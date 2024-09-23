@@ -18,6 +18,11 @@ public class PlayerManager : CharacterManager
     {
         base.Update();
 
+        //Uncomment if adding networked coop
+        // if (!IsOwner) {
+        //     return;
+        // }
+
         //Handle all movement every frame
         playerLocomotionManager.HandleAllMovement();
     }

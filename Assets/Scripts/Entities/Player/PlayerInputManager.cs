@@ -90,4 +90,15 @@ public class PlayerInputManager : MonoBehaviour
             moveAmount = 1;
         }
     }
+
+    private void OnApplicationFocus(bool focus) {
+        if (enabled) {
+            if (focus) {
+                playerControls.Enable();
+            }
+            else {
+                playerControls.Disable();
+            }
+        }
+    }
 }
