@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public enum WeaponType
@@ -17,7 +18,10 @@ public enum WeaponType
     BoneBlade,
     ReinforcedWrench,
     //specialty weapons
-    Dagger
+    Dagger,
+
+    //Limit
+    UNKNOWN
 }
 [Serializable]
 public class WeaponsArray
@@ -55,33 +59,97 @@ public class BaseWeaponStats
 
     public class WeaponsController : MonoBehaviour
 {
-
-    public GameObject[] weapons;
-    public TextAsset jsonFile;
+    [Header("List of all weapons. Will use prefab added in Editor. Intilized by JSON")]
+    public GameObject[] weapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
+    public TextAsset jsonFile; // json file with intilizing stats that will overwrite prefab
+    public bool debugMode = true; // Debug Text, adds shortsword to current weapons
+    [Header("Player Inventory")]
+    public List<GameObject> currentlyOwnedWeapons;
+    public int indexOfCurrentlyEquippedWeapon = 0;
     // Start is called before the first frame update
     void Start()
     {
-        //read json file and create objects
+
+
+        //add prefabs to initilizer array
+        GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
+        foreach (var weapon in weapons)
+        {
+            weaponsInitilizer[(int)weapon.GetComponent<BaseWeaponScript>().weaponType] = weapon;
+        }
+        //read json file and initilize stats
         WeaponsArray weaponsJsons = JsonUtility.FromJson<WeaponsArray>(jsonFile.text);
-        GameObject[] weapons2 = new GameObject[Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
-        foreach(BaseWeaponStats weaponStat in weaponsJsons.weapons)
+        foreach (BaseWeaponStats weaponStat in weaponsJsons.weapons)
         {
             int i = (int)weaponStat.weaponType;
-            weapons2[i] = new GameObject("Empty");
-            weapons2[i].AddComponent(typeof(BaseWeaponScript));
-            weapons2[i].GetComponent<BaseWeaponScript>().copy(weaponStat);
-            Debug.Log("Weapon " + i + ": WeaponType:" + weapons2[i].GetComponent<BaseWeaponScript>().weaponType 
-                + " Atk:"+ weapons2[i].GetComponent<BaseWeaponScript>().attack); //astest
+            if (weaponsInitilizer[i] != null)
+            {   // prefab is loaded, copy stats over
+                if (debugMode) Debug.Log("Prefab loaded for " + i + " type:" + weaponsInitilizer[i].GetComponent<BaseWeaponScript>().weaponName);//astest
+                weaponsInitilizer[i].GetComponent<BaseWeaponScript>().copy(weaponStat);
+            }
+            else
+            {   // no prefab, create a new empty object
+                // Warning: currently attack() is virtual & cannot be called for base weapons, need SwordScript or WrenchScript
+                //          Stats can be viewed for these however
+                weaponsInitilizer[i] = new GameObject("Empty");
+                weaponsInitilizer[i].AddComponent(typeof(BaseWeaponScript));
+                weaponsInitilizer[i].GetComponent<BaseWeaponScript>().copy(weaponStat);
+                if (debugMode) Debug.Log("created object for " + i + " type:" + weaponsInitilizer[i].GetComponent<BaseWeaponScript>().weaponName); //astest
+            }
+            if (debugMode) Debug.Log("Weapon " + i + ": WeaponType:" + weaponsInitilizer[i].GetComponent<BaseWeaponScript>().weaponType 
+                + " Atk:"+ weaponsInitilizer[i].GetComponent<BaseWeaponScript>().attack); //astest
         }
-        weapons = weapons2;
-        Debug.Log("Attack of level 1 BastardSword:" + GetWeaponAttack(WeaponType.BastardSword, 1));//astest
+        //Set weapons here
+        weapons = weaponsInitilizer;
+        if (debugMode)
+        {
+            //Tests
+            //display attack by weapon type
+            Debug.Log("Attack of level 1 BastardSword:" + GetWeaponAttack(WeaponType.BastardSword, 1));//astest
+            //Add 2 Shortswords and a Wrench to currently owned weapons
+            AddWeaponToCurrentWeapons(WeaponType.Shortsword);
+            AddWeaponToCurrentWeapons(WeaponType.Shortsword);
+            AddWeaponToCurrentWeapons(WeaponType.Wrench);
+            //Two methods of attacking
+            currentlyOwnedWeapons[0].GetComponent<BaseWeaponScript>().attackTarget(gameObject);
+            AttackTargetWithCurrentlyEquippedWeapon(gameObject);
+            //Change to Wrench, the third weapon
+            ChangeWeapon(2); 
+            AttackTargetWithCurrentlyEquippedWeapon(gameObject);
+        }
+    }
+    public void AddWeaponToCurrentWeapons(WeaponType weaponType)
+    {
+        int i = (int)weaponType;
+        if (weapons[i] != null) {
+            currentlyOwnedWeapons.Add(Instantiate(weapons[i]));
+        }
+        else
+        {
+            Debug.Log("Warning in addWeaponToCurrentWeapons(" + weaponType + "). Not found");
+        }
+    }
+    public void ChangeWeapon(int index)
+    {
+        if (currentlyOwnedWeapons[index] != null)
+            indexOfCurrentlyEquippedWeapon = index;
+    }
+    public void AttackTargetWithCurrentlyEquippedWeapon(GameObject target)
+    {
+        if (target == null) return;
+        if (currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon] != null)
+        {
+            currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon].GetComponent<BaseWeaponScript>().attackTarget(target);
+        }
     }
     /**
      * Perhaps could use a method to calculate the attributes of a weapon of a particular level
      */
     public float GetWeaponAttack(WeaponType type, int level)
     {
-        return weapons[(int)type].GetComponent<BaseWeaponScript>().attack * level;
+        if(weapons[(int)type] != null)
+            return weapons[(int)type].GetComponent<BaseWeaponScript>().attack * level;
+        return -1;
     }
 }
 /** Change Log  

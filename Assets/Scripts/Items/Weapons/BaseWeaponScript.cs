@@ -9,7 +9,9 @@ using UnityEngine;
 [Serializable]
 public class BaseWeaponScript : MonoBehaviour
 {
-    [Header("Weapon Attributes")]
+    [Header("Weapon Type - Important - Set in Prefab")]
+    public WeaponType weaponType = 0;
+    [Header("Weapon Attributes (Intilized by JSON)")]
     public float attack = 1.0f;
     public float speed = 1.0f;
     public float specialtyCooldown = 0;
@@ -28,18 +30,23 @@ public class BaseWeaponScript : MonoBehaviour
     public int scalesPower = 0;
     public int techPower = 0;
     public int tinkerPointsPerLvl = 0;
-    public WeaponType weaponType = 0;
-    [Header("Weapon State")]
+    
+    [Header("Weapon State (Intilized by JSON)")]
     public float currentDurability = 1.0f;
     public int level = 1;
     public float currentExperiencePoints = 0.0f;
     public int currentTinkerPoints = 0;
     public String weaponName = "BaseWeaponName";
 
+    /**
+     * Currently set to virtual so must override with other script. Can call this from override
+     */
     public virtual void attackTarget(GameObject target)
     {
-        Debug.Log("WeaponScript attackTarget called.");//ASTEST
+        Debug.Log("BaseWeaponScript attackTarget called.");//ASTEST
         if (target != null) {
+            //calculateElementalDamage(attack, target);
+            //calculateAntiTypeDamage(attack, target);
             //target.GetComponent<EnemyController>().hp -= attack;
             //TODO
             //play weapon animation
