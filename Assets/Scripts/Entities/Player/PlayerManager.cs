@@ -19,6 +19,7 @@ public class PlayerManager : CharacterManager
         base.Update();
 
         //Uncomment if adding networked coop
+        //If we don't own this gameobject, we do not control or edit it
         // if (!IsOwner) {
         //     return;
         // }
