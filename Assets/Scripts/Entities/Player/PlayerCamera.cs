@@ -13,6 +13,7 @@ public class PlayerCamera : MonoBehaviour
     [Header("Camera Settings")]
     //Larger cameraSmoothSpeed values equal longer time for the camera to reach its position during movement
     private float cameraSmoothSpeed = 1f;
+    public bool isCameraInverted = false;
 
     //Rotation sensitivities
     [SerializeField] float leftAndRightRotationSpeed = 220f;
@@ -83,7 +84,12 @@ public class PlayerCamera : MonoBehaviour
 
         //Rotate this gameobject up and down
         cameraRotation = Vector3.zero;
-        cameraRotation.x = upAndDownLookAngle;
+        if (isCameraInverted) {
+            cameraRotation.x = -upAndDownLookAngle;
+        }
+        else {
+            cameraRotation.x = upAndDownLookAngle;
+        }
         targetRotation = Quaternion.Euler(cameraRotation);
         cameraPivotTransform.localRotation = targetRotation;
     }
