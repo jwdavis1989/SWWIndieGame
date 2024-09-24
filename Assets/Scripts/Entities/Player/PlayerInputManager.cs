@@ -8,10 +8,17 @@ public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
     PlayerControls playerControls;
+
+    [Header("Movement Input")]
     [SerializeField] Vector2 movementInput;
     public float horizontalInput;
     public float verticalInput;
     public float moveAmount;
+
+    [Header("Camera Movement Input")]
+    [SerializeField] Vector2 cameraInput;
+    public float cameraHorizontalInput;
+    public float cameraVerticalInput;
 
 
     //Start is called before the first frame update
@@ -30,7 +37,7 @@ public class PlayerInputManager : MonoBehaviour
     void Update()
     {
         HandleMovementInput();
-        //Debug.Log("PlayerInputManager Update");
+        HandleCameraMovementInput();
     }
 
     //Goals:
@@ -40,6 +47,7 @@ public class PlayerInputManager : MonoBehaviour
         if (playerControls == null) {
             playerControls = new PlayerControls();
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+            playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
         }
 
         playerControls.Enable();
@@ -89,6 +97,11 @@ public class PlayerInputManager : MonoBehaviour
         else if (moveAmount > 0.5 && moveAmount <= 1) {
             moveAmount = 1;
         }
+    }
+
+    private void HandleCameraMovementInput() {
+        cameraVerticalInput = cameraInput.y;
+        cameraHorizontalInput = cameraInput.x;
     }
 
     private void OnApplicationFocus(bool focus) {
