@@ -11,9 +11,6 @@ public class PlayerManager : CharacterManager
 
         //Do more stuff, only for the player
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
-
-        //Comment this out for Multiplayer
-        PlayerCamera.instance.player = this;
     }
 
     // Update is called once per frame
@@ -40,6 +37,7 @@ public class PlayerManager : CharacterManager
 
     protected override void LateUpdate() {
         //Uncomment for Multiplayer
+        //Also make sure to unset the PlayerCamera's player prefab in the unity editor
         // if (!IsOwner) {
         //     return;
         // }
