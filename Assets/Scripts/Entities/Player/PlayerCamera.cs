@@ -109,18 +109,24 @@ public class PlayerCamera : MonoBehaviour
     private void HandleCollisions() {
         targetCameraZPosition = cameraZPosition;
         RaycastHit hit;
+        //Direction for collision check
         Vector3 direction = cameraObject.transform.position - cameraPivotTransform.position;
         direction.Normalize();
 
+        //Check if an object is in front of our camera's desired direction
         if (Physics.SphereCast(cameraPivotTransform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetCameraZPosition), collideWithLayers)) {
+            //If there is, we get our distance from it
             float distanceFromHitObject = Vector3.Distance(cameraPivotTransform.position, hit.point);
+            //We then equate our target Z position to the following
             targetCameraZPosition = -(distanceFromHitObject - cameraCollisionRadius);
         }
 
+        //If our target position is less than our collision radius, we subtract our collision radius (Making it snap back)
         if (Mathf.Abs(targetCameraZPosition) < cameraCollisionRadius) {
             targetCameraZPosition = -cameraCollisionRadius;
         }
 
+        //We then apply our final position using a lerp over a time of cameraCollisionLerpDuration
         cameraObjectPosition.z = Mathf.Lerp(cameraObject.transform.localPosition.z, targetCameraZPosition, cameraCollisionLerpDuration);
         cameraObject.transform.localPosition = cameraObjectPosition;
     }
