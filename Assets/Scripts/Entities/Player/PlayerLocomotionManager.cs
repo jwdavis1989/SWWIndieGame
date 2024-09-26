@@ -19,6 +19,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Dodge")]
     private Vector3 rollDirection;
+    public GameObject forceFieldGraphic;
     
 
     // Update is called once per frame
@@ -43,7 +44,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (!player.canMove) {
             return;
         }
-        
+
         GetVerticalAndHorizontalInputs();
 
         //Our movement direction is based on our camera's facing perspective and our movement inputs
@@ -106,6 +107,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             player.transform.rotation = playerRotation;
 
             //Debug.Log("Roll Attempted!");
+
+            //Activate Force Field Graphic
+            forceFieldGraphic.SetActive(true);
 
             //Perform a Roll Animation here
             //Look to episode 6 for animation tutorial for this part
