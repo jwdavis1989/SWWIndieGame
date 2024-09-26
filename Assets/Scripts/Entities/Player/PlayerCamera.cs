@@ -13,7 +13,7 @@ public class PlayerCamera : MonoBehaviour
     [Header("Camera Settings")]
     //Larger cameraSmoothSpeed values equal longer time for the camera to reach its position during movement
     private float cameraSmoothSpeed = 1f;
-    public bool isCameraInverted = false;
+    public bool isCameraInverted = true;
 
     //Rotation sensitivities
     [SerializeField] float leftAndRightRotationSpeed = 220f;
@@ -25,16 +25,28 @@ public class PlayerCamera : MonoBehaviour
     //Highest point you can look up
     [SerializeField] float maximumPivot = 60f;
 
+    //Camera collision radius
+    [SerializeField]  float cameraCollisionRadius = 0.2f;
+    [SerializeField] LayerMask collideWithLayers;
+
     //Displays camera values
     [Header("Camera Values")]
     private Vector3 cameraVelocity;
+    //Used for camera collisions, moves the camera object to this position upon colliding
+    private Vector3 cameraObjectPosition;
     [SerializeField] float leftAndRightLookAngle;
     [SerializeField] float upAndDownLookAngle;
+    
+    //Used for Camera Collisions
+    private float cameraZPosition;
+    private float targetCameraZPosition;
+    private float cameraCollisionLerpDuration = 0.2f;
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        cameraZPosition = cameraObject.transform.localPosition.z;
     }
 
     private void Awake() {
@@ -50,7 +62,7 @@ public class PlayerCamera : MonoBehaviour
         if (player != null) {
             HandleFollowTarget();
             HandleRotations();
-            //3. Collide with objects
+            HandleCollisions();
         }
     }
 
@@ -92,5 +104,30 @@ public class PlayerCamera : MonoBehaviour
         }
         targetRotation = Quaternion.Euler(cameraRotation);
         cameraPivotTransform.localRotation = targetRotation;
+    }
+
+    private void HandleCollisions() {
+        targetCameraZPosition = cameraZPosition;
+        RaycastHit hit;
+        //Direction for collision check
+        Vector3 direction = cameraObject.transform.position - cameraPivotTransform.position;
+        direction.Normalize();
+
+        //Check if an object is in front of our camera's desired direction
+        if (Physics.SphereCast(cameraPivotTransform.position, cameraCollisionRadius, direction, out hit, Mathf.Abs(targetCameraZPosition), collideWithLayers)) {
+            //If there is, we get our distance from it
+            float distanceFromHitObject = Vector3.Distance(cameraPivotTransform.position, hit.point);
+            //We then equate our target Z position to the following
+            targetCameraZPosition = -(distanceFromHitObject - cameraCollisionRadius);
+        }
+
+        //If our target position is less than our collision radius, we subtract our collision radius (Making it snap back)
+        if (Mathf.Abs(targetCameraZPosition) < cameraCollisionRadius) {
+            targetCameraZPosition = -cameraCollisionRadius;
+        }
+
+        //We then apply our final position using a lerp over a time of cameraCollisionLerpDuration
+        cameraObjectPosition.z = Mathf.Lerp(cameraObject.transform.localPosition.z, targetCameraZPosition, cameraCollisionLerpDuration);
+        cameraObject.transform.localPosition = cameraObjectPosition;
     }
 }

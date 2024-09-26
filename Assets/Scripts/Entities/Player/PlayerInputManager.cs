@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
+    public PlayerManager player;
     PlayerControls playerControls;
 
     [Header("Movement Input")]
@@ -14,6 +15,9 @@ public class PlayerInputManager : MonoBehaviour
     public float horizontalInput;
     public float verticalInput;
     public float moveAmount;
+
+    [Header("Player Action Input")]
+    [SerializeField] bool dodgeInput = false;
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
@@ -36,8 +40,13 @@ public class PlayerInputManager : MonoBehaviour
     //Update is called once per frame
     void Update()
     {
+        HandleAllInputs();
+    }
+
+    private void HandleAllInputs() {
         HandleMovementInput();
         HandleCameraMovementInput();
+        HandleDodgeInput();
     }
 
     //Goals:
@@ -48,6 +57,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls = new PlayerControls();
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
+            playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
         }
 
         playerControls.Enable();
@@ -83,6 +93,7 @@ public class PlayerInputManager : MonoBehaviour
         SceneManager.activeSceneChanged -= OnSceneChange;
     }
 
+    //Movement
     private void HandleMovementInput() {
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
@@ -112,6 +123,18 @@ public class PlayerInputManager : MonoBehaviour
             else {
                 playerControls.Disable();
             }
+        }
+    }
+
+    //Actions
+    private void HandleDodgeInput() {
+        if (dodgeInput) {
+            dodgeInput = false;
+
+            //Future Note: Return if Menu or UI window is open, do nothing.
+            
+            //Perform the dodge
+            player.playerLocomotionManager.AttemptToPerformDodge();
         }
     }
 }

@@ -80,10 +80,15 @@ MonoBehaviour:
   player: {fileID: 0}
   cameraObject: {fileID: 1335847405064486984}
   cameraPivotTransform: {fileID: 6129023708278722047}
+  isCameraInverted: 1
   leftAndRightRotationSpeed: 220
   upAndDownRotationSpeed: 220
   minimumPivot: -30
   maximumPivot: 60
+  cameraCollisionRadius: 0.2
+  collideWithLayers:
+    serializedVersion: 2
+    m_Bits: 1
   leftAndRightLookAngle: 0
   upAndDownLookAngle: 0
 --- !u!1 &6428806842583117978
@@ -150,7 +155,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0

@@ -22,5 +22,8 @@ public class TitleScreenManager : MonoBehaviour
 
     public void StartNewGame() {
         StartCoroutine(WorldSaveGameManager.instance.LoadNewGame());
+
+        //Hide mouse cursor for KB&M players
+        Cursor.visible = false;
     }
 }
