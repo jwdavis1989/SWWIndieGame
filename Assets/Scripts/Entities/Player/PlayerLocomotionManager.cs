@@ -5,19 +5,24 @@ using UnityEngine;
 public class PlayerLocomotionManager : CharacterLocomotionManager
 {
     PlayerManager player;
+    //Values taken from Input Manager
+    [HideInInspector] public float verticalMovement;
+    [HideInInspector] public float horizontalMovement;
+    [HideInInspector] public float moveAmount; //Currently does nothing, might remove. See PlayerInputManager.instance.moveAmount for correct value.
+    
+    [Header("Movement Settings")]
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
     [SerializeField] float walkingSpeed = 2f;
     [SerializeField] float runningSpeed = 5f;
     [SerializeField] float rotationSpeed = 15f;
-    //Values taken from Input Manager
-    public float verticalMovement;
-    public float horizontalMovement;
-    public float moveAmount;
+
+    [Header("Dodge")]
+    private Vector3 rollDirection;
+    
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         HandleAllMovement();
     }
 
@@ -35,6 +40,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     }
 
     private void HandleGroundedMovement() {
+        if (!player.canMove) {
+            return;
+        }
+        
         GetVerticalAndHorizontalInputs();
 
         //Our movement direction is based on our camera's facing perspective and our movement inputs
@@ -54,6 +63,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     }
 
     private void HandleRotation() {
+        if (!player.canRotate) {
+            return;
+        }
+
         targetRotationDirection = Vector3.zero;
         targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
         targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
@@ -74,5 +87,35 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         horizontalMovement = PlayerInputManager.instance.horizontalInput;
 
         //Clamp the movements when we add animations
+    }
+    
+    public void AttemptToPerformDodge() {
+        //Debug.Log("AttemptToPerformDodge Called");
+        if (player.isPerformingAction) {
+            //Debug.Log("Roll Cancelled!");
+            return;
+        }
+        //Roll if moving before
+        if (PlayerInputManager.instance.moveAmount > 0) {
+            rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+            rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+            rollDirection.y = 0;
+            rollDirection.Normalize();
+
+            Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
+            player.transform.rotation = playerRotation;
+
+            //Debug.Log("Roll Attempted!");
+
+            //Perform a Roll Animation here
+            //Look to episode 6 for animation tutorial for this part
+        }
+        //Backstep if stationary before
+        else {
+            //Debug.Log("Backstep Attempted!");
+
+            //Perform a Backstep Animation here
+            //Look to episode 6 for animation tutorial for this part
+        }
     }
 }

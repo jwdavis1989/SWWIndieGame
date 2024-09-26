@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-    PlayerLocomotionManager playerLocomotionManager;
+    public PlayerLocomotionManager playerLocomotionManager;
 
     protected override void Awake() {
         base.Awake();
 
         //Do more stuff, only for the player
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        PlayerInputManager.instance.player = this;
     }
 
     // Update is called once per frame
@@ -32,6 +33,7 @@ public class PlayerManager : CharacterManager
     // override OnNetworkSpawn() {
     //     if (IsOwner) {
     //         PlayerCamera.instance.player = this;
+    //         PlayerInputManager.instance.player = this;
     //     }
     // }
 
