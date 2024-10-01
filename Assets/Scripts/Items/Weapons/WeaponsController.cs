@@ -9,57 +9,12 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public enum WeaponType
-{
-    Shortsword,
-    Wrench,
-    BastardSword,
-    BroadSword,
-    BoneBlade,
-    ReinforcedWrench,
-    //specialty weapons
-    Dagger,
 
-    //Limit
-    UNKNOWN
-}
-[Serializable]
-public class WeaponsArray
-{
-    public BaseWeaponStats[] weapons;
-}
-[Serializable]
-public class BaseWeaponStats
-{
-    public float attack = 1.0f;
-    public float speed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float block = 1.0f;
-    public float stability = 1.0f;
-    public float xpToLevel = 100.0f;
-    public int maxDurability = 1;
-    public int firePower = 0;
-    public int icePower = 0;
-    public int lightningPower = 0;
-    public int windPower = 0;
-    public int earthPower = 0;
-    public int lightPower = 0;
-    public int beastPower = 0;
-    public int scalesPower = 0;
-    public int techPower = 0;
-    public int tinkerPointsPerLvl = 0;
-    public WeaponType weaponType = 0;
-    public float currentDurability = 1.0f;
-    public int level = 1;
-    public float currentExperiencePoints = 0.0f;
-    public int currentTinkerPoints = 0;
-    public String weaponName = "BaseWeaponName";
-}
 
 
     public class WeaponsController : MonoBehaviour
 {
-    [Header("List of all weapons. Will use prefab added in Editor. Intilized by JSON")]
+    [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
     public GameObject[] weapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
     public TextAsset jsonFile; // json file with intilizing stats that will overwrite prefab
     public bool debugMode = true; // Debug Text, adds shortsword to current weapons
@@ -69,8 +24,6 @@ public class BaseWeaponStats
     // Start is called before the first frame update
     void Start()
     {
-
-
         //add prefabs to initilizer array
         GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
         foreach (var weapon in weapons)
@@ -151,6 +104,55 @@ public class BaseWeaponStats
             return weapons[(int)type].GetComponent<BaseWeaponScript>().attack * level;
         return -1;
     }
+}
+// Enum type of all weapon types
+public enum WeaponType
+{
+    Shortsword,
+    Wrench,
+    BastardSword,
+    BroadSword,
+    BoneBlade,
+    ReinforcedWrench,
+    //specialty weapons
+    Dagger,
+
+    //Limit
+    UNKNOWN
+}
+//used for JSON array
+[Serializable]
+public class WeaponsArray
+{
+    public BaseWeaponStats[] weapons;
+}
+//used for JSON object
+[Serializable]
+public class BaseWeaponStats
+{
+    public float attack = 1.0f;
+    public float speed = 1.0f;
+    public float specialtyCooldown = 0;
+    public float block = 1.0f;
+    public float stability = 1.0f;
+    public float xpToLevel = 100.0f;
+    public int maxDurability = 1;
+    public int firePower = 0;
+    public int icePower = 0;
+    public int lightningPower = 0;
+    public int windPower = 0;
+    public int earthPower = 0;
+    public int lightPower = 0;
+    public int beastPower = 0;
+    public int scalesPower = 0;
+    public int techPower = 0;
+    public int tinkerPointsPerLvl = 0;
+    public WeaponType weaponType = 0;
+    public float currentDurability = 1.0f;
+    public int level = 1;
+    public float currentExperiencePoints = 0.0f;
+    public int currentTinkerPoints = 0;
+    public String weaponName = "BaseWeaponName";
 }
 /** Change Log  
  *  Date         Developer  Description
