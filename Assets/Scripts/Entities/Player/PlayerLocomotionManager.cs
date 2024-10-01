@@ -103,25 +103,24 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     
     public void HandleSprinting() {
         if (player.isPerformingAction) {
-            //Set sprinting to false
             isSprinting = false;
         }
         //If we're out of stamina, set sprinting to false
-        Debug.Log("moveAmount: " + PlayerInputManager.instance.moveAmount);
+
+
         // If we are moving, set sprinting to true
         if (PlayerInputManager.instance.moveAmount > 0) {
             isSprinting = true;
         }
+        //If stationary, set it to false
         else {
             isSprinting = false;
         }
 
-        //If stationary, set it to false
     }
     public void AttemptToPerformDodge() {
         //Debug.Log("AttemptToPerformDodge Called");
         if (player.isPerformingAction) {
-            Debug.Log("Roll Cancelled!");
             return;
         }
         //Roll if moving before
