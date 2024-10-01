@@ -8,18 +8,23 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
     [HideInInspector] public float horizontalMovement;
-    [HideInInspector] public float moveAmount; //Currently does nothing, might remove. See PlayerInputManager.instance.moveAmount for correct value.
+    //[HideInInspector] public float moveAmount; //Currently does nothing, might remove. See PlayerInputManager.instance.moveAmount for correct value.
     
     [Header("Movement Settings")]
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
     [SerializeField] float walkingSpeed = 2f;
     [SerializeField] float runningSpeed = 5f;
+    [SerializeField] float sprintingSpeed = 6.5f;
     [SerializeField] float rotationSpeed = 15f;
 
     [Header("Dodge")]
     private Vector3 rollDirection;
     public GameObject forceFieldGraphic;
+
+    [Header("Sprinting")]
+    //IF we add multiplayer, move this to the CharacterNetworkManager
+    public bool isSprinting = false;
     
 
     // Update is called once per frame
@@ -53,14 +58,20 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        if (PlayerInputManager.instance.moveAmount > 0.5f) {
-            //Move at a running speed
-            player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+        if(isSprinting) {
+            player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
         }
-        else if (PlayerInputManager.instance.moveAmount <= 0.5f) {
-            //Move at a walking speed
-            player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+        else {
+            if (PlayerInputManager.instance.moveAmount > 0.5f) {
+                //Move at a running speed
+                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+            }
+            else if (PlayerInputManager.instance.moveAmount <= 0.5f) {
+                //Move at a walking speed
+                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+            }
         }
+
     }
 
     private void HandleRotation() {
@@ -90,10 +101,27 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         //Clamp the movements when we add animations
     }
     
+    public void HandleSprinting() {
+        if (player.isPerformingAction) {
+            //Set sprinting to false
+            isSprinting = false;
+        }
+        //If we're out of stamina, set sprinting to false
+        Debug.Log("moveAmount: " + PlayerInputManager.instance.moveAmount);
+        // If we are moving, set sprinting to true
+        if (PlayerInputManager.instance.moveAmount > 0) {
+            isSprinting = true;
+        }
+        else {
+            isSprinting = false;
+        }
+
+        //If stationary, set it to false
+    }
     public void AttemptToPerformDodge() {
         //Debug.Log("AttemptToPerformDodge Called");
         if (player.isPerformingAction) {
-            //Debug.Log("Roll Cancelled!");
+            Debug.Log("Roll Cancelled!");
             return;
         }
         //Roll if moving before
