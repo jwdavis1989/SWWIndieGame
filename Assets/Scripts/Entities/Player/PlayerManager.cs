@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PlayerManager : CharacterManager
 {
-    public PlayerLocomotionManager playerLocomotionManager;
+
+    [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
+    //Turn on if adding multiplayer
+    //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
 
     protected override void Awake() {
         base.Awake();
 
         //Do more stuff, only for the player
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        
+        //Turn on if adding multiplayer
+        //playerNetworkManager = GetComponent<PlayerNetworkManager>();
         PlayerInputManager.instance.player = this;
     }
 

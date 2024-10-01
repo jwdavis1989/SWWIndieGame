@@ -18,6 +18,7 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Player Action Input")]
     [SerializeField] bool dodgeInput = false;
+    [SerializeField] bool sprintInput = false;
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
@@ -47,6 +48,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
+        HandleSprintInput();
     }
 
     //Goals:
@@ -58,6 +60,11 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+
+            //Holding the input sets the bool to true
+            playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
+            //Releasing sets the sprint bool to false
+            playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
         }
 
         playerControls.Enable();
@@ -135,6 +142,18 @@ public class PlayerInputManager : MonoBehaviour
             
             //Perform the dodge
             player.playerLocomotionManager.AttemptToPerformDodge();
+        }
+    }
+
+    private void HandleSprintInput() {
+        if (sprintInput) {
+            player.playerLocomotionManager.HandleSprinting();
+            //Debug.Log("Attempt to Sprint in InputManager.");
+        }
+        else {
+            //If adding multiplayer, this will instead use the following:
+            //player.playerNetworkManager.isSprinting = false;
+            player.playerLocomotionManager.isSprinting = false;
         }
     }
 }
