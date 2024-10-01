@@ -54,7 +54,7 @@ using UnityEngine.UI;
         }
         //Set weapons here
         weapons = weaponsInitilizer;
-        if (debugMode)
+        if (debugMode)//astest
         {
             //Tests
             //display attack by weapon type
@@ -69,6 +69,12 @@ using UnityEngine.UI;
             //Change to Wrench, the third weapon
             ChangeWeapon(2); 
             AttackTargetWithCurrentlyEquippedWeapon(gameObject);
+            Debug.Log("============== LIST OF ALL WEAPONS =====================");
+            foreach(GameObject weaponObj in weapons)
+            {
+                BaseWeaponScript weapon = weaponObj.GetComponent<BaseWeaponScript>();
+                Debug.Log("Weapon:" + weapon.weaponName + " Atk: " + weapon.attack + " Fire:" + weapon.firePower + " Type:"+ weapon.weaponType);
+            }
         }
     }
     public void AddWeaponToCurrentWeapons(WeaponType weaponType)
@@ -116,6 +122,14 @@ public enum WeaponType
     ReinforcedWrench,
     //specialty weapons
     Dagger,
+    Flintlock,
+    SparkCaster,
+    BowieKnife,
+    FlintlockEvolve1,
+    FlintlockEvolve2,
+    ZapCaster,
+    BurnCaster,
+    FreezeCaster,
 
     //Limit
     UNKNOWN
