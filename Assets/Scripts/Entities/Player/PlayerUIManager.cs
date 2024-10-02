@@ -8,6 +8,8 @@ public class PlayerUIManager : MonoBehaviour
     // [Header("NETWORK JOIN")]
     // [SerializeField] bool startGameAsClient;
     // Start is called before the first frame update
+
+    [HideInInspector] public PlayerUIHudManager playerUIHudManager;
     public static PlayerUIManager instance;
     void Start()
     {
@@ -24,12 +26,14 @@ public class PlayerUIManager : MonoBehaviour
         // }
     }
 
-    void awake() {
+    void Awake() {
         if (instance == null) {
             instance = this;
         }
         else {
             Destroy(gameObject);
         }
+
+        playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
     }
 }

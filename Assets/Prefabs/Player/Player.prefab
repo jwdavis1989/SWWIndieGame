@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 6463123928413147796}
   - component: {fileID: 7184984905457114304}
   - component: {fileID: 5286892211168698038}
+  - component: {fileID: 7964722329884446191}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -192,6 +193,7 @@ MonoBehaviour:
   canRotate: 1
   canMove: 1
   playerLocomotionManager: {fileID: 0}
+  playerStatsManager: {fileID: 0}
 --- !u!114 &1965232953715711117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalMovement: 0
   horizontalMovement: 0
-  moveAmount: 0
   walkingSpeed: 2
   runningSpeed: 5
   sprintingSpeed: 6.5
@@ -368,6 +369,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7964722329884446191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748067122375590922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b823ff643ef3b468f07baf2fa23e3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endurance: 10
+  currentStamina: 0
+  maxStamina: 1
 --- !u!1001 &2246868201770542268
 PrefabInstance:
   m_ObjectHideFlags: 0
