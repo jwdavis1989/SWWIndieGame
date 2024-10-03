@@ -44,4 +44,19 @@ public class CharacterManager : MonoBehaviour
     protected virtual void LateUpdate() {
         
     }
+
+    //Uncomment for multiplayer, then remove the version in PlayerLocomotionManager
+    // public virtual void RegenerateStamina() {
+    //     if (!IsOwner) {
+    //         return;
+    //     }
+
+    //     if (characterNetworkManager.isSprinting.Value) {
+    //         return;
+    //     }
+
+    //     if (isPerformingAction) {
+    //         return;
+    //     }
+    // }
 }
