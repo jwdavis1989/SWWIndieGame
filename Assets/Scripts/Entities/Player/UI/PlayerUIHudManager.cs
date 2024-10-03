@@ -6,11 +6,11 @@ public class PlayerUIHudManager : MonoBehaviour
 {
     [SerializeField] UIStatBar staminaBar;
 
-    public void SetNewStaminaValue(int newValue, int oldValue = 0) {
+    public void SetNewStaminaValue(float newValue) {
         staminaBar.SetStat(newValue);
     }
 
-    public void SetMaxStaminaValue(int maxStamina) {
+    public void SetMaxStaminaValue(float maxStamina) {
         staminaBar.SetMaxStat(maxStamina);
     }
 }

@@ -17,6 +17,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float runningSpeed = 5f;
     [SerializeField] float sprintingSpeed = 6.5f;
     [SerializeField] float rotationSpeed = 15f;
+    [SerializeField] float sprintingStaminaCost = 6f;
+    [SerializeField] float staminaTickTimer = 0.1f;
 
     [Header("Dodge")]
     private Vector3 rollDirection;
@@ -106,7 +108,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             isSprinting = false;
         }
         //If we're out of stamina, set sprinting to false
-
+        if (player.playerStatsManager.currentStamina <= 0) {
+            isSprinting = false;
+            return;
+        }
 
         // If we are moving, set sprinting to true
         if (PlayerInputManager.instance.moveAmount > 0) {
@@ -115,6 +120,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         //If stationary, set it to false
         else {
             isSprinting = false;
+        }
+
+        if (isSprinting) {
+            player.playerStatsManager.currentStamina -= sprintingStaminaCost * Time.deltaTime;
         }
 
     }
@@ -147,6 +156,30 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
             //Perform a Backstep Animation here
             //Look to episode 6 for animation tutorial for this part
+        }
+    }
+
+    public void RegenerateStamina() {
+
+        if (isSprinting) {
+            return;
+        }
+
+        if (player.isPerformingAction) {
+            return;
+        }
+
+        player.playerStatsManager.staminaRegenerationTimer += Time.deltaTime;
+
+        if (player.playerStatsManager.staminaRegenerationTimer >= player.playerStatsManager.staminaRegenerationDelay) {
+            if (player.playerStatsManager.currentStamina < player.playerStatsManager.maxStamina) {
+                staminaTickTimer += Time.deltaTime;
+
+                if (staminaTickTimer >= 0.1) {
+                    staminaTickTimer = 0;
+                    player.playerStatsManager.currentStamina += player.playerStatsManager.staminaRegenAmount;
+                }
+            }
         }
     }
 }

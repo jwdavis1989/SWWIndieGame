@@ -8,8 +8,13 @@ public class CharacterStatsManager : MonoBehaviour
 
     //Move these to the CharacterNetworkManager if adding multiplayer
     public int endurance = 1;
-    public int currentStamina = 0;
-    public int maxStamina = 100;
+
+    [Header("Stamina")]
+    public float currentStamina = 0;
+    public float maxStamina = 100;
+    public float staminaRegenerationTimer = 0f;
+    public float staminaRegenerationDelay = 2f;
+    public float staminaRegenAmount = 2f;
 
 
     public int CalculateStaminaBasedOnEnduranceLevel(int endurance) {

@@ -55,6 +55,7 @@ public class PlayerManager : CharacterManager
         //Remove when adding multiplayer
         //Debug.Log("playerStatsManager.currentStamina? " + playerStatsManager.currentStamina);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+
     }
 
     //Uncomment for Multiplayer
@@ -68,6 +69,7 @@ public class PlayerManager : CharacterManager
                //This will be moved when saving/loading is added
                //PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance);
                //PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(PlayerNetworkManager.maxStamina.Value);
+               //playerNetworkManager.currentStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
 
     //     }
     // }
