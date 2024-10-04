@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CharacterStatsManager : MonoBehaviour
 {
+    CharacterManager character;
     [Header("Stats")]
-
     //Move these to the CharacterNetworkManager if adding multiplayer
     public int endurance = 1;
 
@@ -15,7 +15,13 @@ public class CharacterStatsManager : MonoBehaviour
     public float staminaRegenerationTimer = 0f;
     public float staminaRegenerationDelay = 2f;
     public float staminaRegenAmount = 2f;
+    public float sprintingStaminaCost = 12f;
+    public float dodgeStaminaCost = 25f;
+    public float staminaTickTimer = 0.1f;
 
+    protected virtual void Awake() {
+        character = GetComponent<CharacterManager>();
+    }
 
     public int CalculateStaminaBasedOnEnduranceLevel(int endurance) {
         //Create an equation for how stamina is calculated
@@ -28,4 +34,40 @@ public class CharacterStatsManager : MonoBehaviour
         //If simple formula, use this simpler and more efficient method
         return endurance * 10;
     }
+
+    public void RegenerateStamina() {
+
+        if (character.isSprinting) {
+            return;
+        }
+
+        if (character.isPerformingAction) {
+            return;
+        }
+
+        staminaRegenerationTimer += Time.deltaTime;
+
+        if (staminaRegenerationTimer >= staminaRegenerationDelay) {
+            if (currentStamina < maxStamina) {
+                staminaTickTimer += Time.deltaTime;
+
+                if (staminaTickTimer >= 0.1) {
+                    staminaTickTimer = 0;
+                    currentStamina += staminaRegenAmount;
+                }
+            }
+        }
+    }
+
+    //Remove this version if adding multiplayer
+    public virtual void ResetStaminaRegenTimer() {
+        staminaRegenerationTimer = 0;
+    }
+
+    //Use this version if adding multiplayer
+        // public virtual void ResetStaminaRegenTimer(float previousStaminaAmount, float currentStaminaAmount) {
+        //     if (currentStaminaAmount < previousStaminaAmount) {
+        //         staminaRegenerationTimer = 0;
+        //     }
+        // }
 }

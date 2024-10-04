@@ -1332,9 +1332,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5810074031667369502, guid: cd05f831f51a95a468dca165302c8b8a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 385a8facd102cc040b9e8ce3d7455927, type: 2}
     - target: {fileID: 7748067122375590922, guid: cd05f831f51a95a468dca165302c8b8a, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964722329884446191, guid: cd05f831f51a95a468dca165302c8b8a, type: 3}
+      propertyPath: sprintingStaminaCost
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1502,22 +1510,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2511096260873081481, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e61a550a7ddc3304fbfe0a01919efe9c, type: 3}
-    - target: {fileID: 2511096260873081481, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_Color.b
-      value: 0.078431375
-      objectReference: {fileID: 0}
-    - target: {fileID: 2511096260873081481, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_Color.g
-      value: 0.05882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 2511096260873081481, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2762194693757865561, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1541,30 +1533,6 @@ PrefabInstance:
     - target: {fileID: 4212765689232555426, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_Name
       value: Player UI Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8316652878559309128, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8316652878559309128, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8363975383038880218, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8363975383038880218, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8363975383038880218, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8363975383038880218, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

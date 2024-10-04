@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerLocomotionManager : CharacterLocomotionManager
 {
     PlayerManager player;
+    [HideInInspector] public CharacterManager characterManager;
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
     [HideInInspector] public float horizontalMovement;
@@ -17,16 +18,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float runningSpeed = 5f;
     [SerializeField] float sprintingSpeed = 6.5f;
     [SerializeField] float rotationSpeed = 15f;
-    [SerializeField] float sprintingStaminaCost = 6f;
-    [SerializeField] float staminaTickTimer = 0.1f;
 
     [Header("Dodge")]
     private Vector3 rollDirection;
     public GameObject forceFieldGraphic;
 
-    [Header("Sprinting")]
-    //IF we add multiplayer, move this to the CharacterNetworkManager
-    public bool isSprinting = false;
     
 
     // Update is called once per frame
@@ -45,6 +41,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         base.Awake();
 
         player = GetComponent<PlayerManager>();
+        characterManager = GetComponent<CharacterManager>();
     }
 
     private void HandleGroundedMovement() {
@@ -60,7 +57,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        if(isSprinting) {
+        if(characterManager.isSprinting) {
             player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
         }
         else {
@@ -105,33 +102,38 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     
     public void HandleSprinting() {
         if (player.isPerformingAction) {
-            isSprinting = false;
+            characterManager.isSprinting = false;
         }
         //If we're out of stamina, set sprinting to false
         if (player.playerStatsManager.currentStamina <= 0) {
-            isSprinting = false;
+            characterManager.isSprinting = false;
             return;
         }
 
         // If we are moving, set sprinting to true
         if (PlayerInputManager.instance.moveAmount > 0) {
-            isSprinting = true;
+            characterManager.isSprinting = true;
         }
         //If stationary, set it to false
         else {
-            isSprinting = false;
+            characterManager.isSprinting = false;
         }
 
-        if (isSprinting) {
-            player.playerStatsManager.currentStamina -= sprintingStaminaCost * Time.deltaTime;
+        if (characterManager.isSprinting) {
+            player.playerStatsManager.currentStamina -= player.playerStatsManager.sprintingStaminaCost * Time.deltaTime;
+            player.playerStatsManager.ResetStaminaRegenTimer();
         }
 
     }
     public void AttemptToPerformDodge() {
-        //Debug.Log("AttemptToPerformDodge Called");
         if (player.isPerformingAction) {
             return;
         }
+
+        if (player.playerStatsManager.currentStamina <= 0) {
+            return;
+        }
+
         //Roll if moving before
         if (PlayerInputManager.instance.moveAmount > 0) {
             rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
@@ -147,6 +149,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             //Activate Force Field Graphic
             forceFieldGraphic.SetActive(true);
 
+            //Set Stamina regen delay to 0
+            player.playerStatsManager.ResetStaminaRegenTimer();
+
             //Perform a Roll Animation here
             //Look to episode 6 for animation tutorial for this part
         }
@@ -155,31 +160,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             //Debug.Log("Backstep Attempted!");
 
             //Perform a Backstep Animation here
-            //Look to episode 6 for animation tutorial for this part
-        }
-    }
-
-    public void RegenerateStamina() {
-
-        if (isSprinting) {
-            return;
+            //Look to episode 6 for animation tutorial for this 
+            //player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
         }
 
-        if (player.isPerformingAction) {
-            return;
-        }
-
-        player.playerStatsManager.staminaRegenerationTimer += Time.deltaTime;
-
-        if (player.playerStatsManager.staminaRegenerationTimer >= player.playerStatsManager.staminaRegenerationDelay) {
-            if (player.playerStatsManager.currentStamina < player.playerStatsManager.maxStamina) {
-                staminaTickTimer += Time.deltaTime;
-
-                if (staminaTickTimer >= 0.1) {
-                    staminaTickTimer = 0;
-                    player.playerStatsManager.currentStamina += player.playerStatsManager.staminaRegenAmount;
-                }
-            }
-        }
+        player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
     }
 }
