@@ -56,6 +56,9 @@ public class PlayerManager : CharacterManager
         //Debug.Log("playerStatsManager.currentStamina? " + playerStatsManager.currentStamina);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
+        //Regenerates your stamina
+        playerStatsManager.RegenerateStamina();
+
     }
 
     //Uncomment for Multiplayer

@@ -153,7 +153,7 @@ public class PlayerInputManager : MonoBehaviour
         else {
             //If adding multiplayer, this will instead use the following:
             //player.playerNetworkManager.isSprinting = false;
-            player.playerLocomotionManager.isSprinting = false;
+            player.playerLocomotionManager.characterManager.isSprinting = false;
         }
     }
 }
