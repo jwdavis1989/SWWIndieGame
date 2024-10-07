@@ -27,9 +27,9 @@ Transform:
   m_GameObject: {fileID: 6539006154378668682}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3127314472973663158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
+  animator: {fileID: 0}
   isPerformingAction: 0
   applyRootMotion: 0
   canRotate: 1
@@ -196,6 +197,7 @@ MonoBehaviour:
   isSprinting: 0
   playerLocomotionManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
+  playerAnimationManager: {fileID: 0}
 --- !u!114 &1965232953715711117
 MonoBehaviour:
   m_ObjectHideFlags: 0

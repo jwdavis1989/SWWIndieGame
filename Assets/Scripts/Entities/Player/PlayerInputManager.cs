@@ -116,6 +116,9 @@ public class PlayerInputManager : MonoBehaviour
             moveAmount = 1;
         }
 
+        if (player == null) {
+            return;
+        }
         //If not locked on
         //We pass 0 for horizontal because we're not locked on, as we always rotate to face the way we walk.
         player.playerAnimationManager.UpdateAnimatorMovementParameters(0, moveAmount);
