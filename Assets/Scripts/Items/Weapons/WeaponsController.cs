@@ -11,13 +11,13 @@ using UnityEngine.UI;
 
 
 
-
-    public class WeaponsController : MonoBehaviour
+public class WeaponsController : MonoBehaviour
 {
+    [Header("WeaponsController\nDescription - Contains: List of all Weapon Types\n\t\t\tPrefafs of each weapon\n\t\t\tList of Player's current wepaons\n\n")]
     [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
     public GameObject[] weapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
     public TextAsset jsonFile; // json file with intilizing stats that will overwrite prefab
-    public bool debugMode = true; // Debug Text, adds shortsword to current weapons
+    public bool debugMode = false; // Debug Text, adds shortsword to current weapons
     [Header("Player Inventory")]
     public List<GameObject> currentlyOwnedWeapons;
     public int indexOfCurrentlyEquippedWeapon = 0;
@@ -130,6 +130,8 @@ public enum WeaponType
     ZapCaster,
     BurnCaster,
     FreezeCaster,
+    //T3 Weapons
+    DiamondSword,
 
     //Limit
     UNKNOWN
