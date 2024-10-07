@@ -9,6 +9,7 @@ public class PlayerManager : CharacterManager
     //Turn on if adding multiplayer
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
+    [HideInInspector] public PlayerAnimationManager playerAnimationManager;
 
     protected override void Awake() {
         base.Awake();
@@ -20,6 +21,8 @@ public class PlayerManager : CharacterManager
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
         PlayerInputManager.instance.player = this;
         playerStatsManager = GetComponent<PlayerStatsManager>();
+
+        playerAnimationManager = GetComponent<PlayerAnimationManager>();
         
         //Remove this when adding multiplayer. 
         //This will also be removed when saving and loading are added!
@@ -31,10 +34,6 @@ public class PlayerManager : CharacterManager
             PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
             PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.maxStamina);
         //}
-
-    }
-
-    public void Start() {
 
     }
 

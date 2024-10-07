@@ -27,9 +27,9 @@ Transform:
   m_GameObject: {fileID: 6539006154378668682}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3127314472973663158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 7184984905457114304}
   - component: {fileID: 5286892211168698038}
   - component: {fileID: 7964722329884446191}
+  - component: {fileID: 2973246162167215673}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -188,12 +189,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
+  animator: {fileID: 0}
   isPerformingAction: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
+  isSprinting: 0
   playerLocomotionManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
+  playerAnimationManager: {fileID: 0}
 --- !u!114 &1965232953715711117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,14 +210,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae2cb43c36af9e54186f07a76a056517, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterManager: {fileID: 0}
   verticalMovement: 0
   horizontalMovement: 0
-  walkingSpeed: 2
-  runningSpeed: 5
-  sprintingSpeed: 6.5
+  walkingSpeed: 1.5
+  runningSpeed: 4.5
+  sprintingSpeed: 7
   rotationSpeed: 15
   forceFieldGraphic: {fileID: 6539006154378668682}
-  isSprinting: 0
 --- !u!143 &2895811096310676182
 CharacterController:
   m_ObjectHideFlags: 0
@@ -358,7 +362,7 @@ Animator:
   m_GameObject: {fileID: 7748067122375590922}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b493e5f14e6af2f4b957d2ab82a0bf13, type: 3}
-  m_Controller: {fileID: 9100000, guid: 55c19d18a36aca440bb8586d2508daea, type: 2}
+  m_Controller: {fileID: 9100000, guid: cf6b4c68c846d154badf17176f3cf2c1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -384,6 +388,24 @@ MonoBehaviour:
   endurance: 10
   currentStamina: 0
   maxStamina: 1
+  staminaRegenerationTimer: 0
+  staminaRegenerationDelay: 2
+  staminaRegenAmount: 2
+  sprintingStaminaCost: 12
+  dodgeStaminaCost: 25
+  staminaTickTimer: 0.1
+--- !u!114 &2973246162167215673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748067122375590922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 322cad85795cace4e98cf172c3e00c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5044094183258164044
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -463,7 +485,7 @@ PrefabInstance:
     - target: {fileID: 1630794972795428178, guid: b493e5f14e6af2f4b957d2ab82a0bf13, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5a69900c3b4005f41b4ce0b303ce8149, type: 2}
+      objectReference: {fileID: 2100000, guid: 385a8facd102cc040b9e8ce3d7455927, type: 2}
     - target: {fileID: 5866666021909216657, guid: b493e5f14e6af2f4b957d2ab82a0bf13, type: 3}
       propertyPath: m_Enabled
       value: 0

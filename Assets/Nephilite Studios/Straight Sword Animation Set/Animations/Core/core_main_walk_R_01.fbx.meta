@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 821860e6e04dbd04ca5493ddad94d8cc
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 22200
   internalIDToNameTable:
   - first:
       74: -6515822650386919681
@@ -72,6 +72,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -99,6 +100,7 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -445,18 +447,18 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Fx_Attachment
       parentName: Root
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      position: {x: -0, y: 0.8311259, z: -0.000000047683713}
+      rotation: {x: 0.45326355, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Prop_Attachment_Extra1
       parentName: Root
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      position: {x: -0, y: 0.0000000018597833, z: 1.955248e-17}
+      rotation: {x: 0.9788659, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Prop_Attachment_Extra2
       parentName: Root
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      position: {x: -0, y: -0.0000000019964597, z: -4.6052473e-17}
+      rotation: {x: 0.9914144, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hips
       parentName: Root
@@ -511,7 +513,7 @@ ModelImporter:
     - name: Head_Attachment
       parentName: Head
       position: {x: -2.4071082e-15, y: 0.21543543, z: 0.010532023}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      rotation: {x: -0.041390207, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Clavicle_L
       parentName: Spine_03
@@ -545,8 +547,8 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Tome_Attachment_L
       parentName: Hand_L
-      position: {x: -1.4210854e-16, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 3.330669e-16, w: 1}
+      position: {x: -1.4210854e-16, y: -0.001159668, z: -0.032833397}
+      rotation: {x: 0.039936602, y: -0.0030434094, z: 3.330669e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Thumb_01_L
       parentName: Hand_L
@@ -735,8 +737,8 @@ ModelImporter:
       scale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
     - name: Md_Char_Low_Poly_Man
       parentName: Straight_Sword_Anim_export_with_character(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      position: {x: -0, y: -0.0000000011153232, z: -0.0000000019772268}
+      rotation: {x: 0.66068864, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
@@ -756,6 +758,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

@@ -9,7 +9,8 @@ using UnityEngine;
 public class CharacterManager : MonoBehaviour
 {
     //CharacterNetworkManager characterNetworkManager;
-    public CharacterController characterController;
+    [HideInInspector] public CharacterController characterController;
+    [HideInInspector] public Animator animator;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
@@ -22,6 +23,7 @@ public class CharacterManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     protected virtual void Update() {

@@ -26,8 +26,14 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     
 
     // Update is called once per frame
-    void Update() {
+    protected override void Update() {
+        base.Update();
         HandleAllMovement();
+
+        //Cancelled forcefield cancel
+        // if (!player.isPerformingAction && forceFieldGraphic.activeSelf) {
+        //     forceFieldGraphic.SetActive(false);
+        // }
     }
 
     public void HandleAllMovement() {
@@ -144,10 +150,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
             player.transform.rotation = playerRotation;
 
-            //Debug.Log("Roll Attempted!");
+            //Play roll animation
+            player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
 
             //Activate Force Field Graphic
-            forceFieldGraphic.SetActive(true);
+            //forceFieldGraphic.SetActive(true);
 
             //Set Stamina regen delay to 0
             player.playerStatsManager.ResetStaminaRegenTimer();
@@ -157,11 +164,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
         //Backstep if stationary before
         else {
-            //Debug.Log("Backstep Attempted!");
-
             //Perform a Backstep Animation here
-            //Look to episode 6 for animation tutorial for this 
-            //player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            //Play Backstep Animation
+            player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
         }
 
         player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
