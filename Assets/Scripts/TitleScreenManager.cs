@@ -21,9 +21,11 @@ public class TitleScreenManager : MonoBehaviour
     // }
 
     public void StartNewGame() {
-        StartCoroutine(WorldSaveGameManager.instance.LoadNewGame());
+        WorldSaveGameManager.instance.CreateNewGame();
+        StartCoroutine(WorldSaveGameManager.instance.LoadWorldScene());
 
         //Hide mouse cursor for KB&M players
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 }

@@ -87,4 +87,22 @@ public class PlayerManager : CharacterManager
         PlayerCamera.instance.HandleAllCameraActions();
     }
 
+    public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+        currentCharacterData.characterName = playerStatsManager.characterName;
+        currentCharacterData.xPosition = transform.position.x;
+        currentCharacterData.yPosition = transform.position.y;
+        currentCharacterData.zPosition = transform.position.z;
+
+        //Add Weapon Arsenal Data later
+
+
+    }
+
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+        currentCharacterData.characterName = playerStatsManager.characterName;
+        Vector3 myPosition = new Vector3(currentCharacterData.xPosition, currentCharacterData.yPosition, currentCharacterData.zPosition);
+        transform.position = myPosition;
+
+        //Add Weapon Arsenal Data Loading here later
+    }
 }
