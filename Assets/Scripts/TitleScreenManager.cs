@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class TitleScreenManager : MonoBehaviour
 {
+    public static TitleScreenManager instance;
     [Header("Menus")]
     [SerializeField] GameObject titleScreenMainMenu;
     [SerializeField] GameObject titleScreenLoadMenu;
@@ -13,18 +14,27 @@ public class TitleScreenManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] Button loadMenuReturnButton;
     [SerializeField] Button mainMenuReturnButton;
+    [SerializeField] Button mainMenuNewGameButton;
+
+    [Header("Pop-ups")]
+    [SerializeField] GameObject noCharacterSlotsPopUp;
+    [SerializeField] Button noCharacterSlotsOkayButton;
+
 
     // public void StartNetworkAsHost() {
 
     // }
 
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
     public void StartNewGame() {
-        WorldSaveGameManager.instance.CreateNewGame();
-        StartCoroutine(WorldSaveGameManager.instance.LoadWorldScene());
-
-        //Hide mouse cursor for KB&M players
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        WorldSaveGameManager.instance.AttemptToCreateNewGame();
     }
 
     public void OpenLoadGameMenu() {
@@ -49,5 +59,15 @@ public class TitleScreenManager : MonoBehaviour
 
         //Select the Return Button First
         mainMenuReturnButton.Select();
+    }
+
+    public void DisplayNoFreeCharacterSlotsPopUp() {
+        noCharacterSlotsPopUp.SetActive(true);
+        noCharacterSlotsOkayButton.Select();
+    }
+
+    public void CloseNoFreeCharacterSlotsPopUp() {
+        noCharacterSlotsPopUp.SetActive(false);
+        mainMenuNewGameButton.Select();
     }
 }

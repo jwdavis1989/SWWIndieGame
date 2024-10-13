@@ -8,7 +8,7 @@ public class WorldSaveGameManager : MonoBehaviour
 
     //Create Singleton Instance
     public static WorldSaveGameManager instance;
-    [SerializeField] PlayerManager player;
+    public PlayerManager player;
 
     [Header("Save/Load")]
     [SerializeField] bool saveGame;
@@ -107,11 +107,65 @@ public class WorldSaveGameManager : MonoBehaviour
         return tempFileName;
     }
     
-    public void CreateNewGame() {
-        //Create new file, with a file name depending on which slot we are using
-        fileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(currentCharacterSlotBeingUsed);
+    public void AttemptToCreateNewGame() {
+        saveFileDataWriter = new SaveFileDataWriter();
+        saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
 
-        currentCharacterData = new CharacterSaveData();
+        //Check if we can make a new slot (Check for pre-existing slot)
+        //Slot 01
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_01);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_01;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 02
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_02);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_02;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 03
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_03);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_03;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 04
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_04);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_04;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //If there are no free slots, notify the player
+        TitleScreenManager.instance.DisplayNoFreeCharacterSlotsPopUp();
     }
 
     public void LoadGame() {
@@ -183,6 +237,8 @@ public class WorldSaveGameManager : MonoBehaviour
     public IEnumerator LoadWorldScene() {
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
 
+        //Give player object data from file
+        player.LoadGameFromCurrentCharacterData(ref currentCharacterData);
         yield return null;
     }
 

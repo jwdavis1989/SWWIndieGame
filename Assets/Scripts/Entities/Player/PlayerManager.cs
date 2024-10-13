@@ -20,6 +20,7 @@ public class PlayerManager : CharacterManager
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
         PlayerInputManager.instance.player = this;
+        WorldSaveGameManager.instance.player = this;
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
