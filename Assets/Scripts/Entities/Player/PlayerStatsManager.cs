@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class PlayerStatsManager : CharacterStatsManager
 {
-    
+    //Using instead of a network variable
+    public string characterName;
 }
