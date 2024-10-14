@@ -15,11 +15,18 @@ public class TitleScreenManager : MonoBehaviour
     [SerializeField] Button loadMenuReturnButton;
     [SerializeField] Button mainMenuReturnButton;
     [SerializeField] Button mainMenuNewGameButton;
+    [SerializeField] Button deleteCharacterPopUpConfirmButton;
 
     [Header("Pop-ups")]
     [SerializeField] GameObject noCharacterSlotsPopUp;
     [SerializeField] Button noCharacterSlotsOkayButton;
+    [SerializeField] GameObject deleteCharacterSlotPopUp;
 
+    [Header("Character Slots")]
+    public CharacterSlot currentSelectedSlot = CharacterSlot.NO_SLOT;
+
+    [Header("Title Screen Inputs")]
+    [SerializeField] bool deleteCharacterSlot = false;
 
     // public void StartNetworkAsHost() {
 
@@ -70,4 +77,38 @@ public class TitleScreenManager : MonoBehaviour
         noCharacterSlotsPopUp.SetActive(false);
         mainMenuNewGameButton.Select();
     }
+
+    //Character Slots
+
+    public void SelectCharacterSlot(CharacterSlot characterSlot) {
+        currentSelectedSlot = characterSlot;
+    }
+
+    public void SelectNoSlot() {
+        currentSelectedSlot = CharacterSlot.NO_SLOT;
+    }
+
+    public void AttemptToDeleteCharacterSlot() {
+        if (currentSelectedSlot != CharacterSlot.NO_SLOT) {
+            deleteCharacterSlotPopUp.SetActive(true);
+            deleteCharacterPopUpConfirmButton.Select();
+        }
+    }
+
+    public void DeleteCharacterSlot() {
+        deleteCharacterSlotPopUp.SetActive(false);
+        WorldSaveGameManager.instance.DeleteGame(currentSelectedSlot);
+
+        //Handle this thing like a router and turn that bitch off then on to update the display
+        titleScreenLoadMenu.SetActive(false);
+        titleScreenLoadMenu.SetActive(true);
+        
+        loadMenuReturnButton.Select();
+    }
+
+    public void CloseDeleteCharacterPopUp() {
+        deleteCharacterSlotPopUp.SetActive(false);
+        loadMenuReturnButton.Select();
+    }
+    
 }

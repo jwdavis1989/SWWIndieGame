@@ -164,6 +164,84 @@ public class WorldSaveGameManager : MonoBehaviour
             return;
         }
 
+        //Slot 05
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_05);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_05;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 06
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_06);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_06;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 07
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_07);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_07;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 08
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_08);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_08;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 09
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_09);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_09;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
+        //Slot 10
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot.CharacterSlot_10);
+        if (!saveFileDataWriter.CheckToSeeIfFileExists()) {
+            //If Profile slot is not taken, we will use it
+            currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_10;
+            currentCharacterData = new CharacterSaveData();
+            StartCoroutine(LoadWorldScene());
+            //Hide mouse cursor for KB&M players
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
+            return;
+        }
+
         //If there are no free slots, notify the player
         TitleScreenManager.instance.DisplayNoFreeCharacterSlotsPopUp();
     }
@@ -196,6 +274,15 @@ public class WorldSaveGameManager : MonoBehaviour
 
         //Write that info onto a JSON file, saved to this machine
         saveFileDataWriter.CreateNewCharacterSaveFile(currentCharacterData);
+    }
+
+    public void DeleteGame(CharacterSlot characterSlot) {
+        //Choose a file based on name
+        saveFileDataWriter = new SaveFileDataWriter();
+        saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+        saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(characterSlot);
+        
+        saveFileDataWriter.DeleteSaveFile();
     }
 
     //Load all character profiles on device when starting game
