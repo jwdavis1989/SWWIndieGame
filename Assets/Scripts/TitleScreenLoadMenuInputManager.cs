@@ -11,7 +11,6 @@ public class TitleScreenLoadMenuInputManager : MonoBehaviour
 
     private void Update() {
         if (deleteCharacterSlot) {
-            Debug.Log("X Pressed");
             deleteCharacterSlot = false;
             TitleScreenManager.instance.AttemptToDeleteCharacterSlot();
         }
