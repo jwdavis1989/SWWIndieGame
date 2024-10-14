@@ -7,8 +7,11 @@ using UnityEngine;
 //a monobehavior and is instead serializable.
 public class CharacterSaveData
 {
+    [Header("Scene Index")]
+    public int sceneIndex = 1;
+
     [Header("Character Name")]
-    public string characterName = "Character";
+    public string characterName = "Character Name";
 
     [Header("Time Played")]
     public float secondsPlayed;
