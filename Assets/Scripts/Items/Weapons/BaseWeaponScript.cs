@@ -37,6 +37,8 @@ public class BaseWeaponScript : MonoBehaviour
     public float currentExperiencePoints = 0.0f;
     public int currentTinkerPoints = 0;
     public String weaponName = "BaseWeaponName";
+    [Header("Will appear as ??? on weapon sheet until obtained")]
+    public bool hasObtained = false;
 
     /**
      * Currently set to virtual so must override with other script. Can call this from override
