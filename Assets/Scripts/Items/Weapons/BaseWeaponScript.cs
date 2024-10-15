@@ -11,7 +11,7 @@ public class BaseWeaponScript : MonoBehaviour
 {
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
-    [Header("Weapon Attributes (Intilized by JSON)")]
+    [Header("Weapon Attributes (Intialized by JSON)")]
     public float attack = 1.0f;
     public float speed = 1.0f;
     public float specialtyCooldown = 0;
@@ -31,12 +31,14 @@ public class BaseWeaponScript : MonoBehaviour
     public int techPower = 0;
     public int tinkerPointsPerLvl = 0;
     
-    [Header("Weapon State (Intilized by JSON)")]
+    [Header("Weapon State (Intialized by JSON)")]
     public float currentDurability = 1.0f;
     public int level = 1;
     public float currentExperiencePoints = 0.0f;
     public int currentTinkerPoints = 0;
     public String weaponName = "BaseWeaponName";
+    [Header("Will appear as ??? on weapon sheet until obtained")]
+    public bool hasObtained = false;
 
     /**
      * Currently set to virtual so must override with other script. Can call this from override
@@ -72,6 +74,7 @@ public class BaseWeaponScript : MonoBehaviour
         //}
         return result;
     }
+    //move JSON Values into this object
     public void copy(BaseWeaponStats script)
     {
         this.attack = script.attack;

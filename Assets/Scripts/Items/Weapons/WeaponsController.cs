@@ -9,68 +9,21 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public enum WeaponType
-{
-    Shortsword,
-    Wrench,
-    BastardSword,
-    BroadSword,
-    BoneBlade,
-    ReinforcedWrench,
-    //specialty weapons
-    Dagger,
-
-    //Limit
-    UNKNOWN
-}
-[Serializable]
-public class WeaponsArray
-{
-    public BaseWeaponStats[] weapons;
-}
-[Serializable]
-public class BaseWeaponStats
-{
-    public float attack = 1.0f;
-    public float speed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float block = 1.0f;
-    public float stability = 1.0f;
-    public float xpToLevel = 100.0f;
-    public int maxDurability = 1;
-    public int firePower = 0;
-    public int icePower = 0;
-    public int lightningPower = 0;
-    public int windPower = 0;
-    public int earthPower = 0;
-    public int lightPower = 0;
-    public int beastPower = 0;
-    public int scalesPower = 0;
-    public int techPower = 0;
-    public int tinkerPointsPerLvl = 0;
-    public WeaponType weaponType = 0;
-    public float currentDurability = 1.0f;
-    public int level = 1;
-    public float currentExperiencePoints = 0.0f;
-    public int currentTinkerPoints = 0;
-    public String weaponName = "BaseWeaponName";
-}
 
 
-    public class WeaponsController : MonoBehaviour
+public class WeaponsController : MonoBehaviour
 {
-    [Header("List of all weapons. Will use prefab added in Editor. Intilized by JSON")]
+    [Header("WeaponsController\nDescription - Contains: List of all Weapon Types\n\t\t\tPrefafs of each weapon\n\t\t\tList of Player's current wepaons\n\n")]
+    [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
     public GameObject[] weapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
     public TextAsset jsonFile; // json file with intilizing stats that will overwrite prefab
-    public bool debugMode = true; // Debug Text, adds shortsword to current weapons
+    public bool debugMode = false; // Debug Text, adds shortsword to current weapons
     [Header("Player Inventory")]
     public List<GameObject> currentlyOwnedWeapons;
     public int indexOfCurrentlyEquippedWeapon = 0;
     // Start is called before the first frame update
     void Start()
     {
-
-
         //add prefabs to initilizer array
         GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
         foreach (var weapon in weapons)
@@ -101,7 +54,7 @@ public class BaseWeaponStats
         }
         //Set weapons here
         weapons = weaponsInitilizer;
-        if (debugMode)
+        if (debugMode)//astest
         {
             //Tests
             //display attack by weapon type
@@ -116,6 +69,12 @@ public class BaseWeaponStats
             //Change to Wrench, the third weapon
             ChangeWeapon(2); 
             AttackTargetWithCurrentlyEquippedWeapon(gameObject);
+            Debug.Log("============== LIST OF ALL WEAPONS =====================");
+            foreach(GameObject weaponObj in weapons)
+            {
+                BaseWeaponScript weapon = weaponObj.GetComponent<BaseWeaponScript>();
+                Debug.Log("Weapon:" + weapon.weaponName + " Atk: " + weapon.attack + " Fire:" + weapon.firePower + " Type:"+ weapon.weaponType);
+            }
         }
     }
     public void AddWeaponToCurrentWeapons(WeaponType weaponType)
@@ -151,6 +110,65 @@ public class BaseWeaponStats
             return weapons[(int)type].GetComponent<BaseWeaponScript>().attack * level;
         return -1;
     }
+}
+// Enum type of all weapon types
+public enum WeaponType
+{
+    Shortsword,
+    Wrench,
+    BastardSword,
+    BroadSword,
+    BoneBlade,
+    ReinforcedWrench,
+    //specialty weapons
+    Dagger,
+    Flintlock,
+    SparkCaster,
+    BowieKnife,
+    Revolver,
+    ScrapGun,
+    ZapCaster,
+    BurnCaster,
+    FreezeCaster,
+    //T3 Weapons
+    DiamondSword,
+
+    //Limit
+    UNKNOWN
+}
+//used for JSON array
+[Serializable]
+public class WeaponsArray
+{
+    public BaseWeaponStats[] weapons;
+}
+//used for JSON object
+[Serializable]
+public class BaseWeaponStats
+{
+    public float attack = 1.0f;
+    public float speed = 1.0f;
+    public float specialtyCooldown = 0;
+    public float block = 1.0f;
+    public float stability = 1.0f;
+    public float xpToLevel = 100.0f;
+    public int maxDurability = 1;
+    public int firePower = 0;
+    public int icePower = 0;
+    public int lightningPower = 0;
+    public int windPower = 0;
+    public int earthPower = 0;
+    public int lightPower = 0;
+    public int beastPower = 0;
+    public int scalesPower = 0;
+    public int techPower = 0;
+    public int tinkerPointsPerLvl = 0;
+    public WeaponType weaponType = 0;
+    public float currentDurability = 1.0f;
+    public int level = 1;
+    public float currentExperiencePoints = 0.0f;
+    public int currentTinkerPoints = 0;
+    public String weaponName = "BaseWeaponName";
 }
 /** Change Log  
  *  Date         Developer  Description
