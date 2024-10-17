@@ -11,7 +11,7 @@ public class CharacterLocomotionManager : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     
     //Offsets the ground check to the feet of the character
-    [SerializeField] float groundCheckYOffset = -0.5f;
+    //[SerializeField] float groundCheckYOffset = -0.5f;
     [SerializeField] float groundCheckSphereRadius = 0.3f;
     //Upward or Downward force applied to player. e.g. Gravity or jumping.
     [SerializeField] protected Vector3 yVelocity;
