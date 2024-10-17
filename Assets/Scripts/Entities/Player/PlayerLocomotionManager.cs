@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerLocomotionManager : CharacterLocomotionManager
 {
     PlayerManager player;
+    public GameObject rightBoosters;
+    public GameObject leftBoosters;
     [HideInInspector] public CharacterManager characterManager;
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
@@ -102,6 +104,43 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
             freeFallDirection.y = 0;
             player.characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
+
+
+            Debug.Log(player.gameObject.transform.eulerAngles.y);
+            //Facing Forward
+            if ((player.gameObject.transform.eulerAngles.y >= 270 && player.gameObject.transform.eulerAngles.y <= 360) 
+            || ( player.gameObject.transform.eulerAngles.y >= 0 && player.gameObject.transform.eulerAngles.y < 90)) {
+                if (freeFallDirection.x > 0) {
+                    DisableJumpJets("Right");
+                    EnableJumpJets("Left");
+                }
+                else if (freeFallDirection.x < 0) {
+                    DisableJumpJets("Left");
+                    EnableJumpJets("Right");
+                }
+                else {
+                    EnableJumpJets("Right");
+                    EnableJumpJets("Left");
+                }
+            }
+            //Facing Backward
+            else {
+                if (freeFallDirection.x < 0) {
+                DisableJumpJets("Right");
+                EnableJumpJets("Left");
+                }
+                else if (freeFallDirection.x > 0) {
+                    DisableJumpJets("Left");
+                    EnableJumpJets("Right");
+                }
+                else {
+                    EnableJumpJets("Right");
+                    EnableJumpJets("Left");
+                }
+            }
+        }
+        else {
+            DisableJumpJets("Both");
         }
     }
     private void HandleRotation() {
@@ -245,11 +284,51 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
         }
 
+        if (jumpDirection.x > 0) {
+            EnableJumpJets("Left");
+        }
+        else if (jumpDirection.x < 0) {
+            EnableJumpJets("Right");
+        }
+        else {
+            EnableJumpJets("Both");
+        }
+
     }
 
     public void ApplyJumpingVelocity() {
         //Apply an upward velocity depending on forces in our game such as gravity
         yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
+    }
+
+    public void EnableJumpJets(string side) {
+        switch(side) {
+            case "Left":
+            leftBoosters.SetActive(true);
+                break;
+            case "Right":
+            rightBoosters.SetActive(true);
+                break;
+            case "Both":
+            rightBoosters.SetActive(true);
+            leftBoosters.SetActive(true);
+                break;
+        }
+    }
+
+    public void DisableJumpJets(string side) {
+        switch(side) {
+            case "Left":
+            leftBoosters.SetActive(false);
+                break;
+            case "Right":
+            rightBoosters.SetActive(false);
+                break;
+            case "Both":
+            rightBoosters.SetActive(false);
+            leftBoosters.SetActive(false);
+                break;
+        }
     }
 
 }
