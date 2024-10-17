@@ -7,19 +7,19 @@ public class CharacterLocomotionManager : MonoBehaviour
     public CharacterManager character;
 
     [Header("Ground Check & Jumping")]
-    [SerializeField] float gravityForce = -5.55f;
+    [SerializeField] protected float gravityForce = -5.55f;
     [SerializeField] LayerMask groundLayer;
     
     //Offsets the ground check to the feet of the character
     //[SerializeField] float groundCheckYOffset = -0.5f;
-    [SerializeField] float groundCheckSphereRadius = 0.3f;
+    [SerializeField] float groundCheckSphereRadius = 0.1f;
     //Upward or Downward force applied to player. e.g. Gravity or jumping.
     [SerializeField] protected Vector3 yVelocity;
 
     //Gravity
-    [SerializeField] protected float groundedYVelocity = -20;
+    [SerializeField] protected float groundedYVelocity = -20f;
     //The force at which our character begins to fall when ungrounded. This value increases over time when in the air. 
-    [SerializeField] protected float fallStartYVelocity = -5;
+    [SerializeField] protected float fallStartYVelocity = -7f;
 
     protected bool fallingVelocityHasBeenSet = false;
     protected float inAirTimer = 0f;

@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3875666304839276864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -299,21 +299,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 816585948188296129}
+  gravityForce: -5.55
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
-  groundCheckYOffset: -1
-  groundCheckSphereRadius: 0.3
-  yVelocity: {x: 0, y: 0, z: 0}
+  groundCheckSphereRadius: 0.1
+  yVelocity: {x: 0, y: -20, z: 0}
   groundedYVelocity: -20
-  fallStartYVelocity: -5
-  characterManager: {fileID: 0}
+  fallStartYVelocity: -7
+  characterManager: {fileID: 816585948188296129}
   verticalMovement: 0
   horizontalMovement: 0
   walkingSpeed: 1.5
   runningSpeed: 4.5
   sprintingSpeed: 7
   rotationSpeed: 15
+  jumpHeight: 2
+  jumpForwardSpeed: 5
+  freeFallSpeed: 2
   forceFieldGraphic: {fileID: 0}
 --- !u!143 &2895811096310676182
 CharacterController:
@@ -335,12 +338,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.4
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!82 &6463123928413147796
 AudioSource:
   m_ObjectHideFlags: 0
@@ -486,13 +489,13 @@ MonoBehaviour:
   currentStamina: 0
   maxStamina: 1
   staminaRegenerationTimer: 0
-  staminaRegenerationDelay: 2
-  staminaRegenAmount: 2
+  staminaRegenerationDelay: 1.75
+  staminaRegenAmount: 2.5
   sprintingStaminaCost: 12
   dodgeStaminaCost: 25
-  jumpStaminaCost: 25
+  jumpStaminaCost: 0
   staminaTickTimer: 0.1
-  characterName: 
+  characterName: Character Name
 --- !u!114 &2973246162167215673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,7 +530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e2ed75f14a653ab44951e3b840a7a6d8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e2ed75f14a653ab44951e3b840a7a6d8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -884,6 +887,10 @@ PrefabInstance:
     - target: {fileID: 5161181382502148836, guid: e2ed75f14a653ab44951e3b840a7a6d8, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: e2ed75f14a653ab44951e3b840a7a6d8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6240733294840144465, guid: e2ed75f14a653ab44951e3b840a7a6d8, type: 3}
       propertyPath: m_Layer

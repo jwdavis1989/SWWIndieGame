@@ -59,7 +59,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.83006537
+        functionName: ApplyJumpingVelocity
+        data: 
+        objectReferenceParameter: {fileID: 7748067122375590922, guid: cd05f831f51a95a468dca165302c8b8a, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

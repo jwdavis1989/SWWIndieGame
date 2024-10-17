@@ -49,7 +49,8 @@ public class PlayerInputManager : MonoBehaviour
         HandleMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
-        HandleSprintingInput();
+        HandleSprintInput();
+        HandleJumpInput();
     }
 
     //Goals:
@@ -159,7 +160,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleSprintingInput() {
+    private void HandleSprintInput() {
         if (sprintInput) {
             player.playerLocomotionManager.HandleSprinting();
             //Debug.Log("Attempt to Sprint in InputManager.");
@@ -171,7 +172,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleJumpingInput() {
+    private void HandleJumpInput() {
         if (jumpInput) {
             jumpInput = false;
 

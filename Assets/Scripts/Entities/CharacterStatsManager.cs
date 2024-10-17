@@ -13,11 +13,11 @@ public class CharacterStatsManager : MonoBehaviour
     public float currentStamina = 0;
     public float maxStamina = 100;
     public float staminaRegenerationTimer = 0f;
-    public float staminaRegenerationDelay = 2f;
-    public float staminaRegenAmount = 2f;
+    public float staminaRegenerationDelay = 1.75f;
+    public float staminaRegenAmount = 2.5f;
     public float sprintingStaminaCost = 12f;
     public float dodgeStaminaCost = 25f;
-    public float jumpStaminaCost = 25f;
+    public float jumpStaminaCost = 0f;
     public float staminaTickTimer = 0.1f;
 
     protected virtual void Awake() {
