@@ -8,6 +8,8 @@ public class PlayerCamera : MonoBehaviour
     public PlayerManager player;
     public Camera cameraObject;
     [SerializeField] Transform cameraPivotTransform;
+    [SerializeField] Vector3 cameraYOffsetVector3;
+    [SerializeField] float cameraYOffset = 1;
 
     //Change these to tweak camera performance
     [Header("Camera Settings")]
@@ -67,7 +69,8 @@ public class PlayerCamera : MonoBehaviour
     }
 
     private void HandleFollowTarget() {
-        Vector3 targetCameraPosition = Vector3.SmoothDamp(transform.position, player.transform.position, ref cameraVelocity, cameraSmoothSpeed * Time.deltaTime);
+        cameraYOffsetVector3 = new Vector3(player.transform.position.x, player.transform.position.y + cameraYOffset, player.transform.position.z);
+        Vector3 targetCameraPosition = Vector3.SmoothDamp(transform.position, cameraYOffsetVector3, ref cameraVelocity, cameraSmoothSpeed * Time.deltaTime);
         transform.position = targetCameraPosition;
     }
 
