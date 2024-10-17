@@ -17,6 +17,7 @@ public class CharacterStatsManager : MonoBehaviour
     public float staminaRegenAmount = 2f;
     public float sprintingStaminaCost = 12f;
     public float dodgeStaminaCost = 25f;
+    public float jumpStaminaCost = 25f;
     public float staminaTickTimer = 0.1f;
 
     protected virtual void Awake() {

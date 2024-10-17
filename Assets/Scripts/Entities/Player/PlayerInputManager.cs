@@ -19,6 +19,7 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Player Action Input")]
     [SerializeField] bool dodgeInput = false;
     [SerializeField] bool sprintInput = false;
+    [SerializeField] bool jumpInput = false;
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
@@ -48,7 +49,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
-        HandleSprintInput();
+        HandleSprintingInput();
     }
 
     //Goals:
@@ -57,9 +58,12 @@ public class PlayerInputManager : MonoBehaviour
     private void OnEnable() {
         if (playerControls == null) {
             playerControls = new PlayerControls();
+
+            //I believe these are establishing event listeners/subscribing
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+            playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
 
             //Holding the input sets the bool to true
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -155,7 +159,7 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleSprintInput() {
+    private void HandleSprintingInput() {
         if (sprintInput) {
             player.playerLocomotionManager.HandleSprinting();
             //Debug.Log("Attempt to Sprint in InputManager.");
@@ -164,6 +168,17 @@ public class PlayerInputManager : MonoBehaviour
             //If adding multiplayer, this will instead use the following:
             //player.playerNetworkManager.isSprinting = false;
             player.playerLocomotionManager.characterManager.isSprinting = false;
+        }
+    }
+
+    private void HandleJumpingInput() {
+        if (jumpInput) {
+            jumpInput = false;
+
+            //If we have a UI window open, simply return without doing anything
+
+            //Attempt to perform a jump
+            player.playerLocomotionManager.AttemptToPerformJump();
         }
     }
 }

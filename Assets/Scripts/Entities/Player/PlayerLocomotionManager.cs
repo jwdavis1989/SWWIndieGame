@@ -171,4 +171,39 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
     }
+
+    public void AttemptToPerformJump() {
+        //If performing any action, we don't want to allow a jump (Will change when combat is added)
+        if (player.isPerformingAction) {
+            return;
+        }
+
+        //If out of stamina, we can't jump
+        if (player.playerStatsManager.currentStamina <= 0) {
+            return;
+        }
+
+        //If already jumping, we can't jump
+        if (player.isJumping) {
+            return;
+        }
+
+        //If not on the ground, we can't jump
+        if (player.isGrounded) {
+            return;
+        }
+
+        //If using a 2-handed weapon, play the 2h weapon jump animation, otherwise play the one handed animation
+        player.playerAnimationManager.PlayTargetActionAnimation("Main_Jump_01", false);
+
+        player.isJumping = true;
+
+        player.playerStatsManager.currentStamina -= player.playerStatsManager.jumpStaminaCost;
+    }
+
+    // public bool ApplyJumpingVelocity() {
+    //     //Apply an upward velocity depending on forces in our game such as gravity
+
+    // }
+
 }
