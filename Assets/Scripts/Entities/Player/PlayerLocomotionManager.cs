@@ -6,11 +6,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 {
     PlayerManager player;
     public GameObject rightBoosters;
-    public GameObject rightForwardBoosters;
-    public GameObject rightBackwardBoosters;
+    // public GameObject rightForwardBoosters;
+    // public GameObject rightBackwardBoosters;
     public GameObject leftBoosters;
-    public GameObject leftForwardBoosters;
-    public GameObject leftBackwardBoosters;
+    // public GameObject leftForwardBoosters;
+    // public GameObject leftBackwardBoosters;
     [HideInInspector] public CharacterManager characterManager;
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
@@ -335,72 +335,72 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             case "Both":
                 rightBoosters.SetActive(false);
                 leftBoosters.SetActive(false);
-                leftForwardBoosters.SetActive(false);
-                rightForwardBoosters.SetActive(false);
+                // leftForwardBoosters.SetActive(false);
+                // rightForwardBoosters.SetActive(false);
                 break;
         }
     }
 
-    public void HandleOmniJumpJets(float horizontalMovement, float verticalMovement) {
-        //Vector2 movement = new Vector2(horizontalMovement, verticalMovement);
+    // public void HandleOmniJumpJets(float horizontalMovement, float verticalMovement) {
+    //     //Vector2 movement = new Vector2(horizontalMovement, verticalMovement);
 
-        //Case 1: Positive horizontal - Right
-        if (horizontalMovement > 0) {
-            rightBoosters.SetActive(false);
-            leftBoosters.SetActive(true);
+    //     //Case 1: Positive horizontal - Right
+    //     if (horizontalMovement > 0) {
+    //         rightBoosters.SetActive(false);
+    //         leftBoosters.SetActive(true);
 
-            //If Moving Forward
-            if (verticalMovement >= 0) {
-                rightBackwardBoosters.SetActive(true);
-                leftBackwardBoosters.SetActive(true);
-                rightForwardBoosters.SetActive(false);
-                leftForwardBoosters.SetActive(false);
-            }
-            //If Moving Backward
-            else {
-                rightBackwardBoosters.SetActive(false);
-                leftBackwardBoosters.SetActive(false);
-                rightForwardBoosters.SetActive(true);
-                leftForwardBoosters.SetActive(true);
-            }
-        }
-        //Case 2: Negative horizontal - Left
-        else if (horizontalMovement < 0) {
-            rightBoosters.SetActive(true);
-            leftBoosters.SetActive(false);
+    //         //If Moving Forward
+    //         if (verticalMovement >= 0) {
+    //             rightBackwardBoosters.SetActive(true);
+    //             leftBackwardBoosters.SetActive(true);
+    //             rightForwardBoosters.SetActive(false);
+    //             leftForwardBoosters.SetActive(false);
+    //         }
+    //         //If Moving Backward
+    //         else {
+    //             rightBackwardBoosters.SetActive(false);
+    //             leftBackwardBoosters.SetActive(false);
+    //             rightForwardBoosters.SetActive(true);
+    //             leftForwardBoosters.SetActive(true);
+    //         }
+    //     }
+    //     //Case 2: Negative horizontal - Left
+    //     else if (horizontalMovement < 0) {
+    //         rightBoosters.SetActive(true);
+    //         leftBoosters.SetActive(false);
 
-            //If Moving Forward
-            if (verticalMovement >= 0) {
-                rightBackwardBoosters.SetActive(true);
-                leftBackwardBoosters.SetActive(true);
-                rightForwardBoosters.SetActive(false);
-                leftForwardBoosters.SetActive(false);
-            }
-            //If Moving Backward
-            else {
-                rightBackwardBoosters.SetActive(false);
-                leftBackwardBoosters.SetActive(false);
-                rightForwardBoosters.SetActive(true);
-                leftForwardBoosters.SetActive(true);
-            }
-        }
-        //Case 3: Neutral horizontal
-        else {
-            //Reset to neutral playing field
-            //ResetOmniJumpJets();
+    //         //If Moving Forward
+    //         if (verticalMovement >= 0) {
+    //             rightBackwardBoosters.SetActive(true);
+    //             leftBackwardBoosters.SetActive(true);
+    //             rightForwardBoosters.SetActive(false);
+    //             leftForwardBoosters.SetActive(false);
+    //         }
+    //         //If Moving Backward
+    //         else {
+    //             rightBackwardBoosters.SetActive(false);
+    //             leftBackwardBoosters.SetActive(false);
+    //             rightForwardBoosters.SetActive(true);
+    //             leftForwardBoosters.SetActive(true);
+    //         }
+    //     }
+    //     //Case 3: Neutral horizontal
+    //     else {
+    //         //Reset to neutral playing field
+    //         //ResetOmniJumpJets();
 
-            //I like just the 2 turned on for hover mode aesthetically
-            rightBoosters.SetActive(true);
-            leftBoosters.SetActive(true);
-        }
-    }
+    //         //I like just the 2 turned on for hover mode aesthetically
+    //         rightBoosters.SetActive(true);
+    //         leftBoosters.SetActive(true);
+    //     }
+    // }
 
-    public void ResetOmniJumpJets() {
-        rightBoosters.SetActive(false);
-        leftBoosters.SetActive(false);
-        rightForwardBoosters.SetActive(false);
-        leftForwardBoosters.SetActive(false);
-        rightBackwardBoosters.SetActive(false);
-        leftBackwardBoosters.SetActive(false);
-    }
+    // public void ResetOmniJumpJets() {
+    //     rightBoosters.SetActive(false);
+    //     leftBoosters.SetActive(false);
+    //     rightForwardBoosters.SetActive(false);
+    //     leftForwardBoosters.SetActive(false);
+    //     rightBackwardBoosters.SetActive(false);
+    //     leftBackwardBoosters.SetActive(false);
+    // }
 }
