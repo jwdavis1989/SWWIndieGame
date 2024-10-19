@@ -69,11 +69,16 @@ public class WeaponsController : MonoBehaviour
             //Change to Wrench, the third weapon
             ChangeWeapon(2); 
             AttackTargetWithCurrentlyEquippedWeapon(gameObject);
-            Debug.Log("============== LIST OF ALL WEAPONS =====================");
+            Debug.Log("============== LIST OF ALL WEAPONS ====================="+weapons.Length + " :"+weapons.ToString());
+            int i = 0;
             foreach(GameObject weaponObj in weapons)
             {
                 BaseWeaponScript weapon = weaponObj.GetComponent<BaseWeaponScript>();
-                Debug.Log("Weapon:" + weapon.weaponName + " Atk: " + weapon.attack + " Fire:" + weapon.firePower + " Type:"+ weapon.weaponType);
+                if (weapon.weaponType == WeaponType.UNKNOWN)
+                    break;
+                Debug.Log("Weapon " + i + ":"+ weapon.weaponName + " Atk: " + weapon.attack 
+                    + " Fire:" + weapon.elemental.firePower 
+                    + " Type:"+ weapon.weaponType);
             }
         }
     }
@@ -147,12 +152,31 @@ public class WeaponsArray
 public class BaseWeaponStats
 {
     public float attack = 1.0f;
-    public float speed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float block = 1.0f;
-    public float stability = 1.0f;
-    public float xpToLevel = 100.0f;
+    public float maxAttack = 1.0f;
+    public int durability = 1;
     public int maxDurability = 1;
+    public float block = 1.0f;
+    public float maxBlock = 1.0f;
+    public float stability = 1.0f;
+    public float maxStability = 1.0f;
+    public ElementalStats elemental;
+    public ElementalStats maxElemental;
+    public float speed = 1.0f;
+    public float maxSpeed = 1.0f;
+    public float specialtyCooldown = 0;
+    public float maxSpecialtyCooldown = 0;
+    public float xpToLevel = 100.0f;
+    public int tinkerPointsPerLvl = 0;
+    public WeaponType weaponType = 0;
+    public float currentDurability = 1.0f;
+    public int level = 1;
+    public float currentExperiencePoints = 0.0f;
+    public int currentTinkerPoints = 0;
+    public String weaponName = "BaseWeaponName";
+}
+[Serializable]
+public class ElementalStats
+{
     public int firePower = 0;
     public int icePower = 0;
     public int lightningPower = 0;
@@ -162,13 +186,6 @@ public class BaseWeaponStats
     public int beastPower = 0;
     public int scalesPower = 0;
     public int techPower = 0;
-    public int tinkerPointsPerLvl = 0;
-    public WeaponType weaponType = 0;
-    public float currentDurability = 1.0f;
-    public int level = 1;
-    public float currentExperiencePoints = 0.0f;
-    public int currentTinkerPoints = 0;
-    public String weaponName = "BaseWeaponName";
 }
 /** Change Log  
  *  Date         Developer  Description
