@@ -14,6 +14,8 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Flags")]
     public bool isPerformingAction = false;
+    public bool isJumping = false;
+    public bool isGrounded = true;
     public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;
@@ -42,6 +44,8 @@ public class CharacterManager : MonoBehaviour
         //Rotation
         //         transform.rotation = Quaternion.Slerp(transform.rotation, characterNetworkManager.networkRotation.Value, characterNetworkManager.networkRotationSmoothTime);
         // }
+
+        animator.SetBool("isGrounded", isGrounded);
     }
 
     protected virtual void LateUpdate() {

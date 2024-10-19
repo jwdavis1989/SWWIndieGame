@@ -5,6 +5,12 @@ using UnityEngine;
 public class PlayerLocomotionManager : CharacterLocomotionManager
 {
     PlayerManager player;
+    public GameObject rightBoosters;
+    public GameObject rightForwardBoosters;
+    public GameObject rightBackwardBoosters;
+    public GameObject leftBoosters;
+    public GameObject leftForwardBoosters;
+    public GameObject leftBackwardBoosters;
     [HideInInspector] public CharacterManager characterManager;
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
@@ -18,6 +24,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float runningSpeed = 5f;
     [SerializeField] float sprintingSpeed = 6.5f;
     [SerializeField] float rotationSpeed = 15f;
+
+    [Header("Jump")]
+    [SerializeField] float jumpHeight = 2f;   
+    [SerializeField] float jumpForwardSpeed = 5f;
+    [SerializeField] float freeFallSpeed = 2f;
+    private Vector3 jumpDirection;
+
 
     [Header("Dodge")]
     private Vector3 rollDirection;
@@ -41,6 +54,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         HandleRotation();
 
         //Aerial Movement
+        HandleJumpingMovement();
+        HandleFreeFallMovement();
     }
 
     protected override void Awake() {
@@ -79,6 +94,63 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     }
 
+    private void HandleJumpingMovement() {
+        if (player.isJumping) {
+            player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
+        }
+    }
+
+    public void HandleFreeFallMovement() {
+        if (!player.isGrounded) {
+            Vector3 freeFallDirection;
+            freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
+            freeFallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
+
+            freeFallDirection.y = 0;
+            player.characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
+
+
+            //HandleOmniJumpJets(horizontalMovement, verticalMovement);
+            //HandleOmniJumpJets(freeFallDirection.x, freeFallDirection.z);
+
+            Debug.Log(player.gameObject.transform.eulerAngles.y);
+            //Facing Forward
+            if ((player.gameObject.transform.eulerAngles.y >= 270 && player.gameObject.transform.eulerAngles.y <= 360) 
+            || ( player.gameObject.transform.eulerAngles.y >= 0 && player.gameObject.transform.eulerAngles.y < 90)) {
+                if (freeFallDirection.x > 0) {
+                    DisableJumpJets("Right");
+                    EnableJumpJets("Left");
+                }
+                else if (freeFallDirection.x < 0) {
+                    DisableJumpJets("Left");
+                    EnableJumpJets("Right");
+                }
+                else {
+                    EnableJumpJets("Right");
+                    EnableJumpJets("Left");
+                }
+            }
+            //Facing Backward
+            else {
+                if (freeFallDirection.x < 0) {
+                DisableJumpJets("Right");
+                EnableJumpJets("Left");
+                }
+                else if (freeFallDirection.x > 0) {
+                    DisableJumpJets("Left");
+                    EnableJumpJets("Right");
+                }
+                else {
+                    EnableJumpJets("Right");
+                    EnableJumpJets("Left");
+                }
+            }
+        }
+        else {
+            DisableJumpJets("Both");
+            //ResetOmniJumpJets();
+        }
+    }
     private void HandleRotation() {
         if (!player.canRotate) {
             return;
@@ -170,5 +242,165 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
 
         player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
+    }
+
+    public void AttemptToPerformJump() {
+        //If performing any action, we don't want to allow a jump (Will change when combat is added)
+        if (player.isPerformingAction) {
+            return;
+        }
+
+        //If out of stamina, we can't jump
+        if (player.playerStatsManager.currentStamina <= 0) {
+            return;
+        }
+
+        //If already jumping, we can't jump
+        if (player.isJumping) {
+            return;
+        }
+
+        //If not on the ground, we can't jump
+        if (!player.isGrounded) {
+            return;
+        }
+
+        //If using a 2-handed weapon, play the 2h weapon jump animation, otherwise play the one handed animation
+        player.playerAnimationManager.PlayTargetActionAnimation("Main_Jump_Start_01", false);
+
+        player.isJumping = true;
+
+        player.playerStatsManager.currentStamina -= player.playerStatsManager.jumpStaminaCost;
+
+        jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+        jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+
+        jumpDirection.y = 0;
+
+        if (jumpDirection != Vector3.zero) {
+            //Sprint means full jump distance
+            if (player.isSprinting) {
+                jumpDirection *= 1;
+            }
+            //Running means half jump distance
+            else if (PlayerInputManager.instance.moveAmount > 0.5) {
+                jumpDirection *= 0.5f;
+            }
+            //Walking means quarter jump distance
+            else if (PlayerInputManager.instance.moveAmount < 0.5) {
+                jumpDirection *= 0.25f;
+            }
+        }
+
+        if (jumpDirection.x > 0) {
+            EnableJumpJets("Left");
+        }
+        else if (jumpDirection.x < 0) {
+            EnableJumpJets("Right");
+        }
+        else {
+            EnableJumpJets("Both");
+        }
+
+    }
+
+    public void ApplyJumpingVelocity() {
+        //Apply an upward velocity depending on forces in our game such as gravity
+        yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
+    }
+
+    public void EnableJumpJets(string side) {
+        switch(side) {
+            case "Left":
+            leftBoosters.SetActive(true);
+                break;
+            case "Right":
+            rightBoosters.SetActive(true);
+                break;
+            case "Both":
+            rightBoosters.SetActive(true);
+            leftBoosters.SetActive(true);
+                break;
+        }
+    }
+
+    public void DisableJumpJets(string side) {
+        switch(side) {
+            case "Left":
+            leftBoosters.SetActive(false);
+                break;
+            case "Right":
+            rightBoosters.SetActive(false);
+                break;
+            case "Both":
+                rightBoosters.SetActive(false);
+                leftBoosters.SetActive(false);
+                leftForwardBoosters.SetActive(false);
+                rightForwardBoosters.SetActive(false);
+                break;
+        }
+    }
+
+    public void HandleOmniJumpJets(float horizontalMovement, float verticalMovement) {
+        //Vector2 movement = new Vector2(horizontalMovement, verticalMovement);
+
+        //Case 1: Positive horizontal - Right
+        if (horizontalMovement > 0) {
+            rightBoosters.SetActive(false);
+            leftBoosters.SetActive(true);
+
+            //If Moving Forward
+            if (verticalMovement >= 0) {
+                rightBackwardBoosters.SetActive(true);
+                leftBackwardBoosters.SetActive(true);
+                rightForwardBoosters.SetActive(false);
+                leftForwardBoosters.SetActive(false);
+            }
+            //If Moving Backward
+            else {
+                rightBackwardBoosters.SetActive(false);
+                leftBackwardBoosters.SetActive(false);
+                rightForwardBoosters.SetActive(true);
+                leftForwardBoosters.SetActive(true);
+            }
+        }
+        //Case 2: Negative horizontal - Left
+        else if (horizontalMovement < 0) {
+            rightBoosters.SetActive(true);
+            leftBoosters.SetActive(false);
+
+            //If Moving Forward
+            if (verticalMovement >= 0) {
+                rightBackwardBoosters.SetActive(true);
+                leftBackwardBoosters.SetActive(true);
+                rightForwardBoosters.SetActive(false);
+                leftForwardBoosters.SetActive(false);
+            }
+            //If Moving Backward
+            else {
+                rightBackwardBoosters.SetActive(false);
+                leftBackwardBoosters.SetActive(false);
+                rightForwardBoosters.SetActive(true);
+                leftForwardBoosters.SetActive(true);
+            }
+        }
+        //Case 3: Neutral horizontal
+        else {
+            //Reset to neutral playing field
+            //ResetOmniJumpJets();
+
+            //I like just the 2 turned on for hover mode aesthetically
+            rightBoosters.SetActive(true);
+            leftBoosters.SetActive(true);
+        }
+    }
+
+    public void ResetOmniJumpJets() {
+        rightBoosters.SetActive(false);
+        leftBoosters.SetActive(false);
+        rightForwardBoosters.SetActive(false);
+        leftForwardBoosters.SetActive(false);
+        rightBackwardBoosters.SetActive(false);
+        leftBackwardBoosters.SetActive(false);
     }
 }
