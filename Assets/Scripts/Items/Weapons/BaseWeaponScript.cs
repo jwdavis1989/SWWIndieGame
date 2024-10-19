@@ -9,26 +9,26 @@ using UnityEngine;
 [Serializable]
 public class BaseWeaponScript : MonoBehaviour
 {
+
+
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
     [Header("Weapon Attributes (Intialized by JSON)")]
     public float attack = 1.0f;
-    public float speed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float block = 1.0f;
-    public float stability = 1.0f;
-    //public float[] xpToLevel;
-    public float xpToLevel = 100.0f;
+    public float maxAttack = 1.0f;
+    public int durability = 1;
     public int maxDurability = 1;
-    public int firePower = 0;
-    public int icePower = 0;
-    public int lightningPower = 0;
-    public int windPower = 0;
-    public int earthPower = 0;
-    public int lightPower = 0;
-    public int beastPower = 0;
-    public int scalesPower = 0;
-    public int techPower = 0;
+    public float block = 1.0f;
+    public float maxBlock = 1.0f;
+    public float stability = 1.0f;
+    public float maxStability = 1.0f;
+    public ElementalStats elemental;
+    public ElementalStats maxElemental;
+    public float speed = 1.0f;
+    public float maxSpeed = 1.0f;
+    public float specialtyCooldown = 0;
+    public float maxSpecialtyCooldown = 0;
+    public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 0;
     
     [Header("Weapon State (Intialized by JSON)")]
@@ -83,18 +83,17 @@ public class BaseWeaponScript : MonoBehaviour
         this.block = script.block;
         this.stability = script.stability;
         this.xpToLevel = script.xpToLevel;
-        this.maxDurability = script.maxDurability;
-        this.firePower = script.firePower;
-        this.icePower = script.icePower;
-        this.lightningPower = script.lightningPower;
-        this.windPower = script.windPower;
-        this.earthPower = script.earthPower;
-        this.lightPower = script.lightPower;
-        this.beastPower = script.beastPower;
-        this.scalesPower = script.scalesPower;
-        this.techPower = script.techPower;
+        this.durability = script.durability;
+        this.elemental = script.elemental;
         this.tinkerPointsPerLvl = script.tinkerPointsPerLvl;
-        this.currentDurability = script.currentDurability;
+        this.maxAttack = script.maxAttack;
+        this.maxSpeed = script.maxSpeed;
+        this.maxSpecialtyCooldown = script.maxSpecialtyCooldown;
+        this.maxBlock = script.maxBlock;
+        this.maxStability = script.maxStability;
+        this.maxDurability = script.maxDurability;
+        this.maxElemental = script.maxElemental;
+
         this.level = script.level;
         this.currentExperiencePoints = script.currentExperiencePoints;
         this.currentTinkerPoints = script.currentTinkerPoints;
