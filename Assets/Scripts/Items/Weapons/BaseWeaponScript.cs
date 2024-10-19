@@ -30,6 +30,7 @@ public class BaseWeaponScript : MonoBehaviour
     public float maxSpecialtyCooldown = 0;
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 0;
+    public bool isSpecialWeapon = false;
     
     [Header("Weapon State (Intialized by JSON)")]
     public float currentDurability = 1.0f;
@@ -99,6 +100,33 @@ public class BaseWeaponScript : MonoBehaviour
         this.currentTinkerPoints = script.currentTinkerPoints;
         this.weaponName = script.weaponName;
         this.weaponType = script.weaponType;
+    }
+
+    public BaseWeaponStats toJsonObject()
+    {
+        BaseWeaponStats rv = new BaseWeaponStats();
+        rv.attack = this.attack;
+        rv.speed = this.speed;
+        rv.specialtyCooldown = this.specialtyCooldown;
+        rv.block = this.block;
+        rv.stability = this.stability;
+        rv.xpToLevel = this.xpToLevel;
+        rv.durability = this.durability;
+        rv.elemental = this.elemental;
+        rv.tinkerPointsPerLvl = this.tinkerPointsPerLvl;
+        rv.maxAttack = this.maxAttack;
+        rv.maxSpeed = this.maxSpeed;
+        rv.maxSpecialtyCooldown = this.maxSpecialtyCooldown;
+        rv.maxBlock = this.maxBlock;
+        rv.maxStability = this.maxStability;
+        rv.maxDurability = this.maxDurability;
+        rv.maxElemental = this.maxElemental;
+        rv.level = this.level;
+        rv.currentExperiencePoints = this.currentExperiencePoints;
+        rv.currentTinkerPoints = this.currentTinkerPoints;
+        rv.weaponName = this.weaponName;
+        rv.weaponType = this.weaponType;
+        return rv;
     }
 
  }
