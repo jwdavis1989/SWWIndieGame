@@ -113,7 +113,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             //HandleOmniJumpJets(horizontalMovement, verticalMovement);
             //HandleOmniJumpJets(freeFallDirection.x, freeFallDirection.z);
 
-            Debug.Log(player.gameObject.transform.eulerAngles.y);
+            //Debug.Log(player.gameObject.transform.eulerAngles.y);
             //Facing Forward
             if ((player.gameObject.transform.eulerAngles.y >= 270 && player.gameObject.transform.eulerAngles.y <= 360) 
             || ( player.gameObject.transform.eulerAngles.y >= 0 && player.gameObject.transform.eulerAngles.y < 90)) {

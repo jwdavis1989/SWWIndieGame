@@ -13,6 +13,8 @@ using UnityEngine.UI;
 
 public class WeaponsController : MonoBehaviour
 {
+    public static WeaponsController instance;
+
     [Header("WeaponsController\nDescription - Contains: List of all Weapon Types\n\t\t\tPrefafs of each weapon\n\t\t\tList of Player's current wepaons\n\n")]
     [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
     public GameObject[] weapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
@@ -21,9 +23,21 @@ public class WeaponsController : MonoBehaviour
     [Header("Player Inventory")]
     public List<GameObject> currentlyOwnedWeapons;
     public int indexOfCurrentlyEquippedWeapon = 0;
-    // Start is called before the first frame update
+    // Start is called before the first frame 
+    
+    public void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(gameObject);
+        }
+    }
     void Start()
     {
+        //Avoids destroying this object when changing scenes
+        DontDestroyOnLoad(gameObject);
+
         //add prefabs to initilizer array
         GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
         foreach (var weapon in weapons)
@@ -115,7 +129,32 @@ public class WeaponsController : MonoBehaviour
             return weapons[(int)type].GetComponent<BaseWeaponScript>().attack * level;
         return -1;
     }
+
+    public void setCurrentWeapons(WeaponsArray weaponsJson)
+    {
+        currentlyOwnedWeapons = new List<GameObject>();
+        foreach (BaseWeaponStats weaponStat in weaponsJson.weapons)
+        {
+            currentlyOwnedWeapons.Add(Instantiate(weapons[(int)weaponStat.weaponType]));
+            currentlyOwnedWeapons.Last().SetActive(false);
+            currentlyOwnedWeapons.Last().GetComponent<BaseWeaponScript>().copy(weaponStat);
+        }
+    }
+
+    public WeaponsArray GetCurrentWeapons()
+    {
+        WeaponsArray weaponsjson = new WeaponsArray();
+        weaponsjson.weapons = new BaseWeaponStats[currentlyOwnedWeapons.Count];
+        int i = 0;
+        foreach (GameObject weapon in currentlyOwnedWeapons)
+        {
+            weaponsjson.weapons[i] = weapon.GetComponent<BaseWeaponScript>().toJsonObject();
+        }
+        return weaponsjson;
+    }
+
 }
+
 // Enum type of all weapon types
 public enum WeaponType
 {
