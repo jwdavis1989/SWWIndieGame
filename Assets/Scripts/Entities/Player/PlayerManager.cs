@@ -102,6 +102,7 @@ public class PlayerManager : CharacterManager
 
         //Add Weapon Arsenal Data later
         currentCharacterData.weapons = WeaponsController.instance.GetCurrentWeapons();
+        currentCharacterData.indexOfCurrentlyEquippedWeapon = WeaponsController.instance.indexOfCurrentlyEquippedWeapon;
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -132,6 +133,7 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
         //Add Weapon Arsenal Data Loading here later
+        WeaponsController.instance.indexOfCurrentlyEquippedWeapon = currentCharacterData.indexOfCurrentlyEquippedWeapon;
         WeaponsController.instance.setCurrentWeapons(currentCharacterData.weapons);
         AttachCurrentlyEquippedWeaponObjectsToHand();
     }

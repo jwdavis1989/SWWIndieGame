@@ -20,6 +20,9 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool dodgeInput = false;
     [SerializeField] bool sprintInput = false;
     [SerializeField] bool jumpInput = false;
+    [SerializeField] Vector2 mouseWheelInput;
+    [SerializeField] float mouseWheelVerticalInput;
+    [SerializeField] float prevMouseWheelVerticalInput;
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
@@ -51,6 +54,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleDodgeInput();
         HandleSprintInput();
         HandleJumpInput();
+        HandleMouseWheelInput();
     }
 
     //Goals:
@@ -73,6 +77,7 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
+            playerControls.PlayerActions.NextWeapon.performed += i => mouseWheelInput = i.ReadValue<Vector2>();
         }
 
         playerControls.Enable();
@@ -134,7 +139,15 @@ public class PlayerInputManager : MonoBehaviour
         //If locked on
         //If we are locked on, we want to pass the horizontal and vertical, probably
     }
-
+    private void HandleMouseWheelInput()
+    {
+        mouseWheelVerticalInput = mouseWheelInput.y;
+        if(mouseWheelVerticalInput != prevMouseWheelVerticalInput)
+        {
+            WeaponsController.instance.nextWeapon();
+        }
+        prevMouseWheelVerticalInput = mouseWheelVerticalInput;
+    }
     private void HandleCameraMovementInput() {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
