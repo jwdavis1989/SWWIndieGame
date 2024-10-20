@@ -241,6 +241,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DebugTestAddWeapon",
+                    "type": "Button",
+                    "id": "3f262bab-6163-4916-913b-6645f359e00b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -307,6 +316,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8dda6f55-dd3b-4ee8-b19b-87301cd662c4",
+                    "path": "<Keyboard>/numpadPlus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTestAddWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

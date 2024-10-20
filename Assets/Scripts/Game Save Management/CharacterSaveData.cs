@@ -16,10 +16,20 @@ public class CharacterSaveData
     [Header("Time Played")]
     public float secondsPlayed;
 
+    [Header("Weapons")]
+    public WeaponsArray weapons;
+
     //Q: Why not Vector3?
     //A: We can only save data from "Basic" variables (e.g. Int, Float, Bool, String, etc.)
     [Header("World Coordinates")]
     public float xPosition;
     public float yPosition;
     public float zPosition;
+
+    public CharacterSaveData()
+    {
+        this.weapons = new WeaponsArray();
+        this.weapons.weapons = new BaseWeaponStats[0];
+    }
+
 }

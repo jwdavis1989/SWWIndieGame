@@ -70,6 +70,9 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
             //Releasing sets the sprint bool to false
             playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+
+            //Debug Buttons
+            playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
         }
 
         playerControls.Enable();

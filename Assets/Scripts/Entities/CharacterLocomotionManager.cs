@@ -39,6 +39,15 @@ public class CharacterLocomotionManager : MonoBehaviour
                 fallingVelocityHasBeenSet = false;
                 yVelocity.y = groundedYVelocity;
             }
+
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //  Floating bug was occuring in this case, as yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce) and is then applied repeatedly.
+            //  Problem has been solved by noticing that jumping velocity is >4, while the float glitch is ~0.46, so checking for a sub-1 velocity 
+            //  fixes the floating glitch!
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (yVelocity.y < 1) {
+                yVelocity.y = groundedYVelocity;
+            }
         }
         else {
             //If not jumping, and falling velocity has not been set
@@ -52,12 +61,11 @@ public class CharacterLocomotionManager : MonoBehaviour
             character.animator.SetFloat("InAirTimer", inAirTimer);
 
             //Increases gravity's effect over time
-            yVelocity.y += gravityForce * Time.deltaTime;
+            yVelocity.y += (gravityForce * Time.deltaTime);
         }
 
         //Apply downward force to character
         character.characterController.Move(yVelocity * Time.deltaTime);
-
     }
 
     protected void HandleGroundCheck() {
