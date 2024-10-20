@@ -13,4 +13,8 @@ public class CharacterSoundFXManager : MonoBehaviour
     public void PlayRollSoundFX() {
         audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
     }
+
+    public void PlayJumpJetBurstFX() {
+        audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+    }
 }

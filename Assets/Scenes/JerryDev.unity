@@ -619,7 +619,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 837cc27010d0ebc42b5d499eace8b1d5, type: 2}
+  - {fileID: 2100000, guid: c1c30988e5cea3a429e17b6daf8b8178, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4806,6 +4806,63 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &1664322953772802900
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 10.176528
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.29088876
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.948554
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1487049493747842273, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8282799645731419239, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
+      propertyPath: m_Name
+      value: UndergroundAmbience
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 490c63a52a1561d41b14aac379eccfb5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4816,3 +4873,4 @@ SceneRoots:
   - {fileID: 467586017}
   - {fileID: 1960751856}
   - {fileID: 678472566}
+  - {fileID: 1664322953772802900}
