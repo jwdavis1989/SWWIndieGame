@@ -45,29 +45,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970dc607506d8c449af3677e80c130b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 6
-  attack: 16
-  speed: 1
-  specialtyCooldown: 0
-  block: 25
-  stability: 0
-  xpToLevel: 100
-  maxDurability: 100
-  firePower: 2
-  icePower: 0
-  lightningPower: 0
-  windPower: 0
-  earthPower: 10
-  lightPower: 0
-  beastPower: 0
-  scalesPower: 0
-  techPower: 5
-  tinkerPointsPerLvl: 1
-  currentDurability: 100
-  level: 1
-  currentExperiencePoints: 0
-  currentTinkerPoints: 1
-  weaponName: Wrench
+  stats:
+    attack: 1
+    maxAttack: 1
+    durability: 1
+    maxDurability: 1
+    block: 1
+    maxBlock: 1
+    stability: 1
+    maxStability: 1
+    elemental:
+      firePower: 0
+      icePower: 0
+      lightningPower: 0
+      windPower: 0
+      earthPower: 0
+      lightPower: 0
+      beastPower: 0
+      scalesPower: 0
+      techPower: 0
+    maxElemental:
+      firePower: 0
+      icePower: 0
+      lightningPower: 0
+      windPower: 0
+      earthPower: 0
+      lightPower: 0
+      beastPower: 0
+      scalesPower: 0
+      techPower: 0
+    speed: 1
+    maxSpeed: 1
+    specialtyCooldown: 0
+    maxSpecialtyCooldown: 0
+    xpToLevel: 100
+    tinkerPointsPerLvl: 0
+    weaponType: 6
+    currentDurability: 1
+    level: 1
+    currentExperiencePoints: 0
+    currentTinkerPoints: 0
+    weaponName: BaseWeaponName
+  isSpecialWeapon: 1
+  hasObtained: 0
 --- !u!1 &5066913823902681415
 GameObject:
   m_ObjectHideFlags: 0

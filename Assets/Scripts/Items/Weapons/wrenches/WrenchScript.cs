@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WrenchScript : BaseWeaponScript
+public class WrenchScript : WeaponScript
 {
     public override void attackTarget(GameObject target)
     {
