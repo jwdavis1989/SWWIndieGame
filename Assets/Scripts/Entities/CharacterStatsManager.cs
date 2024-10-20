@@ -7,7 +7,12 @@ public class CharacterStatsManager : MonoBehaviour
     CharacterManager character;
     [Header("Stats")]
     //Move these to the CharacterNetworkManager if adding multiplayer
-    public int endurance = 1;
+    public int endurance = 10;
+    public int fortitude = 10;
+
+    [Header("Health")]
+    public float currentHealth = 1;
+    public float maxHealth = 100;
 
     [Header("Stamina")]
     public float currentStamina = 0;
@@ -24,7 +29,7 @@ public class CharacterStatsManager : MonoBehaviour
         character = GetComponent<CharacterManager>();
     }
 
-    public int CalculateStaminaBasedOnEnduranceLevel(int endurance) {
+    public float CalculateHealthBasedOnfortitudeLevel(int fortitude) {
         //Create an equation for how stamina is calculated
 
         //Use Mathf.RoundToInt and a float called stamina if your formula is more complex
@@ -33,7 +38,28 @@ public class CharacterStatsManager : MonoBehaviour
         // return Mathf.RoundToInt(stamina);
 
         //If simple formula, use this simpler and more efficient method
-        return endurance * 10;
+        return fortitude * 10f;
+    }
+    public float CalculateStaminaBasedOnEnduranceLevel(int endurance) {
+        //Create an equation for how stamina is calculated
+
+        //Use Mathf.RoundToInt and a float called stamina if your formula is more complex
+        // float stamina = 0;
+        // stamina = endurance * 10;
+        // return Mathf.RoundToInt(stamina);
+
+        //If simple formula, use this simpler and more efficient method
+        return endurance * 10f;
+    }
+
+    //Only called when player gets an upgrade to these Resources
+    public void SetNewMaxHealthValue() {
+        maxHealth = CalculateHealthBasedOnfortitudeLevel(fortitude);
+        currentHealth = maxHealth;
+    }
+    public void SetNewMaxStaminaValue() {
+        maxStamina = CalculateStaminaBasedOnEnduranceLevel(endurance);
+        currentStamina = maxStamina;
     }
 
     public void RegenerateStamina() {
