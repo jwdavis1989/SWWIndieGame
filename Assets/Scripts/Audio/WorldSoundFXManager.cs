@@ -5,9 +5,13 @@ using UnityEngine;
 public class WorldSoundFXManager : MonoBehaviour
 {
     public static WorldSoundFXManager instance;
+
     [Header("Action Sounds")]
     public AudioClip rollSFX;
     public AudioClip jumpJetAirSFX;
+
+    [Header("Ambience")]
+    public AudioClip caveAmbience;
 
     private void Awake() {
         if (instance == null) {
