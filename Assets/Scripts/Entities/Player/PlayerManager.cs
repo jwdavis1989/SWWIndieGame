@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PlayerManager : CharacterManager
@@ -11,6 +13,8 @@ public class PlayerManager : CharacterManager
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
+    public GameObject mainHandWeaponAnchor;
+    public GameObject offHandWeaponAnchor;
 
     protected override void Awake() {
         base.Awake();
@@ -97,8 +101,7 @@ public class PlayerManager : CharacterManager
         currentCharacterData.zPosition = transform.position.z;
 
         //Add Weapon Arsenal Data later
-
-
+        currentCharacterData.weapons = WeaponsController.instance.GetCurrentWeapons();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -107,7 +110,33 @@ public class PlayerManager : CharacterManager
         transform.position = myPosition;
 
         //Add Weapon Arsenal Data Loading here later
+        WeaponsController.instance.setCurrentWeapons(currentCharacterData.weapons);
+        AttachCurrentlyEquippedWeaponObjectsToHand();
     }
 
+    public void DebugAddWeapon() {
+        WeaponsController.instance.AddWeaponToCurrentWeapons(WeaponType.Wrench);
+    }
+
+    public void AttachCurrentlyEquippedWeaponObjectsToHand() {
+        //For each weapon in our currentlyOwnedWeapons
+        // foreach (GameObject Weapon in WeaponsController.instance.currentlyOwnedWeapons) {
+        //     //Turn object into child of weapon anchor point
+        //     //Somehow turn into child, needs research
+        // }
+
+        //WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(true);
+    }
+
+    public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex) {
+        //Turn off old weapon
+        WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(false);
+
+        //Tell weaponcontroller what its new weapon index is
+        WeaponsController.instance.ChangeWeapon(newActiveIndex);
+
+        //Turn on new weapon
+        WeaponsController.instance.currentlyOwnedWeapons[newActiveIndex].SetActive(true);
+    }
     
 }
