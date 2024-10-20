@@ -18,6 +18,7 @@ public class CharacterSaveData
 
     [Header("Weapons")]
     public WeaponsArray weapons;
+    public int indexOfCurrentlyEquippedWeapon = 0;
 
     //Q: Why not Vector3?
     //A: We can only save data from "Basic" variables (e.g. Int, Float, Bool, String, etc.)
@@ -29,7 +30,7 @@ public class CharacterSaveData
     public CharacterSaveData()
     {
         this.weapons = new WeaponsArray();
-        this.weapons.weapons = new BaseWeaponStats[0];
+        this.weapons.weaponStats = new WeaponStats[0];
     }
 
 }
