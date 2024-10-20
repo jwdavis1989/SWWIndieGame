@@ -99,31 +99,35 @@ public class WeaponsController : MonoBehaviour
     public void nextWeapon()
     {
         int totalWeapons = currentlyOwnedWeapons.Count;
+        int newWeaponIndex = indexOfCurrentlyEquippedWeapon;
         if (currentlyOwnedWeapons != null && totalWeapons > 0)
         {
-            if(indexOfCurrentlyEquippedWeapon + 1 > totalWeapons - 1)
+            if(newWeaponIndex + 1 > totalWeapons - 1)
             {
-                indexOfCurrentlyEquippedWeapon = 0;
+                newWeaponIndex = 0;
             }
             else
             {
-                indexOfCurrentlyEquippedWeapon++;
+                newWeaponIndex++;
             }
+            ChangeWeapon(newWeaponIndex);
         }
     }
     public void prevWeapon()
     {
         int totalWeapons = currentlyOwnedWeapons.Count;
+        int newWeaponIndex = indexOfCurrentlyEquippedWeapon;
         if (currentlyOwnedWeapons != null && totalWeapons > 0)
         {
-            if (indexOfCurrentlyEquippedWeapon - 1 < 0)
+            if (newWeaponIndex - 1 < 0)
             {
-                indexOfCurrentlyEquippedWeapon = totalWeapons - 1;
+                newWeaponIndex = totalWeapons - 1;
             }
             else
             {
-                indexOfCurrentlyEquippedWeapon--;
+                newWeaponIndex--;
             }
+            ChangeWeapon(newWeaponIndex);
         }
     }
     public void AttackTargetWithCurrentlyEquippedWeapon(GameObject target)
@@ -151,7 +155,7 @@ public class WeaponsController : MonoBehaviour
         foreach (WeaponStats weaponStat in weaponsJson.weaponStats)
         {
             AddWeaponToCurrentWeapons(weaponStat.weaponType);
-            currentlyOwnedWeapons[i].SetActive(false);
+            //currentlyOwnedWeapons[i].SetActive(false);
             currentlyOwnedWeapons[i++].GetComponent<WeaponScript>().stats = weaponStat;
         }
         if(currentlyOwnedWeapons.Count > 0)
