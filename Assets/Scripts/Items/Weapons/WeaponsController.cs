@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -95,6 +96,36 @@ public class WeaponsController : MonoBehaviour
             currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon].SetActive(true);
         }
     }
+    public void nextWeapon()
+    {
+        int totalWeapons = currentlyOwnedWeapons.Count;
+        if (currentlyOwnedWeapons != null && totalWeapons > 0)
+        {
+            if(indexOfCurrentlyEquippedWeapon + 1 > totalWeapons - 1)
+            {
+                indexOfCurrentlyEquippedWeapon = 0;
+            }
+            else
+            {
+                indexOfCurrentlyEquippedWeapon++;
+            }
+        }
+    }
+    public void prevWeapon()
+    {
+        int totalWeapons = currentlyOwnedWeapons.Count;
+        if (currentlyOwnedWeapons != null && totalWeapons > 0)
+        {
+            if (indexOfCurrentlyEquippedWeapon - 1 < 0)
+            {
+                indexOfCurrentlyEquippedWeapon = totalWeapons - 1;
+            }
+            else
+            {
+                indexOfCurrentlyEquippedWeapon--;
+            }
+        }
+    }
     public void AttackTargetWithCurrentlyEquippedWeapon(GameObject target)
     {
         if (target == null) return;
@@ -116,15 +147,15 @@ public class WeaponsController : MonoBehaviour
     public void setCurrentWeapons(WeaponsArray weaponsJson)
     {
         currentlyOwnedWeapons = new List<GameObject>();
+        int i = 0;
         foreach (WeaponStats weaponStat in weaponsJson.weaponStats)
         {
             AddWeaponToCurrentWeapons(weaponStat.weaponType);
-            currentlyOwnedWeapons.Last().SetActive(false);
-            currentlyOwnedWeapons.Last().GetComponent<WeaponScript>().stats = weaponStat;
+            currentlyOwnedWeapons[i].SetActive(false);
+            currentlyOwnedWeapons[i++].GetComponent<WeaponScript>().stats = weaponStat;
         }
         if(currentlyOwnedWeapons.Count > 0)
         {
-            indexOfCurrentlyEquippedWeapon = 0;//TODO Load this from character save
             currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon].SetActive(true);
         }
     }

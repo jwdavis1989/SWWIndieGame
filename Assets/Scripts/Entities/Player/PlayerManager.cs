@@ -111,8 +111,8 @@ public class PlayerManager : CharacterManager
         transform.position = myPosition;
 
         //Add Weapon Arsenal Data Loading here later
-        WeaponsController.instance.setCurrentWeapons(currentCharacterData.weapons);
         WeaponsController.instance.indexOfCurrentlyEquippedWeapon = currentCharacterData.indexOfCurrentlyEquippedWeapon;
+        WeaponsController.instance.setCurrentWeapons(currentCharacterData.weapons);
         AttachCurrentlyEquippedWeaponObjectsToHand();
     }
 
