@@ -26,7 +26,7 @@ public class TitleScreenManager : MonoBehaviour
     public CharacterSlot currentSelectedSlot = CharacterSlot.NO_SLOT;
 
     [Header("Title Screen Inputs")]
-    [SerializeField] bool deleteCharacterSlot = false;
+    //[SerializeField] bool deleteCharacterSlot = false;
 
     [Header("Audio")]
     private AudioSource audioSource;
@@ -124,7 +124,7 @@ public class TitleScreenManager : MonoBehaviour
     
     public void PlayStartGameSFX() {
         audioSource.PlayOneShot(enterGameSFX);
-        Debug.Log("Enter World Played");
+        //Debug.Log("Enter World Played");
     }
 
     public void PlayMenuScrollSFX() {

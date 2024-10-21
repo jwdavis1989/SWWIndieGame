@@ -36,10 +36,10 @@ public class WeaponScript : MonoBehaviour
         }
         else return 0;
     }
-    public void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
+    // public void Start()
+    // {
+    //     DontDestroyOnLoad(gameObject);
+    // }
 
 }
 /** Change Log  

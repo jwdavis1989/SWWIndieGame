@@ -75,9 +75,13 @@ public class PlayerInputManager : MonoBehaviour
             //Releasing sets the sprint bool to false
             playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
 
+            //Weapon Quick-Changing
+            playerControls.PlayerActions.NextWeapon.performed += i => mouseWheelInput = i.ReadValue<Vector2>();
+
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
-            playerControls.PlayerActions.NextWeapon.performed += i => mouseWheelInput = i.ReadValue<Vector2>();
+            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += i => SceneManager.LoadSceneAsync(2);
+
         }
 
         playerControls.Enable();
