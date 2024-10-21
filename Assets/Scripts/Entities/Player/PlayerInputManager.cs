@@ -100,7 +100,8 @@ public class PlayerInputManager : MonoBehaviour
 
     private void OnSceneChange(Scene oldScene, Scene newScene) {
         //If we are loading into our world scene, enable our player controls
-        if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex()) {
+        //if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex() /*Debug only*/ || newScene.buildIndex == 2 /*Debug only*/) {
+        if (newScene.buildIndex != 0) {
             //Script being enabled, not the game object
             instance.enabled = true;
         }
