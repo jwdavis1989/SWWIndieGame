@@ -26,7 +26,12 @@ public class TitleScreenManager : MonoBehaviour
     public CharacterSlot currentSelectedSlot = CharacterSlot.NO_SLOT;
 
     [Header("Title Screen Inputs")]
-    [SerializeField] bool deleteCharacterSlot = false;
+    //[SerializeField] bool deleteCharacterSlot = false;
+
+    [Header("Audio")]
+    private AudioSource audioSource;
+    public AudioClip menuScrollSFX;
+    public AudioClip enterGameSFX;
 
     // public void StartNetworkAsHost() {
 
@@ -35,12 +40,14 @@ public class TitleScreenManager : MonoBehaviour
     private void Awake() {
         if (instance == null) {
             instance = this;
+            audioSource = GetComponent<AudioSource>();
         }
         else {
             Destroy(gameObject);
         }
     }
     public void StartNewGame() {
+        PlayStartGameSFX();
         WorldSaveGameManager.instance.AttemptToCreateNewGame();
     }
 
@@ -54,6 +61,7 @@ public class TitleScreenManager : MonoBehaviour
 
         //Select the Return Button First
         loadMenuReturnButton.Select();
+        PlayMenuScrollSFX();
     }
 
     public void CloseLoadGameMenu() {
@@ -66,6 +74,7 @@ public class TitleScreenManager : MonoBehaviour
 
         //Select the Return Button First
         mainMenuReturnButton.Select();
+        PlayMenuScrollSFX();
     }
 
     public void DisplayNoFreeCharacterSlotsPopUp() {
@@ -76,6 +85,7 @@ public class TitleScreenManager : MonoBehaviour
     public void CloseNoFreeCharacterSlotsPopUp() {
         noCharacterSlotsPopUp.SetActive(false);
         mainMenuNewGameButton.Select();
+        PlayMenuScrollSFX();
     }
 
     //Character Slots
@@ -104,6 +114,7 @@ public class TitleScreenManager : MonoBehaviour
         titleScreenLoadMenu.SetActive(true);
         
         loadMenuReturnButton.Select();
+        PlayMenuScrollSFX();
     }
 
     public void CloseDeleteCharacterPopUp() {
@@ -111,4 +122,12 @@ public class TitleScreenManager : MonoBehaviour
         loadMenuReturnButton.Select();
     }
     
+    public void PlayStartGameSFX() {
+        audioSource.PlayOneShot(enterGameSFX);
+        //Debug.Log("Enter World Played");
+    }
+
+    public void PlayMenuScrollSFX() {
+        audioSource.PlayOneShot(menuScrollSFX);
+    }
 }

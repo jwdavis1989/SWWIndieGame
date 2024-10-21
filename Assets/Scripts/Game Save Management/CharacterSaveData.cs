@@ -27,6 +27,14 @@ public class CharacterSaveData
     public float yPosition;
     public float zPosition;
 
+    [Header("Attributes")]
+    public int fortitude = 10;
+    public int endurance = 10;
+
+    [Header("Resources")]
+    public float currentHealth = 100;
+    public float currentStamina = 100;
+
     public CharacterSaveData()
     {
         this.weapons = new WeaponsArray();

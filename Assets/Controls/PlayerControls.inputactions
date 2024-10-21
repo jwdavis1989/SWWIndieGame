@@ -252,6 +252,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DebugTeleportToAlecDev",
+                    "type": "Button",
+                    "id": "be383daf-aa62-4dd2-96ba-5c8f03d173a9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "NextWeapon",
                     "type": "PassThrough",
                     "id": "3e3e861f-fb3e-42f7-9cd1-77f1b6df3609",
@@ -371,6 +380,17 @@
                     "action": "NextWeapon",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "4a882b52-ecc2-474f-a932-5f51de24d189",
+                    "path": "<Keyboard>/numpadMultiply",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTeleportToAlecDev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

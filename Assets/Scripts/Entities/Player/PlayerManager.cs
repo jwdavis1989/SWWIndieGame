@@ -13,8 +13,6 @@ public class PlayerManager : CharacterManager
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
-    public GameObject mainHandWeaponAnchor;
-    public GameObject offHandWeaponAnchor;
 
     protected override void Awake() {
         base.Awake();
@@ -29,17 +27,6 @@ public class PlayerManager : CharacterManager
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
-        
-        //Remove this when adding multiplayer. 
-        //This will also be removed when saving and loading are added!
-        //This should be called on any sort of increase to endurance stat as well, like level ups or inventions
-        //{
-            playerStatsManager.maxStamina = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerStatsManager.endurance);
-            playerStatsManager.currentStamina = playerStatsManager.maxStamina;
-
-            PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
-            PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.maxStamina);
-        //}
 
     }
 
@@ -57,8 +44,8 @@ public class PlayerManager : CharacterManager
         //Handle all movement every frame
         playerLocomotionManager.HandleAllMovement();
 
-        //Remove when adding multiplayer
-        //Debug.Log("playerStatsManager.currentStamina? " + playerStatsManager.currentStamina);
+        //Update UI Resources
+        PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
         //Regenerates your stamina
@@ -94,11 +81,22 @@ public class PlayerManager : CharacterManager
     }
 
     public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
-        currentCharacterData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
+
+        //Positional Data
+        currentCharacterData.sceneIndex = SceneManager.GetActiveScene().buildIndex;
         currentCharacterData.xPosition = transform.position.x;
         currentCharacterData.yPosition = transform.position.y;
         currentCharacterData.zPosition = transform.position.z;
+
+        //Attributes
+        currentCharacterData.fortitude = playerStatsManager.fortitude;
+        currentCharacterData.endurance = playerStatsManager.endurance;
+
+        //Resources
+        currentCharacterData.currentHealth = playerStatsManager.currentHealth;
+        currentCharacterData.currentStamina = playerStatsManager.currentStamina;
 
         //Add Weapon Arsenal Data later
         currentCharacterData.weapons = WeaponsController.instance.GetCurrentWeapons();
@@ -106,29 +104,54 @@ public class PlayerManager : CharacterManager
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+        //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
+
+        //Positional Data
         Vector3 myPosition = new Vector3(currentCharacterData.xPosition, currentCharacterData.yPosition, currentCharacterData.zPosition);
         transform.position = myPosition;
+
+        //Attributes
+        playerStatsManager.fortitude = currentCharacterData.fortitude;
+        playerStatsManager.endurance = currentCharacterData.endurance;
+
+        //Resources
+        //Health
+        playerStatsManager.maxHealth = playerStatsManager.CalculateHealthBasedOnfortitudeLevel(playerStatsManager.fortitude);
+        playerStatsManager.currentHealth = currentCharacterData.currentHealth;
+
+        PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerStatsManager.maxHealth);
+        PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
+
+        //Stamina
+        playerStatsManager.maxStamina = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerStatsManager.endurance);
+        playerStatsManager.currentStamina = currentCharacterData.currentStamina;
+
+        PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
+        PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
         //Add Weapon Arsenal Data Loading here later
         WeaponsController.instance.indexOfCurrentlyEquippedWeapon = currentCharacterData.indexOfCurrentlyEquippedWeapon;
         WeaponsController.instance.setCurrentWeapons(currentCharacterData.weapons);
-        AttachCurrentlyEquippedWeaponObjectsToHand();
+        //AttachCurrentlyEquippedWeaponObjectsToHand();
     }
 
     public void DebugAddWeapon() {
-        WeaponsController.instance.AddWeaponToCurrentWeapons(WeaponType.Wrench);
+        WeaponType weaponType = (WeaponType)Random.Range(0, System.Enum.GetValues(typeof(WeaponType)).Length - 1);
+        WeaponsController.instance.SetAllWeaponsToInactive(WeaponsController.instance.weapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon);
+        WeaponsController.instance.AddWeaponToCurrentWeapons(weaponType);
+        WeaponsController.instance.indexOfCurrentlyEquippedWeapon = WeaponsController.instance.currentlyOwnedWeapons.Count - 1;
     }
 
-    public void AttachCurrentlyEquippedWeaponObjectsToHand() {
-        //For each weapon in our currentlyOwnedWeapons
-        // foreach (GameObject Weapon in WeaponsController.instance.currentlyOwnedWeapons) {
-        //     //Turn object into child of weapon anchor point
-        //     //Somehow turn into child, needs research
-        // }
+    // public void AttachCurrentlyEquippedWeaponObjectsToHand() {
+    //     //For each weapon in our currentlyOwnedWeapons
+    //     // foreach (GameObject Weapon in WeaponsController.instance.currentlyOwnedWeapons) {
+    //     //     //Turn object into child of weapon anchor point
+    //     //     //Somehow turn into child, needs research
+    //     // }
 
-        //WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(true);
-    }
+    //     //WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(true);
+    // }
 
     public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex) {
         //Turn off old weapon

@@ -11,6 +11,7 @@ public class CharacterManager : MonoBehaviour
     //CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public CharacterStatsManager characterStatsManager;
 
     [Header("Flags")]
     public bool isPerformingAction = false;
@@ -25,6 +26,7 @@ public class CharacterManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         characterController = GetComponent<CharacterController>();
+        characterStatsManager = GetComponent<CharacterStatsManager>();
         animator = GetComponent<Animator>();
     }
 
