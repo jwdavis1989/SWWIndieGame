@@ -25,6 +25,10 @@ public class WeaponsController : MonoBehaviour
     public List<GameObject> currentlyOwnedWeapons;
     public int indexOfCurrentlyEquippedWeapon = 0;
     // Start is called before the first frame 
+
+    [Header("Weapon Attachment")]
+    public GameObject mainHandWeaponAnchor;
+    public GameObject offHandWeaponAnchor;
     
     public void Awake() {
         if (instance == null) {
@@ -79,8 +83,14 @@ public class WeaponsController : MonoBehaviour
     {
         int i = (int)weaponType;
         if (weapons[i] != null) {
-            currentlyOwnedWeapons.Add(Instantiate(weapons[i]));
-            weapons[i].GetComponent<WeaponScript>().hasObtained = true;
+            if (weapons[i].GetComponent<WeaponScript>().isSpecialWeapon) {
+                currentlyOwnedWeapons.Add(Instantiate(weapons[i], offHandWeaponAnchor.transform));
+            }
+            else {
+                currentlyOwnedWeapons.Add(Instantiate(weapons[i], mainHandWeaponAnchor.transform));
+            }
+            WeaponScript currentWeaponScript = weapons[i].GetComponent<WeaponScript>();
+            currentWeaponScript.hasObtained = true;
         }
         else
         {
@@ -155,8 +165,9 @@ public class WeaponsController : MonoBehaviour
         foreach (WeaponStats weaponStat in weaponsJson.weaponStats)
         {
             AddWeaponToCurrentWeapons(weaponStat.weaponType);
-            //currentlyOwnedWeapons[i].SetActive(false);
-            currentlyOwnedWeapons[i++].GetComponent<WeaponScript>().stats = weaponStat;
+            currentlyOwnedWeapons[i].GetComponent<WeaponScript>().stats = weaponStat;
+            currentlyOwnedWeapons[i].SetActive(false);
+            i++;
         }
         if(currentlyOwnedWeapons.Count > 0)
         {
@@ -175,6 +186,17 @@ public class WeaponsController : MonoBehaviour
         }
         return weaponsPojo;
     }
+
+    public void SetAllWeaponsToInactive(bool targetSpecialWeaponStatus) {
+        if (currentlyOwnedWeapons.Count > 0) {
+            foreach (GameObject weapon in currentlyOwnedWeapons) {
+                if (weapon.GetComponent<WeaponScript>().isSpecialWeapon == targetSpecialWeaponStatus) {
+                    weapon.SetActive(false);
+                }
+            }
+        }
+    }
+
     void RunTests()
     {
         if (debugMode)//astest

@@ -13,8 +13,6 @@ public class PlayerManager : CharacterManager
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
-    public GameObject mainHandWeaponAnchor;
-    public GameObject offHandWeaponAnchor;
 
     protected override void Awake() {
         base.Awake();
@@ -135,22 +133,25 @@ public class PlayerManager : CharacterManager
         //Add Weapon Arsenal Data Loading here later
         WeaponsController.instance.indexOfCurrentlyEquippedWeapon = currentCharacterData.indexOfCurrentlyEquippedWeapon;
         WeaponsController.instance.setCurrentWeapons(currentCharacterData.weapons);
-        AttachCurrentlyEquippedWeaponObjectsToHand();
+        //AttachCurrentlyEquippedWeaponObjectsToHand();
     }
 
     public void DebugAddWeapon() {
-        WeaponsController.instance.AddWeaponToCurrentWeapons(WeaponType.Wrench);
+        WeaponType weaponType = (WeaponType)Random.Range(0, System.Enum.GetValues(typeof(WeaponType)).Length - 1);
+        WeaponsController.instance.SetAllWeaponsToInactive(WeaponsController.instance.weapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon);
+        WeaponsController.instance.AddWeaponToCurrentWeapons(weaponType);
+        WeaponsController.instance.indexOfCurrentlyEquippedWeapon = WeaponsController.instance.currentlyOwnedWeapons.Count - 1;
     }
 
-    public void AttachCurrentlyEquippedWeaponObjectsToHand() {
-        //For each weapon in our currentlyOwnedWeapons
-        // foreach (GameObject Weapon in WeaponsController.instance.currentlyOwnedWeapons) {
-        //     //Turn object into child of weapon anchor point
-        //     //Somehow turn into child, needs research
-        // }
+    // public void AttachCurrentlyEquippedWeaponObjectsToHand() {
+    //     //For each weapon in our currentlyOwnedWeapons
+    //     // foreach (GameObject Weapon in WeaponsController.instance.currentlyOwnedWeapons) {
+    //     //     //Turn object into child of weapon anchor point
+    //     //     //Somehow turn into child, needs research
+    //     // }
 
-        //WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(true);
-    }
+    //     //WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(true);
+    // }
 
     public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex) {
         //Turn off old weapon
