@@ -285,6 +285,15 @@ public class WorldSaveGameManager : MonoBehaviour
         saveFileDataWriter.DeleteSaveFile();
     }
 
+    //We don't currently use this. Tutorial uses it to set defaults to characterStats with an 
+    //emphasis on creating a character of a specific class on game start and autosaving. 
+    //Our game does not autosave or have classes, so feel free to ignore this function.
+    // private void NewGame() {
+    //     //Saves the newly created Character Stats, and items (when creation screen is added)
+    //     SaveGame();
+    //     StartCoroutine(LoadWorldScene());
+    // }
+
     //Load all character profiles on device when starting game
     private void LoadAllCharacterProfiles() {
         saveFileDataWriter = new SaveFileDataWriter();

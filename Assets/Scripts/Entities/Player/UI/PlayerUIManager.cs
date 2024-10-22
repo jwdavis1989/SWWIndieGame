@@ -36,4 +36,5 @@ public class PlayerUIManager : MonoBehaviour
 
         playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
     }
+    
 }
