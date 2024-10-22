@@ -22,4 +22,17 @@ public class PlayerUIHudManager : MonoBehaviour
     public void SetMaxStaminaValue(float maxStamina) {
         staminaBar.SetMaxStat(maxStamina);
     }
+
+    public void RefreshHud() {
+        //Reboot UI objects to force an update
+        //Turn off
+        healthBar.gameObject.SetActive(false);
+        staminaBar.gameObject.SetActive(false);
+
+        //Turn on
+        healthBar.gameObject.SetActive(true);
+        staminaBar.gameObject.SetActive(true);
+    }
+
+
 }
