@@ -3,6 +3,7 @@ using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection;
 using Unity.VisualScripting;
@@ -302,6 +303,20 @@ public class ElementalStats
     public int beastPower = 0;
     public int scalesPower = 0;
     public int techPower = 0;
+    public ElementalStats CalculateElementDiff(ElementalStats subtractor)
+    {
+        ElementalStats diff = new ElementalStats();
+        diff.firePower = firePower - subtractor.firePower;
+        diff.icePower = icePower - subtractor.icePower;
+        diff.lightningPower = lightningPower - subtractor.lightningPower;
+        diff.windPower = windPower - subtractor.windPower;
+        diff.earthPower = earthPower - subtractor.earthPower;
+        diff.lightPower = lightPower - subtractor.lightningPower;
+        diff.beastPower = beastPower - subtractor.beastPower;
+        diff.scalesPower = scalesPower - subtractor.scalesPower;
+        diff.techPower = techPower - subtractor.techPower;
+        return diff;
+    }
 }
 /** Change Log  
  *  Date         Developer  Description
