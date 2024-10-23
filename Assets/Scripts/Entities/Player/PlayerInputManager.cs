@@ -147,9 +147,17 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleMouseWheelInput()
     {
         mouseWheelVerticalInput = mouseWheelInput.y;
-        if(mouseWheelVerticalInput != prevMouseWheelVerticalInput)
+        //if(mouseWheelVerticalInput != prevMouseWheelVerticalInput)
+        //{
+        //    WeaponsController.instance.nextWeapon();
+        //}
+        if (mouseWheelVerticalInput == 1)
         {
             WeaponsController.instance.nextWeapon();
+        }
+        else if (mouseWheelVerticalInput == -1 )
+        {
+            WeaponsController.instance.nextSpecialWeapon();
         }
         prevMouseWheelVerticalInput = mouseWheelVerticalInput;
     }
