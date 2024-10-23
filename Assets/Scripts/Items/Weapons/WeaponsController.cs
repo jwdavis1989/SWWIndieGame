@@ -253,12 +253,11 @@ public class WeaponsController : MonoBehaviour
     }
 
     public void SetAllWeaponsToInactive(bool targetSpecialWeaponStatus) {
-        if (ownedWeapons.Count > 0) {
-            foreach (GameObject weapon in ownedWeapons) {
-                if (weapon.GetComponent<WeaponScript>().isSpecialWeapon == targetSpecialWeaponStatus) {
-                    weapon.SetActive(false);
-                }
-            }
+        List<GameObject> weapons = targetSpecialWeaponStatus? ownedSpecialWeapons: ownedWeapons; ;
+        if (weapons.Count <= 0)
+            return;
+        foreach (GameObject weapon in weapons) {
+                weapon.SetActive(false);
         }
     }
 
