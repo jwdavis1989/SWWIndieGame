@@ -29,6 +29,11 @@ public class CharacterStatsManager : MonoBehaviour
         character = GetComponent<CharacterManager>();
     }
 
+    protected virtual void Start() {
+        CalculateHealthBasedOnfortitudeLevel(fortitude);
+        CalculateHealthBasedOnfortitudeLevel(endurance);
+    }
+
     public float CalculateHealthBasedOnfortitudeLevel(int fortitude) {
         //Create an equation for how stamina is calculated
 
@@ -55,10 +60,12 @@ public class CharacterStatsManager : MonoBehaviour
     //Only called when player gets an upgrade to these Resources
     public void SetNewMaxHealthValue() {
         maxHealth = CalculateHealthBasedOnfortitudeLevel(fortitude);
+        PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(maxHealth);
         currentHealth = maxHealth;
     }
     public void SetNewMaxStaminaValue() {
         maxStamina = CalculateStaminaBasedOnEnduranceLevel(endurance);
+        PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(maxStamina);
         currentStamina = maxStamina;
     }
 
