@@ -18,7 +18,8 @@ public class CharacterSaveData
 
     [Header("Weapons")]
     public WeaponsArray weapons;
-    public int indexOfCurrentlyEquippedWeapon = 0;
+    public int indexOfEquippedWeapon = 0;
+    public int indexOfEquippedSpecialWeapon = 0;
 
     //Q: Why not Vector3?
     //A: We can only save data from "Basic" variables (e.g. Int, Float, Bool, String, etc.)
