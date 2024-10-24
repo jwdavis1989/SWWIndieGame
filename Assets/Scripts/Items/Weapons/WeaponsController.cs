@@ -19,12 +19,14 @@ public class WeaponsController : MonoBehaviour
 
     [Header("WeaponsController\nDescription - Contains: List of all Weapon Types\n\t\t\tPrefafs of each weapon\n\t\t\tList of Player's current wepaons\n\n")]
     [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
-    public GameObject[] weapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
-    public TextAsset jsonFile; // json file with intilizing stats that will overwrite prefab
+    public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
+    public TextAsset baseWeaponJsonFile; // json file with intilizing stats that will overwrite prefab
     public bool debugMode = false; // Debug Text, adds shortsword to current weapons
     [Header("Player Inventory")]
-    public List<GameObject> currentlyOwnedWeapons;
-    public int indexOfCurrentlyEquippedWeapon = 0;
+    public List<GameObject> ownedWeapons;
+    public List<GameObject> ownedSpecialWeapons;
+    public int indexOfEquippedWeapon = 0;
+    public int indexOfEquippedSpecialWeapon = 0;
     // Start is called before the first frame 
 
     [Header("Weapon Attachment")]
@@ -50,12 +52,12 @@ public class WeaponsController : MonoBehaviour
     {
         //add prefabs to initilizer array
         GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
-        foreach (var weapon in weapons)
+        foreach (var weapon in baseWeapons)
         {
             weaponsInitilizer[(int)weapon.GetComponent<WeaponScript>().stats.weaponType] = weapon;
         }
         //read json file and initilize stats
-        WeaponsArray weaponsJsons = JsonUtility.FromJson<WeaponsArray>(jsonFile.text);
+        WeaponsArray weaponsJsons = JsonUtility.FromJson<WeaponsArray>(baseWeaponJsonFile.text);
         foreach (WeaponStats weaponStat in weaponsJsons.weaponStats)
         {
             int i = (int)weaponStat.weaponType;
@@ -77,20 +79,20 @@ public class WeaponsController : MonoBehaviour
                 + " Atk:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.attack); //astest
         }
         //Set weapons here
-        weapons = weaponsInitilizer;
+        baseWeapons = weaponsInitilizer;
     }
 
     public void AddWeaponToCurrentWeapons(WeaponType weaponType)
     {
         int i = (int)weaponType;
-        if (weapons[i] != null) {
-            if (weapons[i].GetComponent<WeaponScript>().isSpecialWeapon) {
-                currentlyOwnedWeapons.Add(Instantiate(weapons[i], offHandWeaponAnchor.transform));
+        if (baseWeapons[i] != null) {
+            if (baseWeapons[i].GetComponent<WeaponScript>().isSpecialWeapon) {
+                ownedSpecialWeapons.Add(Instantiate(baseWeapons[i], offHandWeaponAnchor.transform));
             }
             else {
-                currentlyOwnedWeapons.Add(Instantiate(weapons[i], mainHandWeaponAnchor.transform));
+                ownedWeapons.Add(Instantiate(baseWeapons[i], mainHandWeaponAnchor.transform));
             }
-            WeaponScript currentWeaponScript = weapons[i].GetComponent<WeaponScript>();
+            WeaponScript currentWeaponScript = baseWeapons[i].GetComponent<WeaponScript>();
             currentWeaponScript.hasObtained = true;
         }
         else
@@ -100,18 +102,19 @@ public class WeaponsController : MonoBehaviour
     }
     public void ChangeWeapon(int index)
     {
-        if (currentlyOwnedWeapons[index] != null)
+        Debug.Log("ChangeWeapon-Index="+index);//astest
+        if (index < ownedWeapons.Count && ownedWeapons[index] != null)
         {
-            currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon].SetActive(false);
-            indexOfCurrentlyEquippedWeapon = index;
-            currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon].SetActive(true);
+            ownedWeapons[indexOfEquippedWeapon].SetActive(false);
+            indexOfEquippedWeapon = index;
+            ownedWeapons[indexOfEquippedWeapon].SetActive(true);
         }
     }
     public void nextWeapon()
     {
-        int totalWeapons = currentlyOwnedWeapons.Count;
-        int newWeaponIndex = indexOfCurrentlyEquippedWeapon;
-        if (currentlyOwnedWeapons != null && totalWeapons > 0)
+        int totalWeapons = ownedWeapons.Count;
+        int newWeaponIndex = indexOfEquippedWeapon;
+        if (ownedWeapons != null && totalWeapons > 0)
         {
             if(newWeaponIndex + 1 > totalWeapons - 1)
             {
@@ -126,9 +129,9 @@ public class WeaponsController : MonoBehaviour
     }
     public void prevWeapon()
     {
-        int totalWeapons = currentlyOwnedWeapons.Count;
-        int newWeaponIndex = indexOfCurrentlyEquippedWeapon;
-        if (currentlyOwnedWeapons != null && totalWeapons > 0)
+        int totalWeapons = ownedWeapons.Count;
+        int newWeaponIndex = indexOfEquippedWeapon;
+        if (ownedWeapons != null && totalWeapons > 0)
         {
             if (newWeaponIndex - 1 < 0)
             {
@@ -141,12 +144,56 @@ public class WeaponsController : MonoBehaviour
             ChangeWeapon(newWeaponIndex);
         }
     }
+    public void ChangeSpecialWeapon(int index)
+    {
+
+        if (index < ownedSpecialWeapons.Count && ownedSpecialWeapons[index] != null)
+        {
+            ownedSpecialWeapons[indexOfEquippedSpecialWeapon].SetActive(false);
+            indexOfEquippedSpecialWeapon = index;
+            ownedSpecialWeapons[indexOfEquippedSpecialWeapon].SetActive(true);
+        }
+    }
+    public void nextSpecialWeapon()
+    {
+        int totalWeapons = ownedSpecialWeapons.Count;
+        int newWeaponIndex = indexOfEquippedSpecialWeapon;
+        if (ownedSpecialWeapons != null && totalWeapons > 0)
+        {
+            if (newWeaponIndex + 1 > totalWeapons - 1)
+            {
+                newWeaponIndex = 0;
+            }
+            else
+            {
+                newWeaponIndex++;
+            }
+            ChangeSpecialWeapon(newWeaponIndex);
+        }
+    }
+    public void prevSpecialWeapon()
+    {
+        int totalWeapons = ownedSpecialWeapons.Count;
+        int newWeaponIndex = indexOfEquippedSpecialWeapon;
+        if (ownedSpecialWeapons != null && totalWeapons > 0)
+        {
+            if (newWeaponIndex - 1 < 0)
+            {
+                newWeaponIndex = totalWeapons - 1;
+            }
+            else
+            {
+                newWeaponIndex--;
+            }
+            ChangeSpecialWeapon(newWeaponIndex);
+        }
+    }
     public void AttackTargetWithCurrentlyEquippedWeapon(GameObject target)
     {
         if (target == null) return;
-        if (currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon] != null)
+        if (ownedWeapons[indexOfEquippedWeapon] != null)
         {
-            currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon].GetComponent<WeaponScript>().attackTarget(target);
+            ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().attackTarget(target);
         }
     }
     /**
@@ -154,34 +201,51 @@ public class WeaponsController : MonoBehaviour
      */
     public float GetWeaponAttack(WeaponType type, int level)
     {
-        if(weapons[(int)type] != null)
-            return weapons[(int)type].GetComponent<WeaponScript>().stats.attack * level;
+        if(baseWeapons[(int)type] != null)
+            return baseWeapons[(int)type].GetComponent<WeaponScript>().stats.attack * level;
         return -1;
     }
     //For loading weapons from save file json
     public void setCurrentWeapons(WeaponsArray weaponsJson)
     {
-        currentlyOwnedWeapons = new List<GameObject>();
+        ownedWeapons = new List<GameObject>();
+        ownedSpecialWeapons = new List<GameObject>();
         int i = 0;
+        int specialI = 0;
         foreach (WeaponStats weaponStat in weaponsJson.weaponStats)
         {
             AddWeaponToCurrentWeapons(weaponStat.weaponType);
-            currentlyOwnedWeapons[i].GetComponent<WeaponScript>().stats = weaponStat;
-            currentlyOwnedWeapons[i].SetActive(false);
-            i++;
+            if (baseWeapons[(int)weaponStat.weaponType].GetComponent<WeaponScript>().isSpecialWeapon)
+            {
+                ownedSpecialWeapons[specialI].GetComponent<WeaponScript>().stats = weaponStat;
+                ownedSpecialWeapons[specialI++].SetActive(false);
+            }
+            else
+            {
+                ownedWeapons[i].GetComponent<WeaponScript>().stats = weaponStat;
+                ownedWeapons[i++].SetActive(false);
+            }
         }
-        if(currentlyOwnedWeapons.Count > 0)
+        if(ownedWeapons.Count > 0)
         {
-            currentlyOwnedWeapons[indexOfCurrentlyEquippedWeapon].SetActive(true);
+            ownedWeapons[indexOfEquippedWeapon].SetActive(true);
+        }
+        if (ownedSpecialWeapons.Count > 0)
+        {
+            ownedSpecialWeapons[indexOfEquippedSpecialWeapon].SetActive(true);
         }
     }
     //for saving current weapons to save file json
     public WeaponsArray GetCurrentWeapons()
     {
         WeaponsArray weaponsPojo = new WeaponsArray();
-        weaponsPojo.weaponStats = new WeaponStats[currentlyOwnedWeapons.Count];
+        weaponsPojo.weaponStats = new WeaponStats[ownedWeapons.Count + ownedSpecialWeapons.Count];
         int i = 0;
-        foreach (GameObject weapon in currentlyOwnedWeapons)
+        foreach (GameObject weapon in ownedWeapons)
+        {
+            weaponsPojo.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
+        }
+        foreach (GameObject weapon in ownedSpecialWeapons)
         {
             weaponsPojo.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
         }
@@ -189,12 +253,11 @@ public class WeaponsController : MonoBehaviour
     }
 
     public void SetAllWeaponsToInactive(bool targetSpecialWeaponStatus) {
-        if (currentlyOwnedWeapons.Count > 0) {
-            foreach (GameObject weapon in currentlyOwnedWeapons) {
-                if (weapon.GetComponent<WeaponScript>().isSpecialWeapon == targetSpecialWeaponStatus) {
-                    weapon.SetActive(false);
-                }
-            }
+        List<GameObject> weapons = targetSpecialWeaponStatus? ownedSpecialWeapons: ownedWeapons; ;
+        if (weapons.Count <= 0)
+            return;
+        foreach (GameObject weapon in weapons) {
+                weapon.SetActive(false);
         }
     }
 
@@ -210,14 +273,14 @@ public class WeaponsController : MonoBehaviour
             AddWeaponToCurrentWeapons(WeaponType.Shortsword);
             AddWeaponToCurrentWeapons(WeaponType.Wrench);
             //Two methods of attacking
-            currentlyOwnedWeapons[0].GetComponent<WeaponScript>().attackTarget(gameObject);
+            ownedWeapons[0].GetComponent<WeaponScript>().attackTarget(gameObject);
             AttackTargetWithCurrentlyEquippedWeapon(gameObject);
             //Change to Wrench, the third weapon
             ChangeWeapon(2);
             AttackTargetWithCurrentlyEquippedWeapon(gameObject);
-            Debug.Log("============== LIST OF ALL WEAPONS =====================" + weapons.Length + " :" + weapons.ToString());
+            Debug.Log("============== LIST OF ALL WEAPONS =====================" + baseWeapons.Length + " :" + baseWeapons.ToString());
             int i = 0;
-            foreach (GameObject weaponObj in weapons)
+            foreach (GameObject weaponObj in baseWeapons)
             {
                 WeaponScript weapon = weaponObj.GetComponent<WeaponScript>();
                 if (weapon.stats.weaponType == WeaponType.UNKNOWN)
@@ -316,6 +379,20 @@ public class ElementalStats
         diff.scalesPower = scalesPower - subtractor.scalesPower;
         diff.techPower = techPower - subtractor.techPower;
         return diff;
+    }
+    public ElementalStats Add(ElementalStats other)
+    {
+        ElementalStats sum = new ElementalStats();
+        sum.firePower = firePower + other.firePower;
+        sum.icePower = icePower + other.icePower;
+        sum.lightningPower = lightningPower + other.lightningPower;
+        sum.windPower = windPower + other.windPower;
+        sum.earthPower = earthPower + other.earthPower;
+        sum.lightPower = lightPower + other.lightningPower;
+        sum.beastPower = beastPower + other.beastPower;
+        sum.scalesPower = scalesPower + other.scalesPower;
+        sum.techPower = techPower + other.techPower;
+        return sum;
     }
 }
 /** Change Log  
