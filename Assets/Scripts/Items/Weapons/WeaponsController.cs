@@ -102,7 +102,6 @@ public class WeaponsController : MonoBehaviour
     }
     public void ChangeWeapon(int index)
     {
-        Debug.Log("ChangeWeapon-Index="+index);//astest
         if (index < ownedWeapons.Count && ownedWeapons[index] != null)
         {
             ownedWeapons[indexOfEquippedWeapon].SetActive(false);

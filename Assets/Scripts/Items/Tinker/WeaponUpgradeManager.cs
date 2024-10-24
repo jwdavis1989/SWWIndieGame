@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponUpgradeManager : MonoBehaviour
 {
+    GameObject[] components;
+    List<GameObject> ownedWeaponBreakdowns = new List<GameObject>();
+    public TextAsset baseComponentJsonFile; // json file with intilizing stats that will overwrite prefab
     /**
      * CanUseComponent will return true if any stat will be upgraded. I.e. if any matching stat is not currently maxed
      */
@@ -69,5 +73,49 @@ public class WeaponUpgradeManager : MonoBehaviour
             }
         }
         return canUpgrade;
+    }
+    public void LoadAllComponentTypes()
+    {
+        if(baseComponentJsonFile == null)
+        {
+            Debug.Log("WeaponUpgradeManager.baseComponentJsonFile is missing!");
+            return;
+        }
+        //add prefabs to initilizer array
+        GameObject[] componentInitilizer = new GameObject[(int)TinkerComponentType.Weapon];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
+        foreach (var component in components)
+        {
+            componentInitilizer[(int)component.GetComponent<TinkerComponent>().componentType] = component;
+        }
+        //read json file and initilize stats
+        ComponentsArray componentJsons = JsonUtility.FromJson<ComponentsArray>(baseComponentJsonFile.text);
+        foreach (TinkerComponent component in componentJsons.components)
+        {
+                int i = (int)component.componentType;
+            //    if (weaponsInitilizer[i] != null)
+            //    {   // prefab is loaded, copy stats over
+            //        if (debugMode) Debug.Log("Prefab loaded for " + i + " type:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponName);//astest
+            //        weaponsInitilizer[i].GetComponent<WeaponScript>().stats = weaponStat;
+            //    }
+            //    else
+            //    {   // no prefab, create a new empty object
+            //        // Warning: currently attack() is virtual & cannot be called for base weapons, need SwordScript or WrenchScript
+            //        //          Stats can be viewed for these however
+            //        weaponsInitilizer[i] = new GameObject("Empty");
+            //        weaponsInitilizer[i].AddComponent(typeof(WeaponScript));
+            //        weaponsInitilizer[i].GetComponent<WeaponScript>().stats = weaponStat;
+            //        if (debugMode) Debug.Log("created object for " + i + " type:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponName); //astest
+            //    }
+            //    if (debugMode) Debug.Log("Weapon " + i + ": WeaponType:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponType
+            //        + " Atk:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.attack); //astest
+        }
+    ////Set weapons here
+    //baseWeapons = weaponsInitilizer;
+}
+    //used for JSON. Loading all types and for loading players components
+    [Serializable]
+    public class ComponentsArray
+    {
+        public TinkerComponent[] components;
     }
 }
