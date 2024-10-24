@@ -10,6 +10,8 @@ public class CharacterStatsManager : MonoBehaviour
     public int endurance = 10;
     public int fortitude = 10;
 
+    public ElementalStats elementalDefenses;
+
     [Header("Health")]
     public float currentHealth = 1;
     public float maxHealth = 100;
