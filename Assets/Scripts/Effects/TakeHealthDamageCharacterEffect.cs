@@ -10,7 +10,9 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     public CharacterManager characterCausingDamage;
 
     [Header("Damage")]
-    public float physicalDamage = 0f;    //In the future, we could break this down into Standard, Strike, Slash, and Pierce
+    //Elemental Damage will probably change to an ElementalStats object later.
+    //public ElementalStats elementalDamage = new ElementalStats();
+    public float physicalDamage = 0f;   
     public float fireDamage = 0f;
     public float iceDamage = 0f;
     public float lightningDamage = 0f;
@@ -57,7 +59,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Check for "Invulnerability"
 
         //Calculate then apply the Damage
-        ApplyDamage(character);
+        //ApplyDamage(character);
 
         //Check which direction damage came from
         //Play a damage animation
@@ -69,11 +71,11 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
     }
 
-    private void ApplyDamage(CharacterManager character) {
+    private void ApplyDamage(CharacterManager character, Collider other) {
         if (characterCausingDamage != null) {
             if (characterCausingDamage.isPlayer) {
                 //Call Weapon Manager damage function
-                //finalDamageDealt = 
+                finalDamageDealt = WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(other);
             }
             else {
                 //Call Monster damage function

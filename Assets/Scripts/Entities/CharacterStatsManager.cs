@@ -10,7 +10,20 @@ public class CharacterStatsManager : MonoBehaviour
     public int endurance = 10;
     public int fortitude = 10;
 
-    public ElementalStats elementalDefenses;
+    [Header("Defenses")]
+    public float physicalDefense = 0f;
+
+    //Elemental Defenses, currently changing to ElementalStats class
+    public ElementalStats elementalDefenses = new ElementalStats();
+    // public float fireDefense = 0f;
+    // public float iceDefense = 0f;
+    // public float lightningDefense = 0f;
+    // public float windDefense = 0f;
+    // public float earthDefense = 0f;
+    // public float lightDefense = 0f;
+    // public float beastDefense = 0f;
+    // public float scalesDefense = 0f;
+    // public float techDefense = 0f;
 
     [Header("Health")]
     public float currentHealth = 1;
