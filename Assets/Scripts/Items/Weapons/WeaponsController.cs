@@ -334,8 +334,8 @@ public class WeaponStats
     [Header("Weapon Attributes (Intialized by JSON)")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
-    public int durability = 1;
-    public int maxDurability = 1;
+    public float durability = 1;
+    public float maxDurability = 1;
     public float block = 1.0f;
     public float maxBlock = 1.0f;
     public float stability = 1.0f;
@@ -357,15 +357,15 @@ public class WeaponStats
 [Serializable]
 public class ElementalStats
 {
-    public int firePower = 0;
-    public int icePower = 0;
-    public int lightningPower = 0;
-    public int windPower = 0;
-    public int earthPower = 0;
-    public int lightPower = 0;
-    public int beastPower = 0;
-    public int scalesPower = 0;
-    public int techPower = 0;
+    public float firePower = 0;
+    public float icePower = 0;
+    public float lightningPower = 0;
+    public float windPower = 0;
+    public float earthPower = 0;
+    public float lightPower = 0;
+    public float beastPower = 0;
+    public float scalesPower = 0;
+    public float techPower = 0;
     public ElementalStats CalculateElementDiff(ElementalStats subtractor)
     {
         ElementalStats diff = new ElementalStats();
