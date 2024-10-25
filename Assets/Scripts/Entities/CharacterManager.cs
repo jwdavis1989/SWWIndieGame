@@ -53,7 +53,7 @@ public class CharacterManager : MonoBehaviour
         //         transform.rotation = Quaternion.Slerp(transform.rotation, characterNetworkManager.networkRotation.Value, characterNetworkManager.networkRotationSmoothTime);
         // }
 
-        animator.SetBool("isGrounded", isGrounded);
+        animator?.SetBool("isGrounded", isGrounded);
     }
 
     protected virtual void LateUpdate() {

@@ -25,10 +25,9 @@ public class WeaponScript : MonoBehaviour
             //set reload/recharge
         }
     }
-    public float CalculateTotalDamage(Collider other)
+    public float CalculateTotalDamage(CharacterManager targetCharacter)
     {
-        float result = 0;
-        CharacterManager targetCharacter = other.GetComponent<CharacterManager>();
+        float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
         result += stats.attack * (stats.elemental.firePower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.firePower);

@@ -12,6 +12,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     [Header("Damage")]
     //Elemental Damage will probably change to an ElementalStats object later.
     //public ElementalStats elementalDamage = new ElementalStats();
+    // public WeaponScript weaponScript;
     public float physicalDamage = 0f;   
     public float fireDamage = 0f;
     public float iceDamage = 0f;
@@ -23,8 +24,12 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     public float scalesDamage = 0f;
     public float techDamage = 0f;
 
+    //1 = True, 0 = False
+    [Header("Armor Reduces? 1 = T, 0 = F")]
+    public int isReducedByArmor = 1;
+
     [Header("Final Damage")]
-    private float finalDamageDealt = 0f;      //Factors in all defenses and modifiers
+    public float finalDamageDealt = 0f;      //Factors in all defenses and modifiers
 
     [Header("Poise")]
     public float PoiseDamage = 0f;
@@ -48,6 +53,9 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
 
 
+    public void Awake() {
+        //weaponScript = characterCausingDamage.GetComponent<WeaponScript>();
+    }
     public override void ProcessEffect(CharacterManager character) {
         base.ProcessEffect(character);
 
@@ -59,7 +67,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Check for "Invulnerability"
 
         //Calculate then apply the Damage
-        //ApplyDamage(character);
+        ApplyDamage(character, characterCausingDamage);
 
         //Check which direction damage came from
         //Play a damage animation
@@ -71,24 +79,48 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
     }
 
-    private void ApplyDamage(CharacterManager character, Collider other) {
+    private void ApplyDamage(CharacterManager targetCharacter, CharacterManager characterCausingDamage) {
+        //Monsters or player created damage
         if (characterCausingDamage != null) {
-            if (characterCausingDamage.isPlayer) {
-                //Call Weapon Manager damage function
-                finalDamageDealt = WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(other);
+            if (!targetCharacter.isPlayer) {
+                finalDamageDealt = WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter);
             }
             else {
-                //Call Monster damage function
-                //finalDamageDealt = 
+                finalDamageDealt = CalculateNPCDamage(targetCharacter);
             }
         }
+        //Traps and environmental hazards
+        else {
+            finalDamageDealt = CalculateNPCDamage(targetCharacter);
+        }
+
 
         //Apply final damage to character's health
         Debug.Log("Damage Taken: " + finalDamageDealt);
-        character.characterStatsManager.currentHealth -= finalDamageDealt;
+        targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
         
         //Calculate Poise Damage to determine if the character will be stunned
         //TODO
+    }
+
+    public float CalculateNPCDamage (CharacterManager targetCharacter) {
+        float result = physicalDamage * (1 - targetCharacter.characterStatsManager.physicalDefense);
+
+        //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
+        result += physicalDamage * (fireDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.firePower) * isReducedByArmor);
+        result += physicalDamage * (iceDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.icePower) * isReducedByArmor);
+        result += physicalDamage * (lightningDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightningPower) * isReducedByArmor);
+        result += physicalDamage * (windDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.windPower) * isReducedByArmor);
+        result += physicalDamage * (earthDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.earthPower) * isReducedByArmor);
+        result += physicalDamage * (lightDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightPower) * isReducedByArmor);
+        result += physicalDamage * (beastDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower) * isReducedByArmor);
+        result += physicalDamage * (scalesDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower) * isReducedByArmor);
+        result += physicalDamage * (techDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
+
+        if(result > 0) {
+            return result;
+        }
+        else return 0;
     }
 
 }
