@@ -140,9 +140,15 @@ public class PlayerManager : CharacterManager
 
     public void DebugAddWeapon() {
         WeaponType weaponType = (WeaponType)Random.Range(0, System.Enum.GetValues(typeof(WeaponType)).Length - 1);
-        WeaponsController.instance.SetAllWeaponsToInactive(WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon);
+        bool isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
+        WeaponsController.instance.SetAllWeaponsToInactive(isSpecial);
         WeaponsController.instance.AddWeaponToCurrentWeapons(weaponType);
-        WeaponsController.instance.indexOfEquippedWeapon = WeaponsController.instance.ownedWeapons.Count - 1;
+        if (isSpecial)
+        {
+            WeaponsController.instance.indexOfEquippedSpecialWeapon = WeaponsController.instance.ownedSpecialWeapons.Count - 1;
+        }
+        else
+            WeaponsController.instance.indexOfEquippedWeapon = WeaponsController.instance.ownedWeapons.Count - 1;
     }
 
     // public void AttachCurrentlyEquippedWeaponObjectsToHand() {

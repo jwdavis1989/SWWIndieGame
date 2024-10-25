@@ -4,10 +4,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
-[Serializable]
-public class TinkerComponent 
+/**
+ * MonoBehaviour version that can be added to an object
+ */
+
+public class TinkerComponent : MonoBehaviour
 {
     [Header("The TinkerComponent is used for upgrading weapons\n")]
+    public TinkerComponentStats stats = new TinkerComponentStats();
+}
+/**
+ * Serializable version that can read/write as json
+ */
+
+[Serializable]
+public class TinkerComponentStats
+{
     [Header("Type - must be set")]
     public TinkerComponentType componentType = 0;
     [Header("UI Fields")]
@@ -15,11 +27,16 @@ public class TinkerComponent
     public string itemName = "Default TinkerComponent Name";
     [Header("Stats")]
     public float attack = 0;
+    public float durability = 0;
+    public float block = 0;
+    public float stability = 0;
     public ElementalStats elementalStats = new ElementalStats();
     [Header("Components made from recycled weapons behave differently")]
     public bool isWeapon = false;
-
 }
+/**
+ * List of all component types
+ */
 public enum TinkerComponentType
 {
     Micro,
@@ -48,6 +65,6 @@ public enum TinkerComponentType
     Sapphire,
     Topaz,
     Turquoise,
-    //breakdown weapon comonent
+    //Uniqe - breakdown weapon component
     Weapon
 }

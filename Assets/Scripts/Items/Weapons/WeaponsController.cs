@@ -252,7 +252,7 @@ public class WeaponsController : MonoBehaviour
     }
 
     public void SetAllWeaponsToInactive(bool targetSpecialWeaponStatus) {
-        List<GameObject> weapons = targetSpecialWeaponStatus? ownedSpecialWeapons: ownedWeapons; ;
+        List<GameObject> weapons = targetSpecialWeaponStatus? ownedSpecialWeapons: ownedWeapons;
         if (weapons.Count <= 0)
             return;
         foreach (GameObject weapon in weapons) {
