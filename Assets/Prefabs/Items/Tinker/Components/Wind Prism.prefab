@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4976341019228924520
+--- !u!1 &2475961333021485550
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,56 +8,53 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5783575807394235614}
-  - component: {fileID: 7128667898396684464}
+  - component: {fileID: 8807823929122634840}
+  - component: {fileID: 6528723362717498282}
+  - component: {fileID: 2170933762780163657}
   m_Layer: 0
-  m_Name: BastardSword
+  m_Name: Wind Prism
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5783575807394235614
+--- !u!4 &8807823929122634840
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4976341019228924520}
+  m_GameObject: {fileID: 2475961333021485550}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 18.746155, y: 8.443262, z: 1.821213}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7551676223902133885}
+  - {fileID: 2713768653956701570}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7128667898396684464
+--- !u!114 &6528723362717498282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4976341019228924520}
+  m_GameObject: {fileID: 2475961333021485550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2008e3ada4123241a3c2f3e05d42138, type: 3}
+  m_Script: {fileID: 11500000, guid: 1913f343802a8fd4e82df7dcb8a87a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSpecialWeapon: 0
-  hasObtained: 0
   stats:
-    weaponType: 2
-    attack: 1
-    maxAttack: 1
-    durability: 1
-    maxDurability: 1
-    block: 1
-    maxBlock: 1
-    stability: 1
-    maxStability: 1
-    elemental:
+    componentType: 7
+    count: 0
+    itemName: Default TinkerComponent Name
+    attack: 0
+    durability: 0
+    block: 0
+    stability: 0
+    elementalStats:
       firePower: 0
       icePower: 0
       lightningPower: 0
@@ -67,28 +64,29 @@ MonoBehaviour:
       beastPower: 0
       scalesPower: 0
       techPower: 0
-    maxElemental:
-      firePower: 0
-      icePower: 0
-      lightningPower: 0
-      windPower: 0
-      earthPower: 0
-      lightPower: 0
-      beastPower: 0
-      scalesPower: 0
-      techPower: 0
-    speed: 1
-    maxSpeed: 1
-    specialtyCooldown: 0
-    maxSpecialtyCooldown: 0
-    xpToLevel: 100
-    tinkerPointsPerLvl: 0
-    currentDurability: 1
-    level: 1
-    currentExperiencePoints: 0
-    currentTinkerPoints: 0
-    weaponName: BaseWeaponName
---- !u!1 &7497698106452750959
+    isWeapon: 0
+--- !u!135 &2170933762780163657
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475961333021485550}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6981859628330386671
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,46 +94,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7551676223902133885}
-  - component: {fileID: 7033169388066324317}
-  - component: {fileID: 222795881436299637}
+  - component: {fileID: 2713768653956701570}
+  - component: {fileID: 3021741990918515450}
+  - component: {fileID: 6890694556717825419}
+  - component: {fileID: 1066536729103458584}
   m_Layer: 0
-  m_Name: Sword15_Earth
+  m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7551676223902133885
+--- !u!4 &2713768653956701570
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7497698106452750959}
+  m_GameObject: {fileID: 6981859628330386671}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5783575807394235614}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 270}
---- !u!33 &7033169388066324317
+  m_Father: {fileID: 8807823929122634840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3021741990918515450
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7497698106452750959}
-  m_Mesh: {fileID: 6060968266713717718, guid: ca3efc9aae68e2c4b82574617a4bf176, type: 3}
---- !u!23 &222795881436299637
+  m_GameObject: {fileID: 6981859628330386671}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6890694556717825419
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7497698106452750959}
+  m_GameObject: {fileID: 6981859628330386671}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -149,7 +148,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a1741a9171aecf439852b79c94fb55b, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -171,3 +170,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &1066536729103458584
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6981859628330386671}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

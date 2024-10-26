@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7645469214076911580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 901400571711096480}
+  - component: {fileID: 8520812018512171945}
+  m_Layer: 0
+  m_Name: TinkerController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &901400571711096480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645469214076911580}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.390041, y: 8.122353, z: 1.8823756}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8520812018512171945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645469214076911580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a478ec79491998b4ea3cc655092b5f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMode: 0
+  dropItem: 0
+  baseComponents:
+  - {fileID: 409039273172831939, guid: 1cca48cc7491186418ed88f6991e9919, type: 3}
+  - {fileID: 7829938928240353548, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+  - {fileID: 2525497668537524831, guid: f3487f07711c8614e8fd1e091e46d28a, type: 3}
+  - {fileID: 2032668439064790140, guid: dba9722b5fb6fef46ac54f9fcd26be65, type: 3}
+  - {fileID: 8039447635132309836, guid: ccc513b353584ef479a91b6dcb017fb9, type: 3}
+  - {fileID: 6788101276156867435, guid: d92006003b9252245ba94d5bc817d35e, type: 3}
+  - {fileID: 1212031702891662554, guid: b7f2315b91bc96e48854341ba8465440, type: 3}
+  - {fileID: 2475961333021485550, guid: 5e8fd373910230f428c09abd33cc6f1f, type: 3}
+  - {fileID: 8373709045432790711, guid: 6662cf388f843df499f9d79a82d180cf, type: 3}
+  - {fileID: 5922384721406738504, guid: 3701e75622653454993fec759ab15930, type: 3}
+  - {fileID: 6503912171846052454, guid: 4b3b3520601aef84ab7e7c2401f2efb7, type: 3}
+  - {fileID: 4199357060730716979, guid: 9e2aa0d3b09371341922ae456e116341, type: 3}
+  - {fileID: 696246970712138911, guid: 2f85699678c4eac49bf0b7e32309dd9e, type: 3}
+  ownedWeaponBreakdowns: []
+  baseComponentJsonFile: {fileID: 4900000, guid: 8b5b194b82e016448a34bb4c9c1dc2c4, type: 3}
