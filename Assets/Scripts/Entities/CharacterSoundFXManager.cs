@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class CharacterSoundFXManager : MonoBehaviour
 {
+    private CharacterManager characterManager;
     private AudioSource audioSource;
+    private int footStepSFXCount;
+
 
     protected virtual void Awake() {
+        characterManager = GetComponent<CharacterManager>();
         audioSource = GetComponent<AudioSource>();
+        footStepSFXCount = WorldSoundFXManager.instance.walkFootStepSFX.Length;
     }
 
     public void PlayRollSoundFX() {
@@ -16,5 +21,11 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     public void PlayJumpJetBurstFX() {
         audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+    }
+
+     public void PlayFootStepSFX(){
+        if(characterManager.isGrounded && !characterManager.isPerformingAction){
+            audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
+        }
     }
 }
