@@ -283,6 +283,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DebugTeleportToJacobDev"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa5e17fd-dcea-423a-a674-1974ac9a7ce7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""NextWeapon"",
                     ""type"": ""PassThrough"",
                     ""id"": ""3e3e861f-fb3e-42f7-9cd1-77f1b6df3609"",
@@ -413,6 +422,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""DebugTeleportToAlecDev"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""451f3fcf-f1d0-4e84-bdb5-2cf16574b0fc"",
+                    ""path"": ""<Keyboard>/numpadDivide"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToJacobDev"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -460,6 +480,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -622,6 +643,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
+    private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_NextWeapon;
     public struct PlayerActionsActions
     {
@@ -632,6 +654,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
+        public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
@@ -657,6 +680,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToAlecDev.started += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled += instance.OnDebugTeleportToAlecDev;
+            @DebugTeleportToJacobDev.started += instance.OnDebugTeleportToJacobDev;
+            @DebugTeleportToJacobDev.performed += instance.OnDebugTeleportToJacobDev;
+            @DebugTeleportToJacobDev.canceled += instance.OnDebugTeleportToJacobDev;
             @NextWeapon.started += instance.OnNextWeapon;
             @NextWeapon.performed += instance.OnNextWeapon;
             @NextWeapon.canceled += instance.OnNextWeapon;
@@ -679,6 +705,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToAlecDev.started -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled -= instance.OnDebugTeleportToAlecDev;
+            @DebugTeleportToJacobDev.started -= instance.OnDebugTeleportToJacobDev;
+            @DebugTeleportToJacobDev.performed -= instance.OnDebugTeleportToJacobDev;
+            @DebugTeleportToJacobDev.canceled -= instance.OnDebugTeleportToJacobDev;
             @NextWeapon.started -= instance.OnNextWeapon;
             @NextWeapon.performed -= instance.OnNextWeapon;
             @NextWeapon.canceled -= instance.OnNextWeapon;
@@ -760,6 +789,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
+        void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
     }
     public interface IUIActions
