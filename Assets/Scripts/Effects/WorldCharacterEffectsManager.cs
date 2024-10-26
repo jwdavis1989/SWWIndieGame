@@ -6,6 +6,8 @@ using UnityEngine;
 public class WorldCharacterEffectsManager : MonoBehaviour
 {
     public static WorldCharacterEffectsManager instance;
+    [Header("Damage")]
+    public TakeHealthDamageCharacterEffect takeHealthDamageEffect;
     [SerializeField] List<InstantCharacterEffect> instantEffects;
 
     private void Awake() {

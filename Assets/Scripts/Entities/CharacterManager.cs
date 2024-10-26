@@ -12,8 +12,13 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterStatsManager characterStatsManager;
+    [HideInInspector] public CharacterEffectsManager characterEffectsManager;
+
+    [Header("Status")]
+    public bool isDead = false;
 
     [Header("Flags")]
+    public bool isPlayer = false;
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
@@ -28,6 +33,7 @@ public class CharacterManager : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         characterStatsManager = GetComponent<CharacterStatsManager>();
         animator = GetComponent<Animator>();
+        characterEffectsManager = GetComponent<CharacterEffectsManager>();
     }
 
     protected virtual void Update() {
@@ -47,7 +53,7 @@ public class CharacterManager : MonoBehaviour
         //         transform.rotation = Quaternion.Slerp(transform.rotation, characterNetworkManager.networkRotation.Value, characterNetworkManager.networkRotationSmoothTime);
         // }
 
-        animator.SetBool("isGrounded", isGrounded);
+        animator?.SetBool("isGrounded", isGrounded);
     }
 
     protected virtual void LateUpdate() {

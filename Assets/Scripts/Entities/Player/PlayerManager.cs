@@ -27,6 +27,7 @@ public class PlayerManager : CharacterManager
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
+        isPlayer = true;
 
     }
 
