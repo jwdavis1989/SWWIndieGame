@@ -71,7 +71,7 @@ public class TinkerComponent : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         bool debug = WeaponUpgradeManager.instance.debugMode;
-        Debug.Log("TinkerComponent.OnTriggerEnter");
+        if (debug) Debug.Log("TinkerComponent.OnTriggerEnter");
         if (other.CompareTag("Player"))
         {
             if(debug) Debug.Log("TinkerComponent encountered player");
