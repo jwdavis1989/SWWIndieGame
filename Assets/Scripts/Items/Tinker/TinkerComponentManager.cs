@@ -4,18 +4,36 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class WeaponUpgradeManager : MonoBehaviour
+public class TinkerComponentManager : MonoBehaviour
 {
     //****DEBUG ASTEST
     [Header("DEBUG")]
     public bool debugMode = false;
     public bool dropItem = false;
+    public bool breakDownEquippedWeapon = false;
+    public bool addAWeaponComponentToEquippedWeapon = false;
     public void Update()
     {//astest
         if (dropItem)
         {
             dropItem = false;
             DropItem();
+        }
+        if (breakDownEquippedWeapon)
+        {
+            breakDownEquippedWeapon = false;
+            //breakdown equipped weapon
+            BreakDownWeapon(WeaponsController.instance.indexOfEquippedWeapon, false);
+            //equip first weapon
+            WeaponsController.instance.indexOfEquippedWeapon = 0;
+            if(WeaponsController.instance.ownedWeapons.Count > 0)
+                WeaponsController.instance.ownedWeapons[0].SetActive(true);
+        }
+        if (addAWeaponComponentToEquippedWeapon)
+        {
+            addAWeaponComponentToEquippedWeapon = false;
+            if(weaponComponents.Count > 0)
+                AddTinkerComponentToWeapon(WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon], weaponComponents[0], true);
         }
     }
     void DropItem()
@@ -25,10 +43,10 @@ public class WeaponUpgradeManager : MonoBehaviour
     }
     //****DEBUG
 
-    [Header("WeaponUpgradeManager is a singleton containing prefabs for each tinker component\n" +
+    [Header("TinkerComponentManager is a singleton containing prefabs for each tinker component\n" +
         ", methods for upgrading/breaking down weapons\n" +
         ", and a record of the players current tinker components\n")]
-    public static WeaponUpgradeManager instance;
+    public static TinkerComponentManager instance;
     public void Awake()
     {
         if (instance == null)
@@ -45,33 +63,72 @@ public class WeaponUpgradeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         LoadAllComponentTypes();
     }
+    //Array of Tinker Component Pre-Fabs. Use to instantiate components ingame and track players count of each component
     [Header("Array of Tinker Component Pre-Fabs. \n" +
-        "Use to instantiate components ingame and track players count of each component")]
+        "Use to instantiate components ingame and\n track players count of each component")]
     public GameObject[] baseComponents;
+    //List of weapons turned in to tinker components
     [Header("List of weapons turned in to tinker components")]
     public List<GameObject> weaponComponents = new List<GameObject>();
+    //JSON file contaning base stats. Will overwrite prefab!
     [Header("JSON file contaning base stats")]
-    public TextAsset baseComponentJsonFile; // json file with intilizing stats that will overwrite prefab
+    public TextAsset baseComponentJsonFile;
+    /**
+    * break down weapon into a tinker component and add to owned components
+    * @Returns the component that was added
+    */
+    public TinkerComponent BreakDownWeapon(int index, bool specialWeapon)
+    {
+        
+        int weaponIndex = specialWeapon ? WeaponsController.instance.indexOfEquippedSpecialWeapon : WeaponsController.instance.indexOfEquippedWeapon;
+        List <GameObject> weaponsList = specialWeapon ? WeaponsController.instance.ownedSpecialWeapons : WeaponsController.instance.ownedWeapons;
+        if (weaponsList.Count < index)
+            return null;
+        GameObject ownedWeapon = weaponsList[index];
+        WeaponScript weapon = ownedWeapon.GetComponent<WeaponScript>();
+        ownedWeapon.AddComponent<TinkerComponent>();
+        TinkerComponent rv = ownedWeapon.GetComponent<TinkerComponent>();
+        rv.stats.elementalStats = weapon.stats.elemental;
+        rv.stats.attack = weapon.stats.attack;
+        rv.stats.durability = weapon.stats.durability;
+        rv.stats.stability = weapon.stats.stability;
+        rv.stats.block = weapon.stats.block;
+        rv.stats.isWeapon = true;
+        rv.stats.count = 1;
+        weaponComponents.Add(ownedWeapon);
+        weaponsList.Remove(ownedWeapon);
+        ownedWeapon.SetActive(false);
+        return rv;
+    }
     /**
     * add or subtract a tinker component from the player
     */
     public void AddBaseComponentToPlayer(TinkerComponentType type, int count)
     {
-        WeaponUpgradeManager.instance.baseComponents[(int)type].GetComponent<TinkerComponent>().stats.count += count;
+        TinkerComponentManager.instance.baseComponents[(int)type].GetComponent<TinkerComponent>().stats.count += count;
     }
     /**
      * CanUseComponent will return true if any stat will be upgraded. I.e. if any matching stat is not currently maxed
      */
-    public bool CanUseComponent(WeaponScript weapon, TinkerComponent tinkerComponent)
+    public bool CanUseComponent(GameObject weapon, GameObject tinkerComponent)
     {
         return AddTinkerComponentToWeapon(weapon, tinkerComponent, false);
     }
-    public bool UseComponent(WeaponScript weapon, TinkerComponent tinkerComponent)
+    /**
+     * Adds a component to a weapon
+     */
+    public bool UseComponent(GameObject weapon, GameObject tinkerComponent)
     {
         return AddTinkerComponentToWeapon(weapon, tinkerComponent, true);
     }
-    public bool AddTinkerComponentToWeapon(WeaponScript weapon, TinkerComponent tinkerComponent, bool doUpdate)
+    public bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, GameObject tinkerComponentPassed, bool doUpdate)
     {
+        TinkerComponent tinkerComponentToAdd = tinkerComponentPassed.GetComponent<TinkerComponent>();
+        WeaponScript weapon = weaponToUpgrade.GetComponent<WeaponScript>();
+        //used passed component for weapons. Ensure using base components for regular components
+        TinkerComponent tinkerComponent = tinkerComponentToAdd.stats.isWeapon ? tinkerComponentToAdd : baseComponents[(int)tinkerComponentToAdd.stats.componentType].GetComponent<TinkerComponent>();
+        //can't add if out of that component
+        if (tinkerComponent.stats.count <= 0) return false;
         bool canUpgrade = false;
         float newAttack = weapon.stats.attack;
         //calulate new attack
@@ -102,7 +159,7 @@ public class WeaponUpgradeManager : MonoBehaviour
         newStats.beastPower = Mathf.Min(newStats.beastPower, weapon.stats.maxElemental.beastPower);
         newStats.scalesPower = Mathf.Min(newStats.scalesPower, weapon.stats.maxElemental.scalesPower);
         newStats.techPower = Mathf.Min(newStats.techPower, weapon.stats.maxElemental.techPower);
-        ElementalStats diffWithPrev = newStats.CalculateElementDiff(weapon.stats.elemental);
+        ElementalStats diffWithPrev = newStats.Subract(weapon.stats.elemental);
         //if any stat will be upgraded then we can upgrade
         if (diffWithPrev.firePower > 0 ||
             diffWithPrev.icePower > 0 ||
@@ -121,6 +178,10 @@ public class WeaponUpgradeManager : MonoBehaviour
                 weapon.stats.elemental = newStats;
                 weapon.stats.attack = newAttack;
                 tinkerComponent.stats.count--;
+                if (tinkerComponent.stats.isWeapon)
+                {
+                    weaponComponents.Remove(tinkerComponentPassed);
+                }
             }
         }
         return canUpgrade;
@@ -129,11 +190,11 @@ public class WeaponUpgradeManager : MonoBehaviour
     {
         if(baseComponentJsonFile == null)
         {
-            Debug.Log("WeaponUpgradeManager.baseComponentJsonFile is missing!");
+            Debug.Log("TinkerComponentManager.baseComponentJsonFile is missing!");
             return;
         }
         //add prefabs to initilizer array
-        GameObject[] componentInitilizer = new GameObject[(int)TinkerComponentType.Amethyst];//.Weapon];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
+        GameObject[] componentInitilizer = new GameObject[(int)TinkerComponentType.Weapon];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
         foreach (var component in baseComponents)
         {
             componentInitilizer[(int)component.GetComponent<TinkerComponent>().stats.componentType] = component;
@@ -148,19 +209,8 @@ public class WeaponUpgradeManager : MonoBehaviour
                 componentInitilizer[i].GetComponent<TinkerComponent>().stats = componentStats;
                 if (debugMode) Debug.Log("Prefab loaded for " + i + " type:" + componentInitilizer[i].GetComponent<TinkerComponent>().stats.itemName);//astest
             }
-            //    else
-            //    {   // no prefab, create a new empty object
-            //        // Warning: currently attack() is virtual & cannot be called for base weapons, need SwordScript or WrenchScript
-            //        //          Stats can be viewed for these however
-            //        weaponsInitilizer[i] = new GameObject("Empty");
-            //        weaponsInitilizer[i].AddComponent(typeof(WeaponScript));
-            //        weaponsInitilizer[i].GetComponent<WeaponScript>().stats = weaponStat;
-            //        if (debugMode) Debug.Log("created object for " + i + " type:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponName); //astest
-            //    }
-            //    if (debugMode) Debug.Log("Weapon " + i + ": WeaponType:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponType
-            //        + " Atk:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.attack); //astest
         }
-        ////Set weapons here
+        //Set baseComponents here
         baseComponents = componentInitilizer;
 }
     //used for JSON. Loading all types and for loading players components

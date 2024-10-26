@@ -95,10 +95,7 @@ public class WeaponsController : MonoBehaviour
             WeaponScript currentWeaponScript = baseWeapons[i].GetComponent<WeaponScript>();
             currentWeaponScript.hasObtained = true;
         }
-        else
-        {
-            Debug.Log("Warning in addWeaponToCurrentWeapons(" + weaponType + "). Not found");
-        }
+        else Debug.Log("Warning in addWeaponToCurrentWeapons(" + weaponType + "). Not found");
     }
     public void ChangeWeapon(int index)
     {
@@ -115,14 +112,7 @@ public class WeaponsController : MonoBehaviour
         int newWeaponIndex = indexOfEquippedWeapon;
         if (ownedWeapons != null && totalWeapons > 0)
         {
-            if(newWeaponIndex + 1 > totalWeapons - 1)
-            {
-                newWeaponIndex = 0;
-            }
-            else
-            {
-                newWeaponIndex++;
-            }
+            newWeaponIndex = (newWeaponIndex + 1 > totalWeapons - 1)? 0:newWeaponIndex+1;
             ChangeWeapon(newWeaponIndex);
         }
     }
@@ -132,14 +122,7 @@ public class WeaponsController : MonoBehaviour
         int newWeaponIndex = indexOfEquippedWeapon;
         if (ownedWeapons != null && totalWeapons > 0)
         {
-            if (newWeaponIndex - 1 < 0)
-            {
-                newWeaponIndex = totalWeapons - 1;
-            }
-            else
-            {
-                newWeaponIndex--;
-            }
+            newWeaponIndex = (newWeaponIndex - 1 < 0)? totalWeapons -1: newWeaponIndex-1;
             ChangeWeapon(newWeaponIndex);
         }
     }
@@ -159,14 +142,7 @@ public class WeaponsController : MonoBehaviour
         int newWeaponIndex = indexOfEquippedSpecialWeapon;
         if (ownedSpecialWeapons != null && totalWeapons > 0)
         {
-            if (newWeaponIndex + 1 > totalWeapons - 1)
-            {
-                newWeaponIndex = 0;
-            }
-            else
-            {
-                newWeaponIndex++;
-            }
+            newWeaponIndex = (newWeaponIndex + 1 > totalWeapons - 1) ? 0 : newWeaponIndex + 1;
             ChangeSpecialWeapon(newWeaponIndex);
         }
     }
@@ -176,33 +152,17 @@ public class WeaponsController : MonoBehaviour
         int newWeaponIndex = indexOfEquippedSpecialWeapon;
         if (ownedSpecialWeapons != null && totalWeapons > 0)
         {
-            if (newWeaponIndex - 1 < 0)
-            {
-                newWeaponIndex = totalWeapons - 1;
-            }
-            else
-            {
-                newWeaponIndex--;
-            }
+            newWeaponIndex = (newWeaponIndex - 1 < 0)? totalWeapons - 1 : newWeaponIndex - 1;
             ChangeSpecialWeapon(newWeaponIndex);
         }
     }
-    public void AttackTargetWithCurrentlyEquippedWeapon(GameObject target)
+    public void AttackTargetWithEquippedWeapon(GameObject target)
     {
         if (target == null) return;
-        if (ownedWeapons[indexOfEquippedWeapon] != null)
+        if (ownedWeapons.Count > indexOfEquippedWeapon & ownedWeapons[indexOfEquippedWeapon] != null)
         {
             ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().attackTarget(target);
         }
-    }
-    /**
-     * Perhaps could use a method to calculate the attributes of a weapon of a particular level
-     */
-    public float GetWeaponAttack(WeaponType type, int level)
-    {
-        if(baseWeapons[(int)type] != null)
-            return baseWeapons[(int)type].GetComponent<WeaponScript>().stats.attack * level;
-        return -1;
     }
     //For loading weapons from save file json
     public void setCurrentWeapons(WeaponsArray weaponsJson)
@@ -265,18 +225,16 @@ public class WeaponsController : MonoBehaviour
         if (debugMode)//astest
         {
             //Tests
-            //display attack by weapon type
-            Debug.Log("Attack of level 1 BastardSword:" + GetWeaponAttack(WeaponType.BastardSword, 1));//astest
             //Add 2 Shortswords and a Wrench to currently owned weapons
             AddWeaponToCurrentWeapons(WeaponType.Shortsword);
             AddWeaponToCurrentWeapons(WeaponType.Shortsword);
             AddWeaponToCurrentWeapons(WeaponType.Wrench);
             //Two methods of attacking
             ownedWeapons[0].GetComponent<WeaponScript>().attackTarget(gameObject);
-            AttackTargetWithCurrentlyEquippedWeapon(gameObject);
+            AttackTargetWithEquippedWeapon(gameObject);
             //Change to Wrench, the third weapon
             ChangeWeapon(2);
-            AttackTargetWithCurrentlyEquippedWeapon(gameObject);
+            AttackTargetWithEquippedWeapon(gameObject);
             Debug.Log("============== LIST OF ALL WEAPONS =====================" + baseWeapons.Length + " :" + baseWeapons.ToString());
             int i = 0;
             foreach (GameObject weaponObj in baseWeapons)
@@ -293,106 +251,11 @@ public class WeaponsController : MonoBehaviour
 
 }
 
-// Enum type of all weapon types
-public enum WeaponType
-{
-    Shortsword,
-    Wrench,
-    BastardSword,
-    BroadSword,
-    BoneBlade,
-    ReinforcedWrench,
-    //specialty weapons
-    Dagger,
-    Flintlock,
-    SparkCaster,
-    BowieKnife,
-    Revolver,
-    ScrapGun,
-    ZapCaster,
-    BurnCaster,
-    FreezeCaster,
-    //T3 Weapons
-    DiamondSword,
-
-    //Limit
-    UNKNOWN
-}
 //used for JSON array
 [Serializable]
 public class WeaponsArray
 {
     public WeaponStats[] weaponStats;
-}
-//used for JSON object
-[Serializable]
-public class WeaponStats
-{
-    [Header("Weapon Type - Important - Set in Prefab")]
-    public WeaponType weaponType = 0;
-    [Header("Weapon Attributes (Intialized by JSON)")]
-    public float attack = 1.0f;
-    public float maxAttack = 1.0f;
-    public float durability = 1;
-    public float maxDurability = 1;
-    public float block = 1.0f;
-    public float maxBlock = 1.0f;
-    public float stability = 1.0f;
-    public float maxStability = 1.0f;
-    public ElementalStats elemental;
-    public ElementalStats maxElemental;
-    public float speed = 1.0f;
-    public float maxSpeed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float maxSpecialtyCooldown = 0;
-    public float xpToLevel = 100.0f;
-    public int tinkerPointsPerLvl = 0;
-    public float currentDurability = 1.0f;
-    public int level = 1;
-    public float currentExperiencePoints = 0.0f;
-    public int currentTinkerPoints = 0;
-    public String weaponName = "BaseWeaponName";
-}
-[Serializable]
-public class ElementalStats
-{
-    public float firePower = 0;
-    public float icePower = 0;
-    public float lightningPower = 0;
-    public float windPower = 0;
-    public float earthPower = 0;
-    public float lightPower = 0;
-    public float beastPower = 0;
-    public float scalesPower = 0;
-    public float techPower = 0;
-    public ElementalStats CalculateElementDiff(ElementalStats subtractor)
-    {
-        ElementalStats diff = new ElementalStats();
-        diff.firePower = firePower - subtractor.firePower;
-        diff.icePower = icePower - subtractor.icePower;
-        diff.lightningPower = lightningPower - subtractor.lightningPower;
-        diff.windPower = windPower - subtractor.windPower;
-        diff.earthPower = earthPower - subtractor.earthPower;
-        diff.lightPower = lightPower - subtractor.lightningPower;
-        diff.beastPower = beastPower - subtractor.beastPower;
-        diff.scalesPower = scalesPower - subtractor.scalesPower;
-        diff.techPower = techPower - subtractor.techPower;
-        return diff;
-    }
-    public ElementalStats Add(ElementalStats other)
-    {
-        ElementalStats sum = new ElementalStats();
-        sum.firePower = firePower + other.firePower;
-        sum.icePower = icePower + other.icePower;
-        sum.lightningPower = lightningPower + other.lightningPower;
-        sum.windPower = windPower + other.windPower;
-        sum.earthPower = earthPower + other.earthPower;
-        sum.lightPower = lightPower + other.lightningPower;
-        sum.beastPower = beastPower + other.beastPower;
-        sum.scalesPower = scalesPower + other.scalesPower;
-        sum.techPower = techPower + other.techPower;
-        return sum;
-    }
 }
 /** Change Log  
  *  Date         Developer  Description

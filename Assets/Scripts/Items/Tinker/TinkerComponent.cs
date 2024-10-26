@@ -39,6 +39,43 @@ public enum TinkerComponentType
     Weapon
 }
 /**
+ * MonoBehaviour version that one can add to a game object
+ */
+
+public class TinkerComponent : MonoBehaviour
+{
+    [Header("The TinkerComponent is used for upgrading weapons\n")]
+    public TinkerComponentStats stats = new();
+
+    void OnTriggerEnter(Collider other)
+    {
+        bool debug = TinkerComponentManager.instance.debugMode;
+        if (debug) Debug.Log("TinkerComponent.OnTriggerEnter");
+        if (other.CompareTag("Player"))
+        {
+            if(debug) Debug.Log("TinkerComponent encountered player");
+            //TODO: Play Sound
+            if (stats.isWeapon)
+            {
+                if (debug) Debug.Log("component is weapon");
+                //Broken down Weapon Components probably shouldn't be on the ground but handle for them anyways
+                TinkerComponentManager.instance.weaponComponents.Add(gameObject);
+                //gameObject.SetActive(false);
+                Destroy(gameObject);
+            }
+            else
+            {
+                
+                //regular component
+                if (stats.count <= 0) stats.count = 1; // Allow use of positive count for multiple drop in 1 item, otherwise act as a single drop
+                TinkerComponentManager.instance.AddBaseComponentToPlayer(stats.componentType, stats.count);
+                if (debug) Debug.Log("component is type " + stats.componentType + " count = " + TinkerComponentManager.instance.baseComponents[(int)stats.componentType].GetComponent<TinkerComponent>().stats.count);
+                Destroy(gameObject);
+            }
+        }
+    }
+}
+/**
  * Serializable version that can read/write as json
  */
 
@@ -58,40 +95,4 @@ public class TinkerComponentStats
     public ElementalStats elementalStats = new ElementalStats();
     [Header("Components made from recycled weapons behave differently")]
     public bool isWeapon = false;
-}
-/**
- * MonoBehaviour version that one can add to a game object
- */
-
-public class TinkerComponent : MonoBehaviour
-{
-    [Header("The TinkerComponent is used for upgrading weapons\n")]
-    public TinkerComponentStats stats = new TinkerComponentStats();
-
-    void OnTriggerEnter(Collider other)
-    {
-        bool debug = WeaponUpgradeManager.instance.debugMode;
-        if (debug) Debug.Log("TinkerComponent.OnTriggerEnter");
-        if (other.CompareTag("Player"))
-        {
-            if(debug) Debug.Log("TinkerComponent encountered player");
-            //TODO: Play Sound
-            if (stats.isWeapon)
-            {
-                if (debug) Debug.Log("component is weapon");
-                //Broken down Weapon Components probably shouldn't be on the ground but handle for them anyways
-                WeaponUpgradeManager.instance.weaponComponents.Add(gameObject);
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                
-                //regular component
-                if (stats.count <= 0) stats.count = 1; // Allow use of positive count for multiple drop in 1 item, otherwise act as a single drop
-                WeaponUpgradeManager.instance.AddBaseComponentToPlayer(stats.componentType, stats.count);
-                if (debug) Debug.Log("component is type " + stats.componentType + " count = " + WeaponUpgradeManager.instance.baseComponents[(int)stats.componentType].GetComponent<TinkerComponent>().stats.count);
-                Destroy(gameObject);
-            }
-        }
-    }
 }
