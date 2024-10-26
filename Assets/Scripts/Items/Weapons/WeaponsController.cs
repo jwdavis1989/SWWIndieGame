@@ -102,7 +102,6 @@ public class WeaponsController : MonoBehaviour
     }
     public void ChangeWeapon(int index)
     {
-        Debug.Log("ChangeWeapon-Index="+index);//astest
         if (index < ownedWeapons.Count && ownedWeapons[index] != null)
         {
             ownedWeapons[indexOfEquippedWeapon].SetActive(false);
@@ -253,7 +252,7 @@ public class WeaponsController : MonoBehaviour
     }
 
     public void SetAllWeaponsToInactive(bool targetSpecialWeaponStatus) {
-        List<GameObject> weapons = targetSpecialWeaponStatus? ownedSpecialWeapons: ownedWeapons; ;
+        List<GameObject> weapons = targetSpecialWeaponStatus? ownedSpecialWeapons: ownedWeapons;
         if (weapons.Count <= 0)
             return;
         foreach (GameObject weapon in weapons) {
