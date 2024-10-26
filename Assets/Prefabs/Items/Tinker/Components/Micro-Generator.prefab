@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5891161132690087292}
   - component: {fileID: 354769259628670800}
+  - component: {fileID: 7973470440725379157}
   m_Layer: 0
   m_Name: Micro-Generator
   m_TagString: Untagged
@@ -64,6 +65,27 @@ MonoBehaviour:
       scalesPower: 0
       techPower: 0
     isWeapon: 0
+--- !u!135 &7973470440725379157
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409039273172831939}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &634444290355476724
 GameObject:
   m_ObjectHideFlags: 0

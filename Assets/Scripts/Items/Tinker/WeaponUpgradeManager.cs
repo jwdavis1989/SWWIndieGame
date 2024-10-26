@@ -15,11 +15,16 @@ public class WeaponUpgradeManager : MonoBehaviour
         if (dropItem)
         {
             dropItem = false;
-            int i = UnityEngine.Random.Range(0, baseComponents.Length);
-            Instantiate(baseComponents[i]);
+            DropItem();
         }
     }
+    void DropItem()
+    {
+        int i = UnityEngine.Random.Range(0, baseComponents.Length-1);
+        Instantiate(baseComponents[i]);
+    }
     //****DEBUG
+
     [Header("WeaponUpgradeManager is a singleton containing prefabs for each tinker component\n" +
         ", methods for upgrading/breaking down weapons\n" +
         ", and a record of the players current tinker components\n")]
@@ -40,12 +45,20 @@ public class WeaponUpgradeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         LoadAllComponentTypes();
     }
-    [Header("Array of normal components")]
+    [Header("Array of Tinker Component Pre-Fabs. \n" +
+        "Use to instantiate components ingame and track players count of each component")]
     public GameObject[] baseComponents;
-    [Header("List of deconstructed weapon components")]
-    public List<GameObject> ownedWeaponBreakdowns = new List<GameObject>();
+    [Header("List of weapons turned in to tinker components")]
+    public List<GameObject> weaponComponents = new List<GameObject>();
     [Header("JSON file contaning base stats")]
     public TextAsset baseComponentJsonFile; // json file with intilizing stats that will overwrite prefab
+    /**
+    * add or subtract a tinker component from the player
+    */
+    public void AddBaseComponentToPlayer(TinkerComponentType type, int count)
+    {
+        WeaponUpgradeManager.instance.baseComponents[(int)type].GetComponent<TinkerComponent>().stats.count += count;
+    }
     /**
      * CanUseComponent will return true if any stat will be upgraded. I.e. if any matching stat is not currently maxed
      */
@@ -147,8 +160,8 @@ public class WeaponUpgradeManager : MonoBehaviour
             //    if (debugMode) Debug.Log("Weapon " + i + ": WeaponType:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponType
             //        + " Atk:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.attack); //astest
         }
-    ////Set weapons here
-    //baseWeapons = weaponsInitilizer;
+        ////Set weapons here
+        baseComponents = componentInitilizer;
 }
     //used for JSON. Loading all types and for loading players components
     [Serializable]
