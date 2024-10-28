@@ -25,7 +25,10 @@ public class CharacterSoundFXManager : MonoBehaviour
 
      public void PlayFootStepSFX(){
         if(characterManager.isGrounded && !characterManager.isPerformingAction){
-            audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
+            if(characterManager.isSprinting){
+                audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
+            }
+           audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
         }
     }
 }
