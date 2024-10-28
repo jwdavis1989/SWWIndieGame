@@ -11,6 +11,7 @@ public class PauseScript : MonoBehaviour
     [SerializeField] GameObject mainPauseMenu;
     [SerializeField] GameObject upgradeMenu;
     [SerializeField] GameObject DebugSaveGameButton;
+    [SerializeField] GameObject DebugAddItemButton;
 
     public void Start()
     {
@@ -19,12 +20,6 @@ public class PauseScript : MonoBehaviour
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton9)
-            || Input.GetKeyDown(KeyCode.Joystick1Button9)
-            || Input.GetKeyDown(KeyCode.Joystick2Button9)
-            || Input.GetKeyDown(KeyCode.Joystick3Button9)
-            || Input.GetKeyDown(KeyCode.JoystickButton8)
-            || Input.GetKeyDown(KeyCode.Joystick1Button10)
-            || Input.GetKeyDown(KeyCode.JoystickButton10)
             ) && gamePaused == false)
         {
             Pause();
@@ -63,13 +58,30 @@ public class PauseScript : MonoBehaviour
     {
         WorldSaveGameManager.instance.saveGame = true;
     }
+    public void DebugRandomComponentClick()
+    {
+        GameObject playerObj = GameObject.Find("Player");
+        if (playerObj != null)
+        {
+            TinkerComponentManager.instance.DropRandomItem(playerObj.transform, 5.0f);
+        }
+    }
     void Pause()
     {
         Time.timeScale = 0;
         gamePaused = true;
         canvas.SetActive(true);
         mainPauseMenu.SetActive(true);
-        if (debugMode) DebugSaveGameButton.SetActive(true); else DebugSaveGameButton.SetActive(false);
+        if (debugMode)
+        {
+            DebugSaveGameButton.SetActive(true);
+            DebugAddItemButton.SetActive(true);
+        }
+        else
+        {
+            DebugSaveGameButton.SetActive(false);
+            DebugAddItemButton.SetActive(false);
+        }
     }
     void Unpause()
     {

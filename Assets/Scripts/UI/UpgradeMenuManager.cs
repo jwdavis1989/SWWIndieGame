@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeUIManager : MonoBehaviour
+public class UpgradeMenuManager : MonoBehaviour
 {
     public GameObject grid;
     private GridLayoutGroup gridLayoutGroup;
@@ -34,8 +34,12 @@ public class UpgradeUIManager : MonoBehaviour
             if (component == null) continue;
             if (i++ > maxSize) break;
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
-            Object gridElement = Instantiate(genericIcon, grid.transform);
-            gridElement.GetComponent<GridElementController>().textMP.text = componentScript.stats.itemName + " " + componentScript.stats.count;
+            if (componentScript.stats.count > 0)
+            {
+                Object gridElement = Instantiate(genericIcon, grid.transform);
+                gridElement.GetComponent<GridElementController>().topText.text = componentScript.stats.itemName;
+                gridElement.GetComponent<GridElementController>().bottomText.text = "" + componentScript.stats.count;
+            }
             //gridElement.GetComponent<GridElementController>().image = componentScript.;
         }
     }

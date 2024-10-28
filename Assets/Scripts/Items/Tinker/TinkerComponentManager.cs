@@ -9,15 +9,15 @@ public class TinkerComponentManager : MonoBehaviour
     //****DEBUG ASTEST
     [Header("DEBUG")]
     public bool debugMode = false;
-    public bool dropItem = false;
+    public bool dropRandomItem = false;
     public bool breakDownEquippedWeapon = false;
     public bool addAWeaponComponentToEquippedWeapon = false;
     public void Update()
     {//astest
-        if (dropItem)
+        if (dropRandomItem)
         {
-            dropItem = false;
-            DropItem();
+            dropRandomItem = false;
+            DropRandomItem(transform);
         }
         if (breakDownEquippedWeapon)
         {
@@ -36,10 +36,11 @@ public class TinkerComponentManager : MonoBehaviour
                 AddTinkerComponentToWeapon(WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon], weaponComponents[0], true);
         }
     }
-    void DropItem()
+    public void DropRandomItem(Transform transform, float distance = 0)
     {
         int i = UnityEngine.Random.Range(0, baseComponents.Length-1);
-        Instantiate(baseComponents[i]);
+        if (baseComponents[i] == null) return;
+        Instantiate(baseComponents[i], transform.position + (transform.forward * distance), transform.rotation);
     }
     //****DEBUG
 
