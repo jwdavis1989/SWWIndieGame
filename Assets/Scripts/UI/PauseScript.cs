@@ -18,11 +18,18 @@ public class PauseScript : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && gamePaused == false)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton9)
+            || Input.GetKeyDown(KeyCode.Joystick1Button9)
+            || Input.GetKeyDown(KeyCode.Joystick2Button9)
+            || Input.GetKeyDown(KeyCode.Joystick3Button9)
+            || Input.GetKeyDown(KeyCode.JoystickButton8)
+            || Input.GetKeyDown(KeyCode.Joystick1Button10)
+            || Input.GetKeyDown(KeyCode.JoystickButton10)
+            ) && gamePaused == false)
         {
             Pause();
         }
-        else if ((Input.GetKeyDown(KeyCode.Escape) && gamePaused == true))
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton9)) && gamePaused == true)
         {
             Unpause();
         }
