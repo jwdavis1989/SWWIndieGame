@@ -9,6 +9,7 @@ public class WorldSoundFXManager : MonoBehaviour
     [Header("Action Sounds")]
     public AudioClip rollSFX;
     public AudioClip jumpJetAirSFX;
+    public AudioClip[] walkFootStepSFX;
 
     [Header("Ambience")]
     public AudioClip caveAmbience;
