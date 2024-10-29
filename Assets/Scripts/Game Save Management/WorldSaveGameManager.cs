@@ -11,7 +11,7 @@ public class WorldSaveGameManager : MonoBehaviour
     public PlayerManager player;
 
     [Header("Save/Load")]
-    [SerializeField] bool saveGame;
+    [SerializeField] public bool saveGame;
     [SerializeField] bool loadGame;
 
     [Header("World Scene Index")]

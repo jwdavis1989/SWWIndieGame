@@ -4,7 +4,109 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 /** 
+ * Enum of all weapon types.
+ */
+public enum WeaponType
+{
+    Shortsword,
+    Wrench,
+    BastardSword,
+    BroadSword,
+    BoneBlade,
+    ReinforcedWrench,
+    //specialty weapons
+    Dagger,
+    Flintlock,
+    SparkCaster,
+    BowieKnife,
+    Revolver,
+    ScrapGun,
+    ZapCaster,
+    BurnCaster,
+    FreezeCaster,
+    //T3 Weapons
+    DiamondSword,
+    //Limit
+    UNKNOWN
+}
+/*
+ * Serializable WeaponStats used for JSON saving
+ */
+[Serializable]
+public class WeaponStats
+{
+    [Header("Weapon Type - Important - Set in Prefab")]
+    public WeaponType weaponType = 0;
+    [Header("Weapon Attributes (Intialized by JSON)")]
+    public float attack = 1.0f;
+    public float maxAttack = 1.0f;
+    public float durability = 1;
+    public float maxDurability = 1;
+    public float block = 1.0f;
+    public float maxBlock = 1.0f;
+    public float stability = 1.0f;
+    public float maxStability = 1.0f;
+    public ElementalStats elemental;
+    public ElementalStats maxElemental;
+    public float speed = 1.0f;
+    public float maxSpeed = 1.0f;
+    public float specialtyCooldown = 0;
+    public float maxSpecialtyCooldown = 0;
+    public float xpToLevel = 100.0f;
+    public int tinkerPointsPerLvl = 0;
+    public float currentDurability = 1.0f;
+    public int level = 1;
+    public float currentExperiencePoints = 0.0f;
+    public int currentTinkerPoints = 0;
+    public String weaponName = "BaseWeaponName";
+}
+/*
+ * Serializable ElementalStats used for JSON saving
+ */
+[Serializable]
+public class ElementalStats
+{
+    public float firePower = 0;
+    public float icePower = 0;
+    public float lightningPower = 0;
+    public float windPower = 0;
+    public float earthPower = 0;
+    public float lightPower = 0;
+    public float beastPower = 0;
+    public float scalesPower = 0;
+    public float techPower = 0;
+    public ElementalStats Subract(ElementalStats subtractor)
+    {
+        ElementalStats diff = new ElementalStats();
+        diff.firePower = firePower - subtractor.firePower;
+        diff.icePower = icePower - subtractor.icePower;
+        diff.lightningPower = lightningPower - subtractor.lightningPower;
+        diff.windPower = windPower - subtractor.windPower;
+        diff.earthPower = earthPower - subtractor.earthPower;
+        diff.lightPower = lightPower - subtractor.lightningPower;
+        diff.beastPower = beastPower - subtractor.beastPower;
+        diff.scalesPower = scalesPower - subtractor.scalesPower;
+        diff.techPower = techPower - subtractor.techPower;
+        return diff;
+    }
+    public ElementalStats Add(ElementalStats other)
+    {
+        ElementalStats sum = new ElementalStats();
+        sum.firePower = firePower + other.firePower;
+        sum.icePower = icePower + other.icePower;
+        sum.lightningPower = lightningPower + other.lightningPower;
+        sum.windPower = windPower + other.windPower;
+        sum.earthPower = earthPower + other.earthPower;
+        sum.lightPower = lightPower + other.lightningPower;
+        sum.beastPower = beastPower + other.beastPower;
+        sum.scalesPower = scalesPower + other.scalesPower;
+        sum.techPower = techPower + other.techPower;
+        return sum;
+    }
+}
+/** 
  * Base weapon script inherited by other weapons - use for things all weapons should do
+ * MonoBehaviour - Can add to Game Objects
  */
 public class WeaponScript : MonoBehaviour
 {
