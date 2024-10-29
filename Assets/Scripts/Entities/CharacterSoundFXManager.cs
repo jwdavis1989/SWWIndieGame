@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterSoundFXManager : MonoBehaviour
 {
     private CharacterManager characterManager;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private int footStepSFXCount;
 
 

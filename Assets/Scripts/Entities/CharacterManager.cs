@@ -13,6 +13,8 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterStatsManager characterStatsManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
+    [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
+    [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
 
     [Header("Status")]
     public bool isDead = false;
@@ -34,25 +36,11 @@ public class CharacterManager : MonoBehaviour
         characterStatsManager = GetComponent<CharacterStatsManager>();
         animator = GetComponent<Animator>();
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
+        characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
     }
 
     protected virtual void Update() {
-        //Uncomment if adding networked multiplayer
-        // if (IsOwner) {
-        //     characterNetworkManager.networkPosition.Value = transform.position;
-        //     characterNetworkManager.networkRotation.Value = transform.rotation;
-        // }
-        // else {
-        //Position
-        //     transform.position = Vector3.SmoothDamp(
-        //         transform.position, characterNetworkManager.networkPosition.Value, 
-        //         ref characterNetworkManager.networkPositionVelocity, 
-        //         characterNetworkManager.networkPositionSmoothTime)
-
-        //Rotation
-        //         transform.rotation = Quaternion.Slerp(transform.rotation, characterNetworkManager.networkRotation.Value, characterNetworkManager.networkRotationSmoothTime);
-        // }
-
         animator?.SetBool("isGrounded", isGrounded);
     }
 
@@ -60,18 +48,39 @@ public class CharacterManager : MonoBehaviour
         
     }
 
-    //Uncomment for multiplayer, then remove the version in PlayerLocomotionManager
-    // public virtual void RegenerateStamina() {
-    //     if (!IsOwner) {
-    //         return;
-    //     }
 
-    //     if (characterNetworkManager.isSprinting.Value) {
-    //         return;
-    //     }
+    public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false) {
+        if (isPlayer) {
+            characterStatsManager.currentHealth = 0;
+            isDead = true;
 
-    //     if (isPerformingAction) {
-    //         return;
-    //     }
-    // }
+            //Reset any Flags here that need to be reset
+            //Todo: Add these later
+
+            //If not grounded, play an aerial death animation
+
+            if (!manuallySelectDeathAnimation) {
+                //Could change this to choose a random death animation in the future if we wanted to.
+                characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+            }
+        }
+
+        //Play Death SFX
+        //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
+
+        yield return new WaitForSeconds(5);
+
+        if (!isPlayer) {
+            //If monster: Award players with Gold or items
+            
+        }
+
+        //Disable Character
+
+    }
+
+    public virtual void ReviveCharacter() {
+        //
+    }
+
 }
