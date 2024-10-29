@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class PlayerUIManager : MonoBehaviour
 {
-    // [Header("NETWORK JOIN")]
-    // [SerializeField] bool startGameAsClient;
-    // Start is called before the first frame update
+    public static PlayerUIManager instance;
 
     [HideInInspector] public PlayerUIHudManager playerUIHudManager;
-    public static PlayerUIManager instance;
+    [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -19,11 +17,7 @@ public class PlayerUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (startGameAsClient) {
-        //     startGameAsClient = false;
-        //     NetworkManager.Singleton.Shutdown();
-        //     NetworkManager.Singleton.StartClient();
-        // }
+        
     }
 
     void Awake() {
@@ -35,6 +29,7 @@ public class PlayerUIManager : MonoBehaviour
         }
 
         playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
+        playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
     }
     
 }

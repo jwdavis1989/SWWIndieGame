@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,9 @@ public class PlayerManager : CharacterManager
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
+
+    [Header("Debug Menu")]
+    [SerializeField] bool respawnCharacter = false;
 
     protected override void Awake() {
         base.Awake();
@@ -36,12 +40,6 @@ public class PlayerManager : CharacterManager
     {
         base.Update();
 
-        //Uncomment if adding networked coop
-        //If we don't own this gameobject, we do not control or edit it
-        // if (!IsOwner) {
-        //     return;
-        // }
-
         //Handle all movement every frame
         playerLocomotionManager.HandleAllMovement();
 
@@ -52,33 +50,37 @@ public class PlayerManager : CharacterManager
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
 
+        DebugMenu();
     }
 
-    //Uncomment for Multiplayer
-    // override OnNetworkSpawn() {
-    //     if (IsOwner) {
-    //         PlayerCamera.instance.player = this;
-    //         PlayerInputManager.instance.player = this;
-
-    //         PlayerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
-
-               //This will be moved when saving/loading is added
-               //PlayerNetworkManager.maxStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance);
-               //PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(PlayerNetworkManager.maxStamina.Value);
-               //playerNetworkManager.currentStamina.Value = PlayerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
-
-    //     }
-    // }
-
     protected override void LateUpdate() {
-        //Uncomment for Multiplayer
-        //Also make sure to unset the PlayerCamera's player prefab in the unity editor
-        // if (!IsOwner) {
-        //     return;
-        // }
         base.LateUpdate();
 
         PlayerCamera.instance.HandleAllCameraActions();
+    }
+
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
+        if (isPlayer) {
+            PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
+        }
+
+        return base.ProcessDeathEvent(manuallySelectDeathAnimation);
+    }
+
+    public override void ReviveCharacter() {
+        base.ReviveCharacter();
+
+        isDead = false;
+        playerStatsManager.currentHealth = playerStatsManager.maxHealth;
+        playerStatsManager.currentStamina = playerStatsManager.maxStamina;
+        
+
+        //Play Rebirth Effects here
+
+        //Reset player to default empty state
+        playerAnimationManager.PlayTargetActionAnimation("Empty", false);
+
     }
 
     public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -173,4 +175,11 @@ public class PlayerManager : CharacterManager
         WeaponsController.instance.ownedWeapons[newActiveIndex].SetActive(true);
     }
     
+    //Delete this later
+    private void DebugMenu() {
+        if (respawnCharacter) {
+            respawnCharacter = false;
+            ReviveCharacter();
+        }
+    }
 }

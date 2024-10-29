@@ -49,6 +49,10 @@ public class CharacterStatsManager : MonoBehaviour
         CalculateHealthBasedOnfortitudeLevel(endurance);
     }
 
+    public void Update() {
+        CheckHP();
+    }
+
     public float CalculateHealthBasedOnfortitudeLevel(int fortitude) {
         //Create an equation for how stamina is calculated
 
@@ -108,15 +112,21 @@ public class CharacterStatsManager : MonoBehaviour
         }
     }
 
-    //Remove this version if adding multiplayer
     public virtual void ResetStaminaRegenTimer() {
         staminaRegenerationTimer = 0;
     }
 
-    //Use this version if adding multiplayer
-        // public virtual void ResetStaminaRegenTimer(float previousStaminaAmount, float currentStaminaAmount) {
-        //     if (currentStaminaAmount < previousStaminaAmount) {
-        //         staminaRegenerationTimer = 0;
-        //     }
-        // }
+    public void CheckHP() {
+        if (currentHealth <= 0 && !character.isDead) {
+            StartCoroutine(character.ProcessDeathEvent());
+        }
+
+        //Clamp health to avoid over-healing
+        if (character.isPlayer) {
+            if (currentHealth > maxHealth) {
+                currentHealth = maxHealth;
+            }
+        }
+    }
+    
 }
