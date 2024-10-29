@@ -23,9 +23,12 @@ public class CharacterSoundFXManager : MonoBehaviour
         audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
     }
 
-     public void PlayFootStepSFX(){
+    public void PlayFootStepSFX(){
         if(characterManager.isGrounded && !characterManager.isPerformingAction){
             audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
         }
     }
+    // public void PlayRunningFootStepSFX(){
+    //     audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
+    // }
 }
