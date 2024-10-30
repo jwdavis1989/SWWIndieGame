@@ -110,12 +110,45 @@ public class ElementalStats
  */
 public class WeaponScript : MonoBehaviour
 {
+    [Header("Weapon Damage Collider")]
+    [SerializeField] MeleeWeaponDamageCollider meleeWeaponDamageCollider;
+
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
     [Header("Will appear as ??? on weapon sheet until obtained")]
     public bool hasObtained = false;
     [Header("Important: Set weapon type (Otherwise intialized by JSON)")]
     public WeaponStats stats;
+
+    public void Awake() {
+        meleeWeaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+        if (!isSpecialWeapon && meleeWeaponDamageCollider) {
+            SetWeaponDamage();
+        }
+    }
+
+    //Might remove
+    public void SetWeaponDamage() {
+        //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
+        // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
+            meleeWeaponDamageCollider.characterCausingDamage = WeaponsController.instance.characterThatOwnsThisArsenal;
+        // }
+        // else {
+        //     //Monster CharacterManager Weapon Assignment in hypothetical rework
+        // }
+        
+        meleeWeaponDamageCollider.physicalDamage = stats.attack;
+        meleeWeaponDamageCollider.fireDamage = stats.elemental.firePower;
+        meleeWeaponDamageCollider.iceDamage = stats.elemental.icePower;
+        meleeWeaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
+        meleeWeaponDamageCollider.windDamage = stats.elemental.windPower;
+        meleeWeaponDamageCollider.earthDamage = stats.elemental.earthPower;
+        meleeWeaponDamageCollider.lightDamage = stats.elemental.lightPower;
+        meleeWeaponDamageCollider.beastDamage = stats.elemental.beastPower;
+        meleeWeaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
+        meleeWeaponDamageCollider.techDamage = stats.elemental.techPower;
+    }
+
     public virtual void attackTarget(GameObject target)
     {
         Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DamageCollider : MonoBehaviour
 {
+    [Header("Collider")]
+    protected Collider damageCollider;
+
     [Header("Stats")]
     //public WeaponStats stats;
     public float physicalDamage = 0f;
@@ -74,6 +77,17 @@ public class DamageCollider : MonoBehaviour
         
         //Apply the copy's damage effect to the target
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+    }
+
+    public virtual void EnableDamageCollider() {
+        damageCollider.enabled = true;
+    }
+
+    public virtual void DisableDamageCollider() {
+        damageCollider.enabled = false;
+
+        //Reset list of hit enemies so they can be damaged again on next activation
+        charactersDamaged.Clear();
     }
 
 }

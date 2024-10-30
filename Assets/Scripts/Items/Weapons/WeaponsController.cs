@@ -17,7 +17,10 @@ public class WeaponsController : MonoBehaviour
 {
     public static WeaponsController instance;
 
-    [Header("WeaponsController\nDescription - Contains: List of all Weapon Types\n\t\t\tPrefafs of each weapon\n\t\t\tList of Player's current wepaons\n\n")]
+    [Header("Owner CharacterManager")]
+    public CharacterManager characterThatOwnsThisArsenal;
+
+    [Header("Description:\n\t- List of all Weapon Types\n\t- Prefabs of each weapon\n\t- List of Player's current wepaons\n\n")]
     [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
     public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
     public TextAsset baseWeaponJsonFile; // json file with intilizing stats that will overwrite prefab
@@ -115,6 +118,9 @@ public class WeaponsController : MonoBehaviour
             newWeaponIndex = (newWeaponIndex + 1 > totalWeapons - 1)? 0:newWeaponIndex+1;
             ChangeWeapon(newWeaponIndex);
         }
+
+        //Play the weapon swap animation
+        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, true, true, true);
     }
     public void prevWeapon()
     {
@@ -125,6 +131,9 @@ public class WeaponsController : MonoBehaviour
             newWeaponIndex = (newWeaponIndex - 1 < 0)? totalWeapons -1: newWeaponIndex-1;
             ChangeWeapon(newWeaponIndex);
         }
+
+        //Play the weapon swap animation
+        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, true, true, true);
     }
     public void ChangeSpecialWeapon(int index)
     {
@@ -145,6 +154,9 @@ public class WeaponsController : MonoBehaviour
             newWeaponIndex = (newWeaponIndex + 1 > totalWeapons - 1) ? 0 : newWeaponIndex + 1;
             ChangeSpecialWeapon(newWeaponIndex);
         }
+
+        //Play the weapon swap animation
+        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, true, true, true);
     }
     public void prevSpecialWeapon()
     {
@@ -155,6 +167,9 @@ public class WeaponsController : MonoBehaviour
             newWeaponIndex = (newWeaponIndex - 1 < 0)? totalWeapons - 1 : newWeaponIndex - 1;
             ChangeSpecialWeapon(newWeaponIndex);
         }
+
+        //Play the weapon swap animation
+        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, true, true, true);
     }
     public void AttackTargetWithEquippedWeapon(GameObject target)
     {
