@@ -131,7 +131,7 @@ public class WeaponScript : MonoBehaviour
     public void SetWeaponDamage() {
         //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
         // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
-            meleeWeaponDamageCollider.characterCausingDamage = WeaponsController.instance.characterThatOwnsThisArsenal;
+            meleeWeaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
         // }
         // else {
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework
