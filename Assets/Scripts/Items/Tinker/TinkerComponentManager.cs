@@ -23,17 +23,17 @@ public class TinkerComponentManager : MonoBehaviour
         {
             breakDownEquippedWeapon = false;
             //breakdown equipped weapon
-            BreakDownWeapon(WeaponsController.instance.indexOfEquippedWeapon, false);
+            BreakDownWeapon(PlayerWeaponManager.instance.indexOfEquippedWeapon, false);
             //equip first weapon
-            WeaponsController.instance.indexOfEquippedWeapon = 0;
-            if(WeaponsController.instance.ownedWeapons.Count > 0)
-                WeaponsController.instance.ownedWeapons[0].SetActive(true);
+            PlayerWeaponManager.instance.indexOfEquippedWeapon = 0;
+            if(PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+                PlayerWeaponManager.instance.ownedWeapons[0].SetActive(true);
         }
         if (addAWeaponComponentToEquippedWeapon)
         {
             addAWeaponComponentToEquippedWeapon = false;
             if(weaponComponents.Count > 0)
-                AddTinkerComponentToWeapon(WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon], weaponComponents[0], true);
+                AddTinkerComponentToWeapon(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon], weaponComponents[0], true);
         }
     }
     public void DropRandomItem(Transform transform, float distance = 0)
@@ -81,8 +81,8 @@ public class TinkerComponentManager : MonoBehaviour
     public TinkerComponent BreakDownWeapon(int index, bool specialWeapon)
     {
         
-        int weaponIndex = specialWeapon ? WeaponsController.instance.indexOfEquippedSpecialWeapon : WeaponsController.instance.indexOfEquippedWeapon;
-        List <GameObject> weaponsList = specialWeapon ? WeaponsController.instance.ownedSpecialWeapons : WeaponsController.instance.ownedWeapons;
+        int weaponIndex = specialWeapon ? PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon : PlayerWeaponManager.instance.indexOfEquippedWeapon;
+        List <GameObject> weaponsList = specialWeapon ? PlayerWeaponManager.instance.ownedSpecialWeapons : PlayerWeaponManager.instance.ownedWeapons;
         if (weaponsList.Count < index)
             return null;
         GameObject ownedWeapon = weaponsList[index];

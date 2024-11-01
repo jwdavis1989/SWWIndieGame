@@ -102,9 +102,9 @@ public class PlayerManager : CharacterManager
         currentCharacterData.currentStamina = playerStatsManager.currentStamina;
 
         //Add Weapon Arsenal Data later
-        currentCharacterData.weapons = WeaponsController.instance.GetCurrentWeapons();
-        currentCharacterData.indexOfEquippedWeapon = WeaponsController.instance.indexOfEquippedWeapon;
-        currentCharacterData.indexOfEquippedSpecialWeapon = WeaponsController.instance.indexOfEquippedSpecialWeapon;
+        currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
+        currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
+        currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -135,23 +135,23 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
         //Add Weapon Arsenal Data Loading here later
-        WeaponsController.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
-        WeaponsController.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
-        WeaponsController.instance.setCurrentWeapons(currentCharacterData.weapons);
+        PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
+        PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
+        PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
         //AttachCurrentlyEquippedWeaponObjectsToHand();
     }
 
     public void DebugAddWeapon() {
         WeaponType weaponType = (WeaponType)Random.Range(0, System.Enum.GetValues(typeof(WeaponType)).Length - 1);
         bool isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
-        WeaponsController.instance.SetAllWeaponsToInactive(isSpecial);
-        WeaponsController.instance.AddWeaponToCurrentWeapons(weaponType);
+        PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
+        PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
         if (isSpecial)
         {
-            WeaponsController.instance.indexOfEquippedSpecialWeapon = WeaponsController.instance.ownedSpecialWeapons.Count - 1;
+            PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
         }
         else
-            WeaponsController.instance.indexOfEquippedWeapon = WeaponsController.instance.ownedWeapons.Count - 1;
+            PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
     }
 
     // public void AttachCurrentlyEquippedWeaponObjectsToHand() {
@@ -165,14 +165,7 @@ public class PlayerManager : CharacterManager
     // }
 
     public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex) {
-        //Turn off old weapon
-        WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon].SetActive(false);
-
-        //Tell weaponcontroller what its new weapon index is
-        WeaponsController.instance.ChangeWeapon(newActiveIndex);
-
-        //Turn on new weapon
-        WeaponsController.instance.ownedWeapons[newActiveIndex].SetActive(true);
+        PlayerWeaponManager.instance.ChangeWeapon(newActiveIndex);
     }
     
     //Delete this later
