@@ -12,17 +12,41 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 
-
+/**
+ * Used to instantiate weapons with base stats into the world or to compare weapon types
+ * Note: Use CharacterWeaponManager.AddWeaponToCurrentWeapons to add a weapon directly to a character
+ *       Use PlayerWeaponMangaer.instance.AddWeaponToCurrentWeapons to add a weapon directly to the player
+ */
 public class WeaponsController : MonoBehaviour
 {
     public static WeaponsController instance;
-
-    [Header("Description:\n\t- List of all Weapon Types\n\t- Prefabs of each weapon\n\t- List of Player's current wepaons\n\n")]
-    [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
+    [Header("The WeaponsContoller contains all base weapon prefabs and stats.\n" +
+    "   Use this if adding a weapon to the game world\n" +
+    "   Use PlayerWeaponManager to add directly to the player\n" +
+    "   Use CharacterWeaponManager to add to another character")]
+    [Header("List of all weapons. Will use prefab added in Editor. Stats intialized by JSON")]
     public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
+    [Header("JSON containing base stats")]
     public TextAsset baseWeaponJsonFile; // json file with intilizing stats that will overwrite prefab
-    public bool debugMode = false; // Debug Text, adds shortsword to current weapons
-    
+    public bool debugMode = false; // Debug Text, adds to current weapons on Start
+
+    /**
+    * Creates and returns a weapon of any type at any location
+    */
+    public GameObject CreateWeapon(WeaponType type, Transform location)
+    {
+        return Instantiate(baseWeapons[(int)type], location);
+    }
+    void Start()
+    {
+        // Avoids destroying this object when changing scenes
+        DontDestroyOnLoad(gameObject);
+        // Load base stats for weapons from json
+        LoadAllWeaponTypes();
+        // If debug mode is on run some basic tests
+        RunTests();
+    }
+
     public void Awake() {
         if (instance == null) {
             instance = this;
@@ -31,16 +55,10 @@ public class WeaponsController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
-    {
-        //Avoids destroying this object when changing scenes
-        DontDestroyOnLoad(gameObject);
-        LoadAllWeaponTypes();
-        RunTests();
-    }
+
     public void LoadAllWeaponTypes()
     {
-        //add prefabs to initilizer array
+        //add prefabs to initilizer array sorted by weapon type
         GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
         foreach (var weapon in baseWeapons)
         {
@@ -71,14 +89,7 @@ public class WeaponsController : MonoBehaviour
         //Set weapons here
         baseWeapons = weaponsInitilizer;
     }
-
-    /**
-    * Creates and returns a weapon of any type at any location
-    */
-    public GameObject CreateWeapon(WeaponType type, Transform location)
-    {
-        return Instantiate(baseWeapons[(int)type], location);
-    }
+    //Some simple tests to demonstrate functionality
     void RunTests()
     {
         if (debugMode)//astest

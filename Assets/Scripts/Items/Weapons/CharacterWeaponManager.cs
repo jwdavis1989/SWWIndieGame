@@ -6,18 +6,18 @@ public class CharacterWeaponManager : MonoBehaviour
 {
     [Header("Owner CharacterManager")]
     public CharacterManager characterThatOwnsThisArsenal;
-    [Header("Player Inventory")]
+    [Header("Inventory")]
     public List<GameObject> ownedWeapons;
     public List<GameObject> ownedSpecialWeapons;
     public int indexOfEquippedWeapon = 0;
     public int indexOfEquippedSpecialWeapon = 0;
-    [Header("Weapon Attachment to Player")]
+    [Header("Weapon Attachment to Character")]
     public GameObject mainHandWeaponAnchor;
     public GameObject offHandWeaponAnchor;
 
     /**
      * Adds weapon of any type to current weapons
-     * Returns the weapon that was added
+     * Returns a reference to the weapon that was added
      */
     public WeaponScript AddWeaponToCurrentWeapons(WeaponType weaponType)
     {
@@ -113,16 +113,16 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     /**
-     * Attempt to attack target with equiped weapon. If this behavior is elsewhere then this should be deleted
+     * Attempt to attack target with equiped weapon. If this behavior is elsewhere then this should be deleted - Removed attack from weapon Alec 11/2/24
      */
-    public void AttackTargetWithEquippedWeapon(GameObject target)
-    {
-        if (target == null) return;
-        if (ownedWeapons.Count > indexOfEquippedWeapon & ownedWeapons[indexOfEquippedWeapon] != null)
-        {
-            ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().attackTarget(target);
-        }
-    }
+    //public void AttackTargetWithEquippedWeapon(GameObject target)
+    //{
+    //    if (target == null) return;
+    //    if (ownedWeapons.Count > indexOfEquippedWeapon & ownedWeapons[indexOfEquippedWeapon] != null)
+    //    {
+    //        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().attackTarget(target);
+    //    }
+    //}
     /**
      *  Loads weapons from Array
      *  Used by load game systems
@@ -159,18 +159,18 @@ public class CharacterWeaponManager : MonoBehaviour
     //Retruns JSON data used for save game
     public WeaponsArray GetCurrentWeapons()
     {
-        WeaponsArray weaponsPojo = new WeaponsArray();
-        weaponsPojo.weaponStats = new WeaponStats[ownedWeapons.Count + ownedSpecialWeapons.Count];
+        WeaponsArray weaponsData = new WeaponsArray();
+        weaponsData.weaponStats = new WeaponStats[ownedWeapons.Count + ownedSpecialWeapons.Count];
         int i = 0;
         foreach (GameObject weapon in ownedWeapons)
         {
-            weaponsPojo.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
+            weaponsData.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
         }
         foreach (GameObject weapon in ownedSpecialWeapons)
         {
-            weaponsPojo.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
+            weaponsData.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
         }
-        return weaponsPojo;
+        return weaponsData;
     }
     //sets all weapons or special weapons to inactive
     public void SetAllWeaponsToInactive(bool targetSpecialWeaponStatus)

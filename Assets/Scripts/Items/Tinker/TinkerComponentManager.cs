@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TinkerComponentManager : MonoBehaviour
 {
-    //****DEBUG ASTEST
+    //**** DEBUG AREA ASTEST
     [Header("DEBUG")]
     public bool debugMode = false;
     public bool dropRandomItem = false;
@@ -22,27 +22,27 @@ public class TinkerComponentManager : MonoBehaviour
         if (breakDownEquippedWeapon)
         {
             breakDownEquippedWeapon = false;
-            //breakdown equipped weapon
-            BreakDownWeapon(PlayerWeaponManager.instance.indexOfEquippedWeapon, false);
+            //breakdown equipped weapon of player
+            BreakDownWeapon(PlayerWeaponManager.instance.indexOfEquippedWeapon, false, PlayerWeaponManager.instance);
             //equip first weapon
             PlayerWeaponManager.instance.indexOfEquippedWeapon = 0;
-            if(PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
                 PlayerWeaponManager.instance.ownedWeapons[0].SetActive(true);
         }
         if (addAWeaponComponentToEquippedWeapon)
         {
             addAWeaponComponentToEquippedWeapon = false;
-            if(weaponComponents.Count > 0)
+            if (weaponComponents.Count > 0)
                 AddTinkerComponentToWeapon(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon], weaponComponents[0], true);
         }
     }
     public void DropRandomItem(Transform transform, float distance = 0)
     {
-        int i = UnityEngine.Random.Range(0, baseComponents.Length-1);
+        int i = UnityEngine.Random.Range(0, baseComponents.Length - 1);
         if (baseComponents[i] == null) return;
         Instantiate(baseComponents[i], transform.position + (transform.forward * distance), transform.rotation);
     }
-    //****DEBUG
+    //****END DEBUG AREA
 
     [Header("TinkerComponentManager is a singleton containing prefabs for each tinker component\n" +
         ", methods for upgrading/breaking down weapons\n" +
@@ -62,6 +62,7 @@ public class TinkerComponentManager : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
+        //Load base stats from json
         LoadAllComponentTypes();
     }
     //Array of Tinker Component Pre-Fabs. Use to instantiate components ingame and track players count of each component
@@ -76,17 +77,19 @@ public class TinkerComponentManager : MonoBehaviour
     public TextAsset baseComponentJsonFile;
     /**
     * break down weapon into a tinker component and add to owned components
-    * @Returns the component that was added
+    * @Returns a reference to the component that was added
     */
-    public TinkerComponent BreakDownWeapon(int index, bool specialWeapon)
+    public TinkerComponent BreakDownWeapon(int index, bool specialWeapon, CharacterWeaponManager characterWeapons)
     {
         
-        int weaponIndex = specialWeapon ? PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon : PlayerWeaponManager.instance.indexOfEquippedWeapon;
-        List <GameObject> weaponsList = specialWeapon ? PlayerWeaponManager.instance.ownedSpecialWeapons : PlayerWeaponManager.instance.ownedWeapons;
+        int weaponIndex = specialWeapon ? characterWeapons.indexOfEquippedSpecialWeapon : characterWeapons.indexOfEquippedWeapon;
+        List <GameObject> weaponsList = specialWeapon ? characterWeapons.ownedSpecialWeapons : characterWeapons.ownedWeapons;
         if (weaponsList.Count < index)
             return null;
         GameObject ownedWeapon = weaponsList[index];
         WeaponScript weapon = ownedWeapon.GetComponent<WeaponScript>();
+        if (weapon.stats.level < 5)
+            throw new ArgumentException("Weapon must be level 5");
         ownedWeapon.AddComponent<TinkerComponent>();
         TinkerComponent rv = ownedWeapon.GetComponent<TinkerComponent>();
         rv.stats.elementalStats = weapon.stats.elemental;
@@ -96,6 +99,7 @@ public class TinkerComponentManager : MonoBehaviour
         rv.stats.block = weapon.stats.block;
         rv.stats.isWeapon = true;
         rv.stats.count = 1;
+        rv.stats.itemName = weapon.stats.weaponName;
         weaponComponents.Add(ownedWeapon);
         weaponsList.Remove(ownedWeapon);
         ownedWeapon.SetActive(false);

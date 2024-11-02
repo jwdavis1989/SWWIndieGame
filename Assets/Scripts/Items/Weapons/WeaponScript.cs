@@ -26,7 +26,7 @@ public enum WeaponType
     FreezeCaster,
     //T3 Weapons
     DiamondSword,
-    //Limit
+    //Limit - Nothing past here
     UNKNOWN
 }
 /*
@@ -57,6 +57,7 @@ public class WeaponStats
     public float currentDurability = 1.0f;
     public int level = 1;
     public float currentExperiencePoints = 0.0f;
+    public float experiencePointsToNextLevel = 100.0f;
     public int currentTinkerPoints = 0;
     public String weaponName = "BaseWeaponName";
 }
@@ -105,7 +106,7 @@ public class ElementalStats
     }
 }
 /** 
- * Base weapon script inherited by other weapons - use for things all weapons should do
+ * Base weapon script containing weapon stats and behaviors
  * MonoBehaviour - Can add to Game Objects
  */
 public class WeaponScript : MonoBehaviour
@@ -148,18 +149,36 @@ public class WeaponScript : MonoBehaviour
         meleeWeaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
         meleeWeaponDamageCollider.techDamage = stats.elemental.techPower;
     }
-
-    public virtual void attackTarget(GameObject target)
+    /**
+     * Add Exp to a weapon and level it up if possible
+     */
+    public void AddExp(float exp)
     {
-        Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST
-        if (target != null) {
-            //calculateElementalDamage(stats.attack, target);
-            //target.GetComponent<EnemyController>().hp -= stats.attack;
-            //TODO
-            //play weapon animation
-            //set reload/recharge
+        stats.currentExperiencePoints += exp;
+        if(stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0)
+        {
+            stats.level++;
+            stats.currentTinkerPoints += stats.tinkerPointsPerLvl;
+            stats.currentExperiencePoints = stats.currentExperiencePoints - stats.experiencePointsToNextLevel;
+            //Currently add 100 to exp needed for each level
+            stats.experiencePointsToNextLevel = 100 * stats.level;
+            //Handle multi-level
+            if (stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0) 
+                AddExp(0);
         }
     }
+
+    //public virtual void attackTarget(GameObject target)
+    //{
+    //    Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST
+    //    if (target != null) {
+    //        //calculateElementalDamage(stats.attack, target);
+    //        //target.GetComponent<EnemyController>().hp -= stats.attack;
+    //        //TODO
+    //        //play weapon animation
+    //        //set reload/recharge
+    //    }
+    //}
     public float CalculateTotalDamage(CharacterManager targetCharacter)
     {
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);

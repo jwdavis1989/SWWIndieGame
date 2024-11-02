@@ -23,16 +23,14 @@ public class UpgradeMenuManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        int maxSize = 16;
-        int i = 0;
         foreach (Transform child in grid.transform)
         {
             Destroy(child.gameObject);
         }
+        //basic components
         foreach (GameObject component in TinkerComponentManager.instance.baseComponents)
         {
             if (component == null) continue;
-            if (i++ > maxSize) break;
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
             if (componentScript.stats.count > 0)
             {
@@ -41,6 +39,17 @@ public class UpgradeMenuManager : MonoBehaviour
                 gridElement.GetComponent<GridElementController>().bottomText.text = "" + componentScript.stats.count;
             }
             //gridElement.GetComponent<GridElementController>().image = componentScript.;
+        }
+        //weapon components
+        foreach(GameObject component in TinkerComponentManager.instance.weaponComponents)
+        {
+            TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
+            if (componentScript.stats.count >= 0)
+            {
+                Object gridElement = Instantiate(genericIcon, grid.transform);
+                gridElement.GetComponent<GridElementController>().topText.text = componentScript.stats.itemName;
+                gridElement.GetComponent<GridElementController>().bottomText.text = "Atk:" + componentScript.stats.attack;
+            }
         }
     }
 }
