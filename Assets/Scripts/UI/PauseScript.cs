@@ -16,6 +16,9 @@ public class PauseScript : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
+        upgradeMenu.SetActive(false);
+        mainPauseMenu.SetActive(true);
+        canvas.SetActive(false);
     }
     void Update()
     {
@@ -28,11 +31,6 @@ public class PauseScript : MonoBehaviour
         {
             Unpause();
         }
-    }
-
-    public void Home()
-    {
-        SceneManager.LoadScene(0);
     }
 
     public void ContinueClick()
@@ -51,6 +49,8 @@ public class PauseScript : MonoBehaviour
     }
     public void MainMenuClick()
     {
+        Destroy(GameObject.Find("Player"));
+        Destroy(GameObject.Find("DontDestroyOnLoad"));
         SceneManager.LoadSceneAsync(0);
         Unpause();
     }
@@ -87,8 +87,8 @@ public class PauseScript : MonoBehaviour
     {
         Time.timeScale = 1;
         gamePaused = false;
-        mainPauseMenu.SetActive(true);
         upgradeMenu.SetActive(false);
+        mainPauseMenu.SetActive(true);
         canvas.SetActive(false);
     }
     [Header("Pause is a singleton")]

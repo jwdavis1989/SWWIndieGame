@@ -8,7 +8,7 @@ public class GridElementController : MonoBehaviour
 {
     public TextMeshProUGUI topText;
     public TextMeshProUGUI bottomText;
-    public Image image;
+    public Button button;
     // Start is called before the first frame update
     void Start()
     {
