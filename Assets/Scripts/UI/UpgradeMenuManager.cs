@@ -64,6 +64,9 @@ public class UpgradeMenuManager : MonoBehaviour
      */
     void LoadWeaponsToScreen()
     {
+        int numOfPage = PlayerWeaponManager.instance.ownedWeapons.Count / 2;
+        wpnScroll.numberOfSteps = numOfPage;
+        wpnScroll.size = 1.0f / numOfPage;
         int maxDisplayed = 4;
         int displayed = 0;
         int wpnPerRow = 2;
@@ -80,31 +83,49 @@ public class UpgradeMenuManager : MonoBehaviour
             displayed++;
             WeaponScript wpnScrpt = wpn.GetComponent<WeaponScript>();
             Object gridElement = Instantiate(genericIcon, weaponsGrid.transform);
-            gridElement.GetComponent<GridElementController>().topText.text = wpnScrpt.stats.weaponName;
-            gridElement.GetComponent<GridElementController>().bottomText.text = "Lvl " + wpnScrpt.stats.level;
-
+            GridElementController gridScript = gridElement.GetComponent<GridElementController>();
+            gridScript.topText.text = wpnScrpt.stats.weaponName;
+            gridScript.bottomText.text = "Lvl " + wpnScrpt.stats.level;
+            //attach button behavior (equip weapon now. Could be select weapon for upgrade, etc.) 
+            gridScript.index = i;
+            gridScript.button.onClick.AddListener(() =>
+            {
+                PlayerWeaponManager.instance.ChangeWeapon(gridScript.index);
+            });
         }
-        //foreach (GameObject wpn in PlayerWeaponManager.instance.ownedWeapons)
-        //{
-        //    if (wpn == null) continue;
-        //    WeaponScript wpnScrpt = wpn.GetComponent<WeaponScript>();
-        //    Object gridElement = Instantiate(genericIcon, weaponsGrid.transform);
-        //    gridElement.GetComponent<GridElementController>().topText.text = wpnScrpt.stats.weaponName;
-        //    gridElement.GetComponent<GridElementController>().bottomText.text = "Lvl " + wpnScrpt.stats.level;
-        //}
     }
-    public void nextWpnPage()
+    /**
+     * This section controls the weapon scroll bar
+     */
+    public Scrollbar wpnScroll;
+    public float currentStep = 0;
+    public float lastStep = 0;
+    public void OnValueChanged(float value)
     {
         int wpnPerRow = 2;
-        if (curWeaponPage < PlayerWeaponManager.instance.ownedWeapons.Count / wpnPerRow)
+        int numOfPage = PlayerWeaponManager.instance.ownedWeapons.Count / wpnPerRow;
+        wpnScroll.numberOfSteps = numOfPage;
+        wpnScroll.size = 1.0f / numOfPage;
+        currentStep = Mathf.Round(wpnScroll.value * numOfPage);
+        if (currentStep == lastStep) return;
+        if (currentStep > lastStep)
         {
             curWeaponPage++;
         }
         else
         {
+            curWeaponPage--;
+        }
+        if (curWeaponPage > PlayerWeaponManager.instance.ownedWeapons.Count / wpnPerRow)
+        {// past the end go to beg
             curWeaponPage = 0;
         }
-        Debug.Log("Cur wpn pg:" + curWeaponPage);
+        else if (curWeaponPage < 0)
+        {//past beggining go to end
+            curWeaponPage = PlayerWeaponManager.instance.ownedWeapons.Count / wpnPerRow;
+        }
+        lastStep = currentStep;
+        LoadWeaponsToScreen();
     }
     /**
      * Turn equipped weapon into a component
