@@ -127,6 +127,12 @@ public class CharacterWeaponManager : MonoBehaviour
      *  Loads weapons from Array
      *  Used by load game systems
      */
+    public GameObject getEquippedWeapon()
+    {
+        if (ownedWeapons.Count == 0) 
+            return null;
+        return ownedWeapons[indexOfEquippedWeapon];
+    }
     public void setCurrentWeapons(WeaponsArray weaponsJson)
     {
         ownedWeapons = new List<GameObject>();
