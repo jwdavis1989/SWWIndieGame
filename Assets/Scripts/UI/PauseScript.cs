@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PauseScript : MonoBehaviour
@@ -12,6 +13,7 @@ public class PauseScript : MonoBehaviour
     [SerializeField] GameObject upgradeMenu;
     [SerializeField] GameObject DebugSaveGameButton;
     [SerializeField] GameObject DebugAddItemButton;
+    public EventSystem mainPauseMenuEvents;
 
     public void Start()
     {
@@ -22,14 +24,19 @@ public class PauseScript : MonoBehaviour
     }
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton9)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
             ) && gamePaused == false)
         {
             Pause();
         }
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton9)) && gamePaused == true)
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
         {
             Unpause();
+            mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
+        }
+        if (gamePaused && mainPauseMenuEvents.currentSelectedGameObject == null)
+        { //grid system become null when equipping weapon because the grid is reloaded
+            mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
         }
     }
 

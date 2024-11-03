@@ -1,6 +1,8 @@
+using Palmmedia.ReportGenerator.Core.Common;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,7 +13,7 @@ public class UpgradeMenuManager : MonoBehaviour
     public int curWeaponPage = 0;
     public GameObject componentsGrid;
     private GridLayoutGroup gridLayoutGroup;
-    public Object genericIcon;
+    public GameObject elementPrefab;
     public EventSystem eventSystem;
     // Start is called before the first frame update
     void Start()
@@ -49,7 +51,7 @@ public class UpgradeMenuManager : MonoBehaviour
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
             if (componentScript.stats.count > 0)
             {
-                Object gridElement = Instantiate(genericIcon, componentsGrid.transform);
+                Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
                 GridElementController gridScript = gridElement.GetComponent<GridElementController>();
                 gridScript.topText.text = componentScript.stats.itemName;
                 gridScript.bottomText.text = "" + componentScript.stats.count;
@@ -57,7 +59,11 @@ public class UpgradeMenuManager : MonoBehaviour
                 gridScript.button.onClick.AddListener(() =>
                 {
                     TinkerComponentManager.instance.UseComponent( PlayerWeaponManager.instance.getEquippedWeapon(), component);
-                    LoadComponentsToScreen();
+                    int newCount = gridScript.bottomText.text.ParseLargeInteger() - 1;
+                    if (newCount > 0)
+                    {
+                        gridScript.bottomText.text = "" + newCount;
+                    }else Destroy(gridElement);
                 });
             }
             //gridElement.GetComponent<GridElementController>().image = componentScript.;
@@ -66,7 +72,7 @@ public class UpgradeMenuManager : MonoBehaviour
         foreach (GameObject component in TinkerComponentManager.instance.weaponComponents)
         {
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
-            Object gridElement = Instantiate(genericIcon, componentsGrid.transform);
+            Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
             gridElement.GetComponent<GridElementController>().topText.text = componentScript.stats.itemName;
             gridElement.GetComponent<GridElementController>().bottomText.text = "Atk:" + componentScript.stats.attack;
         }
@@ -74,7 +80,7 @@ public class UpgradeMenuManager : MonoBehaviour
     /**
      * Clear weapons grid and reload it with current values
      */
-    void LoadWeaponsToScreen()
+    void LoadWeaponsToScreen(bool setCursor = false)
     {
         PlayerWeaponManager playerWpns = PlayerWeaponManager.instance;
         int numOfPage = playerWpns.ownedWeapons.Count / 2;
@@ -95,18 +101,22 @@ public class UpgradeMenuManager : MonoBehaviour
             if (wpn == null) continue;
             displayed++;
             WeaponScript wpnScrpt = wpn.GetComponent<WeaponScript>();
-            Object gridElement = Instantiate(genericIcon, weaponsGrid.transform);
+            GameObject gridElement = Instantiate(elementPrefab, weaponsGrid.transform);
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
             gridScript.topText.text = wpnScrpt.stats.weaponName;
             gridScript.bottomText.text = "Lvl " + wpnScrpt.stats.level;
             //attach button behavior (equip weapon now. Could be select weapon for upgrade, etc.) 
             gridScript.index = i;
             if (i == playerWpns.indexOfEquippedWeapon)
+            {
                 gridScript.button.GetComponent<Image>().color = Color.green;
+                if(setCursor) //used when changing weapon
+                    eventSystem.SetSelectedGameObject(gridElement);
+            }
             gridScript.button.onClick.AddListener(() =>
             {
                 playerWpns.ChangeWeapon(gridScript.index);
-                LoadWeaponsToScreen();
+                LoadWeaponsToScreen(true);
             });
         }
     }
@@ -153,7 +163,7 @@ public class UpgradeMenuManager : MonoBehaviour
             //break down weapon
             TinkerComponent newComp = TinkerComponentManager.instance.BreakDownWeapon(PlayerWeaponManager.instance.indexOfEquippedWeapon, false, PlayerWeaponManager.instance);
             //add to screen
-            Object gridElement = Instantiate(genericIcon, componentsGrid.transform);
+            Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
             gridElement.GetComponent<GridElementController>().topText.text = newComp.stats.itemName;
             gridElement.GetComponent<GridElementController>().bottomText.text = "Atk:" + newComp.stats.attack;
             Debug.Log("Broke down " + newComp.stats.itemName);
