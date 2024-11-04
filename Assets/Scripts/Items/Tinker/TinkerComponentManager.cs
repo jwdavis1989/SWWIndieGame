@@ -6,6 +6,14 @@ using UnityEngine;
 
 public class TinkerComponentManager : MonoBehaviour
 {
+    /**
+    * Drops a Tinker Component of any type other than weapon at the specified location
+    * Returns a reference to the dropped component
+    */
+    public GameObject DropComponent(TinkerComponentType type, Transform location)
+    {
+        return Instantiate(baseComponents[(int)type], location);
+    }
     //**** DEBUG AREA ASTEST
     [Header("DEBUG")]
     public bool debugMode = false;
@@ -43,10 +51,6 @@ public class TinkerComponentManager : MonoBehaviour
         Instantiate(baseComponents[i], transform.position + (transform.forward * distance), transform.rotation);
     }
     //****END DEBUG AREA
-
-    [Header("TinkerComponentManager is a singleton containing prefabs for each tinker component\n" +
-        ", methods for upgrading/breaking down weapons\n" +
-        ", and a record of the players current tinker components\n")]
     public static TinkerComponentManager instance;
     public void Awake()
     {
@@ -66,6 +70,11 @@ public class TinkerComponentManager : MonoBehaviour
         LoadAllComponentTypes();
     }
     //Array of Tinker Component Pre-Fabs. Use to instantiate components ingame and track players count of each component
+    [Header("TinkerComponentManager is a singleton containing:\n " +
+    "\tPrefabs for each tinker component\n" +
+    "\tMethod for dropping components to the Game world\n" +
+    "\tMethods for upgrading/breaking down weapons\n" +
+    "\tA record of the players current tinker components\n")]
     [Header("Array of Tinker Component Pre-Fabs. \n" +
         "Use to instantiate components ingame and\n track players count of each component")]
     public GameObject[] baseComponents;

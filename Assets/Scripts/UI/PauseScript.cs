@@ -35,7 +35,7 @@ public class PauseScript : MonoBehaviour
             mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
         }
         if (gamePaused && mainPauseMenuEvents.currentSelectedGameObject == null)
-        { //grid system become null when equipping weapon because the grid is reloaded
+        {   // Handle for lost cursor
             mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
         }
     }

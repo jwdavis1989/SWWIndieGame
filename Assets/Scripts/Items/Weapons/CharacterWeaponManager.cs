@@ -124,15 +124,24 @@ public class CharacterWeaponManager : MonoBehaviour
     //    }
     //}
     /**
-     *  Loads weapons from Array
-     *  Used by load game systems
+     * Returns equipped weapon or special weapon if specified. Null if nothing equipped
      */
-    public GameObject getEquippedWeapon()
+    public GameObject GetEquippedWeapon(bool special = false)
     {
+        if (special)
+        {
+            if (ownedSpecialWeapons.Count == 0)
+                return null;
+            return ownedSpecialWeapons[indexOfEquippedSpecialWeapon];
+        }
         if (ownedWeapons.Count == 0) 
             return null;
         return ownedWeapons[indexOfEquippedWeapon];
     }
+    /**
+ *  Loads weapons from Array
+ *  Used by load game systems
+ */
     public void setCurrentWeapons(WeaponsArray weaponsJson)
     {
         ownedWeapons = new List<GameObject>();
