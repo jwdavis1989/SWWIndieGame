@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -68,6 +69,7 @@ public class UpgradeMenuManager : MonoBehaviour
         PlayerWeaponManager wpns = PlayerWeaponManager.instance;
         WeaponScript wpn = wpns.ownedWeapons[wpns.indexOfEquippedWeapon].GetComponent<WeaponScript>();
         wpn.stats.level++;
+        wpn.stats.currentTinkerPoints += 10;
         Debug.Log("Leveled up " + wpn.stats.weaponName + " to level " + wpn.stats.level + ".");
         LoadWeaponsToScreen();//update screen
     }
@@ -123,7 +125,7 @@ public class UpgradeMenuManager : MonoBehaviour
             WeaponScript wpn = PlayerWeaponManager.instance.GetEquippedWeapon().GetComponent<WeaponScript>();
             WeaponStats stats = wpn.stats;
             ElementalStats el = stats.elemental;
-            text = "Equipped - " + stats.weaponName +
+            text = "Equipped - " + stats.weaponName + "   TP " + stats.currentTinkerPoints + " Durability " + stats.durability +
             "\r\n  Stats: Attack " + stats.attack + " Block " + stats.block + " Stability " + stats.stability +
             "\r\n  Elemental: Fire " + el.firePower + ", Ice " + el.icePower + ", Lightning " + el.lightningPower +
             "\r\n  Wind " + el.windPower + ", Earth " + el.earthPower + ", Light " + el.lightPower + ", Beast " + el.beastPower +
@@ -135,7 +137,7 @@ public class UpgradeMenuManager : MonoBehaviour
             WeaponScript specWpn = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>();
             WeaponStats specStats = specWpn.stats;
             ElementalStats sEl = specStats.elemental;
-            text += "\r\n\r\nSpecial - " + specStats.weaponName +
+            text += "\r\n\r\nSpecial - " + specStats.weaponName + "   TP " + specStats.currentTinkerPoints + " Durability " + specStats.durability +
             "\r\n  Stats: Attack " + specStats.attack + " Block " + specStats.block + " Stability " + specStats.stability +
             "\r\n  Elemental: Fire " + sEl.firePower + ", Ice " + sEl.icePower + ", Lightning " + sEl.lightningPower +
             "\r\n  Wind " + sEl.windPower + ", Earth " + sEl.earthPower + ", Light " + sEl.lightPower + ", Beast " + sEl.beastPower +
@@ -164,17 +166,28 @@ public class UpgradeMenuManager : MonoBehaviour
                 GridElementController gridScript = gridElement.GetComponent<GridElementController>();
                 gridScript.topText.text = componentScript.stats.itemName;
                 gridScript.bottomText.text = "" + componentScript.stats.count;
-                //TODO if !CanUseComponent(weapon, tinkerComponent) then disable button
-                gridScript.button.onClick.AddListener(() =>
+                if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                 {
-                    TinkerComponentManager.instance.UseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component);
-                    int newCount = gridScript.bottomText.text.ParseLargeInteger() - 1;
-                    if (newCount > 0)
+                    /**   ADD EVENT TO COMPONENT CLICK   */
+                    gridScript.button.onClick.AddListener(() =>
                     {
-                        gridScript.bottomText.text = "" + newCount;
-                    }
-                    else Destroy(gridElement);
-                });
+                        if (TinkerComponentManager.instance.UseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
+                        {
+                            int newCount = gridScript.bottomText.text.ParseLargeInteger() - 1;
+                            LoadEquippedWeapons();
+                            if (newCount > 0)
+                            {
+                                gridScript.bottomText.text = "" + newCount;
+                            }
+                            else Destroy(gridElement);
+                        }
+                        else
+                        {
+                            Debug.Log("Failed to use component " + componentScript.stats.itemName);
+                        }
+                    });
+                }
+                else gridScript.button.interactable = false;
             }
             //gridElement.GetComponent<GridElementController>().image = componentScript.;
         }
@@ -214,14 +227,15 @@ public class UpgradeMenuManager : MonoBehaviour
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
             gridScript.topText.text = wpnScrpt.stats.weaponName;
             gridScript.bottomText.text = "Lvl " + wpnScrpt.stats.level;
-            //attach button behavior (equip weapon now. Could be select weapon for upgrade, etc.) 
-            gridScript.index = i;
+            //mark equipped weapon
             if (i == playerWpns.indexOfEquippedWeapon)
             {
                 gridScript.button.GetComponent<Image>().color = Color.green;
-                if (setCursor) //used when changing weapon
-                    eventSystem.SetSelectedGameObject(gridElement);
+                //if (setCursor) //used to reset cursor when changing weapon
+                //    eventSystem.SetSelectedGameObject(gridElement);
             }
+            /**   ADD WEAPON CLICK EVENT   */
+            gridScript.index = i;
             gridScript.button.onClick.AddListener(() =>
             {
                 playerWpns.ChangeWeapon(gridScript.index);
