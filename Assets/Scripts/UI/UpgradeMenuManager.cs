@@ -171,15 +171,22 @@ public class UpgradeMenuManager : MonoBehaviour
                     /**   ADD EVENT TO COMPONENT CLICK   */
                     gridScript.button.onClick.AddListener(() =>
                     {
-                        if (TinkerComponentManager.instance.UseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
+                        if (PlayerWeaponManager.instance.GetEquippedWeapon() != null && TinkerComponentManager.instance.UseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                         {
-                            int newCount = gridScript.bottomText.text.ParseLargeInteger() - 1;
-                            LoadEquippedWeapons();
-                            if (newCount > 0)
+                            if (componentScript.stats.isWeapon)
                             {
-                                gridScript.bottomText.text = "" + newCount;
+                                Destroy(gridElement);
                             }
-                            else Destroy(gridElement);
+                            else
+                            {
+                                int newCount = gridScript.bottomText.text.Trim().ParseLargeInteger() - 1;
+                                if (newCount > 0)
+                                {
+                                    gridScript.bottomText.text = "" + newCount;
+                                }
+                                else Destroy(gridElement);
+                            }
+                            LoadEquippedWeapons();
                         }
                         else
                         {

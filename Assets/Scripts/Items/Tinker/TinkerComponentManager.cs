@@ -183,9 +183,9 @@ public class TinkerComponentManager : MonoBehaviour
         float newDur = Mathf.Min(weapon.stats.durability + tinkerComponent.stats.durability, weapon.stats.maxDurability);
         //if any stat will be upgraded then we can upgrade
         if (diffWithPrev.firePower > 0 ||
-            diffWithPrev.icePower > 0 ||
+            diffWithPrev.icePower > 0  ||
             diffWithPrev.lightningPower > 0 ||
-            diffWithPrev.windPower > 0 ||
+            diffWithPrev.windPower > 0  ||
             diffWithPrev.earthPower > 0 ||
             diffWithPrev.lightPower > 0 ||
             diffWithPrev.beastPower > 0 ||
