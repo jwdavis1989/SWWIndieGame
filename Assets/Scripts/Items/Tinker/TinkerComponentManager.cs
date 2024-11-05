@@ -205,6 +205,7 @@ public class TinkerComponentManager : MonoBehaviour
                 weapon.stats.block = newBlock;
                 weapon.stats.durability = newDur;
                 tinkerComponent.stats.count--;
+                weapon.stats.currentTinkerPoints--;
                 if (tinkerComponent.stats.isWeapon)
                 {
                     weaponComponents.Remove(tinkerComponentPassed);
