@@ -299,6 +299,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugTeleportToSamDev"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d1504a1-1849-426b-b8af-2916aa04dab0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -433,6 +442,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""DebugTeleportToJacobDev"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3de6194f-723c-4448-86d6-797a7bf69784"",
+                    ""path"": ""<Keyboard>/numpad4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToSamDev"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -482,6 +502,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToSamDev = m_PlayerActions.FindAction("DebugTeleportToSamDev", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
@@ -645,6 +666,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_NextWeapon;
+    private readonly InputAction m_PlayerActions_DebugTeleportToSamDev;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -656,6 +678,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
+        public InputAction @DebugTeleportToSamDev => m_Wrapper.m_PlayerActions_DebugTeleportToSamDev;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -686,6 +709,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NextWeapon.started += instance.OnNextWeapon;
             @NextWeapon.performed += instance.OnNextWeapon;
             @NextWeapon.canceled += instance.OnNextWeapon;
+            @DebugTeleportToSamDev.started += instance.OnDebugTeleportToSamDev;
+            @DebugTeleportToSamDev.performed += instance.OnDebugTeleportToSamDev;
+            @DebugTeleportToSamDev.canceled += instance.OnDebugTeleportToSamDev;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -711,6 +737,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NextWeapon.started -= instance.OnNextWeapon;
             @NextWeapon.performed -= instance.OnNextWeapon;
             @NextWeapon.canceled -= instance.OnNextWeapon;
+            @DebugTeleportToSamDev.started -= instance.OnDebugTeleportToSamDev;
+            @DebugTeleportToSamDev.performed -= instance.OnDebugTeleportToSamDev;
+            @DebugTeleportToSamDev.canceled -= instance.OnDebugTeleportToSamDev;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -791,6 +820,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
+        void OnDebugTeleportToSamDev(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

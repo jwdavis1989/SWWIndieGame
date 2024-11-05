@@ -277,6 +277,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DebugTeleportToSamDev",
+                    "type": "Button",
+                    "id": "7d1504a1-1849-426b-b8af-2916aa04dab0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -409,6 +418,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DebugTeleportToJacobDev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3de6194f-723c-4448-86d6-797a7bf69784",
+                    "path": "<Keyboard>/numpad4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTeleportToSamDev",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -82,6 +82,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += i => SceneManager.LoadSceneAsync(2);
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
+            playerControls.PlayerActions.DebugTeleportToSamDev.performed += i => SceneManager.LoadSceneAsync(4);
 
         }
 
