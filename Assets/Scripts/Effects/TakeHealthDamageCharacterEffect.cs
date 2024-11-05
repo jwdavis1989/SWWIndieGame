@@ -83,7 +83,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Monsters or player created damage
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
-                finalDamageDealt = WeaponsController.instance.ownedWeapons[WeaponsController.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter);
+                finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter);
             }
             else {
                 finalDamageDealt = CalculateNPCDamage(targetCharacter);

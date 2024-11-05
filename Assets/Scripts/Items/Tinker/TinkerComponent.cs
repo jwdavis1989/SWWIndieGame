@@ -22,7 +22,7 @@ public enum TinkerComponentType
     Razor,
     Hook,
     Drillbit,
-    RareTinkeredComponents,
+    //RareTinkeredComponents
     Amethyst,
     Aquamarine,
     Diamond,

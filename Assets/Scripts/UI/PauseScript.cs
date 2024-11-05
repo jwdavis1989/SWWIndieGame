@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PauseScript : MonoBehaviour
@@ -12,27 +13,31 @@ public class PauseScript : MonoBehaviour
     [SerializeField] GameObject upgradeMenu;
     [SerializeField] GameObject DebugSaveGameButton;
     [SerializeField] GameObject DebugAddItemButton;
+    public EventSystem mainPauseMenuEvents;
 
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
+        upgradeMenu.SetActive(false);
+        mainPauseMenu.SetActive(true);
+        canvas.SetActive(false);
     }
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton9)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
             ) && gamePaused == false)
         {
             Pause();
         }
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton9)) && gamePaused == true)
+        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
         {
             Unpause();
+            mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
         }
-    }
-
-    public void Home()
-    {
-        SceneManager.LoadScene(0);
+        if (gamePaused && mainPauseMenuEvents.currentSelectedGameObject == null)
+        {   // Handle for lost cursor
+            mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
+        }
     }
 
     public void ContinueClick()
@@ -51,6 +56,8 @@ public class PauseScript : MonoBehaviour
     }
     public void MainMenuClick()
     {
+        Destroy(GameObject.Find("Player"));
+        Destroy(GameObject.Find("DontDestroyOnLoad"));
         SceneManager.LoadSceneAsync(0);
         Unpause();
     }
@@ -87,8 +94,8 @@ public class PauseScript : MonoBehaviour
     {
         Time.timeScale = 1;
         gamePaused = false;
-        mainPauseMenu.SetActive(true);
         upgradeMenu.SetActive(false);
+        mainPauseMenu.SetActive(true);
         canvas.SetActive(false);
     }
     [Header("Pause is a singleton")]

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8130850429207198863}
-  - component: {fileID: 7593961861136561148}
+  - component: {fileID: 1513951686123125239}
   m_Layer: 0
   m_Name: Wrench
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 1826034196187816765}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &7593961861136561148
+--- !u!114 &1513951686123125239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,41 +42,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1847124638102049318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 970dc607506d8c449af3677e80c130b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
-  hasObtained: 1
+  hasObtained: 0
   stats:
     weaponType: 1
-    attack: 16
-    maxAttack: 35
-    durability: 100
-    maxDurability: 134
-    block: 25
-    maxBlock: 27
-    stability: 0
-    maxStability: 10
+    attack: 1
+    maxAttack: 1
+    durability: 1
+    maxDurability: 1
+    block: 1
+    maxBlock: 1
+    stability: 1
+    maxStability: 1
     elemental:
-      firePower: 2
+      firePower: 0
       icePower: 0
       lightningPower: 0
       windPower: 0
-      earthPower: 10
+      earthPower: 0
       lightPower: 0
-      beastPower: 10
+      beastPower: 0
       scalesPower: 0
-      techPower: 5
+      techPower: 0
     maxElemental:
-      firePower: 34
-      icePower: 34
-      lightningPower: 34
-      windPower: 34
-      earthPower: 34
-      lightPower: 34
-      beastPower: 34
-      scalesPower: 34
-      techPower: 34
+      firePower: 0
+      icePower: 0
+      lightningPower: 0
+      windPower: 0
+      earthPower: 0
+      lightPower: 0
+      beastPower: 0
+      scalesPower: 0
+      techPower: 0
     speed: 1
     maxSpeed: 1
     specialtyCooldown: 0
@@ -86,8 +87,9 @@ MonoBehaviour:
     currentDurability: 1
     level: 1
     currentExperiencePoints: 0
-    currentTinkerPoints: 1
-    weaponName: Wrench
+    experiencePointsToNextLevel: 100
+    currentTinkerPoints: 0
+    weaponName: BaseWeaponName
 --- !u!1001 &6642198825121613863
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,12 +9,13 @@ public class CharacterSoundFXManager : MonoBehaviour
     private int footStepSFXCount;
 
 
-    protected virtual void Awake() {
+    //protected virtual void Awake() {
+    //I moved to Start because I kept getting an error with this loading before the WorldSoundFXManager - Alec 11/2/24
+    protected virtual void Start() { 
         characterManager = GetComponent<CharacterManager>();
         audioSource = GetComponent<AudioSource>();
         footStepSFXCount = WorldSoundFXManager.instance.walkFootStepSFX.Length;
     }
-
     public void PlayRollSoundFX() {
         audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
     }

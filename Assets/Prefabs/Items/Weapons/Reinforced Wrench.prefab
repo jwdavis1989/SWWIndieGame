@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8130850429207198863}
-  - component: {fileID: 7593961861136561148}
+  - component: {fileID: -2016331803541816496}
   m_Layer: 0
   m_Name: Reinforced Wrench
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 418791301400493166}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7593961861136561148
+--- !u!114 &-2016331803541816496
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,9 +42,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1847124638102049318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 970dc607506d8c449af3677e80c130b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meleeWeaponDamageCollider: {fileID: 0}
+  isSpecialWeapon: 0
+  hasObtained: 0
   stats:
     weaponType: 5
     attack: 1
@@ -84,10 +87,9 @@ MonoBehaviour:
     currentDurability: 1
     level: 1
     currentExperiencePoints: 0
+    experiencePointsToNextLevel: 100
     currentTinkerPoints: 0
     weaponName: BaseWeaponName
-  isSpecialWeapon: 0
-  hasObtained: 0
 --- !u!1 &5066913823902681415
 GameObject:
   m_ObjectHideFlags: 0

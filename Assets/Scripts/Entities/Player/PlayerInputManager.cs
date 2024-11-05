@@ -150,15 +150,15 @@ public class PlayerInputManager : MonoBehaviour
         mouseWheelVerticalInput = mouseWheelInput.y;
         //if(mouseWheelVerticalInput != prevMouseWheelVerticalInput)
         //{
-        //    WeaponsController.instance.nextWeapon();
+        //    PlayerWeaponManager.instance.nextWeapon();
         //}
         if (mouseWheelVerticalInput == 1)
         {
-            WeaponsController.instance.nextWeapon();
+            PlayerWeaponManager.instance.nextWeapon();
         }
         else if (mouseWheelVerticalInput == -1 )
         {
-            WeaponsController.instance.nextSpecialWeapon();
+            PlayerWeaponManager.instance.nextSpecialWeapon();
         }
         prevMouseWheelVerticalInput = mouseWheelVerticalInput;
     }
