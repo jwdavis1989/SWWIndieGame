@@ -81,6 +81,7 @@ public class WeaponsController : MonoBehaviour
                 weaponsInitilizer[i] = new GameObject("Empty");
                 weaponsInitilizer[i].AddComponent(typeof(WeaponScript));
                 weaponsInitilizer[i].GetComponent<WeaponScript>().stats = weaponStat;
+                weaponsInitilizer[i].GetComponent<WeaponScript>().SetWeaponDamage();
                 if (debugMode) Debug.Log("created object for " + i + " type:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponName); //astest
             }
             if (debugMode) Debug.Log("Weapon " + i + ": WeaponType:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponType

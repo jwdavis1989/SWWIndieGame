@@ -210,6 +210,7 @@ public class TinkerComponentManager : MonoBehaviour
                 {
                     weaponComponents.Remove(tinkerComponentPassed);
                 }
+                weapon.SetWeaponDamage();
             }
         }
         Debug.Log("AddTinkerComponentToWeapon ret " + canUpgrade);//astest
