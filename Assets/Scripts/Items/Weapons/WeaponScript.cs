@@ -128,7 +128,7 @@ public class WeaponScript : MonoBehaviour
         }
     }
 
-    //Might remove
+    //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage() {
         if (meleeWeaponDamageCollider == null) return;
         //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
@@ -138,6 +138,7 @@ public class WeaponScript : MonoBehaviour
         // else {
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework
         // }
+        meleeWeaponDamageCollider.enabled = true;
         
         meleeWeaponDamageCollider.physicalDamage = stats.attack;
         meleeWeaponDamageCollider.fireDamage = stats.elemental.firePower;
@@ -149,6 +150,9 @@ public class WeaponScript : MonoBehaviour
         meleeWeaponDamageCollider.beastDamage = stats.elemental.beastPower;
         meleeWeaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
         meleeWeaponDamageCollider.techDamage = stats.elemental.techPower;
+
+        //Turn the collider back off so it doesn't hurt anyone, ow
+        meleeWeaponDamageCollider.enabled = false;
     }
     /**
      * Add Exp to a weapon and level it up if possible
