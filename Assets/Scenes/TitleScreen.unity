@@ -34606,14 +34606,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 4202956625226732820}
-  gravityForce: -5.55
+  gravityForce: -40
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
   groundCheckSphereRadius: 0.3
   yVelocity: {x: 0, y: -20, z: 0}
   groundedYVelocity: -20
-  fallStartYVelocity: -7
+  fallStartYVelocity: -5
   rightBoosters: {fileID: 3583366393923518017}
   leftBoosters: {fileID: 7105567362008579310}
   characterManager: {fileID: 4202956625226732820}
@@ -34623,7 +34623,7 @@ MonoBehaviour:
   runningSpeed: 4.5
   sprintingSpeed: 7
   rotationSpeed: 15
-  jumpHeight: 2
+  jumpHeight: 4
   jumpForwardSpeed: 5
   freeFallSpeed: 2
   forceFieldGraphic: {fileID: 0}
