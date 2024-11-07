@@ -12,30 +12,41 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 
-
+/**
+ * Used to instantiate weapons with base stats into the world or to compare weapon types
+ * Note: Use CharacterWeaponManager.AddWeaponToCurrentWeapons to add a weapon directly to a character
+ *       Use PlayerWeaponMangaer.instance.AddWeaponToCurrentWeapons to add a weapon directly to the player
+ */
 public class WeaponsController : MonoBehaviour
 {
     public static WeaponsController instance;
-
-    [Header("Owner CharacterManager")]
-    public CharacterManager characterThatOwnsThisArsenal;
-
-    [Header("Description:\n\t- List of all Weapon Types\n\t- Prefabs of each weapon\n\t- List of Player's current wepaons\n\n")]
-    [Header("List of all weapons. Will use prefab added in Editor. Intialized by JSON")]
+    [Header("The WeaponsContoller contains all base weapon prefabs and stats.\n" +
+    "   Use this if adding a weapon to the game world\n" +
+    "   Use PlayerWeaponManager to add directly to the player\n" +
+    "   Use CharacterWeaponManager to add to another character")]
+    [Header("List of all weapons. Will use prefab added in Editor. Stats intialized by JSON")]
     public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
+    [Header("JSON containing base stats")]
     public TextAsset baseWeaponJsonFile; // json file with intilizing stats that will overwrite prefab
-    public bool debugMode = false; // Debug Text, adds shortsword to current weapons
-    [Header("Player Inventory")]
-    public List<GameObject> ownedWeapons;
-    public List<GameObject> ownedSpecialWeapons;
-    public int indexOfEquippedWeapon = 0;
-    public int indexOfEquippedSpecialWeapon = 0;
-    // Start is called before the first frame 
+    public bool debugMode = false; // Debug Text, adds to current weapons on Start
 
-    [Header("Weapon Attachment")]
-    public GameObject mainHandWeaponAnchor;
-    public GameObject offHandWeaponAnchor;
-    
+    /**
+    * Creates and returns a weapon of any type at any location
+    */
+    public GameObject CreateWeapon(WeaponType type, Transform location)
+    {
+        return Instantiate(baseWeapons[(int)type], location);
+    }
+    void Start()
+    {
+        // Avoids destroying this object when changing scenes
+        DontDestroyOnLoad(gameObject);
+        // Load base stats for weapons from json
+        LoadAllWeaponTypes();
+        // If debug mode is on run some basic tests
+        RunTests();
+    }
+
     public void Awake() {
         if (instance == null) {
             instance = this;
@@ -44,16 +55,10 @@ public class WeaponsController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
-    {
-        //Avoids destroying this object when changing scenes
-        DontDestroyOnLoad(gameObject);
-        LoadAllWeaponTypes();
-        RunTests();
-    }
+
     public void LoadAllWeaponTypes()
     {
-        //add prefabs to initilizer array
+        //add prefabs to initilizer array sorted by weapon type
         GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
         foreach (var weapon in baseWeapons)
         {
@@ -76,6 +81,7 @@ public class WeaponsController : MonoBehaviour
                 weaponsInitilizer[i] = new GameObject("Empty");
                 weaponsInitilizer[i].AddComponent(typeof(WeaponScript));
                 weaponsInitilizer[i].GetComponent<WeaponScript>().stats = weaponStat;
+                weaponsInitilizer[i].GetComponent<WeaponScript>().SetWeaponDamage();
                 if (debugMode) Debug.Log("created object for " + i + " type:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponName); //astest
             }
             if (debugMode) Debug.Log("Weapon " + i + ": WeaponType:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponType
@@ -84,172 +90,11 @@ public class WeaponsController : MonoBehaviour
         //Set weapons here
         baseWeapons = weaponsInitilizer;
     }
-
-    public void AddWeaponToCurrentWeapons(WeaponType weaponType)
-    {
-        int i = (int)weaponType;
-        if (baseWeapons[i] != null) {
-            if (baseWeapons[i].GetComponent<WeaponScript>().isSpecialWeapon) {
-                ownedSpecialWeapons.Add(Instantiate(baseWeapons[i], offHandWeaponAnchor.transform));
-            }
-            else {
-                ownedWeapons.Add(Instantiate(baseWeapons[i], mainHandWeaponAnchor.transform));
-            }
-            WeaponScript currentWeaponScript = baseWeapons[i].GetComponent<WeaponScript>();
-            currentWeaponScript.hasObtained = true;
-        }
-        else Debug.Log("Warning in addWeaponToCurrentWeapons(" + weaponType + "). Not found");
-    }
-    public void ChangeWeapon(int index)
-    {
-        if (index < ownedWeapons.Count && ownedWeapons[index] != null)
-        {
-            ownedWeapons[indexOfEquippedWeapon].SetActive(false);
-            indexOfEquippedWeapon = index;
-            ownedWeapons[indexOfEquippedWeapon].SetActive(true);
-        }
-    }
-    public void nextWeapon()
-    {
-        int totalWeapons = ownedWeapons.Count;
-        int newWeaponIndex = indexOfEquippedWeapon;
-        if (ownedWeapons != null && totalWeapons > 0)
-        {
-            newWeaponIndex = (newWeaponIndex + 1 > totalWeapons - 1)? 0:newWeaponIndex+1;
-            ChangeWeapon(newWeaponIndex);
-        }
-
-        //Play the weapon swap animation
-        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, true, true, true);
-    }
-    public void prevWeapon()
-    {
-        int totalWeapons = ownedWeapons.Count;
-        int newWeaponIndex = indexOfEquippedWeapon;
-        if (ownedWeapons != null && totalWeapons > 0)
-        {
-            newWeaponIndex = (newWeaponIndex - 1 < 0)? totalWeapons -1: newWeaponIndex-1;
-            ChangeWeapon(newWeaponIndex);
-        }
-
-        //Play the weapon swap animation
-        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, true, true, true);
-    }
-    public void ChangeSpecialWeapon(int index)
-    {
-
-        if (index < ownedSpecialWeapons.Count && ownedSpecialWeapons[index] != null)
-        {
-            ownedSpecialWeapons[indexOfEquippedSpecialWeapon].SetActive(false);
-            indexOfEquippedSpecialWeapon = index;
-            ownedSpecialWeapons[indexOfEquippedSpecialWeapon].SetActive(true);
-        }
-    }
-    public void nextSpecialWeapon()
-    {
-        int totalWeapons = ownedSpecialWeapons.Count;
-        int newWeaponIndex = indexOfEquippedSpecialWeapon;
-        if (ownedSpecialWeapons != null && totalWeapons > 0)
-        {
-            newWeaponIndex = (newWeaponIndex + 1 > totalWeapons - 1) ? 0 : newWeaponIndex + 1;
-            ChangeSpecialWeapon(newWeaponIndex);
-        }
-
-        //Play the weapon swap animation
-        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, true, true, true);
-    }
-    public void prevSpecialWeapon()
-    {
-        int totalWeapons = ownedSpecialWeapons.Count;
-        int newWeaponIndex = indexOfEquippedSpecialWeapon;
-        if (ownedSpecialWeapons != null && totalWeapons > 0)
-        {
-            newWeaponIndex = (newWeaponIndex - 1 < 0)? totalWeapons - 1 : newWeaponIndex - 1;
-            ChangeSpecialWeapon(newWeaponIndex);
-        }
-
-        //Play the weapon swap animation
-        characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, true, true, true);
-    }
-    public void AttackTargetWithEquippedWeapon(GameObject target)
-    {
-        if (target == null) return;
-        if (ownedWeapons.Count > indexOfEquippedWeapon & ownedWeapons[indexOfEquippedWeapon] != null)
-        {
-            ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().attackTarget(target);
-        }
-    }
-    //For loading weapons from save file json
-    public void setCurrentWeapons(WeaponsArray weaponsJson)
-    {
-        ownedWeapons = new List<GameObject>();
-        ownedSpecialWeapons = new List<GameObject>();
-        int i = 0;
-        int specialI = 0;
-        foreach (WeaponStats weaponStat in weaponsJson.weaponStats)
-        {
-            AddWeaponToCurrentWeapons(weaponStat.weaponType);
-            if (baseWeapons[(int)weaponStat.weaponType].GetComponent<WeaponScript>().isSpecialWeapon)
-            {
-                ownedSpecialWeapons[specialI].GetComponent<WeaponScript>().stats = weaponStat;
-                ownedSpecialWeapons[specialI++].SetActive(false);
-            }
-            else
-            {
-                ownedWeapons[i].GetComponent<WeaponScript>().stats = weaponStat;
-                ownedWeapons[i++].SetActive(false);
-            }
-        }
-        if(ownedWeapons.Count > 0)
-        {
-            ownedWeapons[indexOfEquippedWeapon].SetActive(true);
-        }
-        if (ownedSpecialWeapons.Count > 0)
-        {
-            ownedSpecialWeapons[indexOfEquippedSpecialWeapon].SetActive(true);
-        }
-    }
-    //for saving current weapons to save file json
-    public WeaponsArray GetCurrentWeapons()
-    {
-        WeaponsArray weaponsPojo = new WeaponsArray();
-        weaponsPojo.weaponStats = new WeaponStats[ownedWeapons.Count + ownedSpecialWeapons.Count];
-        int i = 0;
-        foreach (GameObject weapon in ownedWeapons)
-        {
-            weaponsPojo.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
-        }
-        foreach (GameObject weapon in ownedSpecialWeapons)
-        {
-            weaponsPojo.weaponStats[i++] = weapon.GetComponent<WeaponScript>().stats;
-        }
-        return weaponsPojo;
-    }
-
-    public void SetAllWeaponsToInactive(bool targetSpecialWeaponStatus) {
-        List<GameObject> weapons = targetSpecialWeaponStatus? ownedSpecialWeapons: ownedWeapons;
-        if (weapons.Count <= 0)
-            return;
-        foreach (GameObject weapon in weapons) {
-                weapon.SetActive(false);
-        }
-    }
-
+    //Some simple tests to demonstrate functionality
     void RunTests()
     {
         if (debugMode)//astest
         {
-            //Tests
-            //Add 2 Shortswords and a Wrench to currently owned weapons
-            AddWeaponToCurrentWeapons(WeaponType.Shortsword);
-            AddWeaponToCurrentWeapons(WeaponType.Shortsword);
-            AddWeaponToCurrentWeapons(WeaponType.Wrench);
-            //Two methods of attacking
-            ownedWeapons[0].GetComponent<WeaponScript>().attackTarget(gameObject);
-            AttackTargetWithEquippedWeapon(gameObject);
-            //Change to Wrench, the third weapon
-            ChangeWeapon(2);
-            AttackTargetWithEquippedWeapon(gameObject);
             Debug.Log("============== LIST OF ALL WEAPONS =====================" + baseWeapons.Length + " :" + baseWeapons.ToString());
             int i = 0;
             foreach (GameObject weaponObj in baseWeapons)

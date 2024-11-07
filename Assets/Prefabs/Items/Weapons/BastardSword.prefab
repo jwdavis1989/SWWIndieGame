@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5783575807394235614}
-  - component: {fileID: 7128667898396684464}
+  - component: {fileID: 7257319045343483432}
   m_Layer: 0
   m_Name: BastardSword
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 7551676223902133885}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7128667898396684464
+--- !u!114 &7257319045343483432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,9 +42,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4976341019228924520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2008e3ada4123241a3c2f3e05d42138, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
   hasObtained: 0
   stats:
@@ -86,6 +87,7 @@ MonoBehaviour:
     currentDurability: 1
     level: 1
     currentExperiencePoints: 0
+    experiencePointsToNextLevel: 100
     currentTinkerPoints: 0
     weaponName: BaseWeaponName
 --- !u!1 &7497698106452750959
