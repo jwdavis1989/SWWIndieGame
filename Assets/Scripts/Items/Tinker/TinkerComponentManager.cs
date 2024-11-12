@@ -137,13 +137,13 @@ public class TinkerComponentManager : MonoBehaviour
     }
     public bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, GameObject tinkerComponentPassed, bool doUpdate)
     {
+        if(weaponToUpgrade == null) { return false; }
         TinkerComponent tinkerComponentToAdd = tinkerComponentPassed.GetComponent<TinkerComponent>();
         WeaponScript weapon = weaponToUpgrade.GetComponent<WeaponScript>();
         // new tinker points
         if (weapon.stats.currentTinkerPoints == 0) return false;
         //used passed component for weapons. Ensure using base components for regular components
         TinkerComponent tinkerComponent = tinkerComponentToAdd.stats.isWeapon ? tinkerComponentToAdd : baseComponents[(int)tinkerComponentToAdd.stats.componentType].GetComponent<TinkerComponent>();
-        Debug.Log("AddTinkerComponentToWeapon " + tinkerComponent.stats.itemName);//astest
         //can't add if out of that component
         if (tinkerComponent.stats.count <= 0) return false;
         bool canUpgrade = false;
@@ -165,6 +165,10 @@ public class TinkerComponentManager : MonoBehaviour
             newAttack += tinkerComponent.stats.attack;
         }
         newAttack = Mathf.Min(newAttack, weapon.stats.maxAttack);
+        //calc other stats
+        float newStab = Mathf.Min(weapon.stats.stability + tinkerComponent.stats.stability, weapon.stats.maxStability);
+        float newBlock = Mathf.Min(weapon.stats.block + tinkerComponent.stats.block, weapon.stats.maxBlock);
+        float newDur = Mathf.Min(weapon.stats.durability + tinkerComponent.stats.durability, weapon.stats.maxDurability);
         //calculate new elemental
         ElementalStats newStats = weapon.stats.elemental.Add(tinkerComponent.stats.elementalStats);
         newStats.firePower = Mathf.Min(newStats.firePower, weapon.stats.maxElemental.firePower);
@@ -177,10 +181,6 @@ public class TinkerComponentManager : MonoBehaviour
         newStats.scalesPower = Mathf.Min(newStats.scalesPower, weapon.stats.maxElemental.scalesPower);
         newStats.techPower = Mathf.Min(newStats.techPower, weapon.stats.maxElemental.techPower);
         ElementalStats diffWithPrev = newStats.Subract(weapon.stats.elemental);
-        //calc other stats
-        float newStab = Mathf.Min(weapon.stats.stability + tinkerComponent.stats.stability, weapon.stats.maxStability);
-        float newBlock = Mathf.Min(weapon.stats.block + tinkerComponent.stats.block, weapon.stats.maxBlock);
-        float newDur = Mathf.Min(weapon.stats.durability + tinkerComponent.stats.durability, weapon.stats.maxDurability);
         //if any stat will be upgraded then we can upgrade
         if (diffWithPrev.firePower > 0 ||
             diffWithPrev.icePower > 0  ||
@@ -190,11 +190,11 @@ public class TinkerComponentManager : MonoBehaviour
             diffWithPrev.lightPower > 0 ||
             diffWithPrev.beastPower > 0 ||
             diffWithPrev.scalesPower > 0 ||
-            weapon.stats.stability < newStab ||
-            weapon.stats.block < newBlock ||
-            weapon.stats.durability < newDur ||
-            diffWithPrev.techPower > 0 ||
-            weapon.stats.attack < newAttack)
+            (diffWithPrev.techPower > 0) ||
+            (newStab > weapon.stats.stability) ||
+            (newBlock > weapon.stats.block) ||
+            (newDur > weapon.stats.durability) ||
+            (newAttack > weapon.stats.attack))
         {
             canUpgrade = true;
             if (doUpdate)
@@ -213,7 +213,6 @@ public class TinkerComponentManager : MonoBehaviour
                 weapon.SetWeaponDamage();
             }
         }
-        Debug.Log("AddTinkerComponentToWeapon ret " + canUpgrade);//astest
         return canUpgrade;
     }
     public void LoadAllComponentTypes()
