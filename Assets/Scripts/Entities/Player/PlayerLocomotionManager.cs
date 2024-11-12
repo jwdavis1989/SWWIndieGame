@@ -11,6 +11,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public GameObject leftBoosters;
     // public GameObject leftForwardBoosters;
     // public GameObject leftBackwardBoosters;
+    public GameObject backBoosters;
     [HideInInspector] public CharacterManager characterManager;
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
@@ -52,6 +53,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void HandleAllMovement() {
         HandleGroundedMovement();
         HandleRotation();
+        HandleBackBoosterJets();
 
         //Aerial Movement
         HandleJumpingMovement();
@@ -338,6 +340,17 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 // leftForwardBoosters.SetActive(false);
                 // rightForwardBoosters.SetActive(false);
                 break;
+        }
+    }
+
+    public void HandleBackBoosterJets() {
+        if (characterManager.isSprinting && !backBoosters.activeSelf) {
+            backBoosters.SetActive(true);
+            Debug.Log("Setting Boosters to true.");
+        }
+        else if (!characterManager.isSprinting && backBoosters.activeSelf == true) {
+            backBoosters.SetActive(false);
+            Debug.Log("Setting Boosters to false.");
         }
     }
 
