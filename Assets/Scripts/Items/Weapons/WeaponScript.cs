@@ -26,7 +26,7 @@ public enum WeaponType
     FreezeCaster,
     //T3 Weapons
     DiamondSword,
-    //Limit
+    //Limit - Nothing past here
     UNKNOWN
 }
 /*
@@ -53,10 +53,11 @@ public class WeaponStats
     public float specialtyCooldown = 0;
     public float maxSpecialtyCooldown = 0;
     public float xpToLevel = 100.0f;
-    public int tinkerPointsPerLvl = 0;
+    public int tinkerPointsPerLvl = 1;
     public float currentDurability = 1.0f;
     public int level = 1;
     public float currentExperiencePoints = 0.0f;
+    public float experiencePointsToNextLevel = 100.0f;
     public int currentTinkerPoints = 0;
     public String weaponName = "BaseWeaponName";
 }
@@ -83,7 +84,7 @@ public class ElementalStats
         diff.lightningPower = lightningPower - subtractor.lightningPower;
         diff.windPower = windPower - subtractor.windPower;
         diff.earthPower = earthPower - subtractor.earthPower;
-        diff.lightPower = lightPower - subtractor.lightningPower;
+        diff.lightPower = lightPower - subtractor.lightPower;
         diff.beastPower = beastPower - subtractor.beastPower;
         diff.scalesPower = scalesPower - subtractor.scalesPower;
         diff.techPower = techPower - subtractor.techPower;
@@ -97,7 +98,7 @@ public class ElementalStats
         sum.lightningPower = lightningPower + other.lightningPower;
         sum.windPower = windPower + other.windPower;
         sum.earthPower = earthPower + other.earthPower;
-        sum.lightPower = lightPower + other.lightningPower;
+        sum.lightPower = lightPower + other.lightPower;
         sum.beastPower = beastPower + other.beastPower;
         sum.scalesPower = scalesPower + other.scalesPower;
         sum.techPower = techPower + other.techPower;
@@ -105,28 +106,84 @@ public class ElementalStats
     }
 }
 /** 
- * Base weapon script inherited by other weapons - use for things all weapons should do
+ * Base weapon script containing weapon stats and behaviors
  * MonoBehaviour - Can add to Game Objects
  */
 public class WeaponScript : MonoBehaviour
 {
+    [Header("Weapon Damage Collider")]
+    [SerializeField] MeleeWeaponDamageCollider meleeWeaponDamageCollider;
+
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
     [Header("Will appear as ??? on weapon sheet until obtained")]
     public bool hasObtained = false;
     [Header("Important: Set weapon type (Otherwise intialized by JSON)")]
     public WeaponStats stats;
-    public virtual void attackTarget(GameObject target)
-    {
-        Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST
-        if (target != null) {
-            //calculateElementalDamage(stats.attack, target);
-            //target.GetComponent<EnemyController>().hp -= stats.attack;
-            //TODO
-            //play weapon animation
-            //set reload/recharge
+
+    public void Awake() {
+        meleeWeaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+        if (!isSpecialWeapon && meleeWeaponDamageCollider) {
+            SetWeaponDamage();
         }
     }
+
+    //TODO: Call this when you upgrade weapons too!
+    public void SetWeaponDamage() {
+        if (meleeWeaponDamageCollider == null) return;
+        //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
+        // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
+            meleeWeaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
+        // }
+        // else {
+        //     //Monster CharacterManager Weapon Assignment in hypothetical rework
+        // }
+        meleeWeaponDamageCollider.enabled = true;
+        
+        meleeWeaponDamageCollider.physicalDamage = stats.attack;
+        meleeWeaponDamageCollider.fireDamage = stats.elemental.firePower;
+        meleeWeaponDamageCollider.iceDamage = stats.elemental.icePower;
+        meleeWeaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
+        meleeWeaponDamageCollider.windDamage = stats.elemental.windPower;
+        meleeWeaponDamageCollider.earthDamage = stats.elemental.earthPower;
+        meleeWeaponDamageCollider.lightDamage = stats.elemental.lightPower;
+        meleeWeaponDamageCollider.beastDamage = stats.elemental.beastPower;
+        meleeWeaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
+        meleeWeaponDamageCollider.techDamage = stats.elemental.techPower;
+
+        //Turn the collider back off so it doesn't hurt anyone, ow
+        meleeWeaponDamageCollider.enabled = false;
+    }
+    /**
+     * Add Exp to a weapon and level it up if possible
+     */
+    public void AddExp(float exp)
+    {
+        stats.currentExperiencePoints += exp;
+        if(stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0)
+        {
+            stats.level++;
+            stats.currentTinkerPoints += stats.tinkerPointsPerLvl;
+            stats.currentExperiencePoints = stats.currentExperiencePoints - stats.experiencePointsToNextLevel;
+            //Currently add 100 to exp needed for each level
+            stats.experiencePointsToNextLevel = 100 * stats.level;
+            //Handle multi-level
+            if (stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0) 
+                AddExp(0);
+        }
+    }
+
+    //public virtual void attackTarget(GameObject target)
+    //{
+    //    Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST
+    //    if (target != null) {
+    //        //calculateElementalDamage(stats.attack, target);
+    //        //target.GetComponent<EnemyController>().hp -= stats.attack;
+    //        //TODO
+    //        //play weapon animation
+    //        //set reload/recharge
+    //    }
+    //}
     public float CalculateTotalDamage(CharacterManager targetCharacter)
     {
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);

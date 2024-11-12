@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8130850429207198863}
-  - component: {fileID: 7593961861136561148}
+  - component: {fileID: 2917005456082049530}
   m_Layer: 0
   m_Name: BoneBlade
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   - {fileID: 2457901244686193971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7593961861136561148
+--- !u!114 &2917005456082049530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,41 +42,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1847124638102049318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 970dc607506d8c449af3677e80c130b8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
-  hasObtained: 1
+  hasObtained: 0
   stats:
     weaponType: 4
-    attack: 22
-    maxAttack: 45
-    durability: 100
-    maxDurability: 142
-    block: 20
-    maxBlock: 22
-    stability: 0
-    maxStability: 6
+    attack: 1
+    maxAttack: 1
+    durability: 1
+    maxDurability: 1
+    block: 1
+    maxBlock: 1
+    stability: 1
+    maxStability: 1
     elemental:
       firePower: 0
-      icePower: 20
+      icePower: 0
       lightningPower: 0
       windPower: 0
       earthPower: 0
       lightPower: 0
       beastPower: 0
       scalesPower: 0
-      techPower: 5
+      techPower: 0
     maxElemental:
-      firePower: 45
-      icePower: 45
-      lightningPower: 45
-      windPower: 45
-      earthPower: 45
-      lightPower: 45
-      beastPower: 45
-      scalesPower: 45
-      techPower: 45
+      firePower: 0
+      icePower: 0
+      lightningPower: 0
+      windPower: 0
+      earthPower: 0
+      lightPower: 0
+      beastPower: 0
+      scalesPower: 0
+      techPower: 0
     speed: 1
     maxSpeed: 1
     specialtyCooldown: 0
@@ -86,8 +87,87 @@ MonoBehaviour:
     currentDurability: 1
     level: 1
     currentExperiencePoints: 0
-    currentTinkerPoints: 1
-    weaponName: Bone Blade
+    experiencePointsToNextLevel: 100
+    currentTinkerPoints: 0
+    weaponName: BaseWeaponName
+--- !u!1 &4029110176930541267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7935371202563298210}
+  - component: {fileID: 6636901035085857461}
+  - component: {fileID: 3686604803176733965}
+  m_Layer: 8
+  m_Name: Damage Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7935371202563298210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029110176930541267}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.002, y: 0.201, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2457901244686193971}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6636901035085857461
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029110176930541267}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 1.75, z: 0.075}
+  m_Center: {x: 0, y: 0.94, z: 0}
+--- !u!114 &3686604803176733965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4029110176930541267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26ec8518b4d45f4298e4dd16d4e8c4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalDamage: 0
+  fireDamage: 0
+  iceDamage: 0
+  lightningDamage: 0
+  windDamage: 0
+  earthDamage: 0
+  lightDamage: 0
+  beastDamage: 0
+  scalesDamage: 0
+  techDamage: 0
+  isReducedByArmor: 1
+  characterCausingDamage: {fileID: 0}
 --- !u!1 &8162462757089158816
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +198,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 7935371202563298210}
   m_Father: {fileID: 8130850429207198863}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 270}
 --- !u!33 &1163970147535320748
