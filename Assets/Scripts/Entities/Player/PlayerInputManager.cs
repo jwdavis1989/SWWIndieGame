@@ -40,6 +40,9 @@ public class PlayerInputManager : MonoBehaviour
         SceneManager.activeSceneChanged += OnSceneChange;
         
         instance.enabled = false;
+        if (playerControls != null) {
+                playerControls.Disable();
+        }
     }
 
     //Update is called once per frame
@@ -105,11 +108,17 @@ public class PlayerInputManager : MonoBehaviour
         if (newScene.buildIndex != 0) {
             //Script being enabled, not the game object
             instance.enabled = true;
+            if (playerControls != null) {
+                playerControls.Enable();
+            }
         }
         //Otherwise, we're in a menu so disable player controls
         //This is so our player can't move around if we enter things like a character creation menu, etc
         else {
             instance.enabled = false;
+            if (playerControls != null) {
+                playerControls.Disable();
+            }
         }
     }
 
