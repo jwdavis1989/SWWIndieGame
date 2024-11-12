@@ -21,7 +21,11 @@ public class CharacterSoundFXManager : MonoBehaviour
     }
 
     public void PlayJumpJetBurstFX() {
-        audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+        audioSource.PlayOneShot(WorldSoundFXManager.instance.jumpJetAirSFX);
+    }
+
+    public void PlayBackPedalSFX() {
+        audioSource.PlayOneShot(WorldSoundFXManager.instance.backPedalSFX);
     }
 
     public void PlayFootStepSFX(){
@@ -29,7 +33,4 @@ public class CharacterSoundFXManager : MonoBehaviour
             audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
         }
     }
-    // public void PlayRunningFootStepSFX(){
-    //     audioSource.PlayOneShot(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)]);
-    // }
 }
