@@ -27,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 2475961333021485550}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.746155, y: 8.443262, z: 1.821213}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2713768653956701570}
+  - {fileID: 8574887500244118031}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6528723362717498282
@@ -49,20 +49,20 @@ MonoBehaviour:
   stats:
     componentType: 24
     count: 0
-    itemName: Default TinkerComponent Name
-    attack: 0
+    itemName: Turquoise
+    attack: 5
     durability: 0
     block: 0
     stability: 0
     elementalStats:
       firePower: 0
       icePower: 0
-      lightningPower: 0
+      lightningPower: 5
       windPower: 0
       earthPower: 0
       lightPower: 0
-      beastPower: 0
-      scalesPower: 0
+      beastPower: 10
+      scalesPower: 10
       techPower: 0
     isWeapon: 0
 --- !u!135 &2170933762780163657
@@ -84,9 +84,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &6981859628330386671
+--- !u!1 &5249566848505816377
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,47 +94,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2713768653956701570}
-  - component: {fileID: 3021741990918515450}
-  - component: {fileID: 6890694556717825419}
-  - component: {fileID: 1066536729103458584}
+  - component: {fileID: 8574887500244118031}
+  - component: {fileID: 7608359850115878943}
+  - component: {fileID: 8791663048750887723}
+  - component: {fileID: 3955257782112635796}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2713768653956701570
+--- !u!4 &8574887500244118031
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6981859628330386671}
+  m_GameObject: {fileID: 5249566848505816377}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.125, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.25, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8807823929122634840}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &3021741990918515450
+--- !u!33 &7608359850115878943
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6981859628330386671}
+  m_GameObject: {fileID: 5249566848505816377}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6890694556717825419
+--- !u!23 &8791663048750887723
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6981859628330386671}
+  m_GameObject: {fileID: 5249566848505816377}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -148,7 +148,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ce0cb08ae584a994c9763f374b462256, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -170,13 +170,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1066536729103458584
+--- !u!135 &3955257782112635796
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6981859628330386671}
+  m_GameObject: {fileID: 5249566848505816377}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

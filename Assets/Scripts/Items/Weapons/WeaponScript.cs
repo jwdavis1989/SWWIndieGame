@@ -53,7 +53,7 @@ public class WeaponStats
     public float specialtyCooldown = 0;
     public float maxSpecialtyCooldown = 0;
     public float xpToLevel = 100.0f;
-    public int tinkerPointsPerLvl = 0;
+    public int tinkerPointsPerLvl = 1;
     public float currentDurability = 1.0f;
     public int level = 1;
     public float currentExperiencePoints = 0.0f;
@@ -84,7 +84,7 @@ public class ElementalStats
         diff.lightningPower = lightningPower - subtractor.lightningPower;
         diff.windPower = windPower - subtractor.windPower;
         diff.earthPower = earthPower - subtractor.earthPower;
-        diff.lightPower = lightPower - subtractor.lightningPower;
+        diff.lightPower = lightPower - subtractor.lightPower;
         diff.beastPower = beastPower - subtractor.beastPower;
         diff.scalesPower = scalesPower - subtractor.scalesPower;
         diff.techPower = techPower - subtractor.techPower;
@@ -98,7 +98,7 @@ public class ElementalStats
         sum.lightningPower = lightningPower + other.lightningPower;
         sum.windPower = windPower + other.windPower;
         sum.earthPower = earthPower + other.earthPower;
-        sum.lightPower = lightPower + other.lightningPower;
+        sum.lightPower = lightPower + other.lightPower;
         sum.beastPower = beastPower + other.beastPower;
         sum.scalesPower = scalesPower + other.scalesPower;
         sum.techPower = techPower + other.techPower;
