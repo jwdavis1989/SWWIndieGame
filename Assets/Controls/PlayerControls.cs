@@ -274,6 +274,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DebugTeleportToJerryDev"",
+                    ""type"": ""Button"",
+                    ""id"": ""6dd9e535-836f-4964-bad6-cd3e298713d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""DebugTeleportToAlecDev"",
                     ""type"": ""Button"",
                     ""id"": ""be383daf-aa62-4dd2-96ba-5c8f03d173a9"",
@@ -457,7 +466,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4a882b52-ecc2-474f-a932-5f51de24d189"",
-                    ""path"": ""<Keyboard>/numpadMultiply"",
+                    ""path"": ""<Keyboard>/numpad2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -468,7 +477,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""451f3fcf-f1d0-4e84-bdb5-2cf16574b0fc"",
-                    ""path"": ""<Keyboard>/numpadDivide"",
+                    ""path"": ""<Keyboard>/numpad3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -484,6 +493,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DebugFullResources"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bac45972-00ce-4071-abec-226820970bdb"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToJerryDev"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -532,6 +552,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToJerryDev = m_PlayerActions.FindAction("DebugTeleportToJerryDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
@@ -696,6 +717,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
+    private readonly InputAction m_PlayerActions_DebugTeleportToJerryDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_NextWeapon;
@@ -708,6 +730,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
+        public InputAction @DebugTeleportToJerryDev => m_Wrapper.m_PlayerActions_DebugTeleportToJerryDev;
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
@@ -733,6 +756,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTestAddWeapon.started += instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.performed += instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.canceled += instance.OnDebugTestAddWeapon;
+            @DebugTeleportToJerryDev.started += instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.performed += instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.canceled += instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToAlecDev.started += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled += instance.OnDebugTeleportToAlecDev;
@@ -761,6 +787,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTestAddWeapon.started -= instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.performed -= instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.canceled -= instance.OnDebugTestAddWeapon;
+            @DebugTeleportToJerryDev.started -= instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.performed -= instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.canceled -= instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToAlecDev.started -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled -= instance.OnDebugTeleportToAlecDev;
@@ -850,6 +879,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);
+        void OnDebugTeleportToJerryDev(InputAction.CallbackContext context);
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
