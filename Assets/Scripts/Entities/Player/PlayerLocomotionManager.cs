@@ -35,6 +35,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Dodge")]
     private Vector3 rollDirection;
+    [SerializeField] float airBoostSpeed = 15f;
     public GameObject forceFieldGraphic;
 
     
@@ -216,16 +217,41 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         //Roll if moving before
         if (PlayerInputManager.instance.moveAmount > 0) {
-            rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-            rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-            rollDirection.y = 0;
-            rollDirection.Normalize();
+            Quaternion playerRotation;
+            if (player.isGrounded) {
+                //Set roll direction
+                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+                rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+                rollDirection.y = 0;
+                rollDirection.Normalize();
 
-            Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
-            player.transform.rotation = playerRotation;
+                //Set player facing
+                playerRotation = Quaternion.LookRotation(rollDirection);
+                player.transform.rotation = playerRotation;
 
-            //Play roll animation
-            player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
+                //Play roll animation
+                player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
+            }
+            else {
+                //Boosting flag
+                player.isBoosting = true;
+
+                //Set boost direction
+                jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+                jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+                jumpDirection.y = 0;
+                jumpDirection.Normalize();
+
+                //Movement caused by boosting
+                player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
+
+                //Set player facing
+                playerRotation = Quaternion.LookRotation(jumpDirection);
+                player.transform.rotation = playerRotation;
+
+                //Play boost animation
+                player.playerAnimationManager.PlayTargetActionAnimation("Boost_Forward_01", true, true, false, false);
+            }
 
             //Activate Force Field Graphic
             //forceFieldGraphic.SetActive(true);

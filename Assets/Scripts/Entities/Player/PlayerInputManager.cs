@@ -11,7 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     PlayerControls playerControls;
 
     [Header("Movement Input")]
-    [SerializeField] Vector2 movementInput;
+    [SerializeField] public Vector2 movementInput;
     public float horizontalInput;
     public float verticalInput;
     public float moveAmount;
