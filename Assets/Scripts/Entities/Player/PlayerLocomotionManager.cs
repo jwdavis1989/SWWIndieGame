@@ -265,8 +265,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         //Backstep if stationary before
         else {
             //Perform a Backstep Animation here
-            //Play Backstep Animation
-            player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            if (player.isGrounded) {
+                //Play Backstep Animation
+                player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            }
         }
 
         player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
