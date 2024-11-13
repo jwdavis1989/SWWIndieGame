@@ -277,6 +277,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DebugFullResources",
+                    "type": "Button",
+                    "id": "2d0e4d85-af8f-4b29-964a-f05c6a53d363",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -442,6 +451,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "DebugTeleportToJacobDev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a956710-5813-466a-9789-ac419f51fbb5",
+                    "path": "<Keyboard>/numpadPeriod",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugFullResources",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

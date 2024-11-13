@@ -128,5 +128,10 @@ public class CharacterStatsManager : MonoBehaviour
             }
         }
     }
+
+    public void FullyRestoreResources() {
+        SetNewMaxHealthValue();
+        SetNewMaxStaminaValue();
+    }
     
 }

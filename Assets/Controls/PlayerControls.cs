@@ -299,6 +299,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugFullResources"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d0e4d85-af8f-4b29-964a-f05c6a53d363"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -466,6 +475,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""DebugTeleportToJacobDev"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a956710-5813-466a-9789-ac419f51fbb5"",
+                    ""path"": ""<Keyboard>/numpadPeriod"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugFullResources"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -515,6 +535,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
+        m_PlayerActions_DebugFullResources = m_PlayerActions.FindAction("DebugFullResources", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
@@ -678,6 +699,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_NextWeapon;
+    private readonly InputAction m_PlayerActions_DebugFullResources;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -689,6 +711,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
+        public InputAction @DebugFullResources => m_Wrapper.m_PlayerActions_DebugFullResources;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -719,6 +742,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NextWeapon.started += instance.OnNextWeapon;
             @NextWeapon.performed += instance.OnNextWeapon;
             @NextWeapon.canceled += instance.OnNextWeapon;
+            @DebugFullResources.started += instance.OnDebugFullResources;
+            @DebugFullResources.performed += instance.OnDebugFullResources;
+            @DebugFullResources.canceled += instance.OnDebugFullResources;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -744,6 +770,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NextWeapon.started -= instance.OnNextWeapon;
             @NextWeapon.performed -= instance.OnNextWeapon;
             @NextWeapon.canceled -= instance.OnNextWeapon;
+            @DebugFullResources.started -= instance.OnDebugFullResources;
+            @DebugFullResources.performed -= instance.OnDebugFullResources;
+            @DebugFullResources.canceled -= instance.OnDebugFullResources;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -824,6 +853,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
+        void OnDebugFullResources(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
