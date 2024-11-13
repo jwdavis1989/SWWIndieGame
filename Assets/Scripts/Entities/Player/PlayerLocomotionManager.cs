@@ -12,6 +12,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     // public GameObject leftForwardBoosters;
     // public GameObject leftBackwardBoosters;
     public GameObject backBoosters;
+    public GameObject airDashBoosters;
+
+
     [HideInInspector] public CharacterManager characterManager;
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
@@ -135,11 +138,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
             //Facing Backward
             else {
-                if (freeFallDirection.x < 0) {
+                if (freeFallDirection.x < 0 && !characterManager.isBoosting) {
                 DisableJumpJets("Right");
                 EnableJumpJets("Left");
                 }
-                else if (freeFallDirection.x > 0) {
+                else if (freeFallDirection.x > 0 && !characterManager.isBoosting) {
                     DisableJumpJets("Left");
                     EnableJumpJets("Right");
                 }
@@ -151,6 +154,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
         else {
             DisableJumpJets("Both");
+            airDashBoosters.SetActive(false);
             //ResetOmniJumpJets();
         }
     }
@@ -235,6 +239,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             else {
                 //Boosting flag
                 player.isBoosting = true;
+
+                //Activate booster Particle Effects
+                airDashBoosters.SetActive(true);
+                EnableJumpJets("Both");
 
                 //Set boost direction
                 jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
@@ -322,10 +330,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
         }
 
-        if (jumpDirection.x > 0) {
+        if (jumpDirection.x > 0 && !characterManager.isBoosting) {
             EnableJumpJets("Left");
         }
-        else if (jumpDirection.x < 0) {
+        else if (jumpDirection.x < 0 && !characterManager.isBoosting) {
             EnableJumpJets("Right");
         }
         else {
@@ -374,11 +382,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void HandleBackBoosterJets() {
         if (characterManager.isSprinting && !backBoosters.activeSelf) {
             backBoosters.SetActive(true);
-            Debug.Log("Setting Boosters to true.");
         }
         else if (!characterManager.isSprinting && backBoosters.activeSelf == true) {
             backBoosters.SetActive(false);
-            Debug.Log("Setting Boosters to false.");
         }
     }
 
