@@ -24,6 +24,7 @@ public class CharacterManager : MonoBehaviour
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
+    public bool isBoosting = false;
     public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;

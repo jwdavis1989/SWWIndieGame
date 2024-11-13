@@ -252,6 +252,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DebugTeleportToJerryDev",
+                    "type": "Button",
+                    "id": "6dd9e535-836f-4964-bad6-cd3e298713d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "DebugTeleportToAlecDev",
                     "type": "Button",
                     "id": "be383daf-aa62-4dd2-96ba-5c8f03d173a9",
@@ -274,6 +283,15 @@
                     "type": "PassThrough",
                     "id": "3e3e861f-fb3e-42f7-9cd1-77f1b6df3609",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugFullResources",
+                    "type": "Button",
+                    "id": "2d0e4d85-af8f-4b29-964a-f05c6a53d363",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -426,7 +444,7 @@
                 {
                     "name": "",
                     "id": "4a882b52-ecc2-474f-a932-5f51de24d189",
-                    "path": "<Keyboard>/numpadMultiply",
+                    "path": "<Keyboard>/numpad2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -437,11 +455,33 @@
                 {
                     "name": "",
                     "id": "451f3fcf-f1d0-4e84-bdb5-2cf16574b0fc",
-                    "path": "<Keyboard>/numpadDivide",
+                    "path": "<Keyboard>/numpad3",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "DebugTeleportToJacobDev",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5a956710-5813-466a-9789-ac419f51fbb5",
+                    "path": "<Keyboard>/numpadPeriod",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugFullResources",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bac45972-00ce-4071-abec-226820970bdb",
+                    "path": "<Keyboard>/numpad1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTeleportToJerryDev",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

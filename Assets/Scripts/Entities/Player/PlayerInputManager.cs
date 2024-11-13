@@ -11,7 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     PlayerControls playerControls;
 
     [Header("Movement Input")]
-    [SerializeField] Vector2 movementInput;
+    [SerializeField] public Vector2 movementInput;
     public float horizontalInput;
     public float verticalInput;
     public float moveAmount;
@@ -83,8 +83,10 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += i => SceneManager.LoadSceneAsync(1);
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += i => SceneManager.LoadSceneAsync(2);
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
+            playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
         }
 
