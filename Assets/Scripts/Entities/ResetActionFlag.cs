@@ -16,6 +16,7 @@ public class ResetActionFlag : StateMachineBehaviour
         character.canRotate = true;
         character.canMove = true;
         character.isJumping = false;
+        character.isBoosting = false;
         character.animator.applyRootMotion = false;
     }
 

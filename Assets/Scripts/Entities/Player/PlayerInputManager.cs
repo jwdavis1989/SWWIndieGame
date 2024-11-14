@@ -11,7 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     PlayerControls playerControls;
 
     [Header("Movement Input")]
-    [SerializeField] Vector2 movementInput;
+    [SerializeField] public Vector2 movementInput;
     public float horizontalInput;
     public float verticalInput;
     public float moveAmount;
@@ -40,6 +40,9 @@ public class PlayerInputManager : MonoBehaviour
         SceneManager.activeSceneChanged += OnSceneChange;
         
         instance.enabled = false;
+        if (playerControls != null) {
+                playerControls.Disable();
+        }
     }
 
     //Update is called once per frame
@@ -80,8 +83,10 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += i => SceneManager.LoadSceneAsync(1);
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += i => SceneManager.LoadSceneAsync(2);
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
+            playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
         }
 
@@ -105,11 +110,17 @@ public class PlayerInputManager : MonoBehaviour
         if (newScene.buildIndex != 0) {
             //Script being enabled, not the game object
             instance.enabled = true;
+            if (playerControls != null) {
+                playerControls.Enable();
+            }
         }
         //Otherwise, we're in a menu so disable player controls
         //This is so our player can't move around if we enter things like a character creation menu, etc
         else {
             instance.enabled = false;
+            if (playerControls != null) {
+                playerControls.Disable();
+            }
         }
     }
 

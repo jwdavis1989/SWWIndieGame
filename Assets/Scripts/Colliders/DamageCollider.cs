@@ -31,8 +31,13 @@ public class DamageCollider : MonoBehaviour
     protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Character")) {
-            CharacterManager damageTarget = other.GetComponent<CharacterManager>();
+        //if (other.gameObject.layer == LayerMask.NameToLayer("Character")) {
+            CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
+
+            //Uncomment below if we want to search on both the damageable character colliders and the character controller collider:
+            // if (damageTarget == null) {
+            //     damageTarget = other.GetComponent<CharacterManager>();
+            // }
 
             if (damageTarget != null) {
                 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
@@ -46,7 +51,7 @@ public class DamageCollider : MonoBehaviour
                 //Damage
                 DamageTarget(damageTarget);
             }
-        }
+        //}
     }
 
     protected virtual void DamageTarget(CharacterManager damageTarget) {
