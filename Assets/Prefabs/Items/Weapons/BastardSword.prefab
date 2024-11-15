@@ -47,49 +47,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
-  hasObtained: 0
+  spr: {fileID: 21300000, guid: 9d6bac7c5f7d1d24f92bf84b9813510b, type: 3}
+  hasObtained: 1
   stats:
     weaponType: 2
-    attack: 1
-    maxAttack: 1
-    durability: 1
-    maxDurability: 1
-    block: 1
-    maxBlock: 1
-    stability: 1
-    maxStability: 1
+    attack: 23
+    maxAttack: 46
+    durability: 100
+    maxDurability: 144
+    block: 20
+    maxBlock: 24
+    stability: 0
+    maxStability: 6
     elemental:
       firePower: 0
       icePower: 0
       lightningPower: 0
       windPower: 0
-      earthPower: 0
+      earthPower: 21
       lightPower: 0
-      beastPower: 0
+      beastPower: 15
       scalesPower: 0
       techPower: 0
     maxElemental:
-      firePower: 0
-      icePower: 0
-      lightningPower: 0
-      windPower: 0
-      earthPower: 0
-      lightPower: 0
-      beastPower: 0
-      scalesPower: 0
-      techPower: 0
+      firePower: 45
+      icePower: 45
+      lightningPower: 45
+      windPower: 45
+      earthPower: 45
+      lightPower: 45
+      beastPower: 45
+      scalesPower: 45
+      techPower: 45
     speed: 1
     maxSpeed: 1
     specialtyCooldown: 0
     maxSpecialtyCooldown: 0
     xpToLevel: 100
-    tinkerPointsPerLvl: 0
+    tinkerPointsPerLvl: 1
     currentDurability: 1
     level: 1
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
-    currentTinkerPoints: 0
-    weaponName: BaseWeaponName
+    currentTinkerPoints: 1
+    weaponName: Bastard Sword
 --- !u!1 &7061731996036675610
 GameObject:
   m_ObjectHideFlags: 0

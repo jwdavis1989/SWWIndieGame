@@ -8,7 +8,9 @@ public class GridElementController : MonoBehaviour
 {
     public TextMeshProUGUI topText;
     public TextMeshProUGUI bottomText;
-    public Button button;
+    public Button mainButton;
+    public GameObject mainButtonForeground;
+    public Button cornerButton;
     public int index = 0;
     // Start is called before the first frame update
     void Start()
