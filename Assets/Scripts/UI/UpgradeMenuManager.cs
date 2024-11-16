@@ -108,11 +108,14 @@ public class UpgradeMenuManager : MonoBehaviour
         else
         {
             wpnScroll.gameObject.SetActive(true);
+            wpnScroll.numberOfSteps = numOfPage;
+            wpnScroll.size = 1.0f / numOfPage;
+            currentStep = Mathf.Round(wpnScroll.value * numOfPage);
         }
-        wpnScroll.numberOfSteps = numOfPage;
-        wpnScroll.size = 1.0f / numOfPage;
-        currentStep = Mathf.Round(wpnScroll.value * numOfPage);
-        if (currentStep == lastStep) return;
+        if (currentStep == lastStep)
+        {
+            return; //no change
+        }
         if (currentStep > lastStep)
         {
             curWeaponPage++;
@@ -121,13 +124,13 @@ public class UpgradeMenuManager : MonoBehaviour
         {
             curWeaponPage--;
         }
-        if (curWeaponPage > weaponsCount / wpnPerRow)
+        if (curWeaponPage > numOfPage)
         {// past the end go to beg
             curWeaponPage = 0;
         }
         else if (curWeaponPage < 0)
         {//past beggining go to end
-            curWeaponPage = weaponsCount / wpnPerRow;
+            curWeaponPage = numOfPage;
         }
         lastStep = currentStep;
         LoadWeaponsToScreen();
@@ -143,25 +146,26 @@ public class UpgradeMenuManager : MonoBehaviour
     public const int cmpntPerRow = 6;
     public void ComponentScroll(float value)
     {
-        int count = 0;
+        int count = 0;//count total unique components owned
         foreach (var item in TinkerComponentManager.instance.baseComponents)
         {
             if(item.GetComponent<TinkerComponent>().stats.count > 0) count++;
         }
         count += TinkerComponentManager.instance.weaponComponents.Count;
         int numOfPage = count / cmpntPerRow;
-        //if (numOfPage < 2)
-        //{
-        //    cmpntScroll.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    cmpntScroll.gameObject.SetActive(true);
-        //}
-        cmpntScroll.numberOfSteps = numOfPage;
-        cmpntScroll.size = 1.0f / numOfPage;
-        cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
-        if (cmpntCurrentStep == cmpntLastStep) return;
+        if (numOfPage < 2)
+        {
+            cmpntScroll.gameObject.SetActive(false);
+        }
+        else
+        {
+            cmpntScroll.gameObject.SetActive(true);
+            cmpntScroll.numberOfSteps = numOfPage;
+            cmpntScroll.size = 1.0f / numOfPage;
+            cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
+        }
+        if (cmpntCurrentStep == cmpntLastStep) 
+            return; // no change
         if (cmpntCurrentStep > cmpntLastStep)
         {
             curComponentPage++;
@@ -170,13 +174,13 @@ public class UpgradeMenuManager : MonoBehaviour
         {
             curComponentPage--;
         }
-        if (curComponentPage > count / cmpntPerRow)
+        if (curComponentPage > numOfPage)
         {// past the end go to beg
             curComponentPage = 0;
         }
         else if (curComponentPage < 0)
         {//past beggining go to end
-            curComponentPage = count / cmpntPerRow;
+            curComponentPage = numOfPage;
         }
         cmpntLastStep = cmpntCurrentStep;
         LoadComponentsToScreen();
@@ -188,9 +192,10 @@ public class UpgradeMenuManager : MonoBehaviour
     void LoadEquippedWeapons()
     {
         string text = "";
-        if (PlayerWeaponManager.instance.GetEquippedWeapon())
+        GameObject equippedWpn = PlayerWeaponManager.instance.GetEquippedWeapon();
+        if (equippedWpn)
         {
-            WeaponScript wpn = PlayerWeaponManager.instance.GetEquippedWeapon().GetComponent<WeaponScript>();
+            WeaponScript wpn = equippedWpn.GetComponent<WeaponScript>();
             WeaponStats stats = wpn.stats;
             ElementalStats el = stats.elemental;
             text = "Equipped - " + stats.weaponName + "   TP " + stats.currentTinkerPoints +
@@ -199,6 +204,7 @@ public class UpgradeMenuManager : MonoBehaviour
             "\n  Fire " + el.firePower + ", Ice " + el.icePower + ", Lightning " + el.lightningPower +
             "\n  Wind " + el.windPower + ", Earth " + el.earthPower + ", Light " + el.lightPower +
             "\n  Beast " + el.beastPower + ", Scale " + el.scalesPower + ", Tech " + el.techPower;
+            //weapon evolves
             WeaponsController weaponCntrller = WeaponsController.instance;
             List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
             List<WeaponType> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
@@ -213,6 +219,11 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt.mainButton.interactable = true;
                     myBtnScrpt.bottomText.text = "Evolve!";
                     myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
+                    {
+                        weaponCntrller.EvolveWeapon(equippedWpn, evolves[0], PlayerWeaponManager.instance);
+                        ReloadScreen();
+                    });
                 }
                 else
                 {
@@ -224,7 +235,7 @@ public class UpgradeMenuManager : MonoBehaviour
             }
             else wpnEvolveBtn1.SetActive(false);
             if (evolves.Count >= 2)
-            {
+            {//2nd weapon evolve
                 wpnEvolveBtn2.SetActive(true);
                 WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
                 GridElementController myBtnScrpt2 = wpnEvolveBtn2.GetComponent<GridElementController>();
@@ -234,6 +245,11 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt2.mainButton.interactable = true;
                     myBtnScrpt2.bottomText.text = "Evolve!";
                     myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
+                    {
+                        weaponCntrller.EvolveWeapon(equippedWpn, evolves[1], PlayerWeaponManager.instance);
+                        ReloadScreen();
+                    });
                 }
                 else
                 {
@@ -251,9 +267,10 @@ public class UpgradeMenuManager : MonoBehaviour
             wpnEvolveBtn1.SetActive(false);
             wpnEvolveBtn2.SetActive(false);
         }
-        if (PlayerWeaponManager.instance.GetEquippedWeapon(true))
+        GameObject equippedSpecialWpn = PlayerWeaponManager.instance.GetEquippedWeapon(true);
+        if (equippedSpecialWpn)//special weapon stats
         {
-            WeaponScript specWpn = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>();
+            WeaponScript specWpn = equippedSpecialWpn.GetComponent<WeaponScript>();
             WeaponStats specStats = specWpn.stats;
             ElementalStats sEl = specStats.elemental;
             text += "\n\n\nSpecial - " + specStats.weaponName + "   TP " + specStats.currentTinkerPoints +
@@ -261,6 +278,7 @@ public class UpgradeMenuManager : MonoBehaviour
             "\n  Fire " + sEl.firePower + ", Ice " + sEl.icePower + ", Lightning " + sEl.lightningPower +
             "\n  Wind " + sEl.windPower + ", Earth " + sEl.earthPower + ", Light " + sEl.lightPower +
             "\n  Beast " + sEl.beastPower + ", Scale " + sEl.scalesPower + ", Tech " + sEl.techPower;
+            //secial weapon evolves
             WeaponsController weaponCntrller = WeaponsController.instance;
             List <WeaponType> evolves = weaponCntrller.GetAllEvolutions(specWpn.stats.weaponType);
             List<WeaponType> availEvolves = WeaponsController.instance.GetAvailableEvolves(specWpn);
@@ -276,6 +294,11 @@ public class UpgradeMenuManager : MonoBehaviour
                         myBtnScrpt3.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
                     myBtnScrpt3.mainButton.interactable = true;
                     myBtnScrpt3.bottomText.text = "Evolve!";
+                    myBtnScrpt3.mainButton.onClick.AddListener(() => //evolve special wpn btn
+                    {
+                        weaponCntrller.EvolveWeapon(equippedSpecialWpn, evolves[0], PlayerWeaponManager.instance);
+                        ReloadScreen();
+                    });
                 }
                 else
                 {
@@ -287,7 +310,7 @@ public class UpgradeMenuManager : MonoBehaviour
             }
             else specWpnEvolveBtn1.SetActive(false);
             if (evolves.Count >= 2)
-            {
+            {//2nd special wpn evolve
                 specWpnEvolveBtn2.SetActive(true);
                 WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
                 GridElementController myBtnScrpt4 = specWpnEvolveBtn2.GetComponent<GridElementController>();
@@ -298,6 +321,11 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt4.bottomText.text = "Evolve!";
                     if (evolWpn.spr)
                         myBtnScrpt4.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt4.mainButton.onClick.AddListener(() => //evolve special wpn btn 2
+                    {
+                        weaponCntrller.EvolveWeapon(equippedSpecialWpn, evolves[1], PlayerWeaponManager.instance);
+                        ReloadScreen();
+                    });
                 }
                 else
                 {
@@ -322,6 +350,7 @@ public class UpgradeMenuManager : MonoBehaviour
      */
     void LoadWeaponsToScreen(bool setCursor = false)
     {
+        WeaponScroll(0);
         PlayerWeaponManager playerWpns = PlayerWeaponManager.instance;
         int numOfPage = (playerWpns.ownedWeapons.Count + playerWpns.ownedSpecialWeapons.Count) / wpnPerRow;
         wpnScroll.numberOfSteps = numOfPage;
@@ -424,6 +453,7 @@ public class UpgradeMenuManager : MonoBehaviour
      */
     void LoadComponentsToScreen()
     {
+        ComponentScroll(0);
         foreach (Transform child in componentsGrid.transform)
         {
             Destroy(child.gameObject);
@@ -514,5 +544,11 @@ public class UpgradeMenuManager : MonoBehaviour
         int numOfPage = iconCount / cmpntPerRow;
         cmpntScroll.numberOfSteps = numOfPage;
         cmpntScroll.size = 1.0f / numOfPage;
+    }
+    private void ReloadScreen()
+    {
+        LoadWeaponsToScreen();
+        LoadEquippedWeapons();
+        LoadComponentsToScreen();
     }
 }

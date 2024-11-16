@@ -108,6 +108,40 @@ public class WeaponsController : MonoBehaviour
             }
         }
     }
+    /** Replace old weapon with it's evolution
+     * oldWpn - weapon to be olved
+     * newWeaponType - weapon type to evolve to
+     * character - owner of the weapon to be evolved
+     * @returns - a reference to the new weapon
+     */
+    public GameObject EvolveWeapon(GameObject oldWpn, WeaponType newWeaponType, CharacterWeaponManager character)
+    {
+        WeaponScript oldWpnScrpt = oldWpn.GetComponent<WeaponScript>();
+        WeaponStats oldStats = oldWpnScrpt.stats;
+        bool isSpecial = oldWpnScrpt.isSpecialWeapon;
+        GameObject newWpn = baseWeapons[(int)newWeaponType];
+        WeaponStats newStats = newWpn.GetComponent<WeaponScript>().stats;
+        newStats.attack = oldStats.attack;
+        newStats.durability = oldStats.durability;
+        newStats.block = oldStats.block;
+        newStats.stability = oldStats.stability;
+        newStats.elemental = oldStats.elemental;
+        newStats.currentTinkerPoints = oldStats.currentTinkerPoints;
+        if (isSpecial)
+        {
+            int oldWpnIndex = character.ownedSpecialWeapons.IndexOf(oldWpn);
+            if(oldWpnIndex == -1) return null;
+            character.ownedSpecialWeapons[oldWpnIndex] = newWpn;
+        }
+        else
+        {
+            int oldWpnIndex = character.ownedWeapons.IndexOf(oldWpn);
+            if (oldWpnIndex == -1) return null;
+            character.ownedWeapons[oldWpnIndex] = newWpn;
+        }
+        Destroy(oldWpn);
+        return newWpn;
+    }
     public List<WeaponType> GetAvailableEvolves(WeaponScript curWpn)
     {
         List<WeaponType> evolves = GetAllEvolutions(curWpn.stats.weaponType);
