@@ -198,7 +198,7 @@ public class UpgradeMenuManager : MonoBehaviour
             WeaponScript wpn = equippedWpn.GetComponent<WeaponScript>();
             WeaponStats stats = wpn.stats;
             ElementalStats el = stats.elemental;
-            text = "Equipped - " + stats.weaponName + "   TP " + stats.currentTinkerPoints +
+            text = "Equipped - " + stats.weaponName + "   TP " + stats.currentTinkerPoints + " Lvl " + stats.level +
             "\n  Attack " + stats.attack + " Durability " + stats.durability +
             "\n  Block " + stats.block + " Stability " + stats.stability +
             "\n  Fire " + el.firePower + ", Ice " + el.icePower + ", Lightning " + el.lightningPower +
@@ -227,7 +227,7 @@ public class UpgradeMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt.topText.text = "???";
+                    myBtnScrpt.topText.text = "???"; // TODO isObtained? weaponName : "???";
                     myBtnScrpt.mainButton.interactable = false;
                     myBtnScrpt.bottomText.text = "";
                     myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
@@ -273,7 +273,7 @@ public class UpgradeMenuManager : MonoBehaviour
             WeaponScript specWpn = equippedSpecialWpn.GetComponent<WeaponScript>();
             WeaponStats specStats = specWpn.stats;
             ElementalStats sEl = specStats.elemental;
-            text += "\n\n\nSpecial - " + specStats.weaponName + "   TP " + specStats.currentTinkerPoints +
+            text += "\n\n\nSpecial - " + specStats.weaponName + "   TP " + specStats.currentTinkerPoints + " Lvl " + specStats.level +
             "\n  Attack " + specStats.attack +
             "\n  Fire " + sEl.firePower + ", Ice " + sEl.icePower + ", Lightning " + sEl.lightningPower +
             "\n  Wind " + sEl.windPower + ", Earth " + sEl.earthPower + ", Light " + sEl.lightPower +
@@ -404,10 +404,15 @@ public class UpgradeMenuManager : MonoBehaviour
                 LoadComponentsToScreen();
             });
         }
-        int wpnsToSkip = curWeaponPage * wpnPerRow;
+        int wpnsToSkip = curWeaponPage * wpnPerRow - playerWpns.ownedWeapons.Count;
         int index = 0;
         foreach (GameObject weapon in playerWpns.ownedSpecialWeapons) //special weapons
         {
+            if (index < wpnsToSkip)
+            {
+                index++;
+                continue;
+            }
             if (weapon == null) continue;
             if (++displayed > maxDisplayed) break;
             WeaponScript wpnScrpt = weapon.GetComponent<WeaponScript>();
@@ -453,12 +458,11 @@ public class UpgradeMenuManager : MonoBehaviour
      */
     void LoadComponentsToScreen()
     {
-        ComponentScroll(0);
         foreach (Transform child in componentsGrid.transform)
         {
             Destroy(child.gameObject);
         }
-        int iconCount = 0;
+        int displayedCount = 0;
         int maxDisplayed = 12;
         int componentsToSkip = curComponentPage * cmpntPerRow;
         //basic components
@@ -473,7 +477,7 @@ public class UpgradeMenuManager : MonoBehaviour
                     componentsToSkip--;
                     continue;
                 }
-                if (++iconCount > maxDisplayed) break;
+                if (++displayedCount > maxDisplayed) break;
                 Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
                 GridElementController gridScript = gridElement.GetComponent<GridElementController>();
                 gridScript.topText.text = componentScript.stats.itemName;
@@ -506,7 +510,6 @@ public class UpgradeMenuManager : MonoBehaviour
                 }// cant use component. disable the button
                 else gridScript.mainButton.interactable = false;
             }
-            //gridElement.GetComponent<GridElementController>().image = componentScript.;
         }
         //weapon components
         foreach (GameObject component in TinkerComponentManager.instance.weaponComponents)
@@ -516,7 +519,7 @@ public class UpgradeMenuManager : MonoBehaviour
                 componentsToSkip--;
                 continue;
             }
-            if (++iconCount > maxDisplayed) break;
+            if (++displayedCount > maxDisplayed) break;
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
             Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
@@ -541,9 +544,24 @@ public class UpgradeMenuManager : MonoBehaviour
             }// cant use component. disable the button
             else gridScript.mainButton.interactable = false;
         }
-        int numOfPage = iconCount / cmpntPerRow;
-        cmpntScroll.numberOfSteps = numOfPage;
-        cmpntScroll.size = 1.0f / numOfPage;
+        int count = 0;//count total unique components owned
+        foreach (var item in TinkerComponentManager.instance.baseComponents)
+        {
+            if (item.GetComponent<TinkerComponent>().stats.count > 0) count++;
+        }
+        count += TinkerComponentManager.instance.weaponComponents.Count;
+        int numOfPage = count / cmpntPerRow;
+        if (numOfPage < 2)
+        {
+            cmpntScroll.gameObject.SetActive(false);
+        }
+        else
+        {
+            cmpntScroll.gameObject.SetActive(true);
+            cmpntScroll.numberOfSteps = numOfPage;
+            cmpntScroll.size = 1.0f / numOfPage;
+            cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
+        }
     }
     private void ReloadScreen()
     {

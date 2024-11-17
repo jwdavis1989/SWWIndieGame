@@ -119,7 +119,7 @@ public class WeaponsController : MonoBehaviour
         WeaponScript oldWpnScrpt = oldWpn.GetComponent<WeaponScript>();
         WeaponStats oldStats = oldWpnScrpt.stats;
         bool isSpecial = oldWpnScrpt.isSpecialWeapon;
-        GameObject newWpn = baseWeapons[(int)newWeaponType];
+        GameObject newWpn = Instantiate(baseWeapons[(int)newWeaponType], oldWpn.transform.parent);
         WeaponStats newStats = newWpn.GetComponent<WeaponScript>().stats;
         newStats.attack = oldStats.attack;
         newStats.durability = oldStats.durability;
