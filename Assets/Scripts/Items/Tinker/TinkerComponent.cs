@@ -97,4 +97,5 @@ public class TinkerComponentStats
     public ElementalStats elementalStats = new ElementalStats();
     [Header("Components made from recycled weapons behave differently")]
     public bool isWeapon = false;
+    public bool isSpecialWpn = false;
 }

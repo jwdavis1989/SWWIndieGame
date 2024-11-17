@@ -90,28 +90,44 @@ public class TinkerComponentManager : MonoBehaviour
     */
     public TinkerComponent BreakDownWeapon(int index, bool specialWeapon, CharacterWeaponManager characterWeapons)
     {
-        
-        int weaponIndex = specialWeapon ? characterWeapons.indexOfEquippedSpecialWeapon : characterWeapons.indexOfEquippedWeapon;
         List <GameObject> weaponsList = specialWeapon ? characterWeapons.ownedSpecialWeapons : characterWeapons.ownedWeapons;
         if (weaponsList.Count < index)
             return null;
-        GameObject ownedWeapon = weaponsList[index];
-        WeaponScript weapon = ownedWeapon.GetComponent<WeaponScript>();
+        GameObject wpnToBreak = weaponsList[index];
+        WeaponScript weapon = wpnToBreak.GetComponent<WeaponScript>();
         if (weapon.stats.level < 5)
             throw new ArgumentException("Weapon must be level 5");
-        ownedWeapon.AddComponent<TinkerComponent>();
-        TinkerComponent rv = ownedWeapon.GetComponent<TinkerComponent>();
+        wpnToBreak.AddComponent<TinkerComponent>();
+        TinkerComponent rv = wpnToBreak.GetComponent<TinkerComponent>();
         rv.stats.elementalStats = weapon.stats.elemental;
         rv.stats.attack = weapon.stats.attack;
         rv.stats.durability = weapon.stats.durability;
         rv.stats.stability = weapon.stats.stability;
         rv.stats.block = weapon.stats.block;
         rv.stats.isWeapon = true;
+        rv.stats.isSpecialWpn = specialWeapon;
         rv.stats.count = 1;
         rv.stats.itemName = weapon.stats.weaponName;
-        weaponComponents.Add(ownedWeapon);
-        weaponsList.Remove(ownedWeapon);
-        ownedWeapon.SetActive(false);
+        rv.spr = weapon.spr;
+        weaponComponents.Add(wpnToBreak); //add component
+        GameObject eqWpn = characterWeapons.GetEquippedWeapon(specialWeapon);
+        weaponsList.Remove(wpnToBreak);
+        //reset equipped weapon index as it may have changed
+        if (specialWeapon)
+        {
+            if (eqWpn == wpnToBreak)
+                characterWeapons.indexOfEquippedSpecialWeapon = 0;
+            else
+                characterWeapons.indexOfEquippedSpecialWeapon = characterWeapons.ownedSpecialWeapons.IndexOf(eqWpn);
+        }
+        else
+        {
+            if (eqWpn == wpnToBreak)
+                characterWeapons.indexOfEquippedWeapon = 0;
+            else
+                characterWeapons.indexOfEquippedWeapon = characterWeapons.ownedWeapons.IndexOf(eqWpn);
+        }
+        wpnToBreak.SetActive(false);
         return rv;
     }
     /**
@@ -149,8 +165,12 @@ public class TinkerComponentManager : MonoBehaviour
         bool canUpgrade = false;
         float newAttack = weapon.stats.attack;
         //calulate new attack
-        if (tinkerComponent.stats.isWeapon)
+        if (tinkerComponent.stats.isWeapon)// broken down weapon component
         {
+            if (weapon.isSpecialWeapon && !tinkerComponent.stats.isSpecialWpn)
+                return false;//can only add main hand to main hand / off hand to off hand
+            if (!weapon.isSpecialWeapon && tinkerComponent.stats.isSpecialWpn)
+                return false;
             if (weapon.stats.attack < tinkerComponent.stats.attack)
             {
                 newAttack += tinkerComponent.stats.attack * 0.25f;

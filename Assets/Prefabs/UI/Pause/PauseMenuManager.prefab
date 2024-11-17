@@ -98,10 +98,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.5778747, g: 0.75023705, b: 0.8113208, a: 1}
-    m_HighlightedColor: {r: 0.104396574, g: 0.4339623, b: 0.39307576, a: 1}
-    m_PressedColor: {r: 0.18422927, g: 0.20932423, b: 0.5660378, a: 1}
-    m_SelectedColor: {r: 0.09714311, g: 0.33061415, b: 0.5566038, a: 1}
+    m_NormalColor: {r: 0.8117647, g: 0.5764706, b: 0.706242, a: 1}
+    m_HighlightedColor: {r: 0.43529412, g: 0.10588234, b: 0.27074954, a: 1}
+    m_PressedColor: {r: 0.33962262, g: 0.11302614, b: 0.09772159, a: 1}
+    m_SelectedColor: {r: 0.5566038, g: 0.13389996, b: 0.24287547, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -123,7 +123,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1370574338659230144}
         m_TargetAssemblyTypeName: UpgradeMenuManager, Assembly-CSharp
-        m_MethodName: BreakDownEquippedWeapon
+        m_MethodName: BreakDownActiveWeapon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1507,8 +1507,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -287.9, y: 92.7}
-  m_SizeDelta: {x: 191, y: 50}
+  m_AnchoredPosition: {x: -292.47, y: 92.7}
+  m_SizeDelta: {x: 215.06, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &638249542010371238
 CanvasRenderer:
@@ -1881,7 +1881,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Breakdown Eq. Weapon
+  m_text: Recycle Weapon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2650,8 +2650,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0012188, y: -0.00021935}
-  m_SizeDelta: {x: 166.6, y: 126.57}
+  m_AnchoredPosition: {x: -14.8777, y: -0.00021935}
+  m_SizeDelta: {x: 160.9061, y: 126.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3783947701221806291
 CanvasRenderer:
@@ -3673,8 +3673,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -287.9, y: 2.5}
-  m_SizeDelta: {x: 191, y: 149.42}
+  m_AnchoredPosition: {x: -292.47, y: 2.5}
+  m_SizeDelta: {x: 215.06, y: 149.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &170786173050533990
 CanvasRenderer:
@@ -4022,6 +4022,7 @@ MonoBehaviour:
   componentsGrid: {fileID: 8993567812264126408}
   curComponentPage: 0
   elementPrefab: {fileID: 6330473451523954200, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
+  breakdownBtn: {fileID: 7246520293623212660}
   eventSystem: {fileID: 198342114754364641}
   wpnScroll: {fileID: 5179587441313577337}
   currentStep: 0
@@ -4292,7 +4293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 67.4
+      value: 78.30002
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4521,7 +4522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 67.4
+      value: 78.3
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4754,7 +4755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 67.4
+      value: 78.30002
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4881,7 +4882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 67.4
+      value: 78.30002
       objectReference: {fileID: 0}
     - target: {fileID: 541447442964833853, guid: cde24ccb92f09dc4e835a9fe79c88589, type: 3}
       propertyPath: m_AnchoredPosition.y

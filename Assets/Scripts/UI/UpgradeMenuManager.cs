@@ -27,7 +27,10 @@ public class UpgradeMenuManager : MonoBehaviour
     public int curComponentPage = 0;
     [Header("Prefab for item UI object")]
     public GameObject elementPrefab;
+    [Header("Buttons")]
+    public Button breakdownBtn;
     public EventSystem eventSystem;
+
 
     //called when arriving at this menu
     private void OnEnable()
@@ -50,25 +53,37 @@ public class UpgradeMenuManager : MonoBehaviour
         { //grid system become null when equipping weapon because the grid is reloaded
             eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
         }
+        if (activeWeapon != null && activeWeapon.GetComponent<WeaponScript>().stats.level >= 5)
+        {
+            breakdownBtn.interactable = true;
+        }
+        else
+        {
+            breakdownBtn.interactable= false;
+        }
     }
 
     //************************** B U T T O N S **************************
     /**
-     * Turn equipped weapon into a component
+     * Turn active weapon into a component
      */
-    public void BreakDownEquippedWeapon()
+    public void BreakDownActiveWeapon()
     {
         try
         {
+            if (activeWeapon.GetComponent<WeaponScript>().stats.level < 5)
+                throw new System.Exception("Must be Level 5 or over");
             //break down weapon
-            TinkerComponent newComp = TinkerComponentManager.instance.BreakDownWeapon(PlayerWeaponManager.instance.indexOfEquippedWeapon, false, PlayerWeaponManager.instance);
-            //add to screen
-            Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
-            gridElement.GetComponent<GridElementController>().topText.text = newComp.stats.itemName;
-            gridElement.GetComponent<GridElementController>().bottomText.text = "Atk:" + newComp.stats.attack;
+            PlayerWeaponManager pWpns = PlayerWeaponManager.instance;
+            bool isSpecial = activeWeapon.GetComponent<WeaponScript>().isSpecialWeapon;
+            int index = isSpecial ? pWpns.ownedSpecialWeapons.IndexOf(activeWeapon) : pWpns.ownedWeapons.IndexOf(activeWeapon);
+            TinkerComponent newComp = TinkerComponentManager.instance.BreakDownWeapon(index, isSpecial, pWpns);
             Debug.Log("Broke down " + newComp.stats.itemName);
+            //add to screen
+            activeWeapon = null;
+            ReloadUpgradeMenu();
         }
-        catch (System.Exception e) //Catches not lvl 5 or over error
+        catch (System.Exception e) //Catches not lvl 5 or over error / no active weapon
         {
             Debug.Log(e.Message);
         }
@@ -222,7 +237,7 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
                     {
                         weaponCntrller.EvolveWeapon(equippedWpn, evolves[0], PlayerWeaponManager.instance);
-                        ReloadScreen();
+                        ReloadUpgradeMenu();
                     });
                 }
                 else
@@ -248,7 +263,7 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
                     {
                         weaponCntrller.EvolveWeapon(equippedWpn, evolves[1], PlayerWeaponManager.instance);
-                        ReloadScreen();
+                        ReloadUpgradeMenu();
                     });
                 }
                 else
@@ -297,7 +312,7 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt3.mainButton.onClick.AddListener(() => //evolve special wpn btn
                     {
                         weaponCntrller.EvolveWeapon(equippedSpecialWpn, evolves[0], PlayerWeaponManager.instance);
-                        ReloadScreen();
+                        ReloadUpgradeMenu();
                     });
                 }
                 else
@@ -324,7 +339,7 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt4.mainButton.onClick.AddListener(() => //evolve special wpn btn 2
                     {
                         weaponCntrller.EvolveWeapon(equippedSpecialWpn, evolves[1], PlayerWeaponManager.instance);
-                        ReloadScreen();
+                        ReloadUpgradeMenu();
                     });
                 }
                 else
@@ -483,6 +498,8 @@ public class UpgradeMenuManager : MonoBehaviour
                 gridScript.topText.text = componentScript.stats.itemName;
                 gridScript.bottomText.text = "" + componentScript.stats.count;
                 gridScript.cornerButton.gameObject.SetActive(false);
+                if(componentScript.spr)
+                    gridScript.mainButtonForeground.GetComponent<Image>().sprite = componentScript.spr;
                 //Only affecting equipped non-special weapon here //activeWeapon
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, component))
@@ -525,7 +542,9 @@ public class UpgradeMenuManager : MonoBehaviour
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
             gridScript.topText.text = componentScript.stats.itemName;
             gridScript.bottomText.text = "Atk:" + componentScript.stats.attack;
-            gridScript.cornerButton.enabled = false;
+            gridScript.cornerButton.gameObject.SetActive(false);
+            if (componentScript.spr)
+                gridScript.mainButtonForeground.GetComponent<Image>().sprite = componentScript.spr;
             if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
             {
                 /**   ADD EVENT TO WEAPON COMPONENT CLICK   */
@@ -563,7 +582,7 @@ public class UpgradeMenuManager : MonoBehaviour
             cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
         }
     }
-    private void ReloadScreen()
+    private void ReloadUpgradeMenu()
     {
         LoadWeaponsToScreen();
         LoadEquippedWeapons();
