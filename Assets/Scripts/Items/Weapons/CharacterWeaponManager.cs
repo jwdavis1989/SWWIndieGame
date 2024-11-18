@@ -204,6 +204,6 @@ public class CharacterWeaponManager : MonoBehaviour
         //weaponAction.AttemptToPerformAction(characterThatOwnsThisArsenal, weaponPerformingAction);
 
         //Work-around based on us not needing to store the weapon being used afaik
-        weaponAction.AttemptToPerformAction();
+        weaponAction.AttemptToPerformAction(characterThatOwnsThisArsenal);
     }
 }

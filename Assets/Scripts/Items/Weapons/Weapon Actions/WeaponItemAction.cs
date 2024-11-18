@@ -7,7 +7,7 @@ public class WeaponItemAction : ScriptableObject
 {
     public int actionID;
 
-    public virtual void AttemptToPerformAction() {
+    public virtual void AttemptToPerformAction(CharacterManager characterPerformingAction) {
         // What does every weapon action have in common?
         // 1. Keep track of which weapon is currently being used
         // playerPerformingAction.PlayerCombatManager.currentWeaponBeingUsed = weaponPerformingAction;
