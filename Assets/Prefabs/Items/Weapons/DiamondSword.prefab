@@ -128,46 +128,47 @@ MonoBehaviour:
   hasObtained: 0
   stats:
     weaponType: 15
-    attack: 1
-    maxAttack: 1
-    durability: 1
-    maxDurability: 1
-    block: 1
-    maxBlock: 1
-    stability: 1
-    maxStability: 1
+    attack: 42
+    maxAttack: 84
+    durability: 105
+    maxDurability: 150
+    block: 25
+    maxBlock: 42
+    stability: 0
+    maxStability: 5
     elemental:
       firePower: 0
-      icePower: 0
+      icePower: 50
       lightningPower: 0
       windPower: 0
-      earthPower: 0
+      earthPower: 36
       lightPower: 0
       beastPower: 0
       scalesPower: 0
       techPower: 0
     maxElemental:
-      firePower: 0
-      icePower: 0
-      lightningPower: 0
-      windPower: 0
-      earthPower: 0
-      lightPower: 0
-      beastPower: 0
-      scalesPower: 0
-      techPower: 0
+      firePower: 100
+      icePower: 100
+      lightningPower: 100
+      windPower: 100
+      earthPower: 100
+      lightPower: 100
+      beastPower: 100
+      scalesPower: 100
+      techPower: 100
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 0
+    specialtyCooldown: 20
     maxSpecialtyCooldown: 0
     xpToLevel: 100
-    tinkerPointsPerLvl: 0
+    tinkerPointsPerLvl: 1
     currentDurability: 1
     level: 1
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
-    currentTinkerPoints: 0
-    weaponName: BaseWeaponName
+    currentTinkerPoints: 1
+    weaponName: Diamond Sword
+  mainHandLightAttackAction: {fileID: 11400000, guid: 6ae304242bac49b4aa055e13caae4195, type: 2}
 --- !u!1 &6196311575992089123
 GameObject:
   m_ObjectHideFlags: 0

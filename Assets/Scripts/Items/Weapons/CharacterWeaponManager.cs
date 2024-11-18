@@ -198,4 +198,12 @@ public class CharacterWeaponManager : MonoBehaviour
             weapon.SetActive(false);
         }
     }
+
+    public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponScript weaponPerformingAction) {
+        //Way shown in tutorial, might not make sense for our version
+        //weaponAction.AttemptToPerformAction(characterThatOwnsThisArsenal, weaponPerformingAction);
+
+        //Work-around based on us not needing to store the weapon being used afaik
+        weaponAction.AttemptToPerformAction();
+    }
 }
