@@ -121,6 +121,9 @@ public class WeaponScript : MonoBehaviour
     [Header("Important: Set weapon type (Otherwise intialized by JSON)")]
     public WeaponStats stats;
 
+    [Header("Actions")]
+    public WeaponItemAction mainHandLightAttackAction;
+
     public void Awake() {
         meleeWeaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
         if (!isSpecialWeapon && meleeWeaponDamageCollider) {

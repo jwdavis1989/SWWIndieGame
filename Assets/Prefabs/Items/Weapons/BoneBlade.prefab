@@ -50,46 +50,47 @@ MonoBehaviour:
   hasObtained: 0
   stats:
     weaponType: 4
-    attack: 1
-    maxAttack: 1
-    durability: 1
-    maxDurability: 1
-    block: 1
-    maxBlock: 1
-    stability: 1
-    maxStability: 1
+    attack: 22
+    maxAttack: 45
+    durability: 100
+    maxDurability: 142
+    block: 20
+    maxBlock: 22
+    stability: 0
+    maxStability: 6
     elemental:
       firePower: 0
-      icePower: 0
+      icePower: 20
       lightningPower: 0
       windPower: 0
       earthPower: 0
       lightPower: 0
       beastPower: 0
       scalesPower: 0
-      techPower: 0
+      techPower: 5
     maxElemental:
-      firePower: 0
-      icePower: 0
-      lightningPower: 0
-      windPower: 0
-      earthPower: 0
-      lightPower: 0
-      beastPower: 0
-      scalesPower: 0
-      techPower: 0
+      firePower: 45
+      icePower: 45
+      lightningPower: 45
+      windPower: 45
+      earthPower: 45
+      lightPower: 45
+      beastPower: 45
+      scalesPower: 45
+      techPower: 45
     speed: 1
     maxSpeed: 1
     specialtyCooldown: 0
     maxSpecialtyCooldown: 0
     xpToLevel: 100
-    tinkerPointsPerLvl: 0
+    tinkerPointsPerLvl: 1
     currentDurability: 1
     level: 1
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
-    currentTinkerPoints: 0
-    weaponName: BaseWeaponName
+    currentTinkerPoints: 1
+    weaponName: Bone Blade
+  mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
 --- !u!1 &4029110176930541267
 GameObject:
   m_ObjectHideFlags: 0
