@@ -15,6 +15,7 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
+    public CharacterWeaponManager characterWeaponManager;
 
     [Header("Status")]
     public bool isDead = false;
@@ -107,6 +108,18 @@ public class CharacterManager : MonoBehaviour
                 Physics.IgnoreCollision(collider, otherCollider);
             }
         }
+    }
+
+    public void CallDrainStaminaBasedOnAttack() {
+        characterWeaponManager.DrainStaminaBasedOnAttack();
+    }
+
+    public void CallOpenDamageCollider() {
+        characterWeaponManager.OpenDamageCollider();
+    }
+
+    public void CallCloseDamageCollider() {
+        characterWeaponManager.CloseDamageCollider();
     }
 
 }
