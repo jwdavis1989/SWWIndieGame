@@ -60,6 +60,18 @@ public class WeaponStats
     public float experiencePointsToNextLevel = 100.0f;
     public int currentTinkerPoints = 0;
     public String weaponName = "BaseWeaponName";
+
+    [Header("Stamina Costs")]
+    public float baseStaminaCost = 20f;
+    public float lightAttack01StaminaCostModifier = 1f;
+    public float lightAttack02StaminaCostModifier = 1f;
+    public float heavyAttack01StaminaCostModifier = 1f;
+    public float heavyAttack02StaminaCostModifier = 1f;
+
+    [Header("Motion Values")]
+    public float lightAttack01DamageMotionValue = 1f;
+    public float lightAttack02DamageMotionValue = 1.1f;
+
 }
 /*
  * Serializable ElementalStats used for JSON saving
@@ -112,7 +124,7 @@ public class ElementalStats
 public class WeaponScript : MonoBehaviour
 {
     [Header("Weapon Damage Collider")]
-    [SerializeField] MeleeWeaponDamageCollider meleeWeaponDamageCollider;
+    [SerializeField] public MeleeWeaponDamageCollider meleeWeaponDamageCollider;
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
@@ -158,6 +170,9 @@ public class WeaponScript : MonoBehaviour
 
         //Turn the collider back off so it doesn't hurt anyone, ow
         meleeWeaponDamageCollider.enabled = false;
+
+        //Add Motion Value
+        meleeWeaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
     }
     /**
      * Add Exp to a weapon and level it up if possible
@@ -189,7 +204,7 @@ public class WeaponScript : MonoBehaviour
     //        //set reload/recharge
     //    }
     //}
-    public float CalculateTotalDamage(CharacterManager targetCharacter)
+    public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
@@ -205,7 +220,7 @@ public class WeaponScript : MonoBehaviour
         result += stats.attack * (stats.elemental.techPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.techPower);
 
         if(result > 0) {
-            return result;
+            return result * attackMotionValue * fullChargeModifier;
         }
         else return 0;
     }

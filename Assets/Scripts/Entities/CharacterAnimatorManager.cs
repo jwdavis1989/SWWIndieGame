@@ -50,6 +50,7 @@ public class CharacterAnimatorManager : MonoBehaviour
     }
 
     public virtual void PlayTargetAttackActionAnimation(
+        AttackType attackType,
         string targetAnimation, 
         bool isPerformingAction, 
         bool applyRootMotion = true, 
@@ -63,7 +64,7 @@ public class CharacterAnimatorManager : MonoBehaviour
             //Update Animation Set to Current Weapon's Animations
             
             //Decide if our attack can be parried
-
+            character.characterWeaponManager.currentAttackType = attackType;
             character.animator.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
             character.isPerformingAction = isPerformingAction;

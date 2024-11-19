@@ -24,6 +24,12 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     public float scalesDamage = 0f;
     public float techDamage = 0f;
 
+    //Damage modifier for specific attack, which differs between attacks in a combo
+    public float attackMotionValue = 1f;
+
+    //Damage modifier for successfully charging an attack fully (e.g. Heavy melee or Magic)
+    public float fullChargeModifier = 1f;
+
     //1 = True, 0 = False
     [Header("Armor Reduces? 1 = T, 0 = F")]
     public int isReducedByArmor = 1;
@@ -83,10 +89,10 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Monsters or player created damage
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
-                finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter);
+                finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
             else {
-                finalDamageDealt = CalculateNPCDamage(targetCharacter);
+                finalDamageDealt = CalculateNPCDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
         }
         //Traps and environmental hazards
@@ -103,7 +109,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //TODO
     }
 
-    public float CalculateNPCDamage (CharacterManager targetCharacter) {
+    public float CalculateNPCDamage (CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f) {
         float result = physicalDamage * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
@@ -118,7 +124,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         result += physicalDamage * (techDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
 
         if(result > 0) {
-            return result;
+            return result * attackMotionValue * fullChargeModifier;
         }
         else return 0;
     }
