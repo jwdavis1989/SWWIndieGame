@@ -20,6 +20,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool dodgeInput = false;
     [SerializeField] bool sprintInput = false;
     [SerializeField] bool jumpInput = false;
+    [SerializeField] bool lightAttackInput = false;
     [SerializeField] Vector2 mouseWheelInput;
     [SerializeField] float mouseWheelVerticalInput;
     [SerializeField] float prevMouseWheelVerticalInput;
@@ -57,6 +58,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleDodgeInput();
         HandleSprintInput();
         HandleJumpInput();
+        HandleMainHandLightAttackInput();
         HandleMouseWheelInput();
     }
 
@@ -72,6 +74,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+            playerControls.PlayerActions.LightAttack.performed += i => lightAttackInput = true;
 
             //Holding the input sets the bool to true
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -221,6 +224,20 @@ public class PlayerInputManager : MonoBehaviour
 
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
+        }
+    }
+
+    private void HandleMainHandLightAttackInput() {
+        if (lightAttackInput) {
+            lightAttackInput = false;
+
+            //TODO: Return if we have a UI Window Open
+
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
+
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction, 
+                                                PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+            }
         }
     }
 }
