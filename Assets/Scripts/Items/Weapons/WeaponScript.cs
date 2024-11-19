@@ -116,9 +116,11 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
+    [Header("Image used for menu icon")]
+    public Sprite spr = null;
     [Header("Will appear as ??? on weapon sheet until obtained")]
     public bool hasObtained = false;
-    [Header("Important: Set weapon type (Otherwise intialized by JSON)")]
+    [Header("Important: Set weapon type (Otherwise base weapon stats are intialized by weaponsJSON)")]
     public WeaponStats stats;
 
     [Header("Actions")]

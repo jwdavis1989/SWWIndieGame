@@ -108,6 +108,114 @@ public class WeaponsController : MonoBehaviour
             }
         }
     }
+    /** Replace old weapon with it's evolution
+     * oldWpn - weapon to be olved
+     * newWeaponType - weapon type to evolve to
+     * character - owner of the weapon to be evolved
+     * @returns - a reference to the new weapon
+     */
+    public GameObject EvolveWeapon(GameObject oldWpn, WeaponType newWeaponType, CharacterWeaponManager character)
+    {
+        WeaponScript oldWpnScrpt = oldWpn.GetComponent<WeaponScript>();
+        WeaponStats oldStats = oldWpnScrpt.stats;
+        bool isSpecial = oldWpnScrpt.isSpecialWeapon;
+        GameObject newWpn = Instantiate(baseWeapons[(int)newWeaponType], oldWpn.transform.parent);
+        WeaponStats newStats = newWpn.GetComponent<WeaponScript>().stats;
+        newStats.attack = oldStats.attack;
+        newStats.durability = oldStats.durability;
+        newStats.block = oldStats.block;
+        newStats.stability = oldStats.stability;
+        newStats.elemental = oldStats.elemental;
+        newStats.currentTinkerPoints = oldStats.currentTinkerPoints;
+        if (isSpecial)
+        {
+            int oldWpnIndex = character.ownedSpecialWeapons.IndexOf(oldWpn);
+            if(oldWpnIndex == -1) return null;
+            character.ownedSpecialWeapons[oldWpnIndex] = newWpn;
+        }
+        else
+        {
+            int oldWpnIndex = character.ownedWeapons.IndexOf(oldWpn);
+            if (oldWpnIndex == -1) return null;
+            character.ownedWeapons[oldWpnIndex] = newWpn;
+        }
+        Destroy(oldWpn);
+        return newWpn;
+    }
+    public List<WeaponType> GetAvailableEvolves(WeaponScript curWpn)
+    {
+        List<WeaponType> evolves = GetAllEvolutions(curWpn.stats.weaponType);
+        List<WeaponType> availableEvolves = new List<WeaponType>();
+        foreach (WeaponType evolve in evolves)
+        {
+            WeaponScript newWpn = baseWeapons[(int)evolve].GetComponent<WeaponScript>();
+            //check diff between req stats and current stats
+            ElementalStats diff = newWpn.stats.elemental.Subract(curWpn.stats.elemental);
+            if(diff.firePower <= 0 &&
+                diff.icePower <= 0 &&
+                diff.lightningPower <= 0 &&
+                diff.windPower <= 0 &&
+                diff.earthPower <= 0 &&
+                diff.lightPower <= 0 &&
+                diff.beastPower <= 0 &&
+                diff.scalesPower <= 0 &&
+                diff.techPower <= 0 &&
+                curWpn.stats.attack >= newWpn.stats.attack &&
+                curWpn.stats.durability >= newWpn.stats.durability &&
+                curWpn.stats.stability >= newWpn.stats.stability &&
+                curWpn.stats.block >= newWpn.stats.block)
+            {
+                availableEvolves.Add(evolve);
+            }
+        }
+        return availableEvolves;
+    }
+    public List<WeaponType> GetAllEvolutions(WeaponType weaponType)
+    {
+        List<WeaponType> evolutions = new List<WeaponType>();
+        switch(weaponType){
+            case WeaponType.Shortsword:
+                evolutions.Add(WeaponType.BastardSword);
+                evolutions.Add(WeaponType.BroadSword); break;
+            case WeaponType.Wrench:
+                evolutions.Add(WeaponType.ReinforcedWrench);
+                break;
+            case WeaponType.BastardSword:
+                break;
+            case WeaponType.BroadSword:
+                break;
+            case WeaponType.BoneBlade:
+                //evolutions.Add(WeaponType.Deathknell);
+                break;
+            case WeaponType.ReinforcedWrench:
+                break;
+            case WeaponType.Dagger:
+                evolutions.Add(WeaponType.BowieKnife);
+                break;
+            case WeaponType.Flintlock:
+                evolutions.Add(WeaponType.Revolver);
+                evolutions.Add(WeaponType.ScrapGun); break;
+            case WeaponType.SparkCaster:
+                evolutions.Add(WeaponType.ZapCaster);
+                evolutions.Add(WeaponType.BurnCaster); break;
+            case WeaponType.BowieKnife:
+                break;
+            case WeaponType.Revolver:
+                break;
+            case WeaponType.ScrapGun:
+                break;
+            case WeaponType.ZapCaster:
+                break;
+            case WeaponType.BurnCaster:
+                break;
+            case WeaponType.FreezeCaster:
+                //evolutions.Add(WeaponType.SplashCaster);
+                break;
+            case WeaponType.DiamondSword:
+                break;
+        }
+        return evolutions;
+    }
 
 }
 

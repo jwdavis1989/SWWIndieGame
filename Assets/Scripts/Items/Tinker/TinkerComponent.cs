@@ -46,6 +46,8 @@ public class TinkerComponent : MonoBehaviour
 {
     [Header("The TinkerComponent is used for upgrading weapons\n")]
     public TinkerComponentStats stats = new();
+    [Header("Image used for menu icon")]
+    public Sprite spr = null;
 
     void OnTriggerEnter(Collider other)
     {
@@ -95,4 +97,5 @@ public class TinkerComponentStats
     public ElementalStats elementalStats = new ElementalStats();
     [Header("Components made from recycled weapons behave differently")]
     public bool isWeapon = false;
+    public bool isSpecialWpn = false;
 }
