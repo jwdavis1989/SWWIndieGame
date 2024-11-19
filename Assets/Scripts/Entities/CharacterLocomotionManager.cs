@@ -65,7 +65,9 @@ public class CharacterLocomotionManager : MonoBehaviour
         }
 
         //Apply downward force to character
-        character.characterController.Move(yVelocity * Time.deltaTime);
+        if (!character.isBoosting) {
+            character.characterController.Move(yVelocity * Time.deltaTime);
+        }
     }
 
     protected void HandleGroundCheck() {

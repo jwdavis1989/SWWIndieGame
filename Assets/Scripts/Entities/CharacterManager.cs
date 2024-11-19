@@ -24,6 +24,7 @@ public class CharacterManager : MonoBehaviour
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
+    public bool isBoosting = false;
     public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;
@@ -38,6 +39,10 @@ public class CharacterManager : MonoBehaviour
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
+    }
+
+    protected virtual void Start() {
+        IgnoreMyOwnColliders();
     }
 
     protected virtual void Update() {
@@ -81,6 +86,27 @@ public class CharacterManager : MonoBehaviour
 
     public virtual void ReviveCharacter() {
         //
+    }
+
+    protected virtual void IgnoreMyOwnColliders() {
+        Collider characterControllerCollider = GetComponent<Collider>();
+        Collider[] damageableCharacterColliders = GetComponentsInChildren<Collider>();
+        List<Collider> ignoreColliders = new List<Collider>();
+
+        //Add all limb damage collider to the list to ignore
+        foreach (var collider in damageableCharacterColliders) {
+            ignoreColliders.Add(collider);
+        }
+
+        //Adding primary collider from character controller to the list to ignore
+        ignoreColliders.Add(characterControllerCollider);
+
+        //Go through each collider in the list, and ignore collision with each other
+        foreach (var collider in ignoreColliders) {
+            foreach (var otherCollider in ignoreColliders) {
+                Physics.IgnoreCollision(collider, otherCollider);
+            }
+        }
     }
 
 }

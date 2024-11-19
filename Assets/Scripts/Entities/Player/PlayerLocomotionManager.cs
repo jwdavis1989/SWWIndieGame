@@ -11,6 +11,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public GameObject leftBoosters;
     // public GameObject leftForwardBoosters;
     // public GameObject leftBackwardBoosters;
+    public GameObject backBoosters;
+    public GameObject airDashBoosters;
+
+
     [HideInInspector] public CharacterManager characterManager;
     //Values taken from Input Manager
     [HideInInspector] public float verticalMovement;
@@ -34,6 +38,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Dodge")]
     private Vector3 rollDirection;
+    [SerializeField] float airBoostSpeed = 15f;
     public GameObject forceFieldGraphic;
 
     
@@ -52,6 +57,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void HandleAllMovement() {
         HandleGroundedMovement();
         HandleRotation();
+        HandleBackBoosterJets();
 
         //Aerial Movement
         HandleJumpingMovement();
@@ -132,11 +138,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
             //Facing Backward
             else {
-                if (freeFallDirection.x < 0) {
+                if (freeFallDirection.x < 0 && !characterManager.isBoosting) {
                 DisableJumpJets("Right");
                 EnableJumpJets("Left");
                 }
-                else if (freeFallDirection.x > 0) {
+                else if (freeFallDirection.x > 0 && !characterManager.isBoosting) {
                     DisableJumpJets("Left");
                     EnableJumpJets("Right");
                 }
@@ -148,6 +154,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
         else {
             DisableJumpJets("Both");
+            airDashBoosters.SetActive(false);
             //ResetOmniJumpJets();
         }
     }
@@ -214,16 +221,45 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         //Roll if moving before
         if (PlayerInputManager.instance.moveAmount > 0) {
-            rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-            rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-            rollDirection.y = 0;
-            rollDirection.Normalize();
+            Quaternion playerRotation;
+            if (player.isGrounded) {
+                //Set roll direction
+                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+                rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+                rollDirection.y = 0;
+                rollDirection.Normalize();
 
-            Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
-            player.transform.rotation = playerRotation;
+                //Set player facing
+                playerRotation = Quaternion.LookRotation(rollDirection);
+                player.transform.rotation = playerRotation;
 
-            //Play roll animation
-            player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
+                //Play roll animation
+                player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
+            }
+            else {
+                //Boosting flag
+                player.isBoosting = true;
+
+                //Activate booster Particle Effects
+                airDashBoosters.SetActive(true);
+                EnableJumpJets("Both");
+
+                //Set boost direction
+                jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+                jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+                jumpDirection.y = 0;
+                jumpDirection.Normalize();
+
+                //Movement caused by boosting
+                player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
+
+                //Set player facing
+                playerRotation = Quaternion.LookRotation(jumpDirection);
+                player.transform.rotation = playerRotation;
+
+                //Play boost animation
+                player.playerAnimationManager.PlayTargetActionAnimation("Boost_Forward_01", true, true, false, false);
+            }
 
             //Activate Force Field Graphic
             //forceFieldGraphic.SetActive(true);
@@ -237,8 +273,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         //Backstep if stationary before
         else {
             //Perform a Backstep Animation here
-            //Play Backstep Animation
-            player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            if (player.isGrounded) {
+                //Play Backstep Animation
+                player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            }
         }
 
         player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
@@ -292,10 +330,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
         }
 
-        if (jumpDirection.x > 0) {
+        if (jumpDirection.x > 0 && !characterManager.isBoosting) {
             EnableJumpJets("Left");
         }
-        else if (jumpDirection.x < 0) {
+        else if (jumpDirection.x < 0 && !characterManager.isBoosting) {
             EnableJumpJets("Right");
         }
         else {
@@ -338,6 +376,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 // leftForwardBoosters.SetActive(false);
                 // rightForwardBoosters.SetActive(false);
                 break;
+        }
+    }
+
+    public void HandleBackBoosterJets() {
+        if (characterManager.isSprinting && !backBoosters.activeSelf) {
+            backBoosters.SetActive(true);
+        }
+        else if (!characterManager.isSprinting && backBoosters.activeSelf == true) {
+            backBoosters.SetActive(false);
         }
     }
 

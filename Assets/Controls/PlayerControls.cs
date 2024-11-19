@@ -265,9 +265,27 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""LightAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a1c8636-a073-4ba6-809b-bde77a31ee15"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""DebugTestAddWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""3f262bab-6163-4916-913b-6645f359e00b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugTeleportToJerryDev"",
+                    ""type"": ""Button"",
+                    ""id"": ""6dd9e535-836f-4964-bad6-cd3e298713d1"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -296,6 +314,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""3e3e861f-fb3e-42f7-9cd1-77f1b6df3609"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugFullResources"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d0e4d85-af8f-4b29-964a-f05c6a53d363"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -448,7 +475,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4a882b52-ecc2-474f-a932-5f51de24d189"",
-                    ""path"": ""<Keyboard>/numpadMultiply"",
+                    ""path"": ""<Keyboard>/numpad2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -459,11 +486,55 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""451f3fcf-f1d0-4e84-bdb5-2cf16574b0fc"",
-                    ""path"": ""<Keyboard>/numpadDivide"",
+                    ""path"": ""<Keyboard>/numpad3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DebugTeleportToJacobDev"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5a956710-5813-466a-9789-ac419f51fbb5"",
+                    ""path"": ""<Keyboard>/numpadPeriod"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugFullResources"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bac45972-00ce-4071-abec-226820970bdb"",
+                    ""path"": ""<Keyboard>/numpad1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToJerryDev"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dacf1a52-b481-4136-8a8a-8468510e1737"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c4dcbf09-7cae-4cf9-b0c2-84cd80303ab4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LightAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -511,10 +582,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Dodge = m_PlayerActions.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerActions_LightAttack = m_PlayerActions.FindAction("LightAttack", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToJerryDev = m_PlayerActions.FindAction("DebugTeleportToJerryDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
+        m_PlayerActions_DebugFullResources = m_PlayerActions.FindAction("DebugFullResources", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
@@ -674,10 +748,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Dodge;
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Jump;
+    private readonly InputAction m_PlayerActions_LightAttack;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
+    private readonly InputAction m_PlayerActions_DebugTeleportToJerryDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_NextWeapon;
+    private readonly InputAction m_PlayerActions_DebugFullResources;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -685,10 +762,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Dodge => m_Wrapper.m_PlayerActions_Dodge;
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
+        public InputAction @LightAttack => m_Wrapper.m_PlayerActions_LightAttack;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
+        public InputAction @DebugTeleportToJerryDev => m_Wrapper.m_PlayerActions_DebugTeleportToJerryDev;
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
+        public InputAction @DebugFullResources => m_Wrapper.m_PlayerActions_DebugFullResources;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -707,9 +787,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @LightAttack.started += instance.OnLightAttack;
+            @LightAttack.performed += instance.OnLightAttack;
+            @LightAttack.canceled += instance.OnLightAttack;
             @DebugTestAddWeapon.started += instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.performed += instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.canceled += instance.OnDebugTestAddWeapon;
+            @DebugTeleportToJerryDev.started += instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.performed += instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.canceled += instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToAlecDev.started += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled += instance.OnDebugTeleportToAlecDev;
@@ -719,6 +805,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NextWeapon.started += instance.OnNextWeapon;
             @NextWeapon.performed += instance.OnNextWeapon;
             @NextWeapon.canceled += instance.OnNextWeapon;
+            @DebugFullResources.started += instance.OnDebugFullResources;
+            @DebugFullResources.performed += instance.OnDebugFullResources;
+            @DebugFullResources.canceled += instance.OnDebugFullResources;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -732,9 +821,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @LightAttack.started -= instance.OnLightAttack;
+            @LightAttack.performed -= instance.OnLightAttack;
+            @LightAttack.canceled -= instance.OnLightAttack;
             @DebugTestAddWeapon.started -= instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.performed -= instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.canceled -= instance.OnDebugTestAddWeapon;
+            @DebugTeleportToJerryDev.started -= instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.performed -= instance.OnDebugTeleportToJerryDev;
+            @DebugTeleportToJerryDev.canceled -= instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToAlecDev.started -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled -= instance.OnDebugTeleportToAlecDev;
@@ -744,6 +839,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @NextWeapon.started -= instance.OnNextWeapon;
             @NextWeapon.performed -= instance.OnNextWeapon;
             @NextWeapon.canceled -= instance.OnNextWeapon;
+            @DebugFullResources.started -= instance.OnDebugFullResources;
+            @DebugFullResources.performed -= instance.OnDebugFullResources;
+            @DebugFullResources.canceled -= instance.OnDebugFullResources;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -820,10 +918,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnLightAttack(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);
+        void OnDebugTeleportToJerryDev(InputAction.CallbackContext context);
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
+        void OnDebugFullResources(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -11,7 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     PlayerControls playerControls;
 
     [Header("Movement Input")]
-    [SerializeField] Vector2 movementInput;
+    [SerializeField] public Vector2 movementInput;
     public float horizontalInput;
     public float verticalInput;
     public float moveAmount;
@@ -20,6 +20,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool dodgeInput = false;
     [SerializeField] bool sprintInput = false;
     [SerializeField] bool jumpInput = false;
+    [SerializeField] bool lightAttackInput = false;
     [SerializeField] Vector2 mouseWheelInput;
     [SerializeField] float mouseWheelVerticalInput;
     [SerializeField] float prevMouseWheelVerticalInput;
@@ -40,6 +41,9 @@ public class PlayerInputManager : MonoBehaviour
         SceneManager.activeSceneChanged += OnSceneChange;
         
         instance.enabled = false;
+        if (playerControls != null) {
+                playerControls.Disable();
+        }
     }
 
     //Update is called once per frame
@@ -54,6 +58,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleDodgeInput();
         HandleSprintInput();
         HandleJumpInput();
+        HandleMainHandLightAttackInput();
         HandleMouseWheelInput();
     }
 
@@ -69,6 +74,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+            playerControls.PlayerActions.LightAttack.performed += i => lightAttackInput = true;
 
             //Holding the input sets the bool to true
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -80,8 +86,10 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += i => SceneManager.LoadSceneAsync(1);
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += i => SceneManager.LoadSceneAsync(2);
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
+            playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
         }
 
@@ -105,11 +113,17 @@ public class PlayerInputManager : MonoBehaviour
         if (newScene.buildIndex != 0) {
             //Script being enabled, not the game object
             instance.enabled = true;
+            if (playerControls != null) {
+                playerControls.Enable();
+            }
         }
         //Otherwise, we're in a menu so disable player controls
         //This is so our player can't move around if we enter things like a character creation menu, etc
         else {
             instance.enabled = false;
+            if (playerControls != null) {
+                playerControls.Disable();
+            }
         }
     }
 
@@ -210,6 +224,20 @@ public class PlayerInputManager : MonoBehaviour
 
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
+        }
+    }
+
+    private void HandleMainHandLightAttackInput() {
+        if (lightAttackInput) {
+            lightAttackInput = false;
+
+            //TODO: Return if we have a UI Window Open
+
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
+
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction, 
+                                                PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+            }
         }
     }
 }
