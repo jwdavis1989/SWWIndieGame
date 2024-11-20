@@ -32,7 +32,8 @@ public class CharacterSoundFXManager : MonoBehaviour
     }
 
     public void PlayJumpJetBurstFX() {
-        audioSource.PlayOneShot(WorldSoundFXManager.instance.jumpJetAirSFX);
+        //audioSource.PlayOneShot(WorldSoundFXManager.instance.jumpJetAirSFX);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 1.25f, 1.2f, true);
     }
 
     public void PlayBackPedalSFX() {

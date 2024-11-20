@@ -24,6 +24,9 @@ public class CharacterLocomotionManager : MonoBehaviour
     protected bool fallingVelocityHasBeenSet = false;
     protected float inAirTimer = 0f;
 
+    [Header("Debug")]
+    bool debugGroundCollisionSphere = false;
+
     protected virtual void Awake() {
         //DontDestroyOnLoad(this);
         character = GetComponent<CharacterManager>();
@@ -82,8 +85,9 @@ public class CharacterLocomotionManager : MonoBehaviour
     //Draws ground check sphere in editor
     protected void OnDrawGizmosSelected() {
         //Bugged to hell and back
-        Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
-        
+        if (debugGroundCollisionSphere) {
+            Gizmos.DrawSphere(character.transform.position, groundCheckSphereRadius);
+        }
         //Better work-around
             // Vector3 groundVector = new Vector3(character.transform.position.x, character.transform.position.y + groundCheckYOffset, character.transform.position.z);
             // Gizmos.DrawSphere(groundVector, groundCheckSphereRadius);
