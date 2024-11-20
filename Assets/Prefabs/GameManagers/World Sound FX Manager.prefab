@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1841575692151067228
+--- !u!1 &8408219786391799015
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8513741736030493569}
-  - component: {fileID: 2367443542644200814}
+  - component: {fileID: 2406621850794021007}
+  - component: {fileID: 476021741734607624}
   m_Layer: 0
   m_Name: World Sound FX Manager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8513741736030493569
+--- !u!4 &2406621850794021007
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841575692151067228}
+  m_GameObject: {fileID: 8408219786391799015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.013680458, y: 0.49924034, z: 0}
@@ -32,16 +32,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2367443542644200814
+--- !u!114 &476021741734607624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841575692151067228}
+  m_GameObject: {fileID: 8408219786391799015}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030bbc8b636953c4da4758850f574a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicalDamageSFX:
+  - {fileID: 8300000, guid: ca000da645d1c644da71c0d055f1e628, type: 3}
   rollSFX: {fileID: 0}
+  jumpJetAirSFX: {fileID: 8300000, guid: 5d87e2fb199dbc547b3651aa0dc9dc6e, type: 3}
+  walkFootStepSFX:
+  - {fileID: 8300000, guid: 05a08dd4ee0c046a6b56466d5c9aa9b8, type: 3}
+  - {fileID: 8300000, guid: bc1c11a60c94e439d84d64c56fdd354f, type: 3}
+  - {fileID: 8300000, guid: 64049f336db3d403dabd0425eb159922, type: 3}
+  - {fileID: 8300000, guid: aa9d74433c06a41a9b25cc9175d3f3ae, type: 3}
+  - {fileID: 8300000, guid: f7bff2a24d7d64eb296a8133060bd3e9, type: 3}
+  - {fileID: 8300000, guid: f626dafe2c3e045cd852e86532182f70, type: 3}
+  - {fileID: 8300000, guid: 27f4d8a727d874633b0292b089ec9b7c, type: 3}
+  - {fileID: 8300000, guid: c1eac1c698fc84605adb7e1074fd7d34, type: 3}
+  - {fileID: 8300000, guid: f54a7e8aabfc8436b965149db8156132, type: 3}
+  - {fileID: 8300000, guid: 3a06a27039e144e5c853a93d408fd63a, type: 3}
+  backPedalSFX: {fileID: 8300000, guid: 27f4d8a727d874633b0292b089ec9b7c, type: 3}
+  caveAmbience: {fileID: 8300000, guid: f74396619b7154fa5a38a1959cfa67ae, type: 3}

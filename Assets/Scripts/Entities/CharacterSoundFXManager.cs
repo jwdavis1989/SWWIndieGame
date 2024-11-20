@@ -16,6 +16,17 @@ public class CharacterSoundFXManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         footStepSFXCount = WorldSoundFXManager.instance.walkFootStepSFX.Length;
     }
+
+    public void PlayAdvancedSoundFX(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool randomizePitch = true, float pitchRandomRange = 0.1f) {
+        audioSource.PlayOneShot(soundFX, volume);
+
+        //Reset pitch from last time called
+        audioSource.pitch = pitch;
+
+        if (randomizePitch) {
+            audioSource.pitch += Random.Range(-pitchRandomRange, pitchRandomRange);
+        }
+    }
     public void PlayRollSoundFX() {
         audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
     }
