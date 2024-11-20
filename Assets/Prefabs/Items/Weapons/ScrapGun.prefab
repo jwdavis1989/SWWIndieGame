@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5766320279592979237}
   - component: {fileID: 3100118881847462815}
   - component: {fileID: 5275000474845902491}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: -223811698134625486}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ScrapGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,6 +199,14 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Scrap Gun
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+  mainHandLightAttackAction: {fileID: 0}
 --- !u!1 &2535281150303290597
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +219,7 @@ GameObject:
   - component: {fileID: 2126417235507697420}
   - component: {fileID: 6637929047194429190}
   - component: {fileID: 2280998301188199185}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlaceholderModel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -76,8 +76,13 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
 --- !u!1 &4976341019228924520
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5783575807394235614}
   - component: {fileID: -1932554149293971777}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DiamondSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,6 +174,13 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Diamond Sword
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
 --- !u!1 &6196311575992089123
 GameObject:
@@ -181,7 +193,7 @@ GameObject:
   - component: {fileID: 2173383381579321629}
   - component: {fileID: 2000763928103510600}
   - component: {fileID: 8880881947132248144}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword9_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

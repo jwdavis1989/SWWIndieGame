@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: -2016331803541816496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Reinforced Wrench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,6 +91,13 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Reenforced Wrench
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
 --- !u!1 &2822337914466691319
 GameObject:
@@ -168,8 +175,13 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
 --- !u!1001 &3958046888691683104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,6 +257,10 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_Name
       value: Wrench
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

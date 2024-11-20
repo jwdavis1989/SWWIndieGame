@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 2772885370573196530}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BowieKnife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,6 +91,13 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Bowie Knife
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 0}
 --- !u!1 &5053468531180226278
 GameObject:
@@ -168,8 +175,13 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
 --- !u!1 &8733336373595495089
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +193,7 @@ GameObject:
   - component: {fileID: 6764746420122938674}
   - component: {fileID: 5084212928407533322}
   - component: {fileID: 5526092687273670876}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword4_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
