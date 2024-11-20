@@ -97,6 +97,9 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         //Apply Full Charge Bonus Damage Modifier for Charged Heavy & Charged Spell Attacks
         damageEffect.fullChargeModifier = fullChargeModifier;
+
+        //Update Contact Point for VFX
+        damageEffect.contactPoint = contactPoint;
         
         //Apply the copy's damage effect to the target
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);

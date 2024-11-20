@@ -108,6 +108,9 @@ public class DamageCollider : MonoBehaviour
 
         //Apply Charge Bonus Damage Modifier
         damageEffect.fullChargeModifier = fullChargeModifier;
+
+        //Update Contact Point for VFX
+        damageEffect.contactPoint = contactPoint;
         
         //Apply the copy's damage effect to the target
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
