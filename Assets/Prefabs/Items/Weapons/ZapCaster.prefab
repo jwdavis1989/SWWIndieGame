@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 3136826522968309236}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ZapCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,6 +91,14 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Zap Force-Caster
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+  mainHandLightAttackAction: {fileID: 0}
 --- !u!1 &8099725182053724663
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,7 +111,7 @@ GameObject:
   - component: {fileID: 5689675717716234059}
   - component: {fileID: 4082589086951870642}
   - component: {fileID: 251400843281628815}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

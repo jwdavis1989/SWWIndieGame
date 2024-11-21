@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 3432091543788513949}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Flintlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,6 +92,14 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Flintlock
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+  mainHandLightAttackAction: {fileID: 0}
 --- !u!1 &4566568271701896506
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +112,7 @@ GameObject:
   - component: {fileID: 3029286569134632403}
   - component: {fileID: 5949621815964921598}
   - component: {fileID: 1437177574278535675}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +219,7 @@ GameObject:
   - component: {fileID: 1060742899753911021}
   - component: {fileID: 7110785474323482881}
   - component: {fileID: 1539507631495202980}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlaceholderModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

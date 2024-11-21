@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2337119068084869673}
   - component: {fileID: 4102494510766856222}
   - component: {fileID: 6873427394410685659}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 5269407390337821213}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FreezeCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,3 +198,11 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Frost Force Caster
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+  mainHandLightAttackAction: {fileID: 0}

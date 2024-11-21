@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 8298995786358464485}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BroadSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,6 +92,13 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Broad Sword
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
 --- !u!1 &5687603947947713818
 GameObject:
@@ -104,7 +111,7 @@ GameObject:
   - component: {fileID: 4603378424090745148}
   - component: {fileID: 5449066847933691313}
   - component: {fileID: 2944739814324307164}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword10_Brown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,8 +260,13 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
 --- !u!1 &7995889272470371700
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +278,7 @@ GameObject:
   - component: {fileID: 7521103631610412770}
   - component: {fileID: 6881426961233404826}
   - component: {fileID: 5659163898514860616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword2_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}

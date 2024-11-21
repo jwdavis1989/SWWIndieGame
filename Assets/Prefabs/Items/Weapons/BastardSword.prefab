@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5783575807394235614}
   - component: {fileID: 7257319045343483432}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BastardSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,6 +91,13 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Bastard Sword
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
 --- !u!1 &7061731996036675610
 GameObject:
@@ -168,8 +175,13 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
 --- !u!1 &7619226508609028785
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +193,7 @@ GameObject:
   - component: {fileID: 9203028800343424630}
   - component: {fileID: 2948654172950971135}
   - component: {fileID: 4759737282602542830}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword5_Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -78,8 +78,12 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Check which direction damage came from
         //Play a damage animation
         //Check for build-ups (Poison, Bleed, ect)
+
         //Play damage sound FX
+        PlayDamageSFX(character);
+        
         //Play Damage VFX
+        PlayDamageVFX(character);
 
         //If Character is A.I., Check for new target if character causing damage is preset
 
@@ -127,6 +131,20 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             return result * attackMotionValue * fullChargeModifier;
         }
         else return 0;
+    }
+
+    private void PlayDamageVFX(CharacterManager character) {
+        //e.g. If we have Fire Damage, Play Fire Particle Effects
+        character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
+    }
+
+    private void PlayDamageSFX(CharacterManager character) {
+        AudioClip physicalDamageSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.physicalDamageSFX);
+
+        character.characterSoundFXManager.PlayAdvancedSoundFX(physicalDamageSFX, 1, 0.8f, true, 0.1f);
+        //e.g. If Fire damage is greater, play burn SFX
+        //e.g. If Lightning damage is greater, play Zap SFX
+
     }
 
 }
