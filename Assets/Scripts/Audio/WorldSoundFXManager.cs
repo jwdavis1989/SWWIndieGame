@@ -10,7 +10,7 @@ public class WorldSoundFXManager : MonoBehaviour
     public AudioClip[] physicalDamageSFX;
 
     [Header("Action Sounds")]
-    public AudioClip rollSFX;
+    public AudioClip[] rollSFX;
     public AudioClip jumpJetAirSFX;
     public AudioClip[] walkFootStepSFX;
     public AudioClip backPedalSFX;

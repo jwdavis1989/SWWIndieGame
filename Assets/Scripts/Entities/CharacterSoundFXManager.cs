@@ -28,7 +28,9 @@ public class CharacterSoundFXManager : MonoBehaviour
         }
     }
     public void PlayRollSoundFX() {
-        audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+        //audioSource.PlayOneShot(WorldSoundFXManager.instance.rollSFX);
+        AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        characterManager.characterSoundFXManager.PlayAdvancedSoundFX(rollSFX, 1, 1f, true, 0.1f);
     }
 
     public void PlayJumpJetBurstFX() {
