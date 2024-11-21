@@ -29,6 +29,26 @@ public enum WeaponType
     //Limit - Nothing past here
     UNKNOWN
 }
+
+public enum WeaponFamily {
+    Swords,
+    GreatSwords,
+    HammersOrWrenches,
+    Scythes,
+    Daggers,
+    SemiAutoGuns,
+    BurstFireGuns,
+    LaserGuns,
+    Shotguns,
+    GrenadeLaunchers,
+    MagicRosary,
+    MagicWands,
+    MagicStaves,
+    MagicRings,
+    Drones,
+    NotYetSet
+}
+
 /*
  * Serializable WeaponStats used for JSON saving
  */
@@ -37,6 +57,8 @@ public class WeaponStats
 {
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
+    [Header("Physical Damage Type - Important - Set in Prefab")]
+    public WeaponFamily weaponFamily = WeaponFamily.NotYetSet;
     [Header("Weapon Attributes (Intialized by JSON)")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;

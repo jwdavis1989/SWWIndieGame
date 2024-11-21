@@ -145,6 +145,57 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //e.g. If Fire damage is greater, play burn SFX
         //e.g. If Lightning damage is greater, play Zap SFX
 
+        WeaponFamily attackersWeaponFamily = characterCausingDamage.characterWeaponManager.ownedSpecialWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.weaponFamily;
+
+        switch (attackersWeaponFamily) {
+                case WeaponFamily.Swords:
+                    //Do the thing
+                    break;
+                case WeaponFamily.GreatSwords:
+                    //Do the thing
+                    break;
+                case WeaponFamily.HammersOrWrenches:
+                    //Do the thing
+                    break;
+                case WeaponFamily.Scythes:
+                    //Do the thing
+                    break;
+                case WeaponFamily.Daggers:
+                    //Do the thing
+                    break;
+                case WeaponFamily.SemiAutoGuns:
+                    //Do the thing
+                    break;
+                case WeaponFamily.BurstFireGuns:
+                    //Do the thing
+                    break;
+                case WeaponFamily.LaserGuns:
+                    //Do the thing
+                    break;
+                case WeaponFamily.Shotguns:
+                    //Do the thing
+                    break;
+                case WeaponFamily.GrenadeLaunchers:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicRosary:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicWands:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicStaves:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicRings:
+                    //Do the thing
+                    break;
+                case WeaponFamily.Drones:
+                    //Do the thing
+                    break;
+                default:
+                    break;
+            }
     }
 
 }
