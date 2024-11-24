@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4081712542137494337}
   - component: {fileID: 8989995509006160431}
   - component: {fileID: 6890655055941609557}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: -5525374223646732557}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SparkCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponFamily: 10
   meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
   spr: {fileID: 21300000, guid: 8563cee664c6a4941a031f4ab9342599, type: 3}
@@ -198,3 +199,11 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Spark Force-Caster
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+  mainHandLightAttackAction: {fileID: 0}

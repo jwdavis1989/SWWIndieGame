@@ -20,9 +20,19 @@ public class DamageCollider : MonoBehaviour
     public float scalesDamage = 0f;
     public float techDamage = 0f;
 
+    //Damage modifier for specific attack, which differs between attacks in a combo
+    public float attackMotionValue = 1f;
+
+    //Damage modifier for successfully charging an attack fully (e.g. Heavy melee or Magic)
+    public float fullChargeModifier = 1f;
+
     //1 = True, 0 = False
     [Header("Armor Reduces? 1 = T, 0 = F")]
     public int isReducedByArmor = 1;
+
+    [Header("Environmental Hazard Fields")]
+    public bool isEnvironmentalHazard = false;
+    public float environmentalHazardTickRate = 2f;
 
     [Header("Contact Point")]
     protected Vector3 contactPoint;
@@ -30,7 +40,15 @@ public class DamageCollider : MonoBehaviour
     [Header("Characters Damaged")]
     protected List<CharacterManager> charactersDamaged = new List<CharacterManager>();
 
-    private void OnTriggerEnter(Collider other) {
+    protected virtual void Awake() {
+        damageCollider = GetComponent<Collider>();
+        
+        if (isEnvironmentalHazard) {
+            InvokeRepeating("ResetDamageList", environmentalHazardTickRate, environmentalHazardTickRate);
+        }
+    }
+    
+    protected virtual void OnTriggerEnter(Collider other) {
         //if (other.gameObject.layer == LayerMask.NameToLayer("Character")) {
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
@@ -57,6 +75,12 @@ public class DamageCollider : MonoBehaviour
     protected virtual void DamageTarget(CharacterManager damageTarget) {
         //We don't want to damage the same target more than once in a single attack
         //So we add them to a list that checks before applying damage
+        if (charactersDamaged.Contains(damageTarget)) {
+            return;
+        }
+
+        charactersDamaged.Add(damageTarget);
+
         //Create a copy of the damage effect to not change the original
         TakeHealthDamageCharacterEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
 
@@ -79,6 +103,15 @@ public class DamageCollider : MonoBehaviour
 
         //Armore Penetration
         damageEffect.isReducedByArmor = isReducedByArmor;
+
+        //Apply Motion Value
+        damageEffect.attackMotionValue = attackMotionValue;
+
+        //Apply Charge Bonus Damage Modifier
+        damageEffect.fullChargeModifier = fullChargeModifier;
+
+        //Update Contact Point for VFX
+        damageEffect.contactPoint = contactPoint;
         
         //Apply the copy's damage effect to the target
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
@@ -89,10 +122,17 @@ public class DamageCollider : MonoBehaviour
     }
 
     public virtual void DisableDamageCollider() {
-        damageCollider.enabled = false;
 
         //Reset list of hit enemies so they can be damaged again on next activation
         charactersDamaged.Clear();
+
+        damageCollider.enabled = false;
+    }
+
+    private void ResetDamageList() {
+        charactersDamaged.Clear();
+        damageCollider.enabled = false;
+        damageCollider.enabled = true;
     }
 
 }

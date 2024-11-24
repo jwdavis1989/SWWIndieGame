@@ -9,6 +9,8 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     [Header("Character Causing Damage")]
     public CharacterManager characterCausingDamage;
 
+    [HideInInspector] public WeaponFamily weaponFamily;
+
     [Header("Damage")]
     //Elemental Damage will probably change to an ElementalStats object later.
     //public ElementalStats elementalDamage = new ElementalStats();
@@ -23,6 +25,12 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     public float beastDamage = 0f;
     public float scalesDamage = 0f;
     public float techDamage = 0f;
+
+    //Damage modifier for specific attack, which differs between attacks in a combo
+    public float attackMotionValue = 1f;
+
+    //Damage modifier for successfully charging an attack fully (e.g. Heavy melee or Magic)
+    public float fullChargeModifier = 1f;
 
     //1 = True, 0 = False
     [Header("Armor Reduces? 1 = T, 0 = F")]
@@ -72,8 +80,12 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Check which direction damage came from
         //Play a damage animation
         //Check for build-ups (Poison, Bleed, ect)
+
         //Play damage sound FX
+        PlayDamageSFX(character);
+        
         //Play Damage VFX
+        PlayDamageVFX(character);
 
         //If Character is A.I., Check for new target if character causing damage is preset
 
@@ -83,10 +95,10 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Monsters or player created damage
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
-                finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter);
+                finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
             else {
-                finalDamageDealt = CalculateNPCDamage(targetCharacter);
+                finalDamageDealt = CalculateNPCDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
         }
         //Traps and environmental hazards
@@ -103,7 +115,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //TODO
     }
 
-    public float CalculateNPCDamage (CharacterManager targetCharacter) {
+    public float CalculateNPCDamage (CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f) {
         float result = physicalDamage * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
@@ -118,9 +130,84 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         result += physicalDamage * (techDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
 
         if(result > 0) {
-            return result;
+            return result * attackMotionValue * fullChargeModifier;
         }
         else return 0;
+    }
+
+    private void PlayDamageVFX(CharacterManager character) {
+        //e.g. If we have Fire Damage, Play Fire Particle Effects
+        character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
+    }
+
+    private void PlayDamageSFX(CharacterManager damagedCharacter) {
+        AudioClip impactSFX;
+        //e.g. If Fire damage is greater, play burn SFX
+        //e.g. If Lightning damage is greater, play Zap SFX
+
+        switch (weaponFamily) {
+                case WeaponFamily.Swords:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.GreatSwords:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 8f, true, 0.1f);
+                    break;
+                case WeaponFamily.HammersOrWrenches:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.bludgeoningImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.Scythes:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.Daggers:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.piercingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.SemiAutoGuns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.gunImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.BurstFireGuns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.gunImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1.2f, true, 0.1f);
+                    break;
+                case WeaponFamily.LaserGuns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.fireImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1.2f, true, 0.1f);
+                    break;
+                case WeaponFamily.Shotguns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.gunImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 0.6f, true, 0.1f);
+                    break;
+                case WeaponFamily.GrenadeLaunchers:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.explosionImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.MagicRosary:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicWands:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicStaves:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicRings:
+                    //Do the thing
+                    break;
+                case WeaponFamily.Drones:
+                    //Do the thing
+                    break;
+                case WeaponFamily.NotYetSet:
+                    Debug.Log("Weapon Family not set on Prefab!");
+                    break;
+                default:
+                    Debug.Log("Weapon Family not set on Prefab!");
+                    break;
+            }
     }
 
 }

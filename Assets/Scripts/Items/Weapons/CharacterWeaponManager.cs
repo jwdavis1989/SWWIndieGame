@@ -15,6 +15,9 @@ public class CharacterWeaponManager : MonoBehaviour
     public GameObject mainHandWeaponAnchor;
     public GameObject offHandWeaponAnchor;
 
+    [Header("Weapon Combo System")]
+    public AttackType currentAttackType;
+
     /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
@@ -205,5 +208,35 @@ public class CharacterWeaponManager : MonoBehaviour
 
         //Work-around based on us not needing to store the weapon being used afaik
         weaponAction.AttemptToPerformAction(characterThatOwnsThisArsenal);
+    }
+
+    public void OpenDamageCollider() {
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().meleeWeaponDamageCollider.EnableDamageCollider();
+
+        //TODO: Play Whoosh SFX
+
+    }
+
+    public void CloseDamageCollider() {
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().meleeWeaponDamageCollider.DisableDamageCollider();
+    }
+    public void DrainStaminaBasedOnAttack() {
+        WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        
+        if (currentWeapon == null) {
+            return;
+        }
+
+        float staminaDeducted = 0f;
+
+        switch (currentAttackType) {
+            case AttackType.LightAttack01:
+            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.lightAttack01StaminaCostModifier;
+                break;
+            default:
+                break;
+        }
+
+        characterThatOwnsThisArsenal.characterStatsManager.currentStamina -= staminaDeducted;
     }
 }

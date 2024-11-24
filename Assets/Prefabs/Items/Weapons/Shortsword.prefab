@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5783575807394235614}
   - component: {fileID: 7080999268907457629}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shortsword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 0
+    weaponFamily: 0
     attack: 15
     maxAttack: 36
     durability: 100
@@ -91,6 +92,13 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Shortsword
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
 --- !u!1 &7105071253258005747
 GameObject:
@@ -168,8 +176,13 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
 --- !u!1 &8572077701968115525
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +194,7 @@ GameObject:
   - component: {fileID: 1643883618653487066}
   - component: {fileID: 4811937892969682438}
   - component: {fileID: 4652095504400643474}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword4_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

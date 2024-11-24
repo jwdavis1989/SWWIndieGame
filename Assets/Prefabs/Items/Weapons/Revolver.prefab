@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 8869481248320568687}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponFamily: 5
   meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
   spr: {fileID: 21300000, guid: f3a8210d9ca7e8f4cb8291f7192dcf17, type: 3}
@@ -92,6 +93,14 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Revolver
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+  mainHandLightAttackAction: {fileID: 0}
 --- !u!1 &6757941415605432438
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +113,7 @@ GameObject:
   - component: {fileID: 8607877546313552349}
   - component: {fileID: 230976608117213177}
   - component: {fileID: 824399867208280453}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,7 +220,7 @@ GameObject:
   - component: {fileID: 3972750707198679565}
   - component: {fileID: 2850813005273722323}
   - component: {fileID: 6034761019547774308}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlaceholderModel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

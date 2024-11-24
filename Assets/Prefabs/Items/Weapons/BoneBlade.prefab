@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 2917005456082049530}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BoneBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 4
+    weaponFamily: 0
     attack: 22
     maxAttack: 45
     durability: 100
@@ -91,6 +92,13 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Bone Blade
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
 --- !u!1 &4029110176930541267
 GameObject:
@@ -168,8 +176,13 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
 --- !u!1 &8162462757089158816
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +194,7 @@ GameObject:
   - component: {fileID: 2457901244686193971}
   - component: {fileID: 1163970147535320748}
   - component: {fileID: 7394566836785102321}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword11_Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -29,6 +29,26 @@ public enum WeaponType
     //Limit - Nothing past here
     UNKNOWN
 }
+
+public enum WeaponFamily {
+    Swords,
+    GreatSwords,
+    HammersOrWrenches,
+    Scythes,
+    Daggers,
+    SemiAutoGuns,
+    BurstFireGuns,
+    LaserGuns,
+    Shotguns,
+    GrenadeLaunchers,
+    MagicRosary,
+    MagicWands,
+    MagicStaves,
+    MagicRings,
+    Drones,
+    NotYetSet
+}
+
 /*
  * Serializable WeaponStats used for JSON saving
  */
@@ -37,6 +57,7 @@ public class WeaponStats
 {
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
+
     [Header("Weapon Attributes (Intialized by JSON)")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
@@ -60,6 +81,18 @@ public class WeaponStats
     public float experiencePointsToNextLevel = 100.0f;
     public int currentTinkerPoints = 0;
     public String weaponName = "BaseWeaponName";
+
+    [Header("Stamina Costs")]
+    public float baseStaminaCost = 20f;
+    public float lightAttack01StaminaCostModifier = 1f;
+    public float lightAttack02StaminaCostModifier = 1f;
+    public float heavyAttack01StaminaCostModifier = 1f;
+    public float heavyAttack02StaminaCostModifier = 1f;
+
+    [Header("Motion Values")]
+    public float lightAttack01DamageMotionValue = 1f;
+    public float lightAttack02DamageMotionValue = 1.1f;
+
 }
 /*
  * Serializable ElementalStats used for JSON saving
@@ -111,8 +144,11 @@ public class ElementalStats
  */
 public class WeaponScript : MonoBehaviour
 {
+    [Header("Weapon Family - Important - Set in Prefab")]
+    public WeaponFamily weaponFamily = 0;
+
     [Header("Weapon Damage Collider")]
-    [SerializeField] MeleeWeaponDamageCollider meleeWeaponDamageCollider;
+    [SerializeField] public MeleeWeaponDamageCollider meleeWeaponDamageCollider;
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
@@ -144,6 +180,8 @@ public class WeaponScript : MonoBehaviour
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework
         // }
         meleeWeaponDamageCollider.enabled = true;
+
+        meleeWeaponDamageCollider.weaponFamily = weaponFamily;
         
         meleeWeaponDamageCollider.physicalDamage = stats.attack;
         meleeWeaponDamageCollider.fireDamage = stats.elemental.firePower;
@@ -158,6 +196,9 @@ public class WeaponScript : MonoBehaviour
 
         //Turn the collider back off so it doesn't hurt anyone, ow
         meleeWeaponDamageCollider.enabled = false;
+
+        //Add Motion Value
+        meleeWeaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
     }
     /**
      * Add Exp to a weapon and level it up if possible
@@ -189,7 +230,7 @@ public class WeaponScript : MonoBehaviour
     //        //set reload/recharge
     //    }
     //}
-    public float CalculateTotalDamage(CharacterManager targetCharacter)
+    public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
@@ -205,7 +246,7 @@ public class WeaponScript : MonoBehaviour
         result += stats.attack * (stats.elemental.techPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.techPower);
 
         if(result > 0) {
-            return result;
+            return result * attackMotionValue * fullChargeModifier;
         }
         else return 0;
     }
