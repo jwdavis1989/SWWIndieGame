@@ -32,7 +32,9 @@ public class CharacterEffectsManager : MonoBehaviour
         }
         //Else we use the generic version we have elsewhere
         else {
-            GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.instance.defaultBloodSplatterVFX, contactPoint, Quaternion.identity);
+            if (character.canBleed) {
+                GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.instance.defaultBloodSplatterVFX, contactPoint, Quaternion.identity);
+            }
         }
     }
 }

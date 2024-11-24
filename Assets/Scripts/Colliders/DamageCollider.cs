@@ -47,6 +47,7 @@ public class DamageCollider : MonoBehaviour
             InvokeRepeating("ResetDamageList", environmentalHazardTickRate, environmentalHazardTickRate);
         }
     }
+    
     protected virtual void OnTriggerEnter(Collider other) {
         //if (other.gameObject.layer == LayerMask.NameToLayer("Character")) {
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();

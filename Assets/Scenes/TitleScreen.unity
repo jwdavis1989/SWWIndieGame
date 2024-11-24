@@ -74414,30 +74414,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: rollSFX.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: rollSFX.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 0bb90fc6f6e7ba040a2c362626c68003, type: 3}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: rollSFX.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 5b0de124f8ee55c43a617bf1b68aba98, type: 3}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: rollSFX.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: d87284730b4a0584c8b5af2856cd3008, type: 3}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: physicalDamageSFX.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: physicalDamageSFX.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: ca000da645d1c644da71c0d055f1e628, type: 3}
     - target: {fileID: 2406621850794021007, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.013680458
@@ -79372,6 +79348,7 @@ MonoBehaviour:
   canRotate: 1
   canMove: 1
   isSprinting: 0
+  canBleed: 1
   playerLocomotionManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
   playerAnimationManager: {fileID: 0}

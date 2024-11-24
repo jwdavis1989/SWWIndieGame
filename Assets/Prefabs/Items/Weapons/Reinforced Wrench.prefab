@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponFamily: 2
   meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
   spr: {fileID: 21300000, guid: 3c5a3428922647347bf7cdd29d3e1e09, type: 3}
   hasObtained: 1
   stats:
     weaponType: 5
-    weaponFamily: 2
     attack: 35
     maxAttack: 35
     durability: 100
@@ -183,6 +183,7 @@ MonoBehaviour:
   environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
   lightAttack01DamageMotionValue: 0
+  weaponFamily: 0
 --- !u!1001 &3958046888691683104
 PrefabInstance:
   m_ObjectHideFlags: 0
