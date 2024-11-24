@@ -235,6 +235,7 @@ public class TinkerComponentManager : MonoBehaviour
         }
         return canUpgrade;
     }
+    /** After removing json part this is just sorting the components by type which is still important */
     public void LoadAllComponentTypes()
     {
         if(baseComponentJsonFile == null)
@@ -249,16 +250,16 @@ public class TinkerComponentManager : MonoBehaviour
             componentInitilizer[(int)component.GetComponent<TinkerComponent>().stats.componentType] = component;
         }
         //read json file and initilize stats
-        ComponentsArray componentJsons = JsonUtility.FromJson<ComponentsArray>(baseComponentJsonFile.text);
-        foreach (TinkerComponentStats componentStats in componentJsons.components)
-        {
-            int i = (int)componentStats.componentType;
-            if (componentInitilizer[i] != null)
-            {   // prefab is loaded, copy stats over
-                componentInitilizer[i].GetComponent<TinkerComponent>().stats = componentStats;
-                if (debugMode) Debug.Log("Prefab loaded for " + i + " type:" + componentInitilizer[i].GetComponent<TinkerComponent>().stats.itemName);//astest
-            }
-        }
+        //ComponentsArray componentJsons = JsonUtility.FromJson<ComponentsArray>(baseComponentJsonFile.text);
+        //foreach (TinkerComponentStats componentStats in componentJsons.components)
+        //{
+        //    int i = (int)componentStats.componentType;
+        //    if (componentInitilizer[i] != null)
+        //    {   // prefab is loaded, copy stats over
+        //        componentInitilizer[i].GetComponent<TinkerComponent>().stats = componentStats;
+        //        if (debugMode) Debug.Log("Prefab loaded for " + i + " type:" + componentInitilizer[i].GetComponent<TinkerComponent>().stats.itemName);//astest
+        //    }
+        //}
         //Set baseComponents here
         baseComponents = componentInitilizer;
 }

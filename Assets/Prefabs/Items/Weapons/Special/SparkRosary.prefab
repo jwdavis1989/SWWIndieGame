@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: -5525374223646732557}
   m_Layer: 6
-  m_Name: SparkCaster
+  m_Name: SparkRosary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,16 +161,16 @@ MonoBehaviour:
     weaponType: 8
     attack: 28
     maxAttack: 70
-    durability: 1
-    maxDurability: 1
-    block: 1
-    maxBlock: 1
-    stability: 1
-    maxStability: 1
+    durability: 100
+    maxDurability: 134
+    block: 0
+    maxBlock: 0
+    stability: 0
+    maxStability: 0
     elemental:
       firePower: 0
       icePower: 0
-      lightningPower: 20
+      lightningPower: 10
       windPower: 0
       earthPower: 0
       lightPower: 0
@@ -178,19 +178,19 @@ MonoBehaviour:
       scalesPower: 0
       techPower: 0
     maxElemental:
-      firePower: 68
-      icePower: 68
-      lightningPower: 68
-      windPower: 68
-      earthPower: 68
-      lightPower: 68
-      beastPower: 68
-      scalesPower: 68
-      techPower: 68
+      firePower: 34
+      icePower: 34
+      lightningPower: 34
+      windPower: 34
+      earthPower: 34
+      lightPower: 34
+      beastPower: 34
+      scalesPower: 34
+      techPower: 34
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 20
-    maxSpecialtyCooldown: 0
+    specialtyCooldown: 5
+    maxSpecialtyCooldown: 5
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -198,7 +198,7 @@ MonoBehaviour:
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
-    weaponName: Spark Force-Caster
+    weaponName: Spark Rosary
     baseStaminaCost: 20
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1

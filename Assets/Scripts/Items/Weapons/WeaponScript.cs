@@ -58,7 +58,7 @@ public class WeaponStats
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
 
-    [Header("Weapon Attributes (Intialized by JSON)")]
+    [Header("Weapon Attributes")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
     public float durability = 1;
@@ -72,7 +72,7 @@ public class WeaponStats
     public float speed = 1.0f;
     public float maxSpeed = 1.0f;
     public float specialtyCooldown = 0;
-    public float maxSpecialtyCooldown = 0;
+    public float maxSpecialtyCooldown = 0; // Unused?
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
     public float currentDurability = 1.0f;
@@ -156,7 +156,7 @@ public class WeaponScript : MonoBehaviour
     public Sprite spr = null;
     [Header("Will appear as ??? on weapon sheet until obtained")]
     public bool hasObtained = false;
-    [Header("Important: Set weapon type (Otherwise base weapon stats are intialized by weaponsJSON)")]
+    [Header("These are all written to JSON when saving a game.")]
     public WeaponStats stats;
 
     [Header("Actions")]

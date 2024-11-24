@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 5269407390337821213}
   m_Layer: 6
-  m_Name: FreezeCaster
+  m_Name: FrostWand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,17 +159,17 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 14
-    attack: 48
-    maxAttack: 88
-    durability: 1
-    maxDurability: 1
-    block: 1
-    maxBlock: 1
-    stability: 1
-    maxStability: 1
+    attack: 24
+    maxAttack: 44
+    durability: 100
+    maxDurability: 134
+    block: 0
+    maxBlock: 0
+    stability: 0
+    maxStability: 0
     elemental:
       firePower: 0
-      icePower: 36
+      icePower: 18
       lightningPower: 0
       windPower: 0
       earthPower: 0
@@ -178,19 +178,19 @@ MonoBehaviour:
       scalesPower: 0
       techPower: 0
     maxElemental:
-      firePower: 90
-      icePower: 90
-      lightningPower: 90
-      windPower: 90
-      earthPower: 90
-      lightPower: 90
-      beastPower: 90
-      scalesPower: 90
-      techPower: 90
+      firePower: 45
+      icePower: 45
+      lightningPower: 45
+      windPower: 45
+      earthPower: 45
+      lightPower: 45
+      beastPower: 45
+      scalesPower: 45
+      techPower: 45
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 20
-    maxSpecialtyCooldown: 0
+    specialtyCooldown: 5
+    maxSpecialtyCooldown: 5
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
