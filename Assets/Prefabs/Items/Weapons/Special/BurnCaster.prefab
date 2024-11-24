@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8130850429207198863}
-  - component: {fileID: 3136826522968309236}
+  - component: {fileID: 3312004634150445010}
   m_Layer: 6
-  m_Name: ZapCaster
+  m_Name: BurnCaster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,10 +30,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7190646607856315909}
+  - {fileID: 8672117909087263554}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3136826522968309236
+--- !u!114 &3312004634150445010
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51,19 +51,19 @@ MonoBehaviour:
   spr: {fileID: 21300000, guid: ab89822e4a554994387e2d81ba0a53b7, type: 3}
   hasObtained: 1
   stats:
-    weaponType: 12
-    attack: 48
-    maxAttack: 88
-    durability: 1
-    maxDurability: 1
-    block: 1
-    maxBlock: 1
-    stability: 1
-    maxStability: 1
+    weaponType: 13
+    attack: 24
+    maxAttack: 44
+    durability: 100
+    maxDurability: 134
+    block: 0
+    maxBlock: 0
+    stability: 0
+    maxStability: 0
     elemental:
-      firePower: 0
+      firePower: 18
       icePower: 0
-      lightningPower: 36
+      lightningPower: 0
       windPower: 0
       earthPower: 0
       lightPower: 0
@@ -71,19 +71,19 @@ MonoBehaviour:
       scalesPower: 0
       techPower: 0
     maxElemental:
-      firePower: 90
-      icePower: 90
-      lightningPower: 90
-      windPower: 90
-      earthPower: 90
-      lightPower: 90
-      beastPower: 90
-      scalesPower: 90
-      techPower: 90
+      firePower: 45
+      icePower: 45
+      lightningPower: 45
+      windPower: 45
+      earthPower: 45
+      lightPower: 45
+      beastPower: 45
+      scalesPower: 45
+      techPower: 45
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 20
-    maxSpecialtyCooldown: 0
+    specialtyCooldown: 5
+    maxSpecialtyCooldown: 5
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -91,7 +91,7 @@ MonoBehaviour:
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
-    weaponName: Zap Force-Caster
+    weaponName: Burn Force-Caster
     baseStaminaCost: 20
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
@@ -100,7 +100,7 @@ MonoBehaviour:
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 0}
---- !u!1 &8099725182053724663
+--- !u!1 &6113844736066265108
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,10 +108,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7190646607856315909}
-  - component: {fileID: 5689675717716234059}
-  - component: {fileID: 4082589086951870642}
-  - component: {fileID: 251400843281628815}
+  - component: {fileID: 8672117909087263554}
+  - component: {fileID: 923710837832429586}
+  - component: {fileID: 6352823157866723916}
+  - component: {fileID: 6675898903869950856}
   m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
@@ -119,13 +119,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7190646607856315909
+--- !u!4 &8672117909087263554
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099725182053724663}
+  m_GameObject: {fileID: 6113844736066265108}
   serializedVersion: 2
   m_LocalRotation: {x: -0.051977124, y: -0.03311308, z: 0.21417022, w: 0.97485024}
   m_LocalPosition: {x: -0.0069, y: 0.1525, z: -0.012}
@@ -134,21 +134,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8130850429207198863}
   m_LocalEulerAnglesHint: {x: 355, y: 355, z: 25}
---- !u!33 &5689675717716234059
+--- !u!33 &923710837832429586
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099725182053724663}
+  m_GameObject: {fileID: 6113844736066265108}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &4082589086951870642
+--- !u!23 &6352823157866723916
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099725182053724663}
+  m_GameObject: {fileID: 6113844736066265108}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -162,7 +162,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a099fd7279e43c342a2357e9d35e3e26, type: 2}
+  - {fileID: 2100000, guid: f79172295ef6ba849bb3a4ecf3aaee34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -184,13 +184,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &251400843281628815
+--- !u!136 &6675898903869950856
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8099725182053724663}
+  m_GameObject: {fileID: 6113844736066265108}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
