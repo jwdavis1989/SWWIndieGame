@@ -243,6 +243,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ToggleFlashlight",
+                    "type": "Button",
+                    "id": "e11afb79-a6b8-45d4-8e07-78df9d7336d7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "LightAttack",
                     "type": "Button",
                     "id": "3a1c8636-a073-4ba6-809b-bde77a31ee15",
@@ -513,6 +522,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "LightAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88df2206-0856-4113-a1c7-12973b03eb62",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleFlashlight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "22a8e373-2f7b-42d2-807a-b1db1ae3ad36",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleFlashlight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

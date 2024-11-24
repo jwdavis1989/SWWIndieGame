@@ -76,10 +76,13 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
             playerControls.PlayerActions.LightAttack.performed += i => lightAttackInput = true;
 
-            //Holding the input sets the bool to true
+            //Holding the input sets Sprinting to true
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
-            //Releasing sets the sprint bool to false
+            //Releasing sets the sprint Sprinting to false
             playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
+
+            //Flashlight
+            playerControls.PlayerActions.ToggleFlashlight.performed += i => player.ToggleFlashlight();
 
             //Weapon Quick-Changing
             playerControls.PlayerActions.NextWeapon.performed += i => mouseWheelInput = i.ReadValue<Vector2>();
