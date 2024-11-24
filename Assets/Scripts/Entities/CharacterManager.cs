@@ -30,6 +30,7 @@ public class CharacterManager : MonoBehaviour
     public bool canRotate = true;
     public bool canMove = true;
     public bool isSprinting = false;
+    public bool canBleed = true;
 
     protected virtual void Awake() {
         DontDestroyOnLoad(this);

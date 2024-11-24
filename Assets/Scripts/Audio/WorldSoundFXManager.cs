@@ -7,7 +7,17 @@ public class WorldSoundFXManager : MonoBehaviour
     public static WorldSoundFXManager instance;
 
     [Header("Damage Sounds")]
-    public AudioClip[] physicalDamageSFX;
+    public AudioClip[] slashingImpactSFX;
+    public AudioClip[] bludgeoningImpactSFX;
+    public AudioClip[] piercingImpactSFX;
+    public AudioClip[] gunImpactSFX;
+    public AudioClip[] explosionImpactSFX;
+    public AudioClip[] fireImpactSFX;
+    public AudioClip[] iceImpactSFX;
+    public AudioClip[] windImpactSFX;
+    public AudioClip[] lightningImpactSFX;
+    public AudioClip[] lightImpactSFX;
+    public AudioClip[] earthImpactSFX;
 
     [Header("Action Sounds")]
     public AudioClip[] rollSFX;

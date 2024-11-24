@@ -10,8 +10,15 @@ public class MeleeWeaponDamageCollider : DamageCollider
     [Header("Weapon Attack Modifiers")]
     public float lightAttack01DamageMotionValue;
 
+    private WeaponScript weaponThatOwnsThisCollider;
+    public WeaponFamily weaponFamily;
+
     protected override void Awake() {
         base.Awake();
+
+        // weaponThatOwnsThisCollider = GetComponentInParent<WeaponScript>();
+        // weaponFamily = weaponThatOwnsThisCollider.stats.weaponFamily;
+        // Debug.Log("weaponFamily of collider set to: " + weaponFamily);
 
         //Disable hit box on awake
         damageCollider.enabled = false;
@@ -20,7 +27,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
     protected override void OnTriggerEnter(Collider other) {
         //if (other.gameObject.layer == LayerMask.NameToLayer("Character")) {
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
-
+            
             //Uncomment below if we want to search on both the damageable character colliders and the character controller collider:
             // if (damageTarget == null) {
             //     damageTarget = other.GetComponent<CharacterManager>();
@@ -58,9 +65,11 @@ public class MeleeWeaponDamageCollider : DamageCollider
         //Create a copy of the damage effect to not change the original
         TakeHealthDamageCharacterEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
 
+        //Set the Weapon Family of the attack for sound and visual effects
+        damageEffect.weaponFamily = weaponFamily;
+
         //Base Attack Power
         damageEffect.physicalDamage = physicalDamage;
-        //damageEffect.weaponScript.stats = stats;
 
         //Elemental
         damageEffect.fireDamage = fireDamage;

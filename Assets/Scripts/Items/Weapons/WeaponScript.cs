@@ -29,6 +29,26 @@ public enum WeaponType
     //Limit - Nothing past here
     UNKNOWN
 }
+
+public enum WeaponFamily {
+    Swords,
+    GreatSwords,
+    HammersOrWrenches,
+    Scythes,
+    Daggers,
+    SemiAutoGuns,
+    BurstFireGuns,
+    LaserGuns,
+    Shotguns,
+    GrenadeLaunchers,
+    MagicRosary,
+    MagicWands,
+    MagicStaves,
+    MagicRings,
+    Drones,
+    NotYetSet
+}
+
 /*
  * Serializable WeaponStats used for JSON saving
  */
@@ -37,6 +57,7 @@ public class WeaponStats
 {
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
+
     [Header("Weapon Attributes (Intialized by JSON)")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
@@ -123,6 +144,9 @@ public class ElementalStats
  */
 public class WeaponScript : MonoBehaviour
 {
+    [Header("Weapon Family - Important - Set in Prefab")]
+    public WeaponFamily weaponFamily = 0;
+
     [Header("Weapon Damage Collider")]
     [SerializeField] public MeleeWeaponDamageCollider meleeWeaponDamageCollider;
 
@@ -156,6 +180,8 @@ public class WeaponScript : MonoBehaviour
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework
         // }
         meleeWeaponDamageCollider.enabled = true;
+
+        meleeWeaponDamageCollider.weaponFamily = weaponFamily;
         
         meleeWeaponDamageCollider.physicalDamage = stats.attack;
         meleeWeaponDamageCollider.fireDamage = stats.elemental.firePower;

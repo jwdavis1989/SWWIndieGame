@@ -15,6 +15,8 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
 
+    public GameObject flashlight;
+
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
 
@@ -141,6 +143,20 @@ public class PlayerManager : CharacterManager
         //AttachCurrentlyEquippedWeaponObjectsToHand();
     }
 
+    public void ToggleFlashlight() {
+        if (flashlight != null) {
+            if (flashlight.activeSelf) {
+                flashlight.SetActive(false);
+            }
+            else {
+                flashlight.SetActive(true);
+            }
+        }
+        else {
+            Debug.Log("ERROR: Player Flashlight Instance Not Set in Editor.");
+        }
+    }
+    
     public void DebugAddWeapon() {
         WeaponType weaponType = (WeaponType)Random.Range(0, System.Enum.GetValues(typeof(WeaponType)).Length - 1);
         bool isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
