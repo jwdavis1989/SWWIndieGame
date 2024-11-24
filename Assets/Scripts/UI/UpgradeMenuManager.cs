@@ -498,9 +498,8 @@ public class UpgradeMenuManager : MonoBehaviour
                 gridScript.topText.text = componentScript.stats.itemName;
                 gridScript.bottomText.text = "" + componentScript.stats.count;
                 gridScript.cornerButton.gameObject.SetActive(false);
-                if(componentScript.spr)
+                if(componentScript.spr)//Icon
                     gridScript.mainButtonForeground.GetComponent<Image>().sprite = componentScript.spr;
-                //Only affecting equipped non-special weapon here //activeWeapon
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, component))
                 {
