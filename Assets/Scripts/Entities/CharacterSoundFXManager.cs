@@ -32,6 +32,12 @@ public class CharacterSoundFXManager : MonoBehaviour
         characterManager.characterSoundFXManager.PlayAdvancedSoundFX(rollSFX, 1, 1f, true, 0.1f);
     }
 
+    public void PlayAirDashSoundFX() {
+        AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        characterManager.characterSoundFXManager.PlayAdvancedSoundFX(rollSFX, 1.5f, 0.9f, true, 0.1f);
+        characterManager.characterSoundFXManager.PlayAdvancedSoundFX(rollSFX, 1.5f, 0.5f, true, 0.1f);
+    }
+
     public void PlayJumpJetBurstFX() {
         PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 1.25f, 1.2f, true);
     }
