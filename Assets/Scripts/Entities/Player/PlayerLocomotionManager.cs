@@ -267,8 +267,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             //Set Stamina regen delay to 0
             player.playerStatsManager.ResetStaminaRegenTimer();
 
-            //Perform a Roll Animation here
-            //Look to episode 6 for animation tutorial for this part
+            //Subtract Stamina for roll or airdash
+            player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
         }
         //Backstep if stationary before
         else {
@@ -276,10 +276,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             if (player.isGrounded) {
                 //Play Backstep Animation
                 player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+                
+                //Subtract Stamina for backstep
+                player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
             }
         }
-
-        player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
     }
 
     public void AttemptToPerformJump() {
