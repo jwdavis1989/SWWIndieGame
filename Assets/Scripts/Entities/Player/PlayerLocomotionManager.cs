@@ -198,6 +198,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         // If we are moving, set sprinting to true
         if (PlayerInputManager.instance.moveAmount > 0) {
             characterManager.isSprinting = true;
+
+            //Play Booster Fire Sound Effect
+            player.characterSoundFXManager.PlaySprintBoostSoundFX();
         }
         //If stationary, set it to false
         else {
