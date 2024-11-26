@@ -59,6 +59,7 @@ public class CharacterManager : MonoBehaviour
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false) {
         if (isPlayer) {
             characterStatsManager.currentHealth = 0;
+            canMove = false;
             isDead = true;
 
             //Reset any Flags here that need to be reset

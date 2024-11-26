@@ -72,7 +72,7 @@ public class PlayerManager : CharacterManager
 
     public override void ReviveCharacter() {
         base.ReviveCharacter();
-
+        canMove = true;
         isDead = false;
         playerStatsManager.currentHealth = playerStatsManager.maxHealth;
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
