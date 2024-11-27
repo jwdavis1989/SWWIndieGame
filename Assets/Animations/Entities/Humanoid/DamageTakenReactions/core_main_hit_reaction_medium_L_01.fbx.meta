@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: 75d1559760887304c9029071beb053f5
+guid: f4a4d714fd66bed4aa861288d17366d8
 ModelImporter:
-  serializedVersion: 22200
-  internalIDToNameTable: []
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: -4353348262354453302
+    second: core_main_hit_reaction_medium_L_01
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -14,7 +17,6 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -33,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: straight_sword_main_light_attack_01
-      takeName: straight_sword_main_light_attack_01
-      internalID: 673659374932735726
+      name: core_main_hit_reaction_medium_L_01
+      takeName: core_oh_hit_reaction_medium_L_01
+      internalID: 0
       firstFrame: 0
-      lastFrame: 38
+      lastFrame: 41
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -56,28 +58,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.23813847
-        functionName: CallDrainStaminaBasedOnAttack
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.2689017
-        functionName: CallOpenDamageCollider
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.48031923
-        functionName: CallCloseDamageCollider
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -90,12 +71,10 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -107,7 +86,6 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
-    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -118,7 +96,6 @@ ModelImporter:
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -776,8 +753,6 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 1
-  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -109,6 +109,9 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         //Update Contact Point for VFX
         damageEffect.contactPoint = contactPoint;
+
+        //Update the angle the target is hit from for determining animations
+        damageEffect.angleHitFrom = Vector3.SignedAngle(characterCausingDamage.transform.forward, damageTarget.transform.forward, Vector3.up);
         
         //Apply the copy's damage effect to the target
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
