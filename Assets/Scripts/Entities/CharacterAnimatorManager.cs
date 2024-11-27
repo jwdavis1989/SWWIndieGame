@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class CharacterAnimatorManager : MonoBehaviour
@@ -7,6 +8,12 @@ public class CharacterAnimatorManager : MonoBehaviour
     CharacterManager character;
     int horizontal;
     int vertical;
+
+    [Header("Damage Animations")]
+        public string hit_Forward_Medium_01 = "hit_Forward_Medium_01";
+        public string hit_Backward_Medium_01 = "hit_Backward_Medium_01";
+        public string hit_Right_Medium_01 = "hit_Right_Medium_01";
+        public string hit_Left_Medium_01 = "hit_Left_Medium_01";
 
     protected virtual void Awake() {
         character = GetComponent<CharacterManager>();
@@ -39,6 +46,8 @@ public class CharacterAnimatorManager : MonoBehaviour
         bool canMove = false) {
             character.animator.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
+
+            Debug.Log("Playing Animation: " + targetAnimation);
 
             //Can be used to stop character from attempting new actions
             //For example, if you get damaged, and begin performing a damage animation, this will stop from doing anything else.

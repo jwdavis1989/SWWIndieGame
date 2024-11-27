@@ -78,7 +78,11 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         ApplyDamage(character, characterCausingDamage);
 
         //Check which direction damage came from
+
+
         //Play a damage animation
+        PlayDirectionalBasedDamageAnimation(character);
+
         //Check for build-ups (Poison, Bleed, ect)
 
         //Play damage sound FX
@@ -208,6 +212,37 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                     Debug.Log("Weapon Family not set on Prefab!");
                     break;
             }
+    }
+
+    private void PlayDirectionalBasedDamageAnimation(CharacterManager characterTakingDamage) {
+        //Calculate if Poise is broken
+        poiseIsBroken = true;
+
+        if (angleHitFrom >= 145 && angleHitFrom <= 180) {
+            //Play Front Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Forward_Medium_01;
+        }
+        else if (angleHitFrom <= -145 && angleHitFrom >= -180) {
+            //Play Front Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Forward_Medium_01;
+        }
+        else if (angleHitFrom >= -45 && angleHitFrom <= 45) {
+            //Play Back Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Backward_Medium_01;
+        }
+        else if (angleHitFrom >= -144 && angleHitFrom <= -45){
+            //Play Left Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Left_Medium_01;
+        }
+        else if (angleHitFrom >= 45 && angleHitFrom <= 144) {
+            //Play Right Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Right_Medium_01;
+        }
+
+        //If poise is broken, play a staggering damage animation
+        if (poiseIsBroken) {
+            characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
+        }
     }
 
 }

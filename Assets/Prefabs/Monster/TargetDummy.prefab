@@ -714,6 +714,7 @@ MonoBehaviour:
   canRotate: 1
   canMove: 1
   isSprinting: 0
+  canBleed: 1
 --- !u!114 &8324911359619041986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,6 +927,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5df43b8add383040995aebb2fcaa28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hit_Forward_Medium_01: hit_Forward_Medium_01
+  hit_Backward_Medium_01: hit_Backward_Medium_01
+  hit_Right_Medium_01: hit_Right_Medium_01
+  hit_Left_Medium_01: hit_Left_Medium_01
 --- !u!114 &2223352995700398705
 MonoBehaviour:
   m_ObjectHideFlags: 0
