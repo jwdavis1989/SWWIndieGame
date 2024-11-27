@@ -63,9 +63,7 @@ public class PlayerManager : CharacterManager
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
-        if (isPlayer) {
-            PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
-        }
+        PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
 
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }

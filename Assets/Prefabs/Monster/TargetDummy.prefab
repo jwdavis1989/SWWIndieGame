@@ -904,7 +904,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
-  currentHealth: 1
+  currentHealth: 100
   maxHealth: 100
   currentStamina: 0
   maxStamina: 100
@@ -927,10 +927,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5df43b8add383040995aebb2fcaa28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hit_Forward_Medium_01: hit_Forward_Medium_01
-  hit_Backward_Medium_01: hit_Backward_Medium_01
-  hit_Right_Medium_01: hit_Right_Medium_01
-  hit_Left_Medium_01: hit_Left_Medium_01
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  right_Medium_Damage: []
+  left_Medium_Damage: []
 --- !u!114 &2223352995700398705
 MonoBehaviour:
   m_ObjectHideFlags: 0

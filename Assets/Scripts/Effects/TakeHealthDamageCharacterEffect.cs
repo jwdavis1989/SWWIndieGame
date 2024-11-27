@@ -220,27 +220,28 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
         if (angleHitFrom >= 145 && angleHitFrom <= 180) {
             //Play Front Animation
-            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Forward_Medium_01;
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.forward_Medium_Damage);
         }
         else if (angleHitFrom <= -145 && angleHitFrom >= -180) {
             //Play Front Animation
-            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Forward_Medium_01;
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.forward_Medium_Damage);
         }
         else if (angleHitFrom >= -45 && angleHitFrom <= 45) {
             //Play Back Animation
-            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Backward_Medium_01;
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.backward_Medium_Damage);
         }
         else if (angleHitFrom >= -144 && angleHitFrom <= -45){
             //Play Left Animation
-            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Left_Medium_01;
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.left_Medium_Damage);
         }
         else if (angleHitFrom >= 45 && angleHitFrom <= 144) {
             //Play Right Animation
-            damageAnimation = characterTakingDamage.characterAnimatorManager.hit_Right_Medium_01;
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.right_Medium_Damage);
         }
 
         //If poise is broken, play a staggering damage animation
         if (poiseIsBroken) {
+            characterTakingDamage.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
             characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
         }
     }
