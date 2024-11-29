@@ -63,16 +63,14 @@ public class PlayerManager : CharacterManager
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
-        if (isPlayer) {
-            PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
-        }
+        PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
 
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
 
     public override void ReviveCharacter() {
         base.ReviveCharacter();
-
+        canMove = true;
         isDead = false;
         playerStatsManager.currentHealth = playerStatsManager.maxHealth;
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;

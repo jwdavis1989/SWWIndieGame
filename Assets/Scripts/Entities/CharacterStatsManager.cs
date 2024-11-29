@@ -122,10 +122,8 @@ public class CharacterStatsManager : MonoBehaviour
         }
 
         //Clamp health to avoid over-healing
-        if (character.isPlayer) {
-            if (currentHealth > maxHealth) {
-                currentHealth = maxHealth;
-            }
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
         }
     }
 

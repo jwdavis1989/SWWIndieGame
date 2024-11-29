@@ -17,23 +17,40 @@ public class CharacterSoundFXManager : MonoBehaviour
         footStepSFXCount = WorldSoundFXManager.instance.walkFootStepSFX.Length;
     }
 
-    public void PlayAdvancedSoundFX(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool randomizePitch = true, float pitchRandomRange = 0.1f) {
-        audioSource.PlayOneShot(soundFX, volume);
+    public void PlayAdvancedSoundFX(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool randomizePitch = true, float pitchRandomRange = 0.1f, bool canOverlap = false) {
+        if (canOverlap || audioSource.clip != soundFX) {
+            audioSource.PlayOneShot(soundFX, volume);
 
-        //Reset pitch from last time called
-        audioSource.pitch = pitch;
+            //Reset pitch from last time called
+            audioSource.pitch = pitch;
 
-        if (randomizePitch) {
-            audioSource.pitch += Random.Range(-pitchRandomRange, pitchRandomRange);
+            if (randomizePitch) {
+                audioSource.pitch += Random.Range(-pitchRandomRange, pitchRandomRange);
+            }
         }
     }
     public void PlayRollSoundFX() {
         AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
-        characterManager.characterSoundFXManager.PlayAdvancedSoundFX(rollSFX, 1, 1f, true, 0.1f);
+        PlayAdvancedSoundFX(rollSFX, 1, 1f, true, 0.1f);
+    }
+
+    public void PlayAirDashSoundFX() {
+        AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        PlayAdvancedSoundFX(rollSFX, 1.5f, 0.9f, true, 0.1f);
+        PlayAdvancedSoundFX(rollSFX, 1.5f, 0.5f, true, 0.1f);
+    }
+
+    public void PlaySprintBoostSoundFX() {
+        AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.9f, true, 0.1f);
+        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.5f, true, 0.1f);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 0.5f, 0.25f, true, 0.1f);
     }
 
     public void PlayJumpJetBurstFX() {
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 1.25f, 1.2f, true);
+        if (characterManager.isPlayer) {
+            PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 1.25f, 1.2f, true);
+        }
     }
 
     public void PlayBackPedalSFX() {
