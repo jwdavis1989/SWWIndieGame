@@ -105,6 +105,9 @@ public class PlayerManager : CharacterManager
         currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
         currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
         currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
+        //Tinker Components owned
+        currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
+        currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -139,6 +142,9 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
         //AttachCurrentlyEquippedWeaponObjectsToHand();
+        //Load TinkerComponents
+        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
+        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
     }
 
     public void ToggleFlashlight() {
