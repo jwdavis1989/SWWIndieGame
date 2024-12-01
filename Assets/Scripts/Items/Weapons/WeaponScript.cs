@@ -168,7 +168,6 @@ public class WeaponScript : MonoBehaviour
             SetWeaponDamage();
         }
     }
-
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage() {
         if (meleeWeaponDamageCollider == null) return;
@@ -214,8 +213,8 @@ public class WeaponScript : MonoBehaviour
             //Currently add 100 to exp needed for each level
             stats.experiencePointsToNextLevel = 100 * stats.level;
             //Handle multi-level
-            if (stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0) 
-                AddExp(0);
+            //if (stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0) 
+            //    AddExp(0);
         }
     }
 

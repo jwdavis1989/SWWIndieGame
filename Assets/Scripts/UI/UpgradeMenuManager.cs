@@ -214,6 +214,7 @@ public class UpgradeMenuManager : MonoBehaviour
             WeaponStats stats = wpn.stats;
             ElementalStats el = stats.elemental;
             text = "Equipped - " + stats.weaponName + "   TP " + stats.currentTinkerPoints + " Lvl " + stats.level +
+            "\n  Exp " + stats.currentExperiencePoints + " To Next Lvl " + stats.experiencePointsToNextLevel +
             "\n  Attack " + stats.attack + " Durability " + stats.durability +
             "\n  Block " + stats.block + " Stability " + stats.stability +
             "\n  Fire " + el.firePower + ", Ice " + el.icePower + ", Lightning " + el.lightningPower +
@@ -289,7 +290,7 @@ public class UpgradeMenuManager : MonoBehaviour
             WeaponStats specStats = specWpn.stats;
             ElementalStats sEl = specStats.elemental;
             text += "\n\n\nSpecial - " + specStats.weaponName + "   TP " + specStats.currentTinkerPoints + " Lvl " + specStats.level +
-            "\n  Attack " + specStats.attack +
+            "\n  Attack " + specStats.attack + " Exp " + specStats.currentExperiencePoints + " To Next Lvl " + specStats.experiencePointsToNextLevel +
             "\n  Fire " + sEl.firePower + ", Ice " + sEl.icePower + ", Lightning " + sEl.lightningPower +
             "\n  Wind " + sEl.windPower + ", Earth " + sEl.earthPower + ", Light " + sEl.lightPower +
             "\n  Beast " + sEl.beastPower + ", Scale " + sEl.scalesPower + ", Tech " + sEl.techPower;
