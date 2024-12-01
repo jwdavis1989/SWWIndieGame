@@ -12,6 +12,8 @@ public class EnemyStatsManager : CharacterStatsManager
     public float[] weaponDropChances = new float[(int)WeaponType.UNKNOWN]; //drop chance of all weapons
     public void RollAllDrops()
     {
+        if (expDrop > 0)
+            DropExp();
         if (goldDropChance > Random.value)
             DropGold();
         for(int i = 0; i < componentDropChances.Length; i++)
@@ -39,11 +41,11 @@ public class EnemyStatsManager : CharacterStatsManager
     }
     public void DropGold()
     {
-
+        ItemDropContainer.instance.DropGold(transform);
     }
     public void DropExp()
     {
-
+        ItemDropContainer.instance.DropExp(transform);
     }
     /** 
      *  Drops a weapon at this objects location 
@@ -51,7 +53,7 @@ public class EnemyStatsManager : CharacterStatsManager
      */
     public GameObject DropWeapon(WeaponType type)
     {
-        return Instantiate(WeaponsController.instance.CreateWeapon(type, transform));
+        return Instantiate(ItemDropContainer.instance.DropWeapon(type, transform));
     }
     /** 
      *  Drops a TinkerComponent at this objects location 
@@ -59,6 +61,6 @@ public class EnemyStatsManager : CharacterStatsManager
      */
     public GameObject DropComponent(TinkerComponentType type)
     {
-        return Instantiate(TinkerComponentManager.instance.DropComponent(type, transform));
+        return Instantiate(ItemDropContainer.instance.DropComponent(type, transform));
     }
 }

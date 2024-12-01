@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1326936399141112553}
   - component: {fileID: 832365610704171507}
   - component: {fileID: 6738154468145463735}
+  - component: {fileID: 4189392252686030318}
   m_Layer: 0
   m_Name: WeaponController
   m_TagString: Untagged
@@ -83,3 +84,18 @@ MonoBehaviour:
   indexOfEquippedSpecialWeapon: 0
   mainHandWeaponAnchor: {fileID: 0}
   offHandWeaponAnchor: {fileID: 0}
+  currentAttackType: 0
+--- !u!114 &4189392252686030318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4393887841404714592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 449243ac67114d6438cd9338ccbdc242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldPrefab: {fileID: 6834262310921018269, guid: 6c6773a9da69c464bab5035edc3291d5, type: 3}
+  expPrefab: {fileID: 3124469588837278367, guid: 161d730b065127048b5114289487edeb, type: 3}
