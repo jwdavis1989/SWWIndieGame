@@ -30,6 +30,9 @@ public class PlayerInputManager : MonoBehaviour
     public float cameraHorizontalInput;
     public float cameraVerticalInput;
 
+    [Header("Lock-On Input")]
+    [SerializeField] bool lockOnInput;
+
 
     //Start is called before the first frame update
     void Start() {
@@ -60,6 +63,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleJumpInput();
         HandleMainHandLightAttackInput();
         HandleMouseWheelInput();
+        HandleLockOnInput();
     }
 
     //Goals:
@@ -75,6 +79,9 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
             playerControls.PlayerActions.LightAttack.performed += i => lightAttackInput = true;
+
+            //Lock On
+            playerControls.PlayerActions.LockOn.performed += i => lockOnInput = true;
 
             //Holding the input sets Sprinting to true
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -243,4 +250,46 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
     }
+
+
+    //Lock On
+    private void HandleLockOnInput() {
+        //Is our current target dead? (If so, Unlock)
+        if (player.isLockedOn) {
+            if (player.playerCombatManager.currentTarget == null) {
+                return;
+            }
+            if (player.playerCombatManager.currentTarget.isDead) {
+                player.isLockedOn = false;
+            }
+
+            //Attempt to Find new Target
+        }
+
+
+        //Are we already locked on?
+        if (lockOnInput && player.isLockedOn) {
+            //Disable Lock On
+            lockOnInput = false;
+            PlayerCamera.instance.ClearLockOnTargets();
+            player.isLockedOn = false;
+            player.characterCombatManager.currentTarget = null;
+            return;
+        }
+
+        if (lockOnInput && !player.isLockedOn) {
+            lockOnInput = false;
+
+            //Enable Lock On
+            PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+            if (PlayerCamera.instance.nearestLockOnTarget != null) {
+                //Set the target as our current target
+                player.playerCombatManager.SetTarget(PlayerCamera.instance.nearestLockOnTarget);
+                player.isLockedOn = true;
+            }
+        }
+    }
+
+
 }

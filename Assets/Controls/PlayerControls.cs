@@ -335,6 +335,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""78ba601b-73b7-4233-9faf-034ceaebacdc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -568,6 +577,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleFlashlight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99d0e44b-54e3-417d-ba8f-8e9b0eff40ca"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""200d60ad-4b4b-4022-84ca-9a2878abceae"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -621,6 +652,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugFullResources = m_PlayerActions.FindAction("DebugFullResources", throwIfNotFound: true);
+        m_PlayerActions_LockOn = m_PlayerActions.FindAction("LockOn", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
@@ -788,6 +820,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_NextWeapon;
     private readonly InputAction m_PlayerActions_DebugFullResources;
+    private readonly InputAction m_PlayerActions_LockOn;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -803,6 +836,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
         public InputAction @DebugFullResources => m_Wrapper.m_PlayerActions_DebugFullResources;
+        public InputAction @LockOn => m_Wrapper.m_PlayerActions_LockOn;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -845,6 +879,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugFullResources.started += instance.OnDebugFullResources;
             @DebugFullResources.performed += instance.OnDebugFullResources;
             @DebugFullResources.canceled += instance.OnDebugFullResources;
+            @LockOn.started += instance.OnLockOn;
+            @LockOn.performed += instance.OnLockOn;
+            @LockOn.canceled += instance.OnLockOn;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -882,6 +919,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugFullResources.started -= instance.OnDebugFullResources;
             @DebugFullResources.performed -= instance.OnDebugFullResources;
             @DebugFullResources.canceled -= instance.OnDebugFullResources;
+            @LockOn.started -= instance.OnLockOn;
+            @LockOn.performed -= instance.OnLockOn;
+            @LockOn.canceled -= instance.OnLockOn;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -966,6 +1006,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
         void OnDebugFullResources(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -12,6 +12,7 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterStatsManager characterStatsManager;
+    [HideInInspector] public CharacterCombatManager characterCombatManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
@@ -30,13 +31,17 @@ public class CharacterManager : MonoBehaviour
     public bool canRotate = true;
     public bool canMove = true;
     public bool isSprinting = false;
+    public bool isLockedOn = false;
     public bool canBleed = true;
 
     protected virtual void Awake() {
-        DontDestroyOnLoad(this);
-
+        if (isPlayer) {
+            DontDestroyOnLoad(this);
+        }
+        
         characterController = GetComponent<CharacterController>();
         characterStatsManager = GetComponent<CharacterStatsManager>();
+        characterCombatManager = GetComponent<CharacterCombatManager>();
         animator = GetComponent<Animator>();
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
@@ -121,5 +126,6 @@ public class CharacterManager : MonoBehaviour
     public void CallCloseDamageCollider() {
         characterWeaponManager.CloseDamageCollider();
     }
+
 
 }

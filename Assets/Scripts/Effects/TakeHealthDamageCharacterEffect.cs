@@ -215,6 +215,13 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     }
 
     private void PlayDirectionalBasedDamageAnimation(CharacterManager characterTakingDamage) {
+
+        //Works without this, but the tutorial suggests it so Idk man(?)
+        if (characterTakingDamage.isDead) {
+            return;
+        }
+
+        
         //Calculate if Poise is broken
         poiseIsBroken = true;
 
