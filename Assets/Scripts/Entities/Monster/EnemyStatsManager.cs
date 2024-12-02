@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class EnemyStatsManager : CharacterStatsManager
 {
-    public float goldDrop = 0;
+    public int goldDrop = 0;
     public float goldDropChance = 0;// % as 0-1
-    public float expDrop = 0;
+    public int expDrop = 0;
 
     public float[] componentDropChances = new float[(int)TinkerComponentType.Weapon]; //drop chance of all components (exluding weapon components)
+    public KeyValuePair<TinkerComponentType, float>[] componentDropChances3 = new KeyValuePair<TinkerComponentType, float>[(int)TinkerComponentType.Weapon];
+    //public Dictionary<TinkerComponentType, float> componentDropChances = new Dictionary<TinkerComponentType, float>();
     public float[] weaponDropChances = new float[(int)WeaponType.UNKNOWN]; //drop chance of all weapons
-    public void RollAllDrops()
+    public void DoAllDrops()
     {
         if (expDrop > 0)
             DropExp();
@@ -41,11 +43,11 @@ public class EnemyStatsManager : CharacterStatsManager
     }
     public void DropGold()
     {
-        ItemDropContainer.instance.DropGold(transform);
+        ItemDropContainer.instance.DropGold(transform, goldDrop);
     }
     public void DropExp()
     {
-        ItemDropContainer.instance.DropExp(transform);
+        ItemDropContainer.instance.DropExp(transform, expDrop);
     }
     /** 
      *  Drops a weapon at this objects location 

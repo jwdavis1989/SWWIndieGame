@@ -651,20 +651,20 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3521593014899338385}
-  - component: {fileID: 1768183658158479621}
   - component: {fileID: 8324911359619041986}
   - component: {fileID: 7973562659234960350}
   - component: {fileID: 1804076952437044375}
   - component: {fileID: 6470104204036595642}
   - component: {fileID: 465279585424491268}
-  - component: {fileID: 5826801028419178503}
   - component: {fileID: 5593394485033971698}
   - component: {fileID: 2223352995700398705}
   - component: {fileID: 4575406248074987551}
   - component: {fileID: 9111272354797200899}
+  - component: {fileID: -1380448457263495958}
+  - component: {fileID: -2751484905158295220}
   m_Layer: 6
   m_Name: TargetDummy
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -685,36 +685,6 @@ Transform:
   - {fileID: 7026200343423808830}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1768183658158479621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7797294244837541688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterController: {fileID: 0}
-  animator: {fileID: 0}
-  characterStatsManager: {fileID: 0}
-  characterEffectsManager: {fileID: 0}
-  characterAnimatorManager: {fileID: 0}
-  characterSoundFXManager: {fileID: 0}
-  characterWeaponManager: {fileID: 2223352995700398705}
-  isDead: 0
-  isPlayer: 0
-  isPerformingAction: 0
-  isJumping: 0
-  isGrounded: 1
-  isBoosting: 0
-  applyRootMotion: 0
-  canRotate: 1
-  canMove: 1
-  isSprinting: 0
-  canBleed: 1
 --- !u!114 &8324911359619041986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,42 +849,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5826801028419178503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7797294244837541688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf088034b4f0654ca9645a86c51a6e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endurance: 10
-  fortitude: 10
-  physicalDefense: 0
-  elementalDefenses:
-    firePower: 0
-    icePower: 0
-    lightningPower: 0
-    windPower: 0
-    earthPower: 0
-    lightPower: 0
-    beastPower: 0
-    scalesPower: 0
-    techPower: 0
-  currentHealth: 100
-  maxHealth: 100
-  currentStamina: 0
-  maxStamina: 100
-  staminaRegenerationTimer: 0
-  staminaRegenerationDelay: 1.75
-  staminaRegenAmount: 2.5
-  sprintingStaminaCost: 12
-  dodgeStaminaCost: 25
-  jumpStaminaCost: 0
-  staminaTickTimer: 0.1
 --- !u!114 &5593394485033971698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -952,7 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95d73edaae823154ab0936456999b27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterThatOwnsThisArsenal: {fileID: 1768183658158479621}
+  characterThatOwnsThisArsenal: {fileID: -2751484905158295220}
   ownedWeapons: []
   ownedSpecialWeapons: []
   indexOfEquippedWeapon: 0
@@ -1013,6 +947,118 @@ CharacterController:
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-1380448457263495958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7797294244837541688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81e365d45d628d4dbcf8edd77484347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endurance: 10
+  fortitude: 10
+  physicalDefense: 0
+  elementalDefenses:
+    firePower: 0
+    icePower: 0
+    lightningPower: 0
+    windPower: 0
+    earthPower: 0
+    lightPower: 0
+    beastPower: 0
+    scalesPower: 0
+    techPower: 0
+  currentHealth: 100
+  maxHealth: 100
+  currentStamina: 0
+  maxStamina: 100
+  staminaRegenerationTimer: 0
+  staminaRegenerationDelay: 1.75
+  staminaRegenAmount: 2.5
+  sprintingStaminaCost: 12
+  dodgeStaminaCost: 25
+  jumpStaminaCost: 0
+  staminaTickTimer: 0.1
+  goldDrop: 25
+  goldDropChance: 0.5
+  expDrop: 50
+  componentDropChances:
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  weaponDropChances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+--- !u!114 &-2751484905158295220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7797294244837541688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0052ad77a7827814f866c701929f7695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterController: {fileID: 0}
+  animator: {fileID: 0}
+  characterStatsManager: {fileID: 0}
+  characterEffectsManager: {fileID: 0}
+  characterAnimatorManager: {fileID: 0}
+  characterSoundFXManager: {fileID: 0}
+  characterWeaponManager: {fileID: 2223352995700398705}
+  isDead: 0
+  isPlayer: 0
+  isPerformingAction: 0
+  isJumping: 0
+  isGrounded: 1
+  isBoosting: 0
+  applyRootMotion: 0
+  canRotate: 1
+  canMove: 1
+  isSprinting: 0
+  canBleed: 1
 --- !u!1 &8194514929879964489
 GameObject:
   m_ObjectHideFlags: 0

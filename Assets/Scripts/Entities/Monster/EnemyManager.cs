@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class EnemyManager : CharacterManager
 {
-    // Start is called before the first frame update
-    void Start()
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
-        
-    }
+        characterStatsManager.currentHealth = 0;
+        canMove = false;
+        isDead = true;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //Reset any Flags here that need to be reset
+        //Todo: Add these later
+
+        //If not grounded, play an aerial death animation
+
+        if (!manuallySelectDeathAnimation)
+        {
+            //Could change this to choose a random death animation in the future if we wanted to.
+            characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
+        }
+
+        //Play Death SFX
+        //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
+
+        yield return new WaitForSeconds(5);
+
+        if (!isPlayer)
+        {
+            //If monster: Award players with Gold or items
+            GetComponent<EnemyStatsManager>().DoAllDrops();
+        }
     }
 }

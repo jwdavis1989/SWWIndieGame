@@ -35,9 +35,9 @@ public class CharacterWeaponManager : MonoBehaviour
     }
     public void Awake()
     {
-        if(characterThatOwnsThisArsenal == null && GetComponent<CharacterManager>() != null)
+        if(characterThatOwnsThisArsenal == null && gameObject.GetComponent<CharacterManager>() != null)
         {
-            characterThatOwnsThisArsenal = GetComponent<CharacterManager>();
+            characterThatOwnsThisArsenal = gameObject.GetComponent<CharacterManager>();
         }
     }
     /**

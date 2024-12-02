@@ -6,19 +6,23 @@ public class ItemDropContainer : MonoBehaviour
 {
     public GameObject goldPrefab;
     public GameObject expPrefab;
-    public GameObject DropGold(Transform loc)
+    public GameObject DropGold(Transform loc, int amt)
     {
-        return Instantiate(goldPrefab, loc);
+        GameObject g = Instantiate(goldPrefab, loc);
+        g.GetComponent<GoldDropCollider>().gold = amt;
+        return g;
     }
-    public GameObject DropExp(Transform loc)
+    public GameObject DropExp(Transform loc, int amt)
     {
-        return Instantiate(expPrefab, loc);
+        GameObject exp = Instantiate(expPrefab, loc);
+        exp.GetComponent<ExpDropCollider>().exp = amt;
+        return exp;
     }
     public GameObject DropComponent(TinkerComponentType type, Transform loc)
     {
         return Instantiate(TinkerComponentManager.instance.DropComponent(type, loc));
     }
-    public GameObject DropWeapon(WeaponType type, Transform loc)
+    public GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
     {
         return Instantiate(WeaponsController.instance.CreateWeapon(type, loc));
     }
