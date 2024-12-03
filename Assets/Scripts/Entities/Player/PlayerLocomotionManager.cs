@@ -169,7 +169,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
 
         if (player.isLockedOn) {
-            if (player.isSprinting) {
+            if (player.isSprinting || player.isRolling) {
                 //This is functionally identical to the non-locked on code currently, but is separated in case we want to have different behavior between the two cases
                 Vector3 targetDirection = Vector3.zero;
                 targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
@@ -179,11 +179,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
                 if (targetDirection == Vector3.zero) {
                     targetDirection = transform.forward;
-
-                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-                    Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-                    transform.rotation = finalRotation;
                 }
+                
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = finalRotation;
             }
             else {
                 if (player.playerCombatManager.currentTarget == null) {
@@ -278,6 +278,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
                 //Play roll animation
                 player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
+                player.isRolling = true;
             }
             else {
                 //Boosting flag

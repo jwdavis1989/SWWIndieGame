@@ -54,8 +54,8 @@ public class PlayerCamera : MonoBehaviour
     public CharacterManager rightLockOnTarget;
     [SerializeField] float lockOnTargetFollowSpeed = 0.2f;
     [SerializeField] float setCameraHeightSpeed = 0.05f;
-    [SerializeField] float unlockedCameraHeight = 1.65f;
-    [SerializeField] float lockedCameraHeight = 2.0f;
+    [SerializeField] float unlockedCameraHeight = 0.6f;
+    [SerializeField] float lockedCameraHeight = 1.8f;
     private Coroutine cameraLockOnHeightCoroutine;
 
 
@@ -246,14 +246,16 @@ public class PlayerCamera : MonoBehaviour
                     }
 
                     //Check the left side for targets
-                    if (relativeEnemyPosition.x <= 0.00f && distanceFromLeftTarget > shortestDistanceOfLeftTarget) {
+                    if (relativeEnemyPosition.x <= 0.00f && distanceFromLeftTarget < shortestDistanceOfLeftTarget) {
                         shortestDistanceOfLeftTarget = distanceFromLeftTarget;
                         leftLockOnTarget = availableTargets[j];
+                        Debug.Log("Target found to the left!");
                     }
                     //Check the right side for targets
                     else if (relativeEnemyPosition.x >= 0.00f && distanceFromRightTarget < shortestDistanceOfRightTarget) {
                         shortestDistanceOfRightTarget = distanceFromRightTarget;
                         rightLockOnTarget = availableTargets[j];
+                        Debug.Log("Target found to the right!");
                     }
                 }
             }
@@ -302,7 +304,6 @@ public class PlayerCamera : MonoBehaviour
         Vector3 velocity = Vector3.zero;
         Vector3 newLockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, lockedCameraHeight);
         Vector3 newUnlockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, unlockedCameraHeight);
-        Debug.Log("Expected Height: " + newUnlockedCameraHeight);
 
         while (timer < duration) {
             timer += Time.deltaTime;
@@ -317,7 +318,6 @@ public class PlayerCamera : MonoBehaviour
                 else {
                     cameraPivotTransform.transform.localPosition = 
                         Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
-                    Debug.Log("Actual Height: " + cameraPivotTransform.transform.localPosition.y);
                 }
             }
 
