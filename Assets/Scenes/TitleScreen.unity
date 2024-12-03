@@ -5296,8 +5296,7 @@ PrefabInstance:
       propertyPath: characterThatOwnsThisArsenal
       value: 
       objectReference: {fileID: 4202956625226732820}
-    m_RemovedComponents:
-    - {fileID: 6738154468145463735, guid: bfecf7ab4327b4c49b14b878541a993d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -79410,7 +79409,7 @@ MonoBehaviour:
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
-  characterWeaponManager: {fileID: 8671731848262977637}
+  characterWeaponManager: {fileID: 8671731848262977638}
   isDead: 0
   isPlayer: 0
   isPerformingAction: 0
@@ -89782,7 +89781,7 @@ GameObject:
   - component: {fileID: 1749061307611504876}
   - component: {fileID: 8671731848262977637}
   - component: {fileID: 8671731848262977636}
-  - component: {fileID: 8671731848262977637}
+  - component: {fileID: 8671731848262977638}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -95668,6 +95667,15 @@ MonoBehaviour:
   currentWeaponBeingUsed: {fileID: 0}
   currentTarget: {fileID: 0}
   LockOnTransform: {fileID: 373732615}
+--- !u!114 &8671731848262977638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6521308607458431711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97b64536436e6e2418d4d0c54cae651f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

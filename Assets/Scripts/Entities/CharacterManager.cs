@@ -67,7 +67,7 @@ public class CharacterManager : MonoBehaviour
         isDead = true;
 
         //Reset any Flags here that need to be reset
-        //Todo: Add these later
+        //TODO: Add these later
 
         //If not grounded, play an aerial death animation
 
