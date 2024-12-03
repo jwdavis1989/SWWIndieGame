@@ -65,15 +65,31 @@ public class CharacterAnimatorManager : MonoBehaviour
     public void UpdateAnimatorMovementParameters(float horizontalValue, float verticalValue, bool isSprinting) {
         //If you want to snap the animations to values of 0, 0.5, or 1 only, add clamped version. This is good when your animations don't blend well.
 
-        float horizontalAmount = horizontalValue;
-        float verticalAmount = verticalValue;
+        float snappedHorizontalAmount = horizontalValue;
+        float snappedVerticalAmount = verticalValue;
 
-        if (isSprinting) {
-            verticalAmount = 2;
+        //Snap movement values
+        if (horizontalValue > 0f && horizontalValue < 0.5f) {
+            snappedHorizontalAmount = 0.5f;
+        }
+        else if (horizontalValue < 0f && horizontalValue > -0.5f) {
+            snappedHorizontalAmount = -0.5f;
         }
         
-        character.animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);
-        character.animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);
+        if (verticalValue > 0f && verticalValue < 0.5f) {
+            snappedVerticalAmount = 0.5f;
+        } 
+        else if (verticalValue < 0f && verticalValue > -0.5f) {
+            snappedVerticalAmount = -0.5f;
+        }
+
+
+        if (isSprinting) {
+            snappedVerticalAmount = 2;
+        }
+        
+        character.animator.SetFloat(horizontal, snappedHorizontalAmount, 0.1f, Time.deltaTime);
+        character.animator.SetFloat(vertical, snappedVerticalAmount, 0.1f, Time.deltaTime);
         
     }
 
