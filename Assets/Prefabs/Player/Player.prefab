@@ -92497,18 +92497,26 @@ MonoBehaviour:
   characterController: {fileID: 0}
   animator: {fileID: 0}
   characterStatsManager: {fileID: 0}
+  characterEffectsManager: {fileID: 0}
+  characterAnimatorManager: {fileID: 0}
+  characterSoundFXManager: {fileID: 0}
+  characterWeaponManager: {fileID: 0}
+  isDead: 0
+  isPlayer: 0
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
+  isBoosting: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
   isSprinting: 0
+  canBleed: 1
   playerLocomotionManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
   playerAnimationManager: {fileID: 0}
-  mainHandWeaponAnchor: {fileID: 0}
-  offHandWeaponAnchor: {fileID: 0}
+  flashlight: {fileID: 0}
+  respawnCharacter: 0
 --- !u!114 &1965232953715711117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92532,6 +92540,8 @@ MonoBehaviour:
   fallStartYVelocity: -7
   rightBoosters: {fileID: 53008419102615700}
   leftBoosters: {fileID: 6024397389374433851}
+  backBoosters: {fileID: 0}
+  airDashBoosters: {fileID: 0}
   characterManager: {fileID: 816585948188296129}
   verticalMovement: 0
   horizontalMovement: 0
@@ -92542,6 +92552,7 @@ MonoBehaviour:
   jumpHeight: 2
   jumpForwardSpeed: 5
   freeFallSpeed: 2
+  airBoostSpeed: 15
   forceFieldGraphic: {fileID: 0}
 --- !u!114 &2421360271577463055
 MonoBehaviour:
@@ -92555,6 +92566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0167eaeed62b08e4badea1ea25b95e0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodSplatterVFX: {fileID: 0}
   effectToTest: {fileID: 0}
   ProcessEffect: 0
 --- !u!143 &2895811096310676182
@@ -92691,6 +92703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad660143889338499fc4c820503dc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
 --- !u!95 &5286892211168698038
 Animator:
   serializedVersion: 5
@@ -92725,6 +92738,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endurance: 10
+  fortitude: 10
+  physicalDefense: 0
+  elementalDefenses:
+    firePower: 0
+    icePower: 0
+    lightningPower: 0
+    windPower: 0
+    earthPower: 0
+    lightPower: 0
+    beastPower: 0
+    scalesPower: 0
+    techPower: 0
+  currentHealth: 1
+  maxHealth: 100
   currentStamina: 0
   maxStamina: 1
   staminaRegenerationTimer: 0
@@ -92747,6 +92774,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322cad85795cace4e98cf172c3e00c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastDamageAnimationPlayed: 
+  hit_Forward_Medium_01: Hit_Forward_Medium_01
+  hit_Forward_Medium_02: Hit_Forward_Medium_02
+  hit_Backward_Medium_01: Hit_Backward_Medium_01
+  hit_Backward_Medium_02: Hit_Backward_Medium_02
+  hit_Right_Medium_01: Hit_Right_Medium_01
+  hit_Right_Medium_02: Hit_Right_Medium_02
+  hit_Left_Medium_01: Hit_Left_Medium_01
+  hit_Left_Medium_02: Hit_Left_Medium_02
+  forward_Medium_Damage: []
+  backward_Medium_Damage: []
+  right_Medium_Damage: []
+  left_Medium_Damage: []
 --- !u!1 &7807133674838534577
 GameObject:
   m_ObjectHideFlags: 0
