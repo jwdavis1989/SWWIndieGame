@@ -54,8 +54,8 @@ public class PlayerCamera : MonoBehaviour
     public CharacterManager rightLockOnTarget;
     [SerializeField] float lockOnTargetFollowSpeed = 0.2f;
     [SerializeField] float setCameraHeightSpeed = 0.05f;
-    [SerializeField] float unlockedCameraHeight = 1.65f;
-    [SerializeField] float lockedCameraHeight = 2.0f;
+    [SerializeField] float unlockedCameraHeight = 0.6f;
+    [SerializeField] float lockedCameraHeight = 1.8f;
     private Coroutine cameraLockOnHeightCoroutine;
 
 

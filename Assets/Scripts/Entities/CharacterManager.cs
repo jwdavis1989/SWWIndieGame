@@ -16,6 +16,7 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
+    [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
     public CharacterWeaponManager characterWeaponManager;
 
     [Header("Status")]
@@ -27,6 +28,7 @@ public class CharacterManager : MonoBehaviour
     public bool isJumping = false;
     public bool isGrounded = true;
     public bool isBoosting = false;
+    public bool isRolling = false;
     public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;
@@ -46,6 +48,7 @@ public class CharacterManager : MonoBehaviour
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
+        characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
     }
 
     protected virtual void Start() {
