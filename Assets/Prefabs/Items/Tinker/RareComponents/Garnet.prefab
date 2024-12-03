@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8134157460973366859}
   - component: {fileID: 6797206704419403104}
   - component: {fileID: 7744647621566854056}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 8807823929122634840}
   - component: {fileID: 6528723362717498282}
   - component: {fileID: 2170933762780163657}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Garnet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     componentType: 17
-    count: 0
+    count: 1
     itemName: Garnet
     attack: 0
     durability: 0
@@ -245,6 +245,10 @@ PrefabInstance:
     - target: {fileID: 7684165817106254107, guid: 14d2bfe5cd471d44fba5ff33377671b5, type: 3}
       propertyPath: m_Name
       value: MoveToPlayerCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7684165817106254107, guid: 14d2bfe5cd471d44fba5ff33377671b5, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
