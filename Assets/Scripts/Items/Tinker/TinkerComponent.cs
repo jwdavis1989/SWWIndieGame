@@ -45,6 +45,7 @@ public enum TinkerComponentType
 public class TinkerComponent : MonoBehaviour
 {
     [Header("The TinkerComponent is used for upgrading weapons\n")]
+    [Header("These values are saved when saving game")]
     public TinkerComponentStats stats = new();
     [Header("Image used for menu icon")]
     public Sprite spr = null;
@@ -84,7 +85,7 @@ public class TinkerComponent : MonoBehaviour
 [Serializable]
 public class TinkerComponentStats
 {
-    [Header("Type - must be set on prefab - Other values set from json in WeaponUpgradeManager")]
+    [Header("Type")]
     public TinkerComponentType componentType = 0;
     [Header("UI Fields")]
     public int count = 0;

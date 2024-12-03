@@ -19,6 +19,28 @@ public class CharacterWeaponManager : MonoBehaviour
     public AttackType currentAttackType;
 
     /**
+     * Shorthands to access Main/Off hand weapons
+     */
+    public WeaponScript GetMainHand()
+    {
+        if (GetEquippedWeapon() != null)
+            return GetEquippedWeapon().GetComponent<WeaponScript>();
+        return null;
+    }
+    public WeaponScript GetOffHand()
+    {
+        if (GetEquippedWeapon(true) != null)
+            return GetEquippedWeapon(true).GetComponent<WeaponScript>();
+        return null;
+    }
+    public void Awake()
+    {
+        if(characterThatOwnsThisArsenal == null && gameObject.GetComponent<CharacterManager>() != null)
+        {
+            characterThatOwnsThisArsenal = gameObject.GetComponent<CharacterManager>();
+        }
+    }
+    /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
      */
@@ -116,17 +138,6 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     /**
-     * Attempt to attack target with equiped weapon. If this behavior is elsewhere then this should be deleted - Removed attack from weapon Alec 11/2/24
-     */
-    //public void AttackTargetWithEquippedWeapon(GameObject target)
-    //{
-    //    if (target == null) return;
-    //    if (ownedWeapons.Count > indexOfEquippedWeapon & ownedWeapons[indexOfEquippedWeapon] != null)
-    //    {
-    //        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().attackTarget(target);
-    //    }
-    //}
-    /**
      * Returns equipped weapon or special weapon if specified. Null if nothing equipped
      */
     public GameObject GetEquippedWeapon(bool special = false)
@@ -142,9 +153,9 @@ public class CharacterWeaponManager : MonoBehaviour
         return ownedWeapons[indexOfEquippedWeapon];
     }
     /**
- *  Loads weapons from Array
- *  Used by load game systems
- */
+     *  Loads weapons from Array
+     *  Used by load game systems
+     */
     public void setCurrentWeapons(WeaponsArray weaponsJson)
     {
         ownedWeapons = new List<GameObject>();

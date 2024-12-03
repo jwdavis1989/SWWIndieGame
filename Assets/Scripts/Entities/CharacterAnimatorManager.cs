@@ -106,14 +106,17 @@ public class CharacterAnimatorManager : MonoBehaviour
         bool canRotate = false, 
         bool canMove = false) {
 
-            //Keep track of last attack performed (For Combos)
+        //Keep track of last attack performed (For Combos)
 
-            //Keep track of current attack type (Light, Heavy, etc.)
+        //Keep track of current attack type (Light, Heavy, etc.)
 
-            //Update Animation Set to Current Weapon's Animations
-            
-            //Decide if our attack can be parried
-            character.characterWeaponManager.currentAttackType = attackType;
+        //Update Animation Set to Current Weapon's Animations
+
+        //Decide if our attack can be parried
+        Debug.Log(character == null ? "character=null":"character=good");
+        Debug.Log(character.characterWeaponManager == null ? "characterWeaponManager=null" : "characterWeaponManager=good");
+
+        character.characterWeaponManager.currentAttackType = attackType;
             character.animator.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
             character.isPerformingAction = isPerformingAction;

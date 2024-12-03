@@ -5281,6 +5281,10 @@ PrefabInstance:
       value: WeaponController
       objectReference: {fileID: 0}
     - target: {fileID: 6738154468145463735, guid: bfecf7ab4327b4c49b14b878541a993d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738154468145463735, guid: bfecf7ab4327b4c49b14b878541a993d, type: 3}
       propertyPath: offHandWeaponAnchor
       value: 
       objectReference: {fileID: 877648542}
@@ -5292,22 +5296,12 @@ PrefabInstance:
       propertyPath: characterThatOwnsThisArsenal
       value: 
       objectReference: {fileID: 4202956625226732820}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6738154468145463735, guid: bfecf7ab4327b4c49b14b878541a993d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfecf7ab4327b4c49b14b878541a993d, type: 3}
---- !u!114 &77438495 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6738154468145463735, guid: bfecf7ab4327b4c49b14b878541a993d, type: 3}
-  m_PrefabInstance: {fileID: 77438494}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97b64536436e6e2418d4d0c54cae651f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &79640696
 GameObject:
   m_ObjectHideFlags: 0
@@ -79416,7 +79410,7 @@ MonoBehaviour:
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
-  characterWeaponManager: {fileID: 77438495}
+  characterWeaponManager: {fileID: 8671731848262977637}
   isDead: 0
   isPlayer: 0
   isPerformingAction: 0
@@ -89788,6 +89782,7 @@ GameObject:
   - component: {fileID: 1749061307611504876}
   - component: {fileID: 8671731848262977637}
   - component: {fileID: 8671731848262977636}
+  - component: {fileID: 8671731848262977637}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -95673,6 +95668,17 @@ MonoBehaviour:
   currentWeaponBeingUsed: {fileID: 0}
   currentTarget: {fileID: 0}
   LockOnTransform: {fileID: 373732615}
+  m_Script: {fileID: 11500000, guid: 97b64536436e6e2418d4d0c54cae651f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterThatOwnsThisArsenal: {fileID: 4202956625226732820}
+  ownedWeapons: []
+  ownedSpecialWeapons: []
+  indexOfEquippedWeapon: 0
+  indexOfEquippedSpecialWeapon: 0
+  mainHandWeaponAnchor: {fileID: 1416436979}
+  offHandWeaponAnchor: {fileID: 877648542}
+  currentAttackType: 0
 --- !u!198 &8703379257358464094
 ParticleSystem:
   m_ObjectHideFlags: 0
