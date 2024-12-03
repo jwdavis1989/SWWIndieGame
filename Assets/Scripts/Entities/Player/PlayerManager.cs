@@ -14,6 +14,7 @@ public class PlayerManager : CharacterManager
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
+    [HideInInspector] public PlayerCombatManager playerCombatManager;
 
     public GameObject flashlight;
 
@@ -21,10 +22,12 @@ public class PlayerManager : CharacterManager
     [SerializeField] bool respawnCharacter = false;
 
     protected override void Awake() {
+        isPlayer = true;
         base.Awake();
 
         //Do more stuff, only for the player
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        playerCombatManager = GetComponent<PlayerCombatManager>();
         
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
@@ -33,7 +36,6 @@ public class PlayerManager : CharacterManager
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
-        isPlayer = true;
 
     }
 
@@ -195,4 +197,6 @@ public class PlayerManager : CharacterManager
             ReviveCharacter();
         }
     }
+
+    
 }

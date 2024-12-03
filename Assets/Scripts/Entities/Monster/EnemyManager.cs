@@ -24,12 +24,13 @@ public class EnemyManager : CharacterManager
         //Play Death SFX
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
 
-        yield return new WaitForSeconds(5);
-
         if (!isPlayer)
         {
             //If monster: Award players with Gold or items
             GetComponent<EnemyStatsManager>().DoAllDrops();
         }
+        
+        yield return new WaitForSeconds(5);
+
     }
 }
