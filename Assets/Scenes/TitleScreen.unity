@@ -36631,6 +36631,7 @@ MonoBehaviour:
   currentSelectedSlot: 10
   menuScrollSFX: {fileID: 8300000, guid: b10152f1895e7d4408b51926bb55b560, type: 3}
   enterGameSFX: {fileID: 8300000, guid: 01d8b4f6c61099247ac99d5303d8df64, type: 3}
+  titleScreenMusic: {fileID: 8300000, guid: 11d8541d8f629814abff72420b962c3c, type: 3}
 --- !u!82 &1062043394
 AudioSource:
   m_ObjectHideFlags: 0
@@ -45191,14 +45192,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: bbfe043264780af4c8d2b252ad3bb011, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -79409,6 +79410,7 @@ MonoBehaviour:
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   characterWeaponManager: {fileID: 8671731848262977638}
   isDead: 0
   isPlayer: 0
@@ -79416,6 +79418,7 @@ MonoBehaviour:
   isJumping: 0
   isGrounded: 1
   isBoosting: 0
+  isRolling: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
