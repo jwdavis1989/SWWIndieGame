@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Numerics;
 using UnityEngine;
 
 public class PlayerLocomotionManager : CharacterLocomotionManager
@@ -72,7 +73,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     }
 
     private void HandleGroundedMovement() {
-        if (!player.canMove) {
+        if (!player.canMove || player.isDead) {
             return;
         }
 
@@ -159,23 +160,62 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
     }
     private void HandleRotation() {
+        if (player.isDead) {
+            return;
+        }
+
         if (!player.canRotate) {
             return;
         }
 
-        targetRotationDirection = Vector3.zero;
-        targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-        targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-        targetRotationDirection.Normalize();
-        targetRotationDirection.y = 0;
+        if (player.isLockedOn) {
+            if (player.isSprinting) {
+                //This is functionally identical to the non-locked on code currently, but is separated in case we want to have different behavior between the two cases
+                Vector3 targetDirection = Vector3.zero;
+                targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+                targetDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+                targetDirection.Normalize();
+                targetDirection.y = 0;
 
-        if (targetRotationDirection == Vector3.zero) {
-            targetRotationDirection = transform.forward;
+                if (targetDirection == Vector3.zero) {
+                    targetDirection = transform.forward;
+
+                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                    Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                    transform.rotation = finalRotation;
+                }
+            }
+            else {
+                if (player.playerCombatManager.currentTarget == null) {
+                    return;
+                }
+
+                Vector3 targetDirection;
+                targetDirection = player.playerCombatManager.currentTarget.transform.position - transform.position;
+                targetDirection.y = 0;
+                targetDirection.Normalize();
+
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = finalRotation;
+            }
+        }
+        else {
+            targetRotationDirection = Vector3.zero;
+            targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+            targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+            targetRotationDirection.Normalize();
+            targetRotationDirection.y = 0;
+
+            if (targetRotationDirection == Vector3.zero) {
+                targetRotationDirection = transform.forward;
+            }
+
+            Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = targetRotation;
         }
 
-        Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
-        Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
-        transform.rotation = targetRotation;
     }
 
     private void GetVerticalAndHorizontalInputs() {

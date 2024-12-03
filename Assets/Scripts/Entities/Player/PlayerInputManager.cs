@@ -32,6 +32,9 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Lock-On Input")]
     [SerializeField] bool lockOnInput;
+    [SerializeField] bool lockOnSelectLeftInput;
+    [SerializeField] bool lockOnSelectRightInput;
+    private Coroutine lockOnCoroutine;
 
 
     //Start is called before the first frame update
@@ -64,6 +67,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleMainHandLightAttackInput();
         HandleMouseWheelInput();
         HandleLockOnInput();
+        HandleLockOnSwitchTargetInput();
     }
 
     //Goals:
@@ -82,6 +86,8 @@ public class PlayerInputManager : MonoBehaviour
 
             //Lock On
             playerControls.PlayerActions.LockOn.performed += i => lockOnInput = true;
+            playerControls.PlayerActions.SeekLeftLockOnTarget.performed += i => lockOnSelectLeftInput = true;
+            playerControls.PlayerActions.SeekRightLockOnTarget.performed += i => lockOnSelectRightInput = true;
 
             //Holding the input sets Sprinting to true
             playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
@@ -164,10 +170,15 @@ public class PlayerInputManager : MonoBehaviour
         }
         //If not locked on
         //We pass 0 for horizontal because we're not locked on, as we always rotate to face the way we walk.
-        player.playerAnimationManager.UpdateAnimatorMovementParameters(0, moveAmount, player.isSprinting);
-
+        if (!player.isLockedOn || player.isSprinting) {
+            player.playerAnimationManager.UpdateAnimatorMovementParameters(0, moveAmount, player.isSprinting);
+        }
         //If locked on
-        //If we are locked on, we want to pass the horizontal and vertical, probably
+        //If we are locked on, we want to pass the horizontal and vertical
+        else {
+            player.playerAnimationManager.UpdateAnimatorMovementParameters(horizontalInput, verticalInput, player.isSprinting);
+        }
+
     }
     private void HandleMouseWheelInput()
     {
@@ -264,6 +275,12 @@ public class PlayerInputManager : MonoBehaviour
             }
 
             //Attempt to Find new Target
+            //This assures us that the couroutine never runs multiple times
+            if (lockOnCoroutine != null) {
+                StopCoroutine(lockOnCoroutine);
+
+                lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
+            }
         }
 
 
@@ -291,5 +308,31 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
+    private void HandleLockOnSwitchTargetInput() {
+        if (lockOnSelectLeftInput) {
+            lockOnSelectLeftInput = false;
+
+            if (player.isLockedOn) {
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+                if (PlayerCamera.instance.leftLockOnTarget != null) {
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
+                }
+            }
+        }
+
+        if (lockOnSelectRightInput) {
+            lockOnSelectRightInput = false;
+
+            if (player.isLockedOn) {
+                PlayerCamera.instance.HandleLocatingLockOnTargets();
+
+                if (PlayerCamera.instance.rightLockOnTarget != null) {
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
+                }
+            }
+        }
+
+    }
 
 }

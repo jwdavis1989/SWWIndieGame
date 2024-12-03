@@ -322,6 +322,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SeekLeftLockOnTarget",
+                    "type": "Button",
+                    "id": "af4678c2-669d-402e-a7d0-f27aef98a7c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SeekRightLockOnTarget",
+                    "type": "Button",
+                    "id": "7a58e275-92fc-49ca-ab0b-15f532837cd1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -548,7 +566,7 @@
                 {
                     "name": "",
                     "id": "22a8e373-2f7b-42d2-807a-b1db1ae3ad36",
-                    "path": "<Keyboard>/tab",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -575,6 +593,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "LockOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "506d3b94-1177-4fc5-b089-93d98d38539a",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SeekLeftLockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a1b0068-fefd-415e-a126-5b48df766beb",
+                    "path": "<Gamepad>/rightStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SeekRightLockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ef694a95-76b5-47df-ae29-5eaa32a8b4e3",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SeekRightLockOnTarget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
