@@ -12,9 +12,11 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public Animator animator;
     [HideInInspector] public CharacterStatsManager characterStatsManager;
+    [HideInInspector] public CharacterCombatManager characterCombatManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
+    [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
     public CharacterWeaponManager characterWeaponManager;
 
     [Header("Status")]
@@ -26,21 +28,27 @@ public class CharacterManager : MonoBehaviour
     public bool isJumping = false;
     public bool isGrounded = true;
     public bool isBoosting = false;
+    public bool isRolling = false;
     public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;
     public bool isSprinting = false;
+    public bool isLockedOn = false;
     public bool canBleed = true;
 
     protected virtual void Awake() {
-        DontDestroyOnLoad(this);
-
+        if (isPlayer) {
+            DontDestroyOnLoad(this);
+        }
+        
         characterController = GetComponent<CharacterController>();
         characterStatsManager = GetComponent<CharacterStatsManager>();
+        characterCombatManager = GetComponent<CharacterCombatManager>();
         animator = GetComponent<Animator>();
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
+        characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
     }
 
     protected virtual void Start() {
@@ -62,7 +70,7 @@ public class CharacterManager : MonoBehaviour
         isDead = true;
 
         //Reset any Flags here that need to be reset
-        //Todo: Add these later
+        //TODO: Add these later
 
         //If not grounded, play an aerial death animation
 
@@ -121,5 +129,6 @@ public class CharacterManager : MonoBehaviour
     public void CallCloseDamageCollider() {
         characterWeaponManager.CloseDamageCollider();
     }
+
 
 }

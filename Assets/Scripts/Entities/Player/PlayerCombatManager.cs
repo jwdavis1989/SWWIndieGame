@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class PlayerCombatManager : CharacterCombatManager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public override void SetTarget(CharacterManager newTarget) {
+        base.SetTarget(newTarget);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        PlayerCamera.instance.SetLockCameraHeight();
     }
 }
