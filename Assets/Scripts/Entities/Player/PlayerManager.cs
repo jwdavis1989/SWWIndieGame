@@ -17,6 +17,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerCombatManager playerCombatManager;
 
     public GameObject flashlight;
+    public GameObject cameraflashlight;
 
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
@@ -160,6 +161,18 @@ public class PlayerManager : CharacterManager
         }
         else {
             Debug.Log("ERROR: Player Flashlight Instance Not Set in Editor.");
+        }
+
+        if (cameraflashlight != null) {
+            if (cameraflashlight.activeSelf) {
+                cameraflashlight.SetActive(false);
+            }
+            else {
+                cameraflashlight.SetActive(true);
+            }
+        }
+        else {
+            Debug.Log("ERROR: Camera Flashlight Instance Not Set in Editor.");
         }
     }
     
