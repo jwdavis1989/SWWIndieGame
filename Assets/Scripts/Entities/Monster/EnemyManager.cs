@@ -1,9 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyManager : CharacterManager
 {
+    public bool isAggro = false;
+    public float aggroRange = 1.0f;
+    public AggroCollider aggroCollider;
+
+    public float atkRange = 1.0f;
+    public CharacterCombatManager combatManager;
+    [Header("Tell which type of exp to give")]
+    public bool lastHitByMainHand = true;
+    protected override void Awake()
+    {
+        base.Awake();
+        if (combatManager == null) combatManager = GetComponent<CharacterCombatManager>();
+        if(aggroCollider) aggroCollider.SetRange(aggroRange);
+    }
+    public void AggroPlayer(GameObject player)
+    {
+        isLockedOn = true;
+        if (combatManager != null)
+        {
+            combatManager.LockOnTransform = player.transform;
+            combatManager.currentTarget = player.GetComponent<CharacterManager>();
+        }
+        else Debug.Log("Combat manager is null");
+    }
+    //public void BeginMeleeSwing()
+    //{
+
+    //}
+    //public void LungeForward()
+    //{
+    //}
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
         characterStatsManager.currentHealth = 0;
@@ -27,7 +59,7 @@ public class EnemyManager : CharacterManager
         if (!isPlayer)
         {
             //If monster: Award players with Gold or items
-            GetComponent<EnemyStatsManager>().DoAllDrops();
+            GetComponent<EnemyStatsManager>().DoAllDrops(lastHitByMainHand);
         }
         
         yield return new WaitForSeconds(5);
