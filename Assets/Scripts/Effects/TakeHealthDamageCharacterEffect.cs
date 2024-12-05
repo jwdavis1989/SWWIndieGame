@@ -99,7 +99,13 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Monsters or player created damage
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
-                finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                EnemyManager enemy = targetCharacter.GetComponent<EnemyManager>();
+                if (enemy != null)
+                {
+                    enemy.lastHitByMainHand = true;//TODO: Not sure how to tell which weapon type collided to the enemy
+                }
             }
             else {
                 finalDamageDealt = CalculateNPCDamage(targetCharacter, attackMotionValue, fullChargeModifier);

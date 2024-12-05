@@ -129,8 +129,6 @@ public class CharacterAnimatorManager : MonoBehaviour
         //Update Animation Set to Current Weapon's Animations
 
         //Decide if our attack can be parried
-        Debug.Log(character == null ? "character=null":"character=good");
-        Debug.Log(character.characterWeaponManager == null ? "characterWeaponManager=null" : "characterWeaponManager=good");
 
         character.characterWeaponManager.currentAttackType = attackType;
             character.animator.applyRootMotion = applyRootMotion;
