@@ -204,17 +204,15 @@ public class WeaponScript : MonoBehaviour
      */
     public void AddExp(float exp)
     {
-        Debug.Log("Adding " + exp + " exp to " + stats.weaponName);//astest
+        //Debug.Log("Adding " + exp + " exp to " + stats.weaponName);//astest
         stats.currentExperiencePoints += exp;
-        if(stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0)
+        while(stats.currentExperiencePoints >= stats.experiencePointsToNextLevel)
         {
             stats.level++;
             stats.currentTinkerPoints += stats.tinkerPointsPerLvl;
             //Currently add 100 to exp needed for each level
             stats.experiencePointsToNextLevel = 100 + 100 * stats.level;
-            //Handle multi-level
-            //if (stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0) 
-            //    AddExp(0);
+            //TODO PLAY LEVEL UP NOISE/ANIMATION
         }
     }
 

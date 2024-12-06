@@ -5,6 +5,8 @@ using UnityEngine;
 public class AtkRangeCollider : MonoBehaviour
 {
     private SphereCollider atkCollider;
+    [Header("Could use to differentiate different attacks with different ranges")]
+    public int atkIndex = 0;
     void Awake()
     {
         atkCollider = GetComponent<SphereCollider>();
@@ -18,7 +20,13 @@ public class AtkRangeCollider : MonoBehaviour
         //if(other.gameObject == gameObject.transform.parent.GetComponent<CharacterCombatManager>().currentTarget) {
         if (other.CompareTag("Player"))
         {
-            gameObject.transform.parent.GetComponent<EnemyManager>().BeginAttack01();
+            EnemyManager attaker = gameObject.transform.parent.GetComponent<EnemyManager>();
+            switch (atkIndex)
+            {
+                case 0: attaker.BeginAttack01(); break;
+                default: attaker.BeginAttack01(); break;
+            }
+            
         }
     }
 
