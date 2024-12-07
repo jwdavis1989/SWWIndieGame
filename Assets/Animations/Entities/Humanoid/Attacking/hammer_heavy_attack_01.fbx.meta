@@ -1,11 +1,8 @@
 fileFormatVersion: 2
-guid: 37ad1d06f2fe1964f80057850f6099c7
+guid: 962c9608038509a42b291776a19b3d87
 ModelImporter:
   serializedVersion: 22200
-  internalIDToNameTable:
-  - first:
-      74: 4351752844515222478
-    second: core_oh_sprint_F_01
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -17,7 +14,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 1
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -36,18 +33,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: core_oh_sprint_F_01
-      takeName: core_oh_sprint_F_01
-      internalID: 0
+      name: straight_sword_main_jump_attack_01_sequence
+      takeName: straight_sword_main_jump_attack_01_sequence
+      internalID: -7578585881538278727
       firstFrame: 0
-      lastFrame: 18
+      lastFrame: 74
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -59,21 +56,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.39506173
-        functionName: PlayRunFootStepSFX
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.9176954
-        functionName: PlayRunFootStepSFX
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -772,7 +755,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 0
+  importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

@@ -91,6 +91,8 @@ Shader "SWW/Aura2/Outline"
 
         ZWrite On
         CGPROGRAM
+        #include "Assets/Aura 2/Core/Code/Shaders/Aura.cginc"
+
         // Physically based Standard lighting model, and enable shadows on all light types
         #pragma surface surf Standard fullforwardshadows
 
