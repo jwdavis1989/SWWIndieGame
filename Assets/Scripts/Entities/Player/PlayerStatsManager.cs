@@ -29,6 +29,8 @@ public class PlayerStatsManager : CharacterStatsManager
     public void FullyRestoreResources() {
         SetNewMaxHealthValue();
         SetNewMaxStaminaValue();
-        player.ReviveCharacter();
+        if (player.isDead) {
+            player.ReviveCharacter();
+        }
     }
 }
