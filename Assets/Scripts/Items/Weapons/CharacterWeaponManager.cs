@@ -225,7 +225,7 @@ public class CharacterWeaponManager : MonoBehaviour
         ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().meleeWeaponDamageCollider.EnableDamageCollider();
 
         //TODO: Play Whoosh SFX
-
+        PlayMeleeWeaponSwingSFX();
     }
 
     public void CloseDamageCollider() {
@@ -249,5 +249,40 @@ public class CharacterWeaponManager : MonoBehaviour
         }
 
         characterThatOwnsThisArsenal.characterStatsManager.currentStamina -= staminaDeducted;
+    }
+
+    private void PlayMeleeWeaponSwingSFX() {
+        AudioClip meleeWeaponSwingSFX;
+        //e.g. If Fire damage is greater, play burn SFX
+        //e.g. If Lightning damage is greater, play Zap SFX
+
+        switch (ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponFamily) {
+                case WeaponFamily.Swords:
+                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingWeaponSwingSFX);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.GreatSwords:
+                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.heavySlashingWeaponSwingSFX);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 0.8f, true, 0.1f);
+                    break;
+                case WeaponFamily.HammersOrWrenches:
+                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.bludgeoningWeaponSwingSFX);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.Scythes:
+                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.scytheWeaponSwingSFX);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 0.8f, true, 0.1f);
+                    break;
+                case WeaponFamily.Daggers:
+                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.piercingWeaponSwingSFX);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.NotYetSet:
+                    Debug.Log("Weapon Family not set on Prefab!");
+                    break;
+                default:
+                    Debug.Log("Weapon Family not set on Prefab!");
+                    break;
+            }
     }
 }

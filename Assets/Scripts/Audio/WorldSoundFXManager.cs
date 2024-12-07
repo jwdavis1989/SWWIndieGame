@@ -6,6 +6,13 @@ public class WorldSoundFXManager : MonoBehaviour
 {
     public static WorldSoundFXManager instance;
 
+    [Header("Melee Weapon Swing Sounds")]
+    public AudioClip[] slashingWeaponSwingSFX;
+    public AudioClip[] heavySlashingWeaponSwingSFX;
+    public AudioClip[] bludgeoningWeaponSwingSFX;
+    public AudioClip[] scytheWeaponSwingSFX;
+    public AudioClip[] piercingWeaponSwingSFX;
+    
     [Header("Damage Sounds")]
     public AudioClip[] slashingImpactSFX;
     public AudioClip[] bludgeoningImpactSFX;
