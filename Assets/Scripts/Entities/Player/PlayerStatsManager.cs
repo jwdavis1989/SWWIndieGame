@@ -25,4 +25,10 @@ public class PlayerStatsManager : CharacterStatsManager
             // CalculateHealthBasedOnfortitudeLevel(fortitude);
             // CalculateStaminaBasedOnEnduranceLevel(endurance);
     }
+
+    public void FullyRestoreResources() {
+        SetNewMaxHealthValue();
+        SetNewMaxStaminaValue();
+        player.ReviveCharacter();
+    }
 }
