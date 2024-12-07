@@ -30,6 +30,7 @@ public class WorldSoundFXManager : MonoBehaviour
     public AudioClip[] rollSFX;
     public AudioClip jumpJetAirSFX;
     public AudioClip[] walkFootStepSFX;
+    public AudioClip[] runFootStepSFX;
     public AudioClip backPedalSFX;
 
     [Header("Ambience")]
