@@ -223,8 +223,7 @@ public class CharacterWeaponManager : MonoBehaviour
 
     public void OpenDamageCollider() {
         ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().meleeWeaponDamageCollider.EnableDamageCollider();
-
-        //TODO: Play Whoosh SFX
+        //Play Whoosh SFX
         PlayMeleeWeaponSwingSFX();
     }
 
@@ -256,7 +255,7 @@ public class CharacterWeaponManager : MonoBehaviour
         //e.g. If Fire damage is greater, play burn SFX
         //e.g. If Lightning damage is greater, play Zap SFX
 
-        switch (ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponFamily) {
+        switch (GetMainHand().weaponFamily) {
                 case WeaponFamily.Swords:
                     meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingWeaponSwingSFX);
                     characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 1f, true, 0.1f);
