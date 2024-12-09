@@ -23,8 +23,8 @@ public class AtkRangeCollider : MonoBehaviour
             EnemyManager attaker = gameObject.transform.parent.GetComponent<EnemyManager>();
             switch (atkIndex)
             {
-                case 0: attaker.BeginAttack01(); break;
-                default: attaker.BeginAttack01(); break;
+                case 0: attaker.ChargeAttack01(); break;
+                default: attaker.ChargeAttack01(); break;
             }
             
         }

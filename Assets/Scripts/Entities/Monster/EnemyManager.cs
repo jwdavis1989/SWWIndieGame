@@ -57,25 +57,43 @@ public class EnemyManager : CharacterManager
         }
         else Debug.Log("Combat manager is null");
     }
-    public void BeginAttack01()
+    public void ChargeAttack01()
     {
         if (!chargingAtk1)
         {
             chargingAtk1 = true;
             movingToTarget = false;
-            StartCoroutine(EndAttack01(atk1ChargeTime));
+            StartCoroutine(BeginAttack01(atk1ChargeTime));
             //Test animation... I HAVE NO IDEA WHATS IM DOING. I thikn atk ani should start here - alec 
             //string light_attack_01 = "Main_Hand_Light_Attack_01";
             //characterAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, light_attack_01, true);
         }
 
     }
+    private bool performingAtk1 = false;
+    public float atk1Duration = 2.0f;
 
+    public IEnumerator BeginAttack01(float delayTime)
+    {
+        if (!performingAtk1)
+        {
+            yield return new WaitForSeconds(delayTime);
+            performingAtk1 = true;
+            movingToTarget = true;
+            chargingAtk1 = false;
+            StartCoroutine(EndAttack01(atk1Duration));
+        }
+        //Test animation... I HAVE NO IDEA WHATS IM DOING. I try go back to reg movement here - alec 
+        //characterAnimatorManager.PlayTargetActionAnimation("SomeIdleAnimation?", false, true, true, true);
+    }
     public IEnumerator EndAttack01(float delayTime)
     {
-        yield return new WaitForSeconds(delayTime);
-        movingToTarget = true;
-        chargingAtk1 = false;
+        if (performingAtk1)
+        {
+            yield return new WaitForSeconds(delayTime);
+            performingAtk1 = false;
+            ChargeAttack01();
+        }
         //Test animation... I HAVE NO IDEA WHATS IM DOING. I try go back to reg movement here - alec 
         //characterAnimatorManager.PlayTargetActionAnimation("SomeIdleAnimation?", false, true, true, true);
     }
