@@ -261,6 +261,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "HeavyAttack",
+                    "type": "Button",
+                    "id": "bd2961e7-6a6d-4053-ad74-91db3d69a466",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChargeHeavyAttack",
+                    "type": "PassThrough",
+                    "id": "a71620a7-becd-4735-9452-1dedc8db015a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(pressPoint=0.1)",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "DebugTestAddWeapon",
                     "type": "Button",
                     "id": "3f262bab-6163-4916-913b-6645f359e00b",
@@ -626,6 +644,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "SeekRightLockOnTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e120aa0f-c2c2-4af7-9c9c-6a7e0cfc4dba",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc2b0e8d-d749-403b-a19a-7392f6f1f952",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9575b28f-e455-4c6a-ace0-49853e623ef5",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChargeHeavyAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98e05bcb-ea7b-4acf-8483-1b9863e290a8",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChargeHeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

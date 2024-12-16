@@ -15445,6 +15445,44 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!84 &335014409
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &369286020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36390,44 +36428,6 @@ MonoBehaviour:
   tintStrength: 1
   useExtinction: 0
   extinction: 0.75
---- !u!84 &968737097
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &977648258
 GameObject:
   m_ObjectHideFlags: 0
@@ -36980,7 +36980,7 @@ MonoBehaviour:
   overridingColor: {r: 1, g: 1, b: 1, a: 1}
   useShadow: 1
   useCookie: 1
-  cookieMapRenderTexture: {fileID: 968737097}
+  cookieMapRenderTexture: {fileID: 335014409}
   enableOutOfPhaseColor: 0
   outOfPhaseColorStrength: 0.1
   outOfPhaseColor: {r: 0, g: 1, b: 1, a: 1}
@@ -80044,6 +80044,7 @@ MonoBehaviour:
   isSprinting: 0
   isLockedOn: 0
   canBleed: 1
+  isChargingAttack: 0
   playerLocomotionManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
   playerAnimationManager: {fileID: 0}
@@ -80596,6 +80597,10 @@ PrefabInstance:
     - target: {fileID: 915837811372269487, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: unlockedCameraHeight
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 915837811372269487, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
+      propertyPath: lockOnTargetFollowSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335847405064486984, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: m_RenderingPath

@@ -21,6 +21,13 @@ public enum CharacterSlot {
     NO_SLOT
 }
 
+//This is used to calculate damage based on attack type
 public enum AttackType {
-    LightAttack01
+    LightAttack01,
+    LightAttack02,
+    LightAttack03,
+    HeavyAttack01,
+    HeavyAttack02,
+    ChargedAttack01,
+    ChargedAttack02
 }
