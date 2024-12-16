@@ -22,8 +22,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool jumpInput = false;
     [SerializeField] bool lightAttackInput = false;
     [SerializeField] Vector2 mouseWheelInput;
-    [SerializeField] float mouseWheelVerticalInput;
-    [SerializeField] float prevMouseWheelVerticalInput;
+    [SerializeField] bool heavyAttackInput = false;
+    [SerializeField] bool holdHeavyAttackInput = false;
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
@@ -35,6 +35,15 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool lockOnSelectLeftInput;
     [SerializeField] bool lockOnSelectRightInput;
     private Coroutine lockOnCoroutine;
+
+    [Header("Weapon Swapping")]
+    //Mouse & Keyboard
+    [SerializeField] float mouseWheelVerticalInput;
+    [SerializeField] float prevMouseWheelVerticalInput;
+
+    //Gamepad
+    [SerializeField] bool ChangeRightWeaponDPad = false;
+    [SerializeField] bool ChangeLeftWeaponDPad = false;
 
 
     //Start is called before the first frame update
@@ -65,9 +74,13 @@ public class PlayerInputManager : MonoBehaviour
         HandleSprintInput();
         HandleJumpInput();
         HandleMainHandLightAttackInput();
-        HandleMouseWheelInput();
+        HandleMouseKBWeaponSwapInput();
         HandleLockOnInput();
         HandleLockOnSwitchTargetInput();
+        HandleMainHandHeavyAttackInput();
+        HandleChargeMainHandHeavyAttackInput();
+        HandleGamePadRightWeaponSwapInput();
+        HandleGamePadLeftWeaponSwapInput();
     }
 
     //Goals:
@@ -82,7 +95,16 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
+
+            //Melee Attacking
             playerControls.PlayerActions.LightAttack.performed += i => lightAttackInput = true;
+            playerControls.PlayerActions.HeavyAttack.performed += i => heavyAttackInput = true;
+            playerControls.PlayerActions.ChargeHeavyAttack.performed += i => holdHeavyAttackInput = true;
+            playerControls.PlayerActions.ChargeHeavyAttack.canceled += i => holdHeavyAttackInput = false;
+
+            //Switch Weapons on Gamepad
+            playerControls.PlayerActions.ChangeRightWeaponDPad.performed += i => ChangeRightWeaponDPad = true;
+            playerControls.PlayerActions.ChangeLeftWeaponDPad.performed += i => ChangeLeftWeaponDPad = true;
 
             //Lock On
             playerControls.PlayerActions.LockOn.performed += i => lockOnInput = true;
@@ -180,7 +202,7 @@ public class PlayerInputManager : MonoBehaviour
         }
 
     }
-    private void HandleMouseWheelInput()
+    private void HandleMouseKBWeaponSwapInput()
     {
         mouseWheelVerticalInput = mouseWheelInput.y;
         //if(mouseWheelVerticalInput != prevMouseWheelVerticalInput)
@@ -197,6 +219,21 @@ public class PlayerInputManager : MonoBehaviour
         }
         prevMouseWheelVerticalInput = mouseWheelVerticalInput;
     }
+
+    private void HandleGamePadRightWeaponSwapInput() {
+        if (ChangeRightWeaponDPad) {
+            ChangeRightWeaponDPad = false;
+            PlayerWeaponManager.instance.nextWeapon();
+        }
+    }
+
+    private void HandleGamePadLeftWeaponSwapInput() {
+        if (ChangeLeftWeaponDPad) {
+            ChangeLeftWeaponDPad = false;
+            PlayerWeaponManager.instance.nextSpecialWeapon();
+        }
+    }
+
     private void HandleCameraMovementInput() {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
@@ -259,6 +296,27 @@ public class PlayerInputManager : MonoBehaviour
                 PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction, 
                                                 PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
             }
+        }
+    }
+
+    private void HandleMainHandHeavyAttackInput() {
+        if (heavyAttackInput) {
+            heavyAttackInput = false;
+
+            //TODO: Return if we have a UI Window Open
+
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
+
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction, 
+                                                PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+            }
+        }
+    }
+
+    private void HandleChargeMainHandHeavyAttackInput() {
+        //We only want to check for a charge if we are in an action that requires it (e.g. Attacking)
+        if (player.isPerformingAction) {
+            player.isChargingAttack = holdHeavyAttackInput;
         }
     }
 

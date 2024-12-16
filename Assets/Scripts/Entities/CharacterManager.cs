@@ -35,6 +35,7 @@ public class CharacterManager : MonoBehaviour
     public bool isSprinting = false;
     public bool isLockedOn = false;
     public bool canBleed = true;
+    public bool isChargingAttack = false;
 
     protected virtual void Awake() {
         if (isPlayer) {
@@ -56,7 +57,9 @@ public class CharacterManager : MonoBehaviour
     }
 
     protected virtual void Update() {
+        //Update Animation Flags
         animator?.SetBool("isGrounded", isGrounded);
+        animator?.SetBool("isChargingAttack", isChargingAttack);
     }
 
     protected virtual void LateUpdate() {

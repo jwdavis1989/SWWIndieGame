@@ -53,11 +53,23 @@ public class CharacterWeaponManager : MonoBehaviour
         {
             weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
             ownedSpecialWeapons.Add(weaponToAdd);
+
+            //Update Equipped Weapon Icon if this is your first special weapon
+            //Alec, this might cause bugs later if I goofed so heads-up lol
+            if (indexOfEquippedSpecialWeapon == 0) {
+                PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
+            }
         }
         else
         {
             weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, mainHandWeaponAnchor.transform);
             ownedWeapons.Add(weaponToAdd);
+
+            //Update Equipped Weapon Icon if this is your first weapon
+            //Alec, this might cause bugs later if I goofed so heads-up lol
+            if (indexOfEquippedWeapon == 0) {
+                PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+            }
         }
         //Warning if using for npc - Currently still tracking single pokedex
         WeaponScript currentWeaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
@@ -75,7 +87,12 @@ public class CharacterWeaponManager : MonoBehaviour
             indexOfEquippedWeapon = index;
             ownedWeapons[indexOfEquippedWeapon].SetActive(true);
             //Play the weapon swap animation
-            characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, true, true, true);
+            characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, false, true, true);
+
+            //Update Weapon Slot UI for the player only
+            if (characterThatOwnsThisArsenal.isPlayer) {
+                PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+            }
         }
     }
     //find next weapon and call ChangeWeapon
@@ -112,7 +129,12 @@ public class CharacterWeaponManager : MonoBehaviour
             indexOfEquippedSpecialWeapon = index;
             ownedSpecialWeapons[indexOfEquippedSpecialWeapon].SetActive(true);
             //Play the weapon swap animation
-            characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, true, true, true);
+            characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, false, true, true);
+
+            //Update Weapon Slot UI for the player only
+            if (characterThatOwnsThisArsenal.isPlayer) {
+                PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
+            }
         }
     }
     //find next weapon and call ChangeSpecialWeapon
