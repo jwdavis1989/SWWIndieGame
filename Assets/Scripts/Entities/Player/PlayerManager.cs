@@ -187,9 +187,11 @@ public class PlayerManager : CharacterManager
             PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
             if (isSpecial) {
                 PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
+                //PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
             }
             else {
                 PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
+                //PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }
     }

@@ -22,8 +22,6 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool jumpInput = false;
     [SerializeField] bool lightAttackInput = false;
     [SerializeField] Vector2 mouseWheelInput;
-    [SerializeField] float mouseWheelVerticalInput;
-    [SerializeField] float prevMouseWheelVerticalInput;
     [SerializeField] bool heavyAttackInput = false;
     [SerializeField] bool holdHeavyAttackInput = false;
 
@@ -37,6 +35,15 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool lockOnSelectLeftInput;
     [SerializeField] bool lockOnSelectRightInput;
     private Coroutine lockOnCoroutine;
+
+    [Header("Weapon Swapping")]
+    //Mouse & Keyboard
+    [SerializeField] float mouseWheelVerticalInput;
+    [SerializeField] float prevMouseWheelVerticalInput;
+
+    //Gamepad
+    [SerializeField] bool ChangeRightWeaponDPad = false;
+    [SerializeField] bool ChangeLeftWeaponDPad = false;
 
 
     //Start is called before the first frame update
@@ -67,11 +74,13 @@ public class PlayerInputManager : MonoBehaviour
         HandleSprintInput();
         HandleJumpInput();
         HandleMainHandLightAttackInput();
-        HandleMouseWheelInput();
+        HandleMouseKBWeaponSwapInput();
         HandleLockOnInput();
         HandleLockOnSwitchTargetInput();
         HandleMainHandHeavyAttackInput();
         HandleChargeMainHandHeavyAttackInput();
+        HandleGamePadRightWeaponSwapInput();
+        HandleGamePadLeftWeaponSwapInput();
     }
 
     //Goals:
@@ -92,6 +101,10 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.HeavyAttack.performed += i => heavyAttackInput = true;
             playerControls.PlayerActions.ChargeHeavyAttack.performed += i => holdHeavyAttackInput = true;
             playerControls.PlayerActions.ChargeHeavyAttack.canceled += i => holdHeavyAttackInput = false;
+
+            //Switch Weapons on Gamepad
+            playerControls.PlayerActions.ChangeRightWeaponDPad.performed += i => ChangeRightWeaponDPad = true;
+            playerControls.PlayerActions.ChangeLeftWeaponDPad.performed += i => ChangeLeftWeaponDPad = true;
 
             //Lock On
             playerControls.PlayerActions.LockOn.performed += i => lockOnInput = true;
@@ -189,7 +202,7 @@ public class PlayerInputManager : MonoBehaviour
         }
 
     }
-    private void HandleMouseWheelInput()
+    private void HandleMouseKBWeaponSwapInput()
     {
         mouseWheelVerticalInput = mouseWheelInput.y;
         //if(mouseWheelVerticalInput != prevMouseWheelVerticalInput)
@@ -206,6 +219,21 @@ public class PlayerInputManager : MonoBehaviour
         }
         prevMouseWheelVerticalInput = mouseWheelVerticalInput;
     }
+
+    private void HandleGamePadRightWeaponSwapInput() {
+        if (ChangeRightWeaponDPad) {
+            ChangeRightWeaponDPad = false;
+            PlayerWeaponManager.instance.nextWeapon();
+        }
+    }
+
+    private void HandleGamePadLeftWeaponSwapInput() {
+        if (ChangeLeftWeaponDPad) {
+            ChangeLeftWeaponDPad = false;
+            PlayerWeaponManager.instance.nextSpecialWeapon();
+        }
+    }
+
     private void HandleCameraMovementInput() {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
