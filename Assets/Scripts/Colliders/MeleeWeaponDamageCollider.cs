@@ -8,7 +8,18 @@ public class MeleeWeaponDamageCollider : DamageCollider
     public CharacterManager characterCausingDamage;
 
     [Header("Weapon Attack Modifiers")]
+    //Light
     public float lightAttack01DamageMotionValue;
+    public float lightAttack02DamageMotionValue;
+    public float lightAttack03DamageMotionValue;
+
+    //Heavy
+    public float heavyAttack01DamageMotionValue;
+    public float heavyAttack02DamageMotionValue;
+
+    //Charged Heavy
+    public float heavyChargedAttack01DamageMotionValue;
+    public float heavyChargedAttack02DamageMotionValue;
 
     private WeaponScript weaponThatOwnsThisCollider;
     public WeaponFamily weaponFamily;
@@ -68,6 +79,11 @@ public class MeleeWeaponDamageCollider : DamageCollider
         //Set the Weapon Family of the attack for sound and visual effects
         damageEffect.weaponFamily = weaponFamily;
 
+        //Set Character Causing the damage, if it exits
+        if (characterCausingDamage != null) {
+            damageEffect.characterCausingDamage = characterCausingDamage;
+        }
+
         //Base Attack Power
         damageEffect.physicalDamage = physicalDamage;
 
@@ -90,9 +106,35 @@ public class MeleeWeaponDamageCollider : DamageCollider
         //Determine Motion Value
         if (characterCausingDamage.characterWeaponManager != null) {
             switch (characterCausingDamage.characterWeaponManager.currentAttackType) {
+
+                //Light Attacks
                 case AttackType.LightAttack01:
                     attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.lightAttack01DamageMotionValue;
                     break;
+                case AttackType.LightAttack02:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.lightAttack02DamageMotionValue;
+                    break;
+                case AttackType.LightAttack03:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.lightAttack03DamageMotionValue;
+                    break;
+
+                //Heavy Attacks
+                case AttackType.HeavyAttack01:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyAttack01DamageMotionValue;
+                    break;
+                case AttackType.HeavyAttack02:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyAttack02DamageMotionValue;
+                    break;
+
+                //Charge Heavy Attacks
+                case AttackType.ChargedAttack01:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyChargedAttack01DamageMotionValue;
+                    break;
+                case AttackType.ChargedAttack02:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyChargedAttack02DamageMotionValue;
+                    break;
+
+                //Default
                 default:
                     break;
             }
@@ -100,11 +142,11 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         //Apply Motion Value
         damageEffect.attackMotionValue = attackMotionValue;
+                    
+        //TODO: Determine Full Charge Bonus Damage Modifier for Charged Spell Attacks
+        //UPDATE: Using a different system for melee charge attacking, might still use this for spell charge attacks(?)
 
-        //TODO: Determine Full Charge Bonus Damage Modifier for Charged Heavy & Charged Spell Attacks
-        //Probably a switch
-
-        //Apply Full Charge Bonus Damage Modifier for Charged Heavy & Charged Spell Attacks
+        //Apply Full Charge Bonus Damage Modifier for Charged Spell Attacks
         damageEffect.fullChargeModifier = fullChargeModifier;
 
         //Update Contact Point for VFX

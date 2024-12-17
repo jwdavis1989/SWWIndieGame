@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponFamily: 0
   meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
   spr: {fileID: 21300000, guid: 7e27f95cfd8e96f458ac8ce1571f04d0, type: 3}
   hasObtained: 1
   stats:
     weaponType: 4
-    weaponFamily: 0
     attack: 22
     maxAttack: 45
     durability: 100
@@ -100,6 +100,7 @@ MonoBehaviour:
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
+  mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
 --- !u!1 &4029110176930541267
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,6 +184,7 @@ MonoBehaviour:
   environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
   lightAttack01DamageMotionValue: 0
+  weaponFamily: 0
 --- !u!1 &8162462757089158816
 GameObject:
   m_ObjectHideFlags: 0

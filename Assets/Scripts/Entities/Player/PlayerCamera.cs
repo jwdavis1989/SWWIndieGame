@@ -312,6 +312,7 @@ public class PlayerCamera : MonoBehaviour
                 if (player.playerCombatManager.currentTarget != null) {
                     cameraPivotTransform.transform.localPosition = 
                         Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedCameraHeight, ref velocity, setCameraHeightSpeed);
+                        
                     cameraPivotTransform.transform.localRotation = 
                         Quaternion.Slerp(cameraPivotTransform.transform.localRotation, Quaternion.Euler(0, 0, 0), lockOnTargetFollowSpeed);
                 }

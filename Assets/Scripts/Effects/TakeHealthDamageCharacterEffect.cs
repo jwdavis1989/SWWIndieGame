@@ -162,7 +162,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                     break;
                 case WeaponFamily.GreatSwords:
                     impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingImpactSFX);
-                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 8f, true, 0.1f);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 0.8f, true, 0.1f);
                     break;
                 case WeaponFamily.HammersOrWrenches:
                     impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.bludgeoningImpactSFX);
