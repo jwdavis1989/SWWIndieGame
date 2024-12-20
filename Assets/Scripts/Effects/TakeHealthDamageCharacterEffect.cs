@@ -59,6 +59,9 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     public float angleHitFrom;                      //Used to determine what damage animation to play
     public Vector3 contactPoint;                    //Used to determine where impact occured for SFX instantiating
 
+    [Header("Main Hand / Off Hand weapon")]
+    public bool isMainHand = false;
+
 
 
     public void Awake() {
@@ -100,11 +103,19 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
-                finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                if (isMainHand)
+                {
+                    finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                }
+                else
+                {
+                    finalDamageDealt = PlayerWeaponManager.instance.GetOffHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                }
+                
                 EnemyManager enemy = targetCharacter.GetComponent<EnemyManager>();
                 if (enemy != null)
                 {
-                    enemy.lastHitByMainHand = true;//TODO: Not sure how to tell which weapon type collided to the enemy
+                    enemy.lastHitByMainHand = isMainHand;
                 }
             }
             else {

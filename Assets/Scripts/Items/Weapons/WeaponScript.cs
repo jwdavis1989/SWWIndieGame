@@ -160,7 +160,7 @@ public class WeaponScript : MonoBehaviour
     public WeaponFamily weaponFamily = 0;
 
     [Header("Weapon Damage Collider")]
-    [SerializeField] public MeleeWeaponDamageCollider meleeWeaponDamageCollider;
+    [SerializeField] public MeleeWeaponDamageCollider weaponDamageCollider;
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
@@ -175,53 +175,70 @@ public class WeaponScript : MonoBehaviour
     public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
     public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
 
+    [Header("Projectile")]
+    public GameObject projectile = null;
+
     public void Awake() {
-        meleeWeaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-        if (!isSpecialWeapon && meleeWeaponDamageCollider) {
+        if (isSpecialWeapon)
+        {
+            if(projectile != null)
+            {
+                weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
+            }
+            else { 
+                weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+            }
+        }
+        else
+        {
+            weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+        }
+        if (weaponDamageCollider) {
             SetWeaponDamage();
         }
     }
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage() {
-        if (meleeWeaponDamageCollider == null) return;
+        if (weaponDamageCollider == null) return;
         //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
         // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
-            meleeWeaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
+            weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
         // }
         // else {
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework
         // }
-        meleeWeaponDamageCollider.enabled = true;
+        weaponDamageCollider.isMainHand = !isSpecialWeapon;
+        weaponDamageCollider.enabled = true;
 
-        meleeWeaponDamageCollider.weaponFamily = weaponFamily;
+        weaponDamageCollider.weaponFamily = weaponFamily;
         
-        meleeWeaponDamageCollider.physicalDamage = stats.attack;
-        meleeWeaponDamageCollider.fireDamage = stats.elemental.firePower;
-        meleeWeaponDamageCollider.iceDamage = stats.elemental.icePower;
-        meleeWeaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
-        meleeWeaponDamageCollider.windDamage = stats.elemental.windPower;
-        meleeWeaponDamageCollider.earthDamage = stats.elemental.earthPower;
-        meleeWeaponDamageCollider.lightDamage = stats.elemental.lightPower;
-        meleeWeaponDamageCollider.beastDamage = stats.elemental.beastPower;
-        meleeWeaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
-        meleeWeaponDamageCollider.techDamage = stats.elemental.techPower;
+        weaponDamageCollider.physicalDamage = stats.attack;
+        weaponDamageCollider.fireDamage = stats.elemental.firePower;
+        weaponDamageCollider.iceDamage = stats.elemental.icePower;
+        weaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
+        weaponDamageCollider.windDamage = stats.elemental.windPower;
+        weaponDamageCollider.earthDamage = stats.elemental.earthPower;
+        weaponDamageCollider.lightDamage = stats.elemental.lightPower;
+        weaponDamageCollider.beastDamage = stats.elemental.beastPower;
+        weaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
+        weaponDamageCollider.techDamage = stats.elemental.techPower;
 
         //Turn the collider back off so it doesn't hurt anyone, ow
-        meleeWeaponDamageCollider.enabled = false;
+        weaponDamageCollider.enabled = false;
 
         //Add Motion Value
         //Light
-        meleeWeaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.lightAttack02DamageMotionValue = stats.lightAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.lightAttack03DamageMotionValue = stats.lightAttack01DamageMotionValue;
+        weaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
+        weaponDamageCollider.lightAttack02DamageMotionValue = stats.lightAttack01DamageMotionValue;
+        weaponDamageCollider.lightAttack03DamageMotionValue = stats.lightAttack01DamageMotionValue;
 
         //Heavy
-        meleeWeaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
+        weaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
+        weaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
 
         //Charged Heavy
-        meleeWeaponDamageCollider.heavyChargedAttack01DamageMotionValue = stats.heavyChargedAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.heavyChargedAttack02DamageMotionValue = stats.heavyChargedAttack02DamageMotionValue;
+        weaponDamageCollider.heavyChargedAttack01DamageMotionValue = stats.heavyChargedAttack01DamageMotionValue;
+        weaponDamageCollider.heavyChargedAttack02DamageMotionValue = stats.heavyChargedAttack02DamageMotionValue;
     }
     /**
      * Add Exp to a weapon and level it up if possible
