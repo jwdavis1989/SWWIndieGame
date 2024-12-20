@@ -55,12 +55,11 @@ public class DamageCollider : MonoBehaviour
         //if (other.gameObject.layer == LayerMask.NameToLayer("Character")) {
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
-            //Uncomment below if we want to search on both the damageable character colliders and the character controller collider:
-            // if (damageTarget == null) {
-            //     damageTarget = other.GetComponent<CharacterManager>();
-            // }
-
-            if (damageTarget != null) {
+        //Uncomment below if we want to search on both the damageable character colliders and the character controller collider:
+        // if (damageTarget == null) {
+        //     damageTarget = other.GetComponent<CharacterManager>();
+        // }
+        if (damageTarget != null) {
                 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
                 //Check if we can damage this target based on friendly fire
@@ -86,7 +85,6 @@ public class DamageCollider : MonoBehaviour
 
         //Create a copy of the damage effect to not change the original
         TakeHealthDamageCharacterEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
-
         damageEffect.isMainHand = isMainHand;
 
         //Base Attack Power

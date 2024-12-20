@@ -15,10 +15,10 @@ public class EnemyStatsManager : CharacterStatsManager
     public KeyValuePair<TinkerComponentType, float>[] componentDropChances3 = new KeyValuePair<TinkerComponentType, float>[(int)TinkerComponentType.Weapon];
     //public Dictionary<TinkerComponentType, float> componentDropChances = new Dictionary<TinkerComponentType, float>();
     //public float[] weaponDropChances = new float[(int)WeaponType.UNKNOWN]; //drop chance of all weapons
-    public void DoAllDrops(bool isMainHand)
+    public void DoAllDrops(bool isHitByMainHand, bool isHitByOffHand)
     {
         if (expDropAmt > 0)
-            DropExp(isMainHand);
+            DropExp(isHitByMainHand, isHitByOffHand);
         if (goldDropChance > Random.value)
             DropGold();
         for(int i = 0; i < componentDropChances.Length; i++)
@@ -44,7 +44,7 @@ public class EnemyStatsManager : CharacterStatsManager
     {
         ItemDropContainer.instance.DropGold(transform, goldDrop);
     }
-    public void DropExp(bool isMainHand)
+    public void DropExp(bool isHitByMainHand, bool isHitByOffHand)
     {
         Transform t = transform;
         Vector3 p = t.position; 
@@ -52,7 +52,7 @@ public class EnemyStatsManager : CharacterStatsManager
         float newY = p.y + (Random.value * (Random.value > 0.5 ? -1 : 1));
         float newZ = p.z + (Random.value * (Random.value > 0.5 ? -1 : 1));
         t.position = new Vector3 (newX, newY, newZ);
-        ItemDropContainer.instance.DropExp(t, expDropAmt, isMainHand);
+        ItemDropContainer.instance.DropExp(t, expDropAmt, isHitByMainHand, isHitByOffHand);
     }
     /** 
      *  Drops a TinkerComponent at this objects location 

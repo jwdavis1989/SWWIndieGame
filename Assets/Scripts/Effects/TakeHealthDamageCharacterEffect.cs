@@ -102,20 +102,27 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Monsters or player created damage
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
+                EnemyManager enemy = targetCharacter.GetComponent<EnemyManager>();
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                 if (isMainHand)
                 {
+                    Debug.Log("Hit with main hand");
                     finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                    if (enemy != null)
+                    {
+                        enemy.isHitByMainHand = true;
+                        Debug.Log("Enemy Hit with main hand");
+                    }
                 }
                 else
                 {
+                    Debug.Log("Hit with off hand");
                     finalDamageDealt = PlayerWeaponManager.instance.GetOffHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
-                }
-                
-                EnemyManager enemy = targetCharacter.GetComponent<EnemyManager>();
-                if (enemy != null)
-                {
-                    enemy.lastHitByMainHand = isMainHand;
+                    if (enemy != null)
+                    {
+                        enemy.isHitByOffHand = true;
+                        Debug.Log("Enemy Hit with off hand");
+                    }
                 }
             }
             else {

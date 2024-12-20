@@ -22,7 +22,8 @@ public class EnemyManager : CharacterManager
     bool isFlying = true;
     public float upwardSpeed = 1.0f;
     [Header("Determines which type of exp to drop on death")]
-    public bool lastHitByMainHand = true;
+    public bool isHitByMainHand = false;
+    public bool isHitByOffHand = false;
     protected override void Awake()
     {
         base.Awake();
@@ -156,7 +157,7 @@ public class EnemyManager : CharacterManager
         if (!isPlayer)
         {
             //If monster: Award players with Gold or items
-            GetComponent<EnemyStatsManager>().DoAllDrops(lastHitByMainHand);
+            GetComponent<EnemyStatsManager>().DoAllDrops(isHitByMainHand, isHitByOffHand);
         }
         
         yield return new WaitForSeconds(5);
