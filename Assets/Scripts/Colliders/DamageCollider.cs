@@ -20,6 +20,9 @@ public class DamageCollider : MonoBehaviour
     public float scalesDamage = 0f;
     public float techDamage = 0f;
 
+    [Header("Main Hand / Off Hand weapon")]
+    public bool isMainHand = false;
+
     //Damage modifier for specific attack, which differs between attacks in a combo
     public float attackMotionValue = 1f;
 
@@ -83,6 +86,8 @@ public class DamageCollider : MonoBehaviour
 
         //Create a copy of the damage effect to not change the original
         TakeHealthDamageCharacterEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
+
+        damageEffect.isMainHand = isMainHand;
 
         //Base Attack Power
         damageEffect.physicalDamage = physicalDamage;

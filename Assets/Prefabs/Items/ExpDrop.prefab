@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   exp: 1
+  isMainHandExp: 1
+  scale: 1
 --- !u!135 &477227466840708906
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -67,7 +69,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.15
+  m_Radius: 0.05
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &8415832466590309276
 GameObject:

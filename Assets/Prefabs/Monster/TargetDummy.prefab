@@ -5565,6 +5565,7 @@ MonoBehaviour:
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
   characterWeaponManager: {fileID: 1182099827899900757}
   isDead: 0
   isPlayer: 0
@@ -5572,12 +5573,21 @@ MonoBehaviour:
   isJumping: 0
   isGrounded: 1
   isBoosting: 0
+  isRolling: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
   isSprinting: 0
   isLockedOn: 0
   canBleed: 1
+  isAggro: 0
+  aggroRange: 1
+  aggroCollider: {fileID: 0}
+  atkRange: 5
+  combatManager: {fileID: 0}
+  turnSpeed: 1
+  lastHitByMainHand: 1
+  speed: 1
 --- !u!114 &3271484534067907393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5616,7 +5626,7 @@ MonoBehaviour:
   staminaTickTimer: 0.1
   goldDrop: 100
   goldDropChance: 1
-  expDrop: 20
+  expDropAmt: 0
   componentDropChances:
   - 0
   - 0
@@ -5627,23 +5637,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  weaponDropChances:
   - 0
   - 0
   - 0
