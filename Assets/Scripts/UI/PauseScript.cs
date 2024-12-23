@@ -19,13 +19,13 @@ public class PauseScript : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         upgradeMenu.SetActive(false);
-        mainPauseMenu.SetActive(true);
+        mainPauseMenu.SetActive(false);
         canvas.SetActive(false);
     }
     void Update()
     {
         if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
-            ) && gamePaused == false)
+            ) && gamePaused == false && SceneManager.GetActiveScene().buildIndex != 0)
         {
             Pause();
         }
@@ -65,6 +65,8 @@ public class PauseScript : MonoBehaviour
         Destroy(GameObject.Find("WeaponController"));
         Destroy(GameObject.Find("UpgradeMenuManager"));
         Destroy(GameObject.Find("DontDestroyOnLoad"));
+        Destroy(GameObject.Find("MiniMap Camera"));
+        //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
         SceneManager.LoadScene(0);
         Unpause();
     }
