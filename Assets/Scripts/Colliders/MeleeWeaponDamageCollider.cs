@@ -75,6 +75,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         //Create a copy of the damage effect to not change the original
         TakeHealthDamageCharacterEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
+        damageEffect.isMainHand = isMainHand;
 
         //Set the Weapon Family of the attack for sound and visual effects
         damageEffect.weaponFamily = weaponFamily;
