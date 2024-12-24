@@ -12,12 +12,13 @@ public class ItemDropContainer : MonoBehaviour
         g.GetComponent<GoldDropCollider>().gold = amt;
         return g;
     }
-    public GameObject DropExp(Transform loc, int amt, bool isMainHandExp)
+    public GameObject DropExp(Transform loc, int amt, bool isHitByMainHand, bool isHitByOffHand)
     {
         GameObject exp = Instantiate(expPrefab, loc);
         ExpDropCollider e = exp.GetComponent<ExpDropCollider>();
         e.exp = amt;
-        e.isMainHandExp = isMainHandExp;
+        e.isMainHandExp = isHitByMainHand;
+        e.isOffHandExp = isHitByOffHand;
         return exp;
     }
     public GameObject DropComponent(TinkerComponentType type, Transform loc)

@@ -244,13 +244,13 @@ public class CharacterWeaponManager : MonoBehaviour
     }
 
     public void OpenDamageCollider() {
-        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().meleeWeaponDamageCollider.EnableDamageCollider();
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponDamageCollider.EnableDamageCollider();
         //Play Whoosh SFX
         PlayMeleeWeaponSwingSFX();
     }
 
     public void CloseDamageCollider() {
-        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().meleeWeaponDamageCollider.DisableDamageCollider();
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponDamageCollider.DisableDamageCollider();
     }
     public void DrainStaminaBasedOnAttack() {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();

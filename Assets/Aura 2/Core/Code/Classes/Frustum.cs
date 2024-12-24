@@ -462,7 +462,7 @@ namespace Aura2API
                 _computeMaximumDepthComputeShader.SetVector("zParameters", isOrthographic ? _cameraRanges : _zParameters);
                 _computeMaximumDepthComputeShader.SetBool("isOrthographic", isOrthographic);
                 _computeMaximumDepthComputeShader.SetTexture((int)_frustumSettings.QualitySettings.occlusionCullingAccuracy, "occlusionTexture", OcclusionTexture.WriteBuffer);
-                _computeMaximumDepthComputeShader.DispatchIndirect((int)_frustumSettings.QualitySettings.occlusionCullingAccuracy, _dispatchBuffers[2]); // TODO : Use parallel reduction (http://diaryofagraphicsprogrammer.blogspot.com/2014/03/compute-shader-optimizations-for-amd.html && https://developer.download.nvidia.com/compute/cuda/1.1-Beta/x86_website/projects/reduction/doc/reduction.pdf) to get as close as the target size then resize to perfect size
+                _computeMaximumDepthComputeShader.DispatchIndirect((int)_frustumSettings.QualitySettings.occlusionCullingAccuracy, _dispatchBuffers[2]);
                 OcclusionTexture.Swap();
                 if (_processOcclusionMapMaterial == null)
                 {

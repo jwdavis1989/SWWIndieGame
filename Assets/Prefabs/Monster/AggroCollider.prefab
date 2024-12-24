@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1936807308822194415}
   - component: {fileID: 7779124262124713105}
-  - component: {fileID: 2474136608502596496}
   - component: {fileID: -3991761579679066405}
   m_Layer: 11
   m_Name: AggroCollider
@@ -55,19 +54,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2474136608502596496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7684165817106254107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf7cddc77808c44c83f9442ee0de630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
 --- !u!114 &-3991761579679066405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,4 +66,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb10cb4164934c447b8512a966871fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroCollider: {fileID: 0}
