@@ -19,6 +19,11 @@ public class ResetActionFlag : StateMachineBehaviour
         character.isBoosting = false;
         character.isRolling = false;
         character.animator.applyRootMotion = false;
+
+        //TODO: Investigate why this is causing error
+        if (character.characterAnimatorManager != null) {
+            character.characterAnimatorManager.DisableCanDoCombo();
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
