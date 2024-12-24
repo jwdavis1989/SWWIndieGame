@@ -249,13 +249,13 @@ public class PlayerCamera : MonoBehaviour
                     if (relativeEnemyPosition.x <= 0.00f && distanceFromLeftTarget < shortestDistanceOfLeftTarget) {
                         shortestDistanceOfLeftTarget = distanceFromLeftTarget;
                         leftLockOnTarget = availableTargets[j];
-                        Debug.Log("Target found to the left!");
+                        //Debug.Log("Target found to the left!");
                     }
                     //Check the right side for targets
                     else if (relativeEnemyPosition.x >= 0.00f && distanceFromRightTarget < shortestDistanceOfRightTarget) {
                         shortestDistanceOfRightTarget = distanceFromRightTarget;
                         rightLockOnTarget = availableTargets[j];
-                        Debug.Log("Target found to the right!");
+                        //Debug.Log("Target found to the right!");
                     }
                 }
             }

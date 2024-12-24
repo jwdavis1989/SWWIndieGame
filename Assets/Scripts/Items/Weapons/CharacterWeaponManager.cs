@@ -262,9 +262,34 @@ public class CharacterWeaponManager : MonoBehaviour
         float staminaDeducted = 0f;
 
         switch (currentAttackType) {
+            //Light Attacks
             case AttackType.LightAttack01:
             staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.lightAttack01StaminaCostModifier;
                 break;
+            case AttackType.LightAttack02:
+            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.lightAttack02StaminaCostModifier;
+                break;
+            case AttackType.LightAttack03:
+            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.lightAttack03StaminaCostModifier;
+                break;
+
+            //Heavy Attacks
+            case AttackType.HeavyAttack01:
+            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyAttack01StaminaCostModifier;
+                break;
+            case AttackType.HeavyAttack02:
+            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyAttack02StaminaCostModifier;
+                break;
+
+            //Charge Heavy Attacks
+            case AttackType.ChargedAttack01:
+            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyChargedAttack01DamageMotionValue;
+                break;
+            case AttackType.ChargedAttack02:
+            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyChargedAttack02DamageMotionValue;
+                break;
+
+            //Default
             default:
                 break;
         }

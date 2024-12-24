@@ -87,22 +87,22 @@ public class WeaponStats
     public float lightAttack01StaminaCostModifier = 1f;
     public float lightAttack02StaminaCostModifier = 1f;
     public float lightAttack03StaminaCostModifier = 1f;
-    public float heavyAttack01StaminaCostModifier = 1f;
-    public float heavyAttack02StaminaCostModifier = 1f;
+    public float heavyAttack01StaminaCostModifier = 1.2f;
+    public float heavyAttack02StaminaCostModifier = 1.2f;
 
     [Header("Motion Values")]
     //Light
     public float lightAttack01DamageMotionValue = 1f;
-    public float lightAttack02DamageMotionValue = 1f;
-    public float lightAttack03DamageMotionValue = 1.1f;
+    public float lightAttack02DamageMotionValue = 1.1f;
+    public float lightAttack03DamageMotionValue = 1.2f;
 
     //Heavy
     public float heavyAttack01DamageMotionValue = 1.4f;
-    public float heavyAttack02DamageMotionValue = 1.4f;
+    public float heavyAttack02DamageMotionValue = 1.6f;
 
     //Charged Heavy
     public float heavyChargedAttack01DamageMotionValue = 2.0f;
-    public float heavyChargedAttack02DamageMotionValue = 2.0f;
+    public float heavyChargedAttack02DamageMotionValue = 2.2f;
 
 
 }
@@ -212,12 +212,12 @@ public class WeaponScript : MonoBehaviour
         //Add Motion Value
         //Light
         meleeWeaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.lightAttack02DamageMotionValue = stats.lightAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.lightAttack03DamageMotionValue = stats.lightAttack01DamageMotionValue;
+        meleeWeaponDamageCollider.lightAttack02DamageMotionValue = stats.lightAttack02DamageMotionValue;
+        meleeWeaponDamageCollider.lightAttack03DamageMotionValue = stats.lightAttack03DamageMotionValue;
 
         //Heavy
         meleeWeaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
+        meleeWeaponDamageCollider.heavyAttack02DamageMotionValue = stats.heavyAttack02DamageMotionValue;
 
         //Charged Heavy
         meleeWeaponDamageCollider.heavyChargedAttack01DamageMotionValue = stats.heavyChargedAttack01DamageMotionValue;

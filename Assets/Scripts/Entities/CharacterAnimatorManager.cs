@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterAnimatorManager : MonoBehaviour
 {
-    CharacterManager character;
+    protected CharacterManager character;
     int horizontal;
     int vertical;
 
@@ -103,7 +103,7 @@ public class CharacterAnimatorManager : MonoBehaviour
             character.animator.applyRootMotion = applyRootMotion;
             character.animator.CrossFade(targetAnimation, 0.2f);
 
-            Debug.Log("Playing Animation: " + targetAnimation);
+            //Debug.Log("Playing Animation: " + targetAnimation);
 
             //Can be used to stop character from attempting new actions
             //For example, if you get damaged, and begin performing a damage animation, this will stop from doing anything else.
@@ -131,10 +131,23 @@ public class CharacterAnimatorManager : MonoBehaviour
         //Decide if our attack can be parried
 
         character.characterWeaponManager.currentAttackType = attackType;
-            character.animator.applyRootMotion = applyRootMotion;
-            character.animator.CrossFade(targetAnimation, 0.2f);
-            character.isPerformingAction = isPerformingAction;
-            character.canRotate = canRotate;
-            character.canMove = canMove;
+        character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;
+        character.animator.applyRootMotion = applyRootMotion;
+        character.animator.CrossFade(targetAnimation, 0.2f);
+        character.isPerformingAction = isPerformingAction;
+        character.canRotate = canRotate;
+        character.canMove = canMove;
     }
+
+    //Animation Event Calls
+    public virtual void EnableCanDoCombo() {
+        character.characterCombatManager.canComboWithMainHandWeapon = true;
+    }
+
+    public virtual void DisableCanDoCombo() {
+        if (character.characterCombatManager != null) {
+            character.characterCombatManager.canComboWithMainHandWeapon = false;
+        }
+    }
+
 }

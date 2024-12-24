@@ -57,14 +57,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.23813847
+      - time: 0.18246394
         functionName: CallDrainStaminaBasedOnAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.2689017
+      - time: 0.21322718
         functionName: CallOpenDamageCollider
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
@@ -73,6 +73,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.48031923
         functionName: CallCloseDamageCollider
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.57609385
+        functionName: EnableCanDoCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
         floatParameter: 0
