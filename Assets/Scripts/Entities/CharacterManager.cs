@@ -24,6 +24,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Flags")]
     public bool isPlayer = false;
+    public bool isRotatingAttacker = false; //Determines whethere creature can rotate during their attack animations to follow their target
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
@@ -134,7 +135,9 @@ public class CharacterManager : MonoBehaviour
     }
 
     public void EnableCanRotate() {
-        canRotate = true;
+        if (isRotatingAttacker) {
+            canRotate = true;
+        }
     }
 
     public void DisableCanRotate() {
