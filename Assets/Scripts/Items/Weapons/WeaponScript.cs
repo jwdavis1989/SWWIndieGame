@@ -228,13 +228,13 @@ public class WeaponScript : MonoBehaviour
 
         //Add Motion Value
         //Light
-        meleeWeaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.lightAttack02DamageMotionValue = stats.lightAttack02DamageMotionValue;
-        meleeWeaponDamageCollider.lightAttack03DamageMotionValue = stats.lightAttack03DamageMotionValue;
+        weaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
+        weaponDamageCollider.lightAttack02DamageMotionValue = stats.lightAttack02DamageMotionValue;
+        weaponDamageCollider.lightAttack03DamageMotionValue = stats.lightAttack03DamageMotionValue;
 
         //Heavy
-        meleeWeaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
-        meleeWeaponDamageCollider.heavyAttack02DamageMotionValue = stats.heavyAttack02DamageMotionValue;
+        weaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
+        weaponDamageCollider.heavyAttack02DamageMotionValue = stats.heavyAttack02DamageMotionValue;
 
         //Charged Heavy
         weaponDamageCollider.heavyChargedAttack01DamageMotionValue = stats.heavyChargedAttack01DamageMotionValue;
