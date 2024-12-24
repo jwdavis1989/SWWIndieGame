@@ -133,5 +133,12 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.CloseDamageCollider();
     }
 
+    public void EnableCanRotate() {
+        canRotate = true;
+    }
+
+    public void DisableCanRotate() {
+        canRotate = false;
+    }
 
 }

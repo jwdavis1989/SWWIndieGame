@@ -1,11 +1,8 @@
 fileFormatVersion: 2
-guid: 44566bb063b0f60439a872756b517fbe
+guid: 31f1e0e307a9b014096d66d42066d406
 ModelImporter:
   serializedVersion: 22200
-  internalIDToNameTable:
-  - first:
-      74: -7510004476302381493
-    second: core_main_roll_to_idle_F_01
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -17,7 +14,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 1
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -36,14 +33,14 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: core_main_roll_to_idle_F_01
-      takeName: core_main_roll_to_idle_F_01
-      internalID: 0
+      name: straight_sword_main_back_step_attack_02_release
+      takeName: straight_sword_main_back_step_attack_02_release
+      internalID: -1072655217554886999
       firstFrame: 0
-      lastFrame: 33
+      lastFrame: 42
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0.1
+      level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
@@ -60,17 +57,24 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
-        functionName: PlayRollSoundFX
+      - time: 0.007804648
+        functionName: CallDrainStaminaBasedOnAttack
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.51207733
-        functionName: EnableCanDoRollingAttack
+      - time: 0.3593226
+        functionName: CallOpenDamageCollider
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.64213794
+        functionName: CallCloseDamageCollider
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
@@ -772,7 +776,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 0
+  importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 

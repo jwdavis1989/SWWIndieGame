@@ -84,11 +84,24 @@ public class WeaponStats
 
     [Header("Stamina Costs")]
     public float baseStaminaCost = 20f;
+
+    //Light
     public float lightAttack01StaminaCostModifier = 1f;
     public float lightAttack02StaminaCostModifier = 1f;
     public float lightAttack03StaminaCostModifier = 1f;
+
+    //Heavy
     public float heavyAttack01StaminaCostModifier = 1.2f;
     public float heavyAttack02StaminaCostModifier = 1.2f;
+
+    //Running
+    public float lightRunningAttack01StaminaCostModifier = 1f;
+
+    //Rolling
+    public float lightRollingAttack01StaminaCostModifier = 1f;
+
+    //Backstepping
+    public float lightBackstepAttack01StaminaCostModifier = 1f;
 
     [Header("Motion Values")]
     //Light
@@ -103,6 +116,15 @@ public class WeaponStats
     //Charged Heavy
     public float heavyChargedAttack01DamageMotionValue = 2.0f;
     public float heavyChargedAttack02DamageMotionValue = 2.2f;
+
+    //Running
+    public float lightRunningAttack01DamageMotionValue = 1f;
+
+    //Rolling
+    public float lightRollingAttack01DamageMotionValue = 1f;
+
+    //Backstepping
+    public float lightBackstepAttack01DamageMotionValue = 1f;
 
 
 }
@@ -239,6 +261,16 @@ public class WeaponScript : MonoBehaviour
         //Charged Heavy
         weaponDamageCollider.heavyChargedAttack01DamageMotionValue = stats.heavyChargedAttack01DamageMotionValue;
         weaponDamageCollider.heavyChargedAttack02DamageMotionValue = stats.heavyChargedAttack02DamageMotionValue;
+
+        //Running
+        weaponDamageCollider.lightRunningAttack01DamageMotionValue = stats.lightRunningAttack01DamageMotionValue;
+
+        //Rolling
+        weaponDamageCollider.lightRollingAttack01DamageMotionValue = stats.lightRollingAttack01DamageMotionValue;
+
+        //Backstepping
+        weaponDamageCollider.lightBackstepAttack01DamageMotionValue = stats.lightBackstepAttack01DamageMotionValue;
+
     }
     /**
      * Add Exp to a weapon and level it up if possible

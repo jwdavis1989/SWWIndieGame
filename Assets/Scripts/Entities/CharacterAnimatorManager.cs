@@ -139,15 +139,4 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.canMove = canMove;
     }
 
-    //Animation Event Calls
-    public virtual void EnableCanDoCombo() {
-        character.characterCombatManager.canComboWithMainHandWeapon = true;
-    }
-
-    public virtual void DisableCanDoCombo() {
-        if (character.characterCombatManager != null) {
-            character.characterCombatManager.canComboWithMainHandWeapon = false;
-        }
-    }
-
 }
