@@ -218,24 +218,26 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                     //Do the thing
                     break;
                 case WeaponFamily.MagicWands:
-                    //Do the thing
+                    //Do the thing thing
                     break;
                 case WeaponFamily.MagicStaves:
-                    //Do the thing
+                    //Do the thing thing thing
                     break;
                 case WeaponFamily.MagicRings:
-                    //Do the thing
+                    //Do the thing thing thing thing
                     break;
                 case WeaponFamily.Drones:
-                    //Do the thing
+                    //Do the thing thing thing thing thing
                     break;
                 case WeaponFamily.NotYetSet:
-                    Debug.Log("Weapon Family not set on Prefab!");
+                    Debug.Log("ERROR: Weapon Family not set on Prefab!");
                     break;
                 default:
-                    Debug.Log("Weapon Family not set on Prefab!");
+                    Debug.Log("ERROR: Weapon Family not set on Prefab!");
                     break;
             }
+
+            damagedCharacter.characterSoundFXManager.PlayTakeDamageGrunts();
     }
 
     private void PlayDirectionalBasedDamageAnimation(CharacterManager characterTakingDamage) {

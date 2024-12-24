@@ -24,6 +24,7 @@ public class PlayerManager : CharacterManager
 
     protected override void Awake() {
         isPlayer = true;
+        isRotatingAttacker = true;
         base.Awake();
 
         //Do more stuff, only for the player

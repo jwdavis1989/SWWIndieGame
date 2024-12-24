@@ -20,4 +20,13 @@ public class PlayerCombatManager : CharacterCombatManager
         player = GetComponent<PlayerManager>();
     }
 
+    //Animation Event Calls
+    public override void EnableCanDoCombo() {
+        canComboWithMainHandWeapon = true;
+    }
+
+    public override void DisableCanDoCombo() {
+        canComboWithMainHandWeapon = false;
+    }
+
 }

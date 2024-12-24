@@ -21,6 +21,15 @@ public class MeleeWeaponDamageCollider : DamageCollider
     public float heavyChargedAttack01DamageMotionValue;
     public float heavyChargedAttack02DamageMotionValue;
 
+    //Running
+    public float lightRunningAttack01DamageMotionValue;
+
+    //Rolling
+    public float lightRollingAttack01DamageMotionValue;
+
+    //Backstepping
+    public float lightBackstepAttack01DamageMotionValue;
+
     private WeaponScript weaponThatOwnsThisCollider;
     public WeaponFamily weaponFamily;
 

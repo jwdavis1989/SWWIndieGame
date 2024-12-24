@@ -259,34 +259,49 @@ public class CharacterWeaponManager : MonoBehaviour
             return;
         }
 
-        float staminaDeducted = 0f;
+        float staminaDeducted = currentWeapon.stats.baseStaminaCost;
 
         switch (currentAttackType) {
             //Light Attacks
             case AttackType.LightAttack01:
-            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.lightAttack01StaminaCostModifier;
+                staminaDeducted *= currentWeapon.stats.lightAttack01StaminaCostModifier;
                 break;
             case AttackType.LightAttack02:
-            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.lightAttack02StaminaCostModifier;
+                staminaDeducted *= currentWeapon.stats.lightAttack02StaminaCostModifier;
                 break;
             case AttackType.LightAttack03:
-            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.lightAttack03StaminaCostModifier;
+                staminaDeducted *= currentWeapon.stats.lightAttack03StaminaCostModifier;
                 break;
 
             //Heavy Attacks
             case AttackType.HeavyAttack01:
-            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyAttack01StaminaCostModifier;
+                staminaDeducted *= currentWeapon.stats.heavyAttack01StaminaCostModifier;
                 break;
             case AttackType.HeavyAttack02:
-            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyAttack02StaminaCostModifier;
+                staminaDeducted *= currentWeapon.stats.heavyAttack02StaminaCostModifier;
                 break;
 
             //Charge Heavy Attacks
             case AttackType.ChargedAttack01:
-            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyChargedAttack01DamageMotionValue;
+                staminaDeducted *= currentWeapon.stats.heavyAttack01StaminaCostModifier;
                 break;
             case AttackType.ChargedAttack02:
-            staminaDeducted = currentWeapon.stats.baseStaminaCost * currentWeapon.stats.heavyChargedAttack02DamageMotionValue;
+                staminaDeducted *= currentWeapon.stats.heavyAttack02StaminaCostModifier;
+                break;
+
+            //Running Attacks
+            case AttackType.RunningLightAttack01:
+                staminaDeducted *= currentWeapon.stats.lightRunningAttack01StaminaCostModifier;
+                break;
+
+            //Rolling Attacks
+            case AttackType.RollingLightAttack01:
+                staminaDeducted *= currentWeapon.stats.lightRollingAttack01StaminaCostModifier;
+                break;
+
+            //Backstep Attacks
+            case AttackType.BackstepLightAttack01:
+                staminaDeducted *= currentWeapon.stats.lightBackstepAttack01StaminaCostModifier;
                 break;
 
             //Default
