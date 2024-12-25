@@ -14,7 +14,7 @@ public class PlayerCamera : MonoBehaviour
     //Change these to tweak camera performance
     [Header("Camera Settings")]
     //Larger cameraSmoothSpeed values equal longer time for the camera to reach its position during movement
-    private float cameraSmoothSpeed = 1f;
+    [SerializeField] float cameraSmoothSpeed = 15f;
     public bool isCameraInverted = true;
 
     //Rotation sensitivities
