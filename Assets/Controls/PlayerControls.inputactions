@@ -261,6 +261,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "QueueLightAttack",
+                    "type": "Button",
+                    "id": "03aa6557-0fa7-46e5-8209-e9d802d59001",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ChangeRightWeaponDPad",
                     "type": "Button",
                     "id": "dd6fda8c-f7f7-4126-8a50-2609a43a0511",
@@ -282,6 +291,15 @@
                     "name": "HeavyAttack",
                     "type": "Button",
                     "id": "bd2961e7-6a6d-4053-ad74-91db3d69a466",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QueueHeavyAttack",
+                    "type": "Button",
+                    "id": "382b8827-c061-4c47-9104-3058340975a3",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -695,6 +713,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChangeLeftWeaponDPad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f56250b6-ea44-4f68-badb-bebaf130e7de",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueueLightAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e120fcd-4e50-4cc3-9f13-d6edbb5d60ff",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueueLightAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18fa428c-f094-4ad1-a541-2bbeb4759376",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueueHeavyAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "059f8b72-3850-4359-83a6-8ad2a7b3abad",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueueHeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
