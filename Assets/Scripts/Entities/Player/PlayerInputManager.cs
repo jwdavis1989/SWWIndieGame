@@ -36,6 +36,10 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] Vector2 cameraInput;
     public float cameraHorizontalInput;
     public float cameraVerticalInput;
+    public float defaultCameraFieldOfView = 60f;
+    public float sprintCameraFieldOfViewMaximum = 90f;
+    public float sprintCameraFieldOfViewDecreaseSpeed = 30f;
+    public float sprintCameraFieldOfViewIncreaseSpeed = 15f;
 
     [Header("Lock-On Input")]
     [SerializeField] bool lockOnInput;
@@ -89,6 +93,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleGamePadRightWeaponSwapInput();
         HandleGamePadLeftWeaponSwapInput();
         HandleQueuedInputs();
+        HandleCameraFieldOfView();
     }
 
     //Goals:
@@ -277,14 +282,63 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleSprintInput() {
         if (sprintInput) {
             player.playerLocomotionManager.HandleSprinting();
-            //PlayerCamera.instance.cameraObject.fieldOfView = 120;
-            //Debug.Log("Attempt to Sprint in InputManager.");
+            
+            //Camera Zoom-Out Juice to give the illusion of great speed
+            // if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting) {
+            //     if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum) {
+            //         PlayerCamera.instance.cameraObject.fieldOfView += sprintCameraFieldOfViewIncreaseSpeed * Time.deltaTime;
+            //     }
+            //     else {
+            //         PlayerCamera.instance.cameraObject.fieldOfView = sprintCameraFieldOfViewMaximum;
+            //     }
+            // }
+            // //Locked onto an enemy and need to reduce Field of View Extremely Rapidly
+            // else if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView) {
+            //     PlayerCamera.instance.cameraObject.fieldOfView -= 3 * sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
+            // }
+            // else {
+            //     PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
+            // }
         }
         else {
-            //If adding multiplayer, this will instead use the following:
-            //player.playerNetworkManager.isSprinting = false;
             player.playerLocomotionManager.characterManager.isSprinting = false;
-            //PlayerCamera.instance.cameraObject.fieldOfView = 60;
+            //Camera Zoom-Out Juice to give the illusion of Slowing Rapidly
+            // if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting) {
+            //     PlayerCamera.instance.cameraObject.fieldOfView -= sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
+            // }
+            // else {
+            //     PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
+            // }
+        }
+    }
+
+    private void HandleCameraFieldOfView() {
+        if (sprintInput) {
+            //Camera Zoom-Out Juice to give the illusion of great speed
+            if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting) {
+                if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum) {
+                    PlayerCamera.instance.cameraObject.fieldOfView += sprintCameraFieldOfViewIncreaseSpeed * Time.deltaTime;
+                }
+                else {
+                    PlayerCamera.instance.cameraObject.fieldOfView = sprintCameraFieldOfViewMaximum;
+                }
+            }
+            //Locked onto an enemy and need to reduce Field of View Extremely Rapidly
+            else if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView) {
+                PlayerCamera.instance.cameraObject.fieldOfView -= 3 * sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
+            }
+            else {
+                PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
+            }
+        }
+        else {
+            //Camera Zoom-Out Juice to give the illusion of Slowing Rapidly
+            if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting) {
+                PlayerCamera.instance.cameraObject.fieldOfView -= sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
+            }
+            else {
+                PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
+            }
         }
     }
 
