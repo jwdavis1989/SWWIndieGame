@@ -44,4 +44,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b91b86423b74444b8394cb62e3b101f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {x: 0, y: 0}
+  player: {fileID: 0}
+  movementInput: {x: 0, y: 0}
+  horizontalInput: 0
+  verticalInput: 0
+  moveAmount: 0
+  dodgeInput: 0
+  sprintInput: 0
+  jumpInput: 0
+  lightAttackInput: 0
+  mouseWheelInput: {x: 0, y: 0}
+  heavyAttackInput: 0
+  holdHeavyAttackInput: 0
+  InputQueueIsActive: 0
+  defaultQueueInputTimer: 0.5
+  queueInputTimer: 0
+  queueLightAttackInput: 0
+  queueHeavyAttackInput: 0
+  cameraInput: {x: 0, y: 0}
+  cameraHorizontalInput: 0
+  cameraVerticalInput: 0
+  lockOnInput: 0
+  lockOnSelectLeftInput: 0
+  lockOnSelectRightInput: 0
+  mouseWheelVerticalInput: 0
+  prevMouseWheelVerticalInput: 0
+  ChangeRightWeaponDPad: 0
+  ChangeLeftWeaponDPad: 0

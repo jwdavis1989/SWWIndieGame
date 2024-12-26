@@ -83,6 +83,12 @@ MonoBehaviour:
   environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
   lightAttack01DamageMotionValue: 0
+  lightAttack02DamageMotionValue: 0
+  lightAttack03DamageMotionValue: 0
+  heavyAttack01DamageMotionValue: 0
+  heavyAttack02DamageMotionValue: 0
+  heavyChargedAttack01DamageMotionValue: 0
+  heavyChargedAttack02DamageMotionValue: 0
   weaponFamily: 0
 --- !u!1 &4976341019228924520
 GameObject:
@@ -179,10 +185,16 @@ MonoBehaviour:
     baseStaminaCost: 20
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
+    lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
+    lightAttack03DamageMotionValue: 1.2
+    heavyAttack01DamageMotionValue: 1.4
+    heavyAttack02DamageMotionValue: 1.6
+    heavyChargedAttack01DamageMotionValue: 2
+    heavyChargedAttack02DamageMotionValue: 2.2
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
 --- !u!1 &6196311575992089123

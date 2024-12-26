@@ -56,7 +56,49 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.19647354
+        functionName: CallDrainStaminaBasedOnAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.22723678
+        functionName: CallOpenDamageCollider
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4386543
+        functionName: CallCloseDamageCollider
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5065917
+        functionName: EnableCanDoCombo
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.062801935
+        functionName: EnableCanRotate
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.2753623
+        functionName: DisableCanRotate
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

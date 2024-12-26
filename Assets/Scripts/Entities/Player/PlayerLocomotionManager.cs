@@ -73,11 +73,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     }
 
     private void HandleGroundedMovement() {
+        //Allow Movement Inputs if Player can move or rotate
+        if (player.canMove || player.canRotate) {
+            GetVerticalAndHorizontalInputs();
+        }
+
+        //Disable Movement Inputs
         if (!player.canMove || player.isDead) {
             return;
         }
-
-        GetVerticalAndHorizontalInputs();
 
         //Our movement direction is based on our camera's facing perspective and our movement inputs
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;

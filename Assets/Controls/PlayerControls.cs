@@ -283,6 +283,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""QueueLightAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""03aa6557-0fa7-46e5-8209-e9d802d59001"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ChangeRightWeaponDPad"",
                     ""type"": ""Button"",
                     ""id"": ""dd6fda8c-f7f7-4126-8a50-2609a43a0511"",
@@ -304,6 +313,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""HeavyAttack"",
                     ""type"": ""Button"",
                     ""id"": ""bd2961e7-6a6d-4053-ad74-91db3d69a466"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QueueHeavyAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""382b8827-c061-4c47-9104-3058340975a3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -719,6 +737,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeLeftWeaponDPad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f56250b6-ea44-4f68-badb-bebaf130e7de"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueLightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e120fcd-4e50-4cc3-9f13-d6edbb5d60ff"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueLightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18fa428c-f094-4ad1-a541-2bbeb4759376"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueHeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""059f8b72-3850-4359-83a6-8ad2a7b3abad"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueHeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -766,9 +828,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_ToggleFlashlight = m_PlayerActions.FindAction("ToggleFlashlight", throwIfNotFound: true);
         m_PlayerActions_LightAttack = m_PlayerActions.FindAction("LightAttack", throwIfNotFound: true);
+        m_PlayerActions_QueueLightAttack = m_PlayerActions.FindAction("QueueLightAttack", throwIfNotFound: true);
         m_PlayerActions_ChangeRightWeaponDPad = m_PlayerActions.FindAction("ChangeRightWeaponDPad", throwIfNotFound: true);
         m_PlayerActions_ChangeLeftWeaponDPad = m_PlayerActions.FindAction("ChangeLeftWeaponDPad", throwIfNotFound: true);
         m_PlayerActions_HeavyAttack = m_PlayerActions.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_PlayerActions_QueueHeavyAttack = m_PlayerActions.FindAction("QueueHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_ChargeHeavyAttack = m_PlayerActions.FindAction("ChargeHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJerryDev = m_PlayerActions.FindAction("DebugTeleportToJerryDev", throwIfNotFound: true);
@@ -940,9 +1004,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_ToggleFlashlight;
     private readonly InputAction m_PlayerActions_LightAttack;
+    private readonly InputAction m_PlayerActions_QueueLightAttack;
     private readonly InputAction m_PlayerActions_ChangeRightWeaponDPad;
     private readonly InputAction m_PlayerActions_ChangeLeftWeaponDPad;
     private readonly InputAction m_PlayerActions_HeavyAttack;
+    private readonly InputAction m_PlayerActions_QueueHeavyAttack;
     private readonly InputAction m_PlayerActions_ChargeHeavyAttack;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
     private readonly InputAction m_PlayerActions_DebugTeleportToJerryDev;
@@ -962,9 +1028,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @ToggleFlashlight => m_Wrapper.m_PlayerActions_ToggleFlashlight;
         public InputAction @LightAttack => m_Wrapper.m_PlayerActions_LightAttack;
+        public InputAction @QueueLightAttack => m_Wrapper.m_PlayerActions_QueueLightAttack;
         public InputAction @ChangeRightWeaponDPad => m_Wrapper.m_PlayerActions_ChangeRightWeaponDPad;
         public InputAction @ChangeLeftWeaponDPad => m_Wrapper.m_PlayerActions_ChangeLeftWeaponDPad;
         public InputAction @HeavyAttack => m_Wrapper.m_PlayerActions_HeavyAttack;
+        public InputAction @QueueHeavyAttack => m_Wrapper.m_PlayerActions_QueueHeavyAttack;
         public InputAction @ChargeHeavyAttack => m_Wrapper.m_PlayerActions_ChargeHeavyAttack;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
         public InputAction @DebugTeleportToJerryDev => m_Wrapper.m_PlayerActions_DebugTeleportToJerryDev;
@@ -999,6 +1067,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LightAttack.started += instance.OnLightAttack;
             @LightAttack.performed += instance.OnLightAttack;
             @LightAttack.canceled += instance.OnLightAttack;
+            @QueueLightAttack.started += instance.OnQueueLightAttack;
+            @QueueLightAttack.performed += instance.OnQueueLightAttack;
+            @QueueLightAttack.canceled += instance.OnQueueLightAttack;
             @ChangeRightWeaponDPad.started += instance.OnChangeRightWeaponDPad;
             @ChangeRightWeaponDPad.performed += instance.OnChangeRightWeaponDPad;
             @ChangeRightWeaponDPad.canceled += instance.OnChangeRightWeaponDPad;
@@ -1008,6 +1079,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @QueueHeavyAttack.started += instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.performed += instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.canceled += instance.OnQueueHeavyAttack;
             @ChargeHeavyAttack.started += instance.OnChargeHeavyAttack;
             @ChargeHeavyAttack.performed += instance.OnChargeHeavyAttack;
             @ChargeHeavyAttack.canceled += instance.OnChargeHeavyAttack;
@@ -1057,6 +1131,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LightAttack.started -= instance.OnLightAttack;
             @LightAttack.performed -= instance.OnLightAttack;
             @LightAttack.canceled -= instance.OnLightAttack;
+            @QueueLightAttack.started -= instance.OnQueueLightAttack;
+            @QueueLightAttack.performed -= instance.OnQueueLightAttack;
+            @QueueLightAttack.canceled -= instance.OnQueueLightAttack;
             @ChangeRightWeaponDPad.started -= instance.OnChangeRightWeaponDPad;
             @ChangeRightWeaponDPad.performed -= instance.OnChangeRightWeaponDPad;
             @ChangeRightWeaponDPad.canceled -= instance.OnChangeRightWeaponDPad;
@@ -1066,6 +1143,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @QueueHeavyAttack.started -= instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.performed -= instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.canceled -= instance.OnQueueHeavyAttack;
             @ChargeHeavyAttack.started -= instance.OnChargeHeavyAttack;
             @ChargeHeavyAttack.performed -= instance.OnChargeHeavyAttack;
             @ChargeHeavyAttack.canceled -= instance.OnChargeHeavyAttack;
@@ -1174,9 +1254,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnToggleFlashlight(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
+        void OnQueueLightAttack(InputAction.CallbackContext context);
         void OnChangeRightWeaponDPad(InputAction.CallbackContext context);
         void OnChangeLeftWeaponDPad(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnQueueHeavyAttack(InputAction.CallbackContext context);
         void OnChargeHeavyAttack(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);
         void OnDebugTeleportToJerryDev(InputAction.CallbackContext context);

@@ -9,6 +9,8 @@ public class CharacterSoundFXManager : MonoBehaviour
     private int footStepSFXCount;
     private int runFootStepSFXCount;
 
+    [SerializeField] protected AudioClip[] takeDamageGrunts;
+
 
     //protected virtual void Awake() {
     //I moved to Start because I kept getting an error with this loading before the WorldSoundFXManager - Alec 11/2/24
@@ -31,6 +33,7 @@ public class CharacterSoundFXManager : MonoBehaviour
             }
         }
     }
+
     public void PlayRollSoundFX() {
         AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
         PlayAdvancedSoundFX(rollSFX, 1, 1f, true, 0.1f);
@@ -79,6 +82,10 @@ public class CharacterSoundFXManager : MonoBehaviour
         if(characterManager.isGrounded && !characterManager.isPerformingAction){
             PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 1f, 1f, true, 0.1f, true);
         }
+    }
+
+    public virtual void PlayTakeDamageGrunts() {
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(takeDamageGrunts));
     }
 
 }
