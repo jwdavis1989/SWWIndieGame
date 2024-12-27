@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyManager : CharacterManager
+public class AICharacterManager : CharacterManager
 {
-    [Header("Aggro")]
-    public bool isAggro = false;
-    public float aggroRange = 5.0f;
+    //[Header("Aggro")]
+    //public bool isAggro = false;
+    //public float aggroRange = 5.0f;
     public AggroCollider aggroCollider;
     public AtkRangeCollider atkCollider;
     [Header("Attack")]
     public float atkRange = 2.0f;
     bool chargingAtk1 = false;
     public float atk1ChargeTime = 2.0f;
-    public CharacterCombatManager combatManager;
+    public AICombatManager aiCombatManager;
     [Header("Movement")]
-    private bool movingToTarget = false;
+    public bool pursuingTarget = false;
     public float speed = 2.0f;
     public float turnSpeed = 1.0f;
     bool isFlying = true;
@@ -24,11 +24,13 @@ public class EnemyManager : CharacterManager
     [Header("Determines which type of exp to drop on death")]
     public bool isHitByMainHand = false;
     public bool isHitByOffHand = false;
+    public AIStatsManager statsManager;
     protected override void Awake()
     {
+        statsManager = GetComponent<AIStatsManager>();
         base.Awake();
-        if(combatManager == null) combatManager = GetComponent<CharacterCombatManager>();
-        if(aggroCollider) aggroCollider.SetRange(aggroRange);
+        if(aiCombatManager == null) aiCombatManager = GetComponent<AICombatManager>();
+        //if(aggroCollider) aggroCollider.SetRange(aggroRange);
         if(atkCollider) atkCollider.SetRange(atkRange);
     }
     protected override void LateUpdate()
@@ -38,7 +40,7 @@ public class EnemyManager : CharacterManager
         {
             if(canRotate)
                 TurnTowardsTarget();
-            if (canMove && movingToTarget)
+            if (canMove && pursuingTarget)
             {
                 MoveToTarget();
                 if(isFlying)
@@ -49,12 +51,12 @@ public class EnemyManager : CharacterManager
 
     public void AggroPlayer(GameObject player)
     {
-        if (combatManager != null)
+        if (aiCombatManager != null)
         {
             isLockedOn = true;
-            combatManager.LockOnTransform = player.transform;
-            combatManager.SetTarget(player.GetComponent<CharacterManager>());
-            movingToTarget = true;
+            aiCombatManager.LockOnTransform = player.transform;
+            aiCombatManager.SetTarget(player.GetComponent<CharacterManager>());
+            pursuingTarget = true;
         }
         else Debug.Log("Combat manager is null");
     }
@@ -63,7 +65,7 @@ public class EnemyManager : CharacterManager
         if (!chargingAtk1)
         {
             chargingAtk1 = true;
-            movingToTarget = false;
+            pursuingTarget = false;
             StartCoroutine(BeginAttack01(atk1ChargeTime));
             //Test animation... I HAVE NO IDEA WHATS IM DOING. I thikn atk ani should start here - alec 
             //string light_attack_01 = "Main_Hand_Light_Attack_01";
@@ -80,7 +82,7 @@ public class EnemyManager : CharacterManager
         {
             yield return new WaitForSeconds(delayTime);
             performingAtk1 = true;
-            movingToTarget = true;
+            pursuingTarget = true;
             chargingAtk1 = false;
             StartCoroutine(EndAttack01(atk1Duration));
         }
@@ -101,7 +103,7 @@ public class EnemyManager : CharacterManager
     public void TurnTowardsTarget()
     {
         //This rotates this gameObject
-        Vector3 rotationDirection = combatManager.currentTarget.characterCombatManager.LockOnTransform.position - transform.position;
+        Vector3 rotationDirection = aiCombatManager.currentTarget.characterCombatManager.LockOnTransform.position - transform.position;
         rotationDirection.Normalize();
         rotationDirection.y = 0;
 
@@ -110,7 +112,7 @@ public class EnemyManager : CharacterManager
 
         //This rotates the pivot object
         //We don't set rotationDirection.y = 0 because this is the up/down rotation
-        rotationDirection = combatManager.currentTarget.characterCombatManager.LockOnTransform.position - transform.position;
+        rotationDirection = aiCombatManager.currentTarget.characterCombatManager.LockOnTransform.position - transform.position;
         rotationDirection.Normalize();
 
         targetRotation = Quaternion.LookRotation(rotationDirection);
@@ -127,8 +129,8 @@ public class EnemyManager : CharacterManager
     public void MoveToTarget()
     {
         var step = speed * Time.deltaTime; // calculate distance to move
-        if(combatManager != null && combatManager.currentTarget != null)
-            transform.position = Vector3.MoveTowards(transform.position, combatManager.currentTarget.transform.position, step);
+        if(aiCombatManager != null && aiCombatManager.currentTarget != null)
+            transform.position = Vector3.MoveTowards(transform.position, aiCombatManager.currentTarget.transform.position, step);
     }
 
     
@@ -157,10 +159,20 @@ public class EnemyManager : CharacterManager
         if (!isPlayer)
         {
             //If monster: Award players with Gold or items
-            GetComponent<EnemyStatsManager>().DoAllDrops(isHitByMainHand, isHitByOffHand);
+            GetComponent<AIStatsManager>().DoAllDrops(isHitByMainHand, isHitByOffHand);
         }
         
         yield return new WaitForSeconds(5);
 
+    }
+    [Header("Current State")]
+    [SerializeField] AIState currentState;
+    public void ProcessStateMachine()
+    {
+        AIState nextState = currentState?.Tick(this);
+        if (nextState != null)
+        {
+            currentState = nextState;
+        }
     }
 }

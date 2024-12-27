@@ -17,7 +17,7 @@ public class AggroCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameObject.transform.parent.GetComponent<EnemyManager>().AggroPlayer(other.gameObject);
+            gameObject.transform.parent.GetComponent<AICharacterManager>().AggroPlayer(other.gameObject);
         }
     }
 

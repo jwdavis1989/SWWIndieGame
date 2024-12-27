@@ -20,7 +20,7 @@ public class AtkRangeCollider : MonoBehaviour
         //if(other.gameObject == gameObject.transform.parent.GetComponent<CharacterCombatManager>().currentTarget) {
         if (other.CompareTag("Player"))
         {
-            EnemyManager attaker = gameObject.transform.parent.GetComponent<EnemyManager>();
+            AICharacterManager attaker = gameObject.transform.parent.GetComponent<AICharacterManager>();
             switch (atkIndex)
             {
                 case 0: attaker.ChargeAttack01(); break;

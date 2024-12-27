@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatsManager : CharacterStatsManager
+public class AIStatsManager : CharacterStatsManager
 {
     [Header("Amount of gold dropped")]
     public int goldDrop = 0;

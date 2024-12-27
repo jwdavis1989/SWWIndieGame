@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterCombatManager : MonoBehaviour
 {
-    [HideInInspector] CharacterManager character;
+    [HideInInspector] protected CharacterManager character;
     public WeaponScript currentWeaponBeingUsed;
 
     [Header("Attack Target")]
