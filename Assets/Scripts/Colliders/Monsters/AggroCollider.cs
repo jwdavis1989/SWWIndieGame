@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//DEPRECITATED KEEPING AROUND FOR NOSTALGIA
 public class AggroCollider : MonoBehaviour
 {
+    [Header("***   DEPRECIATED   ***")]
     private SphereCollider aggroCollider;
     void Awake()
     {
@@ -17,7 +19,7 @@ public class AggroCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameObject.transform.parent.GetComponent<AICharacterManager>().AggroPlayer(other.gameObject);
+            gameObject.transform.parent.GetComponent<AICombatManager>().AggroPlayer(other.gameObject);
         }
     }
 

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,51 +8,42 @@ public class AIStatsManager : CharacterStatsManager
     public int goldDrop = 0;
     [Header("Gold drop chance as 0-1")]
     public float goldDropChance = 0;// % as 0-1
-    [Header("Amount of expierence points dropped for weapon")]
+    [Header("Amount of expierence points dropped")]
     public int expDropAmt = 0;
     [Header("Tinker component drop chance as 0-1")]
-    public float[] componentDropChances = new float[(int)TinkerComponentType.Weapon]; //drop chance of all components (exluding weapon components)
-    public KeyValuePair<TinkerComponentType, float>[] componentDropChances3 = new KeyValuePair<TinkerComponentType, float>[(int)TinkerComponentType.Weapon];
-    //public Dictionary<TinkerComponentType, float> componentDropChances = new Dictionary<TinkerComponentType, float>();
-    //public float[] weaponDropChances = new float[(int)WeaponType.UNKNOWN]; //drop chance of all weapons
+    public List<TinkerComponentDropChance> componentDropChances = new List<TinkerComponentDropChance>();
+    [Serializable] public class TinkerComponentDropChance { public TinkerComponentType type; public float dropChance; } //Allows for simply setting drop chances in editor
     public void DoAllDrops(bool isHitByMainHand, bool isHitByOffHand)
     {
         if (expDropAmt > 0)
             DropExp(isHitByMainHand, isHitByOffHand);
-        if (goldDropChance > Random.value)
+        if (goldDropChance > UnityEngine.Random.value)
             DropGold();
-        for(int i = 0; i < componentDropChances.Length; i++)
+        foreach(TinkerComponentDropChance componentDropChance in componentDropChances)
         {
-            if (componentDropChances[i] > Random.value)
+            if (componentDropChance.dropChance > UnityEngine.Random.value)
             {
-                DropComponent((TinkerComponentType)i);
+                DropComponent(componentDropChance.type);
             }
         }
-        //for (int i = 0; i < weaponDropChances.Length; i++)
-        //{
-        //    if (weaponDropChances[i] > Random.value)
-        //    {
-        //        DropWeapon((WeaponType)i);
-        //    }
-        //}
     }
-    public float GetComponentDropChance(TinkerComponentType type)
-    {
-        return componentDropChances[(int)type];
-    }
+    /** drop this characters gold */
     public void DropGold()
     {
-        ItemDropContainer.instance.DropGold(transform, goldDrop);
+        ItemDropManager.DropGold(transform, goldDrop);
     }
     public void DropExp(bool isHitByMainHand, bool isHitByOffHand)
     {
+        //randomize posistion
         Transform t = transform;
-        Vector3 p = t.position; 
-        float newX = p.x + (Random.value * (Random.value > 0.5? -1:1));
-        float newY = p.y + (Random.value * (Random.value > 0.5 ? -1 : 1));
-        float newZ = p.z + (Random.value * (Random.value > 0.5 ? -1 : 1));
-        t.position = new Vector3 (newX, newY, newZ);
-        ItemDropContainer.instance.DropExp(t, expDropAmt, isHitByMainHand, isHitByOffHand);
+        Vector3 p = t.position;
+        const float RADIUS = 1.0f;//drop radius should be as small as the scrawniest enemy to avoid dropping through walls
+        float newX = p.x + ((UnityEngine.Random.value * RADIUS) * (UnityEngine.Random.value > 0.5? -1:1));
+        //float newY = p.y + ((Random.value * RADIUS) * (Random.value > 0.5 ? -1 : 1));
+        float newZ = p.z + ((UnityEngine.Random.value * RADIUS) * (UnityEngine.Random.value > 0.5 ? -1 : 1));
+        t.position = new Vector3 (newX, p.y, newZ);
+        //drop the exp
+        ItemDropManager.DropExp(t, expDropAmt, isHitByMainHand, isHitByOffHand);
     }
     /** 
      *  Drops a TinkerComponent at this objects location 
@@ -60,7 +51,7 @@ public class AIStatsManager : CharacterStatsManager
      */
     public GameObject DropComponent(TinkerComponentType type)
     {
-        return Instantiate(ItemDropContainer.instance.DropComponent(type, transform));
+        return Instantiate(ItemDropManager.DropComponent(type, transform));
     }
     /** 
      *  Drops a weapon at this objects location 
