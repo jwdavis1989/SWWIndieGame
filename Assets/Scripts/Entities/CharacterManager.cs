@@ -22,6 +22,9 @@ public class CharacterManager : MonoBehaviour
     [Header("Status")]
     public bool isDead = false;
 
+    [Header("Faction")]
+    public Faction faction;
+
     [Header("Flags")]
     public bool isPlayer = false;
     public bool isRotatingAttacker = false; //Determines whethere creature can rotate during their attack animations to follow their target
