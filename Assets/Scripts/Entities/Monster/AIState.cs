@@ -9,4 +9,13 @@ public class AIState : ScriptableObject
         Debug.Log("Tick");
         return this;
     }
+    protected virtual AIState SwitchState(AICharacterManager ai, AIState newState)
+    {
+        ResetStateFlags(ai);
+        return newState;
+    }
+    protected virtual void ResetStateFlags(AICharacterManager ai)
+    {
+        //todo
+    }
 }

@@ -2,9 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AICharacterManager : CharacterManager
 {
+
+    [Header("Navmesh Agent")]
+    public NavMeshAgent navMeshAgent;
+
+    [HideInInspector] public AICombatManager aiCombatManager;
+    [Header("Current State")]
+    [SerializeField] AIState currentState;
+    [Header("States")]
+    [SerializeField] public IdleState idle;
+    [SerializeField] public PursueTargetState pursueTarget;
     //[Header("Aggro")]
     //public bool isAggro = false;
     //public float aggroRange = 5.0f;
@@ -14,7 +25,6 @@ public class AICharacterManager : CharacterManager
     public float atkRange = 2.0f;
     bool chargingAtk1 = false;
     public float atk1ChargeTime = 2.0f;
-    public AICombatManager aiCombatManager;
     [Header("Movement")]
     public bool pursuingTarget = false;
     public float speed = 2.0f;
@@ -27,11 +37,15 @@ public class AICharacterManager : CharacterManager
     public AIStatsManager statsManager;
     protected override void Awake()
     {
-        statsManager = GetComponent<AIStatsManager>();
         base.Awake();
-        if(aiCombatManager == null) aiCombatManager = GetComponent<AICombatManager>();
+        statsManager = GetComponent<AIStatsManager>();
+        aiCombatManager = GetComponent<AICombatManager>();
+        navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+        // use a copy of the scriptable objects os the originals are not modified...
+
+        //old
         //if(aggroCollider) aggroCollider.SetRange(aggroRange);
-        if(atkCollider) atkCollider.SetRange(atkRange);
+        //if(atkCollider) atkCollider.SetRange(atkRange);
     }
     protected override void LateUpdate()
     {
@@ -165,8 +179,7 @@ public class AICharacterManager : CharacterManager
         yield return new WaitForSeconds(5);
 
     }
-    [Header("Current State")]
-    [SerializeField] AIState currentState;
+    
     public void ProcessStateMachine()
     {
         AIState nextState = currentState?.Tick(this);

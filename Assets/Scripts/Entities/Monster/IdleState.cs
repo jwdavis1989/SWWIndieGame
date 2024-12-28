@@ -9,6 +9,7 @@ public class IdleState : AIState
         if(ai.aiCombatManager.currentTarget != null)
         {
             ai.pursuingTarget = true;
+            return SwitchState(ai, ai.pursueTarget);
             //TODO return PursueTargetState;
         }
         else
