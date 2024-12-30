@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
     [Header("TextMeshPro objects")]
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI speakerNameText;
+    public TextMeshProUGUI bottomText;
 
     public Canvas canvas;
     public EventSystem eventSystem;
@@ -62,46 +63,75 @@ public class DialogueManager : MonoBehaviour
         if( (Input.GetMouseButtonDown(0)  || Input.GetKeyDown(KeyCode.E))
             && playerManager.isLockedOn)
         {
-            Debug.Log("Handling Interact");
+            //Debug.Log("Handling Interact");
             NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
             if (dialogue != null)
             {
-                Debug.Log("Handling Interact Got Dialogue");
+                //Debug.Log("Handling Interact Got Dialogue");
+
                 lines = dialogue.lines;
+                speakerNameText.text = dialogue.speakerName;
                 lineIndex = 0;
                 StartDialgoue();
             }
         }
     }
+    /** Reset dialogue box and begin dialogue */
     void StartDialgoue()
     {
-        Debug.Log("Starting Dialogue");
+        playerManager.isPerformingAction = true;
+        playerManager.canMove = false;
+        dialogueText.text = "";
+        //Debug.Log("Starting Dialogue");
         canvas.gameObject.SetActive(true);
         //eventSystem.gameObject.SetActive(true);
         lineIndex = 0;
         StartCoroutine(TypeLine());
+        if (lines.Length > 1)
+        {
+            bottomText.text = "Continue";
+        }else bottomText.text = "Exit";
     }
+    /** Slowly type a line */
     IEnumerator TypeLine()
     {
+        bool richTextTag = false;// Rich text tags should be printed out instantly so they aren't seen by the player
+        char lastLetter = '\0'; // Use \ to escape and print <
         foreach(char c in lines[lineIndex].ToCharArray())
         {
             dialogueText.text += c;
-            yield return new WaitForSeconds(textSpeed);
+            if(c == '<' && lastLetter != '\\')
+                richTextTag = true;
+            if(richTextTag && c == '>')
+                richTextTag= false;
+            lastLetter = c;
+            if(!richTextTag)
+                yield return new WaitForSeconds(textSpeed);//wait to type the next letter
         }
     }
+    /** Go to the next line or exit dialogue menu if finished */
     void NextLine()
     {
         if (lineIndex < lines.Length - 1)
-        {
+        { // Go to next line
             lineIndex++;
             dialogueText.text = "";
+            if (lineIndex < lines.Length - 1)
+            {
+                bottomText.text = "Continue";
+            }
+            else bottomText.text = "Exit";
             StartCoroutine(TypeLine());
         }
         else
-        {
-            //gameObject.SetActive(false);
+        { // Finished
+            // unlock player
+            playerManager.isPerformingAction = false;
+            playerManager.canMove = true;
+            // turn off dialogue UI
             canvas.gameObject.SetActive(false);
             eventSystem.gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 }
