@@ -98,17 +98,18 @@ public class MeleeWeaponDamageCollider : DamageCollider
         damageEffect.physicalDamage = physicalDamage;
 
         //Elemental
-        damageEffect.fireDamage = fireDamage;
-        damageEffect.iceDamage = iceDamage;
-        damageEffect.lightningDamage = lightningDamage;
-        damageEffect.windDamage = windDamage;
+        damageEffect.elementalDamage = elementalStats;
+        //damageEffect.fireDamage = fireDamage;
+        //damageEffect.iceDamage = iceDamage;
+        //damageEffect.lightningDamage = lightningDamage;
+        //damageEffect.windDamage = windDamage;
 
-        //Anti-Type
-        damageEffect.earthDamage = earthDamage;
-        damageEffect.lightDamage = lightDamage;
-        damageEffect.beastDamage = beastDamage;
-        damageEffect.scalesDamage = scalesDamage;
-        damageEffect.techDamage = techDamage;
+        ////Anti-Type
+        //damageEffect.earthDamage = earthDamage;
+        //damageEffect.lightDamage = lightDamage;
+        //damageEffect.beastDamage = beastDamage;
+        //damageEffect.scalesDamage = scalesDamage;
+        //damageEffect.techDamage = techDamage;
 
         //Armore Penetration
         damageEffect.isReducedByArmor = isReducedByArmor;

@@ -234,16 +234,17 @@ public class WeaponScript : MonoBehaviour
 
         weaponDamageCollider.weaponFamily = weaponFamily;
         
-        weaponDamageCollider.physicalDamage = stats.attack;
-        weaponDamageCollider.fireDamage = stats.elemental.firePower;
-        weaponDamageCollider.iceDamage = stats.elemental.icePower;
-        weaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
-        weaponDamageCollider.windDamage = stats.elemental.windPower;
-        weaponDamageCollider.earthDamage = stats.elemental.earthPower;
-        weaponDamageCollider.lightDamage = stats.elemental.lightPower;
-        weaponDamageCollider.beastDamage = stats.elemental.beastPower;
-        weaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
-        weaponDamageCollider.techDamage = stats.elemental.techPower;
+        //weaponDamageCollider.physicalDamage = stats.attack;
+        //weaponDamageCollider.fireDamage = stats.elemental.firePower;
+        //weaponDamageCollider.iceDamage = stats.elemental.icePower;
+        //weaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
+        //weaponDamageCollider.windDamage = stats.elemental.windPower;
+        //weaponDamageCollider.earthDamage = stats.elemental.earthPower;
+        //weaponDamageCollider.lightDamage = stats.elemental.lightPower;
+        //weaponDamageCollider.beastDamage = stats.elemental.beastPower;
+        //weaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
+        //weaponDamageCollider.techDamage = stats.elemental.techPower;
+        weaponDamageCollider.elementalStats = stats.elemental;
 
         //Turn the collider back off so it doesn't hurt anyone, ow
         weaponDamageCollider.enabled = false;

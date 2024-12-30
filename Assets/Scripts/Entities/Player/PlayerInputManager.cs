@@ -141,8 +141,13 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
-            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += i => SceneManager.LoadSceneAsync(1);
-            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += i => SceneManager.LoadSceneAsync(2);
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i => { 
+                SceneManager.LoadSceneAsync(1); 
+            });
+            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i => { 
+                player.transform.position = new Vector3(0, 9, 0); 
+                SceneManager.LoadSceneAsync(2);
+            });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
@@ -347,7 +352,8 @@ public class PlayerInputManager : MonoBehaviour
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
-
+            if(PauseScript.instance.gamePaused) 
+                return;
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
         }
