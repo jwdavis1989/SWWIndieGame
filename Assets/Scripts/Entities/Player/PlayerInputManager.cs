@@ -25,6 +25,9 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool heavyAttackInput = false;
     [SerializeField] bool holdHeavyAttackInput = false;
 
+    [Header("Player UI Inputs")]
+    [SerializeField] public bool interactInput = false;
+
     [Header("Queued Inputs")]
     [SerializeField] bool InputQueueIsActive = false;
     [SerializeField] float defaultQueueInputTimer = 0.5f;
@@ -141,11 +144,18 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
-            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += i => SceneManager.LoadSceneAsync(1);
-            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += i => SceneManager.LoadSceneAsync(2);
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i => { 
+                SceneManager.LoadSceneAsync(1); 
+            });
+            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i => { 
+                player.transform.position = new Vector3(0, 9, 0); 
+                SceneManager.LoadSceneAsync(2);
+            });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
+            //Player UI interactions
+            playerControls.UI.UIButtonA.performed += i => interactInput = true;
         }
 
         playerControls.Enable();
@@ -347,7 +357,8 @@ public class PlayerInputManager : MonoBehaviour
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
-
+            if(PauseScript.instance.gamePaused) 
+                return;
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
         }

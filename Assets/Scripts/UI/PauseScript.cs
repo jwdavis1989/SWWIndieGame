@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseScript : MonoBehaviour
 {
-    bool gamePaused = false;
+    public bool gamePaused = false;
     public bool debugMode = false;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject mainPauseMenu;
