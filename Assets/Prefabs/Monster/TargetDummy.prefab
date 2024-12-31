@@ -5412,6 +5412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
+  takeDamageGrunts: []
 --- !u!95 &3027537572502786796
 Animator:
   serializedVersion: 5
@@ -5545,7 +5546,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWeaponBeingUsed: {fileID: 0}
   currentTarget: {fileID: 0}
+  lastAttackAnimationPerformed: 
   LockOnTransform: {fileID: 2271180219353227496}
+  canComboWithMainHandWeapon: 0
+  canPerformRollingAttack: 0
+  canPerformBackStepAttack: 0
 --- !u!114 &735412916897030124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5568,7 +5573,9 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterWeaponManager: {fileID: 1182099827899900757}
   isDead: 0
+  faction: 0
   isPlayer: 0
+  isRotatingAttacker: 0
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
@@ -5580,14 +5587,15 @@ MonoBehaviour:
   isSprinting: 0
   isLockedOn: 0
   canBleed: 1
-  isAggro: 0
-  aggroRange: 1
-  aggroCollider: {fileID: 0}
-  atkRange: 5
-  combatManager: {fileID: 0}
-  turnSpeed: 1
-  lastHitByMainHand: 1
-  speed: 1
+  isChargingAttack: 0
+  navMeshAgent: {fileID: 0}
+  aiCombatManager: {fileID: 0}
+  statsManager: {fileID: 0}
+  currentState: {fileID: 0}
+  idle: {fileID: 0}
+  pursueTarget: {fileID: 0}
+  isHitByMainHand: 0
+  isHitByOffHand: 0
 --- !u!114 &3271484534067907393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5628,31 +5636,10 @@ MonoBehaviour:
   goldDropChance: 1
   expDropAmt: 0
   componentDropChances:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - type: 2
+    dropChance: 0.5
+  - type: 3
+    dropChance: 0.1
 --- !u!1 &8643773936884397737
 GameObject:
   m_ObjectHideFlags: 0

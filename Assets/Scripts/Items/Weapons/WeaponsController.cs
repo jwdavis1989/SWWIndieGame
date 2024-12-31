@@ -55,7 +55,7 @@ public class WeaponsController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    //After commenting the part using json this is just sorting the weapons by type which is still important
+    //After commenting the part using json this is just sorting the weapon prefabs by type which is still important
     public void LoadAllWeaponTypes()
     {
         //add prefabs to initilizer array sorted by weapon type
@@ -216,7 +216,14 @@ public class WeaponsController : MonoBehaviour
         }
         return evolutions;
     }
-
+    public bool CheckHasObtained(WeaponType weaponType)
+    {
+        return GetBaseWeaponByType(weaponType).hasObtained;
+    }
+    public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
+    {
+        return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
+    }
 }
 
 //used for JSON array

@@ -10,15 +10,16 @@ public class DamageCollider : MonoBehaviour
     [Header("Stats")]
     //public WeaponStats stats;
     public float physicalDamage = 0f;
-    public float fireDamage = 0f;
-    public float iceDamage = 0f;
-    public float lightningDamage = 0f;
-    public float windDamage = 0f;
-    public float earthDamage = 0f;
-    public float lightDamage = 0f;
-    public float beastDamage = 0f;
-    public float scalesDamage = 0f;
-    public float techDamage = 0f;
+    //public float fireDamage = 0f;
+    //public float iceDamage = 0f;
+    //public float lightningDamage = 0f;
+    //public float windDamage = 0f;
+    //public float earthDamage = 0f;
+    //public float lightDamage = 0f;
+    //public float beastDamage = 0f;
+    //public float scalesDamage = 0f;
+    //public float techDamage = 0f;
+    public ElementalStats elementalStats = new ElementalStats();
 
     [Header("Main Hand / Off Hand weapon")]
     public bool isMainHand = false;
@@ -92,17 +93,18 @@ public class DamageCollider : MonoBehaviour
         //damageEffect.weaponScript.stats = stats;
 
         //Elemental
-        damageEffect.fireDamage = fireDamage;
-        damageEffect.iceDamage = iceDamage;
-        damageEffect.lightningDamage = lightningDamage;
-        damageEffect.windDamage = windDamage;
+        damageEffect.elementalDamage = elementalStats;
+        //damageEffect.fireDamage = fireDamage;
+        //damageEffect.iceDamage = iceDamage;
+        //damageEffect.lightningDamage = lightningDamage;
+        //damageEffect.windDamage = windDamage;
 
-        //Anti-Type
-        damageEffect.earthDamage = earthDamage;
-        damageEffect.lightDamage = lightDamage;
-        damageEffect.beastDamage = beastDamage;
-        damageEffect.scalesDamage = scalesDamage;
-        damageEffect.techDamage = techDamage;
+        ////Anti-Type
+        //damageEffect.earthDamage = earthDamage;
+        //damageEffect.lightDamage = lightDamage;
+        //damageEffect.beastDamage = beastDamage;
+        //damageEffect.scalesDamage = scalesDamage;
+        //damageEffect.techDamage = techDamage;
 
         //Armore Penetration
         damageEffect.isReducedByArmor = isReducedByArmor;

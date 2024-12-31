@@ -796,6 +796,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UIButtonA"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef92f6aa-327e-4cc7-958d-798b0088b416"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -807,6 +816,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UIButtonX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d21664e0-d368-427c-a07c-ac4a695ab550"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIButtonA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2012782-fc88-4cce-b6cc-8d596669d94d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIButtonA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d4e91c3-9437-4204-81fb-f59c792f8790"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIButtonA"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -846,6 +888,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
+        m_UI_UIButtonA = m_UI.FindAction("UIButtonA", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1198,11 +1241,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_UIButtonX;
+    private readonly InputAction m_UI_UIButtonA;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
         public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
+        public InputAction @UIButtonA => m_Wrapper.m_UI_UIButtonA;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1215,6 +1260,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started += instance.OnUIButtonX;
             @UIButtonX.performed += instance.OnUIButtonX;
             @UIButtonX.canceled += instance.OnUIButtonX;
+            @UIButtonA.started += instance.OnUIButtonA;
+            @UIButtonA.performed += instance.OnUIButtonA;
+            @UIButtonA.canceled += instance.OnUIButtonA;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1222,6 +1270,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started -= instance.OnUIButtonX;
             @UIButtonX.performed -= instance.OnUIButtonX;
             @UIButtonX.canceled -= instance.OnUIButtonX;
+            @UIButtonA.started -= instance.OnUIButtonA;
+            @UIButtonA.performed -= instance.OnUIButtonA;
+            @UIButtonA.canceled -= instance.OnUIButtonA;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1273,5 +1324,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnUIButtonX(InputAction.CallbackContext context);
+        void OnUIButtonA(InputAction.CallbackContext context);
     }
 }

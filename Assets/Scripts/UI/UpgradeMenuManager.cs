@@ -29,6 +29,7 @@ public class UpgradeMenuManager : MonoBehaviour
     public GameObject elementPrefab;
     [Header("Buttons")]
     public Button breakdownBtn;
+    //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
     public EventSystem eventSystem;
 
 
@@ -243,7 +244,7 @@ public class UpgradeMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt.topText.text = "???"; // TODO isObtained? weaponName : "???";
+                    myBtnScrpt.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType)? evolWpn.stats.weaponName: "???";
                     myBtnScrpt.mainButton.interactable = false;
                     myBtnScrpt.bottomText.text = "";
                     myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
@@ -269,7 +270,7 @@ public class UpgradeMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt2.topText.text = "???";
+                    myBtnScrpt2.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType) ? evolWpn.stats.weaponName : "???";
                     myBtnScrpt2.mainButton.interactable = false;
                     myBtnScrpt2.bottomText.text = "";
                     myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
@@ -318,7 +319,7 @@ public class UpgradeMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt3.topText.text = "???";
+                    myBtnScrpt3.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType) ? evolWpn.stats.weaponName : "???";
                     myBtnScrpt3.mainButton.interactable = false;
                     myBtnScrpt3.bottomText.text = "";
                     myBtnScrpt3.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
@@ -328,7 +329,7 @@ public class UpgradeMenuManager : MonoBehaviour
             if (evolves.Count >= 2)
             {//2nd special wpn evolve
                 specWpnEvolveBtn2.SetActive(true);
-                WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
+                WeaponScript evolWpn = weaponCntrller.GetBaseWeaponByType(evolves[1]);
                 GridElementController myBtnScrpt4 = specWpnEvolveBtn2.GetComponent<GridElementController>();
                 if (availEvolves.Contains(evolves[1]))
                 {
@@ -345,7 +346,7 @@ public class UpgradeMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt4.topText.text = "???";
+                    myBtnScrpt4.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType) ? evolWpn.stats.weaponName : "???";
                     myBtnScrpt4.mainButton.interactable = false;
                     myBtnScrpt4.bottomText.text = "Evolve?";
                     myBtnScrpt4.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;

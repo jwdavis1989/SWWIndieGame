@@ -13,18 +13,18 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
     [Header("Damage")]
     //Elemental Damage will probably change to an ElementalStats object later.
-    //public ElementalStats elementalDamage = new ElementalStats();
+    public ElementalStats elementalDamage = new ElementalStats();
     // public WeaponScript weaponScript;
     public float physicalDamage = 0f;   
-    public float fireDamage = 0f;
-    public float iceDamage = 0f;
-    public float lightningDamage = 0f;
-    public float windDamage = 0f;
-    public float earthDamage = 0f;
-    public float lightDamage = 0f;
-    public float beastDamage = 0f;
-    public float scalesDamage = 0f;
-    public float techDamage = 0f;
+    //public float fireDamage = 0f;
+    //public float iceDamage = 0f;
+    //public float lightningDamage = 0f;
+    //public float windDamage = 0f;
+    //public float earthDamage = 0f;
+    //public float lightDamage = 0f;
+    //public float beastDamage = 0f;
+    //public float scalesDamage = 0f;
+    //public float techDamage = 0f;
 
     //Damage modifier for specific attack, which differs between attacks in a combo
     public float attackMotionValue = 1f;
@@ -102,7 +102,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Monsters or player created damage
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
-                EnemyManager enemy = targetCharacter.GetComponent<EnemyManager>();
+                AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                 if (isMainHand)
                 {
@@ -147,15 +147,15 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         float result = physicalDamage * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
-        result += physicalDamage * (fireDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.firePower) * isReducedByArmor);
-        result += physicalDamage * (iceDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.icePower) * isReducedByArmor);
-        result += physicalDamage * (lightningDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightningPower) * isReducedByArmor);
-        result += physicalDamage * (windDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.windPower) * isReducedByArmor);
-        result += physicalDamage * (earthDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.earthPower) * isReducedByArmor);
-        result += physicalDamage * (lightDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightPower) * isReducedByArmor);
-        result += physicalDamage * (beastDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower) * isReducedByArmor);
-        result += physicalDamage * (scalesDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower) * isReducedByArmor);
-        result += physicalDamage * (techDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.firePower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.firePower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.icePower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.icePower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.lightningPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightningPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.windPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.windPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.earthPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.earthPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.lightPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.beastPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.scalesPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.techPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
 
         if(result > 0) {
             return result * attackMotionValue * fullChargeModifier;
