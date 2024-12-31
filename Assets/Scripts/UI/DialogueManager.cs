@@ -44,8 +44,9 @@ public class DialogueManager : MonoBehaviour
     }
     void DialogueBoxClickToContinue()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.E))//continue
+        if (PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
         {
+            PlayerInputManager.instance.interactInput = false;
             if (dialogueText.text == lines[lineIndex])
             {//if line is finished go to next line
                 NextLine();
@@ -60,9 +61,9 @@ public class DialogueManager : MonoBehaviour
     }
     void HandleInteract()
     {
-        if( (Input.GetMouseButtonDown(0)  || Input.GetKeyDown(KeyCode.E))
-            && playerManager.isLockedOn)
+        if(PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
         {
+            PlayerInputManager.instance.interactInput = false;
             //Debug.Log("Handling Interact");
             NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
             if (dialogue != null)

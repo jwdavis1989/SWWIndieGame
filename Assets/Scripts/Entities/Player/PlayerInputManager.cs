@@ -25,6 +25,9 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool heavyAttackInput = false;
     [SerializeField] bool holdHeavyAttackInput = false;
 
+    [Header("Player UI Inputs")]
+    [SerializeField] public bool interactInput = false;
+
     [Header("Queued Inputs")]
     [SerializeField] bool InputQueueIsActive = false;
     [SerializeField] float defaultQueueInputTimer = 0.5f;
@@ -151,6 +154,8 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
+            //Player UI interactions
+            playerControls.UI.UIButtonA.performed += i => interactInput = true;
         }
 
         playerControls.Enable();
