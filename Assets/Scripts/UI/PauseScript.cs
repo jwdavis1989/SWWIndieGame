@@ -24,16 +24,16 @@ public class PauseScript : MonoBehaviour
     }
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
-            ) && gamePaused == false && SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            Pause();
-        }
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
-        {
-            Unpause();
-            mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
-        }
+        //if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
+        //    ) && gamePaused == false && SceneManager.GetActiveScene().buildIndex != 0)
+        //{
+        //    Pause();
+        //}
+        //else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
+        //{
+        //    Unpause();
+            
+        //}
         if (gamePaused && mainPauseMenuEvents.currentSelectedGameObject == null)
         {   // Handle for lost cursor
             mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
@@ -82,6 +82,16 @@ public class PauseScript : MonoBehaviour
             TinkerComponentManager.instance.DropRandomItem(playerObj.transform, 5.0f);
         }
     }
+    public void PauseUnpause()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
+            return;
+        if (gamePaused)
+            Unpause();
+        else
+            Pause();
+        
+    }
     void Pause()
     {
         Time.timeScale = 0;
@@ -106,6 +116,7 @@ public class PauseScript : MonoBehaviour
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(true);
         canvas.SetActive(false);
+        mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
     }
     [Header("Pause is a singleton")]
     public static PauseScript instance;
