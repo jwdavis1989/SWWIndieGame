@@ -8,7 +8,7 @@ public class PauseScript : MonoBehaviour
 {
     public bool gamePaused = false;
     public bool debugMode = false;
-    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject mainPauseMenu;
     [SerializeField] GameObject upgradeMenu;
     [SerializeField] GameObject DebugSaveGameButton;
@@ -20,7 +20,7 @@ public class PauseScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(false);
-        canvas.SetActive(false);
+        pauseMenu.SetActive(false);
     }
     void Update()
     {
@@ -96,7 +96,7 @@ public class PauseScript : MonoBehaviour
     {
         Time.timeScale = 0;
         gamePaused = true;
-        canvas.SetActive(true);
+        pauseMenu.SetActive(true);
         mainPauseMenu.SetActive(true);
         if (debugMode)
         {
@@ -115,7 +115,7 @@ public class PauseScript : MonoBehaviour
         gamePaused = false;
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(true);
-        canvas.SetActive(false);
+        pauseMenu.SetActive(false);
         mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
     }
     [Header("Pause is a singleton")]

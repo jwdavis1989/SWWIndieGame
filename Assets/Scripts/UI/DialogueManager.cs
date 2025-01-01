@@ -16,7 +16,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI speakerNameText;
     public TextMeshProUGUI bottomText;
 
-    public Canvas canvas;
+    public GameObject dialogueBox;
     public EventSystem eventSystem;
 
     PlayerManager playerManager;
@@ -26,6 +26,7 @@ public class DialogueManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -36,7 +37,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         dialogueText.text = "";
-        canvas.gameObject.SetActive(false);
+        dialogueBox.gameObject.SetActive(false);
         eventSystem.gameObject.SetActive(false);
         //StartDialgoue();
         playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
@@ -49,7 +50,7 @@ public class DialogueManager : MonoBehaviour
     }
     public static bool IsInDialogue()
     {
-        return instance != null && instance.canvas.isActiveAndEnabled;
+        return instance != null && instance.dialogueBox.activeSelf;
     }
     public void DialogueBoxContinue()
     {
@@ -91,7 +92,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueText.text = "";
         //Debug.Log("Starting Dialogue");
-        canvas.gameObject.SetActive(true);
+        dialogueBox.gameObject.SetActive(true);
         //eventSystem.gameObject.SetActive(true);
         lineIndex = 0;
         StartCoroutine(TypeLine());
@@ -138,7 +139,7 @@ public class DialogueManager : MonoBehaviour
             playerManager.canMove = true;
             playerManager.canRotate = true;
             // turn off dialogue UI
-            canvas.gameObject.SetActive(false);
+            dialogueBox.gameObject.SetActive(false);
             eventSystem.gameObject.SetActive(false);
             //gameObject.SetActive(false);
         }
