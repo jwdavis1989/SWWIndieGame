@@ -16,15 +16,28 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI speakerNameText;
     public TextMeshProUGUI bottomText;
 
-    public Canvas canvas;
+    public GameObject dialogueBox;
     public EventSystem eventSystem;
 
     PlayerManager playerManager;
+    public static DialogueManager instance;
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         dialogueText.text = "";
-        canvas.gameObject.SetActive(false);
+        dialogueBox.gameObject.SetActive(false);
         eventSystem.gameObject.SetActive(false);
         //StartDialgoue();
         playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
@@ -33,20 +46,17 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canvas.isActiveAndEnabled)
-        {
-            DialogueBoxClickToContinue();
-        }
-        else
-        {
-            HandleInteract();
-        }
+
     }
-    void DialogueBoxClickToContinue()
+    public static bool IsInDialogue()
     {
-        if (PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
-        {
-            PlayerInputManager.instance.interactInput = false;
+        return instance != null && instance.dialogueBox.activeSelf;
+    }
+    public void DialogueBoxContinue()
+    {
+        //if (PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
+        //{
+        //    PlayerInputManager.instance.interactInput = false;
             if (dialogueText.text == lines[lineIndex])
             {//if line is finished go to next line
                 NextLine();
@@ -56,16 +66,16 @@ public class DialogueManager : MonoBehaviour
                 StopAllCoroutines();
                 dialogueText.text = lines[lineIndex];
             }
-        }
+        //}
 
     }
-    void HandleInteract()
+    public void PlayDialoge(NPCDialogue dialogue)
     {
-        if(PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
-        {
-            PlayerInputManager.instance.interactInput = false;
+        //if(PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
+        //{
+        //    PlayerInputManager.instance.interactInput = false;
             //Debug.Log("Handling Interact");
-            NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
+            //NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
             if (dialogue != null)
             {
                 //Debug.Log("Handling Interact Got Dialogue");
@@ -75,16 +85,14 @@ public class DialogueManager : MonoBehaviour
                 lineIndex = 0;
                 StartDialgoue();
             }
-        }
+        //}
     }
     /** Reset dialogue box and begin dialogue */
     void StartDialgoue()
     {
-        playerManager.isPerformingAction = true;
-        playerManager.canMove = false;
         dialogueText.text = "";
         //Debug.Log("Starting Dialogue");
-        canvas.gameObject.SetActive(true);
+        dialogueBox.gameObject.SetActive(true);
         //eventSystem.gameObject.SetActive(true);
         lineIndex = 0;
         StartCoroutine(TypeLine());
@@ -129,8 +137,9 @@ public class DialogueManager : MonoBehaviour
             // unlock player
             playerManager.isPerformingAction = false;
             playerManager.canMove = true;
+            playerManager.canRotate = true;
             // turn off dialogue UI
-            canvas.gameObject.SetActive(false);
+            dialogueBox.gameObject.SetActive(false);
             eventSystem.gameObject.SetActive(false);
             //gameObject.SetActive(false);
         }

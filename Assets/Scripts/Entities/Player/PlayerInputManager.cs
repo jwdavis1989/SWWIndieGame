@@ -26,7 +26,9 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool holdHeavyAttackInput = false;
 
     [Header("Player UI Inputs")]
-    [SerializeField] public bool interactInput = false;
+    [SerializeField] bool interactInput = false;
+    [SerializeField] bool uiInteractInput = false;
+    [SerializeField] bool pauseInput = false;
 
     [Header("Queued Inputs")]
     [SerializeField] bool InputQueueIsActive = false;
@@ -82,6 +84,10 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     private void HandleAllInputs() {
+        HandleInteractInput(); //This needs to be before HandleJumpInput or you will jump when you interact
+        HandleUIInteractInput();
+        HandlePauseInput();
+
         HandleMovementInput();
         HandleCameraMovementInput();
         HandleDodgeInput();
@@ -155,7 +161,9 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
             //Player UI interactions
-            playerControls.UI.UIButtonA.performed += i => interactInput = true;
+            playerControls.PlayerActions.Interact.performed += i => interactInput = true;
+            playerControls.UI.UIButtonA.performed += i => uiInteractInput = true;
+            playerControls.UI.PauseButton.performed += i => pauseInput = true;
         }
 
         playerControls.Enable();
@@ -196,6 +204,52 @@ public class PlayerInputManager : MonoBehaviour
         //If we destroy this object, we unsubcribe from this event
         //This is to do with subscribing and might require research
         SceneManager.activeSceneChanged -= OnSceneChange;
+    }
+    //Interact Button
+    void HandleInteractInput()
+    {
+        if (interactInput)// [E], (A)
+        {
+            interactInput = false;
+            //if not already in a dialogue
+            if(player.isLockedOn && !DialogueManager.IsInDialogue())
+            {
+                //Find NPC dialogue. TODO: Change method of finding dialogue target
+                NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
+                if(dialogue != null)
+                { //play the dialogue if found
+                    DialogueManager.instance.PlayDialoge(dialogue);
+                    //Lock player. (Unlocked on exit in DialgoueManager.NextLine)
+                    player.isPerformingAction = true;
+                    player.canMove = false;
+                    player.canRotate = false;
+                }
+                    
+            }
+            
+        }
+    }
+    //Interact Button during dialogue box
+    void HandleUIInteractInput()
+    {
+        //if they press the button during a dialogue
+        if (uiInteractInput)// [LMB], [E], (A)
+        {
+            uiInteractInput = false;
+            if (DialogueManager.IsInDialogue())
+            {
+                DialogueManager.instance.DialogueBoxContinue();
+            }
+        }
+    }
+    //Pause button
+    void HandlePauseInput()
+    {
+        if (pauseInput) // [Esc], (Start/Menu)
+        {
+            pauseInput = false;
+            PauseScript.instance.PauseUnpause();
+        }
     }
 
     //Movement
@@ -283,7 +337,8 @@ public class PlayerInputManager : MonoBehaviour
             dodgeInput = false;
 
             //Future Note: Return if Menu or UI window is open, do nothing.
-            
+            if (PauseScript.instance.gamePaused || DialogueManager.IsInDialogue())
+                return;
             //Perform the dodge
             player.playerLocomotionManager.AttemptToPerformDodge();
         }
@@ -357,7 +412,7 @@ public class PlayerInputManager : MonoBehaviour
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
-            if(PauseScript.instance.gamePaused) 
+            if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue()) 
                 return;
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
