@@ -8,7 +8,7 @@ public class PauseScript : MonoBehaviour
 {
     public bool gamePaused = false;
     public bool debugMode = false;
-    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject mainPauseMenu;
     [SerializeField] GameObject upgradeMenu;
     [SerializeField] GameObject DebugSaveGameButton;
@@ -20,20 +20,20 @@ public class PauseScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(false);
-        canvas.SetActive(false);
+        pauseMenu.SetActive(false);
     }
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
-            ) && gamePaused == false && SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            Pause();
-        }
-        else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
-        {
-            Unpause();
-            mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
-        }
+        //if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
+        //    ) && gamePaused == false && SceneManager.GetActiveScene().buildIndex != 0)
+        //{
+        //    Pause();
+        //}
+        //else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
+        //{
+        //    Unpause();
+            
+        //}
         if (gamePaused && mainPauseMenuEvents.currentSelectedGameObject == null)
         {   // Handle for lost cursor
             mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
@@ -82,11 +82,21 @@ public class PauseScript : MonoBehaviour
             TinkerComponentManager.instance.DropRandomItem(playerObj.transform, 5.0f);
         }
     }
+    public void PauseUnpause()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
+            return;
+        if (gamePaused)
+            Unpause();
+        else
+            Pause();
+        
+    }
     void Pause()
     {
         Time.timeScale = 0;
         gamePaused = true;
-        canvas.SetActive(true);
+        pauseMenu.SetActive(true);
         mainPauseMenu.SetActive(true);
         if (debugMode)
         {
@@ -105,7 +115,8 @@ public class PauseScript : MonoBehaviour
         gamePaused = false;
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(true);
-        canvas.SetActive(false);
+        pauseMenu.SetActive(false);
+        mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
     }
     [Header("Pause is a singleton")]
     public static PauseScript instance;
