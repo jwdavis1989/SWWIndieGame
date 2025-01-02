@@ -32,7 +32,7 @@ public class TitleScreenManager : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip menuScrollSFX;
     public AudioClip enterGameSFX;
-    public AudioClip titleScreenMusic;
+    //public AudioClip titleScreenMusic;
 
     // public void StartNetworkAsHost() {
 
@@ -42,7 +42,7 @@ public class TitleScreenManager : MonoBehaviour
         if (instance == null) {
             instance = this;
             audioSource = GetComponent<AudioSource>();
-            PlayTitleScreenBackgroundMusic();
+            //PlayTitleScreenBackgroundMusic();
         }
         else {
             Destroy(gameObject);
@@ -132,12 +132,12 @@ public class TitleScreenManager : MonoBehaviour
         PlayAdvancedSoundFX(menuScrollSFX, 1f);
     }
 
-    public void PlayTitleScreenBackgroundMusic() {
-            audioSource.clip = titleScreenMusic;
-            audioSource.loop = true;
-            audioSource.volume = 0.25f;
-            audioSource.Play();
-    }
+    // public void PlayTitleScreenBackgroundMusic() {
+    //         audioSource.clip = titleScreenMusic;
+    //         audioSource.loop = true;
+    //         audioSource.volume = 0.25f;
+    //         audioSource.Play();
+    // }
 
     public void PlayAdvancedSoundFX(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool randomizePitch = true, float pitchRandomRange = 0.1f, bool canOverlap = false) {
         if (canOverlap || audioSource.clip != soundFX) {

@@ -31,6 +31,7 @@ public class CharacterSoundFXManager : MonoBehaviour
             if (randomizePitch) {
                 audioSource.pitch += Random.Range(-pitchRandomRange, pitchRandomRange);
             }
+
         }
     }
 
@@ -47,9 +48,9 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     public void PlaySprintBoostSoundFX() {
         AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
-        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.9f, true, 0.1f);
-        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.5f, true, 0.1f);
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 0.5f, 0.25f, true, 0.1f);
+        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.9f, true, 0.1f, false);
+        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.5f, true, 0.1f, false);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 0.5f, 0.25f, true, 0.1f, false);
     }
 
     public void PlayJumpJetBurstFX() {
