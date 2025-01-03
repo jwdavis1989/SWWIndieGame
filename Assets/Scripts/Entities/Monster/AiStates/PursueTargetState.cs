@@ -2,36 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
 [CreateAssetMenu(menuName ="A.I./States/Pursue Target")]
+
 public class PursueTargetState : AIState
 {
     public override AIState Tick(AICharacterManager aiCharacter)
     {
-        //check performing action, if so do nothing until action is finshed
-        if (aiCharacter.isPerformingAction)
+        //Check if we're performing an action. If so, then do nothing until the action is finshed
+        if (aiCharacter.isPerformingAction) {
             return this;
+        }
 
-        //if no target, then go idle
-        if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
-        {
-            return SwitchState(aiCharacter, aiCharacter.idle);
+        //If we have no target, then return to the Idle State
+        if (aiCharacter.aiCharacterCombatManager.currentTarget == null) {
+            return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
         //Make sure our navmesh is active. if not, then enable it
-        if(!aiCharacter.navMeshAgent.enabled) 
+        if(!aiCharacter.navMeshAgent.enabled) {
             aiCharacter.navMeshAgent.enabled = true;
+        }
+
+        aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
+
         //If we are in combat range of the target, switch to Combat Stance State
         //if(aiCharacter.atkRange)
 
         //if target is not reachable/far return home
 
         //Pursue the Target
-        //option1
+        //Option 1: Better performance, Asynchronous, might not always work
         //aiCharacter.navMeshAgent.SetDestination(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position);
-        //option2
+
+        //Option 2: Worse Performance, guaranteed to work, tutorial sites ~60 characters using it simultaneously with no noticible performance drop
         NavMeshPath path = new NavMeshPath();
         aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
         aiCharacter.navMeshAgent.SetPath(path);
+
         return this;
     }
 }

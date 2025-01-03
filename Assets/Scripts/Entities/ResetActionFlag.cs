@@ -18,7 +18,14 @@ public class ResetActionFlag : StateMachineBehaviour
         character.isJumping = false;
         character.isBoosting = false;
         character.isRolling = false;
-        character.animator.applyRootMotion = false;
+
+        //TODO: Investigate if this is causing bugs for AI.
+        //This was needed to keep enemies from being automatically set to no root motion
+        //Which they use to move using their NavMeshes.
+        if (character.isPlayer) {
+            character.animator.applyRootMotion = false;
+        }
+
         //TODO: Investigate why this is causing error
         if (character.characterCombatManager != null) {
             character.characterCombatManager.DisableCanDoCombo();

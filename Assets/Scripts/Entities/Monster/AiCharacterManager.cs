@@ -10,15 +10,19 @@ public class AICharacterManager : CharacterManager
     [Header("Navmesh Agent")]
     public NavMeshAgent navMeshAgent;
 
+    [HideInInspector] public AICharacterManager aiCharacterManager;
     [HideInInspector] public AiCharacterCombatManager aiCharacterCombatManager;
-    [HideInInspector] public AIStatsManager statsManager;
+    [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
+    [HideInInspector] public AICharacterStatsManager statsManager;
 
     [Header("Current State")]
     [SerializeField] AIState currentState;
 
     [Header("States")]
-    [SerializeField] public IdleState idle;
-    [SerializeField] public PursueTargetState pursueTarget;
+    public IdleState idleState;
+    public PursueTargetState pursueTargetState;
+    //Combat Stance State
+    //Attack State
 
     [Header("Determines which type of exp to drop on death")]
     public bool isHitByMainHand = false;
@@ -26,10 +30,17 @@ public class AICharacterManager : CharacterManager
 
     protected override void Awake() {
         base.Awake();
-        statsManager = GetComponent<AIStatsManager>();
+        aiCharacterManager = GetComponent<AICharacterManager>();
+        aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
+        statsManager = GetComponent<AICharacterStatsManager>();
         aiCharacterCombatManager = GetComponent<AiCharacterCombatManager>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
-        // video note: use a copy of the scriptable objects so the originals are not modified...
+
+        //Use a copy of the scriptable objects so the originals are not modified
+        idleState = Instantiate(idleState);
+        pursueTargetState = Instantiate(pursueTargetState);
+
+        currentState = idleState;
     }
 
     protected override void FixedUpdate() {
@@ -59,7 +70,7 @@ public class AICharacterManager : CharacterManager
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
         if (!isPlayer) {
             //If monster: Award players with Gold or items
-            GetComponent<AIStatsManager>().DoAllDrops(isHitByMainHand, isHitByOffHand);
+            GetComponent<AICharacterStatsManager>().DoAllDrops(isHitByMainHand, isHitByOffHand);
         }
         
         yield return new WaitForSeconds(5);
@@ -73,19 +84,23 @@ public class AICharacterManager : CharacterManager
             currentState = nextState;
         }
 
+        //The position/rotation should be reset only after the state machine has processed its tick
+        navMeshAgent.transform.localPosition = Vector3.zero;
+        navMeshAgent.transform.localRotation = Quaternion.identity;
+
         if (navMeshAgent.enabled) {
             Vector3 agentDestination = navMeshAgent.destination;
             float remainingDistance = Vector3.Distance(agentDestination, transform.position);
 
             if (remainingDistance > navMeshAgent.stoppingDistance) {
-                //aiCharacterNetworkManager.isMoving = true;
+                aiCharacterManager.isMoving = true;
             }
             else {
-                //aiCharacterNetworkManager.isMoving = false;
+                aiCharacterManager.isMoving = false;
             }
         }
         else {
-            //aiCharacterNetworkManager.isMoving = false;
+            aiCharacterManager.isMoving = false;
         }
     }
 

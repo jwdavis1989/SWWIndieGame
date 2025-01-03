@@ -15,13 +15,13 @@ public class AIState : ScriptableObject
         return this;
     }
 
-    protected virtual AIState SwitchState(AICharacterManager ai, AIState newState) {
-        ResetStateFlags(ai);
+    protected virtual AIState SwitchState(AICharacterManager aiCharacter, AIState newState) {
+        ResetStateFlags(aiCharacter);
         return newState;
     }
 
-    protected virtual void ResetStateFlags(AICharacterManager ai) {
-        //todo
+    protected virtual void ResetStateFlags(AICharacterManager aiCharacter) {
+        //Reset any state flags here, so when you return to the state, they are blank once again
     }
 
 

@@ -36,6 +36,7 @@ public class CharacterManager : MonoBehaviour
     public bool applyRootMotion = false;
     public bool canRotate = true;
     public bool canMove = true;
+    public bool isMoving = false;
     public bool isSprinting = false;
     public bool isLockedOn = false;
     public bool canBleed = true;
@@ -64,6 +65,7 @@ public class CharacterManager : MonoBehaviour
         //Update Animation Flags
         animator?.SetBool("isGrounded", isGrounded);
         animator?.SetBool("isChargingAttack", isChargingAttack);
+        animator?.SetBool("isMoving", isMoving);
     }
 
     protected virtual void FixedUpdate() {
