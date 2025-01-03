@@ -93,4 +93,17 @@ public class WorldUtilityManager : MonoBehaviour
 
         return false;
     }
+
+    public float GetAngleOfTarget(Transform characterTransform, Vector3 targetCharactersDirection) {
+        targetCharactersDirection.y = 0;
+        float viewableAngle = Vector3.Angle(characterTransform.forward, targetCharactersDirection);
+        Vector3 cross = Vector3.Cross(characterTransform.forward, targetCharactersDirection);
+
+        if (cross.y < 0) {
+            viewableAngle = -viewableAngle;
+        }
+
+        return viewableAngle;
+    }
+
 }

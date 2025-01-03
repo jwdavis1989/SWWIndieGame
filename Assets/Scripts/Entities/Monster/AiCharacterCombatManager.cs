@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AiCharacterCombatManager : CharacterCombatManager
@@ -9,6 +7,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
     public float aggroRange = 5.0f;
     public float minimumDetectionAngle = -35f;
     public float maximumDetectionAngle = 35f;
+
+    [Header("Target Information")]
+    public float viewableAngle;
+    public Vector3 targetsDirection;
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {
         if(currentTarget != null) {
@@ -30,20 +32,22 @@ public class AiCharacterCombatManager : CharacterCombatManager
 
                 //If a potential target is found, it has to be in front of us
                 Vector3 targetsDirection = targetCharacter.transform.position - aiCharacter.transform.position;
-                float viewableAngle = Vector3.Angle(targetsDirection, aiCharacter.transform.forward);
+                float angleOfPotentialTarget = Vector3.Angle(targetsDirection, aiCharacter.transform.forward);
 
-                if(viewableAngle > minimumDetectionAngle && viewableAngle < maximumDetectionAngle) {
+                if(angleOfPotentialTarget > minimumDetectionAngle && angleOfPotentialTarget < maximumDetectionAngle) {
 
                     //Check if the environment blocks sight to the target
                     if(Physics.Linecast(aiCharacter.characterCombatManager.LockOnTransform.position, 
                      targetCharacter.characterCombatManager.LockOnTransform.position, 
                      WorldUtilityManager.instance.GetEnvironmentLayers())) {
                         //blocked
-                        Debug.Log("FindATargetWithInLineOSight(): Line of Sight Blocked");
                         Debug.DrawLine(aiCharacter.characterCombatManager.LockOnTransform.position, targetCharacter.characterCombatManager.LockOnTransform.position);
                     }
                     else {
+                        targetsDirection = targetCharacter.transform.position - transform.position;
+                        viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(transform, targetsDirection);
                         aiCharacter.characterCombatManager.SetTarget(targetCharacter);
+                        PivotTowardsTarget(aiCharacter);
                     }
                 }
             }
@@ -55,4 +59,22 @@ public class AiCharacterCombatManager : CharacterCombatManager
         LockOnTransform = player.transform;
         SetTarget(player.GetComponent<CharacterManager>());
     }
+
+    public void PivotTowardsTarget(AICharacterManager aICharacter) {
+        //Play a Pivot Animation depending on the Viewable Angle of Target
+        if (aICharacter.isPerformingAction) {
+            return;
+        }
+
+        //Note: Commented out version is for having specific angled animations (e.g. Turn_Right_45) like in the tutorial episode 37
+        //if (viewableAngle >= 20 && viewableAngle <= 60) {
+        //     aICharacter.characterAnimatorManager.PlayTargetActionAnimation("AI_Main_Turn_Right_01", true);
+        // }
+        
+        //Note: Commented out version is for having specific angled animations (e.g. Turn_Right_45) like in the tutorial episode 37
+        // else if (viewableAngle <= -20 && viewableAngle >= -60) {
+        //     aICharacter.characterAnimatorManager.PlayTargetActionAnimation("AI_Main_Turn_Left_01", true);
+        // }
+    }
+
 }

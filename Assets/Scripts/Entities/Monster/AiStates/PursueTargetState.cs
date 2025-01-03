@@ -24,6 +24,12 @@ public class PursueTargetState : AIState
             aiCharacter.navMeshAgent.enabled = true;
         }
 
+        //If our target is outside of our field of view, pivot to face them
+        if (aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumDetectionAngle 
+         || aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumDetectionAngle) {
+            aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+        }
+
         aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
 
         //If we are in combat range of the target, switch to Combat Stance State
