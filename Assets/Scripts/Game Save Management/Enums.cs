@@ -38,3 +38,12 @@ public enum AttackType {
     BackstepHeavyAttack01
 
 }
+
+public enum CharacterFaction {
+    TeamPlayer, //Player, Pets, Summons
+    TeamGreen, //Player cannot attack
+    TeamYellow, //Non-Hostile, Attackable by player
+    TeamHostile01, //Hostile to player, TeamHostile02, and TeamHostile03
+    TeamHostile02, //Hostile to yellow, player, TeamHostile01, and TeamHostile02
+    TeamHostile03, //Hostile to yellow, player, TeamHostile01, and TeamHostile02
+}

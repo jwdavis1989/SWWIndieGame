@@ -271,6 +271,14 @@ public class PlayerInputManager : MonoBehaviour
         if (player == null) {
             return;
         }
+
+        if (moveAmount != 0) {
+            player.isMoving = true;
+        }
+        else {
+            player.isMoving = false;
+        }
+
         //If not locked on
         //We pass 0 for horizontal because we're not locked on, as we always rotate to face the way we walk.
         if (!player.isLockedOn || player.isSprinting) {
