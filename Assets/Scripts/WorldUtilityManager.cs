@@ -27,21 +27,70 @@ public class WorldUtilityManager : MonoBehaviour
     public LayerMask GetEnvironmentLayers() {
         return environmentLayers;
     }
-    public bool CanIAtkThisTarget(Faction attacker, Faction target)
-    {
-        if (attacker == target) return false;
-        if (attacker == Faction.TeamPlayer)
-        {
-            switch (target)
-            {
-                case Faction.TeamHostile: return true;
-                default: return false;
+    public bool CanIAttackThisTarget(CharacterFaction attackingCharacterFaction, CharacterFaction targetCharacterFaction) {
+        if (attackingCharacterFaction == targetCharacterFaction) {
+            return false;
+        }
+
+        //Player Team's targets: Yellow (Non-hostile but attackable), Hostile 1, Hostile 2, and Hostile 3
+        if (attackingCharacterFaction == CharacterFaction.TeamPlayer) {
+            switch (targetCharacterFaction) {
+                case CharacterFaction.TeamYellow: 
+                    return true;
+                case CharacterFaction.TeamHostile01: 
+                    return true;
+                case CharacterFaction.TeamHostile02: 
+                    return true;
+                case CharacterFaction.TeamHostile03: 
+                    return true;
+                default: 
+                    return false;
             }
         }
-        else if (attacker == Faction.TeamHostile)
-        {
-            if(target == Faction.TeamPlayer) return true;
+        //Hostile Team 01's targets: Player, Hostile 2, and Hostile 3
+        else if (attackingCharacterFaction == CharacterFaction.TeamHostile01) {
+            switch (targetCharacterFaction) {
+                case CharacterFaction.TeamPlayer: 
+                    return true;
+                case CharacterFaction.TeamHostile02: 
+                    return true;
+                case CharacterFaction.TeamHostile03: 
+                    return true;
+                default: 
+                    return false;
+            }
         }
+        //Hostile Team 02's targets: Player, Yellow (Non-hostile but attackable), Hostile 2, and Hostile 3
+        else if (attackingCharacterFaction == CharacterFaction.TeamHostile02) {
+            switch (targetCharacterFaction) {
+                case CharacterFaction.TeamYellow: 
+                    return true;
+                case CharacterFaction.TeamPlayer: 
+                    return true;
+                case CharacterFaction.TeamHostile01: 
+                    return true;
+                case CharacterFaction.TeamHostile02: 
+                    return true;
+                default: 
+                    return false;
+            }
+        }
+        //Hostile Team 03's targets: Player, Yellow (Non-hostile but attackable), Hostile 2, and Hostile 3
+        else if (attackingCharacterFaction == CharacterFaction.TeamHostile03) {
+            switch (targetCharacterFaction) {
+                case CharacterFaction.TeamYellow: 
+                    return true;
+                case CharacterFaction.TeamPlayer: 
+                    return true;
+                case CharacterFaction.TeamHostile01: 
+                    return true;
+                case CharacterFaction.TeamHostile02: 
+                    return true;
+                default: 
+                    return false;
+            }
+        }
+
         return false;
     }
 }

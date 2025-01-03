@@ -22,8 +22,8 @@ public class CharacterManager : MonoBehaviour
     [Header("Status")]
     public bool isDead = false;
 
-    [Header("Faction")]
-    public Faction faction;
+    [Header("Character Faction")]
+    public CharacterFaction faction;
 
     [Header("Flags")]
     public bool isPlayer = false;
@@ -66,6 +66,10 @@ public class CharacterManager : MonoBehaviour
         animator?.SetBool("isChargingAttack", isChargingAttack);
     }
 
+    protected virtual void FixedUpdate() {
+        
+    }
+    
     protected virtual void LateUpdate() {
         
     }

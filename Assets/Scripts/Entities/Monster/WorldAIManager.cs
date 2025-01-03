@@ -6,46 +6,71 @@ using UnityEngine.SceneManagement;
 public class WorldAIManager : MonoBehaviour
 {
     public static WorldAIManager instance;
-    [Header("Enemies Prefabs")]
-    [SerializeField] public GameObject[] enemies;
+
+    [Header("AI Character Prefabs")]
+    [SerializeField] GameObject[] aiCharacters;
+
     [Header("Currently active enemies")]
-    [SerializeField] public List<GameObject> spawnedEnemies;
-    public void Awake()
-    {
-        if (instance == null)
-        {
+    [SerializeField] List<GameObject> spawnedAiCharacters;
+
+    [Header("Debug")]
+    [SerializeField] bool debugSpawnCharacters = false;
+    [SerializeField] bool debugDespawnCharacters = false;
+
+    public void Awake() {
+        if (instance == null) {
             instance = this;
         }
-        else
-        {
+        else {
             Destroy(gameObject);
         }
     }
-    public void Update()
-    {
-        
+
+    private void Start() {
+        StartCoroutine(WaitForSceneToLoadThenSpawnCharacters());
     }
-    private IEnumerator WaitForLoadThenSpawnChars()
-    {
-        while (!SceneManager.GetActiveScene().isLoaded)
-        {
+
+    private void Update() {
+        if (debugSpawnCharacters) {
+            debugSpawnCharacters = false;
+            SpawnAllCharacters();
+        }
+
+        if (debugDespawnCharacters) {
+            debugDespawnCharacters = false;
+            DespawnAllCharacters();
+        }
+    }
+
+    private IEnumerator WaitForSceneToLoadThenSpawnCharacters() {
+        while (!SceneManager.GetActiveScene().isLoaded) {
             yield return null;
         }
-        SpawnAllChars();
+
+        SpawnAllCharacters();
     }
-    private void SpawnAllChars()
+
+    private void SpawnAllCharacters()
     {
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject aiCharacter in aiCharacters)
         {
-            GameObject charInstance = Instantiate(enemy);
-            spawnedEnemies.Add(charInstance);
+            GameObject instantiatedCharacter = Instantiate(aiCharacter);
+            spawnedAiCharacters.Add(instantiatedCharacter);
         }
     }
-    private void DespawnAllChars()
-    {
-        foreach (GameObject enemy in spawnedEnemies)
-        {
-            Destroy(enemy);
+
+    private void DespawnAllCharacters() {
+        foreach (GameObject aiCharacter in spawnedAiCharacters) {
+            if (aiCharacter != null) {
+                Destroy(aiCharacter);
+            }
         }
+    }
+
+    private void DisableAllCharacters() {
+        //Disable GameObjects if Disabled status is true
+
+        //Can be used to disable characters that are far from player to save memory
+        //Characters can be split into areas (e.g. Area_00, Area_01, etc.)
     }
 }
