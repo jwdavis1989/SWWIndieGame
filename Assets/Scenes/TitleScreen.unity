@@ -36859,7 +36859,6 @@ MonoBehaviour:
   currentSelectedSlot: 10
   menuScrollSFX: {fileID: 8300000, guid: b10152f1895e7d4408b51926bb55b560, type: 3}
   enterGameSFX: {fileID: 8300000, guid: 01d8b4f6c61099247ac99d5303d8df64, type: 3}
-  titleScreenMusic: {fileID: 8300000, guid: 11d8541d8f629814abff72420b962c3c, type: 3}
 --- !u!82 &1062043394
 AudioSource:
   m_ObjectHideFlags: 0
@@ -45826,6 +45825,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4894937217335537802, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
   m_PrefabInstance: {fileID: 8441853390447065137}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &2109666600
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!4 &2125440740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6515712193588681746, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
@@ -70185,6 +70222,71 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2021199516}
   m_SourcePrefab: {fileID: 100100000, guid: 3faff298b6ef2644d94a74c631a6013f, type: 3}
+--- !u!1001 &2734879239356093117
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3812537201477898178, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: dungeonTheme01
+      value: 
+      objectReference: {fileID: 8300000, guid: 2c43c4b1d62c46048903b9588fa5c88e, type: 3}
+    - target: {fileID: 3812537201477898178, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: titleScreenTheme01
+      value: 
+      objectReference: {fileID: 8300000, guid: 11d8541d8f629814abff72420b962c3c, type: 3}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.43239695
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.7447786
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 60.903873
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7753113136068932076, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
+      propertyPath: m_Name
+      value: WorldMusicManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
 --- !u!1 &2887912714651136464
 GameObject:
   m_ObjectHideFlags: 0
@@ -75085,6 +75187,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
+      propertyPath: caveAmbience
+      value: 
+      objectReference: {fileID: 8300000, guid: 46d07e1dca5be7e49a49b8aeffbe0a32, type: 3}
+    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
+      propertyPath: jumpJetAirSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 459488eba8797a946a07ff6ce6f3849c, type: 3}
+    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
+      propertyPath: dungeonTheme01
+      value: 
+      objectReference: {fileID: 8300000, guid: 2c43c4b1d62c46048903b9588fa5c88e, type: 3}
     - target: {fileID: 2406621850794021007, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.013680458
@@ -105990,3 +106104,5 @@ SceneRoots:
   - {fileID: 1888044720}
   - {fileID: 6939171599217454806}
   - {fileID: 2243634381851867460}
+  - {fileID: 2017193857}
+  - {fileID: 2734879239356093117}
