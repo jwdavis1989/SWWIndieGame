@@ -21,8 +21,8 @@ public class AICharacterManager : CharacterManager
     [Header("States")]
     public IdleState idleState;
     public PursueTargetState pursueTargetState;
-    //Combat Stance State
-    //Attack State
+    public CombatStanceState combatStanceState;
+    public AttackState attackState;
 
     [Header("Determines which type of exp to drop on death")]
     public bool isHitByMainHand = false;
@@ -43,6 +43,11 @@ public class AICharacterManager : CharacterManager
         currentState = idleState;
     }
 
+    protected override void Update() {
+        base.Update();
+
+        aiCharacterCombatManager.HandleActionRecovery(this);
+    }
     protected override void FixedUpdate() {
         base.FixedUpdate();
 
@@ -91,6 +96,7 @@ public class AICharacterManager : CharacterManager
         if (aiCharacterCombatManager.currentTarget != null) {
             aiCharacterCombatManager.targetsDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
             aiCharacterCombatManager.viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetsDirection);
+            aiCharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
         }
 
         if (navMeshAgent.enabled) {

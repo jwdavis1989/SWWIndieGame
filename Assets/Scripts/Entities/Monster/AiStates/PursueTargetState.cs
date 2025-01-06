@@ -33,7 +33,15 @@ public class PursueTargetState : AIState
         aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
 
         //If we are in combat range of the target, switch to Combat Stance State
-        //if(aiCharacter.atkRange)
+        //Option 01
+        // if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.combatStanceState.maximumEngagementDistance) {
+        //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+        // }
+
+        //Option 02 - Only use for melee enemies, will use a different approach for ranged enemies
+        if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
+            return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+        }
 
         //if target is not reachable/far return home
 
