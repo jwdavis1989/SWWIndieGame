@@ -40,18 +40,16 @@ public class CharacterWeaponManager : MonoBehaviour
             characterThatOwnsThisArsenal = gameObject.GetComponent<CharacterManager>();
         }
 
-        List<WeaponType> types = new List<WeaponType>();
-        foreach (var wpn in ownedWeapons)
-        {
-            types.Add(wpn.GetComponent<WeaponScript>().stats.weaponType);
-        }
-        if (ownedWeapons.Count > 0)
-        {
+        if (ownedWeapons.Count > 0) {
+            List<WeaponType> weaponTypes = new List<WeaponType>();
+            foreach (var weapon in ownedWeapons) {
+                weaponTypes.Add(weapon.GetComponent<WeaponScript>().stats.weaponType);
+            }
             ownedWeapons = new List<GameObject>();
-        }
-        foreach (WeaponType type in types)
-        {
-            AddWeaponToCurrentWeapons(type);
+            
+            foreach (WeaponType weaponType in weaponTypes) {
+                AddWeaponToCurrentWeapons(weaponType);
+            }
         }
     }
     /**
