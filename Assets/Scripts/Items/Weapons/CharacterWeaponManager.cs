@@ -39,6 +39,20 @@ public class CharacterWeaponManager : MonoBehaviour
         {
             characterThatOwnsThisArsenal = gameObject.GetComponent<CharacterManager>();
         }
+
+        List<WeaponType> types = new List<WeaponType>();
+        foreach (var wpn in ownedWeapons)
+        {
+            types.Add(wpn.GetComponent<WeaponScript>().stats.weaponType);
+        }
+        if (ownedWeapons.Count > 0)
+        {
+            ownedWeapons = new List<GameObject>();
+        }
+        foreach (WeaponType type in types)
+        {
+            AddWeaponToCurrentWeapons(type);
+        }
     }
     /**
      * Adds weapon of any type to current weapons
@@ -56,7 +70,7 @@ public class CharacterWeaponManager : MonoBehaviour
 
             //Update Equipped Weapon Icon if this is your first special weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (indexOfEquippedSpecialWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0) {
                 PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
             }
         }
@@ -67,7 +81,7 @@ public class CharacterWeaponManager : MonoBehaviour
 
             //Update Equipped Weapon Icon if this is your first weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (indexOfEquippedWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0) {
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }
