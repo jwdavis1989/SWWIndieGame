@@ -211,12 +211,14 @@ public class PlayerInputManager : MonoBehaviour
         if (interactInput)// [E], (A)
         {
             interactInput = false;
-            //if not already in a dialogue
-            if(player.isLockedOn && !DialogueManager.IsInDialogue())
+            //if not already in a dialogue - Note: Disable this if in combat for efficency?
+            if( //player.isLockedOn && 
+                !DialogueManager.IsInDialogue())
             {
-                //Find NPC dialogue. TODO: Change method of finding dialogue target
-                NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
-                if(dialogue != null)
+                //Find NPC dialogue.
+                NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
+                //NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
+                if (dialogue != null)
                 { //play the dialogue if found
                     DialogueManager.instance.PlayDialoge(dialogue);
                     //Lock player. (Unlocked on exit in DialgoueManager.NextLine)
@@ -224,7 +226,7 @@ public class PlayerInputManager : MonoBehaviour
                     player.canMove = false;
                     player.canRotate = false;
                 }
-                    
+
             }
             
         }

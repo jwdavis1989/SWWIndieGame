@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Invention : MonoBehaviour
+public class InventionScript : MonoBehaviour
 {
+    [Header("InventionScript is used to mark an object as an Invention")]
     public InventionType type;
-    public bool hasObtained = false;
     public IdeaType[] neededIdeas;
+    [Header("Used by InventionManager")]
+    public bool hasObtained = false;
 }
 public enum InventionType
 {
@@ -19,12 +21,4 @@ public enum InventionType
     RollerJoints,
     EnemyRadar,
     DaedalusNanoMaterials
-}
-public enum IdeaType
-{
-    Rock,
-    Brick,
-    Screw,
-    Window,
-    Potato
 }

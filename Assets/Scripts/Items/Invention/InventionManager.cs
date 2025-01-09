@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class InventionManager : MonoBehaviour
 {
-    public Invention[] allInventions;
+    public InventionScript[] allInventions;
+    public IdeaScript allIdeas;
     //TODO - Handle saving and loading of inventions
-    //TODO - Handle capturing and saving of ideas
-    //TODO - Create UI for using Ideas to make inventions
     public static InventionManager instance;
     public void Awake()
     {
@@ -19,11 +18,20 @@ public class InventionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
     }
-    public bool CheckHasUpgrade(Invention invention)
+
+    /** returns true if the player has aquired the upgrade */
+    public bool CheckHasUpgrade(InventionType type)
     {
         foreach (var item in allInventions) 
-            if (item.type == invention.type) return true;
+            if (item.type == type && item.hasObtained) return true;
         return false;
+    }
+    /** returns true if the player has aquired the upgrade assuming allInventions is ordered */
+    public bool CheckHasUpgradeOrdered(InventionType type)
+    {
+        return allInventions[(int)type].hasObtained;
     }
 }

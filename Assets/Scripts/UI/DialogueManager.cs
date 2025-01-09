@@ -19,7 +19,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueBox;
     public EventSystem eventSystem;
 
-    PlayerManager playerManager;
+    PlayerManager player;
     public static DialogueManager instance;
     public void Awake()
     {
@@ -40,7 +40,7 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.gameObject.SetActive(false);
         eventSystem.gameObject.SetActive(false);
         //StartDialgoue();
-        playerManager = GameObject.Find("Player").GetComponent<PlayerManager>();
+        player = GameObject.Find("Player").GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame
@@ -57,15 +57,15 @@ public class DialogueManager : MonoBehaviour
         //if (PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
         //{
         //    PlayerInputManager.instance.interactInput = false;
-            if (dialogueText.text == lines[lineIndex])
-            {//if line is finished go to next line
-                NextLine();
-            }
-            else //Complete current line
-            {
-                StopAllCoroutines();
-                dialogueText.text = lines[lineIndex];
-            }
+        if (dialogueText.text == lines[lineIndex])
+        {//if line is finished go to next line
+            NextLine();
+        }
+        else //Complete current line
+        {
+            StopAllCoroutines();
+            dialogueText.text = lines[lineIndex];
+        }
         //}
 
     }
@@ -74,17 +74,17 @@ public class DialogueManager : MonoBehaviour
         //if(PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
         //{
         //    PlayerInputManager.instance.interactInput = false;
-            //Debug.Log("Handling Interact");
-            //NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
-            if (dialogue != null)
-            {
-                //Debug.Log("Handling Interact Got Dialogue");
+        //Debug.Log("Handling Interact");
+        //NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
+        if (dialogue != null)
+        {
+            //Debug.Log("Handling Interact Got Dialogue");
 
-                lines = dialogue.lines;
-                speakerNameText.text = dialogue.speakerName;
-                lineIndex = 0;
-                StartDialgoue();
-            }
+            lines = dialogue.lines;
+            speakerNameText.text = dialogue.speakerName;
+            lineIndex = 0;
+            StartDialgoue();
+        }
         //}
     }
     /** Reset dialogue box and begin dialogue */
@@ -99,22 +99,23 @@ public class DialogueManager : MonoBehaviour
         if (lines.Length > 1)
         {
             bottomText.text = "Continue";
-        }else bottomText.text = "Exit";
+        }
+        else bottomText.text = "Exit";
     }
     /** Slowly type a line */
     IEnumerator TypeLine()
     {
         bool richTextTag = false;// Rich text tags should be printed out instantly so they aren't seen by the player
         char lastLetter = '\0'; // Use \ to escape and print <
-        foreach(char c in lines[lineIndex].ToCharArray())
+        foreach (char c in lines[lineIndex].ToCharArray())
         {
             dialogueText.text += c;
-            if(c == '<' && lastLetter != '\\')
+            if (c == '<' && lastLetter != '\\')
                 richTextTag = true;
-            if(richTextTag && c == '>')
-                richTextTag= false;
+            if (richTextTag && c == '>')
+                richTextTag = false;
             lastLetter = c;
-            if(!richTextTag)
+            if (!richTextTag)
                 yield return new WaitForSeconds(textSpeed);//wait to type the next letter
         }
     }
@@ -135,13 +136,78 @@ public class DialogueManager : MonoBehaviour
         else
         { // Finished
             // unlock player
-            playerManager.isPerformingAction = false;
-            playerManager.canMove = true;
-            playerManager.canRotate = true;
+            player.isPerformingAction = false;
+            player.canMove = true;
+            player.canRotate = true;
             // turn off dialogue UI
             dialogueBox.gameObject.SetActive(false);
             eventSystem.gameObject.SetActive(false);
             //gameObject.SetActive(false);
         }
     }
+    public NPCDialogue HandleLocatingDialogueTargets()
+    {
+        //declarations
+        List<NPCDialogue> availableTargets = new List<NPCDialogue>();
+        NPCDialogue nearestTarget = null;
+        float lockOnRadius = 12f;
+        float minimumViewableAngle = -50f;
+        float maximumViewableAngle = 50f;
+
+        //Will be used to determine the target closest to us
+        float shortestDistance = Mathf.Infinity;
+
+        //Uses a Character Layermask to improve efficiency
+        Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.instance.GetCharacterLayers());
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            NPCDialogue lockOnTarget = colliders[i].GetComponent<NPCDialogue>();
+
+            if (lockOnTarget != null)
+            {
+                //Check if they are within our Field of View
+                Vector3 lockOnTargetsDirection = lockOnTarget.transform.position - player.transform.position;
+                float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);
+                float viewableAngle = Vector3.Angle(lockOnTargetsDirection, PlayerCamera.instance.cameraObject.transform.forward);
+
+                
+                //If the target is outside of the field of view or blocked by environment, check the next potential target
+                if (viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
+                {
+                    RaycastHit hit;
+
+                    //Check Line of sight by environment layers
+                    if (Physics.Linecast(player.playerCombatManager.LockOnTransform.position, lockOnTarget.transform.position, out hit, WorldUtilityManager.instance.GetEnvironmentLayers()))
+                    {
+                        //We hit something in the environment, blocking line of sight
+                        continue;
+                    }
+                    else
+                    {
+                        //Add the target to the available targets list since it's within Line of Sight
+                        availableTargets.Add(lockOnTarget);
+                    }
+                }
+
+            }
+        }
+
+        //Sort through potential targets to see which one we lock onto first
+        for (int i = 0; i < availableTargets.Count; i++)
+        {
+            if (availableTargets[i] != null)
+            {
+                float distanceFromTarget = Vector3.Distance(player.transform.position, availableTargets[i].transform.position);
+
+                if (distanceFromTarget < shortestDistance)
+                {
+                    shortestDistance = distanceFromTarget;
+                    nearestTarget = availableTargets[i];
+                }
+            }
+        }
+        return nearestTarget;
+    }
+
 }
