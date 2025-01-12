@@ -27,8 +27,11 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
+    [SerializeField] bool useItemQuickslotInput = false;//using for idea camera. This will be an item?
     [SerializeField] bool uiInteractInput = false;
     [SerializeField] bool pauseInput = false;
+    [SerializeField] bool capturePhotoInput = false;
+
 
     [Header("Queued Inputs")]
     [SerializeField] bool InputQueueIsActive = false;
@@ -84,9 +87,11 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     private void HandleAllInputs() {
-        HandleInteractInput(); //This needs to be before HandleJumpInput or you will jump when you interact
+        HandleInteractInput();
         HandleUIInteractInput();
         HandlePauseInput();
+        HandleUseItemQuickSlotInput();
+        HandleCapturePhotoInput();
 
         HandleMovementInput();
         HandleCameraMovementInput();
@@ -164,6 +169,8 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
             playerControls.UI.UIButtonA.performed += i => uiInteractInput = true;
             playerControls.UI.PauseButton.performed += i => pauseInput = true;
+            playerControls.PlayerActions.UseItemQuickSlot.performed += i => useItemQuickslotInput = true;
+            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
         }
 
         playerControls.Enable();
@@ -244,6 +251,15 @@ public class PlayerInputManager : MonoBehaviour
             }
         }
     }
+    //Use item button
+    void HandleUseItemQuickSlotInput()
+    {
+        if (useItemQuickslotInput) // [1], (Y)
+        {
+            useItemQuickslotInput = false;
+            IdeaCameraController.instance.ActivateDeactiveCameraView();
+        }
+    }
     //Pause button
     void HandlePauseInput()
     {
@@ -253,6 +269,17 @@ public class PlayerInputManager : MonoBehaviour
             PauseScript.instance.PauseUnpause();
         }
     }
+   
+    //Idea Capture button
+    void HandleCapturePhotoInput()
+    {
+        if (capturePhotoInput) // [Space], (X)
+        {
+            capturePhotoInput = false;
+            IdeaCameraController.instance.TakeScreenshotInput();
+        }
+    }
+
 
     //Movement
     private void HandleMovementInput() {
@@ -422,7 +449,7 @@ public class PlayerInputManager : MonoBehaviour
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
-            if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue()) 
+            if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy()) 
                 return;
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();

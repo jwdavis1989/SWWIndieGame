@@ -20,8 +20,8 @@ public class InventionUIManager : MonoBehaviour
     void TakeScreenshot()
     {
         //ScreenCapture.CaptureScreenshot("SomeLevel.png");
-        int width = Screen.width;
-        int height = Screen.height;
+        int width = Screen.width * 65 / 100;
+        int height = Screen.height * 85 / 100;
         Texture2D screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
         Rect rect = new Rect(0, 0, width, height);
         screenshot.ReadPixels(rect, 0, 0);

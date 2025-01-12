@@ -6,6 +6,11 @@ public class IdeaScript : MonoBehaviour
 {
     [Header("IdeaScript is used to mark an object as an Idea")]
     public IdeaType type;
+    public bool hasObtained;
+    public override string ToString()
+    {
+        return ""+type;
+    }
     //public Image photoCapture;
     public readonly static Sprite icon; // the icon for this type of Idea.
 }
@@ -16,5 +21,10 @@ public enum IdeaType
     Brick,
     Screw,
     Window,
-    Potato
+    Potato,
+    Dummy,
+
+
+    //used as limit
+    MAX
 }
