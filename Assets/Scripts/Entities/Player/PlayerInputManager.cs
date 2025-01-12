@@ -28,7 +28,8 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
     [SerializeField] bool useItemQuickslotInput = false;//using for idea camera. This will be an item?
-    [SerializeField] bool uiInteractInput = false;
+    [SerializeField] bool uiInteractInput = false;//(A)
+    [SerializeField] bool uiInteractInput2 = false;//(X)
     [SerializeField] bool pauseInput = false;
     [SerializeField] bool capturePhotoInput = false;
 
@@ -168,6 +169,7 @@ public class PlayerInputManager : MonoBehaviour
             //Player UI interactions
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
             playerControls.UI.UIButtonA.performed += i => uiInteractInput = true;
+            playerControls.UI.UIButtonX.performed += i => uiInteractInput2 = true;
             playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PlayerActions.UseItemQuickSlot.performed += i => useItemQuickslotInput = true;
             playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
@@ -218,9 +220,10 @@ public class PlayerInputManager : MonoBehaviour
         if (interactInput)// [E], (A)
         {
             interactInput = false;
-            //if not already in a dialogue - Note: Disable this if in combat for efficency?
-            if( //player.isLockedOn && 
-                !DialogueManager.IsInDialogue())
+
+            //Note: Disable this if in combat for efficency?
+            // If not busy doing something else
+            if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())  //player.isLockedOn &&
             {
                 //Find NPC dialogue.
                 NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
@@ -242,9 +245,10 @@ public class PlayerInputManager : MonoBehaviour
     void HandleUIInteractInput()
     {
         //if they press the button during a dialogue
-        if (uiInteractInput)// [LMB], [E], (A)
+        if (uiInteractInput || uiInteractInput2)// [LMB], [E], (A)
         {
             uiInteractInput = false;
+            uiInteractInput2 = false;//(X) I wanted this to continue dialgue for now... Could change later
             if (DialogueManager.IsInDialogue())
             {
                 DialogueManager.instance.DialogueBoxContinue();
@@ -257,6 +261,10 @@ public class PlayerInputManager : MonoBehaviour
         if (useItemQuickslotInput) // [1], (Y)
         {
             useItemQuickslotInput = false;
+            if (SceneManager.GetActiveScene().buildIndex == 0) 
+                return; //dont use on title screen
+
+            //currently have camera here. Not sure if it gets it's own button or is an item
             IdeaCameraController.instance.ActivateDeactiveCameraView();
         }
     }

@@ -13,6 +13,7 @@ public class IdeaCameraController : MonoBehaviour
     [Header("Preview UI shown with Save/Discard options")]
     public GameObject photoPreviewFrame;
     public TextMeshProUGUI ideaPhotoText;
+    public TextMeshProUGUI previewControlsText;
     public GameObject previewPhoto;
     [Header("Graphic in center of camera view")]
     public GameObject cameraLensCrosshair;
@@ -25,6 +26,27 @@ public class IdeaCameraController : MonoBehaviour
     PlayerControls playerControls;
     [SerializeField] LayerMask ideaLayers;
     private bool takingPhoto = false;
+    public static IdeaCameraController instance;
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            AttachCameraToPlayer();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void Start()
+    {
+        canvas.gameObject.SetActive(false);
+        ideaCamera.gameObject.SetActive(false);
+        cameraLensCrosshair.SetActive(false);
+        border.SetActive(false);
+        photoPreviewFrame.SetActive(false);
+    }
 
     public void TakeScreenshotInput()
     {
@@ -64,36 +86,42 @@ public class IdeaCameraController : MonoBehaviour
         byte[] bytes = screenshot.EncodeToPNG();
         System.IO.File.WriteAllBytes(Application.dataPath + "/screenshot.png", bytes);
         Debug.Log("Screenshot saved at: " + Application.dataPath + "/screenshot.png");
-        StartCoroutine(FlashThenShowPreview(LocateIdeaTarget()));
+        //TODO - Probably will save last taken screenshot like this then save to up to 1 of each idea type
+        StartCoroutine(FlashThenPreview());
     }
-    IEnumerator FlashThenShowPreview(IdeaScript idea)
+    /** Activate Prieview Frame. If idea is present then  */
+    void ShowPreview(IdeaScript idea)
     {
-        StartCoroutine(FlashAndFadeOut());
-        yield return new WaitForSeconds(1.5f);
         photoPreviewFrame.SetActive(true);
         flashGraphic.SetActive(false);
-        if (idea != null) {
-            //if (InventionManager.instance.CheckHasIdea(idea.type))
-            //{
-            //    ideaPhotoText.text = idea.ToString();
-            //}
-            //else
-            //{
-            //    InventionManager.instance.SetHasIdea(idea.type);
-                ideaPhotoText.text = "New idea! - " + idea.ToString();
-            //}
-
-        }
-        else 
+        if (idea == null) {
             ideaPhotoText.text = "No idea here!";
+        }
+        else{
+            if (InventionManager.instance.CheckHasIdea(idea.type)){
+                ideaPhotoText.text = "Idea " + idea.ToString();
+                previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
+                previewControlsText.text += "\n<s> Replace Photo - [Enter] / (A)</s>";
+            }
+            else{
+                InventionManager.instance.SetHasIdea(idea.type);
+                ideaPhotoText.text = "New idea! - " + idea.ToString();
+                previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
+            }
+        }
+            
         StartCoroutine(LoadScreenshot());
     }
-    IEnumerator FlashAndFadeOut()
+    IEnumerator FlashThenPreview()
     {
+        //check for idea
+        IdeaScript idea = LocateIdeaTarget();
+        //activate graphic
         flashGraphic.SetActive(true);
         Image image = flashGraphic.GetComponent<Image>();
         Color curColor = image.color;
         curColor.a = 1;
+        //fade out
         while (Mathf.Abs(curColor.a) > 0.0001f)
         {
             curColor.a -= 0.05f; //Mathf.Lerp(curColor.a, targetAlpha, FadeRate * Time.deltaTime);
@@ -101,6 +129,9 @@ public class IdeaCameraController : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
         flashGraphic.SetActive(false);
+
+        //Open Photo Preview
+        ShowPreview(idea);
         yield return null;
     }
     IEnumerator LoadScreenshot()
@@ -118,19 +149,6 @@ public class IdeaCameraController : MonoBehaviour
     }
 
 
-    public static IdeaCameraController instance;
-    public void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            AttachCameraToPlayer();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
     void AttachCameraToPlayer()
     {
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
