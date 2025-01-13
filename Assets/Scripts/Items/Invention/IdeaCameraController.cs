@@ -84,8 +84,9 @@ public class IdeaCameraController : MonoBehaviour
         screenshot.ReadPixels(rect, 0, 0);
         screenshot.Apply();
         byte[] bytes = screenshot.EncodeToPNG();
-        System.IO.File.WriteAllBytes(Application.dataPath + "/screenshot.png", bytes);
-        Debug.Log("Screenshot saved at: " + Application.dataPath + "/screenshot.png");
+        string filePath = Application.dataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";
+        System.IO.File.WriteAllBytes(filePath, bytes);
+        Debug.Log("Screenshot saved at: " + filePath);
         //TODO - Probably will save last taken screenshot like this then save to up to 1 of each idea type
         StartCoroutine(FlashThenPreview());
     }
@@ -107,10 +108,11 @@ public class IdeaCameraController : MonoBehaviour
                 InventionManager.instance.SetHasIdea(idea.type);
                 ideaPhotoText.text = "New idea! - " + idea.ToString();
                 previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
+                ReplacePhoto(idea.type);
             }
         }
-            
-        StartCoroutine(LoadScreenshot());
+        //load the picture we just took
+        StartCoroutine(LoadCaptureToScreen());
     }
     IEnumerator FlashThenPreview()
     {
@@ -134,9 +136,9 @@ public class IdeaCameraController : MonoBehaviour
         ShowPreview(idea);
         yield return null;
     }
-    IEnumerator LoadScreenshot()
+    IEnumerator LoadCaptureToScreen()
     {
-        string filePath = Application.dataPath + "/screenshot.png";
+        string filePath = Application.dataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";
         if (System.IO.File.Exists(filePath))
         {
             byte[] bytes = System.IO.File.ReadAllBytes(filePath);
@@ -148,7 +150,20 @@ public class IdeaCameraController : MonoBehaviour
         yield return null;
     }
 
-
+    public void ReplacePhoto(IdeaType idea)
+    {
+        string filePath = Application.dataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";//path to last picture
+        if (System.IO.File.Exists(filePath))
+        {
+            //load last picture
+            byte[] bytes = System.IO.File.ReadAllBytes(filePath);
+            //save
+            string saveFileName = Application.dataPath + "/" + player.playerStatsManager.characterName + idea + ".png";//save file for idea
+            Debug.Log("idea photo saved to "+ saveFileName);//astest
+            System.IO.File.WriteAllBytes( saveFileName, bytes);
+        }
+        
+    }
     void AttachCameraToPlayer()
     {
         player = GameObject.Find("Player").GetComponent<PlayerManager>();

@@ -141,7 +141,7 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
-        //Add Weapon Arsenal Data Loading here later
+        //Weapon Arsenal Data Loading here
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
@@ -149,6 +149,7 @@ public class PlayerManager : CharacterManager
         //Load TinkerComponents
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
+        //TODO load saved ideas, inventions, etc
     }
 
     public void ToggleFlashlight() {
