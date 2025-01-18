@@ -80,6 +80,8 @@ public class PlayerCamera : MonoBehaviour
             HandleFollowTarget();
             HandleRotations();
             HandleCollisions();
+            if (IdeaCameraController.isBusy())
+                IdeaCameraController.instance.HandleRotations();
         }
     }
 
@@ -339,5 +341,5 @@ public class PlayerCamera : MonoBehaviour
         yield return null;
 
     }
-
+    public Transform GetPivotTransform() { return cameraPivotTransform; }
 }

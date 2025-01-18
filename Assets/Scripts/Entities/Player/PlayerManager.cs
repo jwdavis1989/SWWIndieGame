@@ -61,7 +61,6 @@ public class PlayerManager : CharacterManager
 
     protected override void LateUpdate() {
         base.LateUpdate();
-
         PlayerCamera.instance.HandleAllCameraActions();
     }
 

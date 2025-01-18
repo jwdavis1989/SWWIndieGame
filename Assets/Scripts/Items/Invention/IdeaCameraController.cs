@@ -47,12 +47,17 @@ public class IdeaCameraController : MonoBehaviour
         border.SetActive(false);
         photoPreviewFrame.SetActive(false);
     }
+    /** returns true if the player is in idea camera mode */
+    static public bool isBusy()
+    {
+        return instance != null && instance.canvas.isActiveAndEnabled;
+    }
 
     public void TakeScreenshotInput()
     {
+        // make suer idea camera mode is active
         if (ideaCamera.gameObject.activeSelf)
         {
-            // Idea Camera is active
             if (photoPreviewFrame.activeSelf)
             {   // Exit photo preview
                 photoPreviewFrame.SetActive(false);
@@ -71,6 +76,7 @@ public class IdeaCameraController : MonoBehaviour
         }
 
     }
+    string lastCaptureFilepath = "";
     IEnumerator TakeScreenshot()
     {
         yield return new WaitForSeconds(0.4f);//delay for crosshair
@@ -84,10 +90,10 @@ public class IdeaCameraController : MonoBehaviour
         screenshot.ReadPixels(rect, 0, 0);
         screenshot.Apply();
         byte[] bytes = screenshot.EncodeToPNG();
-        string filePath = Application.dataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";
-        System.IO.File.WriteAllBytes(filePath, bytes);
-        Debug.Log("Screenshot saved at: " + filePath);
-        //TODO - Probably will save last taken screenshot like this then save to up to 1 of each idea type
+        lastCaptureFilepath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + "LastIdeaCapture.png";
+        System.IO.File.WriteAllBytes(lastCaptureFilepath, bytes);
+        Debug.Log("Capture saved at: " + lastCaptureFilepath);
+        //TODO - Only save locally on object then do this code as part of save/load system...
         StartCoroutine(FlashThenPreview());
     }
     /** Activate Prieview Frame. If idea is present then  */
@@ -138,10 +144,10 @@ public class IdeaCameraController : MonoBehaviour
     }
     IEnumerator LoadCaptureToScreen()
     {
-        string filePath = Application.dataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";
-        if (System.IO.File.Exists(filePath))
+        //string filePath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";
+        if (System.IO.File.Exists(lastCaptureFilepath))
         {
-            byte[] bytes = System.IO.File.ReadAllBytes(filePath);
+            byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             //previewPhoto.GetComponent<Renderer>().material.mainTexture = texture;
@@ -152,24 +158,26 @@ public class IdeaCameraController : MonoBehaviour
 
     public void ReplacePhoto(IdeaType idea)
     {
-        string filePath = Application.dataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";//path to last picture
+        string filePath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + "Screenshot.png";//path to last picture
         if (System.IO.File.Exists(filePath))
         {
             //load last picture
             byte[] bytes = System.IO.File.ReadAllBytes(filePath);
             //save
-            string saveFileName = Application.dataPath + "/" + player.playerStatsManager.characterName + idea + ".png";//save file for idea
-            Debug.Log("idea photo saved to "+ saveFileName);//astest
+            string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
+            Debug.Log("Idea photo saved to "+ saveFileName);//astest
+            //TODO - Only save locally on object then do this code as part of save/load system...
             System.IO.File.WriteAllBytes( saveFileName, bytes);
         }
         
     }
     void AttachCameraToPlayer()
     {
+        if(player == null)
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
         Transform p = player.transform;
         ideaCamera.transform.parent = p;
-        ideaCamera.transform.position = new Vector3(p.position.x, p.position.y+2, p.position.z);
+        ideaCamera.transform.position = new Vector3(p.position.x, p.position.y+1.5f, p.position.z) + (p.forward * 1.5f);
     }
     public void ActivateDeactiveCameraView()
     {
@@ -205,9 +213,47 @@ public class IdeaCameraController : MonoBehaviour
         player.canMove = true;
         takingPhoto = false;
     }
-    static public bool isBusy()
+    float leftAndRightLookAngle = 0;
+    float leftAndRightRotationSpeed = 220f;
+    float upAndDownLookAngle = 0;
+    float upAndDownRotationSpeed = 220f;
+    float minimumPivot = -30f;
+    float maximumPivot = 60f;
+    
+    public void HandleRotations()
     {
-        return instance != null && instance.canvas.isActiveAndEnabled;
+        //Normal Rotations
+        //Rotate left and right based on horizontal movement on the right joystick
+        leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
+
+        //Rotate up and down based on the vertical movement on the right Joystick
+        upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
+
+        //Clamp the up and down look angle between min/max values
+        upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
+
+        //Temp variables used for the below assignments
+        Vector3 cameraRotation = Vector3.zero;
+        Quaternion targetRotation;
+
+        //Rotate the player left and right
+        cameraRotation.y = leftAndRightLookAngle;
+        targetRotation = Quaternion.Euler(cameraRotation);
+        player.transform.rotation = targetRotation;
+        AttachCameraToPlayer();
+        //Rotate the camera up and down
+        cameraRotation = Vector3.zero;
+        if (PlayerCamera.instance.isCameraInverted)
+        {
+            cameraRotation.x = -upAndDownLookAngle;
+        }
+        else
+        {
+            cameraRotation.x = upAndDownLookAngle;
+        }
+        targetRotation = Quaternion.Euler(cameraRotation);
+        ideaCamera.transform.localRotation = targetRotation;
+        
     }
     public IdeaScript LocateIdeaTarget()
     {

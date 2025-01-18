@@ -291,6 +291,9 @@ public class PlayerInputManager : MonoBehaviour
 
     //Movement
     private void HandleMovementInput() {
+        //check if busy
+        if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
+            return;
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
 
