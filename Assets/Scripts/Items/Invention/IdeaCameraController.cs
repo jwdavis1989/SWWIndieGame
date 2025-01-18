@@ -47,12 +47,17 @@ public class IdeaCameraController : MonoBehaviour
         border.SetActive(false);
         photoPreviewFrame.SetActive(false);
     }
+    /** returns true if the player is in idea camera mode */
+    static public bool isBusy()
+    {
+        return instance != null && instance.canvas.isActiveAndEnabled;
+    }
 
     public void TakeScreenshotInput()
     {
+        // make suer idea camera mode is active
         if (ideaCamera.gameObject.activeSelf)
         {
-            // Idea Camera is active
             if (photoPreviewFrame.activeSelf)
             {   // Exit photo preview
                 photoPreviewFrame.SetActive(false);
@@ -205,9 +210,47 @@ public class IdeaCameraController : MonoBehaviour
         player.canMove = true;
         takingPhoto = false;
     }
-    static public bool isBusy()
+    float leftAndRightLookAngle = 0;
+    float leftAndRightRotationSpeed = 0;
+    float upAndDownLookAngle = 0;
+    float upAndDownRotationSpeed = 0;
+    float minimumPivot = 0;
+    float maximumPivot = 0;
+    
+    public void HandleRotations()
     {
-        return instance != null && instance.canvas.isActiveAndEnabled;
+        Transform cameraPivotTransform = transform;
+        //Normal Rotations
+        //Rotate left and right based on horizontal movement on the right joystick
+        leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
+
+        //Rotate up and down based on the vertical movement on the right Joystick
+        upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
+
+        //Clamp the up and down look angle between min/max values
+        upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
+
+        //Temp variables used for the below assignments
+        Vector3 cameraRotation = Vector3.zero;
+        Quaternion targetRotation;
+
+        //Rotate this gameobject left and right
+        cameraRotation.y = leftAndRightLookAngle;
+        targetRotation = Quaternion.Euler(cameraRotation);
+        transform.rotation = targetRotation;
+
+        //Rotate this gameobject up and down
+        cameraRotation = Vector3.zero;
+        //if (isCameraInverted)
+        //{
+        //    cameraRotation.x = -upAndDownLookAngle;
+        //}
+        //else
+        //{
+            cameraRotation.x = upAndDownLookAngle;
+        //}
+        targetRotation = Quaternion.Euler(cameraRotation);
+        cameraPivotTransform.localRotation = targetRotation;
     }
     public IdeaScript LocateIdeaTarget()
     {

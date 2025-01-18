@@ -291,6 +291,8 @@ public class PlayerInputManager : MonoBehaviour
 
     //Movement
     private void HandleMovementInput() {
+        if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy())
+            return;
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
 

@@ -61,7 +61,9 @@ public class PlayerManager : CharacterManager
 
     protected override void LateUpdate() {
         base.LateUpdate();
-
+        if(IdeaCameraController.isBusy())
+            IdeaCameraController.instance.HandleRotations();
+        else
         PlayerCamera.instance.HandleAllCameraActions();
     }
 
