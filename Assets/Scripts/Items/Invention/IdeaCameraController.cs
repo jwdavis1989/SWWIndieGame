@@ -15,6 +15,9 @@ public class IdeaCameraController : MonoBehaviour
     public TextMeshProUGUI ideaPhotoText;
     public TextMeshProUGUI previewControlsText;
     public GameObject previewPhoto;
+    public GameObject oldPhoto;//previous photo if replacing image for previously captured idea
+    public GameObject oldPhotoFrame;
+
     [Header("Graphic in center of camera view")]
     public GameObject cameraLensCrosshair;
     [Header("Black border")]
@@ -55,7 +58,7 @@ public class IdeaCameraController : MonoBehaviour
 
     public void TakeScreenshotInput()
     {
-        // make suer idea camera mode is active
+        // make sure idea camera mode is active
         if (ideaCamera.gameObject.activeSelf)
         {
             if (photoPreviewFrame.activeSelf)
@@ -76,7 +79,8 @@ public class IdeaCameraController : MonoBehaviour
         }
 
     }
-    string lastCaptureFilepath = "";
+    //string lastCaptureFilepath = "";
+    byte[] lastCapturePng = null;
     IEnumerator TakeScreenshot()
     {
         yield return new WaitForSeconds(0.4f);//delay for crosshair
@@ -89,18 +93,21 @@ public class IdeaCameraController : MonoBehaviour
         Rect rect = new Rect(width/6, height/4, width, height);
         screenshot.ReadPixels(rect, 0, 0);
         screenshot.Apply();
-        byte[] bytes = screenshot.EncodeToPNG();
-        lastCaptureFilepath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + "LastIdeaCapture.png";
-        System.IO.File.WriteAllBytes(lastCaptureFilepath, bytes);
-        Debug.Log("Capture saved at: " + lastCaptureFilepath);
+        lastCapturePng = screenshot.EncodeToPNG();
+        //lastCaptureFilepath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + "LastIdeaCapture.png";
+        //System.IO.File.WriteAllBytes(lastCaptureFilepath, bytes);
+        //Debug.Log("Capture saved at: " + lastCaptureFilepath);
         //TODO - Only save locally on object then do this code as part of save/load system...
         StartCoroutine(FlashThenPreview());
     }
     /** Activate Prieview Frame. If idea is present then  */
     void ShowPreview(IdeaScript idea)
     {
+        //activate photo ui
         photoPreviewFrame.SetActive(true);
+        //end flash
         flashGraphic.SetActive(false);
+        // if idea was in the capture set text
         if (idea == null) {
             ideaPhotoText.text = "No idea here!";
         }
@@ -109,12 +116,18 @@ public class IdeaCameraController : MonoBehaviour
                 ideaPhotoText.text = "Idea " + idea.ToString();
                 previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
                 previewControlsText.text += "\n<s> Replace Photo - [Enter] / (A)</s>";
+                oldPhotoFrame.SetActive(true);
+                byte[] bytes = InventionManager.instance.GetIdeaPicture(idea.type);
+                Texture2D texture = new Texture2D(0, 0);
+                texture.LoadImage(bytes);
+                oldPhoto.GetComponent<RawImage>().texture = texture;
             }
             else{
                 InventionManager.instance.SetHasIdea(idea.type);
                 ideaPhotoText.text = "New idea! - " + idea.ToString();
                 previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
                 ReplacePhoto(idea.type);
+                oldPhotoFrame.SetActive(false);
             }
         }
         //load the picture we just took
@@ -145,11 +158,12 @@ public class IdeaCameraController : MonoBehaviour
     IEnumerator LoadCaptureToScreen()
     {
         //string filePath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + "Screenshot.png";
-        if (System.IO.File.Exists(lastCaptureFilepath))
+        //if (System.IO.File.Exists(lastCaptureFilepath))
+        if (lastCapturePng != null)
         {
-            byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
+            //byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
             Texture2D texture = new Texture2D(0, 0);
-            texture.LoadImage(bytes);
+            texture.LoadImage(lastCapturePng);
             //previewPhoto.GetComponent<Renderer>().material.mainTexture = texture;
             previewPhoto.GetComponent<RawImage>().texture = texture;
         }
@@ -158,16 +172,18 @@ public class IdeaCameraController : MonoBehaviour
 
     public void ReplacePhoto(IdeaType idea)
     {
-        string filePath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + "Screenshot.png";//path to last picture
-        if (System.IO.File.Exists(filePath))
+        //if (System.IO.File.Exists(lastCaptureFilepath))
+        if (lastCapturePng != null)
         {
             //load last picture
-            byte[] bytes = System.IO.File.ReadAllBytes(filePath);
+            //byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
+            InventionManager.instance.SetIdeaPicture(lastCapturePng, idea);
+            
             //save
-            string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
-            Debug.Log("Idea photo saved to "+ saveFileName);//astest
+            //string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
+            //Debug.Log("Idea photo saved to "+ saveFileName);//astest
             //TODO - Only save locally on object then do this code as part of save/load system...
-            System.IO.File.WriteAllBytes( saveFileName, bytes);
+            //System.IO.File.WriteAllBytes( saveFileName, bytes);
         }
         
     }

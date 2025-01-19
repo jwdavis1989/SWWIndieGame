@@ -111,6 +111,8 @@ public class PlayerManager : CharacterManager
         //Tinker Components owned
         currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
         currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
+        //Idea Images
+        InventionManager.instance.SaveIdeas();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -148,7 +150,6 @@ public class PlayerManager : CharacterManager
         //Load TinkerComponents
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
-        //TODO load saved ideas, inventions, etc
     }
 
     public void ToggleFlashlight() {
