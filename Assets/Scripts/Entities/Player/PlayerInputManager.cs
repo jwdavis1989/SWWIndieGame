@@ -158,6 +158,10 @@ public class PlayerInputManager : MonoBehaviour
                 SceneManager.LoadSceneAsync(2);
             });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
+            playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i => { 
+                player.transform.position = new Vector3(0, 9, 0); 
+                SceneManager.LoadSceneAsync(4);
+            });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
             //Player UI interactions
