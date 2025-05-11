@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1326936399141112553}
   - component: {fileID: 832365610704171507}
-  - component: {fileID: 6738154468145463735}
+  - component: {fileID: 4189392252686030318}
   m_Layer: 0
   m_Name: WeaponController
   m_TagString: Untagged
@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: 1847124638102049318, guid: 09e1b6f897eb42048bdcb79d0a7c04f4, type: 3}
   baseWeaponJsonFile: {fileID: 4900000, guid: 458a17d759225a143993b2bcdd05c90e, type: 3}
   debugMode: 0
---- !u!114 &6738154468145463735
+--- !u!114 &4189392252686030318
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,13 +73,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4393887841404714592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97b64536436e6e2418d4d0c54cae651f, type: 3}
+  m_Script: {fileID: 11500000, guid: 449243ac67114d6438cd9338ccbdc242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterThatOwnsThisArsenal: {fileID: 0}
-  ownedWeapons: []
-  ownedSpecialWeapons: []
-  indexOfEquippedWeapon: 0
-  indexOfEquippedSpecialWeapon: 0
-  mainHandWeaponAnchor: {fileID: 0}
-  offHandWeaponAnchor: {fileID: 0}
+  goldPrefab: {fileID: 6834262310921018269, guid: 6c6773a9da69c464bab5035edc3291d5, type: 3}
+  expPrefab: {fileID: 3124469588837278367, guid: 161d730b065127048b5114289487edeb, type: 3}

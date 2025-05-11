@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1841575692151067228
+--- !u!1 &8408219786391799015
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8513741736030493569}
-  - component: {fileID: 2367443542644200814}
+  - component: {fileID: 2406621850794021007}
+  - component: {fileID: 476021741734607624}
   m_Layer: 0
   m_Name: World Sound FX Manager
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8513741736030493569
+--- !u!4 &2406621850794021007
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841575692151067228}
+  m_GameObject: {fileID: 8408219786391799015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.013680458, y: 0.49924034, z: 0}
@@ -32,16 +32,87 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2367443542644200814
+--- !u!114 &476021741734607624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1841575692151067228}
+  m_GameObject: {fileID: 8408219786391799015}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030bbc8b636953c4da4758850f574a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollSFX: {fileID: 0}
+  slashingWeaponSwingSFX:
+  - {fileID: 8300000, guid: a17e007c58cd88847b1860f209ca5c3e, type: 3}
+  - {fileID: 8300000, guid: fad5ed4f45bc1394b9771153cb84bb69, type: 3}
+  - {fileID: 8300000, guid: 65766943078c1e249866e3eb6d39a3e8, type: 3}
+  heavySlashingWeaponSwingSFX:
+  - {fileID: 8300000, guid: 3c160e70aad1c0a419e95136ce374fe1, type: 3}
+  - {fileID: 8300000, guid: 1dba90c9a13e7874f9f54c83d32da7cd, type: 3}
+  - {fileID: 8300000, guid: bde0a7948c8caac449fb27ece6031359, type: 3}
+  bludgeoningWeaponSwingSFX:
+  - {fileID: 8300000, guid: ceb06112e4f6133448d9f3020f7ceb03, type: 3}
+  - {fileID: 8300000, guid: 3b7c10ce65911774e9f1424932401525, type: 3}
+  - {fileID: 8300000, guid: 6fb22541b01918d4ebb9241ad2cb5eb7, type: 3}
+  scytheWeaponSwingSFX:
+  - {fileID: 8300000, guid: 59e4f9ffaa3eebf47a94261653863f89, type: 3}
+  - {fileID: 8300000, guid: 63e42520b38d1b547be35653d0752c30, type: 3}
+  - {fileID: 8300000, guid: 6b9c24bffa6d1a246a4e5acaf2c65bbe, type: 3}
+  piercingWeaponSwingSFX:
+  - {fileID: 8300000, guid: bfd3c3700ee0d394cb9a66cdccb5ef20, type: 3}
+  - {fileID: 8300000, guid: 174d74bd06ffc3c478ee45f073754a4d, type: 3}
+  - {fileID: 8300000, guid: 29ec397019b665a4a982930a278d6ceb, type: 3}
+  - {fileID: 8300000, guid: 2270fcaa7781afd4cbf72176f590562f, type: 3}
+  - {fileID: 8300000, guid: cc9872df30f21f642a9a0b7b958dd815, type: 3}
+  - {fileID: 8300000, guid: cc3a6f266b98a644994dfe783faf1ee3, type: 3}
+  - {fileID: 8300000, guid: 59e4f9ffaa3eebf47a94261653863f89, type: 3}
+  - {fileID: 8300000, guid: 63e42520b38d1b547be35653d0752c30, type: 3}
+  - {fileID: 8300000, guid: 6b9c24bffa6d1a246a4e5acaf2c65bbe, type: 3}
+  slashingImpactSFX:
+  - {fileID: 8300000, guid: f78ffcc94cf293b449c1bd6c37dbaa3e, type: 3}
+  - {fileID: 8300000, guid: 7367df5b85ee4e248bfbe86d9d64f541, type: 3}
+  - {fileID: 8300000, guid: 78c12bbfb0536874b8d9867d590bbe98, type: 3}
+  - {fileID: 8300000, guid: e5863a1e6a2fe634a8ba397fbd3452cc, type: 3}
+  - {fileID: 8300000, guid: efe3cb283bf2d26489b9c2ee037e1bd5, type: 3}
+  - {fileID: 8300000, guid: ebf05bccd5e289f44a81a42ffc77e762, type: 3}
+  - {fileID: 8300000, guid: bf2a6a614c9897242a5320a5442fc867, type: 3}
+  - {fileID: 8300000, guid: 9b1fff13d93f4d74387982e28903da77, type: 3}
+  - {fileID: 8300000, guid: cd98a02055556f640a6fe963d5700f55, type: 3}
+  bludgeoningImpactSFX:
+  - {fileID: 8300000, guid: 9e318d2a5571d7f408bf24d3381fc260, type: 3}
+  piercingImpactSFX: []
+  gunImpactSFX: []
+  explosionImpactSFX: []
+  fireImpactSFX: []
+  iceImpactSFX: []
+  windImpactSFX: []
+  lightningImpactSFX: []
+  lightImpactSFX: []
+  earthImpactSFX:
+  - {fileID: 8300000, guid: 8e40e1bb950c22f4386b528a39215fcc, type: 3}
+  - {fileID: 8300000, guid: e09312de9fd336148b9564e4f25dbd9f, type: 3}
+  - {fileID: 8300000, guid: 9e318d2a5571d7f408bf24d3381fc260, type: 3}
+  rollSFX:
+  - {fileID: 8300000, guid: 0bb90fc6f6e7ba040a2c362626c68003, type: 3}
+  - {fileID: 8300000, guid: 5b0de124f8ee55c43a617bf1b68aba98, type: 3}
+  - {fileID: 8300000, guid: d87284730b4a0584c8b5af2856cd3008, type: 3}
+  jumpJetAirSFX: {fileID: 8300000, guid: 5d87e2fb199dbc547b3651aa0dc9dc6e, type: 3}
+  walkFootStepSFX:
+  - {fileID: 8300000, guid: 05a08dd4ee0c046a6b56466d5c9aa9b8, type: 3}
+  - {fileID: 8300000, guid: bc1c11a60c94e439d84d64c56fdd354f, type: 3}
+  - {fileID: 8300000, guid: 64049f336db3d403dabd0425eb159922, type: 3}
+  - {fileID: 8300000, guid: aa9d74433c06a41a9b25cc9175d3f3ae, type: 3}
+  - {fileID: 8300000, guid: f7bff2a24d7d64eb296a8133060bd3e9, type: 3}
+  - {fileID: 8300000, guid: f626dafe2c3e045cd852e86532182f70, type: 3}
+  - {fileID: 8300000, guid: 27f4d8a727d874633b0292b089ec9b7c, type: 3}
+  - {fileID: 8300000, guid: c1eac1c698fc84605adb7e1074fd7d34, type: 3}
+  - {fileID: 8300000, guid: f54a7e8aabfc8436b965149db8156132, type: 3}
+  - {fileID: 8300000, guid: 3a06a27039e144e5c853a93d408fd63a, type: 3}
+  runFootStepSFX:
+  - {fileID: 8300000, guid: a2d19567d6566ec428f419f8526034a6, type: 3}
+  - {fileID: 8300000, guid: 0e1f61083a305e84e8716581cd8f6d8f, type: 3}
+  - {fileID: 8300000, guid: 5d0b746093acd9d44b5928ab62a939b2, type: 3}
+  backPedalSFX: {fileID: 8300000, guid: 27f4d8a727d874633b0292b089ec9b7c, type: 3}
+  caveAmbience: {fileID: 8300000, guid: f74396619b7154fa5a38a1959cfa67ae, type: 3}

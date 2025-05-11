@@ -6,7 +6,7 @@ public class PlayerWeaponManager : CharacterWeaponManager
 {
     [Header("Description:List of Player's current wepaons\n\n")]
     public static PlayerWeaponManager instance;
-    public void Awake()
+    new public void Awake()
     {
         if (instance == null)
         {

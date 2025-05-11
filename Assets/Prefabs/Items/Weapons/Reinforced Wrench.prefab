@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: -2016331803541816496}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Reinforced Wrench
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,40 +45,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponFamily: 2
   meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
   spr: {fileID: 21300000, guid: 3c5a3428922647347bf7cdd29d3e1e09, type: 3}
   hasObtained: 1
   stats:
     weaponType: 5
-    attack: 35
-    maxAttack: 35
+    attack: 24
+    maxAttack: 46
     durability: 100
-    maxDurability: 100
-    block: 20
-    maxBlock: 20
+    maxDurability: 144
+    block: 25
+    maxBlock: 27
     stability: 0
-    maxStability: 0
+    maxStability: 12
     elemental:
-      firePower: 0
+      firePower: 20
       icePower: 0
-      lightningPower: 0
+      lightningPower: 10
       windPower: 0
-      earthPower: 0
+      earthPower: 20
       lightPower: 0
-      beastPower: 0
+      beastPower: 5
       scalesPower: 0
-      techPower: 0
+      techPower: 15
     maxElemental:
-      firePower: 0
-      icePower: 0
-      lightningPower: 0
-      windPower: 0
-      earthPower: 0
-      lightPower: 0
-      beastPower: 0
-      scalesPower: 0
-      techPower: 0
+      firePower: 45
+      icePower: 45
+      lightningPower: 45
+      windPower: 45
+      earthPower: 45
+      lightPower: 45
+      beastPower: 45
+      scalesPower: 45
+      techPower: 5
     speed: 1
     maxSpeed: 1
     specialtyCooldown: 0
@@ -91,7 +92,21 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Reenforced Wrench
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    lightAttack03StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+    lightAttack03DamageMotionValue: 1.2
+    heavyAttack01DamageMotionValue: 1.4
+    heavyAttack02DamageMotionValue: 1.6
+    heavyChargedAttack01DamageMotionValue: 2
+    heavyChargedAttack02DamageMotionValue: 2.2
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
+  mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
 --- !u!1 &2822337914466691319
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,8 +183,20 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
+  lightAttack02DamageMotionValue: 0
+  lightAttack03DamageMotionValue: 0
+  heavyAttack01DamageMotionValue: 0
+  heavyAttack02DamageMotionValue: 0
+  heavyChargedAttack01DamageMotionValue: 0
+  heavyChargedAttack02DamageMotionValue: 0
+  weaponFamily: 0
 --- !u!1001 &3958046888691683104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -245,6 +272,10 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_Name
       value: Wrench
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

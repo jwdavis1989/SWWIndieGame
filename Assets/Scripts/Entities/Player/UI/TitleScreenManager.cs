@@ -32,6 +32,7 @@ public class TitleScreenManager : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip menuScrollSFX;
     public AudioClip enterGameSFX;
+    //public AudioClip titleScreenMusic;
 
     // public void StartNetworkAsHost() {
 
@@ -41,6 +42,7 @@ public class TitleScreenManager : MonoBehaviour
         if (instance == null) {
             instance = this;
             audioSource = GetComponent<AudioSource>();
+            //PlayTitleScreenBackgroundMusic();
         }
         else {
             Destroy(gameObject);
@@ -123,11 +125,30 @@ public class TitleScreenManager : MonoBehaviour
     }
     
     public void PlayStartGameSFX() {
-        audioSource.PlayOneShot(enterGameSFX);
-        //Debug.Log("Enter World Played");
+        PlayAdvancedSoundFX(enterGameSFX, 0.1f);
     }
 
     public void PlayMenuScrollSFX() {
-        audioSource.PlayOneShot(menuScrollSFX);
+        PlayAdvancedSoundFX(menuScrollSFX, 1f);
+    }
+
+    // public void PlayTitleScreenBackgroundMusic() {
+    //         audioSource.clip = titleScreenMusic;
+    //         audioSource.loop = true;
+    //         audioSource.volume = 0.25f;
+    //         audioSource.Play();
+    // }
+
+    public void PlayAdvancedSoundFX(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool randomizePitch = true, float pitchRandomRange = 0.1f, bool canOverlap = false) {
+        if (canOverlap || audioSource.clip != soundFX) {
+            audioSource.PlayOneShot(soundFX, volume);
+
+            //Reset pitch from last time called
+            audioSource.pitch = pitch;
+
+            if (randomizePitch) {
+                audioSource.pitch += UnityEngine.Random.Range(-pitchRandomRange, pitchRandomRange);
+            }
+        }
     }
 }

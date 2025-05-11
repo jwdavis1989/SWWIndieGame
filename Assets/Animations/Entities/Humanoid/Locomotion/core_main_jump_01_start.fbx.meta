@@ -60,17 +60,24 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.724234
+        functionName: PlayJumpJetBurstFX
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.77580637
+        functionName: PlayJumpFootStepSFX
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.83006537
         functionName: ApplyJumpingVelocity
         data: 
         objectReferenceParameter: {fileID: 7748067122375590922, guid: cd05f831f51a95a468dca165302c8b8a, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: PlayJumpJetBurstFX
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

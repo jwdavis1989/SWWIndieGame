@@ -9,20 +9,22 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     [Header("Character Causing Damage")]
     public CharacterManager characterCausingDamage;
 
+    [HideInInspector] public WeaponFamily weaponFamily;
+
     [Header("Damage")]
     //Elemental Damage will probably change to an ElementalStats object later.
-    //public ElementalStats elementalDamage = new ElementalStats();
+    public ElementalStats elementalDamage = new ElementalStats();
     // public WeaponScript weaponScript;
     public float physicalDamage = 0f;   
-    public float fireDamage = 0f;
-    public float iceDamage = 0f;
-    public float lightningDamage = 0f;
-    public float windDamage = 0f;
-    public float earthDamage = 0f;
-    public float lightDamage = 0f;
-    public float beastDamage = 0f;
-    public float scalesDamage = 0f;
-    public float techDamage = 0f;
+    //public float fireDamage = 0f;
+    //public float iceDamage = 0f;
+    //public float lightningDamage = 0f;
+    //public float windDamage = 0f;
+    //public float earthDamage = 0f;
+    //public float lightDamage = 0f;
+    //public float beastDamage = 0f;
+    //public float scalesDamage = 0f;
+    //public float techDamage = 0f;
 
     //Damage modifier for specific attack, which differs between attacks in a combo
     public float attackMotionValue = 1f;
@@ -57,6 +59,9 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     public float angleHitFrom;                      //Used to determine what damage animation to play
     public Vector3 contactPoint;                    //Used to determine where impact occured for SFX instantiating
 
+    [Header("Main Hand / Off Hand weapon")]
+    public bool isMainHand = false;
+
 
 
     public void Awake() {
@@ -76,10 +81,18 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         ApplyDamage(character, characterCausingDamage);
 
         //Check which direction damage came from
+
+
         //Play a damage animation
+        PlayDirectionalBasedDamageAnimation(character);
+
         //Check for build-ups (Poison, Bleed, ect)
+
         //Play damage sound FX
+        PlayDamageSFX(character);
+        
         //Play Damage VFX
+        PlayDamageVFX(character);
 
         //If Character is A.I., Check for new target if character causing damage is preset
 
@@ -89,7 +102,28 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Monsters or player created damage
         if (characterCausingDamage != null) {
             if (!targetCharacter.isPlayer) {
-                finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
+                //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                if (isMainHand)
+                {
+                    Debug.Log("Hit with main hand");
+                    finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                    if (enemy != null)
+                    {
+                        enemy.isHitByMainHand = true;
+                        Debug.Log("Enemy Hit with main hand");
+                    }
+                }
+                else
+                {
+                    Debug.Log("Hit with off hand");
+                    finalDamageDealt = PlayerWeaponManager.instance.GetOffHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                    if (enemy != null)
+                    {
+                        enemy.isHitByOffHand = true;
+                        Debug.Log("Enemy Hit with off hand");
+                    }
+                }
             }
             else {
                 finalDamageDealt = CalculateNPCDamage(targetCharacter, attackMotionValue, fullChargeModifier);
@@ -113,20 +147,136 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         float result = physicalDamage * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
-        result += physicalDamage * (fireDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.firePower) * isReducedByArmor);
-        result += physicalDamage * (iceDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.icePower) * isReducedByArmor);
-        result += physicalDamage * (lightningDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightningPower) * isReducedByArmor);
-        result += physicalDamage * (windDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.windPower) * isReducedByArmor);
-        result += physicalDamage * (earthDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.earthPower) * isReducedByArmor);
-        result += physicalDamage * (lightDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightPower) * isReducedByArmor);
-        result += physicalDamage * (beastDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower) * isReducedByArmor);
-        result += physicalDamage * (scalesDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower) * isReducedByArmor);
-        result += physicalDamage * (techDamage * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.firePower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.firePower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.icePower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.icePower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.lightningPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightningPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.windPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.windPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.earthPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.earthPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.lightPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.beastPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.scalesPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower) * isReducedByArmor);
+        result += physicalDamage * (elementalDamage.techPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
 
         if(result > 0) {
             return result * attackMotionValue * fullChargeModifier;
         }
         else return 0;
+    }
+
+    private void PlayDamageVFX(CharacterManager character) {
+        //e.g. If we have Fire Damage, Play Fire Particle Effects
+        character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
+    }
+
+    private void PlayDamageSFX(CharacterManager damagedCharacter) {
+        AudioClip impactSFX;
+        //e.g. If Fire damage is greater, play burn SFX
+        //e.g. If Lightning damage is greater, play Zap SFX
+
+        switch (weaponFamily) {
+                case WeaponFamily.Swords:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.GreatSwords:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 0.8f, true, 0.1f);
+                    break;
+                case WeaponFamily.HammersOrWrenches:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.bludgeoningImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.Scythes:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.Daggers:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.piercingImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.SemiAutoGuns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.gunImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.BurstFireGuns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.gunImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1.2f, true, 0.1f);
+                    break;
+                case WeaponFamily.LaserGuns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.fireImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1.2f, true, 0.1f);
+                    break;
+                case WeaponFamily.Shotguns:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.gunImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 0.6f, true, 0.1f);
+                    break;
+                case WeaponFamily.GrenadeLaunchers:
+                    impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.explosionImpactSFX);
+                    damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+                    break;
+                case WeaponFamily.MagicRosary:
+                    //Do the thing
+                    break;
+                case WeaponFamily.MagicWands:
+                    //Do the thing thing
+                    break;
+                case WeaponFamily.MagicStaves:
+                    //Do the thing thing thing
+                    break;
+                case WeaponFamily.MagicRings:
+                    //Do the thing thing thing thing
+                    break;
+                case WeaponFamily.Drones:
+                    //Do the thing thing thing thing thing
+                    break;
+                case WeaponFamily.NotYetSet:
+                    Debug.Log("ERROR: Weapon Family not set on Prefab!");
+                    break;
+                default:
+                    Debug.Log("ERROR: Weapon Family not set on Prefab!");
+                    break;
+            }
+
+            damagedCharacter.characterSoundFXManager.PlayTakeDamageGrunts();
+    }
+
+    private void PlayDirectionalBasedDamageAnimation(CharacterManager characterTakingDamage) {
+
+        //Works without this, but the tutorial suggests it so Idk man(?)
+        if (characterTakingDamage.isDead) {
+            return;
+        }
+
+        
+        //Calculate if Poise is broken
+        poiseIsBroken = true;
+
+        if (angleHitFrom >= 145 && angleHitFrom <= 180) {
+            //Play Front Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.forward_Medium_Damage);
+        }
+        else if (angleHitFrom <= -145 && angleHitFrom >= -180) {
+            //Play Front Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.forward_Medium_Damage);
+        }
+        else if (angleHitFrom >= -45 && angleHitFrom <= 45) {
+            //Play Back Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.backward_Medium_Damage);
+        }
+        else if (angleHitFrom >= -144 && angleHitFrom <= -45){
+            //Play Left Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.left_Medium_Damage);
+        }
+        else if (angleHitFrom >= 45 && angleHitFrom <= 144) {
+            //Play Right Animation
+            damageAnimation = characterTakingDamage.characterAnimatorManager.GetRandomAnimationFromList(characterTakingDamage.characterAnimatorManager.right_Medium_Damage);
+        }
+
+        //If poise is broken, play a staggering damage animation
+        if (poiseIsBroken) {
+            characterTakingDamage.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
+            characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
+        }
     }
 
 }

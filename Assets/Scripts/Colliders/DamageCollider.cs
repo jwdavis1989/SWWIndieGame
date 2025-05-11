@@ -10,15 +10,19 @@ public class DamageCollider : MonoBehaviour
     [Header("Stats")]
     //public WeaponStats stats;
     public float physicalDamage = 0f;
-    public float fireDamage = 0f;
-    public float iceDamage = 0f;
-    public float lightningDamage = 0f;
-    public float windDamage = 0f;
-    public float earthDamage = 0f;
-    public float lightDamage = 0f;
-    public float beastDamage = 0f;
-    public float scalesDamage = 0f;
-    public float techDamage = 0f;
+    //public float fireDamage = 0f;
+    //public float iceDamage = 0f;
+    //public float lightningDamage = 0f;
+    //public float windDamage = 0f;
+    //public float earthDamage = 0f;
+    //public float lightDamage = 0f;
+    //public float beastDamage = 0f;
+    //public float scalesDamage = 0f;
+    //public float techDamage = 0f;
+    public ElementalStats elementalStats = new ElementalStats();
+
+    [Header("Main Hand / Off Hand weapon")]
+    public bool isMainHand = false;
 
     //Damage modifier for specific attack, which differs between attacks in a combo
     public float attackMotionValue = 1f;
@@ -47,16 +51,16 @@ public class DamageCollider : MonoBehaviour
             InvokeRepeating("ResetDamageList", environmentalHazardTickRate, environmentalHazardTickRate);
         }
     }
+    
     protected virtual void OnTriggerEnter(Collider other) {
         //if (other.gameObject.layer == LayerMask.NameToLayer("Character")) {
             CharacterManager damageTarget = other.GetComponentInParent<CharacterManager>();
 
-            //Uncomment below if we want to search on both the damageable character colliders and the character controller collider:
-            // if (damageTarget == null) {
-            //     damageTarget = other.GetComponent<CharacterManager>();
-            // }
-
-            if (damageTarget != null) {
+        //Uncomment below if we want to search on both the damageable character colliders and the character controller collider:
+        // if (damageTarget == null) {
+        //     damageTarget = other.GetComponent<CharacterManager>();
+        // }
+        if (damageTarget != null) {
                 contactPoint = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
                 //Check if we can damage this target based on friendly fire
@@ -82,23 +86,25 @@ public class DamageCollider : MonoBehaviour
 
         //Create a copy of the damage effect to not change the original
         TakeHealthDamageCharacterEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeHealthDamageEffect);
+        damageEffect.isMainHand = isMainHand;
 
         //Base Attack Power
         damageEffect.physicalDamage = physicalDamage;
         //damageEffect.weaponScript.stats = stats;
 
         //Elemental
-        damageEffect.fireDamage = fireDamage;
-        damageEffect.iceDamage = iceDamage;
-        damageEffect.lightningDamage = lightningDamage;
-        damageEffect.windDamage = windDamage;
+        damageEffect.elementalDamage = elementalStats;
+        //damageEffect.fireDamage = fireDamage;
+        //damageEffect.iceDamage = iceDamage;
+        //damageEffect.lightningDamage = lightningDamage;
+        //damageEffect.windDamage = windDamage;
 
-        //Anti-Type
-        damageEffect.earthDamage = earthDamage;
-        damageEffect.lightDamage = lightDamage;
-        damageEffect.beastDamage = beastDamage;
-        damageEffect.scalesDamage = scalesDamage;
-        damageEffect.techDamage = techDamage;
+        ////Anti-Type
+        //damageEffect.earthDamage = earthDamage;
+        //damageEffect.lightDamage = lightDamage;
+        //damageEffect.beastDamage = beastDamage;
+        //damageEffect.scalesDamage = scalesDamage;
+        //damageEffect.techDamage = techDamage;
 
         //Armore Penetration
         damageEffect.isReducedByArmor = isReducedByArmor;
@@ -108,6 +114,9 @@ public class DamageCollider : MonoBehaviour
 
         //Apply Charge Bonus Damage Modifier
         damageEffect.fullChargeModifier = fullChargeModifier;
+
+        //Update Contact Point for VFX
+        damageEffect.contactPoint = contactPoint;
         
         //Apply the copy's damage effect to the target
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);

@@ -29,6 +29,26 @@ public enum WeaponType
     //Limit - Nothing past here
     UNKNOWN
 }
+
+public enum WeaponFamily {
+    Swords,
+    GreatSwords,
+    HammersOrWrenches,
+    Scythes,
+    Daggers,
+    SemiAutoGuns,
+    BurstFireGuns,
+    LaserGuns,
+    Shotguns,
+    GrenadeLaunchers,
+    MagicRosary,
+    MagicWands,
+    MagicStaves,
+    MagicRings,
+    Drones,
+    NotYetSet
+}
+
 /*
  * Serializable WeaponStats used for JSON saving
  */
@@ -37,7 +57,8 @@ public class WeaponStats
 {
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
-    [Header("Weapon Attributes (Intialized by JSON)")]
+
+    [Header("Weapon Attributes")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
     public float durability = 1;
@@ -51,7 +72,7 @@ public class WeaponStats
     public float speed = 1.0f;
     public float maxSpeed = 1.0f;
     public float specialtyCooldown = 0;
-    public float maxSpecialtyCooldown = 0;
+    public float maxSpecialtyCooldown = 0; // Unused?
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
     public float currentDurability = 1.0f;
@@ -63,14 +84,48 @@ public class WeaponStats
 
     [Header("Stamina Costs")]
     public float baseStaminaCost = 20f;
+
+    //Light
     public float lightAttack01StaminaCostModifier = 1f;
     public float lightAttack02StaminaCostModifier = 1f;
-    public float heavyAttack01StaminaCostModifier = 1f;
-    public float heavyAttack02StaminaCostModifier = 1f;
+    public float lightAttack03StaminaCostModifier = 1f;
+
+    //Heavy
+    public float heavyAttack01StaminaCostModifier = 1.2f;
+    public float heavyAttack02StaminaCostModifier = 1.2f;
+
+    //Running
+    public float lightRunningAttack01StaminaCostModifier = 1f;
+
+    //Rolling
+    public float lightRollingAttack01StaminaCostModifier = 1f;
+
+    //Backstepping
+    public float lightBackstepAttack01StaminaCostModifier = 1f;
 
     [Header("Motion Values")]
+    //Light
     public float lightAttack01DamageMotionValue = 1f;
     public float lightAttack02DamageMotionValue = 1.1f;
+    public float lightAttack03DamageMotionValue = 1.2f;
+
+    //Heavy
+    public float heavyAttack01DamageMotionValue = 1.4f;
+    public float heavyAttack02DamageMotionValue = 1.6f;
+
+    //Charged Heavy
+    public float heavyChargedAttack01DamageMotionValue = 2.0f;
+    public float heavyChargedAttack02DamageMotionValue = 2.2f;
+
+    //Running
+    public float lightRunningAttack01DamageMotionValue = 1f;
+
+    //Rolling
+    public float lightRollingAttack01DamageMotionValue = 1f;
+
+    //Backstepping
+    public float lightBackstepAttack01DamageMotionValue = 1f;
+
 
 }
 /*
@@ -123,8 +178,11 @@ public class ElementalStats
  */
 public class WeaponScript : MonoBehaviour
 {
+    [Header("Weapon Family - Important - Set in Prefab")]
+    public WeaponFamily weaponFamily = 0;
+
     [Header("Weapon Damage Collider")]
-    [SerializeField] public MeleeWeaponDamageCollider meleeWeaponDamageCollider;
+    [SerializeField] public MeleeWeaponDamageCollider weaponDamageCollider;
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
@@ -132,64 +190,103 @@ public class WeaponScript : MonoBehaviour
     public Sprite spr = null;
     [Header("Will appear as ??? on weapon sheet until obtained")]
     public bool hasObtained = false;
-    [Header("Important: Set weapon type (Otherwise base weapon stats are intialized by weaponsJSON)")]
+    [Header("These are all written to JSON when saving a game.")]
     public WeaponStats stats;
 
     [Header("Actions")]
-    public WeaponItemAction mainHandLightAttackAction;
+    public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
+    public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
+
+    [Header("Projectile")]
+    public GameObject projectile = null;
 
     public void Awake() {
-        meleeWeaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-        if (!isSpecialWeapon && meleeWeaponDamageCollider) {
+        if (isSpecialWeapon)
+        {
+            if(projectile != null)
+            {
+                weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
+            }
+            else { 
+                weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+            }
+        }
+        else
+        {
+            weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+        }
+        if (weaponDamageCollider) {
             SetWeaponDamage();
         }
     }
-
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage() {
-        if (meleeWeaponDamageCollider == null) return;
+        if (weaponDamageCollider == null) return;
         //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
         // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
-            meleeWeaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
+            weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
         // }
         // else {
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework
         // }
-        meleeWeaponDamageCollider.enabled = true;
+        weaponDamageCollider.isMainHand = !isSpecialWeapon;
+        weaponDamageCollider.enabled = true;
+
+        weaponDamageCollider.weaponFamily = weaponFamily;
         
-        meleeWeaponDamageCollider.physicalDamage = stats.attack;
-        meleeWeaponDamageCollider.fireDamage = stats.elemental.firePower;
-        meleeWeaponDamageCollider.iceDamage = stats.elemental.icePower;
-        meleeWeaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
-        meleeWeaponDamageCollider.windDamage = stats.elemental.windPower;
-        meleeWeaponDamageCollider.earthDamage = stats.elemental.earthPower;
-        meleeWeaponDamageCollider.lightDamage = stats.elemental.lightPower;
-        meleeWeaponDamageCollider.beastDamage = stats.elemental.beastPower;
-        meleeWeaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
-        meleeWeaponDamageCollider.techDamage = stats.elemental.techPower;
+        //weaponDamageCollider.physicalDamage = stats.attack;
+        //weaponDamageCollider.fireDamage = stats.elemental.firePower;
+        //weaponDamageCollider.iceDamage = stats.elemental.icePower;
+        //weaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
+        //weaponDamageCollider.windDamage = stats.elemental.windPower;
+        //weaponDamageCollider.earthDamage = stats.elemental.earthPower;
+        //weaponDamageCollider.lightDamage = stats.elemental.lightPower;
+        //weaponDamageCollider.beastDamage = stats.elemental.beastPower;
+        //weaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
+        //weaponDamageCollider.techDamage = stats.elemental.techPower;
+        weaponDamageCollider.elementalStats = stats.elemental;
 
         //Turn the collider back off so it doesn't hurt anyone, ow
-        meleeWeaponDamageCollider.enabled = false;
+        weaponDamageCollider.enabled = false;
 
         //Add Motion Value
-        meleeWeaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
+        //Light
+        weaponDamageCollider.lightAttack01DamageMotionValue = stats.lightAttack01DamageMotionValue;
+        weaponDamageCollider.lightAttack02DamageMotionValue = stats.lightAttack02DamageMotionValue;
+        weaponDamageCollider.lightAttack03DamageMotionValue = stats.lightAttack03DamageMotionValue;
+
+        //Heavy
+        weaponDamageCollider.heavyAttack01DamageMotionValue = stats.heavyAttack01DamageMotionValue;
+        weaponDamageCollider.heavyAttack02DamageMotionValue = stats.heavyAttack02DamageMotionValue;
+
+        //Charged Heavy
+        weaponDamageCollider.heavyChargedAttack01DamageMotionValue = stats.heavyChargedAttack01DamageMotionValue;
+        weaponDamageCollider.heavyChargedAttack02DamageMotionValue = stats.heavyChargedAttack02DamageMotionValue;
+
+        //Running
+        weaponDamageCollider.lightRunningAttack01DamageMotionValue = stats.lightRunningAttack01DamageMotionValue;
+
+        //Rolling
+        weaponDamageCollider.lightRollingAttack01DamageMotionValue = stats.lightRollingAttack01DamageMotionValue;
+
+        //Backstepping
+        weaponDamageCollider.lightBackstepAttack01DamageMotionValue = stats.lightBackstepAttack01DamageMotionValue;
+
     }
     /**
      * Add Exp to a weapon and level it up if possible
      */
     public void AddExp(float exp)
     {
+        //Debug.Log("Adding " + exp + " exp to " + stats.weaponName);//astest
         stats.currentExperiencePoints += exp;
-        if(stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0)
+        while(stats.currentExperiencePoints >= stats.experiencePointsToNextLevel)
         {
             stats.level++;
             stats.currentTinkerPoints += stats.tinkerPointsPerLvl;
-            stats.currentExperiencePoints = stats.currentExperiencePoints - stats.experiencePointsToNextLevel;
             //Currently add 100 to exp needed for each level
-            stats.experiencePointsToNextLevel = 100 * stats.level;
-            //Handle multi-level
-            if (stats.currentExperiencePoints - stats.experiencePointsToNextLevel <= 0) 
-                AddExp(0);
+            stats.experiencePointsToNextLevel = 100 + 100 * stats.level;
+            //TODO PLAY LEVEL UP NOISE/ANIMATION
         }
     }
 
@@ -224,6 +321,7 @@ public class WeaponScript : MonoBehaviour
         }
         else return 0;
     }
+
 
 }
 /** Change Log  

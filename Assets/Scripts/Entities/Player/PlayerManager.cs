@@ -14,15 +14,22 @@ public class PlayerManager : CharacterManager
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
+    [HideInInspector] public PlayerCombatManager playerCombatManager;
+
+    public GameObject flashlight;
+    public GameObject cameraflashlight;
 
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
 
     protected override void Awake() {
+        isPlayer = true;
+        isRotatingAttacker = true;
         base.Awake();
 
         //Do more stuff, only for the player
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+        playerCombatManager = GetComponent<PlayerCombatManager>();
         
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
@@ -31,7 +38,6 @@ public class PlayerManager : CharacterManager
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
-        isPlayer = true;
 
     }
 
@@ -55,22 +61,19 @@ public class PlayerManager : CharacterManager
 
     protected override void LateUpdate() {
         base.LateUpdate();
-
         PlayerCamera.instance.HandleAllCameraActions();
     }
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
-        if (isPlayer) {
-            PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
-        }
+        PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
 
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
 
     public override void ReviveCharacter() {
         base.ReviveCharacter();
-
+        canMove = true;
         isDead = false;
         playerStatsManager.currentHealth = playerStatsManager.maxHealth;
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
@@ -105,6 +108,11 @@ public class PlayerManager : CharacterManager
         currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
         currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
         currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
+        //Tinker Components owned
+        currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
+        currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
+        //Idea Images
+        InventionManager.instance.SaveIdeas();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -134,24 +142,60 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
-        //Add Weapon Arsenal Data Loading here later
+        //Weapon Arsenal Data Loading here
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
         //AttachCurrentlyEquippedWeaponObjectsToHand();
+        //Load TinkerComponents
+        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
+        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
     }
 
-    public void DebugAddWeapon() {
-        WeaponType weaponType = (WeaponType)Random.Range(0, System.Enum.GetValues(typeof(WeaponType)).Length - 1);
-        bool isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
-        PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
-        PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
-        if (isSpecial)
-        {
-            PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
+    public void ToggleFlashlight() {
+        if (flashlight != null) {
+            if (flashlight.activeSelf) {
+                flashlight.SetActive(false);
+            }
+            else {
+                flashlight.SetActive(true);
+            }
         }
-        else
-            PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
+        else {
+            Debug.Log("ERROR: Player Flashlight Instance Not Set in Editor.");
+        }
+
+        if (cameraflashlight != null) {
+            if (cameraflashlight.activeSelf) {
+                cameraflashlight.SetActive(false);
+            }
+            else {
+                cameraflashlight.SetActive(true);
+            }
+        }
+        else {
+            Debug.Log("ERROR: Camera Flashlight Instance Not Set in Editor.");
+        }
+    }
+    
+    public void DebugAddWeapon() {
+        WeaponType weaponType;
+        bool isSpecial;
+        
+        for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++) {
+            weaponType = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>().stats.weaponType;
+            isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
+            PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
+            PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
+            if (isSpecial) {
+                PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
+                //PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
+            }
+            else {
+                PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
+                //PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+            }
+        }
     }
 
     // public void AttachCurrentlyEquippedWeaponObjectsToHand() {
@@ -175,4 +219,6 @@ public class PlayerManager : CharacterManager
             ReviveCharacter();
         }
     }
+
+    
 }

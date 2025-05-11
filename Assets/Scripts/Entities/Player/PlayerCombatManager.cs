@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class PlayerCombatManager : CharacterCombatManager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    PlayerManager player;
+
+    //[Header("Flags")]
+    //public bool canComboWithMainHandWeapon = false;
+
+    public override void SetTarget(CharacterManager newTarget) {
+        base.SetTarget(newTarget);
+
+        PlayerCamera.instance.SetLockCameraHeight();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public override void Awake() {
+        base.Awake();
+        player = GetComponent<PlayerManager>();
     }
+
+    //Animation Event Calls
+    public override void EnableCanDoCombo() {
+        canComboWithMainHandWeapon = true;
+    }
+
+    public override void DisableCanDoCombo() {
+        canComboWithMainHandWeapon = false;
+    }
+
 }

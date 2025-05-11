@@ -6,6 +6,9 @@ using UnityEngine;
 public class WorldCharacterEffectsManager : MonoBehaviour
 {
     public static WorldCharacterEffectsManager instance;
+    [Header("VFX")]
+    public GameObject defaultBloodSplatterVFX;
+
     [Header("Damage")]
     public TakeHealthDamageCharacterEffect takeHealthDamageEffect;
     [SerializeField] List<InstantCharacterEffect> instantEffects;

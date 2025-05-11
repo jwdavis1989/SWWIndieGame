@@ -265,12 +265,75 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""ToggleFlashlight"",
+                    ""type"": ""Button"",
+                    ""id"": ""e11afb79-a6b8-45d4-8e07-78df9d7336d7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""LightAttack"",
                     ""type"": ""Button"",
                     ""id"": ""3a1c8636-a073-4ba6-809b-bde77a31ee15"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QueueLightAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""03aa6557-0fa7-46e5-8209-e9d802d59001"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeRightWeaponDPad"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd6fda8c-f7f7-4126-8a50-2609a43a0511"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeLeftWeaponDPad"",
+                    ""type"": ""Button"",
+                    ""id"": ""29002326-7506-4c60-aaca-d645dd117142"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HeavyAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd2961e7-6a6d-4053-ad74-91db3d69a466"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QueueHeavyAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""382b8827-c061-4c47-9104-3058340975a3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeHeavyAttack"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""a71620a7-becd-4735-9452-1dedc8db015a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(pressPoint=0.1)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -310,6 +373,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DebugTeleportToSurfaceDemo"",
+                    ""type"": ""Button"",
+                    ""id"": ""1cfe77a2-7b8a-412d-9528-86904544d839"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""NextWeapon"",
                     ""type"": ""PassThrough"",
                     ""id"": ""3e3e861f-fb3e-42f7-9cd1-77f1b6df3609"",
@@ -322,6 +394,51 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""DebugFullResources"",
                     ""type"": ""Button"",
                     ""id"": ""2d0e4d85-af8f-4b29-964a-f05c6a53d363"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""78ba601b-73b7-4233-9faf-034ceaebacdc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SeekLeftLockOnTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""af4678c2-669d-402e-a7d0-f27aef98a7c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SeekRightLockOnTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a58e275-92fc-49ca-ab0b-15f532837cd1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""b53bab46-37ad-415e-a517-60eafd2ef95d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItemQuickSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""527cd677-7010-4984-bc53-8c5c616b0bbc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -440,39 +557,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""DPadLeftOrRight"",
-                    ""id"": ""246c313f-e4dd-4faf-b536-d05604da954a"",
-                    ""path"": ""2DVector(mode=2)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NextWeapon"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""b2a6a6b6-72d3-4e34-8262-c358ab9f9be3"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NextWeapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""acffe3f9-089a-4403-a5a5-f03b14b56e8e"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""NextWeapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""4a882b52-ecc2-474f-a932-5f51de24d189"",
                     ""path"": ""<Keyboard>/numpad2"",
@@ -537,6 +621,248 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""LightAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88df2206-0856-4113-a1c7-12973b03eb62"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleFlashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""22a8e373-2f7b-42d2-807a-b1db1ae3ad36"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleFlashlight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99d0e44b-54e3-417d-ba8f-8e9b0eff40ca"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""200d60ad-4b4b-4022-84ca-9a2878abceae"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""506d3b94-1177-4fc5-b089-93d98d38539a"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SeekLeftLockOnTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a1b0068-fefd-415e-a126-5b48df766beb"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SeekRightLockOnTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef694a95-76b5-47df-ae29-5eaa32a8b4e3"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SeekRightLockOnTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e120aa0f-c2c2-4af7-9c9c-6a7e0cfc4dba"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc2b0e8d-d749-403b-a19a-7392f6f1f952"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9575b28f-e455-4c6a-ace0-49853e623ef5"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChargeHeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98e05bcb-ea7b-4acf-8483-1b9863e290a8"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChargeHeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cf9b372a-caae-4557-9192-e1757f3ef0f7"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeRightWeaponDPad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ce695ae-fd45-4d25-a8ae-0c27f42564c7"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeLeftWeaponDPad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f56250b6-ea44-4f68-badb-bebaf130e7de"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueLightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e120fcd-4e50-4cc3-9f13-d6edbb5d60ff"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueLightAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18fa428c-f094-4ad1-a541-2bbeb4759376"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueHeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""059f8b72-3850-4359-83a6-8ad2a7b3abad"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueHeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53097774-62ea-4c9d-a257-c2ed181b7da1"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""641f5baa-c061-4742-8d77-ab526f927f64"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d076d82-bd09-4291-b530-930d3cf61299"",
+                    ""path"": ""<Keyboard>/numpad4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToSurfaceDemo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d3a906e-f7ce-4222-8e42-5ab8c4aa8a64"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItemQuickSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1393861d-3be4-498e-920d-a0e3067add41"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItemQuickSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -552,6 +878,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UIButtonA"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef92f6aa-327e-4cc7-958d-798b0088b416"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""fdf83cdf-0968-4131-bb9d-832faeb26fc5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CaptureIdeaPhotoBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""28878abf-a4e8-4a58-97ce-36e8fba73f88"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -563,6 +916,83 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UIButtonX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d21664e0-d368-427c-a07c-ac4a695ab550"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIButtonA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2012782-fc88-4cce-b6cc-8d596669d94d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIButtonA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d4e91c3-9437-4204-81fb-f59c792f8790"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIButtonA"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3927717-230c-49ba-a785-2df25aaaed14"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed881dd2-2be0-4807-b681-d4c7f69396ad"",
+                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3aa104eb-21ce-433e-9385-2e3a976bf878"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CaptureIdeaPhotoBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e84c4a8-44f5-4b4b-bd40-1f9ac3391c92"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CaptureIdeaPhotoBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -582,16 +1012,32 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Dodge = m_PlayerActions.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerActions_ToggleFlashlight = m_PlayerActions.FindAction("ToggleFlashlight", throwIfNotFound: true);
         m_PlayerActions_LightAttack = m_PlayerActions.FindAction("LightAttack", throwIfNotFound: true);
+        m_PlayerActions_QueueLightAttack = m_PlayerActions.FindAction("QueueLightAttack", throwIfNotFound: true);
+        m_PlayerActions_ChangeRightWeaponDPad = m_PlayerActions.FindAction("ChangeRightWeaponDPad", throwIfNotFound: true);
+        m_PlayerActions_ChangeLeftWeaponDPad = m_PlayerActions.FindAction("ChangeLeftWeaponDPad", throwIfNotFound: true);
+        m_PlayerActions_HeavyAttack = m_PlayerActions.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_PlayerActions_QueueHeavyAttack = m_PlayerActions.FindAction("QueueHeavyAttack", throwIfNotFound: true);
+        m_PlayerActions_ChargeHeavyAttack = m_PlayerActions.FindAction("ChargeHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJerryDev = m_PlayerActions.FindAction("DebugTeleportToJerryDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToSurfaceDemo = m_PlayerActions.FindAction("DebugTeleportToSurfaceDemo", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugFullResources = m_PlayerActions.FindAction("DebugFullResources", throwIfNotFound: true);
+        m_PlayerActions_LockOn = m_PlayerActions.FindAction("LockOn", throwIfNotFound: true);
+        m_PlayerActions_SeekLeftLockOnTarget = m_PlayerActions.FindAction("SeekLeftLockOnTarget", throwIfNotFound: true);
+        m_PlayerActions_SeekRightLockOnTarget = m_PlayerActions.FindAction("SeekRightLockOnTarget", throwIfNotFound: true);
+        m_PlayerActions_Interact = m_PlayerActions.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerActions_UseItemQuickSlot = m_PlayerActions.FindAction("UseItemQuickSlot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
+        m_UI_UIButtonA = m_UI.FindAction("UIButtonA", throwIfNotFound: true);
+        m_UI_PauseButton = m_UI.FindAction("PauseButton", throwIfNotFound: true);
+        m_UI_CaptureIdeaPhotoBtn = m_UI.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -748,13 +1194,26 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Dodge;
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Jump;
+    private readonly InputAction m_PlayerActions_ToggleFlashlight;
     private readonly InputAction m_PlayerActions_LightAttack;
+    private readonly InputAction m_PlayerActions_QueueLightAttack;
+    private readonly InputAction m_PlayerActions_ChangeRightWeaponDPad;
+    private readonly InputAction m_PlayerActions_ChangeLeftWeaponDPad;
+    private readonly InputAction m_PlayerActions_HeavyAttack;
+    private readonly InputAction m_PlayerActions_QueueHeavyAttack;
+    private readonly InputAction m_PlayerActions_ChargeHeavyAttack;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
     private readonly InputAction m_PlayerActions_DebugTeleportToJerryDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
+    private readonly InputAction m_PlayerActions_DebugTeleportToSurfaceDemo;
     private readonly InputAction m_PlayerActions_NextWeapon;
     private readonly InputAction m_PlayerActions_DebugFullResources;
+    private readonly InputAction m_PlayerActions_LockOn;
+    private readonly InputAction m_PlayerActions_SeekLeftLockOnTarget;
+    private readonly InputAction m_PlayerActions_SeekRightLockOnTarget;
+    private readonly InputAction m_PlayerActions_Interact;
+    private readonly InputAction m_PlayerActions_UseItemQuickSlot;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -762,13 +1221,26 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Dodge => m_Wrapper.m_PlayerActions_Dodge;
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
+        public InputAction @ToggleFlashlight => m_Wrapper.m_PlayerActions_ToggleFlashlight;
         public InputAction @LightAttack => m_Wrapper.m_PlayerActions_LightAttack;
+        public InputAction @QueueLightAttack => m_Wrapper.m_PlayerActions_QueueLightAttack;
+        public InputAction @ChangeRightWeaponDPad => m_Wrapper.m_PlayerActions_ChangeRightWeaponDPad;
+        public InputAction @ChangeLeftWeaponDPad => m_Wrapper.m_PlayerActions_ChangeLeftWeaponDPad;
+        public InputAction @HeavyAttack => m_Wrapper.m_PlayerActions_HeavyAttack;
+        public InputAction @QueueHeavyAttack => m_Wrapper.m_PlayerActions_QueueHeavyAttack;
+        public InputAction @ChargeHeavyAttack => m_Wrapper.m_PlayerActions_ChargeHeavyAttack;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
         public InputAction @DebugTeleportToJerryDev => m_Wrapper.m_PlayerActions_DebugTeleportToJerryDev;
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
+        public InputAction @DebugTeleportToSurfaceDemo => m_Wrapper.m_PlayerActions_DebugTeleportToSurfaceDemo;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
         public InputAction @DebugFullResources => m_Wrapper.m_PlayerActions_DebugFullResources;
+        public InputAction @LockOn => m_Wrapper.m_PlayerActions_LockOn;
+        public InputAction @SeekLeftLockOnTarget => m_Wrapper.m_PlayerActions_SeekLeftLockOnTarget;
+        public InputAction @SeekRightLockOnTarget => m_Wrapper.m_PlayerActions_SeekRightLockOnTarget;
+        public InputAction @Interact => m_Wrapper.m_PlayerActions_Interact;
+        public InputAction @UseItemQuickSlot => m_Wrapper.m_PlayerActions_UseItemQuickSlot;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -787,9 +1259,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @ToggleFlashlight.started += instance.OnToggleFlashlight;
+            @ToggleFlashlight.performed += instance.OnToggleFlashlight;
+            @ToggleFlashlight.canceled += instance.OnToggleFlashlight;
             @LightAttack.started += instance.OnLightAttack;
             @LightAttack.performed += instance.OnLightAttack;
             @LightAttack.canceled += instance.OnLightAttack;
+            @QueueLightAttack.started += instance.OnQueueLightAttack;
+            @QueueLightAttack.performed += instance.OnQueueLightAttack;
+            @QueueLightAttack.canceled += instance.OnQueueLightAttack;
+            @ChangeRightWeaponDPad.started += instance.OnChangeRightWeaponDPad;
+            @ChangeRightWeaponDPad.performed += instance.OnChangeRightWeaponDPad;
+            @ChangeRightWeaponDPad.canceled += instance.OnChangeRightWeaponDPad;
+            @ChangeLeftWeaponDPad.started += instance.OnChangeLeftWeaponDPad;
+            @ChangeLeftWeaponDPad.performed += instance.OnChangeLeftWeaponDPad;
+            @ChangeLeftWeaponDPad.canceled += instance.OnChangeLeftWeaponDPad;
+            @HeavyAttack.started += instance.OnHeavyAttack;
+            @HeavyAttack.performed += instance.OnHeavyAttack;
+            @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @QueueHeavyAttack.started += instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.performed += instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.canceled += instance.OnQueueHeavyAttack;
+            @ChargeHeavyAttack.started += instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.performed += instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.canceled += instance.OnChargeHeavyAttack;
             @DebugTestAddWeapon.started += instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.performed += instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.canceled += instance.OnDebugTestAddWeapon;
@@ -802,12 +1295,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToJacobDev.started += instance.OnDebugTeleportToJacobDev;
             @DebugTeleportToJacobDev.performed += instance.OnDebugTeleportToJacobDev;
             @DebugTeleportToJacobDev.canceled += instance.OnDebugTeleportToJacobDev;
+            @DebugTeleportToSurfaceDemo.started += instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToSurfaceDemo.performed += instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToSurfaceDemo.canceled += instance.OnDebugTeleportToSurfaceDemo;
             @NextWeapon.started += instance.OnNextWeapon;
             @NextWeapon.performed += instance.OnNextWeapon;
             @NextWeapon.canceled += instance.OnNextWeapon;
             @DebugFullResources.started += instance.OnDebugFullResources;
             @DebugFullResources.performed += instance.OnDebugFullResources;
             @DebugFullResources.canceled += instance.OnDebugFullResources;
+            @LockOn.started += instance.OnLockOn;
+            @LockOn.performed += instance.OnLockOn;
+            @LockOn.canceled += instance.OnLockOn;
+            @SeekLeftLockOnTarget.started += instance.OnSeekLeftLockOnTarget;
+            @SeekLeftLockOnTarget.performed += instance.OnSeekLeftLockOnTarget;
+            @SeekLeftLockOnTarget.canceled += instance.OnSeekLeftLockOnTarget;
+            @SeekRightLockOnTarget.started += instance.OnSeekRightLockOnTarget;
+            @SeekRightLockOnTarget.performed += instance.OnSeekRightLockOnTarget;
+            @SeekRightLockOnTarget.canceled += instance.OnSeekRightLockOnTarget;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @UseItemQuickSlot.started += instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.performed += instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.canceled += instance.OnUseItemQuickSlot;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -821,9 +1332,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @ToggleFlashlight.started -= instance.OnToggleFlashlight;
+            @ToggleFlashlight.performed -= instance.OnToggleFlashlight;
+            @ToggleFlashlight.canceled -= instance.OnToggleFlashlight;
             @LightAttack.started -= instance.OnLightAttack;
             @LightAttack.performed -= instance.OnLightAttack;
             @LightAttack.canceled -= instance.OnLightAttack;
+            @QueueLightAttack.started -= instance.OnQueueLightAttack;
+            @QueueLightAttack.performed -= instance.OnQueueLightAttack;
+            @QueueLightAttack.canceled -= instance.OnQueueLightAttack;
+            @ChangeRightWeaponDPad.started -= instance.OnChangeRightWeaponDPad;
+            @ChangeRightWeaponDPad.performed -= instance.OnChangeRightWeaponDPad;
+            @ChangeRightWeaponDPad.canceled -= instance.OnChangeRightWeaponDPad;
+            @ChangeLeftWeaponDPad.started -= instance.OnChangeLeftWeaponDPad;
+            @ChangeLeftWeaponDPad.performed -= instance.OnChangeLeftWeaponDPad;
+            @ChangeLeftWeaponDPad.canceled -= instance.OnChangeLeftWeaponDPad;
+            @HeavyAttack.started -= instance.OnHeavyAttack;
+            @HeavyAttack.performed -= instance.OnHeavyAttack;
+            @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @QueueHeavyAttack.started -= instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.performed -= instance.OnQueueHeavyAttack;
+            @QueueHeavyAttack.canceled -= instance.OnQueueHeavyAttack;
+            @ChargeHeavyAttack.started -= instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.performed -= instance.OnChargeHeavyAttack;
+            @ChargeHeavyAttack.canceled -= instance.OnChargeHeavyAttack;
             @DebugTestAddWeapon.started -= instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.performed -= instance.OnDebugTestAddWeapon;
             @DebugTestAddWeapon.canceled -= instance.OnDebugTestAddWeapon;
@@ -836,12 +1368,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToJacobDev.started -= instance.OnDebugTeleportToJacobDev;
             @DebugTeleportToJacobDev.performed -= instance.OnDebugTeleportToJacobDev;
             @DebugTeleportToJacobDev.canceled -= instance.OnDebugTeleportToJacobDev;
+            @DebugTeleportToSurfaceDemo.started -= instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToSurfaceDemo.performed -= instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToSurfaceDemo.canceled -= instance.OnDebugTeleportToSurfaceDemo;
             @NextWeapon.started -= instance.OnNextWeapon;
             @NextWeapon.performed -= instance.OnNextWeapon;
             @NextWeapon.canceled -= instance.OnNextWeapon;
             @DebugFullResources.started -= instance.OnDebugFullResources;
             @DebugFullResources.performed -= instance.OnDebugFullResources;
             @DebugFullResources.canceled -= instance.OnDebugFullResources;
+            @LockOn.started -= instance.OnLockOn;
+            @LockOn.performed -= instance.OnLockOn;
+            @LockOn.canceled -= instance.OnLockOn;
+            @SeekLeftLockOnTarget.started -= instance.OnSeekLeftLockOnTarget;
+            @SeekLeftLockOnTarget.performed -= instance.OnSeekLeftLockOnTarget;
+            @SeekLeftLockOnTarget.canceled -= instance.OnSeekLeftLockOnTarget;
+            @SeekRightLockOnTarget.started -= instance.OnSeekRightLockOnTarget;
+            @SeekRightLockOnTarget.performed -= instance.OnSeekRightLockOnTarget;
+            @SeekRightLockOnTarget.canceled -= instance.OnSeekRightLockOnTarget;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @UseItemQuickSlot.started -= instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.performed -= instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.canceled -= instance.OnUseItemQuickSlot;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -864,11 +1414,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_UIButtonX;
+    private readonly InputAction m_UI_UIButtonA;
+    private readonly InputAction m_UI_PauseButton;
+    private readonly InputAction m_UI_CaptureIdeaPhotoBtn;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
         public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
+        public InputAction @UIButtonA => m_Wrapper.m_UI_UIButtonA;
+        public InputAction @PauseButton => m_Wrapper.m_UI_PauseButton;
+        public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_UI_CaptureIdeaPhotoBtn;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -881,6 +1437,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started += instance.OnUIButtonX;
             @UIButtonX.performed += instance.OnUIButtonX;
             @UIButtonX.canceled += instance.OnUIButtonX;
+            @UIButtonA.started += instance.OnUIButtonA;
+            @UIButtonA.performed += instance.OnUIButtonA;
+            @UIButtonA.canceled += instance.OnUIButtonA;
+            @PauseButton.started += instance.OnPauseButton;
+            @PauseButton.performed += instance.OnPauseButton;
+            @PauseButton.canceled += instance.OnPauseButton;
+            @CaptureIdeaPhotoBtn.started += instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.performed += instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.canceled += instance.OnCaptureIdeaPhotoBtn;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -888,6 +1453,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started -= instance.OnUIButtonX;
             @UIButtonX.performed -= instance.OnUIButtonX;
             @UIButtonX.canceled -= instance.OnUIButtonX;
+            @UIButtonA.started -= instance.OnUIButtonA;
+            @UIButtonA.performed -= instance.OnUIButtonA;
+            @UIButtonA.canceled -= instance.OnUIButtonA;
+            @PauseButton.started -= instance.OnPauseButton;
+            @PauseButton.performed -= instance.OnPauseButton;
+            @PauseButton.canceled -= instance.OnPauseButton;
+            @CaptureIdeaPhotoBtn.started -= instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.performed -= instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.canceled -= instance.OnCaptureIdeaPhotoBtn;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -918,16 +1492,32 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnToggleFlashlight(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
+        void OnQueueLightAttack(InputAction.CallbackContext context);
+        void OnChangeRightWeaponDPad(InputAction.CallbackContext context);
+        void OnChangeLeftWeaponDPad(InputAction.CallbackContext context);
+        void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnQueueHeavyAttack(InputAction.CallbackContext context);
+        void OnChargeHeavyAttack(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);
         void OnDebugTeleportToJerryDev(InputAction.CallbackContext context);
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
+        void OnDebugTeleportToSurfaceDemo(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
         void OnDebugFullResources(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
+        void OnSeekLeftLockOnTarget(InputAction.CallbackContext context);
+        void OnSeekRightLockOnTarget(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnUseItemQuickSlot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnUIButtonX(InputAction.CallbackContext context);
+        void OnUIButtonA(InputAction.CallbackContext context);
+        void OnPauseButton(InputAction.CallbackContext context);
+        void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Numerics;
 using UnityEngine;
 
 public class PlayerLocomotionManager : CharacterLocomotionManager
@@ -72,11 +73,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     }
 
     private void HandleGroundedMovement() {
-        if (!player.canMove) {
-            return;
+        //Allow Movement Inputs if Player can move or rotate
+        if (player.canMove || player.canRotate) {
+            GetVerticalAndHorizontalInputs();
         }
 
-        GetVerticalAndHorizontalInputs();
+        //Disable Movement Inputs
+        if (!player.canMove || player.isDead) {
+            return;
+        }
 
         //Our movement direction is based on our camera's facing perspective and our movement inputs
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
@@ -159,23 +164,62 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
     }
     private void HandleRotation() {
+        if (player.isDead) {
+            return;
+        }
+
         if (!player.canRotate) {
             return;
         }
 
-        targetRotationDirection = Vector3.zero;
-        targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-        targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-        targetRotationDirection.Normalize();
-        targetRotationDirection.y = 0;
+        if (player.isLockedOn) {
+            if (player.isSprinting || player.isRolling) {
+                //This is functionally identical to the non-locked on code currently, but is separated in case we want to have different behavior between the two cases
+                Vector3 targetDirection = Vector3.zero;
+                targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+                targetDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+                targetDirection.Normalize();
+                targetDirection.y = 0;
 
-        if (targetRotationDirection == Vector3.zero) {
-            targetRotationDirection = transform.forward;
+                if (targetDirection == Vector3.zero) {
+                    targetDirection = transform.forward;
+                }
+                
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = finalRotation;
+            }
+            else {
+                if (player.playerCombatManager.currentTarget == null) {
+                    return;
+                }
+
+                Vector3 targetDirection;
+                targetDirection = player.playerCombatManager.currentTarget.transform.position - transform.position;
+                targetDirection.y = 0;
+                targetDirection.Normalize();
+
+                Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                transform.rotation = finalRotation;
+            }
+        }
+        else {
+            targetRotationDirection = Vector3.zero;
+            targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+            targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
+            targetRotationDirection.Normalize();
+            targetRotationDirection.y = 0;
+
+            if (targetRotationDirection == Vector3.zero) {
+                targetRotationDirection = transform.forward;
+            }
+
+            Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = targetRotation;
         }
 
-        Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
-        Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
-        transform.rotation = targetRotation;
     }
 
     private void GetVerticalAndHorizontalInputs() {
@@ -198,6 +242,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         // If we are moving, set sprinting to true
         if (PlayerInputManager.instance.moveAmount > 0) {
             characterManager.isSprinting = true;
+
+            //Play Booster Fire Sound Effect
+            player.characterSoundFXManager.PlaySprintBoostSoundFX();
         }
         //If stationary, set it to false
         else {
@@ -235,6 +282,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
                 //Play roll animation
                 player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
+                player.isRolling = true;
             }
             else {
                 //Boosting flag
@@ -267,8 +315,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             //Set Stamina regen delay to 0
             player.playerStatsManager.ResetStaminaRegenTimer();
 
-            //Perform a Roll Animation here
-            //Look to episode 6 for animation tutorial for this part
+            //Subtract Stamina for roll or airdash
+            player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
         }
         //Backstep if stationary before
         else {
@@ -276,10 +324,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             if (player.isGrounded) {
                 //Play Backstep Animation
                 player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+                
+                //Subtract Stamina for backstep
+                player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
             }
         }
-
-        player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
     }
 
     public void AttemptToPerformJump() {

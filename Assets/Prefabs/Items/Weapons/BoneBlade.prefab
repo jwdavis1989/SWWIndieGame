@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8130850429207198863}
   - component: {fileID: 2917005456082049530}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BoneBlade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponFamily: 0
   meleeWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
   spr: {fileID: 21300000, guid: 7e27f95cfd8e96f458ac8ce1571f04d0, type: 3}
@@ -91,7 +92,21 @@ MonoBehaviour:
     experiencePointsToNextLevel: 100
     currentTinkerPoints: 1
     weaponName: Bone Blade
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    lightAttack03StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+    lightAttack03DamageMotionValue: 1.2
+    heavyAttack01DamageMotionValue: 1.4
+    heavyAttack02DamageMotionValue: 1.6
+    heavyChargedAttack01DamageMotionValue: 2
+    heavyChargedAttack02DamageMotionValue: 2.2
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
+  mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
 --- !u!1 &4029110176930541267
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,8 +183,20 @@ MonoBehaviour:
   beastDamage: 0
   scalesDamage: 0
   techDamage: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
   isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
   characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
+  lightAttack02DamageMotionValue: 0
+  lightAttack03DamageMotionValue: 0
+  heavyAttack01DamageMotionValue: 0
+  heavyAttack02DamageMotionValue: 0
+  heavyChargedAttack01DamageMotionValue: 0
+  heavyChargedAttack02DamageMotionValue: 0
+  weaponFamily: 0
 --- !u!1 &8162462757089158816
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +208,7 @@ GameObject:
   - component: {fileID: 2457901244686193971}
   - component: {fileID: 1163970147535320748}
   - component: {fileID: 7394566836785102321}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword11_Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
