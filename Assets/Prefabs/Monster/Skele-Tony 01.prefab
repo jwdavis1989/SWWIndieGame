@@ -2922,12 +2922,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterThatOwnsThisArsenal: {fileID: 4598192902238206535}
-  ownedWeapons: []
+  ownedWeapons:
+  - {fileID: 4976341019228924520, guid: 90c0779713c8b8c4c8299953ba57355d, type: 3}
   ownedSpecialWeapons: []
   indexOfEquippedWeapon: 0
   indexOfEquippedSpecialWeapon: 0
-  mainHandWeaponAnchor: {fileID: 0}
-  offHandWeaponAnchor: {fileID: 0}
+  mainHandWeaponAnchor: {fileID: 9162095843040807115}
+  offHandWeaponAnchor: {fileID: 9150893026215492027}
   currentAttackType: 0
 --- !u!54 &183252109366728886
 Rigidbody:
@@ -3028,6 +3029,8 @@ MonoBehaviour:
   currentState: {fileID: 11400000, guid: 1cb59e6b735667441a633306849cb7ad, type: 2}
   idleState: {fileID: 11400000, guid: 1cb59e6b735667441a633306849cb7ad, type: 2}
   pursueTargetState: {fileID: 11400000, guid: 7c78ba5159372974c846f31dbf1271c4, type: 2}
+  combatStanceState: {fileID: 11400000, guid: 3254f081909db2046bce0ead74a85845, type: 2}
+  attackState: {fileID: 11400000, guid: 58320f92b4d654445b1bab5df42f31cf, type: 2}
   isHitByMainHand: 0
   isHitByOffHand: 0
 --- !u!114 &6892618644458253901
@@ -3097,8 +3100,11 @@ MonoBehaviour:
   aggroRange: 5
   minimumDetectionAngle: -35
   maximumDetectionAngle: 35
+  distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
+  actionRecoveryTimer: 0
+  attackRotationSpeed: 25
 --- !u!1 &3908097228846371053
 GameObject:
   m_ObjectHideFlags: 0
