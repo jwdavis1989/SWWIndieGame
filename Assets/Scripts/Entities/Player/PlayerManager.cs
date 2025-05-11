@@ -61,7 +61,6 @@ public class PlayerManager : CharacterManager
 
     protected override void LateUpdate() {
         base.LateUpdate();
-
         PlayerCamera.instance.HandleAllCameraActions();
     }
 
@@ -112,6 +111,8 @@ public class PlayerManager : CharacterManager
         //Tinker Components owned
         currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
         currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
+        //Idea Images
+        InventionManager.instance.SaveIdeas();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -141,7 +142,7 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
 
-        //Add Weapon Arsenal Data Loading here later
+        //Weapon Arsenal Data Loading here
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);

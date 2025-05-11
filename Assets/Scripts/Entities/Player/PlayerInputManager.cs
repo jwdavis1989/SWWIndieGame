@@ -27,8 +27,12 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
-    [SerializeField] bool uiInteractInput = false;
+    [SerializeField] bool useItemQuickslotInput = false;//using for idea camera. This will be an item?
+    [SerializeField] bool uiInteractInput = false;//(A)
+    [SerializeField] bool uiInteractInput2 = false;//(X)
     [SerializeField] bool pauseInput = false;
+    [SerializeField] bool capturePhotoInput = false;
+
 
     [Header("Queued Inputs")]
     [SerializeField] bool InputQueueIsActive = false;
@@ -84,9 +88,11 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     private void HandleAllInputs() {
-        HandleInteractInput(); //This needs to be before HandleJumpInput or you will jump when you interact
+        HandleInteractInput();
         HandleUIInteractInput();
         HandlePauseInput();
+        HandleUseItemQuickSlotInput();
+        HandleCapturePhotoInput();
 
         HandleMovementInput();
         HandleCameraMovementInput();
@@ -167,7 +173,10 @@ public class PlayerInputManager : MonoBehaviour
             //Player UI interactions
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
             playerControls.UI.UIButtonA.performed += i => uiInteractInput = true;
+            playerControls.UI.UIButtonX.performed += i => uiInteractInput2 = true;
             playerControls.UI.PauseButton.performed += i => pauseInput = true;
+            playerControls.PlayerActions.UseItemQuickSlot.performed += i => useItemQuickslotInput = true;
+            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
         }
 
         playerControls.Enable();
@@ -215,12 +224,15 @@ public class PlayerInputManager : MonoBehaviour
         if (interactInput)// [E], (A)
         {
             interactInput = false;
-            //if not already in a dialogue
-            if(player.isLockedOn && !DialogueManager.IsInDialogue())
+
+            //Note: Disable this if in combat for efficency?
+            // If not busy doing something else
+            if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())  //player.isLockedOn &&
             {
-                //Find NPC dialogue. TODO: Change method of finding dialogue target
-                NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
-                if(dialogue != null)
+                //Find NPC dialogue.
+                NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
+                //NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
+                if (dialogue != null)
                 { //play the dialogue if found
                     DialogueManager.instance.PlayDialoge(dialogue);
                     //Lock player. (Unlocked on exit in DialgoueManager.NextLine)
@@ -228,7 +240,7 @@ public class PlayerInputManager : MonoBehaviour
                     player.canMove = false;
                     player.canRotate = false;
                 }
-                    
+
             }
             
         }
@@ -237,13 +249,27 @@ public class PlayerInputManager : MonoBehaviour
     void HandleUIInteractInput()
     {
         //if they press the button during a dialogue
-        if (uiInteractInput)// [LMB], [E], (A)
+        if (uiInteractInput || uiInteractInput2)// [LMB], [E], (A)
         {
             uiInteractInput = false;
+            uiInteractInput2 = false;//(X) I wanted this to continue dialgue for now... Could change later
             if (DialogueManager.IsInDialogue())
             {
                 DialogueManager.instance.DialogueBoxContinue();
             }
+        }
+    }
+    //Use item button
+    void HandleUseItemQuickSlotInput()
+    {
+        if (useItemQuickslotInput) // [1], (Y)
+        {
+            useItemQuickslotInput = false;
+            if (SceneManager.GetActiveScene().buildIndex == 0) 
+                return; //dont use on title screen
+
+            //currently have camera here. Not sure if it gets it's own button or is an item
+            IdeaCameraController.instance.ActivateDeactiveCameraView();
         }
     }
     //Pause button
@@ -255,9 +281,23 @@ public class PlayerInputManager : MonoBehaviour
             PauseScript.instance.PauseUnpause();
         }
     }
+   
+    //Idea Capture button
+    void HandleCapturePhotoInput()
+    {
+        if (capturePhotoInput) // [Space], (X)
+        {
+            capturePhotoInput = false;
+            IdeaCameraController.instance.TakeScreenshotInput();
+        }
+    }
+
 
     //Movement
     private void HandleMovementInput() {
+        //check if busy
+        if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
+            return;
         verticalInput = movementInput.y;
         horizontalInput = movementInput.x;
 
@@ -424,7 +464,7 @@ public class PlayerInputManager : MonoBehaviour
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
-            if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue()) 
+            if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy()) 
                 return;
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();

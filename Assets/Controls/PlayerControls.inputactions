@@ -412,6 +412,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UseItemQuickSlot",
+                    "type": "Button",
+                    "id": "527cd677-7010-4984-bc53-8c5c616b0bbc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -792,7 +801,7 @@
                 {
                     "name": "",
                     "id": "641f5baa-c061-4742-8d77-ab526f927f64",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -808,6 +817,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "DebugTeleportToSurfaceDemo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d3a906e-f7ce-4222-8e42-5ab8c4aa8a64",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItemQuickSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1393861d-3be4-498e-920d-a0e3067add41",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItemQuickSlot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -839,6 +870,15 @@
                     "name": "PauseButton",
                     "type": "Button",
                     "id": "fdf83cdf-0968-4131-bb9d-832faeb26fc5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CaptureIdeaPhotoBtn",
+                    "type": "Button",
+                    "id": "28878abf-a4e8-4a58-97ce-36e8fba73f88",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -909,6 +949,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3aa104eb-21ce-433e-9385-2e3a976bf878",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CaptureIdeaPhotoBtn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e84c4a8-44f5-4b4b-bd40-1f9ac3391c92",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CaptureIdeaPhotoBtn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

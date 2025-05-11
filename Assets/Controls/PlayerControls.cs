@@ -434,6 +434,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseItemQuickSlot"",
+                    ""type"": ""Button"",
+                    ""id"": ""527cd677-7010-4984-bc53-8c5c616b0bbc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -814,7 +823,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""641f5baa-c061-4742-8d77-ab526f927f64"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -830,6 +839,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DebugTeleportToSurfaceDemo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d3a906e-f7ce-4222-8e42-5ab8c4aa8a64"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItemQuickSlot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1393861d-3be4-498e-920d-a0e3067add41"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItemQuickSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -861,6 +892,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""PauseButton"",
                     ""type"": ""Button"",
                     ""id"": ""fdf83cdf-0968-4131-bb9d-832faeb26fc5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CaptureIdeaPhotoBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""28878abf-a4e8-4a58-97ce-36e8fba73f88"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -933,6 +973,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""PauseButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3aa104eb-21ce-433e-9385-2e3a976bf878"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CaptureIdeaPhotoBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e84c4a8-44f5-4b4b-bd40-1f9ac3391c92"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CaptureIdeaPhotoBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -969,11 +1031,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_SeekLeftLockOnTarget = m_PlayerActions.FindAction("SeekLeftLockOnTarget", throwIfNotFound: true);
         m_PlayerActions_SeekRightLockOnTarget = m_PlayerActions.FindAction("SeekRightLockOnTarget", throwIfNotFound: true);
         m_PlayerActions_Interact = m_PlayerActions.FindAction("Interact", throwIfNotFound: true);
+        m_PlayerActions_UseItemQuickSlot = m_PlayerActions.FindAction("UseItemQuickSlot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
         m_UI_UIButtonA = m_UI.FindAction("UIButtonA", throwIfNotFound: true);
         m_UI_PauseButton = m_UI.FindAction("PauseButton", throwIfNotFound: true);
+        m_UI_CaptureIdeaPhotoBtn = m_UI.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1149,6 +1213,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_SeekLeftLockOnTarget;
     private readonly InputAction m_PlayerActions_SeekRightLockOnTarget;
     private readonly InputAction m_PlayerActions_Interact;
+    private readonly InputAction m_PlayerActions_UseItemQuickSlot;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
@@ -1175,6 +1240,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SeekLeftLockOnTarget => m_Wrapper.m_PlayerActions_SeekLeftLockOnTarget;
         public InputAction @SeekRightLockOnTarget => m_Wrapper.m_PlayerActions_SeekRightLockOnTarget;
         public InputAction @Interact => m_Wrapper.m_PlayerActions_Interact;
+        public InputAction @UseItemQuickSlot => m_Wrapper.m_PlayerActions_UseItemQuickSlot;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1250,6 +1316,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @UseItemQuickSlot.started += instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.performed += instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.canceled += instance.OnUseItemQuickSlot;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -1320,6 +1389,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @UseItemQuickSlot.started -= instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.performed -= instance.OnUseItemQuickSlot;
+            @UseItemQuickSlot.canceled -= instance.OnUseItemQuickSlot;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -1344,6 +1416,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_UIButtonX;
     private readonly InputAction m_UI_UIButtonA;
     private readonly InputAction m_UI_PauseButton;
+    private readonly InputAction m_UI_CaptureIdeaPhotoBtn;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -1351,6 +1424,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
         public InputAction @UIButtonA => m_Wrapper.m_UI_UIButtonA;
         public InputAction @PauseButton => m_Wrapper.m_UI_PauseButton;
+        public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_UI_CaptureIdeaPhotoBtn;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1369,6 +1443,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
+            @CaptureIdeaPhotoBtn.started += instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.performed += instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.canceled += instance.OnCaptureIdeaPhotoBtn;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1382,6 +1459,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
+            @CaptureIdeaPhotoBtn.started -= instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.performed -= instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.canceled -= instance.OnCaptureIdeaPhotoBtn;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1431,11 +1511,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSeekLeftLockOnTarget(InputAction.CallbackContext context);
         void OnSeekRightLockOnTarget(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnUseItemQuickSlot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnUIButtonX(InputAction.CallbackContext context);
         void OnUIButtonA(InputAction.CallbackContext context);
         void OnPauseButton(InputAction.CallbackContext context);
+        void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
     }
 }
