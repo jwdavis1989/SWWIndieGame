@@ -351,6 +351,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DebugTeleportToSurfaceDemo",
+                    "type": "Button",
+                    "id": "1cfe77a2-7b8a-412d-9528-86904544d839",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "NextWeapon",
                     "type": "PassThrough",
                     "id": "3e3e861f-fb3e-42f7-9cd1-77f1b6df3609",
@@ -797,6 +806,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d076d82-bd09-4291-b530-930d3cf61299",
+                    "path": "<Keyboard>/numpad4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTeleportToSurfaceDemo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

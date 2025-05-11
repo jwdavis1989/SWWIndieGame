@@ -9,8 +9,15 @@ public class AiCharacterCombatManager : CharacterCombatManager
     public float maximumDetectionAngle = 35f;
 
     [Header("Target Information")]
+    public float distanceFromTarget;
     public float viewableAngle;
     public Vector3 targetsDirection;
+
+    [Header("Action Recovery")]
+    public float actionRecoveryTimer = 0f;
+
+    [Header("Attack Rotation Speed")]
+    public float attackRotationSpeed = 25f;
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {
         if(currentTarget != null) {
@@ -60,21 +67,61 @@ public class AiCharacterCombatManager : CharacterCombatManager
         SetTarget(player.GetComponent<CharacterManager>());
     }
 
-    public void PivotTowardsTarget(AICharacterManager aICharacter) {
+    public void PivotTowardsTarget(AICharacterManager aiCharacter) {
         //Play a Pivot Animation depending on the Viewable Angle of Target
-        if (aICharacter.isPerformingAction) {
+        if (aiCharacter.isPerformingAction) {
             return;
         }
 
         //Note: Commented out version is for having specific angled animations (e.g. Turn_Right_45) like in the tutorial episode 37
         //if (viewableAngle >= 20 && viewableAngle <= 60) {
-        //     aICharacter.characterAnimatorManager.PlayTargetActionAnimation("AI_Main_Turn_Right_01", true);
+        //     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("AI_Main_Turn_Right_01", true);
         // }
         
         //Note: Commented out version is for having specific angled animations (e.g. Turn_Right_45) like in the tutorial episode 37
         // else if (viewableAngle <= -20 && viewableAngle >= -60) {
-        //     aICharacter.characterAnimatorManager.PlayTargetActionAnimation("AI_Main_Turn_Left_01", true);
+        //     aiCharacter.characterAnimatorManager.PlayTargetActionAnimation("AI_Main_Turn_Left_01", true);
         // }
+    }
+
+    public void HandleActionRecovery(AICharacterManager aiCharacter) {
+        if (actionRecoveryTimer > 0 && !aiCharacter.isPerformingAction) {
+            actionRecoveryTimer -= Time.deltaTime;
+        }
+    }
+
+    public void RotateTowardsAgent(AICharacterManager aiCharacter) {
+        if (aiCharacter.isMoving) {
+            aiCharacter.transform.rotation = aiCharacter.navMeshAgent.transform.rotation;
+        }
+    }
+
+    public void RotateTowardsTargetWhileAttacking(AICharacterManager aiCharacter) {
+        if (currentTarget == null) {
+            return;
+        }
+
+        //1. Check if we can rotate
+        if (!aiCharacter.canRotate) {
+            return;
+        }
+
+        if (!aiCharacter.isPerformingAction) {
+            return;
+        }
+
+        //2. Rotate towards the target at a specific rotation speed during specified frames
+        Vector3 targetDirection = currentTarget.transform.position - aiCharacter.transform.position;
+        targetDirection.y = 0;
+        targetDirection.Normalize();
+
+        if (targetDirection == Vector3.zero) {
+            targetDirection = aiCharacter.transform.forward;
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+
+        aiCharacter.transform.rotation = Quaternion.Slerp(aiCharacter.transform.rotation, targetRotation, attackRotationSpeed * Time.deltaTime);
     }
 
 }
