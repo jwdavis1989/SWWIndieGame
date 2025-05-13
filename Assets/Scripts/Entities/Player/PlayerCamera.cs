@@ -271,6 +271,10 @@ public class PlayerCamera : MonoBehaviour
     public void SetLockCameraHeight() {
         if (cameraLockOnHeightCoroutine != null) {
             StopCoroutine(cameraLockOnHeightCoroutine);
+            //TODO: Possible fix spot for camera glitch
+            // Vector3 velocity = Vector3.zero;
+            // Vector3 newUnlockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, unlockedCameraHeight);
+            // Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
         }
 
         cameraLockOnHeightCoroutine = StartCoroutine(SetCameraHeight());
@@ -286,17 +290,6 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public void ClearLockOnVFX() {
-        //Clear Lock-On VFX
-        // if (nearestLockOnTarget) {
-        //     nearestLockOnTarget.characterCombatManager.DisableLockOnVFX();
-        // }
-        // if (leftLockOnTarget) {
-        //     leftLockOnTarget.characterCombatManager.DisableLockOnVFX();
-        // }
-        // if (rightLockOnTarget) {
-        //     rightLockOnTarget.characterCombatManager.DisableLockOnVFX();
-        // }
-
         foreach (CharacterManager target in availableTargets) {
             if (target.characterCombatManager.LockOnVFX != null) {
                 target.characterCombatManager.DisableLockOnVFX();
@@ -305,6 +298,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public IEnumerator WaitThenFindNewTarget() {
+        Debug.Log("WaitThenFindNewTarget()");
         while (player.isPerformingAction) {
             yield return null;
         }
@@ -315,6 +309,9 @@ public class PlayerCamera : MonoBehaviour
         if (nearestLockOnTarget != null) {
             player.playerCombatManager.SetTarget(nearestLockOnTarget);
             player.isLockedOn = true;
+        }
+        else {
+            Debug.Log("nearestLockOnTarget == null");
         }
 
         yield return null;

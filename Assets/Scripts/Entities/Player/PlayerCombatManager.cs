@@ -14,7 +14,6 @@ public class PlayerCombatManager : CharacterCombatManager
             currentTarget.characterCombatManager.LockOnVFX.SetActive(false);
         }
         base.SetTarget(newTarget);
-
         PlayerCamera.instance.SetLockCameraHeight();
         newTarget.characterCombatManager.EnableLockOnVFX();
     }
