@@ -277,6 +277,10 @@ public class PlayerCamera : MonoBehaviour
             if (PlayerInputManager.instance.lockOnInput && player.playerCombatManager.currentTarget != null && !cameraLoweringOutsideCoroutine) {
                 cameraLoweringOutsideCoroutine = true;
                 //Lower the Camera over time
+                if (cameraLockOnHeightCoroutineOnUpdate != null) {
+                    StopCoroutine(cameraLockOnHeightCoroutineOnUpdate);
+                    cameraLockOnHeightCoroutineOnUpdate = null;
+                }
                 cameraLockOnHeightCoroutineOnUpdate = StartCoroutine(LowerCameraHeight());
             }
         }
@@ -285,7 +289,6 @@ public class PlayerCamera : MonoBehaviour
                 StopCoroutine(cameraLockOnHeightCoroutineOnUpdate);
             }
             cameraLoweringOutsideCoroutine = false;
-            cameraLockOnHeightCoroutineOnUpdate = null;
         }
     }
 
@@ -396,7 +399,6 @@ public class PlayerCamera : MonoBehaviour
         //Happens once loop completes
         cameraPivotTransform.transform.localPosition = newUnlockedCameraHeight;
         cameraLoweringOutsideCoroutine = false;
-        cameraLockOnHeightCoroutineOnUpdate = null;
 
         yield return null;
     }
