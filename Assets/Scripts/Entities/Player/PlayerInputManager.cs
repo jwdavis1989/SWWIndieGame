@@ -388,8 +388,8 @@ public class PlayerInputManager : MonoBehaviour
         if (dodgeInput) {
             dodgeInput = false;
 
-            //Future Note: Return if Menu or UI window is open, do nothing.
-            if (PauseScript.instance.gamePaused || DialogueManager.IsInDialogue())
+            //If Menu or UI window is open, do nothing.
+            if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
                 return;
             //Perform the dodge
             player.playerLocomotionManager.AttemptToPerformDodge();
@@ -398,6 +398,9 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleSprintInput() {
         if (sprintInput) {
+            //If Menu or UI window is open, do nothing.
+            if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
+                return;
             player.playerLocomotionManager.HandleSprinting();
             
             //Camera Zoom-Out Juice to give the illusion of great speed

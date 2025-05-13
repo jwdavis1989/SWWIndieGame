@@ -35,6 +35,7 @@ public class IdeaCameraController : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
             AttachCameraToPlayer();
         }
         else
@@ -190,7 +191,7 @@ public class IdeaCameraController : MonoBehaviour
     void AttachCameraToPlayer()
     {
         if(player == null)
-        player = GameObject.Find("Player").GetComponent<PlayerManager>();
+            player = GameObject.Find("Player").GetComponent<PlayerManager>();
         Transform p = player.transform;
         ideaCamera.transform.parent = p;
         ideaCamera.transform.position = new Vector3(p.position.x, p.position.y+1.5f, p.position.z) + (p.forward * 1.5f);
