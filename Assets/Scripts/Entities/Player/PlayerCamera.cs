@@ -277,10 +277,31 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public void ClearLockOnTargets() {
+        ClearLockOnVFX();
+
         nearestLockOnTarget = null;
         leftLockOnTarget = null;
         rightLockOnTarget = null;
         availableTargets.Clear();
+    }
+
+    public void ClearLockOnVFX() {
+        //Clear Lock-On VFX
+        // if (nearestLockOnTarget) {
+        //     nearestLockOnTarget.characterCombatManager.DisableLockOnVFX();
+        // }
+        // if (leftLockOnTarget) {
+        //     leftLockOnTarget.characterCombatManager.DisableLockOnVFX();
+        // }
+        // if (rightLockOnTarget) {
+        //     rightLockOnTarget.characterCombatManager.DisableLockOnVFX();
+        // }
+
+        foreach (CharacterManager target in availableTargets) {
+            if (target.characterCombatManager.LockOnVFX != null) {
+                target.characterCombatManager.DisableLockOnVFX();
+            }
+        }
     }
 
     public IEnumerator WaitThenFindNewTarget() {
