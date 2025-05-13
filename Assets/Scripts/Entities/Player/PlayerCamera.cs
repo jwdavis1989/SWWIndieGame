@@ -57,6 +57,9 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField] float unlockedCameraHeight = 0.6f;
     [SerializeField] float lockedCameraHeight = 1.8f;
     private Coroutine cameraLockOnHeightCoroutine;
+    private Coroutine cameraLockOnHeightCoroutineOnUpdate;
+    private bool isCameraLockOnHeightCoroutineActive = false;
+    private bool cameraLoweringOutsideCoroutine = false;
 
 
     // Start is called before the first frame update
@@ -75,6 +78,9 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    public void Update() {
+        HandleCameraHeightOutsideOfInitialLockOn();
+    }
     public void HandleAllCameraActions() {
         if (player != null) {
             HandleFollowTarget();
@@ -251,13 +257,11 @@ public class PlayerCamera : MonoBehaviour
                     if (relativeEnemyPosition.x <= 0.00f && distanceFromLeftTarget < shortestDistanceOfLeftTarget) {
                         shortestDistanceOfLeftTarget = distanceFromLeftTarget;
                         leftLockOnTarget = availableTargets[j];
-                        //Debug.Log("Target found to the left!");
                     }
                     //Check the right side for targets
                     else if (relativeEnemyPosition.x >= 0.00f && distanceFromRightTarget < shortestDistanceOfRightTarget) {
                         shortestDistanceOfRightTarget = distanceFromRightTarget;
                         rightLockOnTarget = availableTargets[j];
-                        //Debug.Log("Target found to the right!");
                     }
                 }
             }
@@ -268,13 +272,26 @@ public class PlayerCamera : MonoBehaviour
         }
     }
 
+    void HandleCameraHeightOutsideOfInitialLockOn() {
+        if (!isCameraLockOnHeightCoroutineActive) {
+            if (PlayerInputManager.instance.lockOnInput && player.playerCombatManager.currentTarget != null && !cameraLoweringOutsideCoroutine) {
+                cameraLoweringOutsideCoroutine = true;
+                //Lower the Camera over time
+                cameraLockOnHeightCoroutineOnUpdate = StartCoroutine(LowerCameraHeight());
+            }
+        }
+        else {
+            if (cameraLoweringOutsideCoroutine) {
+                StopCoroutine(cameraLockOnHeightCoroutineOnUpdate);
+            }
+            cameraLoweringOutsideCoroutine = false;
+            cameraLockOnHeightCoroutineOnUpdate = null;
+        }
+    }
+
     public void SetLockCameraHeight() {
         if (cameraLockOnHeightCoroutine != null) {
             StopCoroutine(cameraLockOnHeightCoroutine);
-            //TODO: Possible fix spot for camera glitch
-            // Vector3 velocity = Vector3.zero;
-            // Vector3 newUnlockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, unlockedCameraHeight);
-            // Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
         }
 
         cameraLockOnHeightCoroutine = StartCoroutine(SetCameraHeight());
@@ -282,11 +299,14 @@ public class PlayerCamera : MonoBehaviour
 
     public void ClearLockOnTargets() {
         ClearLockOnVFX();
-
         nearestLockOnTarget = null;
         leftLockOnTarget = null;
         rightLockOnTarget = null;
         availableTargets.Clear();
+        
+        //Lower the Camera over time
+        cameraLoweringOutsideCoroutine = true;
+        cameraLockOnHeightCoroutineOnUpdate = StartCoroutine(LowerCameraHeight());
     }
 
     public void ClearLockOnVFX() {
@@ -298,7 +318,6 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public IEnumerator WaitThenFindNewTarget() {
-        Debug.Log("WaitThenFindNewTarget()");
         while (player.isPerformingAction) {
             yield return null;
         }
@@ -310,9 +329,6 @@ public class PlayerCamera : MonoBehaviour
             player.playerCombatManager.SetTarget(nearestLockOnTarget);
             player.isLockedOn = true;
         }
-        else {
-            Debug.Log("nearestLockOnTarget == null");
-        }
 
         yield return null;
     }
@@ -320,6 +336,7 @@ public class PlayerCamera : MonoBehaviour
     public IEnumerator SetCameraHeight() {
         float duration = 1f;
         float timer = 0f;
+        isCameraLockOnHeightCoroutineActive = true;
 
         Vector3 velocity = Vector3.zero;
         Vector3 newLockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, lockedCameraHeight);
@@ -356,8 +373,32 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
-        yield return null;
+        isCameraLockOnHeightCoroutineActive = false;
 
+        yield return null;
+    }
+
+    public IEnumerator LowerCameraHeight() {
+        float duration = 1f;
+        float timer = 0f;
+
+        Vector3 velocity = Vector3.zero;
+        Vector3 newUnlockedCameraHeight = new Vector3(cameraPivotTransform.transform.localPosition.x, unlockedCameraHeight);
+
+        while (timer < duration) {
+            timer += Time.deltaTime;
+            cameraPivotTransform.transform.localPosition = 
+                        Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedCameraHeight, ref velocity, setCameraHeightSpeed);
+            
+            yield return null;
+        }
+
+        //Happens once loop completes
+        cameraPivotTransform.transform.localPosition = newUnlockedCameraHeight;
+        cameraLoweringOutsideCoroutine = false;
+        cameraLockOnHeightCoroutineOnUpdate = null;
+
+        yield return null;
     }
     public Transform GetPivotTransform() { return cameraPivotTransform; }
 }
