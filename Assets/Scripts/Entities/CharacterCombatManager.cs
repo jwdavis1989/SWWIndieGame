@@ -15,6 +15,7 @@ public class CharacterCombatManager : MonoBehaviour
 
     [Header("Lock On Transform")]
     public Transform LockOnTransform;
+    public GameObject LockOnVFX;
 
     [Header("Flags")]
     public bool canComboWithMainHandWeapon = false;
@@ -56,6 +57,14 @@ public class CharacterCombatManager : MonoBehaviour
 
     public void DisableCanDoBackStepAttack() {
         canPerformBackStepAttack = false;
+    }
+
+    public void EnableLockOnVFX() {
+        LockOnVFX.SetActive(true);
+    }
+
+    public void DisableLockOnVFX() {
+        LockOnVFX.SetActive(false);
     }
 
 }
