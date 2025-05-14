@@ -10,7 +10,6 @@ public class AICharacterManager : CharacterManager
     [Header("Navmesh Agent")]
     public NavMeshAgent navMeshAgent;
 
-    //[HideInInspector] public AICharacterManager aiCharacterManager;
     [HideInInspector] public AiCharacterCombatManager aiCharacterCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
     [HideInInspector] public AICharacterStatsManager statsManager;
@@ -30,7 +29,6 @@ public class AICharacterManager : CharacterManager
 
     protected override void Awake() {
         base.Awake();
-        //aiCharacterManager = GetComponent<AICharacterManager>();
         aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
         statsManager = GetComponent<AICharacterStatsManager>();
         aiCharacterCombatManager = GetComponent<AiCharacterCombatManager>();
