@@ -526,18 +526,27 @@ public class PlayerInputManager : MonoBehaviour
                     StopCoroutine(lockOnCoroutine);
                 }
 
+                //Avoids the lock-on snapping to a new target while you are currently performing an action, then it locks on.
                 lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
             }
         }
-
 
         //Are we already locked on?
         if (lockOnInput && player.isLockedOn) {
             //Disable Lock On
             lockOnInput = false;
             PlayerCamera.instance.ClearLockOnTargets();
+            
+            //Reset Camera Height to UnlockedCameraHeight
+            // Vector3 newUnlockedCameraHeight = new Vector3(PlayerCamera.instance.cameraPivotTransform.transform.localPosition.x, PlayerCamera.instance.unlockedCameraHeight);
+            // PlayerCamera.instance.cameraPivotTransform.transform.localPosition = newUnlockedCameraHeight;
+
+            //Lower the Camera over time
+            PlayerCamera.instance.InvokeLowerCameraHeightCoroutine();
+
             player.isLockedOn = false;
             player.characterCombatManager.currentTarget = null;
+
             return;
         }
 
