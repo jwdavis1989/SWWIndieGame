@@ -10,7 +10,7 @@ public class AICharacterManager : CharacterManager
     [Header("Navmesh Agent")]
     public NavMeshAgent navMeshAgent;
 
-    [HideInInspector] public AICharacterManager aiCharacterManager;
+    //[HideInInspector] public AICharacterManager aiCharacterManager;
     [HideInInspector] public AiCharacterCombatManager aiCharacterCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
     [HideInInspector] public AICharacterStatsManager statsManager;
@@ -30,7 +30,7 @@ public class AICharacterManager : CharacterManager
 
     protected override void Awake() {
         base.Awake();
-        aiCharacterManager = GetComponent<AICharacterManager>();
+        //aiCharacterManager = GetComponent<AICharacterManager>();
         aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
         statsManager = GetComponent<AICharacterStatsManager>();
         aiCharacterCombatManager = GetComponent<AiCharacterCombatManager>();
@@ -104,14 +104,14 @@ public class AICharacterManager : CharacterManager
             float remainingDistance = Vector3.Distance(agentDestination, transform.position);
 
             if (remainingDistance > navMeshAgent.stoppingDistance) {
-                aiCharacterManager.isMoving = true;
+                isMoving = true;
             }
             else {
-                aiCharacterManager.isMoving = false;
+                isMoving = false;
             }
         }
         else {
-            aiCharacterManager.isMoving = false;
+            isMoving = false;
         }
     }
 

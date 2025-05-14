@@ -2991,7 +2991,6 @@ MonoBehaviour:
   canBleed: 1
   isChargingAttack: 0
   navMeshAgent: {fileID: 0}
-  aiCharacterManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
   statsManager: {fileID: 0}
@@ -3039,7 +3038,7 @@ MonoBehaviour:
   jumpStaminaCost: 0
   staminaTickTimer: 0.1
   goldDrop: 100
-  goldDropChance: 1
+  goldDropChance: 0
   expDropAmt: 0
   componentDropChances:
   - type: 2
