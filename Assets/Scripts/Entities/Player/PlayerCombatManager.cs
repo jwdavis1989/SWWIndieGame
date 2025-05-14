@@ -11,10 +11,9 @@ public class PlayerCombatManager : CharacterCombatManager
 
     public override void SetTarget(CharacterManager newTarget) {
         if (currentTarget) {
-            currentTarget.characterCombatManager.LockOnVFX.SetActive(false);
+            currentTarget.characterCombatManager.DisableLockOnVFX();
         }
         base.SetTarget(newTarget);
-
         PlayerCamera.instance.SetLockCameraHeight();
         newTarget.characterCombatManager.EnableLockOnVFX();
     }
