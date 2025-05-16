@@ -27,7 +27,8 @@ public class AICharacterManager : CharacterManager
     public bool isHitByMainHand = false;
     public bool isHitByOffHand = false;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
         aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
         statsManager = GetComponent<AICharacterStatsManager>();
