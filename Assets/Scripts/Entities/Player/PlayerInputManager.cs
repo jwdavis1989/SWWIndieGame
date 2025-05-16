@@ -51,7 +51,7 @@ public class PlayerInputManager : MonoBehaviour
     public float sprintCameraFieldOfViewIncreaseSpeed = 15f;
 
     [Header("Lock-On Input")]
-    [SerializeField] bool lockOnInput;
+    public bool lockOnInput;
     [SerializeField] bool lockOnSelectLeftInput;
     [SerializeField] bool lockOnSelectRightInput;
     private Coroutine lockOnCoroutine;
@@ -519,25 +519,34 @@ public class PlayerInputManager : MonoBehaviour
             }
             if (player.playerCombatManager.currentTarget.isDead) {
                 player.isLockedOn = false;
-            }
 
-            //Attempt to Find new Target
-            //This assures us that the couroutine never runs multiple times
-            if (lockOnCoroutine != null) {
-                StopCoroutine(lockOnCoroutine);
+                //Attempt to Find new Target
+                //This assures us that the couroutine never runs multiple times
+                if (lockOnCoroutine != null) {
+                    StopCoroutine(lockOnCoroutine);
+                }
 
+                //Avoids the lock-on snapping to a new target while you are currently performing an action, then it locks on.
                 lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
             }
         }
-
 
         //Are we already locked on?
         if (lockOnInput && player.isLockedOn) {
             //Disable Lock On
             lockOnInput = false;
             PlayerCamera.instance.ClearLockOnTargets();
+            
+            //Reset Camera Height to UnlockedCameraHeight
+            // Vector3 newUnlockedCameraHeight = new Vector3(PlayerCamera.instance.cameraPivotTransform.transform.localPosition.x, PlayerCamera.instance.unlockedCameraHeight);
+            // PlayerCamera.instance.cameraPivotTransform.transform.localPosition = newUnlockedCameraHeight;
+
+            //Lower the Camera over time
+            PlayerCamera.instance.InvokeLowerCameraHeightCoroutine();
+
             player.isLockedOn = false;
             player.characterCombatManager.currentTarget = null;
+
             return;
         }
 

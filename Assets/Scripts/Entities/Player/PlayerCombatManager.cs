@@ -10,9 +10,12 @@ public class PlayerCombatManager : CharacterCombatManager
     //public bool canComboWithMainHandWeapon = false;
 
     public override void SetTarget(CharacterManager newTarget) {
+        if (currentTarget) {
+            currentTarget.characterCombatManager.DisableLockOnVFX();
+        }
         base.SetTarget(newTarget);
-
         PlayerCamera.instance.SetLockCameraHeight();
+        newTarget.characterCombatManager.EnableLockOnVFX();
     }
 
     public override void Awake() {
