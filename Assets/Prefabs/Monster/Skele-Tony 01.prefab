@@ -2831,7 +2831,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  takeDamageGrunts: []
+  takeDamageGrunts:
+  - {fileID: 8300000, guid: 3a20c1f2fd4d44c4d9a6fabbec93be20, type: 3}
 --- !u!95 &1852746499727577451
 Animator:
   serializedVersion: 5
@@ -2991,7 +2992,6 @@ MonoBehaviour:
   canBleed: 1
   isChargingAttack: 0
   navMeshAgent: {fileID: 0}
-  aiCharacterManager: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
   statsManager: {fileID: 0}
@@ -3039,7 +3039,7 @@ MonoBehaviour:
   jumpStaminaCost: 0
   staminaTickTimer: 0.1
   goldDrop: 100
-  goldDropChance: 1
+  goldDropChance: 0
   expDropAmt: 0
   componentDropChances:
   - type: 2
