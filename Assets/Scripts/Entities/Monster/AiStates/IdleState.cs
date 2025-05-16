@@ -10,9 +10,8 @@ public class IdleState : AIState
         //Case: Target Aquired
         if(aiCharacter.aiCharacterCombatManager.currentTarget != null) {
             //Turn on the enemy's Minimap Triangle if it's not already visible
-            if (aiCharacter.miniMapSprite != null) {
+            if (aiCharacter.miniMapSprite != null && !aiCharacter.isDead) {
                 aiCharacter.miniMapSprite.SetActive(true);
-                Debug.Log("Minimap Sprite Powers, Activated!");
             }
 
             //Changes state to the pursue target state
