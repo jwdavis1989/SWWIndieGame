@@ -32,6 +32,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool uiInteractInput2 = false;//(X)
     [SerializeField] bool pauseInput = false;
     [SerializeField] bool capturePhotoInput = false;
+    [SerializeField] bool miniMapZoomToggleInput = false;
 
 
     [Header("Queued Inputs")]
@@ -87,7 +88,8 @@ public class PlayerInputManager : MonoBehaviour
         HandleAllInputs();
     }
 
-    private void HandleAllInputs() {
+    private void HandleAllInputs()
+    {
         HandleInteractInput();
         HandleUIInteractInput();
         HandlePauseInput();
@@ -109,13 +111,15 @@ public class PlayerInputManager : MonoBehaviour
         HandleGamePadLeftWeaponSwapInput();
         HandleQueuedInputs();
         HandleCameraFieldOfView();
+        HandleMiniMapZoomToggle();
     }
 
     //Goals:
     //1. Read joystick values
     //2. Move Character using those values
     private void OnEnable() {
-        if (playerControls == null) {
+        if (playerControls == null)
+        {
             playerControls = new PlayerControls();
 
             //I believe these are establishing event listeners/subscribing
@@ -156,16 +160,19 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
-            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i => { 
-                SceneManager.LoadSceneAsync(1); 
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i =>
+            {
+                SceneManager.LoadSceneAsync(1);
             });
-            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i => { 
-                player.transform.position = new Vector3(0, 9, 0); 
+            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i =>
+            {
+                player.transform.position = new Vector3(0, 9, 0);
                 SceneManager.LoadSceneAsync(2);
             });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
-            playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i => { 
-                player.transform.position = new Vector3(0, 9, 0); 
+            playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i =>
+            {
+                player.transform.position = new Vector3(0, 9, 0);
                 SceneManager.LoadSceneAsync(4);
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
@@ -177,6 +184,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PlayerActions.UseItemQuickSlot.performed += i => useItemQuickslotInput = true;
             playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.UI.MiniMapResize.performed += i => miniMapZoomToggleInput = true;
         }
 
         playerControls.Enable();
@@ -372,12 +380,23 @@ public class PlayerInputManager : MonoBehaviour
         cameraHorizontalInput = cameraInput.x;
     }
 
-    private void OnApplicationFocus(bool focus) {
-        if (enabled) {
-            if (focus) {
+    private void HandleMiniMapZoomToggle() {
+        if (miniMapZoomToggleInput)
+        {
+            miniMapZoomToggleInput = false;
+            MiniMapManager.instance.UpdateMiniMapZoom();
+        }
+    }
+    private void OnApplicationFocus(bool focus)
+    {
+        if (enabled)
+        {
+            if (focus)
+            {
                 playerControls.Enable();
             }
-            else {
+            else
+            {
                 playerControls.Disable();
             }
         }

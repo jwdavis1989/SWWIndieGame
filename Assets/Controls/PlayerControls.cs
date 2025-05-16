@@ -905,6 +905,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MiniMapResize"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc345c32-cc8b-4cbd-b017-f2d05c9c2c13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -995,6 +1004,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CaptureIdeaPhotoBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d81e40e-628d-491b-a573-5531f054958a"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiniMapResize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eed1c4e6-d033-4c1b-b11d-8d837bbceabe"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiniMapResize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1038,6 +1069,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_UIButtonA = m_UI.FindAction("UIButtonA", throwIfNotFound: true);
         m_UI_PauseButton = m_UI.FindAction("PauseButton", throwIfNotFound: true);
         m_UI_CaptureIdeaPhotoBtn = m_UI.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
+        m_UI_MiniMapResize = m_UI.FindAction("MiniMapResize", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1417,6 +1449,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_UIButtonA;
     private readonly InputAction m_UI_PauseButton;
     private readonly InputAction m_UI_CaptureIdeaPhotoBtn;
+    private readonly InputAction m_UI_MiniMapResize;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -1425,6 +1458,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @UIButtonA => m_Wrapper.m_UI_UIButtonA;
         public InputAction @PauseButton => m_Wrapper.m_UI_PauseButton;
         public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_UI_CaptureIdeaPhotoBtn;
+        public InputAction @MiniMapResize => m_Wrapper.m_UI_MiniMapResize;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1446,6 +1480,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CaptureIdeaPhotoBtn.started += instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.performed += instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.canceled += instance.OnCaptureIdeaPhotoBtn;
+            @MiniMapResize.started += instance.OnMiniMapResize;
+            @MiniMapResize.performed += instance.OnMiniMapResize;
+            @MiniMapResize.canceled += instance.OnMiniMapResize;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1462,6 +1499,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CaptureIdeaPhotoBtn.started -= instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.performed -= instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.canceled -= instance.OnCaptureIdeaPhotoBtn;
+            @MiniMapResize.started -= instance.OnMiniMapResize;
+            @MiniMapResize.performed -= instance.OnMiniMapResize;
+            @MiniMapResize.canceled -= instance.OnMiniMapResize;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1519,5 +1559,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnUIButtonA(InputAction.CallbackContext context);
         void OnPauseButton(InputAction.CallbackContext context);
         void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
+        void OnMiniMapResize(InputAction.CallbackContext context);
     }
 }
