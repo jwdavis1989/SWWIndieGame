@@ -41,12 +41,17 @@ public class CharacterManager : MonoBehaviour
     public bool isLockedOn = false;
     public bool canBleed = true;
     public bool isChargingAttack = false;
+    
+    [Header("Minimap Sprite")]
+    public GameObject miniMapSprite;
 
-    protected virtual void Awake() {
-        if (isPlayer) {
+    protected virtual void Awake()
+    {
+        if (isPlayer)
+        {
             DontDestroyOnLoad(this);
         }
-        
+
         characterController = GetComponent<CharacterController>();
         characterStatsManager = GetComponent<CharacterStatsManager>();
         characterCombatManager = GetComponent<CharacterCombatManager>();

@@ -883,6 +883,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MiniMapResize",
+                    "type": "Button",
+                    "id": "dc345c32-cc8b-4cbd-b017-f2d05c9c2c13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -971,6 +980,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "CaptureIdeaPhotoBtn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d81e40e-628d-491b-a573-5531f054958a",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MiniMapResize",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eed1c4e6-d033-4c1b-b11d-8d837bbceabe",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MiniMapResize",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
