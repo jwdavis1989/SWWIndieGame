@@ -384,7 +384,7 @@ public class PlayerInputManager : MonoBehaviour
         if (miniMapZoomToggleInput)
         {
             miniMapZoomToggleInput = false;
-            MiniMapManager.instance.UpdateMiniMapZoom();
+            MiniMapManager.instance.UpdateMiniMapState();
         }
     }
     private void OnApplicationFocus(bool focus)

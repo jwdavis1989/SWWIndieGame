@@ -17,11 +17,11 @@ public class MiniMapManager : MonoBehaviour
     public float[] miniMapZoomArray = { 20f, 60f, 60f };
 
     [Header("Minimap Opacity Levels")]
-    public float[] miniMapAlphaArray = { 0.5f, 0.25f, 1f };
+    public float[] miniMapAlphaArray = { 0.5f, 0.5f, 1f };
 
-    [Header("Minimap Aspect Ratio Levels")]
+    [Header("Minimap Aspect Ratio Levels for Y Scale")]
     private float[] miniMapScaleYArray = { 1f, 1.78f, 1.78f };
-    private int miniMapStateIndex = 0;
+    private int miniMapStateIndex = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -42,13 +42,24 @@ public class MiniMapManager : MonoBehaviour
             hudMiniMapRect = hudMiniMap.GetComponent<RectTransform>();
             MiniMapImage = hudMiniMapRect.GetChild(0).GetComponent<RawImage>();
             miniMapBackground = hudMiniMap.GetComponent<Image>();
+
+            //Determine Aspect Ratio
             miniMapScaleYArray[1] = Screen.width / Screen.height;
             miniMapScaleYArray[2] = Screen.width / Screen.height;
+
+            //Initialize State index to n-2 so that the first key press wraps back to index 0
+            miniMapStateIndex = miniMapZoomArray.Length - 2;
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnApplicationFocus() {
+        //Determine Aspect Ratio
+        miniMapScaleYArray[1] = Screen.width / Screen.height;
+        miniMapScaleYArray[2] = Screen.width / Screen.height;
     }
 
     // Update is called once per frame
@@ -59,7 +70,7 @@ public class MiniMapManager : MonoBehaviour
         // transform.rotation = Quaternion.Euler(90f, player.eularAngles.y, 0f);
     }
 
-    public void UpdateMiniMapZoom()
+    public void UpdateMiniMapState()
     {
         //Change the minimap zoom
         miniMapCamera.orthographicSize = miniMapZoomArray[miniMapStateIndex];
