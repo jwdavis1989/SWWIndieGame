@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class InventionManager : MonoBehaviour
 {
     public InventionScript[] allInventions;
-    private bool [] ideaObtainedFlags = new bool[(int)IdeaType.MAX - 1];
-    public byte[][] ideaImages = new byte[(int)IdeaType.MAX - 1][];
+    private bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE - 1];
+    public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE - 1][];
     //TODO - Handle saving and loading of inventions
     private PlayerManager player;
     public static InventionManager instance;
