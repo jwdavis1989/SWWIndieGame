@@ -20,7 +20,7 @@ public class MiniMapManager : MonoBehaviour
     public float[] miniMapAlphaArray = { 0.5f, 0.25f, 1f };
 
     [Header("Minimap Aspect Ratio Levels")]
-    public float[] miniMapScaleYArray = { 1f, 1.78f, 1.78f };
+    private float[] miniMapScaleYArray = { 1f, 1.78f, 1.78f };
     private int miniMapStateIndex = 0;
 
     // Start is called before the first frame update
@@ -42,6 +42,8 @@ public class MiniMapManager : MonoBehaviour
             hudMiniMapRect = hudMiniMap.GetComponent<RectTransform>();
             MiniMapImage = hudMiniMapRect.GetChild(0).GetComponent<RawImage>();
             miniMapBackground = hudMiniMap.GetComponent<Image>();
+            miniMapScaleYArray[1] = Screen.width / Screen.height;
+            miniMapScaleYArray[2] = Screen.width / Screen.height;
         }
         else
         {
