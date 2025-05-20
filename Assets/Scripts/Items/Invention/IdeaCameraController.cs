@@ -82,9 +82,12 @@ public class IdeaCameraController : MonoBehaviour
     }
     //string lastCaptureFilepath = "";
     byte[] lastCapturePng = null;
+    WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
+    WaitForSeconds waitTime = new WaitForSeconds(0.4f);
     IEnumerator TakeScreenshot()
     {
-        yield return new WaitForSeconds(0.4f);//delay for crosshair
+        yield return waitTime;//delay for crosshair
+        yield return frameEnd; //wait for end of frame
         //ScreenCapture.CaptureScreenshot("SomeLevel.png");
 
         int width = Screen.width * 65 / 100;
@@ -98,7 +101,6 @@ public class IdeaCameraController : MonoBehaviour
         //lastCaptureFilepath = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + "LastIdeaCapture.png";
         //System.IO.File.WriteAllBytes(lastCaptureFilepath, bytes);
         //Debug.Log("Capture saved at: " + lastCaptureFilepath);
-        //TODO - Only save locally on object then do this code as part of save/load system...
         StartCoroutine(FlashThenPreview());
     }
     /** Activate Prieview Frame. If idea is present then  */
