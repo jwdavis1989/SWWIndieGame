@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.9150943, g: 0.82596844, b: 0.62588996, a: 1}
+  m_FogColor: {r: 0.80651474, g: 0.8679245, b: 0.85348916, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.004
   m_LinearFogStart: 0
@@ -24,9 +24,9 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.2509804, g: 0.18431373, b: 0.1254902, a: 1}
   m_AmbientGroundColor: {r: 0.14117648, g: 0.10980392, b: 0.10980392, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 1
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 97fca95f33987e548be9dd7c03cb1a96, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 3a253cab252a165478338fba0f03e63a, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 1091410089}
-  m_IndirectSpecularColor: {r: 0.2505808, g: 0.5158458, b: 0.672112, a: 1}
+  m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.14811653, g: 0.113289446, b: 0.10353697, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 9306315}
   - component: {fileID: 9306314}
   - component: {fileID: 9306313}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-240.48, -2.83, 159.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 24027796}
   - component: {fileID: 24027795}
   - component: {fileID: 24027794}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-240.48, -2.83, -240.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -843,7 +843,7 @@ GameObject:
   - component: {fileID: 31129268}
   - component: {fileID: 31129267}
   - component: {fileID: 31129266}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-40.48, -2.83, -240.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3876,7 +3876,7 @@ MonoBehaviour:
       scale: {x: 1, y: 1, z: 1}
   densityInjection:
     enable: 1
-    strength: 1
+    strength: 0.01
     useNoiseMask: 1
     useNoiseMaskLevels: 1
     noiseMaskLevelParameters:
@@ -5565,7 +5565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 308740674}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrains
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7234,7 +7234,7 @@ GameObject:
   - component: {fileID: 401993784}
   - component: {fileID: 401993783}
   - component: {fileID: 401993782}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(59.52, -2.83, 259.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12402,7 +12402,7 @@ GameObject:
   - component: {fileID: 689497503}
   - component: {fileID: 689497502}
   - component: {fileID: 689497501}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(159.52, -2.83, -140.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17673,7 +17673,7 @@ GameObject:
   - component: {fileID: 924958150}
   - component: {fileID: 924958149}
   - component: {fileID: 924958148}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(159.52, -2.83, -240.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20707,7 +20707,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.8156863, b: 0.6509804, a: 1}
-  m_Intensity: 1.6
+  m_Intensity: 0.75
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -20765,13 +20765,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091410087}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5605452, y: -0, z: -0, w: 0.82812387}
-  m_LocalPosition: {x: 32, y: 743, z: -4}
+  m_LocalRotation: {x: -0.27441806, y: 0.6516861, z: -0.27441812, w: -0.65168613}
+  m_LocalPosition: {x: 513, y: 400, z: 53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 68.187, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!1 &1104028497
 GameObject:
   m_ObjectHideFlags: 0
@@ -21147,7 +21147,7 @@ GameObject:
   - component: {fileID: 1127212320}
   - component: {fileID: 1127212319}
   - component: {fileID: 1127212318}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(59.52, -2.83, -240.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21344,7 +21344,7 @@ GameObject:
   - component: {fileID: 1138404503}
   - component: {fileID: 1138404502}
   - component: {fileID: 1138404501}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(159.52, -2.83, 59.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21666,7 +21666,7 @@ GameObject:
   - component: {fileID: 1153349082}
   - component: {fileID: 1153349081}
   - component: {fileID: 1153349080}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(59.52, -2.83, 159.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22096,7 +22096,7 @@ GameObject:
   - component: {fileID: 1177705127}
   - component: {fileID: 1177705126}
   - component: {fileID: 1177705125}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-240.48, -2.83, -40.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23662,7 +23662,7 @@ GameObject:
   - component: {fileID: 1276477041}
   - component: {fileID: 1276477040}
   - component: {fileID: 1276477039}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(159.52, -2.83, 159.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26320,7 +26320,7 @@ GameObject:
   - component: {fileID: 1432971717}
   - component: {fileID: 1432971716}
   - component: {fileID: 1432971715}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-140.48, -2.83, -240.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30483,7 +30483,7 @@ GameObject:
   - component: {fileID: 1678871499}
   - component: {fileID: 1678871498}
   - component: {fileID: 1678871497}
-  m_Layer: 11
+  m_Layer: 6
   m_Name: RockIdea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30534,7 +30534,7 @@ Transform:
   m_GameObject: {fileID: 1678871496}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.055, y: 1.66, z: 3.88}
+  m_LocalPosition: {x: 0.484, y: 1.66, z: 3.581}
   m_LocalScale: {x: 1.2, y: 3, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -30718,7 +30718,7 @@ GameObject:
   - component: {fileID: 1697489357}
   - component: {fileID: 1697489356}
   - component: {fileID: 1697489355}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-40.48, -2.83, 259.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31095,13 +31095,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1710771377}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.010659805, y: 0.77955645, z: 0.013272498, w: 0.6261006}
-  m_LocalPosition: {x: -42.3, y: 21.6, z: 3.6}
+  m_LocalRotation: {x: 0.18649381, y: 0.41617793, z: 0.07590654, w: -0.88670975}
+  m_LocalPosition: {x: 68, y: 8, z: -78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -1.951, y: 102.461, z: 0}
+  m_LocalEulerAnglesHint: {x: -383.198, y: -50.55, z: 1.285}
 --- !u!1001 &1710798567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34488,7 +34488,7 @@ GameObject:
   - component: {fileID: 1897179369}
   - component: {fileID: 1897179368}
   - component: {fileID: 1897179367}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-240.48, -2.83, 59.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34580,7 +34580,7 @@ GameObject:
   - component: {fileID: 1897296958}
   - component: {fileID: 1897296957}
   - component: {fileID: 1897296956}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-240.48, -2.83, -140.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34672,7 +34672,7 @@ GameObject:
   - component: {fileID: 1899545983}
   - component: {fileID: 1899545982}
   - component: {fileID: 1899545981}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-240.48, -2.83, 259.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35326,7 +35326,7 @@ GameObject:
   - component: {fileID: 1938100218}
   - component: {fileID: 1938100217}
   - component: {fileID: 1938100216}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-140.48, -2.83, 259.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35608,7 +35608,7 @@ GameObject:
   - component: {fileID: 1960402075}
   - component: {fileID: 1960402074}
   - component: {fileID: 1960402073}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(-140.48, -2.83, 159.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37070,7 +37070,7 @@ GameObject:
   - component: {fileID: 2033180300}
   - component: {fileID: 2033180299}
   - component: {fileID: 2033180298}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(159.52, -2.83, 259.56)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37962,7 +37962,7 @@ MonoBehaviour:
       scale: {x: 5, y: 5, z: 5}
   densityInjection:
     enable: 1
-    strength: 0.03
+    strength: 0.01
     useNoiseMask: 1
     useNoiseMaskLevels: 1
     noiseMaskLevelParameters:
@@ -38086,7 +38086,7 @@ MonoBehaviour:
     color: {r: 0.999999, g: 0.999998, b: 0.999998, a: 1}
   ambientInjection:
     enable: 1
-    strength: 0.5
+    strength: 0.1
     useNoiseMask: 1
     useNoiseMaskLevels: 1
     noiseMaskLevelParameters:
@@ -39389,7 +39389,7 @@ GameObject:
   - component: {fileID: 2145499515}
   - component: {fileID: 2145499514}
   - component: {fileID: 2145499513}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain_(159.52, -2.83, -40.44)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
