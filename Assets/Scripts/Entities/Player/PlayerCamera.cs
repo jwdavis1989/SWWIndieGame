@@ -36,7 +36,7 @@ public class PlayerCamera : MonoBehaviour
     private Vector3 cameraVelocity;
     //Used for camera collisions, moves the camera object to this position upon colliding
     private Vector3 cameraObjectPosition;
-    [SerializeField] float leftAndRightLookAngle;
+    [SerializeField] public float leftAndRightLookAngle;
     [SerializeField] float upAndDownLookAngle;
 
     //Used for Camera Collisions
@@ -92,8 +92,7 @@ public class PlayerCamera : MonoBehaviour
             HandleFollowTarget();
             HandleRotations();
             HandleCollisions();
-            if (IdeaCameraController.isBusy())
-                IdeaCameraController.instance.HandleRotations();
+            IdeaCameraController.instance.HandleRotations();
         }
     }
 

@@ -257,7 +257,7 @@ public class PlayerInputManager : MonoBehaviour
     void HandleUIInteractInput()
     {
         //if they press the button during a dialogue
-        if (uiInteractInput || uiInteractInput2)// [LMB], [E], (A)
+        if (uiInteractInput || uiInteractInput2)// [LMB], [E], (X)
         {
             uiInteractInput = false;
             uiInteractInput2 = false;//(X) I wanted this to continue dialgue for now... Could change later
@@ -273,7 +273,7 @@ public class PlayerInputManager : MonoBehaviour
         if (useItemQuickslotInput) // [1], (Y)
         {
             useItemQuickslotInput = false;
-            if (SceneManager.GetActiveScene().buildIndex == 0) 
+            if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0) 
                 return; //dont use on title screen
 
             //currently have camera here. Not sure if it gets it's own button or is an item
