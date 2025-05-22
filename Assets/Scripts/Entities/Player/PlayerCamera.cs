@@ -37,7 +37,7 @@ public class PlayerCamera : MonoBehaviour
     //Used for camera collisions, moves the camera object to this position upon colliding
     private Vector3 cameraObjectPosition;
     [SerializeField] public float leftAndRightLookAngle;
-    [SerializeField] float upAndDownLookAngle;
+    [SerializeField] public float upAndDownLookAngle;
 
     //Used for Camera Collisions
     private float cameraZPosition;

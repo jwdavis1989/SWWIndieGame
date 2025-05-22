@@ -205,7 +205,7 @@ public class IdeaCameraController : MonoBehaviour
         }
         ideaCamera.transform.parent = player.transform;
         Vector3 playerPosition = player.transform.position;
-        ideaCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y + 1.6f, playerPosition.z);
+        ideaCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y + 1.6f, playerPosition.z) + (player.transform.forward * 1.5f);
         //leftAndRightLookAngle = player.transform.rotation.y;
         //upAndDownLookAngle = 0;
     }
@@ -223,10 +223,12 @@ public class IdeaCameraController : MonoBehaviour
     public void ActivateIdeaCameraView()
     {
         leftAndRightLookAngle = PlayerCamera.instance.leftAndRightLookAngle;
+        upAndDownLookAngle = PlayerCamera.instance.upAndDownLookAngle;
         //deactivate player
         player.canMove = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
         //deactivate player camera
+        
         PlayerCamera.instance.cameraObject.enabled = false;
         //activate camera ui
         canvas.gameObject.SetActive(true);
@@ -235,6 +237,7 @@ public class IdeaCameraController : MonoBehaviour
         photoPreviewFrame.SetActive(false);
         //activate camera
         ideaCamera.gameObject.SetActive(true);
+        
     }
     public void DeactivateIdeaCameraView()
     {
