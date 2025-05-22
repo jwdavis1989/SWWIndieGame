@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class IdeaCameraController : MonoBehaviour
 {
+    public static IdeaCameraController instance;
     public Camera ideaCamera;
     
     [Header("Preview UI shown with Save/Discard options")]
@@ -29,7 +30,13 @@ public class IdeaCameraController : MonoBehaviour
     PlayerControls playerControls;
     [SerializeField] LayerMask ideaLayers;
     private bool takingPhoto = false;
-    public static IdeaCameraController instance;
+    [Header("Rotation")]
+    float leftAndRightLookAngle = 0;
+    float leftAndRightRotationSpeed = 220f;
+    float upAndDownLookAngle = 0;
+    float upAndDownRotationSpeed = 220f;
+    float minimumPivot = -30f;
+    float maximumPivot = 60f;
     public void Awake()
     {
         if (instance == null)
@@ -192,11 +199,15 @@ public class IdeaCameraController : MonoBehaviour
     }
     void AttachCameraToPlayer()
     {
-        if(player == null)
+        if (player == null)
+        {
             player = GameObject.Find("Player").GetComponent<PlayerManager>();
-        Transform p = player.transform;
-        ideaCamera.transform.parent = p;
-        ideaCamera.transform.position = new Vector3(p.position.x, p.position.y+1.5f, p.position.z) + (p.forward * 1.5f);
+        }
+        ideaCamera.transform.parent = player.transform;
+        Vector3 playerPosition = player.transform.position;
+        ideaCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y + 1.6f, playerPosition.z) + (player.transform.forward * 1.5f);
+        //leftAndRightLookAngle = player.transform.rotation.y;
+        //upAndDownLookAngle = 0;
     }
     public void ActivateDeactiveCameraView()
     {
@@ -211,43 +222,48 @@ public class IdeaCameraController : MonoBehaviour
     }
     public void ActivateIdeaCameraView()
     {
+        leftAndRightLookAngle = PlayerCamera.instance.leftAndRightLookAngle;
+        upAndDownLookAngle = PlayerCamera.instance.upAndDownLookAngle;
+        //deactivate player
         player.canMove = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
+        //deactivate player camera
+        
+        PlayerCamera.instance.cameraObject.enabled = false;
+        //activate camera ui
         canvas.gameObject.SetActive(true);
-        ideaCamera.gameObject.SetActive(true);
         cameraLensCrosshair.SetActive(true);
         border.SetActive(true);
         photoPreviewFrame.SetActive(false);
-        PlayerCamera.instance.cameraObject.enabled = false;
+        //activate camera
+        ideaCamera.gameObject.SetActive(true);
+        
     }
     public void DeactivateIdeaCameraView()
     {
+        //deactivate camera ui
         canvas.gameObject.SetActive(false);
-        ideaCamera.gameObject.SetActive(false);
         cameraLensCrosshair.SetActive(false);
         border.SetActive(false);
         photoPreviewFrame.SetActive(false);
+        ideaCamera.gameObject.SetActive(false);
+        //activate player
         PlayerCamera.instance.cameraObject.enabled = true;
         PlayerUIManager.instance.gameObject.SetActive(true);
         player.canMove = true;
         takingPhoto = false;
     }
-    float leftAndRightLookAngle = 0;
-    float leftAndRightRotationSpeed = 220f;
-    float upAndDownLookAngle = 0;
-    float upAndDownRotationSpeed = 220f;
-    float minimumPivot = -30f;
-    float maximumPivot = 60f;
-    
     public void HandleRotations()
     {
+        if (!isBusy())
+        {
+            return;
+        }
         //Normal Rotations
         //Rotate left and right based on horizontal movement on the right joystick
         leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
-
         //Rotate up and down based on the vertical movement on the right Joystick
         upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
-
         //Clamp the up and down look angle between min/max values
         upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
 
@@ -255,24 +271,19 @@ public class IdeaCameraController : MonoBehaviour
         Vector3 cameraRotation = Vector3.zero;
         Quaternion targetRotation;
 
-        //Rotate the player left and right
+        //rotate camera left and right
         cameraRotation.y = leftAndRightLookAngle;
         targetRotation = Quaternion.Euler(cameraRotation);
         player.transform.rotation = targetRotation;
-        AttachCameraToPlayer();
+
         //Rotate the camera up and down
         cameraRotation = Vector3.zero;
         if (PlayerCamera.instance.isCameraInverted)
-        {
             cameraRotation.x = -upAndDownLookAngle;
-        }
         else
-        {
             cameraRotation.x = upAndDownLookAngle;
-        }
         targetRotation = Quaternion.Euler(cameraRotation);
         ideaCamera.transform.localRotation = targetRotation;
-        
     }
     public IdeaScript LocateIdeaTarget()
     {

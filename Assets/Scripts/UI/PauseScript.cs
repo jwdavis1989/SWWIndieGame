@@ -43,6 +43,12 @@ public class PauseScript : MonoBehaviour
 
     public void ContinueClick()
     {
+        StartCoroutine(WaitToEndOfFrameThenContinue());
+    }
+    WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
+    IEnumerator WaitToEndOfFrameThenContinue()
+    {
+        yield return frameEnd; //wait for end of frame
         Unpause();
     }
     public void UpgradeMenuClick()
