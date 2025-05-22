@@ -352,6 +352,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             return;
         }
 
+        if (PauseScript.instance.gamePaused) {
+            return;
+        }
+
         //If using a 2-handed weapon, play the 2h weapon jump animation, otherwise play the one handed animation
         player.playerAnimationManager.PlayTargetActionAnimation("Main_Jump_Start_01", false);
 

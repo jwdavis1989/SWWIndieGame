@@ -8,7 +8,7 @@ public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
     public PlayerManager player;
-    PlayerControls playerControls;
+    [HideInInspector] public PlayerControls playerControls;
 
     [Header("Movement Input")]
     [SerializeField] public Vector2 movementInput;
@@ -486,7 +486,7 @@ public class PlayerInputManager : MonoBehaviour
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
-            if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy()) 
+            if (PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy())
                 return;
                 
             //Attempt to perform a jump
