@@ -239,12 +239,9 @@ public class PlayerInputManager : MonoBehaviour
                 NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
                 //NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
                 if (dialogue != null)
-                { //play the dialogue if found
-                    DialogueManager.instance.PlayDialoge(dialogue);
-                    //Lock player. (Unlocked on exit in DialgoueManager.NextLine)
-                    player.isPerformingAction = true;
-                    player.canMove = false;
-                    player.canRotate = false;
+                { //lock player and play the dialogue if found
+                    DialogueManager.instance.PlayDialogue(dialogue);
+                    
                 }
 
             }

@@ -201,7 +201,6 @@ public class IdeaCameraController : MonoBehaviour
             //load last picture
             //byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
             InventionManager.instance.SetIdeaPicture(lastCapturePng, idea);
-            
             //save
             //string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
             //Debug.Log("Idea photo saved to "+ saveFileName);//astest

@@ -62,9 +62,6 @@ public class DialogueManager : MonoBehaviour
     }
     public void DialogueBoxContinue()
     {
-        //if (PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
-        //{
-        //    PlayerInputManager.instance.interactInput = false;
         if (dialogueText.text == lines[lineIndex])
         {//if line is finished go to next line
             NextLine();
@@ -74,20 +71,17 @@ public class DialogueManager : MonoBehaviour
             StopAllCoroutines();
             dialogueText.text = lines[lineIndex];
         }
-        //}
-
     }
-    public void PlayDialoge(NPCDialogue dialogue)
+    public void PlayDialogue(NPCDialogue dialogue)
     {
-        //if(PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
-        //{
-        //    PlayerInputManager.instance.interactInput = false;
         //Debug.Log("Handling Interact");
-        //NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
-        if (dialogue != null)
-        {
+        if (dialogue != null){
             //Debug.Log("Handling Interact Got Dialogue");
-
+            player.isPerformingAction = true;
+            player.canMove = false;
+            player.canRotate = false;
+            player.isMoving = false;
+            playerControls.PlayerActions.Disable();
             lines = dialogue.lines;
             speakerNameText.text = dialogue.speakerName;
             lineIndex = 0;
@@ -147,6 +141,7 @@ public class DialogueManager : MonoBehaviour
             player.isPerformingAction = false;
             player.canMove = true;
             player.canRotate = true;
+            playerControls.PlayerActions.Enable();
             // turn off dialogue UI
             dialogueBox.gameObject.SetActive(false);
             eventSystem.gameObject.SetActive(false);
