@@ -27,9 +27,12 @@ public class IdeaCameraController : MonoBehaviour
     public GameObject flashGraphic;
     public Canvas canvas;
     PlayerManager player;
-    PlayerControls playerControls;
+   
     [SerializeField] LayerMask ideaLayers;
     private bool takingPhoto = false;
+    [Header("Controls")]
+    PlayerControls playerControls;
+    [SerializeField] bool capturePhotoInput = false;
     [Header("Rotation")]
     float leftAndRightLookAngle = 0;
     float leftAndRightRotationSpeed = 220f;
@@ -57,6 +60,16 @@ public class IdeaCameraController : MonoBehaviour
         cameraLensCrosshair.SetActive(false);
         border.SetActive(false);
         photoPreviewFrame.SetActive(false);
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.Enable();
+        }
+    }
+    public void Update()
+    {
+        HandleCapturePhotoInput();
     }
     /** returns true if the player is in idea camera mode */
     static public bool isBusy()
@@ -226,6 +239,7 @@ public class IdeaCameraController : MonoBehaviour
         upAndDownLookAngle = PlayerCamera.instance.upAndDownLookAngle;
         //deactivate player
         player.canMove = false;
+        player.isMoving = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
         //deactivate player camera
         
@@ -348,5 +362,14 @@ public class IdeaCameraController : MonoBehaviour
             }
         }
         return nearestTarget;
+    }
+    //Idea Capture button
+    void HandleCapturePhotoInput()
+    {
+        if (capturePhotoInput) // [Space], (X)
+        {
+            capturePhotoInput = false;
+            TakeScreenshotInput();
+        }
     }
 }

@@ -15,6 +15,8 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI speakerNameText;
     public TextMeshProUGUI bottomText;
+    [SerializeField] bool dialogueContinueInput = false;//(A),[LMB]
+    PlayerControls playerControls;
 
     public GameObject dialogueBox;
     public EventSystem eventSystem;
@@ -41,12 +43,18 @@ public class DialogueManager : MonoBehaviour
         eventSystem.gameObject.SetActive(false);
         //StartDialgoue();
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+            playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
+            playerControls.Enable();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        HandleDialogueContineuButton();
     }
     public static bool IsInDialogue()
     {
@@ -209,5 +217,17 @@ public class DialogueManager : MonoBehaviour
         }
         return nearestTarget;
     }
-
+    //Interact Button during dialogue box
+    void HandleDialogueContineuButton()
+    {
+        //if they press the button during a dialogue
+        if (dialogueContinueInput)// [LMB], [E], (X)
+        {
+            dialogueContinueInput = false;
+            if (IsInDialogue())
+            {
+                DialogueBoxContinue();
+            }
+        }
+    }
 }

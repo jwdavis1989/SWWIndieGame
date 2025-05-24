@@ -28,10 +28,9 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
     [SerializeField] bool useItemQuickslotInput = false;//using for idea camera. This will be an item?
-    [SerializeField] bool uiInteractInput = false;//(A)
-    [SerializeField] bool uiInteractInput2 = false;//(X)
-    [SerializeField] bool pauseInput = false;
-    [SerializeField] bool capturePhotoInput = false;
+    //[SerializeField] bool dialogueContinueInput = false;//(A),[LMB]
+    //[SerializeField] bool pauseInput = false;
+    //[SerializeField] bool capturePhotoInput = false;
     [SerializeField] bool miniMapZoomToggleInput = false;
 
 
@@ -91,10 +90,10 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleAllInputs()
     {
         HandleInteractInput();
-        HandleUIInteractInput();
-        HandlePauseInput();
+        //HandleDialogueContineuButton();
+        //HandlePauseInput();
         HandleUseItemQuickSlotInput();
-        HandleCapturePhotoInput();
+        //HandleCapturePhotoInput();
 
         HandleMovementInput();
         HandleCameraMovementInput();
@@ -179,11 +178,10 @@ public class PlayerInputManager : MonoBehaviour
 
             //Player UI interactions
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
-            playerControls.UI.UIButtonA.performed += i => uiInteractInput = true;
-            playerControls.UI.UIButtonX.performed += i => uiInteractInput2 = true;
-            playerControls.UI.PauseButton.performed += i => pauseInput = true;
+            //playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
+            //playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PlayerActions.UseItemQuickSlot.performed += i => useItemQuickslotInput = true;
-            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            //playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
             playerControls.UI.MiniMapResize.performed += i => miniMapZoomToggleInput = true;
         }
 
@@ -235,7 +233,7 @@ public class PlayerInputManager : MonoBehaviour
 
             //Note: Disable this if in combat for efficency?
             // If not busy doing something else
-            if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())  //player.isLockedOn &&
+            if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())
             {
                 //Find NPC dialogue.
                 NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
@@ -254,19 +252,18 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
     //Interact Button during dialogue box
-    void HandleUIInteractInput()
-    {
-        //if they press the button during a dialogue
-        if (uiInteractInput || uiInteractInput2)// [LMB], [E], (X)
-        {
-            uiInteractInput = false;
-            uiInteractInput2 = false;//(X) I wanted this to continue dialgue for now... Could change later
-            if (DialogueManager.IsInDialogue())
-            {
-                DialogueManager.instance.DialogueBoxContinue();
-            }
-        }
-    }
+    //void HandleDialogueContineuButton()
+    //{
+    //    //if they press the button during a dialogue
+    //    if (dialogueContinueInput)// [LMB], [E], (X)
+    //    {
+    //        dialogueContinueInput = false;
+    //        if (DialogueManager.IsInDialogue())
+    //        {
+    //            DialogueManager.instance.DialogueBoxContinue();
+    //        }
+    //    }
+    //}
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
@@ -281,24 +278,24 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
     //Pause button
-    void HandlePauseInput()
-    {
-        if (pauseInput) // [Esc], (Start/Menu)
-        {
-            pauseInput = false;
-            PauseScript.instance.PauseUnpause();
-        }
-    }
-   
+    //void HandlePauseInput()
+    //{
+    //    if (pauseInput) // [Esc], (Start/Menu)
+    //    {
+    //        pauseInput = false;
+    //        PauseScript.instance.PauseUnpause();
+    //    }
+    //}
+
     //Idea Capture button
-    void HandleCapturePhotoInput()
-    {
-        if (capturePhotoInput) // [Space], (X)
-        {
-            capturePhotoInput = false;
-            IdeaCameraController.instance.TakeScreenshotInput();
-        }
-    }
+    //void HandleCapturePhotoInput()
+    //{
+    //    if (capturePhotoInput) // [Space], (X)
+    //    {
+    //        capturePhotoInput = false;
+    //        IdeaCameraController.instance.TakeScreenshotInput();
+    //    }
+    //}
 
 
     //Movement
