@@ -16,19 +16,8 @@ public class InventionManager : MonoBehaviour
     [Header("All possible inventions")]
     public InventionScript[] allInventions;
     [Header("All current idea info")]
-    private bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE - 1];
+    public bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE - 1];
     public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE - 1][];
-    [Header("UI")]
-    [Header("Ideas used for current invention")]
-    public GameObject firstIdea;
-    public GameObject secondIdea;
-    public GameObject thirdIdea;
-    public GameObject inventButton;
-    public GameObject outputText;
-    public GameObject ownedIdeasGrid;
-    public GameObject gridElementPrefab;
-    [Header("Currently selected idea. 1st, 2nd, or 3rd")]
-    private int activeIdea = 1;
 
     //helpful references
     private PlayerManager player;
@@ -51,18 +40,7 @@ public class InventionManager : MonoBehaviour
     {
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
         StartCoroutine(CheckForSavedIdeas());
-    }
-    public void OpenInventionMenu()
-    {
-        Debug.Log("OpenInventionMenu called");//astest
-        LoadIdeasToScreen();
-        firstIdea.SetActive(false);
-        secondIdea.SetActive(false);
-        thirdIdea.SetActive(false);
-    }
-    public void CloseInventionMenu()
-    {
-
+        DontDestroyOnLoad(gameObject);
     }
 
     //INVENTION
@@ -84,7 +62,7 @@ public class InventionManager : MonoBehaviour
     }
     public void SetIdeaPicture(byte[] ideaPicture, IdeaType idea)
     {
-        ideaImages[(int)idea ]= ideaPicture;
+        ideaImages[(int)idea]= ideaPicture;
     }
     /** returns true if the player has photograped the idea */
     public bool CheckHasIdea(IdeaType ideaType)
@@ -133,79 +111,79 @@ public class InventionManager : MonoBehaviour
     /**
      * Clear component list and reload it with current values
      */
-    private int currentIdeasPage = 0;
-    [Header("Total ideas able to display per row when selecting an idea")]
-    public int ideasPerRow = 6;
-    void LoadIdeasToScreen()
-    {
-        Debug.Log("LoadIdeasToScreen called " + ideaObtainedFlags.Length);//astest
-        foreach (Transform child in ownedIdeasGrid.transform)
-        {
-            Destroy(child.gameObject);
-        }
-        int displayedCount = 0;
-        int maxDisplayed = 12;
-        int ideasToSkip = currentIdeasPage * ideasPerRow;
-        //basic components
-        int ideaIndex = -1;
-        int totalIdeaCount = 0;
-        foreach (bool ideaFlag in ideaObtainedFlags)
-        {
-            ideaIndex++;
-            Debug.Log("" + (IdeaType)ideaIndex + " is "+ ideaFlag);//astest
-            if (!ideaFlag) 
-                continue;
-            else 
-            {
-                totalIdeaCount++;
-                if (ideasToSkip > 0)
-                {
-                    ideasToSkip--;
-                    continue;
-                }
-                if (++displayedCount > maxDisplayed) break;
-                Object gridElement = Instantiate(gridElementPrefab, ownedIdeasGrid.transform);
-                GridElementController gridScript = gridElement.GetComponent<GridElementController>();
-                gridScript.topText.text = ""+(IdeaType)ideaIndex;
-                gridScript.bottomText.text = "";
-                gridScript.cornerButton.gameObject.SetActive(false);
-                //load image
-                byte[] bytes = ideaImages[ideaIndex];
-                Texture2D texture = new Texture2D(0, 0);
-                texture.LoadImage(bytes);
-                gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
+    //private int currentIdeasPage = 0;
+    //[Header("Total ideas able to display per row when selecting an idea")]
+    //public int ideasPerRow = 6;
+    //void LoadIdeasToScreen()
+    //{
+    //    Debug.Log("LoadIdeasToScreen called " + ideaObtainedFlags.Length);//astest
+    //    foreach (Transform child in ownedIdeasGrid.transform)
+    //    {
+    //        Destroy(child.gameObject);
+    //    }
+    //    int displayedCount = 0;
+    //    int maxDisplayed = 12;
+    //    int ideasToSkip = currentIdeasPage * ideasPerRow;
+    //    //basic components
+    //    int ideaIndex = -1;
+    //    int totalIdeaCount = 0;
+    //    foreach (bool ideaFlag in ideaObtainedFlags)
+    //    {
+    //        ideaIndex++;
+    //        Debug.Log("" + (IdeaType)ideaIndex + " is "+ ideaFlag);//astest
+    //        if (!ideaFlag) 
+    //            continue;
+    //        else 
+    //        {
+    //            totalIdeaCount++;
+    //            if (ideasToSkip > 0)
+    //            {
+    //                ideasToSkip--;
+    //                continue;
+    //            }
+    //            if (++displayedCount > maxDisplayed) break;
+    //            Object gridElement = Instantiate(gridElementPrefab, ownedIdeasGrid.transform);
+    //            GridElementController gridScript = gridElement.GetComponent<GridElementController>();
+    //            gridScript.topText.text = ""+(IdeaType)ideaIndex;
+    //            gridScript.bottomText.text = "";
+    //            gridScript.cornerButton.gameObject.SetActive(false);
+    //            //load image
+    //            byte[] bytes = ideaImages[ideaIndex];
+    //            Texture2D texture = new Texture2D(0, 0);
+    //            texture.LoadImage(bytes);
+    //            gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
 
-                //add behavior to button
-                gridScript.mainButton.onClick.AddListener(() => {
-                    GridElementController usedIdeaPanel;
-                    if (activeIdea == 1){
-                        usedIdeaPanel = firstIdea.GetComponent<GridElementController>();
-                    }else if (activeIdea == 2){
-                        usedIdeaPanel = secondIdea.GetComponent<GridElementController>();
-                    }else{
-                        usedIdeaPanel = thirdIdea.GetComponent<GridElementController>();
-                    }
-                    usedIdeaPanel.gameObject.SetActive(true);
-                    usedIdeaPanel.mainButtonForeground.GetComponent<RawImage>().texture = texture;
-                    usedIdeaPanel.bottomText.text = "" + (IdeaType)ideaIndex;
-                });
-                // cant use component. disable the button
-                //else gridScript.mainButton.interactable = false;
-            }
-        }
-        int numOfPage = totalIdeaCount / ideasPerRow;
+    //            //add behavior to button
+    //            gridScript.mainButton.onClick.AddListener(() => {
+    //                GridElementController usedIdeaPanel;
+    //                if (activeIdea == 1){
+    //                    usedIdeaPanel = firstIdea.GetComponent<GridElementController>();
+    //                }else if (activeIdea == 2){
+    //                    usedIdeaPanel = secondIdea.GetComponent<GridElementController>();
+    //                }else{
+    //                    usedIdeaPanel = thirdIdea.GetComponent<GridElementController>();
+    //                }
+    //                usedIdeaPanel.gameObject.SetActive(true);
+    //                usedIdeaPanel.mainButtonForeground.GetComponent<RawImage>().texture = texture;
+    //                usedIdeaPanel.bottomText.text = "" + (IdeaType)ideaIndex;
+    //            });
+    //            // cant use component. disable the button
+    //            //else gridScript.mainButton.interactable = false;
+    //        }
+    //    }
+    //    int numOfPage = totalIdeaCount / ideasPerRow;
 
-        //TODO scrolling
-        //if (numOfPage < 2)
-        //{
-        //    cmpntScroll.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    cmpntScroll.gameObject.SetActive(true);
-        //    cmpntScroll.numberOfSteps = numOfPage;
-        //    cmpntScroll.size = 1.0f / numOfPage;
-        //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
-        //}
-    }
+    //    //TODO scrolling
+    //    //if (numOfPage < 2)
+    //    //{
+    //    //    cmpntScroll.gameObject.SetActive(false);
+    //    //}
+    //    //else
+    //    //{
+    //    //    cmpntScroll.gameObject.SetActive(true);
+    //    //    cmpntScroll.numberOfSteps = numOfPage;
+    //    //    cmpntScroll.size = 1.0f / numOfPage;
+    //    //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
+    //    //}
+    //}
 }

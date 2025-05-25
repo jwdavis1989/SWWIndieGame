@@ -110,7 +110,7 @@ public class PauseScript : MonoBehaviour
         mainPauseMenu.SetActive(false);
         upgradeMenu.SetActive(false);
         inventMenu.SetActive(true);
-        InventionManager.instance.OpenInventionMenu();
+        InventionUIManager.instance.OpenInventionMenu();
     }
     public void DebugSaveGameCLick()
     {
