@@ -9,6 +9,8 @@ public class PlayerUIManager : MonoBehaviour
 
     [HideInInspector] public PlayerUIHudManager playerUIHudManager;
     [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
+    [HideInInspector] public PauseScript playerUIPauseMenu;
+
     void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -20,16 +22,20 @@ public class PlayerUIManager : MonoBehaviour
         
     }
 
-    void Awake() {
-        if (instance == null) {
+    void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
         }
-        else {
+        else
+        {
             Destroy(gameObject);
         }
 
         playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
         playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
+        playerUIPauseMenu = GetComponentInChildren<PauseScript>();
     }
     
 }

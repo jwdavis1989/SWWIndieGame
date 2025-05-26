@@ -378,7 +378,7 @@ public class PlayerInputManager : MonoBehaviour
         if (miniMapZoomToggleInput)
         {
             miniMapZoomToggleInput = false;
-            MiniMapManager.instance.UpdateMiniMapZoom();
+            MiniMapManager.instance.UpdateMiniMapState();
         }
     }
     private void OnApplicationFocus(bool focus)
@@ -482,6 +482,7 @@ public class PlayerInputManager : MonoBehaviour
             //If we have a UI window open, simply return without doing anything
             if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy()) 
                 return;
+                
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
         }
@@ -491,11 +492,15 @@ public class PlayerInputManager : MonoBehaviour
         if (lightAttackInput) {
             lightAttackInput = false;
 
-            //TODO: Return if we have a UI Window Open
+            //Return if we have a UI Window Open
+            if (PlayerUIManager.instance.playerUIPauseMenu.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy())
+            {
+                return;
+            }
 
-            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
-
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction, 
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+            {
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction,
                                                 PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
             }
         }

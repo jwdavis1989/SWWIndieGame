@@ -30,7 +30,7 @@ public class ItemDropManager : MonoBehaviour
     }
     public static GameObject DropComponent(TinkerComponentType type, Transform loc)
     {
-        return Instantiate(TinkerComponentManager.instance.DropComponent(type, loc));
+        return TinkerComponentManager.instance.DropComponent(type, loc);
     }
     public static GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
     {
