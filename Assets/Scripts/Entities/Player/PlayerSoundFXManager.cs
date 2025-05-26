@@ -12,6 +12,7 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
 
         sprintBoosterAudioSource = GameObject.Find("BoosterSFXManager").GetComponent<AudioSource>();
 
+        //TODO: Initialize all of the audio emitter components for the booster system to future proof booster audio system.
     }
 
     public override void PlaySprintBoostSoundFX()
