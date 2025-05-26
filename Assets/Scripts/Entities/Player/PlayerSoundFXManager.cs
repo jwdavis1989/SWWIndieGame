@@ -4,5 +4,47 @@ using UnityEngine;
 
 public class PlayerSoundFXManager : CharacterSoundFXManager
 {
-   
+    public AudioSource sprintBoosterAudioSource;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        sprintBoosterAudioSource = GameObject.Find("BoosterSFXManager").GetComponent<AudioSource>();
+
+    }
+
+    public override void PlaySprintBoostSoundFX()
+    {
+        //AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        // WorldSoundFXManager.instance.PlayAdvancedSoundFX(sprintBoosterAudioSource, rollSFX, 0.6f, 0.9f, true, 0.1f, false);
+        // WorldSoundFXManager.instance.PlayAdvancedSoundFX(sprintBoosterAudioSource, rollSFX, 0.6f, 0.5f, true, 0.1f, false);
+        //WorldSoundFXManager.instance.PlayAdvancedSoundFX(sprintBoosterAudioSource, WorldSoundFXManager.instance.jumpJetAirSFX, 1f, 0.25f, true, 0.1f, true);
+        WorldSoundFXManager.instance.ActivateAdvancedSoundFXComponent(sprintBoosterAudioSource, WorldSoundFXManager.instance.jumpJetAirSFX, 1f, 0.25f, true, 0.1f);
+    }
+
+    public override void PlayJumpJetBurstFX()
+    {
+        if (characterManager.isPlayer)
+        {
+            //WorldSoundFXManager.instance.PlayAdvancedSoundFX(sprintBoosterAudioSource, WorldSoundFXManager.instance.jumpJetAirSFX, 1.25f, 1.2f, true);
+        }
+    }
+
+    public override void PlayAirDashSoundFX()
+    {
+        AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        WorldSoundFXManager.instance.PlayAdvancedSoundFX(sprintBoosterAudioSource, rollSFX, 1.5f, 0.9f, true, 0.1f);
+        WorldSoundFXManager.instance.PlayAdvancedSoundFX(sprintBoosterAudioSource, rollSFX, 1.5f, 0.5f, true, 0.1f);
+        Debug.Log("PlayerAir");
+    }
+
+    public void StopSprintBoosterAudioClip()
+    {
+        if (sprintBoosterAudioSource.enabled == true)
+        {   
+            WorldSoundFXManager.instance.DisableAdvancedSoundFXComponent(sprintBoosterAudioSource);
+        }
+    }
+
 }

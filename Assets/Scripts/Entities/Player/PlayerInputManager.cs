@@ -416,12 +416,13 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     private void HandleSprintInput() {
-        if (sprintInput) {
+        if (sprintInput)
+        {
             //If Menu or UI window is open, do nothing.
             if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
                 return;
             player.playerLocomotionManager.HandleSprinting();
-            
+
             //Camera Zoom-Out Juice to give the illusion of great speed
             // if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting) {
             //     if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum) {
@@ -439,7 +440,8 @@ public class PlayerInputManager : MonoBehaviour
             //     PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
             // }
         }
-        else {
+        else
+        {
             player.playerLocomotionManager.characterManager.isSprinting = false;
             //Camera Zoom-Out Juice to give the illusion of Slowing Rapidly
             // if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting) {
@@ -448,6 +450,7 @@ public class PlayerInputManager : MonoBehaviour
             // else {
             //     PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
             // }
+            player.playerSoundFXManager.StopSprintBoosterAudioClip();
         }
     }
 

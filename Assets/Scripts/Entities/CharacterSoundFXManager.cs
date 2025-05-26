@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterSoundFXManager : MonoBehaviour
 {
-    private CharacterManager characterManager;
+    protected CharacterManager characterManager;
     public AudioSource audioSource;
     private int footStepSFXCount;
     private int runFootStepSFXCount;
@@ -40,20 +40,22 @@ public class CharacterSoundFXManager : MonoBehaviour
         PlayAdvancedSoundFX(rollSFX, 1, 1f, true, 0.1f);
     }
 
-    public void PlayAirDashSoundFX() {
+    public virtual void PlayAirDashSoundFX()
+    {
         AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
         PlayAdvancedSoundFX(rollSFX, 1.5f, 0.9f, true, 0.1f);
         PlayAdvancedSoundFX(rollSFX, 1.5f, 0.5f, true, 0.1f);
+        Debug.Log("CharacterAir");
     }
 
-    public void PlaySprintBoostSoundFX() {
+    public virtual void PlaySprintBoostSoundFX() {
         AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
         PlayAdvancedSoundFX(rollSFX, 0.6f, 0.9f, true, 0.1f, false);
         PlayAdvancedSoundFX(rollSFX, 0.6f, 0.5f, true, 0.1f, false);
         PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 0.5f, 0.25f, true, 0.1f, false);
     }
 
-    public void PlayJumpJetBurstFX() {
+    public virtual void PlayJumpJetBurstFX() {
         if (characterManager.isPlayer) {
             PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 1.25f, 1.2f, true);
         }
@@ -75,13 +77,13 @@ public class CharacterSoundFXManager : MonoBehaviour
     public void PlayFootStepSFX(){
         if(characterManager.isGrounded && !characterManager.isPerformingAction){
             //PlayAdvancedSoundFX(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)], 1f, 1f, true, 0.1f, true);
-            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.4f, 1.2f, true, 0.2f, true);
+            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.2f, 1.2f, true, 0.2f, true);
         }
     }
 
     public void PlayRunFootStepSFX(){
         if(characterManager.isGrounded && !characterManager.isPerformingAction){
-            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 1f, 1f, true, 0.1f, true);
+            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.2f, 1f, true, 0.1f, true);
         }
     }
 
