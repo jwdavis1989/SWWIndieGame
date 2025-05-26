@@ -37,7 +37,7 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     public void PlayRollSoundFX() {
         AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
-        PlayAdvancedSoundFX(rollSFX, 1, 1f, true, 0.1f);
+        PlayAdvancedSoundFX(rollSFX, 0.5f, 1f, true, 0.1f);
     }
 
     public virtual void PlayAirDashSoundFX()
@@ -62,16 +62,16 @@ public class CharacterSoundFXManager : MonoBehaviour
     }
 
     public void PlayLandingSFX() {
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 1f, 1f, true, 0.1f, true);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.4f, 1f, true, 0.1f, true);
     }
 
     public void PlayBackPedalSFX() {
         //audioSource.PlayOneShot(WorldSoundFXManager.instance.backPedalSFX);
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.8f, 1f, true, 0.1f, true);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.2f, 1f, true, 0.1f, true);
     }
 
     public void PlayJumpFootStepSFX(){
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.8f, 1.1f, true, 0.1f, false);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0 , runFootStepSFXCount)], 0.4f, 1.1f, true, 0.1f, false);
     }
 
     public void PlayFootStepSFX(){
