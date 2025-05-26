@@ -27,9 +27,12 @@ public class IdeaCameraController : MonoBehaviour
     public GameObject flashGraphic;
     public Canvas canvas;
     PlayerManager player;
-    PlayerControls playerControls;
+   
     [SerializeField] LayerMask ideaLayers;
     private bool takingPhoto = false;
+    [Header("Controls")]
+    PlayerControls playerControls;
+    [SerializeField] bool capturePhotoInput = false;
     [Header("Rotation")]
     float leftAndRightLookAngle = 0;
     float leftAndRightRotationSpeed = 220f;
@@ -57,6 +60,16 @@ public class IdeaCameraController : MonoBehaviour
         cameraLensCrosshair.SetActive(false);
         border.SetActive(false);
         photoPreviewFrame.SetActive(false);
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.Enable();
+        }
+    }
+    public void Update()
+    {
+        HandleCapturePhotoInput();
     }
     /** returns true if the player is in idea camera mode */
     static public bool isBusy()
@@ -119,27 +132,27 @@ public class IdeaCameraController : MonoBehaviour
         flashGraphic.SetActive(false);
         // if idea was in the capture set text
         if (idea == null) {
+
             ideaPhotoText.text = "No idea here!";
-        }
-        else{
-            if (InventionManager.instance.CheckHasIdea(idea.type)){
-                ideaPhotoText.text = "Idea " + idea.ToString();
-                previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
-                previewControlsText.text += "\n<s> Replace Photo - [Enter] / (A)</s>";
-                oldPhotoFrame.SetActive(true);
-                byte[] bytes = InventionManager.instance.GetIdeaPicture(idea.type);
-                Texture2D texture = new Texture2D(0, 0);
-                texture.LoadImage(bytes);
-                oldPhoto.GetComponent<RawImage>().texture = texture;
-            }
-            else{
-                InventionManager.instance.SetHasIdea(idea.type);
-                ideaPhotoText.text = "New idea! - " + idea.ToString();
-                previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
-                ReplacePhoto(idea.type);
-                oldPhotoFrame.SetActive(false);
-            }
-        }
+
+        }else if (InventionManager.instance.CheckHasIdea(idea.type)){
+
+            ideaPhotoText.text = "Idea " + idea.ToString();
+
+            previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
+            previewControlsText.text += "\n<s> Replace Photo - [Enter] / (A)</s>";
+            oldPhotoFrame.SetActive(true);
+            byte[] bytes = InventionManager.instance.GetIdeaPicture(idea.type);
+            Texture2D texture = new Texture2D(0, 0);
+            texture.LoadImage(bytes);
+            oldPhoto.GetComponent<RawImage>().texture = texture;
+         }else{
+            InventionManager.instance.SetHasIdea(idea.type);
+            ideaPhotoText.text = "New idea! - " + idea.ToString();
+            previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
+            ReplacePhoto(idea.type);
+            oldPhotoFrame.SetActive(false);
+         }
         //load the picture we just took
         StartCoroutine(LoadCaptureToScreen());
     }
@@ -188,7 +201,6 @@ public class IdeaCameraController : MonoBehaviour
             //load last picture
             //byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
             InventionManager.instance.SetIdeaPicture(lastCapturePng, idea);
-            
             //save
             //string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
             //Debug.Log("Idea photo saved to "+ saveFileName);//astest
@@ -226,6 +238,7 @@ public class IdeaCameraController : MonoBehaviour
         upAndDownLookAngle = PlayerCamera.instance.upAndDownLookAngle;
         //deactivate player
         player.canMove = false;
+        player.isMoving = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
         //deactivate player camera
         
@@ -348,5 +361,14 @@ public class IdeaCameraController : MonoBehaviour
             }
         }
         return nearestTarget;
+    }
+    //Idea Capture button
+    void HandleCapturePhotoInput()
+    {
+        if (capturePhotoInput) // [Space], (X)
+        {
+            capturePhotoInput = false;
+            TakeScreenshotInput();
+        }
     }
 }
