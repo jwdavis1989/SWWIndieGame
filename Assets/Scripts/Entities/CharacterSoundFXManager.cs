@@ -42,17 +42,23 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     public virtual void PlayAirDashSoundFX()
     {
-        AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
-        PlayAdvancedSoundFX(rollSFX, 1.5f, 0.9f, true, 0.1f);
-        PlayAdvancedSoundFX(rollSFX, 1.5f, 0.5f, true, 0.1f);
-        Debug.Log("CharacterAir");
+        //FUTURE NOTE: This sound effect is actually being managed by enabling audio emitters on the Air Dash Boosters skeleton child, which are hardcoded values. 
+        //Could be upgrade later to be more dynamic.
+
+        // AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        // PlayAdvancedSoundFX(rollSFX, 1.5f, 0.9f, true, 0.1f);
+        // PlayAdvancedSoundFX(rollSFX, 1.5f, 0.5f, true, 0.1f);
     }
 
     public virtual void PlaySprintBoostSoundFX() {
-        AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
-        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.9f, true, 0.1f, false);
-        PlayAdvancedSoundFX(rollSFX, 0.6f, 0.5f, true, 0.1f, false);
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 0.5f, 0.25f, true, 0.1f, false);
+
+        //FUTURE NOTE: This sound effect is actually being managed by enabling audio emitters on the Sprint Dash Boosters skeleton child, which are hardcoded values. 
+        //Could be upgrade later to be more dynamic.
+
+        // AudioClip rollSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
+        // PlayAdvancedSoundFX(rollSFX, 0.6f, 0.9f, true, 0.1f, false);
+        // PlayAdvancedSoundFX(rollSFX, 0.6f, 0.5f, true, 0.1f, false);
+        // PlayAdvancedSoundFX(WorldSoundFXManager.instance.jumpJetAirSFX, 0.5f, 0.25f, true, 0.1f, false);
     }
 
     public virtual void PlayJumpJetBurstFX() {
