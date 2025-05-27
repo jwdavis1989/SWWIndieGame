@@ -331,16 +331,16 @@ public class IdeaCameraController : MonoBehaviour
                     RaycastHit hit;
 
                     //Check Line of sight by environment layers
-                    if (Physics.Linecast(player.playerCombatManager.LockOnTransform.position, lockOnTarget.transform.position, out hit, WorldUtilityManager.instance.GetEnvironmentLayers()))
-                    {
-                        //We hit something in the environment, blocking line of sight
-                        continue;
-                    }
-                    else
-                    {
+                    //if (Physics.Linecast(player.playerCombatManager.LockOnTransform.position, lockOnTarget.transform.position, out hit, WorldUtilityManager.instance.GetEnvironmentLayers()))
+                    //{
+                    //    //We hit something in the environment, blocking line of sight
+                    //    continue;
+                    //}
+                    //else
+                    //{
                         //Add the target to the available targets list since it's within Line of Sight
                         availableTargets.Add(lockOnTarget);
-                    }
+                    //}
                 }
 
             }
