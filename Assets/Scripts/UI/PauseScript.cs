@@ -11,16 +11,40 @@ public class PauseScript : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject mainPauseMenu;
     [SerializeField] GameObject upgradeMenu;
+    [SerializeField] GameObject inventMenu;
     [SerializeField] GameObject DebugSaveGameButton;
     [SerializeField] GameObject DebugAddItemButton;
+
+    [Header("Controls")]
+    [SerializeField] bool pauseInput = false;
+    PlayerControls playerControls;
     public EventSystem mainPauseMenuEvents;
 
+    [Header("Pause is a singleton")]
+    public static PauseScript instance;
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(false);
         pauseMenu.SetActive(false);
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+            playerControls.UI.PauseButton.performed += i => pauseInput = true;
+            playerControls.Enable();
+        }
     }
     void Update()
     {
@@ -32,16 +56,27 @@ public class PauseScript : MonoBehaviour
         //else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
         //{
         //    Unpause();
-            
+
         //}
-        if (gamePaused && mainPauseMenuEvents.currentSelectedGameObject == null)
-        {   // Handle for lost cursor
-            mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
+        HandlePauseInput();
+        if (gamePaused)
+        {
+            if (mainPauseMenuEvents.currentSelectedGameObject == null)
+            {   // Handle for lost cursor
+                mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
+            }
         }
     }
 
     public void ContinueClick()
     {
+        Unpause();
+        StartCoroutine(WaitToEndOfFrameThenContinue());
+    }
+    WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
+    IEnumerator WaitToEndOfFrameThenContinue()
+    {
+        yield return frameEnd; //wait for end of frame
         Unpause();
     }
     public void UpgradeMenuClick()
@@ -70,6 +105,13 @@ public class PauseScript : MonoBehaviour
         SceneManager.LoadScene(0);
         Unpause();
     }
+    public void InventMenuClick()
+    {
+        mainPauseMenu.SetActive(false);
+        upgradeMenu.SetActive(false);
+        inventMenu.SetActive(true);
+        InventionUIManager.instance.OpenInventionMenu();
+    }
     public void DebugSaveGameCLick()
     {
         WorldSaveGameManager.instance.saveGame = true;
@@ -94,6 +136,8 @@ public class PauseScript : MonoBehaviour
     }
     void Pause()
     {
+        //PlayerInputManager.instance.enabled = false;
+        playerControls.PlayerActions.Disable();
         Time.timeScale = 0;
         gamePaused = true;
         pauseMenu.SetActive(true);
@@ -114,27 +158,25 @@ public class PauseScript : MonoBehaviour
     }
     void Unpause()
     {
+        playerControls.PlayerActions.Enable();
+        //PlayerInputManager.instance.enabled = true;
         Time.timeScale = 1;
         gamePaused = false;
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(true);
         pauseMenu.SetActive(false);
+        inventMenu.SetActive(false);
         mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
 
         //Re-enable Controls
         PlayerInputManager.instance.playerControls.Enable();
     }
-    [Header("Pause is a singleton")]
-    public static PauseScript instance;
-    public void Awake()
+    void HandlePauseInput()
     {
-        if (instance == null)
+        if (pauseInput) // [Esc], (Start/Menu)
         {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            pauseInput = false;
+            PauseUnpause();
         }
     }
 }

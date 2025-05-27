@@ -51,7 +51,7 @@ public class AICharacterStatsManager : CharacterStatsManager
      */
     public GameObject DropComponent(TinkerComponentType type)
     {
-        return Instantiate(ItemDropManager.DropComponent(type, transform));
+        return ItemDropManager.DropComponent(type, transform);
     }
     /** 
      *  Drops a weapon at this objects location 

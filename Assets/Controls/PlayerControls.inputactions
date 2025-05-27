@@ -849,16 +849,7 @@
             "id": "232ec43a-4327-4d3c-98d5-0a2bea6b9128",
             "actions": [
                 {
-                    "name": "UIButtonX",
-                    "type": "Button",
-                    "id": "92168ec3-63c1-4755-9dd7-3258e7ff2c0d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Tap",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "UIButtonA",
+                    "name": "DialogueContinue",
                     "type": "Button",
                     "id": "ef92f6aa-327e-4cc7-958d-798b0088b416",
                     "expectedControlType": "Button",
@@ -892,20 +883,18 @@
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "UIButtonX",
+                    "type": "Button",
+                    "id": "76039eff-44b8-4d4c-b31c-fb14f851c692",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "cd27d313-d01b-458d-aafe-e433bc5e2711",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UIButtonX",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "d21664e0-d368-427c-a07c-ac4a695ab550",
@@ -913,7 +902,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UIButtonA",
+                    "action": "DialogueContinue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b20ac24d-4c41-4a47-9d87-0798e20030a9",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DialogueContinue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -924,7 +924,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UIButtonA",
+                    "action": "DialogueContinue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -935,7 +935,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UIButtonA",
+                    "action": "DialogueContinue",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1002,6 +1002,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "MiniMapResize",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09dcd176-c225-4d5a-9333-f5ae8db9a591",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UIButtonX",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
