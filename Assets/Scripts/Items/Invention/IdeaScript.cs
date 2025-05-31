@@ -44,7 +44,7 @@ public enum IdeaType
     Motor,
     Golem,
     Wiring,
-
+    TreasureChest,
     // Total unique ideas. Add new ideas above here
     IDEAS_SIZE
 }

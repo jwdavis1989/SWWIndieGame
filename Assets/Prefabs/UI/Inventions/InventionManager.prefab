@@ -1657,7 +1657,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Result Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1893,8 +1893,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d62ffaee4ade01e48b161993ea8484e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allInventions: []
-  ideaObtainedFlags: 0000000000000000000000
+  allInventions:
+  - {fileID: 6721559076929550124, guid: 80d2b801cf8818943a54c60be4b7eca8, type: 3}
+  ideaObtainedFlags: 000000000000000000000000
 --- !u!114 &2911843322170958878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1907,13 +1908,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ba3cadbabd4034cb7a724ce66753bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstIdea: {fileID: 6217429610052948821}
-  secondIdea: {fileID: 8803055546800216414}
-  thirdIdea: {fileID: 8384396147680991345}
+  firstIdea: {fileID: 5080707852819277633}
+  secondIdea: {fileID: 5541363176321552217}
+  thirdIdea: {fileID: 1267555746952118469}
   inventButton: {fileID: 8862149449646184608}
   outputText: {fileID: 4456686711782937938}
   ownedIdeasGrid: {fileID: 6668427315023115194}
   gridElementPrefab: {fileID: 4250506066951269713, guid: 171a09448bc3cbf449183d8841986a6b, type: 3}
+  questionMark: {fileID: 2800000, guid: b87ada1674ec2734c9ba49b2144471b5, type: 3}
   ideasPerRow: 6
 --- !u!1 &5121312748567126976
 GameObject:
@@ -4179,7 +4181,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4302465567333973787}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2911843322170958878}
+        m_TargetAssemblyTypeName: InventionUIManager, Assembly-CSharp
+        m_MethodName: OnInventClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8928925980309395472
 GameObject:
   m_ObjectHideFlags: 0
