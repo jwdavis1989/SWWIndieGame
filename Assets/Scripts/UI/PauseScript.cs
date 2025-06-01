@@ -153,6 +153,9 @@ public class PauseScript : MonoBehaviour
             DebugSaveGameButton.SetActive(false);
             DebugAddItemButton.SetActive(false);
         }
+
+        //Disable Controls
+        PlayerInputManager.instance.playerControls.Disable();
     }
     void Unpause()
     {
@@ -165,6 +168,9 @@ public class PauseScript : MonoBehaviour
         pauseMenu.SetActive(false);
         inventMenu.SetActive(false);
         mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
+
+        //Re-enable Controls
+        PlayerInputManager.instance.playerControls.Enable();
     }
     void HandlePauseInput()
     {

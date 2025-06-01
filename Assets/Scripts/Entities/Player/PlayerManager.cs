@@ -18,6 +18,7 @@ public class PlayerManager : CharacterManager
 
     public GameObject flashlight;
     public GameObject cameraflashlight;
+    [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
 
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
@@ -30,6 +31,7 @@ public class PlayerManager : CharacterManager
         //Do more stuff, only for the player
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
+        playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
         
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
