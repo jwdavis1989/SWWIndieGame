@@ -16,8 +16,8 @@ public class InventionManager : MonoBehaviour
     [Header("All possible inventions")]
     public InventionScript[] allInventions;
     [Header("All current idea info")]
-    public bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE - 1];
-    public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE - 1][];
+    public bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
+    public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
 
     //helpful references
     private PlayerManager player;
@@ -38,6 +38,8 @@ public class InventionManager : MonoBehaviour
     }
     private void Start()
     {
+        ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
+        ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
         StartCoroutine(CheckForSavedIdeas());
         DontDestroyOnLoad(gameObject);
@@ -83,12 +85,11 @@ public class InventionManager : MonoBehaviour
             string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + (IdeaType)i + ".png";
             if (File.Exists(saveFileName))
             {
-                //Debug.Log("File exist for " + (IdeaType)i);//astest
                 ideaObtainedFlags[i] = true;
                 byte[] bytes = System.IO.File.ReadAllBytes(saveFileName);
                 ideaImages[i] = bytes;
             }
-            //else Debug.Log("File dont exist " + saveFileName);//astest
+            //else Debug.Log("File dont exist " + saveFileName);
         }
         yield return null;
 
@@ -111,79 +112,34 @@ public class InventionManager : MonoBehaviour
     /**
      * Clear component list and reload it with current values
      */
-    //private int currentIdeasPage = 0;
-    //[Header("Total ideas able to display per row when selecting an idea")]
-    //public int ideasPerRow = 6;
-    //void LoadIdeasToScreen()
-    //{
-    //    Debug.Log("LoadIdeasToScreen called " + ideaObtainedFlags.Length);//astest
-    //    foreach (Transform child in ownedIdeasGrid.transform)
-    //    {
-    //        Destroy(child.gameObject);
-    //    }
-    //    int displayedCount = 0;
-    //    int maxDisplayed = 12;
-    //    int ideasToSkip = currentIdeasPage * ideasPerRow;
-    //    //basic components
-    //    int ideaIndex = -1;
-    //    int totalIdeaCount = 0;
-    //    foreach (bool ideaFlag in ideaObtainedFlags)
-    //    {
-    //        ideaIndex++;
-    //        Debug.Log("" + (IdeaType)ideaIndex + " is "+ ideaFlag);//astest
-    //        if (!ideaFlag) 
-    //            continue;
-    //        else 
-    //        {
-    //            totalIdeaCount++;
-    //            if (ideasToSkip > 0)
-    //            {
-    //                ideasToSkip--;
-    //                continue;
-    //            }
-    //            if (++displayedCount > maxDisplayed) break;
-    //            Object gridElement = Instantiate(gridElementPrefab, ownedIdeasGrid.transform);
-    //            GridElementController gridScript = gridElement.GetComponent<GridElementController>();
-    //            gridScript.topText.text = ""+(IdeaType)ideaIndex;
-    //            gridScript.bottomText.text = "";
-    //            gridScript.cornerButton.gameObject.SetActive(false);
-    //            //load image
-    //            byte[] bytes = ideaImages[ideaIndex];
-    //            Texture2D texture = new Texture2D(0, 0);
-    //            texture.LoadImage(bytes);
-    //            gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
-
-    //            //add behavior to button
-    //            gridScript.mainButton.onClick.AddListener(() => {
-    //                GridElementController usedIdeaPanel;
-    //                if (activeIdea == 1){
-    //                    usedIdeaPanel = firstIdea.GetComponent<GridElementController>();
-    //                }else if (activeIdea == 2){
-    //                    usedIdeaPanel = secondIdea.GetComponent<GridElementController>();
-    //                }else{
-    //                    usedIdeaPanel = thirdIdea.GetComponent<GridElementController>();
-    //                }
-    //                usedIdeaPanel.gameObject.SetActive(true);
-    //                usedIdeaPanel.mainButtonForeground.GetComponent<RawImage>().texture = texture;
-    //                usedIdeaPanel.bottomText.text = "" + (IdeaType)ideaIndex;
-    //            });
-    //            // cant use component. disable the button
-    //            //else gridScript.mainButton.interactable = false;
-    //        }
-    //    }
-    //    int numOfPage = totalIdeaCount / ideasPerRow;
-
-    //    //TODO scrolling
-    //    //if (numOfPage < 2)
-    //    //{
-    //    //    cmpntScroll.gameObject.SetActive(false);
-    //    //}
-    //    //else
-    //    //{
-    //    //    cmpntScroll.gameObject.SetActive(true);
-    //    //    cmpntScroll.numberOfSteps = numOfPage;
-    //    //    cmpntScroll.size = 1.0f / numOfPage;
-    //    //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
-    //    //}
-    //}
+    public InventionScript CheckForInvention(IdeaType idea1, IdeaType idea2, IdeaType idea3)
+    {
+        //used for returning an invention with only 2 matches
+        bool halfFound = false;
+        InventionScript halfAnswer = null;
+        foreach (InventionScript inventionScript in allInventions)
+        {
+            int ideaMatches = 0;
+            foreach (IdeaType neededIdea in inventionScript.neededIdeas)
+            {
+                if (idea1 == neededIdea) ideaMatches++;
+                else if (idea2 == neededIdea) ideaMatches++;
+                else if (idea3 == neededIdea) ideaMatches++;
+            }
+            if (ideaMatches == 2)
+            {
+                //half invention found
+                halfFound = true;
+                halfAnswer = inventionScript;
+            }
+            else if (ideaMatches == 3)
+            {
+                //invention found
+                return inventionScript;
+            }
+        }
+        if(halfFound) 
+            return halfAnswer;
+        return null;
+    }
 }

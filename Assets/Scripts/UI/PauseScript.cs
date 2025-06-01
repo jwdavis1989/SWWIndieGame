@@ -39,6 +39,7 @@ public class PauseScript : MonoBehaviour
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(false);
         pauseMenu.SetActive(false);
+        inventMenu.SetActive(false);
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
