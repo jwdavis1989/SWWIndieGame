@@ -68,38 +68,42 @@ public class InventionUIManager : MonoBehaviour
         int maxDisplayed = 12;
         int ideasToSkip = currentIdeasPage * ideasPerRow;
         //basic components
-        int ideaIndex = -1;
         int totalIdeaCount = 0;
         //loop through all possible ideas
+        int ideaIndex = -1;
         foreach (bool ideaFlag in InventionManager.instance.ideaObtainedFlags)
         {
             ideaIndex++;
-            if (ideaFlag)
-            {
-                totalIdeaCount++;
-                if (ideasToSkip > 0)
-                {
-                    ideasToSkip--;
-                    continue;
-                }
-                if (++displayedCount > maxDisplayed) break;
-                //display an idea
-                Object gridElement = Instantiate(gridElementPrefab, ownedIdeasGrid.transform);
-                GridElementController gridScript = gridElement.GetComponent<GridElementController>();
-                IdeaType ideaType = (IdeaType)ideaIndex;
-                gridScript.topText.text = "" + ideaType;
-                gridScript.bottomText.text = "";
-                gridScript.cornerButton.gameObject.SetActive(false);
-                //load image
-                byte[] bytes = InventionManager.instance.ideaImages[ideaIndex];
-                Texture2D texture = new Texture2D(0, 0);
-                texture.LoadImage(bytes);
-                gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
 
-                //add behavior to button
-                /** OBTAINED IDEA BUTTON BEHAVIOUR  */
-                gridScript.mainButton.onClick.AddListener(()=>OwnedIdeaOnclick(ideaType, gridScript));
+            if (!ideaFlag) 
+                continue;//Skip ideas not obtained for now - could show Question Mark or hint
+
+            //used for scrolling
+            totalIdeaCount++;
+            if (ideasToSkip > 0)
+            {
+                ideasToSkip--;
+                continue;
             }
+            if (++displayedCount > maxDisplayed) break;
+
+            //display an idea
+            Object gridElement = Instantiate(gridElementPrefab, ownedIdeasGrid.transform);
+            GridElementController gridScript = gridElement.GetComponent<GridElementController>();
+            IdeaType ideaType = (IdeaType)ideaIndex;
+            string ideaName = GetIdeaString(ideaType);
+            gridScript.topText.text = ideaName;
+            gridScript.bottomText.text = "";
+            gridScript.cornerButton.gameObject.SetActive(false);
+
+            //load image
+            byte[] bytes = InventionManager.instance.ideaImages[ideaIndex];
+            Texture2D texture = new Texture2D(0, 0);
+            texture.LoadImage(bytes);
+            gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
+
+            //add behavior to button
+            gridScript.mainButton.onClick.AddListener(()=>OwnedIdeaOnclick(ideaType, gridScript));
         }
         int numOfPage = totalIdeaCount / ideasPerRow;
 
@@ -116,6 +120,10 @@ public class InventionUIManager : MonoBehaviour
         //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
         //}
     }
+    /** OBTAINED IDEA BUTTON BEHAVIOUR  
+     @param ideaType   Idea to show on button
+     @param gridScript The script for this particular button on the UI
+     */
     private void OwnedIdeaOnclick(IdeaType ideaType, GridElementController gridScript)
     {
         int oldActiveIdea = activeIdea;
@@ -140,7 +148,7 @@ public class InventionUIManager : MonoBehaviour
         usedIdeaPanel.gameObject.gameObject.SetActive(true);
         //set picture
         usedIdeaPanel.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = gridScript.mainButtonForeground.GetComponent<RawImage>().texture;
-        usedIdeaPanel.GetComponent<GridElementController>().topText.text = "" + ideaType;
+        usedIdeaPanel.GetComponent<GridElementController>().topText.text = GetIdeaString(ideaType);
         /** USED IDEA BUTTON BEHAVIOUR  */
         usedIdeaPanel.mainButton.onClick.AddListener(() => {
             Debug.Log("Used Idea Clicked");
@@ -166,6 +174,7 @@ public class InventionUIManager : MonoBehaviour
             }
             if (ideaMatches == 3)
             {
+                //something is invented
                 outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.type + "!";
                 possibleInvention.hasObtained = true;
             }
@@ -198,19 +207,21 @@ public class InventionUIManager : MonoBehaviour
                     }
                     if (!match)
                     {
-                        //found unmatched used
+                        //found unmatched needed
                         neededIdeaUnmatched = i;
 
                     }
                 }
-                if(usedIdeaUnmatched == 0)
+                string needIdeaName = GetIdeaString(possibleInvention.neededIdeas[neededIdeaUnmatched]);
+                needIdeaName = needIdeaName.Substring(0, 1);
+                if (usedIdeaUnmatched == 0)
                 {
                     firstIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    firstIdea.GetComponent<GridElementController>().topText.text = (""+possibleInvention.neededIdeas[neededIdeaUnmatched]).Substring(0,1);
+                    firstIdea.GetComponent<GridElementController>().topText.text = needIdeaName;
                 }else if(usedIdeaUnmatched == 1)
                 {
                     secondIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    secondIdea.GetComponent<GridElementController>().topText.text = ("" + possibleInvention.neededIdeas[neededIdeaUnmatched]).Substring(0,1);
+                    secondIdea.GetComponent<GridElementController>().topText.text = needIdeaName;
                 }
                 else
                 {
@@ -219,5 +230,23 @@ public class InventionUIManager : MonoBehaviour
                 }
             }
         }
+    }
+    public string GetIdeaString(IdeaType type)
+    {
+        string name = "" + type;
+        string formatted = "";
+        foreach (char letter in name)
+        {
+            if (char.IsUpper(letter))
+            {
+                formatted += " " + letter;
+            }
+            else
+            {
+                formatted += letter;
+            }
+        }
+        formatted = formatted.Substring(1);
+        return formatted;
     }
 }

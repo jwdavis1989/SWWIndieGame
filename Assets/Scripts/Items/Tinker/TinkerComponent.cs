@@ -35,11 +35,11 @@ public enum TinkerComponentType
     Sapphire,
     Topaz,
     Turquoise,
-    //Uniqe - breakdown weapon component
-    Weapon
+
+    Weapon //Unique - breakdown weapon component, should always be last in this list
 }
 /**
- * MonoBehaviour version that one can add to a game object
+ * MonoBehaviour TinkerComponent that one can be added to a game object
  */
 
 public class TinkerComponent : MonoBehaviour
@@ -52,18 +52,13 @@ public class TinkerComponent : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        bool debug = TinkerComponentManager.instance.debugMode;
-        if (debug) Debug.Log("TinkerComponent.OnTriggerEnter");
         if (other.CompareTag("Player"))
         {
-            if(debug) Debug.Log("TinkerComponent encountered player");
-            //TODO: Play Sound
+            //TODO: Play Pick Up Sound here
             if (stats.isWeapon)
             {
-                if (debug) Debug.Log("component is weapon");
                 //Broken down Weapon Components probably shouldn't be on the ground but handle for them anyways
                 TinkerComponentManager.instance.weaponComponents.Add(gameObject);
-                //gameObject.SetActive(false);
                 Destroy(gameObject);
             }
             else
@@ -72,14 +67,13 @@ public class TinkerComponent : MonoBehaviour
                 //regular component
                 if (stats.count <= 0) stats.count = 1; // Allow use of positive count for multiple drop in 1 item, otherwise act as a single drop
                 TinkerComponentManager.instance.AddBaseComponentToPlayer(stats.componentType, stats.count);
-                if (debug) Debug.Log("component is type " + stats.componentType + " count = " + TinkerComponentManager.instance.baseComponents[(int)stats.componentType].GetComponent<TinkerComponent>().stats.count);
                 Destroy(gameObject);
             }
         }
     }
 }
 /**
- * Serializable version that can read/write as json
+ * Serializable object that can read/write as json
  */
 
 [Serializable]

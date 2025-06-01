@@ -73,8 +73,6 @@ public class InventionManager : MonoBehaviour
     }
     public void SetHasIdea(IdeaType type)
     {
-        Debug.Log("SetHasIdea" + ideaObtainedFlags.Length);//astest
-        Debug.Log("SetHasIdea" + (int)type);//astest
         ideaObtainedFlags[(int)type] = true;
     }
     /** loads idea images from current save slot */
@@ -87,12 +85,11 @@ public class InventionManager : MonoBehaviour
             string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + (IdeaType)i + ".png";
             if (File.Exists(saveFileName))
             {
-                //Debug.Log("File exist for " + (IdeaType)i);//astest
                 ideaObtainedFlags[i] = true;
                 byte[] bytes = System.IO.File.ReadAllBytes(saveFileName);
                 ideaImages[i] = bytes;
             }
-            //else Debug.Log("File dont exist " + saveFileName);//astest
+            //else Debug.Log("File dont exist " + saveFileName);
         }
         yield return null;
 

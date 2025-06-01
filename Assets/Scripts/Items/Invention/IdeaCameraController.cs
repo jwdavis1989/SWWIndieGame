@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
@@ -25,9 +26,14 @@ public class IdeaCameraController : MonoBehaviour
     public GameObject border;
     [Header("Flash Graphic")]
     public GameObject flashGraphic;
+    [Header("Post Processing Effect")]
+    public PostProcessLayer postProcessLayer;
+    [Header("Idea cam ui")]
     public Canvas canvas;
+
     PlayerManager player;
-   
+
+    [Header("Layers to search for ideas")]
     [SerializeField] LayerMask ideaLayers;
     private bool takingPhoto = false;
     [Header("Controls")]
@@ -55,6 +61,7 @@ public class IdeaCameraController : MonoBehaviour
     }
     public void Start()
     {
+        postProcessLayer.enabled = false;
         canvas.gameObject.SetActive(false);
         ideaCamera.gameObject.SetActive(false);
         cameraLensCrosshair.SetActive(false);
@@ -94,6 +101,7 @@ public class IdeaCameraController : MonoBehaviour
                 {   // Take photo
                     cameraLensCrosshair.SetActive(false);
                     takingPhoto = true;
+                    postProcessLayer.enabled = true;
                     StartCoroutine(TakeScreenshot());
                 }
             }
@@ -110,11 +118,13 @@ public class IdeaCameraController : MonoBehaviour
         yield return frameEnd; //wait for end of frame
         //ScreenCapture.CaptureScreenshot("SomeLevel.png");
 
-        int width = Screen.width * 65 / 100;
-        int height = Screen.height * 65 / 100;
-        //Debug.Log("w="+width+" h="+height);//astest
+        int height = Screen.height * 75 / 100;
+        int width = (int)(height * (4.0/3.0));
+        Debug.Log("Width:"+width+" \nHeight:"+height);
         Texture2D screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
-        Rect rect = new Rect(width/6, height/4, width, height);
+        int x = Screen.width / 2 - (width/2);
+        int y = Screen.height / 2 - (height / 2);
+        Rect rect = new Rect(x, y, width, height);
         screenshot.ReadPixels(rect, 0, 0);
         screenshot.Apply();
         lastCapturePng = screenshot.EncodeToPNG();
@@ -144,7 +154,6 @@ public class IdeaCameraController : MonoBehaviour
             texture.LoadImage(bytes);
             oldPhoto.GetComponent<RawImage>().texture = texture;
          }else{
-            Debug.Log("Found idea " + idea.type);//astest
             InventionManager.instance.SetHasIdea(idea.type);
             ideaPhotoText.text = "New idea! - " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
@@ -159,6 +168,7 @@ public class IdeaCameraController : MonoBehaviour
         //check for idea
         IdeaScript idea = LocateIdeaTarget();
         //activate graphic
+        postProcessLayer.enabled = false;
         flashGraphic.SetActive(true);
         Image image = flashGraphic.GetComponent<Image>();
         Color curColor = image.color;
@@ -201,7 +211,6 @@ public class IdeaCameraController : MonoBehaviour
             InventionManager.instance.SetIdeaPicture(lastCapturePng, idea);
             //save
             //string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
-            //Debug.Log("Idea photo saved to "+ saveFileName);//astest
             //TODO - Only save locally on object then do this code as part of save/load system...
             //System.IO.File.WriteAllBytes( saveFileName, bytes);
         }
