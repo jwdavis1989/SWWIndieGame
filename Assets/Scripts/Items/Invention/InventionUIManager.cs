@@ -212,21 +212,30 @@ public class InventionUIManager : MonoBehaviour
 
                     }
                 }
+                //Show the partial name for the half invented idea
                 string needIdeaName = GetIdeaString(possibleInvention.neededIdeas[neededIdeaUnmatched]);
-                needIdeaName = needIdeaName.Substring(0, 1);
+                string displayName = "";
+                for (int i = 0; i < needIdeaName.Length-1; i++)
+                {
+                    if(i <= 0 || needIdeaName[i] == ' ')
+                        displayName += needIdeaName[i];
+                    else
+                        displayName += '_';
+                }
+
                 if (usedIdeaUnmatched == 0)
                 {
                     firstIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    firstIdea.GetComponent<GridElementController>().topText.text = needIdeaName;
+                    firstIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }else if(usedIdeaUnmatched == 1)
                 {
                     secondIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    secondIdea.GetComponent<GridElementController>().topText.text = needIdeaName;
+                    secondIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }
                 else
                 {
                     thirdIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    thirdIdea.GetComponent<GridElementController>().topText.text = ("" + possibleInvention.neededIdeas[neededIdeaUnmatched]).Substring(0,1);
+                    thirdIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }
             }
         }
