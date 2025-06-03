@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class InventionUIManager : MonoBehaviour
@@ -19,13 +20,13 @@ public class InventionUIManager : MonoBehaviour
     public GameObject ownedIdeasGrid;
     public GameObject gridElementPrefab;
     public Texture questionMark;
+    public GameObject returnButton;
+    public EventSystem eventSystem;
     [Header("Currently selected idea. 1st, 2nd, or 3rd")]
     private int activeIdea = 1;
     //helpful references
-    //private PlayerManager player;
+    private PlayerManager player;
 
-
-    //TODO - Handle saving and loading of inventions
     public void Awake()
     {
         if (instance == null)
@@ -38,10 +39,23 @@ public class InventionUIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    //private void Start()
-    //{
-    //    player = GameObject.Find("Player").GetComponent<PlayerManager>();
-    //}
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<PlayerManager>();
+    }
+    public void Update()
+    {
+        if (eventSystem.currentSelectedGameObject == null)
+        {   // Handle for lost cursor
+            if (ownedIdeasGrid != null){
+                Transform[] allChildren = ownedIdeasGrid.transform.GetComponentsInChildren<Transform>();
+                if(allChildren.Length > 0)
+                    eventSystem.SetSelectedGameObject(allChildren[0].gameObject);
+                else if (returnButton != null) 
+                    eventSystem.SetSelectedGameObject(returnButton.gameObject);
+            }
+        }
+    }
     public void OpenInventionMenu()
     {
         activeIdea = 1;
@@ -132,26 +146,31 @@ public class InventionUIManager : MonoBehaviour
         {
             usedIdeaTypes[0] = ideaType;
             activeIdea++;
-            usedIdeaPanel = firstIdea.GetComponent<GridElementController>();
+            usedIdeaPanel = firstIdea;
         }
         else if (activeIdea == 2)
         {
             usedIdeaTypes[1] = ideaType;
             activeIdea++;
-            usedIdeaPanel = secondIdea.GetComponent<GridElementController>();
+            usedIdeaPanel = secondIdea;
         }
         else
         {
             usedIdeaTypes[2] = ideaType;
-            usedIdeaPanel = thirdIdea.GetComponent<GridElementController>();
+            usedIdeaPanel = thirdIdea;
         }
         usedIdeaPanel.gameObject.gameObject.SetActive(true);
         //set picture
-        usedIdeaPanel.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = gridScript.mainButtonForeground.GetComponent<RawImage>().texture;
-        usedIdeaPanel.GetComponent<GridElementController>().topText.text = GetIdeaString(ideaType);
+        usedIdeaPanel.mainButtonForeground.GetComponent<RawImage>().texture = gridScript.mainButtonForeground.GetComponent<RawImage>().texture;
+        usedIdeaPanel.topText.text = GetIdeaString(ideaType);
         /** USED IDEA BUTTON BEHAVIOUR  */
         usedIdeaPanel.mainButton.onClick.AddListener(() => {
-            Debug.Log("Used Idea Clicked");
+            firstIdea.gameObject.SetActive(false);
+            secondIdea.gameObject.SetActive(false);
+            thirdIdea.gameObject.SetActive(false);
+            activeIdea = 1;
+            LoadIdeasToScreen();
+            //Debug.Log("Used Idea Clicked");
             //usedIdeaPanel.gameObject.SetActive(false);
             ////reenable this idea
             //gridScript.mainButton.interactable = true;
@@ -177,6 +196,10 @@ public class InventionUIManager : MonoBehaviour
                 //something is invented
                 outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.type + "!";
                 possibleInvention.hasObtained = true;
+                if(possibleInvention.type == InventionType.GolemEndoplating)
+                {
+                    player.characterStatsManager.maxHealth += 10;
+                }
             }
             else if (ideaMatches == 2)
             {
@@ -212,24 +235,37 @@ public class InventionUIManager : MonoBehaviour
 
                     }
                 }
+                //Show the partial name for the half invented idea
                 string needIdeaName = GetIdeaString(possibleInvention.neededIdeas[neededIdeaUnmatched]);
-                needIdeaName = needIdeaName.Substring(0, 1);
+                string displayName = "";
+                for (int i = 0; i < needIdeaName.Length-1; i++)
+                {
+                    if(i <= 0 || needIdeaName[i] == ' ')
+                        displayName += needIdeaName[i];
+                    else
+                        displayName += '_';
+                }
+
                 if (usedIdeaUnmatched == 0)
                 {
                     firstIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    firstIdea.GetComponent<GridElementController>().topText.text = needIdeaName;
+                    firstIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }else if(usedIdeaUnmatched == 1)
                 {
                     secondIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    secondIdea.GetComponent<GridElementController>().topText.text = needIdeaName;
+                    secondIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }
                 else
                 {
                     thirdIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
-                    thirdIdea.GetComponent<GridElementController>().topText.text = ("" + possibleInvention.neededIdeas[neededIdeaUnmatched]).Substring(0,1);
+                    thirdIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }
             }
         }
+    }
+    public void OnReturnClick()
+    {
+        PauseScript.instance.InventMenuBackClick();
     }
     public string GetIdeaString(IdeaType type)
     {

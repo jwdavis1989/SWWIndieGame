@@ -90,6 +90,11 @@ public class PauseScript : MonoBehaviour
         upgradeMenu.SetActive(false);
         mainPauseMenu.SetActive(true);
     }
+    public void InventMenuBackClick()
+    {
+        inventMenu.SetActive(false);
+        mainPauseMenu.SetActive(true);
+    }
     public void MainMenuClick()
     {
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
