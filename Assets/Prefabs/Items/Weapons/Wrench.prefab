@@ -67,15 +67,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalDamage: 0
-  fireDamage: 0
-  iceDamage: 0
-  lightningDamage: 0
-  windDamage: 0
-  earthDamage: 0
-  lightDamage: 0
-  beastDamage: 0
-  scalesDamage: 0
-  techDamage: 0
+  elementalStats:
+    firePower: 0
+    icePower: 0
+    lightningPower: 0
+    windPower: 0
+    earthPower: 0
+    lightPower: 0
+    beastPower: 0
+    scalesPower: 0
+    techPower: 0
+  isMainHand: 0
   attackMotionValue: 1
   fullChargeModifier: 1
   isReducedByArmor: 1
@@ -89,6 +91,9 @@ MonoBehaviour:
   heavyAttack02DamageMotionValue: 0
   heavyChargedAttack01DamageMotionValue: 0
   heavyChargedAttack02DamageMotionValue: 0
+  lightRunningAttack01DamageMotionValue: 0
+  lightRollingAttack01DamageMotionValue: 0
+  lightBackstepAttack01DamageMotionValue: 0
   weaponFamily: 0
 --- !u!1 &1847124638102049318
 GameObject:
@@ -136,12 +141,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponFamily: 2
-  meleeWeaponDamageCollider: {fileID: 0}
+  weaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
   spr: {fileID: 21300000, guid: 35c104ec40a28954f82c9efcac65206c, type: 3}
   hasObtained: 1
   stats:
     weaponType: 1
+    isMonsterWeapon: 0
     attack: 16
     maxAttack: 35
     durability: 100
@@ -188,6 +194,9 @@ MonoBehaviour:
     lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
+    lightRunningAttack01StaminaCostModifier: 1
+    lightRollingAttack01StaminaCostModifier: 1
+    lightBackstepAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -195,8 +204,12 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightRunningAttack01DamageMotionValue: 1
+    lightRollingAttack01DamageMotionValue: 1
+    lightBackstepAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
+  projectile: {fileID: 0}
 --- !u!1001 &6642198825121613863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -211,7 +224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_LocalScale.x
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_LocalScale.y
@@ -219,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_LocalScale.z
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_LocalPosition.x
@@ -263,7 +276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 2a43586b93dd4ba41b16080a7719cb89, type: 3}
       propertyPath: m_Materials.Array.data[0]
