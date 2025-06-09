@@ -26,6 +26,9 @@ public enum WeaponType
     FreezeCaster,
     //T3 Weapons
     DiamondSword,
+
+    //Monster Weapons
+    SkeleShortSword,
     //Limit - Nothing past here
     UNKNOWN
 }
@@ -57,6 +60,7 @@ public class WeaponStats
 {
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
+    public bool isMonsterWeapon = false;
 
     [Header("Weapon Attributes")]
     public float attack = 1.0f;

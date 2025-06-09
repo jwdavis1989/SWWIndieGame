@@ -181,21 +181,30 @@ public class PlayerManager : CharacterManager
     }
     
     public void DebugAddWeapon() {
+        WeaponScript weaponScript;
         WeaponType weaponType;
         bool isSpecial;
         
         for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++) {
-            weaponType = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>().stats.weaponType;
+            weaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
+            weaponType = weaponScript.stats.weaponType;
             isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
-            PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
-            PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
-            if (isSpecial) {
-                PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
-                //PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
-            }
-            else {
-                PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
-                //PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+
+            //Only add a weapon if it's a player weapon
+            if (!weaponScript.stats.isMonsterWeapon)
+            {
+                PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
+                PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
+                if (isSpecial)
+                {
+                    PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
+                    //PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
+                }
+                else
+                {
+                    PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
+                    //PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+                }
             }
         }
     }
