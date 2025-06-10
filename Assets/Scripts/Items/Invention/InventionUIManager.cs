@@ -62,13 +62,12 @@ public class InventionUIManager : MonoBehaviour
         secondIdea.gameObject.SetActive(false);
         thirdIdea.gameObject.SetActive(false);
     }
-
-    /**
-     * Clear idea list and reload it with current values
-     */
     [Header("Total ideas able to display per row when selecting an idea")]
     public int ideasPerRow = 6;
     private int currentIdeasPage = 0;
+    /**
+     * Clear idea list and reload it with current values
+     */
     void LoadIdeasToScreen()
     {
         foreach (Transform child in ownedIdeasGrid.transform)
