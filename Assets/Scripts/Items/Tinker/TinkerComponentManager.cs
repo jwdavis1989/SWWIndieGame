@@ -121,7 +121,7 @@ public class TinkerComponentManager : MonoBehaviour
     {
         return AddTinkerComponentToWeapon(weapon, tinkerComponent, true);
     }
-    public bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, GameObject tinkerComponentPassed, bool doUpdate)
+    private bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, GameObject tinkerComponentPassed, bool doUpdate)
     {
         if (weaponToUpgrade == null) { return false; }
         TinkerComponent tinkerComponentToAdd = tinkerComponentPassed.GetComponent<TinkerComponent>();
