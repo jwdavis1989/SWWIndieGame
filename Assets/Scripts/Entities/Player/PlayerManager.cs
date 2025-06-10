@@ -68,7 +68,20 @@ public class PlayerManager : CharacterManager
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
+        //Display Game Over Screen
         PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
+
+        //Remove current lock on target if any
+        if (playerCombatManager.currentTarget != null)
+        {
+            PlayerCamera.instance.ClearLockOnTargets();
+
+            //Lower the Camera over time
+            PlayerCamera.instance.InvokeLowerCameraHeightCoroutine();
+
+            isLockedOn = false;
+            playerCombatManager.currentTarget = null;
+        }
 
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
