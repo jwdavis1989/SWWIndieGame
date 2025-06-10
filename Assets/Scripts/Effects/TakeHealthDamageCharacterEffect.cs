@@ -106,22 +106,18 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                 if (isMainHand)
                 {
-                    Debug.Log("Hit with main hand");
                     finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                     if (enemy != null)
                     {
                         enemy.isHitByMainHand = true;
-                        Debug.Log("Enemy Hit with main hand");
                     }
                 }
                 else
                 {
-                    Debug.Log("Hit with off hand");
                     finalDamageDealt = PlayerWeaponManager.instance.GetOffHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                     if (enemy != null)
                     {
                         enemy.isHitByOffHand = true;
-                        Debug.Log("Enemy Hit with off hand");
                     }
                 }
             }
