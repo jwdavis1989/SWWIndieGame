@@ -76,25 +76,28 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         }
 
         //Check for "Invulnerability"
+        if (!character.isInvulnerable)
+        {
+            //Calculate then apply the Damage
+            ApplyDamage(character, characterCausingDamage);
 
-        //Calculate then apply the Damage
-        ApplyDamage(character, characterCausingDamage);
-
-        //Check which direction damage came from
+            //Check which direction damage came from
 
 
-        //Play a damage animation
-        PlayDirectionalBasedDamageAnimation(character);
+            //Play a damage animation
+            PlayDirectionalBasedDamageAnimation(character);
 
-        //Check for build-ups (Poison, Bleed, ect)
+            //Check for build-ups (Poison, Bleed, ect)
 
-        //Play damage sound FX
-        PlayDamageSFX(character);
-        
-        //Play Damage VFX
-        PlayDamageVFX(character);
+            //Play damage sound FX
+            PlayDamageSFX(character);
 
-        //If Character is A.I., Check for new target if character causing damage is preset
+            //Play Damage VFX
+            PlayDamageVFX(character);
+
+            //If Character is A.I., Check for new target if character causing damage is preset
+
+        }
 
     }
 

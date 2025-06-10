@@ -41,7 +41,8 @@ public class CharacterManager : MonoBehaviour
     public bool isLockedOn = false;
     public bool canBleed = true;
     public bool isChargingAttack = false;
-    
+    public bool isInvulnerable = false;
+
     [Header("Minimap Sprite")]
     public GameObject miniMapSprite;
 
@@ -62,27 +63,32 @@ public class CharacterManager : MonoBehaviour
         characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
     }
 
-    protected virtual void Start() {
+    protected virtual void Start()
+    {
         IgnoreMyOwnColliders();
     }
 
-    protected virtual void Update() {
+    protected virtual void Update()
+    {
         //Update Animation Flags
         animator?.SetBool("isGrounded", isGrounded);
         animator?.SetBool("isChargingAttack", isChargingAttack);
         animator?.SetBool("isMoving", isMoving);
     }
 
-    protected virtual void FixedUpdate() {
-        
+    protected virtual void FixedUpdate()
+    {
+
     }
-    
-    protected virtual void LateUpdate() {
-        
+
+    protected virtual void LateUpdate()
+    {
+
     }
 
 
-    public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false) {
+    public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
         characterStatsManager.currentHealth = 0;
         canMove = false;
         isDead = true;
@@ -92,7 +98,8 @@ public class CharacterManager : MonoBehaviour
 
         //If not grounded, play an aerial death animation
 
-        if (!manuallySelectDeathAnimation) {
+        if (!manuallySelectDeathAnimation)
+        {
             //Could change this to choose a random death animation in the future if we wanted to.
             characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
         }
@@ -102,26 +109,30 @@ public class CharacterManager : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        if (!isPlayer) {
+        if (!isPlayer)
+        {
             //If monster: Award players with Gold or items
-            
+
         }
 
         //Disable Character
 
     }
 
-    public virtual void ReviveCharacter() {
+    public virtual void ReviveCharacter()
+    {
         //
     }
 
-    protected virtual void IgnoreMyOwnColliders() {
+    protected virtual void IgnoreMyOwnColliders()
+    {
         Collider characterControllerCollider = GetComponent<Collider>();
         Collider[] damageableCharacterColliders = GetComponentsInChildren<Collider>();
         List<Collider> ignoreColliders = new List<Collider>();
 
         //Add all limb damage collider to the list to ignore
-        foreach (var collider in damageableCharacterColliders) {
+        foreach (var collider in damageableCharacterColliders)
+        {
             ignoreColliders.Add(collider);
         }
 
@@ -129,33 +140,51 @@ public class CharacterManager : MonoBehaviour
         ignoreColliders.Add(characterControllerCollider);
 
         //Go through each collider in the list, and ignore collision with each other
-        foreach (var collider in ignoreColliders) {
-            foreach (var otherCollider in ignoreColliders) {
+        foreach (var collider in ignoreColliders)
+        {
+            foreach (var otherCollider in ignoreColliders)
+            {
                 Physics.IgnoreCollision(collider, otherCollider);
             }
         }
     }
 
-    public void CallDrainStaminaBasedOnAttack() {
+    public void CallDrainStaminaBasedOnAttack()
+    {
         characterWeaponManager.DrainStaminaBasedOnAttack();
     }
 
-    public void CallOpenDamageCollider() {
+    public void CallOpenDamageCollider()
+    {
         characterWeaponManager.OpenDamageCollider();
     }
 
-    public void CallCloseDamageCollider() {
+    public void CallCloseDamageCollider()
+    {
         characterWeaponManager.CloseDamageCollider();
     }
 
-    public void EnableCanRotate() {
-        if (isRotatingAttacker) {
+    public void EnableCanRotate()
+    {
+        if (isRotatingAttacker)
+        {
             canRotate = true;
         }
     }
 
-    public void DisableCanRotate() {
+    public void DisableCanRotate()
+    {
         canRotate = false;
     }
 
+    public void EnableInvulnerable()
+    {
+        isInvulnerable = true;
+    }
+
+    public void DisableInvulnerable()
+    {
+        isInvulnerable = false;
+    }
+    
 }
