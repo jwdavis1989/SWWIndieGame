@@ -22,8 +22,6 @@ public class InventionUIManager : MonoBehaviour
     public Texture questionMark;
     public GameObject returnButton;
     public EventSystem eventSystem;
-    [Header("Currently selected idea. 1st, 2nd, or 3rd")]
-    private int activeIdea = 1;
     //helpful references
     private PlayerManager player;
 
@@ -58,7 +56,6 @@ public class InventionUIManager : MonoBehaviour
     }
     public void OpenInventionMenu()
     {
-        activeIdea = 1;
         outputText.GetComponent<TextMeshProUGUI>().text = "???";
         LoadIdeasToScreen();
         firstIdea.gameObject.SetActive(false);
@@ -116,7 +113,7 @@ public class InventionUIManager : MonoBehaviour
             texture.LoadImage(bytes);
             gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
 
-            //add behavior to button
+            //add owned IDEA BUTTON BEHAVIOUR  
             gridScript.mainButton.onClick.AddListener(()=>OwnedIdeaOnclick(ideaType, gridScript));
         }
         int numOfPage = totalIdeaCount / ideasPerRow;
@@ -140,44 +137,99 @@ public class InventionUIManager : MonoBehaviour
      */
     private void OwnedIdeaOnclick(IdeaType ideaType, GridElementController gridScript)
     {
-        int oldActiveIdea = activeIdea;
+        int activeIdea;
         GridElementController usedIdeaPanel;
-        if (activeIdea == 1)
+        if (thirdIdea.isActiveAndEnabled)
+            return;
+        else if (secondIdea.isActiveAndEnabled)
         {
-            usedIdeaTypes[0] = ideaType;
-            activeIdea++;
-            usedIdeaPanel = firstIdea;
+            activeIdea = 3;
+            usedIdeaTypes[2] = ideaType;
+            usedIdeaPanel = thirdIdea;
         }
-        else if (activeIdea == 2)
+        else if (firstIdea.isActiveAndEnabled)
         {
+            activeIdea = 2;
             usedIdeaTypes[1] = ideaType;
-            activeIdea++;
             usedIdeaPanel = secondIdea;
         }
         else
         {
-            usedIdeaTypes[2] = ideaType;
-            usedIdeaPanel = thirdIdea;
+            activeIdea = 1;
+            usedIdeaTypes[0] = ideaType;
+            usedIdeaPanel = firstIdea;
         }
         usedIdeaPanel.gameObject.gameObject.SetActive(true);
         //set picture
         usedIdeaPanel.mainButtonForeground.GetComponent<RawImage>().texture = gridScript.mainButtonForeground.GetComponent<RawImage>().texture;
         usedIdeaPanel.topText.text = GetIdeaString(ideaType);
+        usedIdeaPanel.mainButton.onClick.RemoveAllListeners();
         /** USED IDEA BUTTON BEHAVIOUR  */
-        usedIdeaPanel.mainButton.onClick.AddListener(() => {
-            firstIdea.gameObject.SetActive(false);
-            secondIdea.gameObject.SetActive(false);
-            thirdIdea.gameObject.SetActive(false);
-            activeIdea = 1;
-            LoadIdeasToScreen();
-            //Debug.Log("Used Idea Clicked");
-            //usedIdeaPanel.gameObject.SetActive(false);
-            ////reenable this idea
-            //gridScript.mainButton.interactable = true;
-            //activeIdea = oldActiveIdea;
+        usedIdeaPanel.mainButton.onClick.AddListener(() => 
+        {
+            UsedIdeaClick(activeIdea, usedIdeaPanel, gridScript);
         });
-        //disable this idea
-        gridScript.mainButton.interactable = false;
+    }
+    bool proccessingUsedIdeaClick = false;
+    void UsedIdeaClick(int firstSecondOrThird, GridElementController usedIdeaBtn, GridElementController ownedIdeaBtn)
+    {
+        if (proccessingUsedIdeaClick)
+            return;
+        else
+            proccessingUsedIdeaClick = true;
+
+        if (firstSecondOrThird == 3)
+        {
+            thirdIdea.gameObject.SetActive(false);
+        }
+        else if (firstSecondOrThird == 2)
+        {
+            if (thirdIdea.isActiveAndEnabled)
+            {
+                secondIdea.topText.text = "" + thirdIdea.topText.text;
+                secondIdea.mainButtonForeground.GetComponent<RawImage>().texture = thirdIdea.mainButtonForeground.GetComponent<RawImage>().texture;
+                usedIdeaTypes[1] = usedIdeaTypes[2];
+                thirdIdea.gameObject.SetActive(false);
+            }
+            else
+            {
+                secondIdea.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            if (secondIdea.isActiveAndEnabled)
+            {
+                usedIdeaTypes[0] = usedIdeaTypes[1];
+                firstIdea.topText.text = "" + secondIdea.topText.text;
+                firstIdea.mainButtonForeground.GetComponent<RawImage>().texture = secondIdea.mainButtonForeground.GetComponent<RawImage>().texture;
+                if (thirdIdea.isActiveAndEnabled)
+                {
+                    usedIdeaTypes[1] = usedIdeaTypes[2];
+                    secondIdea.topText.text = "" + thirdIdea.topText.text;
+                    secondIdea.mainButtonForeground.GetComponent<RawImage>().texture = thirdIdea.mainButtonForeground.GetComponent<RawImage>().texture;
+                    thirdIdea.gameObject.SetActive(false);
+                }
+                else
+                {
+                    usedIdeaTypes[0] = usedIdeaTypes[1];
+                    firstIdea.topText.text = ""+secondIdea.topText.text;
+                    firstIdea.mainButtonForeground.GetComponent<RawImage>().texture = secondIdea.mainButtonForeground.GetComponent<RawImage>().texture;
+                    secondIdea.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                firstIdea.gameObject.SetActive(false);
+            }
+        }
+        proccessingUsedIdeaClick = false;
+    }
+    private void MoveButton(GridElementController from, GridElementController to)
+    {
+        to.mainButtonForeground.GetComponent<RawImage>().texture = from.mainButtonForeground.GetComponent<RawImage>().texture;
+        to.topText.text = ""+from.topText.text;
+        to.mainButton.onClick = from.mainButton.onClick;
     }
     public void OnInventClick()
     {
