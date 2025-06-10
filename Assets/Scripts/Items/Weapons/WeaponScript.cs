@@ -228,7 +228,8 @@ public class WeaponScript : MonoBehaviour
         if (weaponDamageCollider == null) return;
         //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
         // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
-            weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
+            //weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
+            weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
         // }
         // else {
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework
