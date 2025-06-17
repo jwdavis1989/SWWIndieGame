@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MiniMapRevealCollider : MonoBehaviour
 {
-    //private Collider miniMapRevealCollider;
+    private Collider miniMapRevealCollider;
     private GameObject miniMapTile;
 
     // Start is called before the first frame update
     void Start()
     {
-        //miniMapRevealCollider = GetComponent<Collider>();
+        miniMapRevealCollider = GetComponent<Collider>();
         miniMapTile = transform.GetChild(0).gameObject;
         miniMapTile.SetActive(false);
     }
@@ -18,5 +18,6 @@ public class MiniMapRevealCollider : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         miniMapTile.SetActive(true);
+        miniMapRevealCollider.enabled = false;
     }
 }
