@@ -7,6 +7,9 @@ using UnityEngine.AI;
 public class AICharacterManager : CharacterManager
 {
 
+    [Header("Character Name")]
+    public string characterName = "";
+
     [Header("Navmesh Agent")]
     public NavMeshAgent navMeshAgent;
 
@@ -30,6 +33,7 @@ public class AICharacterManager : CharacterManager
     protected override void Awake()
     {
         base.Awake();
+        isPlayer = false;
         aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
         statsManager = GetComponent<AICharacterStatsManager>();
         aiCharacterCombatManager = GetComponent<AiCharacterCombatManager>();
@@ -57,7 +61,14 @@ public class AICharacterManager : CharacterManager
         base.LateUpdate();
     }
 
-    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false) {
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+    }
+
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
         characterStatsManager.currentHealth = 0;
         canMove = false;
         isDead = true;
@@ -65,18 +76,21 @@ public class AICharacterManager : CharacterManager
         //Todo: Add these later
 
         //If not grounded, play an aerial death animation
-        if (!manuallySelectDeathAnimation) {
+        if (!manuallySelectDeathAnimation)
+        {
             //Could change this to choose a random death animation in the future if we wanted to.
             characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
         }
 
         //Play Death SFX
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
-        if (!isPlayer) {
+        if (!isPlayer)
+        {
             //If monster: Award players with Gold or items
             GetComponent<AICharacterStatsManager>().DoAllDrops(isHitByMainHand, isHitByOffHand);
+            characterUIManager.characterHPBar.enabled = false;
         }
-        
+
         yield return new WaitForSeconds(5);
 
     }
