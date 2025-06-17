@@ -27099,6 +27099,85 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462377066}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1472726797
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.35418
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17311382
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2643385
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000122106806564273, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7829938928240353548, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      propertyPath: m_Name
+      value: Bolt
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7829938928240353548, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1472726799}
+  m_SourcePrefab: {fileID: 100100000, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+--- !u!1 &1472726798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7829938928240353548, guid: 18c9249c46e29114497e30823580dac5, type: 3}
+  m_PrefabInstance: {fileID: 1472726797}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1472726799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472726798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31fcd2d61a5e4a43b1675f90de4fc3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  hasObtained: 0
 --- !u!1 &1476794036
 GameObject:
   m_ObjectHideFlags: 0
@@ -39652,6 +39731,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4560448336157600491, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
+      propertyPath: type
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4612436781134497002, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.89
@@ -39892,3 +39975,4 @@ SceneRoots:
   - {fileID: 795489455}
   - {fileID: 1790226721}
   - {fileID: 9085659670511399118}
+  - {fileID: 1472726797}

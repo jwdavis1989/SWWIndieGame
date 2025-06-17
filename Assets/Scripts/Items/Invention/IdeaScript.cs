@@ -34,17 +34,24 @@ public enum IdeaType
 {
     Rock,
     Brick,
+    Pipe,
+    Bolt,
     Screw,
     Window,
     Hat,
-    Dummy,
-    AirShip,
     Boots,
+    AirShip,
     Screen,
     Motor,
-    Golem,
     Wiring,
     TreasureChest,
-    // Total unique ideas. Add new ideas above here
+    Golem,
+    Dummy,
+    Skeletony,
+
+
+    //Add new ideas here
+
+    // Total unique ideas.
     IDEAS_SIZE
 }
