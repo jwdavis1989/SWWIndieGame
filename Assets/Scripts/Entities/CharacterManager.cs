@@ -17,6 +17,7 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
     [HideInInspector] public CharacterSoundFXManager characterSoundFXManager;
     [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
+    [HideInInspector] public CharacterUIManager characterUIManager;
     public CharacterWeaponManager characterWeaponManager;
 
     [Header("Status")]
@@ -61,6 +62,7 @@ public class CharacterManager : MonoBehaviour
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
         characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
+        characterUIManager = GetComponent<CharacterUIManager>();
     }
 
     protected virtual void Start()
@@ -84,6 +86,16 @@ public class CharacterManager : MonoBehaviour
     protected virtual void LateUpdate()
     {
 
+    }
+
+    protected virtual void OnEnable()
+    {
+        
+    }
+
+    protected virtual void OnDisable()
+    {
+        
     }
 
 
