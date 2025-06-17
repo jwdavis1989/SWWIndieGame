@@ -14,6 +14,9 @@ public class IdleState : AIState
                 aiCharacter.miniMapSprite.SetActive(true);
             }
 
+            //Activate monster health bar
+            aiCharacter.characterUIManager.ActivateHealthBar();
+
             //Changes state to the pursue target state
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class UIStatBar : MonoBehaviour
 {
-    private Slider slider;
-    private RectTransform rectTransform;
+    protected Slider slider;
+    protected RectTransform rectTransform;
 
     //Variable to scale bar size depending on stat (Higher Stat = Longer Bar Across Screen)
     [Header("Bar Options")]
@@ -20,7 +20,13 @@ public class UIStatBar : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
     }
 
-    public virtual void SetStat(float newValue) {
+    protected virtual void Start()
+    {
+        //Stub
+    }
+
+    public virtual void SetStat(float newValue)
+    {
         slider.value = newValue;
     }
 
