@@ -9,6 +9,42 @@ public class InventionScript : MonoBehaviour
     public IdeaType[] neededIdeas;
     [Header("Used by InventionManager")]
     public bool hasObtained = false;
+
+    public override string ToString()
+    {
+        string name = "" + type;
+        string formatted = "";
+        foreach (char letter in name)
+        {
+            if (char.IsUpper(letter))
+            {
+                formatted += " " + letter;
+            }
+            else
+            {
+                formatted += letter;
+            }
+        }
+        formatted = formatted.Trim();//remove extra space
+        return formatted;
+    }
+    public string GetMysteryString()
+    {
+        string name = ToString();
+        string formatted = "";
+        foreach (char letter in name)
+        {
+            if (letter != ' ')
+            {
+                formatted += '?';
+            }else
+            {
+                formatted += ' ';
+            }
+        }
+        formatted = formatted.Trim();//remove extra space
+        return formatted;
+    }
 }
 public enum InventionType
 {

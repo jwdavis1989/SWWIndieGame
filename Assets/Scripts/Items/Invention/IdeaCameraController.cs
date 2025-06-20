@@ -143,7 +143,9 @@ public class IdeaCameraController : MonoBehaviour
         // if idea was in the capture set text
         if (idea == null) {
             ideaPhotoText.text = "No idea here!";
-        }else if (InventionManager.instance.CheckHasIdea(idea.type)){
+            oldPhotoFrame.SetActive(false);
+        }
+        else if (InventionManager.instance.CheckHasIdea(idea.type)){
 
             ideaPhotoText.text = "Idea " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
