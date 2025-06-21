@@ -338,7 +338,9 @@ public class WorldSaveGameManager : MonoBehaviour
         // {
         //     currentCharacterData.sceneIndex = 2;
         // }
-        
+
+        //Note: Interactables might require further modification to this function as per Episode 53 of the tutorial
+
         //If you want to use different scenes for levels in your project, use this
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
         //Give player object data from file

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LockableDoorManager : MonoBehaviour
+public class LockableDoorInteractable : Interactable
 {
     private bool hasUnlocked = false;
     public GameObject lockedDoorLight;
@@ -12,19 +12,49 @@ public class LockableDoorManager : MonoBehaviour
     private float currentDoorOpenTimer = 0f;
     private float maximumDoorOpenTimer = 3f;
     public float doorOpenDistance = 1.5f;
+    public bool needsKey = false;
 
+    protected override void Start()
+    {
+        base.Start();
+        interactableText = "Open Door";
+    }
     // Update is called once per frame
     void Update()
     {
-        if (!isLocked && !hasUnlocked)
-        {
-            lockedDoorLight.SetActive(false);
-            hasUnlocked = true;
-            StartCoroutine(OpenDoorOverTime());
-        }
+        // if (!isLocked && !hasUnlocked)
+        // {
+        //     lockedDoorLight.SetActive(false);
+        //     hasUnlocked = true;
+        //     StartCoroutine(OpenDoorOverTime());
+        // }
     }
-    
-    IEnumerator OpenDoorOverTime ()
+
+    public override void Interact(PlayerManager player)
+    {
+        base.Interact(player);
+
+        if (needsKey)
+        {
+            //TODO: In the future, add a version that handles needing a key!
+        }
+        else
+        {
+            if (!hasUnlocked)
+            {
+                isLocked = false;
+
+                //Turn off Red Locked Light Bar
+                lockedDoorLight.SetActive(false);
+
+                hasUnlocked = true;
+                StartCoroutine(OpenDoorOverTime());
+            }
+        }
+        
+    }
+
+    IEnumerator OpenDoorOverTime()
     {
         while (currentDoorOpenTimer < maximumDoorOpenTimer)
         {

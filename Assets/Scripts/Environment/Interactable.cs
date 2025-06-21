@@ -29,7 +29,7 @@ public class Interactable : MonoBehaviour
 
     public virtual void Interact(PlayerManager player)
     {
-        Debug.Log("You have interacted.");
+        //Debug.Log("You have interacted.");
 
         //Only true for one interaction objects, such as opening a locked chest.
         interactableCollider.enabled = false;
