@@ -241,6 +241,9 @@ public class IdeaCameraController : MonoBehaviour
     }
     public void ActivateIdeaCameraView()
     {
+        //Set bool so the Interactable system understands a Menu window has opened
+        PlayerUIManager.instance.menuWindowIsOpen = true;
+
         leftAndRightLookAngle = PlayerCamera.instance.leftAndRightLookAngle;
         upAndDownLookAngle = PlayerCamera.instance.upAndDownLookAngle;
         //deactivate player
@@ -261,6 +264,9 @@ public class IdeaCameraController : MonoBehaviour
     }
     public void DeactivateIdeaCameraView()
     {
+        //Set bool so the Interactable system understands a Menu window has closed
+        PlayerUIManager.instance.menuWindowIsOpen = false;
+
         //deactivate camera ui
         canvas.gameObject.SetActive(false);
         cameraLensCrosshair.SetActive(false);
