@@ -19,16 +19,6 @@ public class LockableDoorInteractable : Interactable
         base.Start();
         interactableText = "Open Door";
     }
-    // Update is called once per frame
-    void Update()
-    {
-        // if (!isLocked && !hasUnlocked)
-        // {
-        //     lockedDoorLight.SetActive(false);
-        //     hasUnlocked = true;
-        //     StartCoroutine(OpenDoorOverTime());
-        // }
-    }
 
     public override void Interact(PlayerManager player)
     {
@@ -51,7 +41,7 @@ public class LockableDoorInteractable : Interactable
                 StartCoroutine(OpenDoorOverTime());
             }
         }
-        
+
     }
 
     IEnumerator OpenDoorOverTime()
