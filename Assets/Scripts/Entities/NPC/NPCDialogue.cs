@@ -11,10 +11,12 @@ public class NPCDialogue : MonoBehaviour
     [Header("Speaker's lines")]
     public string[] lines;
     public Line[] lines2;
+    //public bool firstTime = true;
 }
 [Serializable]
 public class Line
 {
     public string line;
-    public UnityEngine.Events.UnityEvent condition;
+    //public UnityEngine.Events.UnityEvent condition;
+    public string conditionKey;
 }

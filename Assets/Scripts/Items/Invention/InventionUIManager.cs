@@ -64,6 +64,7 @@ public class InventionUIManager : MonoBehaviour
     }
     public void OpenInventionMenu()
     {
+        JournalManager.instance.journalFlags[JournalManager.hasNotOpenedInventMenuKey] = false;
         outputText.GetComponent<TextMeshProUGUI>().text = "???";
         LoadIdeasToScreen();
         LoadInventionsToScreen();
@@ -320,16 +321,15 @@ public class InventionUIManager : MonoBehaviour
             }
             if (ideaMatches == 3)
             {
+                JournalManager.instance.journalFlags[JournalManager.hasHalfInventionIdea] = false;//set to false so that dialogue doesn't play
+                JournalManager.instance.journalFlags[JournalManager.hasInventedSomethingKey] = true;
                 //something is invented
+                InventionManager.instance.HandleNewInvention(possibleInvention);
                 outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.type + "!";
-                possibleInvention.hasObtained = true;
-                if(possibleInvention.type == InventionType.GolemEndoplating)
-                {
-                    player.characterStatsManager.maxHealth += 10;
-                }
             }
             else if (ideaMatches == 2)
             {
+                JournalManager.instance.journalFlags[JournalManager.hasHalfInventionIdea] = true;
                 outputText.GetComponent<TextMeshProUGUI>().text = "Hmmm... There's something here";
                 //half idea
                 int usedIdeaUnmatched = 0;
@@ -365,9 +365,11 @@ public class InventionUIManager : MonoBehaviour
                 //Show the partial name for the half invented idea
                 string needIdeaName = GetIdeaString(possibleInvention.neededIdeas[neededIdeaUnmatched]);
                 string displayName = "";
-                for (int i = 0; i < needIdeaName.Length-1; i++)
+                int displayedLetters = InventionManager.instance.CheckHasUpgrade(InventionType.PredictiveNeuralLink)
+                    ? needIdeaName.Length/4 : 1;
+                for (int i = 0; i < needIdeaName.Length; i++)
                 {
-                    if(i <= 0 || needIdeaName[i] == ' ')
+                    if(i < displayedLetters || needIdeaName[i] == ' ')
                         displayName += needIdeaName[i];
                     else
                         displayName += '_';
