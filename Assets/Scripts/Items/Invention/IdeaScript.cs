@@ -23,7 +23,7 @@ public class IdeaScript : MonoBehaviour
                 formatted += letter;
             }
         }
-        formatted = formatted.Substring(1);
+        formatted = formatted.Trim();//remove extra space
         return formatted;
     }
     //public Image photoCapture;
@@ -32,19 +32,46 @@ public class IdeaScript : MonoBehaviour
 
 public enum IdeaType
 {
+    Battery,
+    Wires,
+    MetalPlating,
+    Glasses,
+    ToyBrain,
+    LightBulb,
+    Fuel,
+    Pipe,
+    Tank,
+    Umbrella,
+    GoldIngot,
+    MusicBox,
+    Diamond,
+    Stone,
+    Wheel,
+    PLACEHOLDER,
+    Skates,
+    Tumbleweed,
+    MasterworkEye,
+    Spring,
+    SharpeningStone,
+    Anvil,
     Rock,
     Brick,
+    Bolt,
     Screw,
     Window,
     Hat,
-    Dummy,
-    AirShip,
     Boots,
+    AirShip,
     Screen,
     Motor,
-    Golem,
     Wiring,
     TreasureChest,
-    // Total unique ideas. Add new ideas above here
+    Golem,
+    Dummy,
+    Skeletony,
+
+    //Add new ideas here
+
+    // Total unique ideas.
     IDEAS_SIZE
 }
