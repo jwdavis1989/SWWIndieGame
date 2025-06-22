@@ -161,6 +161,9 @@ public class PauseScript : MonoBehaviour
 
         //Disable Controls
         PlayerInputManager.instance.playerControls.Disable();
+
+        //Set bool so the Interactable system understands a Menu window has opened
+        PlayerUIManager.instance.menuWindowIsOpen = true;
     }
     void Unpause()
     {
@@ -176,6 +179,9 @@ public class PauseScript : MonoBehaviour
 
         //Re-enable Controls
         PlayerInputManager.instance.playerControls.Enable();
+
+        //Set bool so the Interactable system understands a Menu window has closed
+        PlayerUIManager.instance.menuWindowIsOpen = false;
     }
     void HandlePauseInput()
     {
