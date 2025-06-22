@@ -14,36 +14,6 @@ public class TinkerComponentManager : MonoBehaviour
     {
         return Instantiate(baseComponents[(int)type], location);
     }
-    //**** DEBUG AREA ASTEST
-    [Header("DEBUG")]
-    public bool debugMode = false;
-    //public bool dropRandomItem = false;
-    //public bool breakDownEquippedWeapon = false;
-    //public bool addAWeaponComponentToEquippedWeapon = false;
-    public void Update()
-    {//astest
-        //if (dropRandomItem)
-        //{
-        //    dropRandomItem = false;
-        //    DropRandomItem(transform);
-        //}
-        //if (breakDownEquippedWeapon)
-        //{
-        //    breakDownEquippedWeapon = false;
-        //    //breakdown equipped weapon of player
-        //    BreakDownWeapon(PlayerWeaponManager.instance.indexOfEquippedWeapon, false, PlayerWeaponManager.instance);
-        //    //equip first weapon
-        //    PlayerWeaponManager.instance.indexOfEquippedWeapon = 0;
-        //    if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
-        //        PlayerWeaponManager.instance.ownedWeapons[0].SetActive(true);
-        //}
-        //if (addAWeaponComponentToEquippedWeapon)
-        //{
-        //    addAWeaponComponentToEquippedWeapon = false;
-        //    if (weaponComponents.Count > 0)
-        //        AddTinkerComponentToWeapon(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon], weaponComponents[0], true);
-        //}
-    }
     public void DropRandomItem(Transform transform, float distance = 0)
     {
         int i = UnityEngine.Random.Range(0, baseComponents.Length - 1);
@@ -151,7 +121,7 @@ public class TinkerComponentManager : MonoBehaviour
     {
         return AddTinkerComponentToWeapon(weapon, tinkerComponent, true);
     }
-    public bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, GameObject tinkerComponentPassed, bool doUpdate)
+    private bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, GameObject tinkerComponentPassed, bool doUpdate)
     {
         if (weaponToUpgrade == null) { return false; }
         TinkerComponent tinkerComponentToAdd = tinkerComponentPassed.GetComponent<TinkerComponent>();
@@ -244,17 +214,6 @@ public class TinkerComponentManager : MonoBehaviour
         {
             componentInitilizer[(int)component.GetComponent<TinkerComponent>().stats.componentType] = component;
         }
-        //read json file and initilize stats
-        //ComponentsArray componentJsons = JsonUtility.FromJson<ComponentsArray>(baseComponentJsonFile.text);
-        //foreach (TinkerComponentStats componentStats in componentJsons.components)
-        //{
-        //    int i = (int)componentStats.componentType;
-        //    if (componentInitilizer[i] != null)
-        //    {   // prefab is loaded, copy stats over
-        //        componentInitilizer[i].GetComponent<TinkerComponent>().stats = componentStats;
-        //        if (debugMode) Debug.Log("Prefab loaded for " + i + " type:" + componentInitilizer[i].GetComponent<TinkerComponent>().stats.itemName);//astest
-        //    }
-        //}
         //Set baseComponents here
         baseComponents = componentInitilizer;
     }

@@ -116,13 +116,21 @@ public class CharacterStatsManager : MonoBehaviour
         staminaRegenerationTimer = 0;
     }
 
-    public void CheckHP() {
-        if (currentHealth <= 0 && !character.isDead) {
+    public void CheckHP()
+    {
+        if (currentHealth <= 0 && !character.isDead)
+        {
+            //Disable Minimap Marker
+            if (character.miniMapSprite != null) {
+                character.miniMapSprite.SetActive(false);
+            }
+            
             StartCoroutine(character.ProcessDeathEvent());
         }
 
         //Clamp health to avoid over-healing
-        if (currentHealth > maxHealth) {
+        if (currentHealth > maxHealth)
+        {
             currentHealth = maxHealth;
         }
     }

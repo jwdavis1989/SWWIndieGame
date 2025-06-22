@@ -871,16 +871,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""232ec43a-4327-4d3c-98d5-0a2bea6b9128"",
             ""actions"": [
                 {
-                    ""name"": ""UIButtonX"",
-                    ""type"": ""Button"",
-                    ""id"": ""92168ec3-63c1-4755-9dd7-3258e7ff2c0d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""UIButtonA"",
+                    ""name"": ""DialogueContinue"",
                     ""type"": ""Button"",
                     ""id"": ""ef92f6aa-327e-4cc7-958d-798b0088b416"",
                     ""expectedControlType"": ""Button"",
@@ -905,20 +896,27 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MiniMapResize"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc345c32-cc8b-4cbd-b017-f2d05c9c2c13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UIButtonX"",
+                    ""type"": ""Button"",
+                    ""id"": ""76039eff-44b8-4d4c-b31c-fb14f851c692"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""cd27d313-d01b-458d-aafe-e433bc5e2711"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UIButtonX"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""d21664e0-d368-427c-a07c-ac4a695ab550"",
@@ -926,7 +924,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UIButtonA"",
+                    ""action"": ""DialogueContinue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b20ac24d-4c41-4a47-9d87-0798e20030a9"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogueContinue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -937,7 +946,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UIButtonA"",
+                    ""action"": ""DialogueContinue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -948,7 +957,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UIButtonA"",
+                    ""action"": ""DialogueContinue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -995,6 +1004,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CaptureIdeaPhotoBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d81e40e-628d-491b-a573-5531f054958a"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiniMapResize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eed1c4e6-d033-4c1b-b11d-8d837bbceabe"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiniMapResize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09dcd176-c225-4d5a-9333-f5ae8db9a591"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UIButtonX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1034,10 +1076,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_UseItemQuickSlot = m_PlayerActions.FindAction("UseItemQuickSlot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
-        m_UI_UIButtonA = m_UI.FindAction("UIButtonA", throwIfNotFound: true);
+        m_UI_DialogueContinue = m_UI.FindAction("DialogueContinue", throwIfNotFound: true);
         m_UI_PauseButton = m_UI.FindAction("PauseButton", throwIfNotFound: true);
         m_UI_CaptureIdeaPhotoBtn = m_UI.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
+        m_UI_MiniMapResize = m_UI.FindAction("MiniMapResize", throwIfNotFound: true);
+        m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1413,18 +1456,20 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_UIButtonX;
-    private readonly InputAction m_UI_UIButtonA;
+    private readonly InputAction m_UI_DialogueContinue;
     private readonly InputAction m_UI_PauseButton;
     private readonly InputAction m_UI_CaptureIdeaPhotoBtn;
+    private readonly InputAction m_UI_MiniMapResize;
+    private readonly InputAction m_UI_UIButtonX;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
         public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
-        public InputAction @UIButtonA => m_Wrapper.m_UI_UIButtonA;
+        public InputAction @DialogueContinue => m_Wrapper.m_UI_DialogueContinue;
         public InputAction @PauseButton => m_Wrapper.m_UI_PauseButton;
         public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_UI_CaptureIdeaPhotoBtn;
+        public InputAction @MiniMapResize => m_Wrapper.m_UI_MiniMapResize;
+        public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1434,34 +1479,40 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @UIButtonX.started += instance.OnUIButtonX;
-            @UIButtonX.performed += instance.OnUIButtonX;
-            @UIButtonX.canceled += instance.OnUIButtonX;
-            @UIButtonA.started += instance.OnUIButtonA;
-            @UIButtonA.performed += instance.OnUIButtonA;
-            @UIButtonA.canceled += instance.OnUIButtonA;
+            @DialogueContinue.started += instance.OnDialogueContinue;
+            @DialogueContinue.performed += instance.OnDialogueContinue;
+            @DialogueContinue.canceled += instance.OnDialogueContinue;
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
             @CaptureIdeaPhotoBtn.started += instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.performed += instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.canceled += instance.OnCaptureIdeaPhotoBtn;
+            @MiniMapResize.started += instance.OnMiniMapResize;
+            @MiniMapResize.performed += instance.OnMiniMapResize;
+            @MiniMapResize.canceled += instance.OnMiniMapResize;
+            @UIButtonX.started += instance.OnUIButtonX;
+            @UIButtonX.performed += instance.OnUIButtonX;
+            @UIButtonX.canceled += instance.OnUIButtonX;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @UIButtonX.started -= instance.OnUIButtonX;
-            @UIButtonX.performed -= instance.OnUIButtonX;
-            @UIButtonX.canceled -= instance.OnUIButtonX;
-            @UIButtonA.started -= instance.OnUIButtonA;
-            @UIButtonA.performed -= instance.OnUIButtonA;
-            @UIButtonA.canceled -= instance.OnUIButtonA;
+            @DialogueContinue.started -= instance.OnDialogueContinue;
+            @DialogueContinue.performed -= instance.OnDialogueContinue;
+            @DialogueContinue.canceled -= instance.OnDialogueContinue;
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
             @CaptureIdeaPhotoBtn.started -= instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.performed -= instance.OnCaptureIdeaPhotoBtn;
             @CaptureIdeaPhotoBtn.canceled -= instance.OnCaptureIdeaPhotoBtn;
+            @MiniMapResize.started -= instance.OnMiniMapResize;
+            @MiniMapResize.performed -= instance.OnMiniMapResize;
+            @MiniMapResize.canceled -= instance.OnMiniMapResize;
+            @UIButtonX.started -= instance.OnUIButtonX;
+            @UIButtonX.performed -= instance.OnUIButtonX;
+            @UIButtonX.canceled -= instance.OnUIButtonX;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1515,9 +1566,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public interface IUIActions
     {
-        void OnUIButtonX(InputAction.CallbackContext context);
-        void OnUIButtonA(InputAction.CallbackContext context);
+        void OnDialogueContinue(InputAction.CallbackContext context);
         void OnPauseButton(InputAction.CallbackContext context);
         void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
+        void OnMiniMapResize(InputAction.CallbackContext context);
+        void OnUIButtonX(InputAction.CallbackContext context);
     }
 }

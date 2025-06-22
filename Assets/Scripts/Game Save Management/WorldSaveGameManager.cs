@@ -334,11 +334,14 @@ public class WorldSaveGameManager : MonoBehaviour
         //If you only have 1 entry scene
         //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
 
-        //If you want to use different scenes for levels in your project, use this
         // if (SceneManager.GetActiveScene().name.Equals("AlecDevTitle"))
         // {
         //     currentCharacterData.sceneIndex = 2;
         // }
+
+        //Note: Interactables might require further modification to this function as per Episode 53 of the tutorial
+
+        //If you want to use different scenes for levels in your project, use this
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
         //Give player object data from file
         player.LoadGameFromCurrentCharacterData(ref currentCharacterData);

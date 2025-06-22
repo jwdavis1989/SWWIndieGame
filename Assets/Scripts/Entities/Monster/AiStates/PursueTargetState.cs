@@ -49,7 +49,7 @@ public class PursueTargetState : AIState
         //Option 1: Better performance, Asynchronous, might not always work
         //aiCharacter.navMeshAgent.SetDestination(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position);
 
-        //Option 2: Worse Performance, guaranteed to work, tutorial sites ~60 characters using it simultaneously with no noticible performance drop
+        //Option 2: Worse Performance, guaranteed to work, tutorial cites ~60 characters using it simultaneously with no noticible performance drop
         NavMeshPath path = new NavMeshPath();
         aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
         aiCharacter.navMeshAgent.SetPath(path);

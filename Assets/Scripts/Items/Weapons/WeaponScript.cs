@@ -26,6 +26,9 @@ public enum WeaponType
     FreezeCaster,
     //T3 Weapons
     DiamondSword,
+
+    //Monster Weapons
+    SkeleShortSword,
     //Limit - Nothing past here
     UNKNOWN
 }
@@ -57,6 +60,7 @@ public class WeaponStats
 {
     [Header("Weapon Type - Important - Set in Prefab")]
     public WeaponType weaponType = 0;
+    public bool isMonsterWeapon = false;
 
     [Header("Weapon Attributes")]
     public float attack = 1.0f;
@@ -224,7 +228,8 @@ public class WeaponScript : MonoBehaviour
         if (weaponDamageCollider == null) return;
         //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
         // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
-            weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
+            //weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
+            weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
         // }
         // else {
         //     //Monster CharacterManager Weapon Assignment in hypothetical rework

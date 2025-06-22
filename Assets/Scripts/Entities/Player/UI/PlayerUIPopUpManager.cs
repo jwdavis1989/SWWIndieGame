@@ -6,16 +6,21 @@ using System.Threading;
 
 public class PlayerUIPopUpManager : MonoBehaviour
 {
+    [Header("Message Pop Up")]
+    [SerializeField] TextMeshProUGUI popUpMessageText;
+    [SerializeField] GameObject popUpMessageGameObject;
+
     [Header("YOU DIED Pop-Up")]
     [SerializeField] GameObject youDiedPopUpGameObject;
     [SerializeField] TextMeshProUGUI youDiedPopUpBackgroundText;
     [SerializeField] TextMeshProUGUI youDiedPopUpText;
-    
+
     //Allows us to set the alpha to fade over time
-    [SerializeField] CanvasGroup youDiedPopUpCanvasGroup;   
+    [SerializeField] CanvasGroup youDiedPopUpCanvasGroup;
 
     //This function can be repeated with other kinds of pop ups such as "Great Enemy/Boss Defeated", "Save Point Unlocked", etc.
-    public void SendYouDiedPopUp() {
+    public void SendYouDiedPopUp()
+    {
         //Activate Post-Processing Effects here e.g. black/white shader, blur, etc
 
         //Turn on the PopUp object so it's visible
@@ -35,15 +40,18 @@ public class PlayerUIPopUpManager : MonoBehaviour
 
     }
 
-    private IEnumerator StretchPopUpTextOverTime(TextMeshProUGUI text, float duration, float stretchAmount) {
-        if (duration > 0f) {
+    private IEnumerator StretchPopUpTextOverTime(TextMeshProUGUI text, float duration, float stretchAmount)
+    {
+        if (duration > 0f)
+        {
             //Resets Character Spacing
             text.characterSpacing = 0;
             float timer = 0f;
 
-            yield return null;  
+            yield return null;
 
-            while (timer < duration) {
+            while (timer < duration)
+            {
                 timer = timer + Time.deltaTime;
                 text.characterSpacing = Mathf.Lerp(text.characterSpacing, stretchAmount, duration * (Time.deltaTime / 20));
 
@@ -52,14 +60,17 @@ public class PlayerUIPopUpManager : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeInPopUpOverTime(CanvasGroup canvas, float duration) {
-        if (duration > 0) {
+    private IEnumerator FadeInPopUpOverTime(CanvasGroup canvas, float duration)
+    {
+        if (duration > 0)
+        {
             canvas.alpha = 0;
             float timer = 0;
 
             yield return null;
 
-            while (timer < duration) {
+            while (timer < duration)
+            {
                 timer = timer + Time.deltaTime;
                 canvas.alpha = Mathf.Lerp(canvas.alpha, 1, duration * Time.deltaTime);
 
@@ -71,9 +82,12 @@ public class PlayerUIPopUpManager : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator WaitThenFadeOutPopUpOverTime(CanvasGroup canvas, float duration, float delay) {
-        if (duration > 0) {
-            while (delay > 0) {
+    private IEnumerator WaitThenFadeOutPopUpOverTime(CanvasGroup canvas, float duration, float delay)
+    {
+        if (duration > 0)
+        {
+            while (delay > 0)
+            {
                 delay = delay - Time.deltaTime;
                 yield return null;
             }
@@ -83,7 +97,8 @@ public class PlayerUIPopUpManager : MonoBehaviour
 
             yield return null;
 
-            while (timer < duration) {
+            while (timer < duration)
+            {
                 timer = timer + Time.deltaTime;
                 canvas.alpha = Mathf.Lerp(canvas.alpha, 0, duration * Time.deltaTime);
 
@@ -96,4 +111,17 @@ public class PlayerUIPopUpManager : MonoBehaviour
         yield return null;
     }
 
+    public void SendPlayerMessagePopUp(string messageText)
+    {
+        PlayerUIManager.instance.popUpWindowIsOpen = true;
+        popUpMessageText.text = messageText;
+        popUpMessageGameObject.SetActive(true);
+    }
+
+    public void CloseAllPopUpWindows()
+    {
+        popUpMessageGameObject.SetActive(false);
+        PlayerUIManager.instance.popUpWindowIsOpen = false;
+    }
+    
 }

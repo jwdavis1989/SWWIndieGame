@@ -10,7 +10,7 @@ public class AiCharacterCombatManager : CharacterCombatManager
 
     [Header("Target Information")]
     public float distanceFromTarget;
-    public float viewableAngle;
+    public float viewableAngle; //Angle of our potential target
     public Vector3 targetsDirection;
 
     [Header("Action Recovery")]

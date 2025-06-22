@@ -15,6 +15,8 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI speakerNameText;
     public TextMeshProUGUI bottomText;
+    [SerializeField] bool dialogueContinueInput = false;//(A),[LMB]
+    PlayerControls playerControls;
 
     public GameObject dialogueBox;
     public EventSystem eventSystem;
@@ -41,12 +43,18 @@ public class DialogueManager : MonoBehaviour
         eventSystem.gameObject.SetActive(false);
         //StartDialgoue();
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+            playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
+            playerControls.Enable();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        HandleDialogueContineuButton();
     }
     public static bool IsInDialogue()
     {
@@ -54,9 +62,6 @@ public class DialogueManager : MonoBehaviour
     }
     public void DialogueBoxContinue()
     {
-        //if (PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
-        //{
-        //    PlayerInputManager.instance.interactInput = false;
         if (dialogueText.text == lines[lineIndex])
         {//if line is finished go to next line
             NextLine();
@@ -66,20 +71,17 @@ public class DialogueManager : MonoBehaviour
             StopAllCoroutines();
             dialogueText.text = lines[lineIndex];
         }
-        //}
-
     }
-    public void PlayDialoge(NPCDialogue dialogue)
+    public void PlayDialogue(NPCDialogue dialogue)
     {
-        //if(PlayerInputManager.instance.interactInput && playerManager.isLockedOn)
-        //{
-        //    PlayerInputManager.instance.interactInput = false;
         //Debug.Log("Handling Interact");
-        //NPCDialogue dialogue = playerManager.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
-        if (dialogue != null)
-        {
+        if (dialogue != null){
             //Debug.Log("Handling Interact Got Dialogue");
-
+            player.isPerformingAction = true;
+            player.canMove = false;
+            player.canRotate = false;
+            player.isMoving = false;
+            playerControls.PlayerActions.Disable();
             lines = dialogue.lines;
             speakerNameText.text = dialogue.speakerName;
             lineIndex = 0;
@@ -135,10 +137,14 @@ public class DialogueManager : MonoBehaviour
         }
         else
         { // Finished
+            //Set bool so the Interactable system understands a Pop-Up window has closed
+            PlayerUIManager.instance.popUpWindowIsOpen = false;
+
             // unlock player
             player.isPerformingAction = false;
             player.canMove = true;
             player.canRotate = true;
+            playerControls.PlayerActions.Enable();
             // turn off dialogue UI
             dialogueBox.gameObject.SetActive(false);
             eventSystem.gameObject.SetActive(false);
@@ -209,5 +215,17 @@ public class DialogueManager : MonoBehaviour
         }
         return nearestTarget;
     }
-
+    //Interact Button during dialogue box
+    void HandleDialogueContineuButton()
+    {
+        //if they press the button during a dialogue
+        if (dialogueContinueInput)// [LMB], [E], (X)
+        {
+            dialogueContinueInput = false;
+            if (IsInDialogue())
+            {
+                DialogueBoxContinue();
+            }
+        }
+    }
 }

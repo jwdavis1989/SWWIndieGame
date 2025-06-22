@@ -15,9 +15,11 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
+    [HideInInspector] public PlayerInteractionManager playerInteractionManager;
 
     public GameObject flashlight;
     public GameObject cameraflashlight;
+    [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
 
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
@@ -30,6 +32,8 @@ public class PlayerManager : CharacterManager
         //Do more stuff, only for the player
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
+        playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
+        playerInteractionManager = GetComponent<PlayerInteractionManager>();
         
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
@@ -66,7 +70,20 @@ public class PlayerManager : CharacterManager
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
+        //Display Game Over Screen
         PlayerUIManager.instance.playerUIPopUpManager.SendYouDiedPopUp();
+
+        //Remove current lock on target if any
+        if (playerCombatManager.currentTarget != null)
+        {
+            PlayerCamera.instance.ClearLockOnTargets();
+
+            //Lower the Camera over time
+            PlayerCamera.instance.InvokeLowerCameraHeightCoroutine();
+
+            isLockedOn = false;
+            playerCombatManager.currentTarget = null;
+        }
 
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
@@ -179,21 +196,30 @@ public class PlayerManager : CharacterManager
     }
     
     public void DebugAddWeapon() {
+        WeaponScript weaponScript;
         WeaponType weaponType;
         bool isSpecial;
         
         for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++) {
-            weaponType = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>().stats.weaponType;
+            weaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
+            weaponType = weaponScript.stats.weaponType;
             isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
-            PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
-            PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
-            if (isSpecial) {
-                PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
-                //PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
-            }
-            else {
-                PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
-                //PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+
+            //Only add a weapon if it's a player weapon
+            if (!weaponScript.stats.isMonsterWeapon)
+            {
+                PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
+                PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
+                if (isSpecial)
+                {
+                    PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
+                    //PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
+                }
+                else
+                {
+                    PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
+                    //PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+                }
             }
         }
     }

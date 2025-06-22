@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class ItemDropManager : MonoBehaviour
 {
-    public static GameObject goldPrefab;
-    public static GameObject expPrefab;
-    public static GameObject DropGold(Transform loc, int amt)
+    [SerializeField]
+    public GameObject goldPrefab;
+    [SerializeField]
+    public GameObject expPrefab;
+    public GameObject DropGold(Transform loc, int amt)
     {
         GameObject g = Instantiate(goldPrefab, loc);
         g.GetComponent<GoldDropCollider>().gold = amt;
         return g;
     }
-    public static GameObject DropExp(Transform loc, int amt, bool giveMainHandExp, bool giveOffHandExp)
+    public GameObject DropExp(Transform loc, int amt, bool giveMainHandExp, bool giveOffHandExp)
     {
         if (!giveMainHandExp && !giveOffHandExp)
         {
@@ -28,7 +30,7 @@ public class ItemDropManager : MonoBehaviour
     }
     public static GameObject DropComponent(TinkerComponentType type, Transform loc)
     {
-        return Instantiate(TinkerComponentManager.instance.DropComponent(type, loc));
+        return TinkerComponentManager.instance.DropComponent(type, loc);
     }
     public static GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
     {

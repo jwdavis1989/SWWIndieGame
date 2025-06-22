@@ -1,23 +1,35 @@
+using Palmmedia.ReportGenerator.Core.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InventionManager : MonoBehaviour
 {
-    public InventionScript[] allInventions;
-    private bool [] ideaObtainedFlags = new bool[(int)IdeaType.MAX - 1];
-    public byte[][] ideaImages = new byte[(int)IdeaType.MAX - 1][];
-    //TODO - Handle saving and loading of inventions
-    private PlayerManager player;
+    //singleton
     public static InventionManager instance;
+
+    [Header("All possible inventions")]
+    public InventionScript[] allInventions;
+    [Header("All current idea info")]
+    public bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
+    public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
+
+    //helpful references
+    private PlayerManager player;
+
+    
+    //TODO - Handle saving and loading of inventions
     public void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -26,8 +38,11 @@ public class InventionManager : MonoBehaviour
     }
     private void Start()
     {
+        ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
+        ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
         StartCoroutine(CheckForSavedIdeas());
+        DontDestroyOnLoad(gameObject);
     }
 
     //INVENTION
@@ -36,19 +51,20 @@ public class InventionManager : MonoBehaviour
     {
         return allInventions[(int)inventType].hasObtained;
     }
+    /** flag that this invention type has been aquired */
     public void SetHasUpgrade(InventionType inventType)
     {
         allInventions[(int)inventType].hasObtained = true;
     }
 
-    //IDEA
+    /** returns image for idea type */
     public byte[] GetIdeaPicture(IdeaType ideaType)
     {
         return ideaImages[(int)ideaType];
     }
     public void SetIdeaPicture(byte[] ideaPicture, IdeaType idea)
     {
-        ideaImages[(int)idea ]= ideaPicture;
+        ideaImages[(int)idea]= ideaPicture;
     }
     /** returns true if the player has photograped the idea */
     public bool CheckHasIdea(IdeaType ideaType)
@@ -59,6 +75,7 @@ public class InventionManager : MonoBehaviour
     {
         ideaObtainedFlags[(int)type] = true;
     }
+    /** loads idea images from current save slot */
     public IEnumerator CheckForSavedIdeas()
     {
         for (int i = 0; i < ideaObtainedFlags.Length; i++)
@@ -68,16 +85,16 @@ public class InventionManager : MonoBehaviour
             string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + (IdeaType)i + ".png";
             if (File.Exists(saveFileName))
             {
-                //Debug.Log("File exist for " + (IdeaType)i);//astest
                 ideaObtainedFlags[i] = true;
                 byte[] bytes = System.IO.File.ReadAllBytes(saveFileName);
                 ideaImages[i] = bytes;
             }
-            //else Debug.Log("File dont exist " + saveFileName);//astest
+            //else Debug.Log("File dont exist " + saveFileName);
         }
         yield return null;
 
     }
+    /** saves idea images to current save slot */
     public void SaveIdeas()
     {
         //save
@@ -91,5 +108,38 @@ public class InventionManager : MonoBehaviour
             }
             
         }
+    }
+    /**
+     * Clear component list and reload it with current values
+     */
+    public InventionScript CheckForInvention(IdeaType idea1, IdeaType idea2, IdeaType idea3)
+    {
+        //used for returning an invention with only 2 matches
+        bool halfFound = false;
+        InventionScript halfAnswer = null;
+        foreach (InventionScript inventionScript in allInventions)
+        {
+            int ideaMatches = 0;
+            foreach (IdeaType neededIdea in inventionScript.neededIdeas)
+            {
+                if (idea1 == neededIdea) ideaMatches++;
+                else if (idea2 == neededIdea) ideaMatches++;
+                else if (idea3 == neededIdea) ideaMatches++;
+            }
+            if (ideaMatches == 2)
+            {
+                //half invention found
+                halfFound = true;
+                halfAnswer = inventionScript;
+            }
+            else if (ideaMatches == 3)
+            {
+                //invention found
+                return inventionScript;
+            }
+        }
+        if(halfFound) 
+            return halfAnswer;
+        return null;
     }
 }

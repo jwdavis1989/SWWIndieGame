@@ -23,6 +23,7 @@ public class AttackState : AIState {
         }
 
         //Rotate towards the target whilst attacking
+        aiCharacter.aiCharacterCombatManager.RotateTowardsTargetWhileAttacking(aiCharacter);
 
         //Set movement values to 0
         aiCharacter.characterAnimatorManager.UpdateAnimatorMovementParameters(0, 0, false);
@@ -36,13 +37,15 @@ public class AttackState : AIState {
             }
         }
 
-        if (!hasPerformedAttack) {
-            //If we are still recovering from an action, wait before performing another
-            if (aiCharacter.aiCharacterCombatManager.actionRecoveryTimer > 0) {
+        if (aiCharacter.isPerformingAction) {
                 return this;
             }
-
-            if (aiCharacter.isPerformingAction) {
+        
+        if (!hasPerformedAttack)
+        {
+            //If we are still recovering from an action, wait before performing another
+            if (aiCharacter.aiCharacterCombatManager.actionRecoveryTimer > 0)
+            {
                 return this;
             }
 

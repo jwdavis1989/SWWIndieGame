@@ -8,7 +8,7 @@ public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
     public PlayerManager player;
-    PlayerControls playerControls;
+    [HideInInspector] public PlayerControls playerControls;
 
     [Header("Movement Input")]
     [SerializeField] public Vector2 movementInput;
@@ -28,10 +28,10 @@ public class PlayerInputManager : MonoBehaviour
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
     [SerializeField] bool useItemQuickslotInput = false;//using for idea camera. This will be an item?
-    [SerializeField] bool uiInteractInput = false;//(A)
-    [SerializeField] bool uiInteractInput2 = false;//(X)
-    [SerializeField] bool pauseInput = false;
-    [SerializeField] bool capturePhotoInput = false;
+    //[SerializeField] bool dialogueContinueInput = false;//(A),[LMB]
+    //[SerializeField] bool pauseInput = false;
+    //[SerializeField] bool capturePhotoInput = false;
+    [SerializeField] bool miniMapZoomToggleInput = false;
 
 
     [Header("Queued Inputs")]
@@ -51,7 +51,7 @@ public class PlayerInputManager : MonoBehaviour
     public float sprintCameraFieldOfViewIncreaseSpeed = 15f;
 
     [Header("Lock-On Input")]
-    [SerializeField] bool lockOnInput;
+    public bool lockOnInput;
     [SerializeField] bool lockOnSelectLeftInput;
     [SerializeField] bool lockOnSelectRightInput;
     private Coroutine lockOnCoroutine;
@@ -87,12 +87,13 @@ public class PlayerInputManager : MonoBehaviour
         HandleAllInputs();
     }
 
-    private void HandleAllInputs() {
+    private void HandleAllInputs()
+    {
         HandleInteractInput();
-        HandleUIInteractInput();
-        HandlePauseInput();
+        //HandleDialogueContineuButton();
+        //HandlePauseInput();
         HandleUseItemQuickSlotInput();
-        HandleCapturePhotoInput();
+        //HandleCapturePhotoInput();
 
         HandleMovementInput();
         HandleCameraMovementInput();
@@ -109,13 +110,15 @@ public class PlayerInputManager : MonoBehaviour
         HandleGamePadLeftWeaponSwapInput();
         HandleQueuedInputs();
         HandleCameraFieldOfView();
+        HandleMiniMapZoomToggle();
     }
 
     //Goals:
     //1. Read joystick values
     //2. Move Character using those values
     private void OnEnable() {
-        if (playerControls == null) {
+        if (playerControls == null)
+        {
             playerControls = new PlayerControls();
 
             //I believe these are establishing event listeners/subscribing
@@ -156,27 +159,30 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
-            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i => { 
-                SceneManager.LoadSceneAsync(1); 
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i =>
+            {
+                SceneManager.LoadSceneAsync(1);
             });
-            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i => { 
-                player.transform.position = new Vector3(0, 9, 0); 
+            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i =>
+            {
+                player.transform.position = new Vector3(0, 9, 0);
                 SceneManager.LoadSceneAsync(2);
             });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
-            playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i => { 
-                player.transform.position = new Vector3(0, 9, 0); 
+            playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i =>
+            {
+                player.transform.position = new Vector3(0, 9, 0);
                 SceneManager.LoadSceneAsync(4);
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
             //Player UI interactions
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
-            playerControls.UI.UIButtonA.performed += i => uiInteractInput = true;
-            playerControls.UI.UIButtonX.performed += i => uiInteractInput2 = true;
-            playerControls.UI.PauseButton.performed += i => pauseInput = true;
+            //playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
+            //playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PlayerActions.UseItemQuickSlot.performed += i => useItemQuickslotInput = true;
-            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            //playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.UI.MiniMapResize.performed += i => miniMapZoomToggleInput = true;
         }
 
         playerControls.Enable();
@@ -225,47 +231,51 @@ public class PlayerInputManager : MonoBehaviour
         {
             interactInput = false;
 
+            //Redundant technically, but insures both systems cooperate
+            PlayerUIManager.instance.playerUIPopUpManager.CloseAllPopUpWindows();
+
             //Note: Disable this if in combat for efficency?
             // If not busy doing something else
-            if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())  //player.isLockedOn &&
+            if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())
             {
                 //Find NPC dialogue.
                 NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
                 //NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
                 if (dialogue != null)
-                { //play the dialogue if found
-                    DialogueManager.instance.PlayDialoge(dialogue);
-                    //Lock player. (Unlocked on exit in DialgoueManager.NextLine)
-                    player.isPerformingAction = true;
-                    player.canMove = false;
-                    player.canRotate = false;
+                { //lock player and play the dialogue if found
+                    DialogueManager.instance.PlayDialogue(dialogue);
+
+                    //Set bool so the Interactable system understands a Pop-Up window has opened
+                    PlayerUIManager.instance.popUpWindowIsOpen = true;
                 }
 
             }
+
+            //Interactable System Interact() call
+            player.playerInteractionManager.Interact();
             
         }
     }
     //Interact Button during dialogue box
-    void HandleUIInteractInput()
-    {
-        //if they press the button during a dialogue
-        if (uiInteractInput || uiInteractInput2)// [LMB], [E], (A)
-        {
-            uiInteractInput = false;
-            uiInteractInput2 = false;//(X) I wanted this to continue dialgue for now... Could change later
-            if (DialogueManager.IsInDialogue())
-            {
-                DialogueManager.instance.DialogueBoxContinue();
-            }
-        }
-    }
+    //void HandleDialogueContineuButton()
+    //{
+    //    //if they press the button during a dialogue
+    //    if (dialogueContinueInput)// [LMB], [E], (X)
+    //    {
+    //        dialogueContinueInput = false;
+    //        if (DialogueManager.IsInDialogue())
+    //        {
+    //            DialogueManager.instance.DialogueBoxContinue();
+    //        }
+    //    }
+    //}
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
         if (useItemQuickslotInput) // [1], (Y)
         {
             useItemQuickslotInput = false;
-            if (SceneManager.GetActiveScene().buildIndex == 0) 
+            if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0) 
                 return; //dont use on title screen
 
             //currently have camera here. Not sure if it gets it's own button or is an item
@@ -273,24 +283,24 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
     //Pause button
-    void HandlePauseInput()
-    {
-        if (pauseInput) // [Esc], (Start/Menu)
-        {
-            pauseInput = false;
-            PauseScript.instance.PauseUnpause();
-        }
-    }
-   
+    //void HandlePauseInput()
+    //{
+    //    if (pauseInput) // [Esc], (Start/Menu)
+    //    {
+    //        pauseInput = false;
+    //        PauseScript.instance.PauseUnpause();
+    //    }
+    //}
+
     //Idea Capture button
-    void HandleCapturePhotoInput()
-    {
-        if (capturePhotoInput) // [Space], (X)
-        {
-            capturePhotoInput = false;
-            IdeaCameraController.instance.TakeScreenshotInput();
-        }
-    }
+    //void HandleCapturePhotoInput()
+    //{
+    //    if (capturePhotoInput) // [Space], (X)
+    //    {
+    //        capturePhotoInput = false;
+    //        IdeaCameraController.instance.TakeScreenshotInput();
+    //    }
+    //}
 
 
     //Movement
@@ -372,12 +382,23 @@ public class PlayerInputManager : MonoBehaviour
         cameraHorizontalInput = cameraInput.x;
     }
 
-    private void OnApplicationFocus(bool focus) {
-        if (enabled) {
-            if (focus) {
+    private void HandleMiniMapZoomToggle() {
+        if (miniMapZoomToggleInput)
+        {
+            miniMapZoomToggleInput = false;
+            MiniMapManager.instance.UpdateMiniMapState();
+        }
+    }
+    private void OnApplicationFocus(bool focus)
+    {
+        if (enabled)
+        {
+            if (focus)
+            {
                 playerControls.Enable();
             }
-            else {
+            else
+            {
                 playerControls.Disable();
             }
         }
@@ -388,8 +409,8 @@ public class PlayerInputManager : MonoBehaviour
         if (dodgeInput) {
             dodgeInput = false;
 
-            //Future Note: Return if Menu or UI window is open, do nothing.
-            if (PauseScript.instance.gamePaused || DialogueManager.IsInDialogue())
+            //If Menu or UI window is open, do nothing.
+            if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
                 return;
             //Perform the dodge
             player.playerLocomotionManager.AttemptToPerformDodge();
@@ -397,9 +418,13 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     private void HandleSprintInput() {
-        if (sprintInput) {
+        if (sprintInput)
+        {
+            //If Menu or UI window is open, do nothing.
+            if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
+                return;
             player.playerLocomotionManager.HandleSprinting();
-            
+
             //Camera Zoom-Out Juice to give the illusion of great speed
             // if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting) {
             //     if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum) {
@@ -417,7 +442,8 @@ public class PlayerInputManager : MonoBehaviour
             //     PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
             // }
         }
-        else {
+        else
+        {
             player.playerLocomotionManager.characterManager.isSprinting = false;
             //Camera Zoom-Out Juice to give the illusion of Slowing Rapidly
             // if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting) {
@@ -426,6 +452,7 @@ public class PlayerInputManager : MonoBehaviour
             // else {
             //     PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
             // }
+            player.playerSoundFXManager.StopSprintBoosterAudioClip();
         }
     }
 
@@ -464,8 +491,9 @@ public class PlayerInputManager : MonoBehaviour
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
-            if(PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy()) 
+            if (PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy())
                 return;
+                
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
         }
@@ -475,11 +503,15 @@ public class PlayerInputManager : MonoBehaviour
         if (lightAttackInput) {
             lightAttackInput = false;
 
-            //TODO: Return if we have a UI Window Open
+            //Return if we have a UI Window Open
+            if (PlayerUIManager.instance.playerUIPauseMenu.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy())
+            {
+                return;
+            }
 
-            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
-
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction, 
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+            {
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction,
                                                 PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
             }
         }
@@ -516,25 +548,34 @@ public class PlayerInputManager : MonoBehaviour
             }
             if (player.playerCombatManager.currentTarget.isDead) {
                 player.isLockedOn = false;
-            }
 
-            //Attempt to Find new Target
-            //This assures us that the couroutine never runs multiple times
-            if (lockOnCoroutine != null) {
-                StopCoroutine(lockOnCoroutine);
+                //Attempt to Find new Target
+                //This assures us that the couroutine never runs multiple times
+                if (lockOnCoroutine != null) {
+                    StopCoroutine(lockOnCoroutine);
+                }
 
+                //Avoids the lock-on snapping to a new target while you are currently performing an action, then it locks on.
                 lockOnCoroutine = StartCoroutine(PlayerCamera.instance.WaitThenFindNewTarget());
             }
         }
-
 
         //Are we already locked on?
         if (lockOnInput && player.isLockedOn) {
             //Disable Lock On
             lockOnInput = false;
             PlayerCamera.instance.ClearLockOnTargets();
+            
+            //Reset Camera Height to UnlockedCameraHeight
+            // Vector3 newUnlockedCameraHeight = new Vector3(PlayerCamera.instance.cameraPivotTransform.transform.localPosition.x, PlayerCamera.instance.unlockedCameraHeight);
+            // PlayerCamera.instance.cameraPivotTransform.transform.localPosition = newUnlockedCameraHeight;
+
+            //Lower the Camera over time
+            PlayerCamera.instance.InvokeLowerCameraHeightCoroutine();
+
             player.isLockedOn = false;
             player.characterCombatManager.currentTarget = null;
+
             return;
         }
 

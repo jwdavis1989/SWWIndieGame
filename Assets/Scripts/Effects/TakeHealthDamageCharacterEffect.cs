@@ -76,25 +76,28 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         }
 
         //Check for "Invulnerability"
+        if (!character.isInvulnerable)
+        {
+            //Calculate then apply the Damage
+            ApplyDamage(character, characterCausingDamage);
 
-        //Calculate then apply the Damage
-        ApplyDamage(character, characterCausingDamage);
-
-        //Check which direction damage came from
+            //Check which direction damage came from
 
 
-        //Play a damage animation
-        PlayDirectionalBasedDamageAnimation(character);
+            //Play a damage animation
+            PlayDirectionalBasedDamageAnimation(character);
 
-        //Check for build-ups (Poison, Bleed, ect)
+            //Check for build-ups (Poison, Bleed, ect)
 
-        //Play damage sound FX
-        PlayDamageSFX(character);
-        
-        //Play Damage VFX
-        PlayDamageVFX(character);
+            //Play damage sound FX
+            PlayDamageSFX(character);
 
-        //If Character is A.I., Check for new target if character causing damage is preset
+            //Play Damage VFX
+            PlayDamageVFX(character);
+
+            //If Character is A.I., Check for new target if character causing damage is preset
+
+        }
 
     }
 
@@ -106,22 +109,18 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                 if (isMainHand)
                 {
-                    Debug.Log("Hit with main hand");
                     finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                     if (enemy != null)
                     {
                         enemy.isHitByMainHand = true;
-                        Debug.Log("Enemy Hit with main hand");
                     }
                 }
                 else
                 {
-                    Debug.Log("Hit with off hand");
                     finalDamageDealt = PlayerWeaponManager.instance.GetOffHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                     if (enemy != null)
                     {
                         enemy.isHitByOffHand = true;
-                        Debug.Log("Enemy Hit with off hand");
                     }
                 }
             }

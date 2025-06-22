@@ -64,7 +64,7 @@ public class WorldMusicController : MonoBehaviour
                 PlayAdvancedMusic(titleScreenTheme01, 0.25f); 
                 return;
             case "JerryDev":
-                PlayAdvancedMusic(dungeonTheme01, 0.5f); 
+                PlayAdvancedMusic(dungeonTheme01, 0.15f); 
                 return;
             case "AlecDev":
                 PlayAdvancedMusic(overworldTheme01); 

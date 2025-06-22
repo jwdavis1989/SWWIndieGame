@@ -30,7 +30,7 @@ public class AICharacterStatsManager : CharacterStatsManager
     /** drop this characters gold */
     public void DropGold()
     {
-        ItemDropManager.DropGold(transform, goldDrop);
+        ItemDropManager.instance.DropGold(transform, goldDrop);
     }
     public void DropExp(bool isHitByMainHand, bool isHitByOffHand)
     {
@@ -43,7 +43,7 @@ public class AICharacterStatsManager : CharacterStatsManager
         float newZ = p.z + ((UnityEngine.Random.value * RADIUS) * (UnityEngine.Random.value > 0.5 ? -1 : 1));
         t.position = new Vector3 (newX, p.y, newZ);
         //drop the exp
-        ItemDropManager.DropExp(t, expDropAmt, isHitByMainHand, isHitByOffHand);
+        ItemDropManager.instance.DropExp(t, expDropAmt, isHitByMainHand, isHitByOffHand);
     }
     /** 
      *  Drops a TinkerComponent at this objects location 
@@ -51,7 +51,7 @@ public class AICharacterStatsManager : CharacterStatsManager
      */
     public GameObject DropComponent(TinkerComponentType type)
     {
-        return Instantiate(ItemDropManager.DropComponent(type, transform));
+        return ItemDropManager.DropComponent(type, transform);
     }
     /** 
      *  Drops a weapon at this objects location 

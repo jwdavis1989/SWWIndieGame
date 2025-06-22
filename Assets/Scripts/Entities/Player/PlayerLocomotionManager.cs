@@ -21,7 +21,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [HideInInspector] public float verticalMovement;
     [HideInInspector] public float horizontalMovement;
     //[HideInInspector] public float moveAmount; //Currently does nothing, might remove. See PlayerInputManager.instance.moveAmount for correct value.
-    
+
     [Header("Movement Settings")]
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
@@ -31,7 +31,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float rotationSpeed = 15f;
 
     [Header("Jump")]
-    [SerializeField] float jumpHeight = 2f;   
+    [SerializeField] float jumpHeight = 2f;
     [SerializeField] float jumpForwardSpeed = 5f;
     [SerializeField] float freeFallSpeed = 2f;
     private Vector3 jumpDirection;
@@ -42,10 +42,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float airBoostSpeed = 15f;
     public GameObject forceFieldGraphic;
 
-    
+
 
     // Update is called once per frame
-    protected override void Update() {
+    protected override void Update()
+    {
         base.Update();
         HandleAllMovement();
 
@@ -55,7 +56,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         // }
     }
 
-    public void HandleAllMovement() {
+    public void HandleAllMovement()
+    {
         HandleGroundedMovement();
         HandleRotation();
         HandleBackBoosterJets();
@@ -65,21 +67,25 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         HandleFreeFallMovement();
     }
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
 
         player = GetComponent<PlayerManager>();
         characterManager = GetComponent<CharacterManager>();
     }
 
-    private void HandleGroundedMovement() {
+    private void HandleGroundedMovement()
+    {
         //Allow Movement Inputs if Player can move or rotate
-        if (player.canMove || player.canRotate) {
+        if (player.canMove || player.canRotate)
+        {
             GetVerticalAndHorizontalInputs();
         }
 
         //Disable Movement Inputs
-        if (!player.canMove || player.isDead) {
+        if (!player.canMove || player.isDead)
+        {
             return;
         }
 
@@ -89,15 +95,19 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         moveDirection.Normalize();
         moveDirection.y = 0;
 
-        if(characterManager.isSprinting) {
+        if (characterManager.isSprinting)
+        {
             player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
         }
-        else {
-            if (PlayerInputManager.instance.moveAmount > 0.5f) {
+        else
+        {
+            if (PlayerInputManager.instance.moveAmount > 0.5f)
+            {
                 //Move at a running speed
                 player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
             }
-            else if (PlayerInputManager.instance.moveAmount <= 0.5f) {
+            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+            {
                 //Move at a walking speed
                 player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
             }
@@ -105,14 +115,18 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     }
 
-    private void HandleJumpingMovement() {
-        if (player.isJumping) {
+    private void HandleJumpingMovement()
+    {
+        if (player.isJumping)
+        {
             player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
         }
     }
 
-    public void HandleFreeFallMovement() {
-        if (!player.isGrounded) {
+    public void HandleFreeFallMovement()
+    {
+        if (!player.isGrounded)
+        {
             Vector3 freeFallDirection;
             freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
             freeFallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
@@ -126,54 +140,68 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
             //Debug.Log(player.gameObject.transform.eulerAngles.y);
             //Facing Forward
-            if ((player.gameObject.transform.eulerAngles.y >= 270 && player.gameObject.transform.eulerAngles.y <= 360) 
-            || ( player.gameObject.transform.eulerAngles.y >= 0 && player.gameObject.transform.eulerAngles.y < 90)) {
-                if (freeFallDirection.x > 0) {
+            if ((player.gameObject.transform.eulerAngles.y >= 270 && player.gameObject.transform.eulerAngles.y <= 360)
+            || (player.gameObject.transform.eulerAngles.y >= 0 && player.gameObject.transform.eulerAngles.y < 90))
+            {
+                if (freeFallDirection.x > 0)
+                {
                     DisableJumpJets("Right");
                     EnableJumpJets("Left");
                 }
-                else if (freeFallDirection.x < 0) {
+                else if (freeFallDirection.x < 0)
+                {
                     DisableJumpJets("Left");
                     EnableJumpJets("Right");
                 }
-                else {
+                else
+                {
                     EnableJumpJets("Right");
                     EnableJumpJets("Left");
                 }
             }
             //Facing Backward
-            else {
-                if (freeFallDirection.x < 0 && !characterManager.isBoosting) {
-                DisableJumpJets("Right");
-                EnableJumpJets("Left");
+            else
+            {
+                if (freeFallDirection.x < 0 && !characterManager.isBoosting)
+                {
+                    DisableJumpJets("Right");
+                    EnableJumpJets("Left");
                 }
-                else if (freeFallDirection.x > 0 && !characterManager.isBoosting) {
+                else if (freeFallDirection.x > 0 && !characterManager.isBoosting)
+                {
                     DisableJumpJets("Left");
                     EnableJumpJets("Right");
                 }
-                else {
+                else
+                {
                     EnableJumpJets("Right");
                     EnableJumpJets("Left");
                 }
             }
         }
-        else {
+        else
+        {
             DisableJumpJets("Both");
             airDashBoosters.SetActive(false);
             //ResetOmniJumpJets();
         }
     }
-    private void HandleRotation() {
-        if (player.isDead) {
+    private void HandleRotation()
+    {
+        if (player.isDead)
+        {
             return;
         }
 
-        if (!player.canRotate) {
+        if (!player.canRotate)
+        {
             return;
         }
 
-        if (player.isLockedOn) {
-            if (player.isSprinting || player.isRolling) {
+        if (player.isLockedOn)
+        {
+            if (player.isSprinting || player.isRolling)
+            {
                 //This is functionally identical to the non-locked on code currently, but is separated in case we want to have different behavior between the two cases
                 Vector3 targetDirection = Vector3.zero;
                 targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
@@ -181,16 +209,19 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 targetDirection.Normalize();
                 targetDirection.y = 0;
 
-                if (targetDirection == Vector3.zero) {
+                if (targetDirection == Vector3.zero)
+                {
                     targetDirection = transform.forward;
                 }
-                
+
                 Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
                 Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
                 transform.rotation = finalRotation;
             }
-            else {
-                if (player.playerCombatManager.currentTarget == null) {
+            else
+            {
+                if (player.playerCombatManager.currentTarget == null)
+                {
                     return;
                 }
 
@@ -204,14 +235,16 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 transform.rotation = finalRotation;
             }
         }
-        else {
+        else
+        {
             targetRotationDirection = Vector3.zero;
             targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
             targetRotationDirection = targetRotationDirection + PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
             targetRotationDirection.Normalize();
             targetRotationDirection.y = 0;
 
-            if (targetRotationDirection == Vector3.zero) {
+            if (targetRotationDirection == Vector3.zero)
+            {
                 targetRotationDirection = transform.forward;
             }
 
@@ -222,54 +255,68 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     }
 
-    private void GetVerticalAndHorizontalInputs() {
+    private void GetVerticalAndHorizontalInputs()
+    {
         verticalMovement = PlayerInputManager.instance.verticalInput;
         horizontalMovement = PlayerInputManager.instance.horizontalInput;
 
         //Clamp the movements when we add animations
     }
-    
-    public void HandleSprinting() {
-        if (player.isPerformingAction) {
+
+    public void HandleSprinting()
+    {
+        if (player.isPerformingAction)
+        {
             characterManager.isSprinting = false;
         }
         //If we're out of stamina, set sprinting to false
-        if (player.playerStatsManager.currentStamina <= 0) {
+        if (player.playerStatsManager.currentStamina <= 0)
+        {
             characterManager.isSprinting = false;
             return;
         }
 
         // If we are moving, set sprinting to true
-        if (PlayerInputManager.instance.moveAmount > 0) {
+        if (PlayerInputManager.instance.moveAmount > 0)
+        {
             characterManager.isSprinting = true;
 
             //Play Booster Fire Sound Effect
-            player.characterSoundFXManager.PlaySprintBoostSoundFX();
+            player.playerSoundFXManager.PlaySprintBoostSoundFX();
+
         }
         //If stationary, set it to false
-        else {
+        else
+        {
             characterManager.isSprinting = false;
         }
 
-        if (characterManager.isSprinting) {
+        if (characterManager.isSprinting)
+        {
             player.playerStatsManager.currentStamina -= player.playerStatsManager.sprintingStaminaCost * Time.deltaTime;
             player.playerStatsManager.ResetStaminaRegenTimer();
         }
 
     }
-    public void AttemptToPerformDodge() {
-        if (player.isPerformingAction) {
+
+    public void AttemptToPerformDodge()
+    {
+        if (player.isPerformingAction)
+        {
             return;
         }
 
-        if (player.playerStatsManager.currentStamina <= 0) {
+        if (player.playerStatsManager.currentStamina <= 0)
+        {
             return;
         }
 
         //Roll if moving before
-        if (PlayerInputManager.instance.moveAmount > 0) {
+        if (PlayerInputManager.instance.moveAmount > 0)
+        {
             Quaternion playerRotation;
-            if (player.isGrounded) {
+            if (player.isGrounded)
+            {
                 //Set roll direction
                 rollDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
                 rollDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
@@ -284,7 +331,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
                 player.isRolling = true;
             }
-            else {
+            else
+            {
                 //Boosting flag
                 player.isBoosting = true;
 
@@ -307,6 +355,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
                 //Play boost animation
                 player.playerAnimationManager.PlayTargetActionAnimation("Boost_Forward_01", true, true, false, false);
+
+                //Play Boost SFX
+                player.playerSoundFXManager.PlayAirDashSoundFX();
             }
 
             //Activate Force Field Graphic
@@ -319,36 +370,48 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
         }
         //Backstep if stationary before
-        else {
+        else
+        {
             //Perform a Backstep Animation here
-            if (player.isGrounded) {
+            if (player.isGrounded)
+            {
                 //Play Backstep Animation
                 player.playerAnimationManager.PlayTargetActionAnimation("Back_Step_01", true, true);
-                
+
                 //Subtract Stamina for backstep
                 player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
             }
         }
     }
 
-    public void AttemptToPerformJump() {
+    public void AttemptToPerformJump()
+    {
         //If performing any action, we don't want to allow a jump (Will change when combat is added)
-        if (player.isPerformingAction) {
+        if (player.isPerformingAction)
+        {
             return;
         }
 
         //If out of stamina, we can't jump
-        if (player.playerStatsManager.currentStamina <= 0) {
+        if (player.playerStatsManager.currentStamina <= 0)
+        {
             return;
         }
 
         //If already jumping, we can't jump
-        if (player.isJumping) {
+        if (player.isJumping)
+        {
             return;
         }
 
         //If not on the ground, we can't jump
-        if (!player.isGrounded) {
+        if (!player.isGrounded)
+        {
+            return;
+        }
+
+        if (PauseScript.instance.gamePaused)
+        {
             return;
         }
 
@@ -364,139 +427,90 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         jumpDirection.y = 0;
 
-        if (jumpDirection != Vector3.zero) {
+        if (jumpDirection != Vector3.zero)
+        {
             //Sprint means full jump distance
-            if (player.isSprinting) {
+            if (player.isSprinting)
+            {
                 jumpDirection *= 1;
             }
             //Running means half jump distance
-            else if (PlayerInputManager.instance.moveAmount > 0.5) {
+            else if (PlayerInputManager.instance.moveAmount > 0.5)
+            {
                 jumpDirection *= 0.5f;
             }
             //Walking means quarter jump distance
-            else if (PlayerInputManager.instance.moveAmount < 0.5) {
+            else if (PlayerInputManager.instance.moveAmount < 0.5)
+            {
                 jumpDirection *= 0.25f;
             }
         }
 
-        if (jumpDirection.x > 0 && !characterManager.isBoosting) {
+        if (jumpDirection.x > 0 && !characterManager.isBoosting)
+        {
             EnableJumpJets("Left");
         }
-        else if (jumpDirection.x < 0 && !characterManager.isBoosting) {
+        else if (jumpDirection.x < 0 && !characterManager.isBoosting)
+        {
             EnableJumpJets("Right");
         }
-        else {
+        else
+        {
             EnableJumpJets("Both");
         }
 
     }
 
-    public void ApplyJumpingVelocity() {
+    public void ApplyJumpingVelocity()
+    {
         //Apply an upward velocity depending on forces in our game such as gravity
         yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
     }
 
-    public void EnableJumpJets(string side) {
-        switch(side) {
+    public void EnableJumpJets(string side)
+    {
+        switch (side)
+        {
             case "Left":
-            leftBoosters.SetActive(true);
+                leftBoosters.SetActive(true);
                 break;
             case "Right":
-            rightBoosters.SetActive(true);
+                rightBoosters.SetActive(true);
                 break;
             case "Both":
-            rightBoosters.SetActive(true);
-            leftBoosters.SetActive(true);
+                rightBoosters.SetActive(true);
+                leftBoosters.SetActive(true);
                 break;
         }
     }
 
-    public void DisableJumpJets(string side) {
-        switch(side) {
+    public void DisableJumpJets(string side)
+    {
+        switch (side)
+        {
             case "Left":
-            leftBoosters.SetActive(false);
+                leftBoosters.SetActive(false);
                 break;
             case "Right":
-            rightBoosters.SetActive(false);
+                rightBoosters.SetActive(false);
                 break;
             case "Both":
                 rightBoosters.SetActive(false);
                 leftBoosters.SetActive(false);
-                // leftForwardBoosters.SetActive(false);
-                // rightForwardBoosters.SetActive(false);
                 break;
         }
     }
 
-    public void HandleBackBoosterJets() {
-        if (characterManager.isSprinting && !backBoosters.activeSelf) {
+    public void HandleBackBoosterJets()
+    {
+        if (characterManager.isSprinting && !backBoosters.activeSelf)
+        {
             backBoosters.SetActive(true);
         }
-        else if (!characterManager.isSprinting && backBoosters.activeSelf == true) {
+        else if (!characterManager.isSprinting && backBoosters.activeSelf == true)
+        {
             backBoosters.SetActive(false);
         }
     }
-
-    // public void HandleOmniJumpJets(float horizontalMovement, float verticalMovement) {
-    //     //Vector2 movement = new Vector2(horizontalMovement, verticalMovement);
-
-    //     //Case 1: Positive horizontal - Right
-    //     if (horizontalMovement > 0) {
-    //         rightBoosters.SetActive(false);
-    //         leftBoosters.SetActive(true);
-
-    //         //If Moving Forward
-    //         if (verticalMovement >= 0) {
-    //             rightBackwardBoosters.SetActive(true);
-    //             leftBackwardBoosters.SetActive(true);
-    //             rightForwardBoosters.SetActive(false);
-    //             leftForwardBoosters.SetActive(false);
-    //         }
-    //         //If Moving Backward
-    //         else {
-    //             rightBackwardBoosters.SetActive(false);
-    //             leftBackwardBoosters.SetActive(false);
-    //             rightForwardBoosters.SetActive(true);
-    //             leftForwardBoosters.SetActive(true);
-    //         }
-    //     }
-    //     //Case 2: Negative horizontal - Left
-    //     else if (horizontalMovement < 0) {
-    //         rightBoosters.SetActive(true);
-    //         leftBoosters.SetActive(false);
-
-    //         //If Moving Forward
-    //         if (verticalMovement >= 0) {
-    //             rightBackwardBoosters.SetActive(true);
-    //             leftBackwardBoosters.SetActive(true);
-    //             rightForwardBoosters.SetActive(false);
-    //             leftForwardBoosters.SetActive(false);
-    //         }
-    //         //If Moving Backward
-    //         else {
-    //             rightBackwardBoosters.SetActive(false);
-    //             leftBackwardBoosters.SetActive(false);
-    //             rightForwardBoosters.SetActive(true);
-    //             leftForwardBoosters.SetActive(true);
-    //         }
-    //     }
-    //     //Case 3: Neutral horizontal
-    //     else {
-    //         //Reset to neutral playing field
-    //         //ResetOmniJumpJets();
-
-    //         //I like just the 2 turned on for hover mode aesthetically
-    //         rightBoosters.SetActive(true);
-    //         leftBoosters.SetActive(true);
-    //     }
-    // }
-
-    // public void ResetOmniJumpJets() {
-    //     rightBoosters.SetActive(false);
-    //     leftBoosters.SetActive(false);
-    //     rightForwardBoosters.SetActive(false);
-    //     leftForwardBoosters.SetActive(false);
-    //     rightBackwardBoosters.SetActive(false);
-    //     leftBackwardBoosters.SetActive(false);
-    // }
+    
 }

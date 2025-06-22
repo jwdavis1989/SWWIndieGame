@@ -9,6 +9,14 @@ public class IdleState : AIState
     public override AIState Tick(AICharacterManager aiCharacter) {
         //Case: Target Aquired
         if(aiCharacter.aiCharacterCombatManager.currentTarget != null) {
+            //Turn on the enemy's Minimap Triangle if it's not already visible
+            if (aiCharacter.miniMapSprite != null && !aiCharacter.isDead) {
+                aiCharacter.miniMapSprite.SetActive(true);
+            }
+
+            //Activate monster health bar
+            aiCharacter.characterUIManager.ActivateHealthBar();
+
             //Changes state to the pursue target state
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }
