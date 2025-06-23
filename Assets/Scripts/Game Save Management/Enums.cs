@@ -22,7 +22,8 @@ public enum CharacterSlot {
 }
 
 //This is used to calculate damage based on attack type
-public enum AttackType {
+public enum AttackType
+{
     LightAttack01,
     LightAttack02,
     LightAttack03,
@@ -39,7 +40,19 @@ public enum AttackType {
 
 }
 
-public enum CharacterFaction {
+//Intensity of blocked attacks
+public enum DamageIntensity
+{
+    Ping,
+    Light,
+    Medium,
+    Heavy,
+    Colossal
+}
+
+//Factions to determine who will/can attack who
+public enum CharacterFaction
+{
     TeamPlayer, //Player, Pets, Summons
     TeamGreen, //Player cannot attack
     TeamYellow, //Non-Hostile, Attackable by player

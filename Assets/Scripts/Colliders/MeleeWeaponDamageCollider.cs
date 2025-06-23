@@ -39,7 +39,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         weaponThatOwnsThisCollider = GetComponentInParent<WeaponScript>();
         InitializeStats();
-        
+
         // weaponFamily = weaponThatOwnsThisCollider.stats.weaponFamily;
 
         //Disable hit box on awake
@@ -78,7 +78,8 @@ public class MeleeWeaponDamageCollider : DamageCollider
             //Check if we can damage this target based on friendly fire
 
             //Check if target is blocking
-
+            CheckForBlock(damageTarget);
+            
             //Check if target is invulnerable
 
             //Damage
@@ -118,17 +119,6 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         //Elemental
         damageEffect.elementalDamage = elementalStats;
-        //damageEffect.fireDamage = fireDamage;
-        //damageEffect.iceDamage = iceDamage;
-        //damageEffect.lightningDamage = lightningDamage;
-        //damageEffect.windDamage = windDamage;
-
-        ////Anti-Type
-        //damageEffect.earthDamage = earthDamage;
-        //damageEffect.lightDamage = lightDamage;
-        //damageEffect.beastDamage = beastDamage;
-        //damageEffect.scalesDamage = scalesDamage;
-        //damageEffect.techDamage = techDamage;
 
         //Armore Penetration
         damageEffect.isReducedByArmor = isReducedByArmor;
@@ -191,8 +181,9 @@ public class MeleeWeaponDamageCollider : DamageCollider
         damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
     }
 
-    // private void ApplyAttackDamageModifiers(float modifier, TakeHealthDamageCharacterEffect damage) {
-    //     damage.
-    // }
+    protected override void GetBlockingDotValues(CharacterManager damageTarget)
+    {
+        base.GetBlockingDotValues(damageTarget);
+    }
 
 }

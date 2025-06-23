@@ -40,6 +40,7 @@ public class CharacterManager : MonoBehaviour
     public bool isMoving = false;
     public bool isSprinting = false;
     public bool isLockedOn = false;
+    public bool isBlocking = false;
     public bool canBleed = true;
     public bool isChargingAttack = false;
     public bool isInvulnerable = false;
