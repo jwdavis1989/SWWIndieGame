@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class InventionScript : MonoBehaviour
+[Serializable]
+public class InventionScript
 {
     [Header("InventionScript is used to mark an object as an Invention")]
     public InventionType type;

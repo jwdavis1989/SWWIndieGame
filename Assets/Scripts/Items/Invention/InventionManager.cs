@@ -16,6 +16,7 @@ public class InventionManager : MonoBehaviour
     [Header("All possible inventions")]
     public InventionScript[] allInventions;
     [Header("All current idea info")]
+    //MAJOR TODO Make IdeaStats object with image, flag & name...
     public bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
     public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
 

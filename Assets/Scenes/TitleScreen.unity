@@ -123,6 +123,44 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!84 &7946354
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &30723546
 GameObject:
   m_ObjectHideFlags: 0
@@ -2450,44 +2488,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 773641032}
   m_CullTransparentMesh: 1
---- !u!84 &810828492
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &877648542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9074875752220091198, guid: dc704eb8c2db37a45959b07ba7cb3925, type: 3}
@@ -3282,7 +3282,7 @@ MonoBehaviour:
   overridingColor: {r: 1, g: 1, b: 1, a: 1}
   useShadow: 1
   useCookie: 1
-  cookieMapRenderTexture: {fileID: 2110854569}
+  cookieMapRenderTexture: {fileID: 7946354}
   enableOutOfPhaseColor: 0
   outOfPhaseColorStrength: 0.1
   outOfPhaseColor: {r: 0, g: 1, b: 1, a: 1}
@@ -4264,6 +4264,44 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!84 &1153808937
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1158508798
 GameObject:
   m_ObjectHideFlags: 0
@@ -7618,44 +7656,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4894937217335537802, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
   m_PrefabInstance: {fileID: 8441853390447065137}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &2110854569
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!84 &2112260666
 RenderTexture:
   m_ObjectHideFlags: 0
@@ -9245,6 +9245,30 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5589217118499626300, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589217118499626300, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589217118499626300, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589217118499626300, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589217118499626300, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5589217118499626300, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5705932062557965108, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -9328,6 +9352,178 @@ PrefabInstance:
     - target: {fileID: 6990383230162046718, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[0].type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[1].type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[2].type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[3].type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[4].type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[5].type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[6].type
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[7].type
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[8].type
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[0].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[1].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[2].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[3].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[4].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[5].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[6].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[7].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[8].neededIdeas.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[0].neededIdeas.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[0].neededIdeas.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[1].neededIdeas.Array.data[0]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[1].neededIdeas.Array.data[1]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[1].neededIdeas.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[2].neededIdeas.Array.data[0]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[2].neededIdeas.Array.data[1]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[2].neededIdeas.Array.data[2]
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[3].neededIdeas.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[3].neededIdeas.Array.data[1]
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[3].neededIdeas.Array.data[2]
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[4].neededIdeas.Array.data[0]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[4].neededIdeas.Array.data[1]
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[4].neededIdeas.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[5].neededIdeas.Array.data[1]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[5].neededIdeas.Array.data[2]
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[6].neededIdeas.Array.data[0]
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[6].neededIdeas.Array.data[1]
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[6].neededIdeas.Array.data[2]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[7].neededIdeas.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[7].neededIdeas.Array.data[1]
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[7].neededIdeas.Array.data[2]
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[8].neededIdeas.Array.data[0]
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[8].neededIdeas.Array.data[1]
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7545869801986132768, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: allInventions.Array.data[8].neededIdeas.Array.data[2]
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 7712401049278039608, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_Enabled
