@@ -15,6 +15,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerStatsManager playerStatsManager;
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
+    [HideInInspector] public PlayerInteractionManager playerInteractionManager;
 
     public GameObject flashlight;
     public GameObject cameraflashlight;
@@ -32,6 +33,7 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
+        playerInteractionManager = GetComponent<PlayerInteractionManager>();
         
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();

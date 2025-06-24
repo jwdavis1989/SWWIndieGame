@@ -231,6 +231,9 @@ public class PlayerInputManager : MonoBehaviour
         {
             interactInput = false;
 
+            //Redundant technically, but insures both systems cooperate
+            PlayerUIManager.instance.playerUIPopUpManager.CloseAllPopUpWindows();
+
             //Note: Disable this if in combat for efficency?
             // If not busy doing something else
             if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())
@@ -241,10 +244,15 @@ public class PlayerInputManager : MonoBehaviour
                 if (dialogue != null)
                 { //lock player and play the dialogue if found
                     DialogueManager.instance.PlayDialogue(dialogue);
-                    
+
+                    //Set bool so the Interactable system understands a Pop-Up window has opened
+                    PlayerUIManager.instance.popUpWindowIsOpen = true;
                 }
 
             }
+
+            //Interactable System Interact() call
+            player.playerInteractionManager.Interact();
             
         }
     }

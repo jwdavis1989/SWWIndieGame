@@ -147,6 +147,9 @@ public class DialogueManager : MonoBehaviour
         }
         else
         { // Finished
+            //Set bool so the Interactable system understands a Pop-Up window has closed
+            PlayerUIManager.instance.popUpWindowIsOpen = false;
+
             // unlock player
             player.isPerformingAction = false;
             player.canMove = true;

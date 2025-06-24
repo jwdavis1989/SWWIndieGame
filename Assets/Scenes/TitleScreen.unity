@@ -3282,7 +3282,7 @@ MonoBehaviour:
   overridingColor: {r: 1, g: 1, b: 1, a: 1}
   useShadow: 1
   useCookie: 1
-  cookieMapRenderTexture: {fileID: 7946354}
+  cookieMapRenderTexture: {fileID: 1888757014}
   enableOutOfPhaseColor: 0
   outOfPhaseColorStrength: 0.1
   outOfPhaseColor: {r: 0, g: 1, b: 1, a: 1}
@@ -5014,6 +5014,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271229941}
   m_CullTransparentMesh: 1
+--- !u!84 &1281299204
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &1282293561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6768,6 +6806,44 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a0b00adac9454a408d87b8d697256e8, type: 3}
+--- !u!84 &1888757014
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!136 &1895216762
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8658,6 +8734,7 @@ MonoBehaviour:
   playerStatsManager: {fileID: 0}
   playerAnimationManager: {fileID: 0}
   playerCombatManager: {fileID: 0}
+  playerInteractionManager: {fileID: 0}
   flashlight: {fileID: 2076048840}
   cameraflashlight: {fileID: 1076579486}
   playerSoundFXManager: {fileID: 0}
@@ -8877,28 +8954,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1050819238090114444, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1050819238090114444, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1050819238090114444, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1050819238090114444, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1050819238090114444, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1050819238090114444, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_AnchoredPosition.y
+    - target: {fileID: 1024506533354755804, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1111507515892314073, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
@@ -9180,14 +9237,6 @@ PrefabInstance:
     - target: {fileID: 4212765689232555426, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_Name
       value: Player UI Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4411727250572569224, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: inventMenu
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4411727250572569224, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: DebugSaveGameButton
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4624022072694486770, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -9847,6 +9896,7 @@ GameObject:
   - component: {fileID: 8671731848262977637}
   - component: {fileID: 8671731848262977636}
   - component: {fileID: 8671731848262977638}
+  - component: {fileID: 8671731848262977639}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -10591,6 +10641,18 @@ MonoBehaviour:
   mainHandWeaponAnchor: {fileID: 1416436979}
   offHandWeaponAnchor: {fileID: 877648542}
   currentAttackType: 0
+--- !u!114 &8671731848262977639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6521308607458431711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfb5b620f891b749a4bd55cec5bf2af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8739248059053034537
 RectTransform:
   m_ObjectHideFlags: 0
