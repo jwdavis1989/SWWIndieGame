@@ -43,6 +43,8 @@ public class CharacterManager : MonoBehaviour
     public bool isBlocking = false;
     public bool isPerfectBlocking = false;
     public float perfectBlockModifier = 2f;
+    public float perfectBlockWindowDuration = 0.25f;
+    private float currentPerfectBlockWindowDuration = 0f;
     public float nonWeaponBlockingStrength = 30f;
     public bool canBleed = true;
     public bool isChargingAttack = false;
@@ -134,6 +136,14 @@ public class CharacterManager : MonoBehaviour
 
         //Disable Character
 
+    }
+
+    public IEnumerator ProcessPerfectBlockTimer()
+    {
+        yield return new WaitForSeconds(perfectBlockWindowDuration);
+
+        isPerfectBlocking = false;
+        Debug.Log("isPerfectBlocking: " + isPerfectBlocking);
     }
 
     public virtual void ReviveCharacter()

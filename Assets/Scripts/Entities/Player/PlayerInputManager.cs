@@ -142,8 +142,8 @@ public class PlayerInputManager : MonoBehaviour
             //Blocking
                 //Holding the input sets Blocking to true
                 playerControls.PlayerActions.Block.performed += i => blockInput = true;
-            //Releasing sets the sprint Blocking to false
-            playerControls.PlayerActions.Block.canceled += i => player.isBlocking = false;
+                //Releasing sets the Blocking to false
+                playerControls.PlayerActions.Block.canceled += i => HandleDisableBlock();
 
             //Switch Weapons on Gamepad
             playerControls.PlayerActions.ChangeRightWeaponDPad.performed += i => ChangeRightWeaponDPad = true;
@@ -554,14 +554,17 @@ public class PlayerInputManager : MonoBehaviour
             blockInput = false;
 
             player.isBlocking = true;
+            player.isPerfectBlocking = true;
+            StartCoroutine(player.ProcessPerfectBlockTimer());
 
-            //TODO: Needs changed to blocking!!!
-            // if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
-            // {
-            //     PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction,
-            //                                     PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
-            // }
         }
+    }
+
+    private void HandleDisableBlock()
+    {
+        player.isBlocking = false;
+        player.isPerfectBlocking = false;
+        StopCoroutine(player.ProcessPerfectBlockTimer());
     }
 
 

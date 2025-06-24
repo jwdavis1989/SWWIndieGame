@@ -114,8 +114,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         //Base Attack Power
         damageEffect.physicalDamage = physicalDamage;
-        Debug.Log("physicalDamage: " + physicalDamage);
-        Debug.Log("damageEffect.physicalDamage: " + damageEffect.physicalDamage);
+        Debug.Log("Base Damage: " + physicalDamage);
 
         //Elemental
         damageEffect.elementalDamage = elementalStats;
