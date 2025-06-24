@@ -65,9 +65,9 @@ public class MeleeWeaponDamageCollider : DamageCollider
         //     damageTarget = other.GetComponent<CharacterManager>();
         // }
 
-        //"Friendly Fire", isn't.
         if (damageTarget != null)
         {
+            //"Friendly Fire", isn't.
             if (damageTarget == characterCausingDamage)
             {
                 return;

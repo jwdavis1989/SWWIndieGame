@@ -88,7 +88,7 @@ public class DamageCollider : MonoBehaviour
 
         //Check if the character is blocking, and check if they are facing in the correct direction to block successfully
         Debug.Log("isBlocking: " + damageTarget.isBlocking);
-        if (damageTarget.isBlocking && dotValueFromAttackToDamageTarget > 0.3f)
+        if (damageTarget.isBlocking /*&& dotValueFromAttackToDamageTarget > 0.1f*/)
         {
             charactersDamaged.Add(damageTarget);
             TakeBlockedHealthDamageCharacterEffect blockingTakeDamageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeBlockedHealthDamageCharacterEffect);

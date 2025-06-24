@@ -124,7 +124,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
 
         //Apply final damage to character's health
-        Debug.Log("Damage Taken: " + finalDamageDealt);
+        Debug.Log("HPDmg: " + finalDamageDealt);
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
         
         //Calculate Poise Damage to determine if the character will be stunned
