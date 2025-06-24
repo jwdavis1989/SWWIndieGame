@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Character Effects/Instant Effects/Take Blocked Health Damage")]
@@ -13,7 +14,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
     [Header("Damage")]
     public ElementalStats elementalDamage = new ElementalStats();
-    public float physicalDamage = 0f;   
+    public float physicalDamage = 0f;
 
     //Damage modifier for specific attack, which differs between attacks in a combo
     public float attackMotionValue = 1f;
@@ -53,10 +54,12 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
 
 
-    public void Awake() {
+    public void Awake()
+    {
         //weaponScript = characterCausingDamage.GetComponent<WeaponScript>();
     }
-    public override void ProcessEffect(CharacterManager character) {
+    public override void ProcessEffect(CharacterManager character)
+    {
         base.ProcessEffect(character);
 
         Debug.Log("Hit was blocked!");
@@ -93,10 +96,13 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
     }
 
-    private void ApplyDamage(CharacterManager targetCharacter, CharacterManager characterCausingDamage) {
+    private void ApplyDamage(CharacterManager targetCharacter, CharacterManager characterCausingDamage)
+    {
         //Monsters or player created damage
-        if (characterCausingDamage != null) {
-            if (!targetCharacter.isPlayer) {
+        if (characterCausingDamage != null)
+        {
+            if (!targetCharacter.isPlayer)
+            {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                 if (isMainHand)
@@ -116,12 +122,14 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
                     }
                 }
             }
-            else {
+            else
+            {
                 finalDamageDealt = CalculateNPCDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
         }
         //Traps and environmental hazards
-        else {
+        else
+        {
             finalDamageDealt = CalculateNPCDamage(targetCharacter);
         }
 
@@ -129,12 +137,13 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         //Apply final damage to character's health
         Debug.Log("Damage Taken: " + finalDamageDealt);
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
-        
+
         //Calculate Poise Damage to determine if the character will be stunned
         //TODO
     }
 
-    public float CalculateNPCDamage (CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f) {
+    public float CalculateNPCDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
+    {
         float result = physicalDamage * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
@@ -148,8 +157,27 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         result += physicalDamage * (elementalDamage.scalesPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower) * isReducedByArmor);
         result += physicalDamage * (elementalDamage.techPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
 
-        if(result > 0) {
-            return result * attackMotionValue * fullChargeModifier;
+        //Calculate block modifier
+        float blockingState = targetCharacter.isPerfectBlocking ? targetCharacter.perfectBlockModifier : 1f;
+
+        if (result > 0)
+        {
+            if (targetCharacter.isBlocking)
+            {
+                if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
+                {
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f);
+                }
+                else
+                {
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.nonWeaponBlockingStrength) / 100f);
+                }
+            }
+            else
+            {
+                return result * attackMotionValue * fullChargeModifier;
+            }
+        
         }
         else return 0;
     }
@@ -161,9 +189,9 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         {
             character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
         }
-        
+
         //Play a Sparking Impact VFX for the blocking impact as well
-        
+
     }
 
     private void PlayDamageSFX(CharacterManager damagedCharacter)
@@ -247,10 +275,12 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         }
     }
 
-    private void PlayDirectionalBasedBlockingAnimation(CharacterManager characterTakingDamage) {
+    private void PlayDirectionalBasedBlockingAnimation(CharacterManager characterTakingDamage)
+    {
 
         //Works without this, but the tutorial suggests it so Idk man(?)
-        if (characterTakingDamage.isDead) {
+        if (characterTakingDamage.isDead)
+        {
             return;
         }
 
@@ -280,7 +310,8 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         }
 
         //If poise is broken, play a staggering damage animation
-        if (poiseIsBroken) {
+        if (poiseIsBroken)
+        {
             characterTakingDamage.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
             characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
         }

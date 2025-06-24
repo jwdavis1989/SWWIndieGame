@@ -88,7 +88,6 @@ public class DamageCollider : MonoBehaviour
 
         //Check if the character is blocking, and check if they are facing in the correct direction to block successfully
         Debug.Log("isBlocking: " + damageTarget.isBlocking);
-        Debug.Log("dotValueFromAttackToDamageTarget: " + dotValueFromAttackToDamageTarget);
         if (damageTarget.isBlocking && dotValueFromAttackToDamageTarget > 0.3f)
         {
             charactersDamaged.Add(damageTarget);

@@ -24,6 +24,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] Vector2 mouseWheelInput;
     [SerializeField] bool heavyAttackInput = false;
     [SerializeField] bool holdHeavyAttackInput = false;
+    [SerializeField] bool blockInput = false;
 
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
@@ -105,6 +106,7 @@ public class PlayerInputManager : MonoBehaviour
         HandleLockOnInput();
         HandleLockOnSwitchTargetInput();
         HandleMainHandHeavyAttackInput();
+        HandleBlockInput();
         HandleChargeMainHandHeavyAttackInput();
         HandleGamePadRightWeaponSwapInput();
         HandleGamePadLeftWeaponSwapInput();
@@ -136,6 +138,12 @@ public class PlayerInputManager : MonoBehaviour
             //Attack Queueing
             playerControls.PlayerActions.QueueLightAttack.performed += i => QueueInput(ref queueLightAttackInput);
             playerControls.PlayerActions.QueueHeavyAttack.performed += i => QueueInput(ref queueHeavyAttackInput);
+
+            //Blocking
+                //Holding the input sets Blocking to true
+                playerControls.PlayerActions.Block.performed += i => blockInput = true;
+            //Releasing sets the sprint Blocking to false
+            playerControls.PlayerActions.Block.canceled += i => player.isBlocking = false;
 
             //Switch Weapons on Gamepad
             playerControls.PlayerActions.ChangeRightWeaponDPad.performed += i => ChangeRightWeaponDPad = true;
@@ -538,20 +546,43 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
+    private void HandleBlockInput()
+    {
+        if (blockInput)
+        {
+            Debug.Log("Attempting to Block");
+            blockInput = false;
+
+            player.isBlocking = true;
+
+            //TODO: Needs changed to blocking!!!
+            // if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+            // {
+            //     PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction,
+            //                                     PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+            // }
+        }
+    }
+
 
     //Lock On
-    private void HandleLockOnInput() {
+    private void HandleLockOnInput()
+    {
         //Is our current target dead? (If so, Unlock)
-        if (player.isLockedOn) {
-            if (player.playerCombatManager.currentTarget == null) {
+        if (player.isLockedOn)
+        {
+            if (player.playerCombatManager.currentTarget == null)
+            {
                 return;
             }
-            if (player.playerCombatManager.currentTarget.isDead) {
+            if (player.playerCombatManager.currentTarget.isDead)
+            {
                 player.isLockedOn = false;
 
                 //Attempt to Find new Target
                 //This assures us that the couroutine never runs multiple times
-                if (lockOnCoroutine != null) {
+                if (lockOnCoroutine != null)
+                {
                     StopCoroutine(lockOnCoroutine);
                 }
 
@@ -561,11 +592,12 @@ public class PlayerInputManager : MonoBehaviour
         }
 
         //Are we already locked on?
-        if (lockOnInput && player.isLockedOn) {
+        if (lockOnInput && player.isLockedOn)
+        {
             //Disable Lock On
             lockOnInput = false;
             PlayerCamera.instance.ClearLockOnTargets();
-            
+
             //Reset Camera Height to UnlockedCameraHeight
             // Vector3 newUnlockedCameraHeight = new Vector3(PlayerCamera.instance.cameraPivotTransform.transform.localPosition.x, PlayerCamera.instance.unlockedCameraHeight);
             // PlayerCamera.instance.cameraPivotTransform.transform.localPosition = newUnlockedCameraHeight;
@@ -579,13 +611,15 @@ public class PlayerInputManager : MonoBehaviour
             return;
         }
 
-        if (lockOnInput && !player.isLockedOn) {
+        if (lockOnInput && !player.isLockedOn)
+        {
             lockOnInput = false;
 
             //Enable Lock On
             PlayerCamera.instance.HandleLocatingLockOnTargets();
 
-            if (PlayerCamera.instance.nearestLockOnTarget != null) {
+            if (PlayerCamera.instance.nearestLockOnTarget != null)
+            {
                 //Set the target as our current target
                 player.playerCombatManager.SetTarget(PlayerCamera.instance.nearestLockOnTarget);
                 player.isLockedOn = true;

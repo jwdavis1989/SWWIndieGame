@@ -41,6 +41,9 @@ public class CharacterManager : MonoBehaviour
     public bool isSprinting = false;
     public bool isLockedOn = false;
     public bool isBlocking = false;
+    public bool isPerfectBlocking = false;
+    public float perfectBlockModifier = 2f;
+    public float nonWeaponBlockingStrength = 30f;
     public bool canBleed = true;
     public bool isChargingAttack = false;
     public bool isInvulnerable = false;
@@ -77,6 +80,7 @@ public class CharacterManager : MonoBehaviour
         animator?.SetBool("isGrounded", isGrounded);
         animator?.SetBool("isChargingAttack", isChargingAttack);
         animator?.SetBool("isMoving", isMoving);
+        animator?.SetBool("isBlocking", isBlocking);
     }
 
     protected virtual void FixedUpdate()
