@@ -40,6 +40,8 @@ public class CharacterSaveData
     public float currentHealth = 100;
     public float currentStamina = 100;
 
+    public Dictionary<string, bool> journalFlags = new Dictionary<string, bool>();
+
     public CharacterSaveData()
     {
         this.weapons = new WeaponsArray();

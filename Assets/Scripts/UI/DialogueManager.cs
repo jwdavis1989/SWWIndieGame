@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.LowLevel;
@@ -8,7 +9,8 @@ using UnityEngine.InputSystem.LowLevel;
 public class DialogueManager : MonoBehaviour
 {
     [Header("Speaker's lines")]
-    public string[] lines;
+    //public string[] lines;
+    public NPCDialogue currentDialogue;
     public float textSpeed;
     private int lineIndex = 0;
     [Header("TextMeshPro objects")]
@@ -62,14 +64,14 @@ public class DialogueManager : MonoBehaviour
     }
     public void DialogueBoxContinue()
     {
-        if (dialogueText.text == lines[lineIndex])
+        if (dialogueText.text == currentDialogue.lines2[lineIndex].line)
         {//if line is finished go to next line
             NextLine();
         }
         else //Complete current line
         {
             StopAllCoroutines();
-            dialogueText.text = lines[lineIndex];
+            dialogueText.text = currentDialogue.lines2[lineIndex].line;
         }
     }
     public void PlayDialogue(NPCDialogue dialogue)
@@ -82,7 +84,9 @@ public class DialogueManager : MonoBehaviour
             player.canRotate = false;
             player.isMoving = false;
             playerControls.PlayerActions.Disable();
-            lines = dialogue.lines;
+            //lines = dialogue.lines;
+            //lines2 = dialogue.lines2;
+            currentDialogue = dialogue;
             speakerNameText.text = dialogue.speakerName;
             lineIndex = 0;
             StartDialgoue();
@@ -98,7 +102,7 @@ public class DialogueManager : MonoBehaviour
         //eventSystem.gameObject.SetActive(true);
         lineIndex = 0;
         StartCoroutine(TypeLine());
-        if (lines.Length > 1)
+        if (currentDialogue.lines2.Length > 1)
         {
             bottomText.text = "Continue";
         }
@@ -109,7 +113,7 @@ public class DialogueManager : MonoBehaviour
     {
         bool richTextTag = false;// Rich text tags should be printed out instantly so they aren't seen by the player
         char lastLetter = '\0'; // Use \ to escape and print <
-        foreach (char c in lines[lineIndex].ToCharArray())
+        foreach (char c in currentDialogue.lines2[lineIndex].line.ToCharArray())
         {
             dialogueText.text += c;
             if (c == '<' && lastLetter != '\\')
@@ -124,11 +128,17 @@ public class DialogueManager : MonoBehaviour
     /** Go to the next line or exit dialogue menu if finished */
     void NextLine()
     {
-        if (lineIndex < lines.Length - 1)
-        { // Go to next line
+        if (lineIndex < currentDialogue.lines2.Length - 1)
+        { // there is a next line and we can go to it
+            // Go to next line
             lineIndex++;
+            if (!CheckLineCondition())
+            {
+                NextLine();
+                return;
+            }
             dialogueText.text = "";
-            if (lineIndex < lines.Length - 1)
+            if (lineIndex < currentDialogue.lines2.Length - 1)
             {
                 bottomText.text = "Continue";
             }
@@ -227,5 +237,25 @@ public class DialogueManager : MonoBehaviour
                 DialogueBoxContinue();
             }
         }
+    }
+
+    //returns true there is no condition or condition is true
+    bool CheckLineCondition()
+    {
+        string key = currentDialogue.lines2[lineIndex].conditionKey;
+        Debug.Log("CheckLineCondition key:" + key);
+        if (key == null || key.Trim() == "")
+            return true;
+        Debug.Log("CheckLineCondition ContainsKey:" + JournalManager.instance.journalFlags.ContainsKey(key));
+        return JournalManager.instance.journalFlags.ContainsKey(key) && JournalManager.instance.journalFlags[key];
+        //DialogueConditions dialogueConditions = currentDialogue.gameObject.GetComponent<DialogueConditions>();
+        //if (dialogueConditions == null)
+        //    return true;
+        //if (currentDialogue.lines2[lineIndex+1] == null || currentDialogue.lines2[lineIndex+1].condition == null)
+        //    return true;
+        //if (!currentDialogue.lines2[lineIndex + 1].condition.Yield().GetEnumerator().MoveNext())
+        //    return true;
+        //currentDialogue.lines2[lineIndex + 1].condition.Invoke();
+        //return dialogueConditions.canSeeDialogue;
     }
 }

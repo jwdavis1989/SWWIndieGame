@@ -9,19 +9,27 @@ using UnityEngine.UI;
 public class InventionUIManager : MonoBehaviour
 {
     public static InventionUIManager instance;
-    [Header("UI")]
-    [Header("Ideas used for current invention")]
+    [Header("--------------------------------------------------------------------------------\n" +
+        "   UI Elements  " +
+        "\n--------------------------------------------------------------------------------")]
+    [Header("Selected ideas displayed for current invention")]
     public GridElementController firstIdea;
     public GridElementController secondIdea;
     public GridElementController thirdIdea;
     private IdeaType[] usedIdeaTypes = new IdeaType[3];
-    public GameObject inventButton;
-    public GameObject outputText;
+    [Header("Displayed Ideas")]
     public GameObject ownedIdeasGrid;
-    public GameObject gridElementPrefab;
-    public Texture questionMark;
+    [Header("(TODO) Displayed Inventions")]
+    public GameObject allInventionsGrid;
+    [Header("Input")]
     public GameObject returnButton;
+    public GameObject inventButton;
     public EventSystem eventSystem;
+    [Header("Output")]
+    public GameObject outputText;
+    [Header("Other assets")]
+    public Texture questionMarkTexture;
+    public GameObject gridElementPrefab;
     //helpful references
     private PlayerManager player;
 
@@ -56,13 +64,18 @@ public class InventionUIManager : MonoBehaviour
     }
     public void OpenInventionMenu()
     {
+        JournalManager.instance.journalFlags[JournalManager.hasNotOpenedInventMenuKey] = false;
         outputText.GetComponent<TextMeshProUGUI>().text = "???";
         LoadIdeasToScreen();
+        LoadInventionsToScreen();
         firstIdea.gameObject.SetActive(false);
         secondIdea.gameObject.SetActive(false);
         thirdIdea.gameObject.SetActive(false);
     }
-    [Header("Total ideas able to display per row when selecting an idea")]
+    [Header("--------------------------------------------------------------------------------\n" +
+    "   Settings  " +
+    "\n--------------------------------------------------------------------------------")]
+    [Header("Total ideas able to display per row i.e. Number of columns")]
     public int ideasPerRow = 6;
     private int currentIdeasPage = 0;
     /**
@@ -169,6 +182,70 @@ public class InventionUIManager : MonoBehaviour
             UsedIdeaClick(activeIdea, usedIdeaPanel, gridScript);
         });
     }
+    [Header("Total ideas able to display per row i.e. Number of columns")]
+    public int inventionsPerRow = 6;
+    private int currentInventionPage = 0;
+    /**
+     * Clear Invention list and reload it with current values
+     */
+    void LoadInventionsToScreen()
+    {
+        foreach (Transform child in allInventionsGrid.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        int displayedCount = 0;
+        int maxDisplayed = 12;
+        int inventionsToSkip = currentInventionPage * inventionsPerRow;
+        //basic components
+        int totalInventionCount = 0;
+        //loop through all possible ideas
+        int ideaIndex = -1;
+        foreach (InventionScript inventionScript in InventionManager.instance.allInventions)
+        {
+            ideaIndex++;
+
+            //used for scrolling
+            totalInventionCount++;
+            if (inventionsToSkip > 0)
+            {
+                inventionsToSkip--;
+                continue;
+            }
+            if (++displayedCount > maxDisplayed) break;
+
+            //display an invention
+            Object gridElement = Instantiate(gridElementPrefab, allInventionsGrid.transform);
+            GridElementController gridScript = gridElement.GetComponent<GridElementController>();
+            if (inventionScript.hasObtained) {
+                gridScript.topText.text = inventionScript.ToString();
+                gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
+            }
+            else
+            {
+                gridScript.topText.text = inventionScript.GetMysteryString();
+                gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
+            }
+            gridScript.bottomText.text = "";
+            gridScript.cornerButton.gameObject.SetActive(false);
+            //add button event
+            //gridScript.mainButton.onClick.AddListener(() => OwnedIdeaOnclick(ideaType, gridScript));
+        }
+        int numOfPage = totalInventionCount / ideasPerRow;
+
+        //TODO scrolling
+        //if (numOfPage < 2)
+        //{
+        //    cmpntScroll.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    cmpntScroll.gameObject.SetActive(true);
+        //    cmpntScroll.numberOfSteps = numOfPage;
+        //    cmpntScroll.size = 1.0f / numOfPage;
+        //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
+        //}
+    }
     bool proccessingUsedIdeaClick = false;
     void UsedIdeaClick(int firstSecondOrThird, GridElementController usedIdeaBtn, GridElementController ownedIdeaBtn)
     {
@@ -244,16 +321,15 @@ public class InventionUIManager : MonoBehaviour
             }
             if (ideaMatches == 3)
             {
+                JournalManager.instance.journalFlags[JournalManager.hasHalfInventionIdea] = false;//set to false so that dialogue doesn't play
+                JournalManager.instance.journalFlags[JournalManager.hasInventedSomethingKey] = true;
                 //something is invented
+                InventionManager.instance.HandleNewInvention(possibleInvention);
                 outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.type + "!";
-                possibleInvention.hasObtained = true;
-                if(possibleInvention.type == InventionType.GolemEndoplating)
-                {
-                    player.characterStatsManager.maxHealth += 10;
-                }
             }
             else if (ideaMatches == 2)
             {
+                JournalManager.instance.journalFlags[JournalManager.hasHalfInventionIdea] = true;
                 outputText.GetComponent<TextMeshProUGUI>().text = "Hmmm... There's something here";
                 //half idea
                 int usedIdeaUnmatched = 0;
@@ -289,9 +365,11 @@ public class InventionUIManager : MonoBehaviour
                 //Show the partial name for the half invented idea
                 string needIdeaName = GetIdeaString(possibleInvention.neededIdeas[neededIdeaUnmatched]);
                 string displayName = "";
-                for (int i = 0; i < needIdeaName.Length-1; i++)
+                int displayedLetters = InventionManager.instance.CheckHasUpgrade(InventionType.PredictiveNeuralLink)
+                    ? needIdeaName.Length/4 : 1;
+                for (int i = 0; i < needIdeaName.Length; i++)
                 {
-                    if(i <= 0 || needIdeaName[i] == ' ')
+                    if(i < displayedLetters || needIdeaName[i] == ' ')
                         displayName += needIdeaName[i];
                     else
                         displayName += '_';
@@ -299,16 +377,16 @@ public class InventionUIManager : MonoBehaviour
 
                 if (usedIdeaUnmatched == 0)
                 {
-                    firstIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
+                    firstIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
                     firstIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }else if(usedIdeaUnmatched == 1)
                 {
-                    secondIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
+                    secondIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
                     secondIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }
                 else
                 {
-                    thirdIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMark;
+                    thirdIdea.GetComponent<GridElementController>().mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
                     thirdIdea.GetComponent<GridElementController>().topText.text = displayName;
                 }
             }

@@ -16,6 +16,7 @@ public class InventionManager : MonoBehaviour
     [Header("All possible inventions")]
     public InventionScript[] allInventions;
     [Header("All current idea info")]
+    //MAJOR TODO Make IdeaStats object with image, flag & name...
     public bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
     public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
 
@@ -119,6 +120,10 @@ public class InventionManager : MonoBehaviour
         InventionScript halfAnswer = null;
         foreach (InventionScript inventionScript in allInventions)
         {
+            if (CheckHasUpgrade(inventionScript.type))
+            {
+                continue; // skip already invented
+            }
             int ideaMatches = 0;
             foreach (IdeaType neededIdea in inventionScript.neededIdeas)
             {
@@ -134,12 +139,62 @@ public class InventionManager : MonoBehaviour
             }
             else if (ideaMatches == 3)
             {
-                //invention found
+                //new invention found
                 return inventionScript;
             }
         }
         if(halfFound) 
             return halfAnswer;
         return null;
+    }
+
+    public void HandleNewInvention(InventionScript newInvention)
+    {
+        foreach (InventionScript invention in allInventions)
+        {
+            if (invention.type == newInvention.type)
+            {
+                Debug.Log("Invented "+ invention.type);//astest
+                invention.hasObtained = true;
+                HandleNewInventionType(newInvention.type);
+                return;
+            }
+        }
+        Debug.Log("Unhandled Invention");
+    }
+    /** Handles immediate effects of new invention types */
+    public void HandleNewInventionType(InventionType newInventionType)
+    {
+        switch (newInventionType)
+        {
+             case InventionType.QuickChargeCapacitory :
+                 break;
+             case InventionType.PredictiveNeuralLink :
+                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.PredictiveNeuralLink);
+                break;
+             case InventionType.IcarausBoosters :
+                 break;
+             case InventionType.TreasureScanner :
+                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.TreasureScanner);
+                break;
+             case InventionType.GolemEndoplating :
+                player.characterStatsManager.fortitude += 1;
+                player.characterStatsManager.SetNewMaxHealthValue();
+                break;
+             case InventionType.Alternator :
+                player.characterStatsManager.endurance += 1;
+                player.characterStatsManager.SetNewMaxStaminaValue();
+                break;
+             case InventionType.RollerJoints :
+                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints);
+                break;
+             case InventionType.EnemyRadar :
+                 break;
+            case InventionType.DaedalusNanoMaterials :
+                break;
+            default:
+                Debug.Log("Unhandled Invent Type");
+                break;
+        }
     }
 }
