@@ -530,11 +530,11 @@ public class PlayerCamera : MonoBehaviour
 
     public void HandlePlaySprintLineVFX()
     {
-        if ((player.isSprinting || player.isBoosting) && !sprintingSpeedLinesVFX.activeSelf)
+        if (!player.isLockedOn && (player.isSprinting || player.isBoosting) && !sprintingSpeedLinesVFX.activeSelf)
         {
             sprintingSpeedLinesVFX.SetActive(true);
         }
-        else if (!player.isSprinting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf)
+        else if (player.isLockedOn || (!player.isSprinting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf))
         {
             sprintingSpeedLinesVFX.SetActive(false);
         }
