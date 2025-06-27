@@ -56,6 +56,10 @@ MonoBehaviour:
   mouseWheelInput: {x: 0, y: 0}
   heavyAttackInput: 0
   holdHeavyAttackInput: 0
+  blockInput: 0
+  interactInput: 0
+  useItemQuickslotInput: 0
+  miniMapZoomToggleInput: 0
   InputQueueIsActive: 0
   defaultQueueInputTimer: 0.5
   queueInputTimer: 0
@@ -64,6 +68,10 @@ MonoBehaviour:
   cameraInput: {x: 0, y: 0}
   cameraHorizontalInput: 0
   cameraVerticalInput: 0
+  defaultCameraFieldOfView: 60
+  sprintCameraFieldOfViewMaximum: 110
+  sprintCameraFieldOfViewDecreaseSpeed: 90
+  sprintCameraFieldOfViewIncreaseSpeed: 90
   lockOnInput: 0
   lockOnSelectLeftInput: 0
   lockOnSelectRightInput: 0
