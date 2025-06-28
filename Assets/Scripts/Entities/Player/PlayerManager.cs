@@ -198,13 +198,15 @@ public class PlayerManager : CharacterManager
             Debug.Log("ERROR: Camera Flashlight Instance Not Set in Editor.");
         }
     }
-    
-    public void DebugAddWeapon() {
+
+    public void DebugAddWeapon()
+    {
         WeaponScript weaponScript;
         WeaponType weaponType;
         bool isSpecial;
-        
-        for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++) {
+
+        for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++)
+        {
             weaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
             weaponType = weaponScript.stats.weaponType;
             isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;

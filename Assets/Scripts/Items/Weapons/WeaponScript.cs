@@ -239,16 +239,6 @@ public class WeaponScript : MonoBehaviour
 
         weaponDamageCollider.weaponFamily = weaponFamily;
         
-        //weaponDamageCollider.physicalDamage = stats.attack;
-        //weaponDamageCollider.fireDamage = stats.elemental.firePower;
-        //weaponDamageCollider.iceDamage = stats.elemental.icePower;
-        //weaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
-        //weaponDamageCollider.windDamage = stats.elemental.windPower;
-        //weaponDamageCollider.earthDamage = stats.elemental.earthPower;
-        //weaponDamageCollider.lightDamage = stats.elemental.lightPower;
-        //weaponDamageCollider.beastDamage = stats.elemental.beastPower;
-        //weaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
-        //weaponDamageCollider.techDamage = stats.elemental.techPower;
         weaponDamageCollider.elementalStats = stats.elemental;
 
         //Turn the collider back off so it doesn't hurt anyone, ow
@@ -320,9 +310,28 @@ public class WeaponScript : MonoBehaviour
         result += stats.attack * (stats.elemental.beastPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower);
         result += stats.attack * (stats.elemental.scalesPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower);
         result += stats.attack * (stats.elemental.techPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.techPower);
+        
+        //Calculate block modifier
+        float blockingState = targetCharacter.isPerfectBlocking ? targetCharacter.perfectBlockModifier : 1f;
 
-        if(result > 0) {
-            return result * attackMotionValue * fullChargeModifier;
+        if (result > 0)
+        {
+            if (targetCharacter.isBlocking)
+            {
+                if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
+                {
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f);
+                }
+                else
+                {
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.nonWeaponBlockingStrength) / 100f);
+                }
+            }
+            else
+            {
+                return result * attackMotionValue * fullChargeModifier;
+            }
+        
         }
         else return 0;
     }
@@ -332,5 +341,6 @@ public class WeaponScript : MonoBehaviour
 /** Change Log  
  *  Date         Developer  Description
  *  09/16/2024   Alec       New.
+ *  06/23/2025   Jerry      Added Block/Perfect Block Mechanics.
  *  
  * */

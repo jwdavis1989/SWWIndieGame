@@ -32,6 +32,7 @@ public class CharacterManager : MonoBehaviour
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
+    public bool isFalling = false;
     public bool isBoosting = false;
     public bool isRolling = false;
     public bool applyRootMotion = false;
@@ -40,6 +41,12 @@ public class CharacterManager : MonoBehaviour
     public bool isMoving = false;
     public bool isSprinting = false;
     public bool isLockedOn = false;
+    public bool isBlocking = false;
+    public bool isPerfectBlocking = false;
+    public float perfectBlockModifier = 2f;
+    public float perfectBlockWindowDuration = 0.5f;
+    private float currentPerfectBlockWindowDuration = 0f;
+    public float nonWeaponBlockingStrength = 30f;
     public bool canBleed = true;
     public bool isChargingAttack = false;
     public bool isInvulnerable = false;
@@ -76,6 +83,7 @@ public class CharacterManager : MonoBehaviour
         animator?.SetBool("isGrounded", isGrounded);
         animator?.SetBool("isChargingAttack", isChargingAttack);
         animator?.SetBool("isMoving", isMoving);
+        animator?.SetBool("isBlocking", isBlocking);
     }
 
     protected virtual void FixedUpdate()
@@ -97,7 +105,6 @@ public class CharacterManager : MonoBehaviour
     {
         
     }
-
 
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
@@ -129,6 +136,23 @@ public class CharacterManager : MonoBehaviour
 
         //Disable Character
 
+    }
+
+    public IEnumerator ProcessPerfectBlockTimer()
+    {
+        yield return new WaitForSeconds(perfectBlockWindowDuration);
+
+        isPerfectBlocking = false;
+    }
+
+    public void EnableIsFalling()
+    {
+        isFalling = true;
+    }
+
+    public void DisableIsFalling()
+    {
+        isFalling = false;
     }
 
     public virtual void ReviveCharacter()
