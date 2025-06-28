@@ -32,6 +32,7 @@ public class CharacterManager : MonoBehaviour
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
+    public bool isFalling = false;
     public bool isBoosting = false;
     public bool isRolling = false;
     public bool applyRootMotion = false;
@@ -105,7 +106,6 @@ public class CharacterManager : MonoBehaviour
         
     }
 
-
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
         characterStatsManager.currentHealth = 0;
@@ -143,6 +143,16 @@ public class CharacterManager : MonoBehaviour
         yield return new WaitForSeconds(perfectBlockWindowDuration);
 
         isPerfectBlocking = false;
+    }
+
+    public void EnableIsFalling()
+    {
+        isFalling = true;
+    }
+
+    public void DisableIsFalling()
+    {
+        isFalling = false;
     }
 
     public virtual void ReviveCharacter()

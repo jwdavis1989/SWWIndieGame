@@ -534,10 +534,21 @@ public class PlayerCamera : MonoBehaviour
         {
             sprintingSpeedLinesVFX.SetActive(true);
         }
-        else if (player.isLockedOn || (!player.isSprinting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf))
+        else if (
+            (!player.playerLocomotionManager.airDashBoosters.activeSelf && !player.isGrounded)
+            // player.isFalling
+             || player.isLockedOn
+             || (!player.isSprinting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf)
+            )
         {
             sprintingSpeedLinesVFX.SetActive(false);
         }
+
+    }
+
+    public void DisableSprintingSpeedLinesVFX()
+    {
+        sprintingSpeedLinesVFX.SetActive(false);
     }
 
     public Transform GetPivotTransform() { return cameraPivotTransform; }
