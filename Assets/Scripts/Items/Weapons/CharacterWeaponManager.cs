@@ -101,8 +101,12 @@ public class CharacterWeaponManager : MonoBehaviour
             //Play the weapon swap animation
             characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, false, true, true);
 
+            //Update Weapon Animator Controller to fit new Weapon
+            characterThatOwnsThisArsenal.characterAnimatorManager.UpdateAnimatorControllerByWeapon(ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>());
+
             //Update Weapon Slot UI for the player only
-            if (characterThatOwnsThisArsenal.isPlayer) {
+            if (characterThatOwnsThisArsenal.isPlayer)
+            {
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }

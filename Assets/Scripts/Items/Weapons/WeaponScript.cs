@@ -204,14 +204,19 @@ public class WeaponScript : MonoBehaviour
     [Header("Projectile")]
     public GameObject projectile = null;
 
-    public void Awake() {
+    [Header("Animations")]
+    public AnimatorOverrideController weaponAnimatorOverride;
+
+    public void Awake()
+    {
         if (isSpecialWeapon)
         {
-            if(projectile != null)
+            if (projectile != null)
             {
                 weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
             }
-            else { 
+            else
+            {
                 weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
             }
         }
@@ -219,7 +224,8 @@ public class WeaponScript : MonoBehaviour
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
         }
-        if (weaponDamageCollider) {
+        if (weaponDamageCollider)
+        {
             SetWeaponDamage();
         }
     }

@@ -21,8 +21,10 @@ public class CharacterCombatManager : MonoBehaviour
     public bool canComboWithMainHandWeapon = false;
     public bool canPerformRollingAttack = false;
     public bool canPerformBackStepAttack = false;
+    public bool canBlock = true;
 
-    public virtual void Awake() {
+    public virtual void Awake()
+    {
         character = GetComponent<CharacterManager>();
     }
 

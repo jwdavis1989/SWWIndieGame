@@ -239,6 +239,9 @@ public class PlayerInputManager : MonoBehaviour
         {
             interactInput = false;
 
+            //Stop Blocking
+            player.isBlocking = false;
+
             //Redundant technically, but insures both systems cooperate
             PlayerUIManager.instance.playerUIPopUpManager.CloseAllPopUpWindows();
 
@@ -285,6 +288,9 @@ public class PlayerInputManager : MonoBehaviour
             useItemQuickslotInput = false;
             if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0) 
                 return; //dont use on title screen
+
+            //Stop Blocking
+            player.isBlocking = false;
 
             //currently have camera here. Not sure if it gets it's own button or is an item
             IdeaCameraController.instance.ActivateDeactiveCameraView();
@@ -363,10 +369,14 @@ public class PlayerInputManager : MonoBehaviour
         if (mouseWheelVerticalInput == 1)
         {
             PlayerWeaponManager.instance.nextWeapon();
+            //Stop Blocking
+            player.isBlocking = false;
         }
-        else if (mouseWheelVerticalInput == -1 )
+        else if (mouseWheelVerticalInput == -1)
         {
             PlayerWeaponManager.instance.nextSpecialWeapon();
+            //Stop Blocking
+            player.isBlocking = false;
         }
         prevMouseWheelVerticalInput = mouseWheelVerticalInput;
     }
@@ -374,6 +384,10 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleGamePadRightWeaponSwapInput() {
         if (ChangeRightWeaponDPad) {
             ChangeRightWeaponDPad = false;
+
+            //Stop Blocking
+            player.isBlocking = false;
+            
             PlayerWeaponManager.instance.nextWeapon();
         }
     }
@@ -381,6 +395,10 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleGamePadLeftWeaponSwapInput() {
         if (ChangeLeftWeaponDPad) {
             ChangeLeftWeaponDPad = false;
+
+            //Stop Blocking
+            player.isBlocking = false;
+
             PlayerWeaponManager.instance.nextSpecialWeapon();
         }
     }
@@ -420,6 +438,10 @@ public class PlayerInputManager : MonoBehaviour
             //If Menu or UI window is open, do nothing.
             if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
                 return;
+            
+            //Stop Blocking
+            player.isBlocking = false;
+
             //Perform the dodge
             player.playerLocomotionManager.AttemptToPerformDodge();
         }
@@ -501,7 +523,10 @@ public class PlayerInputManager : MonoBehaviour
             //If we have a UI window open, simply return without doing anything
             if (PauseScript.instance.gamePaused || DialogueManager.IsInDialogue() || IdeaCameraController.isBusy())
                 return;
-                
+
+            //Disable Blocking
+            player.isBlocking = false;
+
             //Attempt to perform a jump
             player.playerLocomotionManager.AttemptToPerformJump();
         }
@@ -519,6 +544,9 @@ public class PlayerInputManager : MonoBehaviour
 
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
             {
+                //Stop Blocking
+                player.isBlocking = false;
+
                 PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction,
                                                 PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
             }
@@ -532,6 +560,8 @@ public class PlayerInputManager : MonoBehaviour
             //TODO: Return if we have a UI Window Open
 
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
+                //Stop Blocking
+                player.isBlocking = false;
 
                 PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction, 
                                                 PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
@@ -542,6 +572,10 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleChargeMainHandHeavyAttackInput() {
         //We only want to check for a charge if we are in an action that requires it (e.g. Attacking)
         if (player.isPerformingAction) {
+
+            //Stop Blocking
+            player.isBlocking = false;
+
             player.isChargingAttack = holdHeavyAttackInput;
         }
     }
@@ -553,9 +587,12 @@ public class PlayerInputManager : MonoBehaviour
             Debug.Log("Attempting to Block");
             blockInput = false;
 
-            player.isBlocking = true;
-            player.isPerfectBlocking = true;
-            StartCoroutine(player.ProcessPerfectBlockTimer());
+            if (player.playerCombatManager.canBlock)
+            {
+                player.isBlocking = true;
+                player.isPerfectBlocking = true;
+                StartCoroutine(player.ProcessPerfectBlockTimer());
+            }
 
         }
     }
