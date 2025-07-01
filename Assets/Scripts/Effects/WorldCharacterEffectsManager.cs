@@ -11,6 +11,7 @@ public class WorldCharacterEffectsManager : MonoBehaviour
 
     [Header("Damage")]
     public TakeHealthDamageCharacterEffect takeHealthDamageEffect;
+    public TakeBlockedHealthDamageCharacterEffect takeBlockedHealthDamageCharacterEffect;
     [SerializeField] List<InstantCharacterEffect> instantEffects;
 
     private void Awake() {

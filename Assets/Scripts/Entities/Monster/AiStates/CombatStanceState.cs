@@ -109,7 +109,7 @@ public class CombatStanceState : AIState
         }
 
         if (potentialAttacks.Count <= 0) {
-            Debug.Log("ERROR: No Potential Attacks.");
+            //Debug.Log("ERROR: No Potential Attacks.");
             return;
         }
 

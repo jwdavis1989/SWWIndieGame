@@ -12,19 +12,8 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     [HideInInspector] public WeaponFamily weaponFamily;
 
     [Header("Damage")]
-    //Elemental Damage will probably change to an ElementalStats object later.
     public ElementalStats elementalDamage = new ElementalStats();
-    // public WeaponScript weaponScript;
     public float physicalDamage = 0f;   
-    //public float fireDamage = 0f;
-    //public float iceDamage = 0f;
-    //public float lightningDamage = 0f;
-    //public float windDamage = 0f;
-    //public float earthDamage = 0f;
-    //public float lightDamage = 0f;
-    //public float beastDamage = 0f;
-    //public float scalesDamage = 0f;
-    //public float techDamage = 0f;
 
     //Damage modifier for specific attack, which differs between attacks in a combo
     public float attackMotionValue = 1f;
@@ -135,7 +124,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
 
         //Apply final damage to character's health
-        Debug.Log("Damage Taken: " + finalDamageDealt);
+        Debug.Log("HPDmg: " + finalDamageDealt);
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
         
         //Calculate Poise Damage to determine if the character will be stunned

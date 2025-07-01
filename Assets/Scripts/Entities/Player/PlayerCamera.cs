@@ -61,6 +61,9 @@ public class PlayerCamera : MonoBehaviour
     private bool isCameraLockOnHeightCoroutineActive = false;
     private bool cameraLoweringOutsideCoroutine = false;
 
+    [Header("Camera VFX")]
+    [SerializeField] GameObject sprintingSpeedLinesVFX;
+
 
     // Start is called before the first frame update
     void Start()
@@ -93,6 +96,9 @@ public class PlayerCamera : MonoBehaviour
             HandleRotations();
             HandleCollisions();
             IdeaCameraController.instance.HandleRotations();
+
+            //VFX
+            HandlePlaySprintLineVFX();
         }
     }
 
@@ -520,6 +526,29 @@ public class PlayerCamera : MonoBehaviour
         }
 
         yield return null;
+    }
+
+    public void HandlePlaySprintLineVFX()
+    {
+        if (!player.isLockedOn && (player.isSprinting || player.isBoosting) && !sprintingSpeedLinesVFX.activeSelf)
+        {
+            sprintingSpeedLinesVFX.SetActive(true);
+        }
+        else if (
+            (!player.playerLocomotionManager.airDashBoosters.activeSelf && !player.isGrounded)
+            // player.isFalling
+             || player.isLockedOn
+             || (!player.isSprinting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf)
+            )
+        {
+            sprintingSpeedLinesVFX.SetActive(false);
+        }
+
+    }
+
+    public void DisableSprintingSpeedLinesVFX()
+    {
+        sprintingSpeedLinesVFX.SetActive(false);
     }
 
     public Transform GetPivotTransform() { return cameraPivotTransform; }
