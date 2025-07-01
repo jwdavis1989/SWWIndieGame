@@ -11,6 +11,7 @@ public class NPCDialogue : MonoBehaviour
     [Header("Speaker's lines")]
     public string[] lines;
     public Line[] lines2;
+    public int timesSpokenToMe = 0;
     //public bool firstTime = true;
 }
 [Serializable]
