@@ -1,4 +1,5 @@
 using Palmmedia.ReportGenerator.Core.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -16,14 +17,12 @@ public class InventionManager : MonoBehaviour
     [Header("All possible inventions")]
     public InventionScript[] allInventions;
     [Header("All current idea info")]
-    //MAJOR TODO Make IdeaStats object with image, flag & name...
-    public bool [] ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
-    public byte[][] ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
+    public IdeaStats[] ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
 
     //helpful references
     private PlayerManager player;
 
-    
+
     //TODO - Handle saving and loading of inventions
     public void Awake()
     {
@@ -39,10 +38,11 @@ public class InventionManager : MonoBehaviour
     }
     private void Start()
     {
-        ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
-        ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
+        //ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
+        //ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
+        ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
-        StartCoroutine(CheckForSavedIdeas());
+        //StartCoroutine(CheckForSavedIdeas());
         DontDestroyOnLoad(gameObject);
     }
 
@@ -61,54 +61,21 @@ public class InventionManager : MonoBehaviour
     /** returns image for idea type */
     public byte[] GetIdeaPicture(IdeaType ideaType)
     {
-        return ideaImages[(int)ideaType];
+        return ideas[(int)ideaType].image;
     }
     public void SetIdeaPicture(byte[] ideaPicture, IdeaType idea)
     {
-        ideaImages[(int)idea]= ideaPicture;
+        ideas[(int)idea].image = ideaPicture;
     }
     /** returns true if the player has photograped the idea */
     public bool CheckHasIdea(IdeaType ideaType)
     {
-        return ideaObtainedFlags.Length > (int)ideaType && ideaObtainedFlags[(int)ideaType];
+        return ideas.Length > (int)ideaType && ideas[(int)ideaType] != null && ideas[(int)ideaType].obtained;
     }
     public void SetHasIdea(IdeaType type)
     {
-        ideaObtainedFlags[(int)type] = true;
-    }
-    /** loads idea images from current save slot */
-    public IEnumerator CheckForSavedIdeas()
-    {
-        for (int i = 0; i < ideaObtainedFlags.Length; i++)
-        {
-            ideaObtainedFlags[i] = false;
-            //Load from save data
-            string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + (IdeaType)i + ".png";
-            if (File.Exists(saveFileName))
-            {
-                ideaObtainedFlags[i] = true;
-                byte[] bytes = System.IO.File.ReadAllBytes(saveFileName);
-                ideaImages[i] = bytes;
-            }
-            //else Debug.Log("File dont exist " + saveFileName);
-        }
-        yield return null;
-
-    }
-    /** saves idea images to current save slot */
-    public void SaveIdeas()
-    {
-        //save
-        for (int i = 0; i < ideaImages.Length; i++)
-        {
-            if(ideaImages[i] != null)
-            {
-                string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + (IdeaType)i + ".png";
-                //save file for idea
-                System.IO.File.WriteAllBytes(saveFileName, ideaImages[i]);
-            }
-            
-        }
+        ideas[(int)type] = new IdeaStats();
+        ideas[(int)type].obtained = true;
     }
     /**
      * Clear component list and reload it with current values
@@ -143,7 +110,7 @@ public class InventionManager : MonoBehaviour
                 return inventionScript;
             }
         }
-        if(halfFound) 
+        if (halfFound)
             return halfAnswer;
         return null;
     }
@@ -154,7 +121,7 @@ public class InventionManager : MonoBehaviour
         {
             if (invention.type == newInvention.type)
             {
-                Debug.Log("Invented "+ invention.type);//astest
+                Debug.Log("Invented " + invention.type);//astest
                 invention.hasObtained = true;
                 HandleNewInventionType(newInvention.type);
                 return;
@@ -167,34 +134,41 @@ public class InventionManager : MonoBehaviour
     {
         switch (newInventionType)
         {
-             case InventionType.QuickChargeCapacitory :
-                 break;
-             case InventionType.PredictiveNeuralLink :
+            case InventionType.QuickChargeCapacitory:
+                break;
+            case InventionType.PredictiveNeuralLink:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.PredictiveNeuralLink);
                 break;
-             case InventionType.IcarausBoosters :
-                 break;
-             case InventionType.TreasureScanner :
+            case InventionType.IcarausBoosters:
+                break;
+            case InventionType.TreasureScanner:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.TreasureScanner);
                 break;
-             case InventionType.GolemEndoplating :
+            case InventionType.GolemEndoplating:
                 player.characterStatsManager.fortitude += 1;
                 player.characterStatsManager.SetNewMaxHealthValue();
                 break;
-             case InventionType.Alternator :
+            case InventionType.Alternator:
                 player.characterStatsManager.endurance += 1;
                 player.characterStatsManager.SetNewMaxStaminaValue();
                 break;
-             case InventionType.RollerJoints :
+            case InventionType.RollerJoints:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints);
                 break;
-             case InventionType.EnemyRadar :
-                 break;
-            case InventionType.DaedalusNanoMaterials :
+            case InventionType.EnemyRadar:
+                break;
+            case InventionType.DaedalusNanoMaterials:
                 break;
             default:
                 Debug.Log("Unhandled Invent Type");
                 break;
         }
     }
+}
+[Serializable]
+public class IdeaStats
+{
+    public bool obtained = false;
+    public byte[] image = null;
+    public string name = "DefaultName";
 }

@@ -130,8 +130,8 @@ public class PlayerManager : CharacterManager
         currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
         //Journal flags
         currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
-        //Idea Images
-        InventionManager.instance.SaveIdeas();
+        //Ideas
+        currentCharacterData.ideas = InventionManager.instance.ideas;
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -171,6 +171,8 @@ public class PlayerManager : CharacterManager
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
+        //Ideas
+        InventionManager.instance.ideas = currentCharacterData.ideas;
     }
 
     public void ToggleFlashlight() {

@@ -88,11 +88,11 @@ public class InventionUIManager : MonoBehaviour
         int totalIdeaCount = 0;
         //loop through all possible ideas
         int ideaIndex = -1;
-        foreach (bool ideaFlag in InventionManager.instance.ideaObtainedFlags)
+        foreach (IdeaStats idea in InventionManager.instance.ideas)
         {
             ideaIndex++;
 
-            if (!ideaFlag) 
+            if (idea == null || !idea.obtained) 
                 continue;//Skip ideas not obtained for now - could show Question Mark or hint
 
             //used for scrolling
@@ -114,7 +114,7 @@ public class InventionUIManager : MonoBehaviour
             gridScript.cornerButton.gameObject.SetActive(false);
 
             //load image
-            byte[] bytes = InventionManager.instance.ideaImages[ideaIndex];
+            byte[] bytes = InventionManager.instance.ideas[ideaIndex].image;
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
@@ -155,9 +155,9 @@ public class InventionUIManager : MonoBehaviour
     public void IdeaScroll(float value)
     {
         int count = 0;//count total unique ideas owned
-        foreach (bool ideaFlag in InventionManager.instance.ideaObtainedFlags)
+        foreach (IdeaStats idea in InventionManager.instance.ideas)
         {
-            if (ideaFlag) count++;
+            if (idea != null && idea.obtained) count++;
         }
         int numOfPage = count / ideasPerRow;
         if (numOfPage < 2)
