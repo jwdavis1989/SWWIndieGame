@@ -243,21 +243,21 @@ public class PlayerInputManager : MonoBehaviour
             PlayerUIManager.instance.playerUIPopUpManager.CloseAllPopUpWindows();
 
             //Note: Disable this if in combat for efficency?
-            // If not busy doing something else
-            if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())
-            {
-                //Find NPC dialogue.
-                NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
-                //NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
-                if (dialogue != null)
-                { //lock player and play the dialogue if found
-                    DialogueManager.instance.PlayDialogue(dialogue);
+            //// If not busy doing something else
+            //if (!DialogueManager.IsInDialogue() && !IdeaCameraController.isBusy())
+            //{
+            //    //Find NPC dialogue.
+            //    NPCDialogue dialogue = DialogueManager.instance.HandleLocatingDialogueTargets();
+            //    //NPCDialogue dialogue = player.playerCombatManager.currentTarget.GetComponent<NPCDialogue>();
+            //    if (dialogue != null)
+            //    { //lock player and play the dialogue if found
+            //        DialogueManager.instance.PlayDialogue(dialogue);
 
-                    //Set bool so the Interactable system understands a Pop-Up window has opened
-                    PlayerUIManager.instance.popUpWindowIsOpen = true;
-                }
+            //        //Set bool so the Interactable system understands a Pop-Up window has opened
+            //        PlayerUIManager.instance.popUpWindowIsOpen = true;
+            //    }
 
-            }
+            //}
 
             //Interactable System Interact() call
             player.playerInteractionManager.Interact();

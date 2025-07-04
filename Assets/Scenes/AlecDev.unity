@@ -43774,6 +43774,10 @@ PrefabInstance:
       value: Dum-Dum the TargetDummy
       objectReference: {fileID: 0}
     - target: {fileID: 6324382522530830606, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
+      propertyPath: interactableText
+      value: Dum-Dum the Dummy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6324382522530830606, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
       propertyPath: lines.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -43811,6 +43815,10 @@ PrefabInstance:
       propertyPath: lines.Array.data[5]
       value: <size=15>Golly gee willickers batman</size><br>How do I do it?
       objectReference: {fileID: 0}
+    - target: {fileID: 6324382522530830606, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
+      propertyPath: interactableCollider
+      value: 
+      objectReference: {fileID: 4376220762927401980}
     - target: {fileID: 6324382522530830606, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
       propertyPath: lines2.Array.data[0].line
       value: Hello! My name is <color=green>Dum-Dum</color>. <br>I am <b>very</b>
@@ -43972,6 +43980,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5091856974026511370, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4376220762927401979}
+    - targetCorrespondingSourceObject: {fileID: 5091856974026511370, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4376220762927401981}
   m_SourcePrefab: {fileID: 100100000, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
 --- !u!1 &4376220762927401978 stripped
 GameObject:
@@ -43991,6 +44002,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canSeeDialogue: 0
+--- !u!143 &4376220762927401980 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 7851895840052584483, guid: 811529da64c29b349bde91e40e11a5e1, type: 3}
+  m_PrefabInstance: {fileID: 4376220762927401977}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &4376220762927401981
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376220762927401978}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
