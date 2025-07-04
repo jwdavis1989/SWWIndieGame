@@ -78,6 +78,7 @@ public class DialogueManager : MonoBehaviour
     {
         //Debug.Log("Handling Interact");
         if (dialogue != null){
+            dialogue.timesSpokenToMe++;
             //Debug.Log("Handling Interact Got Dialogue");
             player.isPerformingAction = true;
             player.canMove = false;

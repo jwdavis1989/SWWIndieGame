@@ -72,12 +72,6 @@ public class InventionUIManager : MonoBehaviour
         secondIdea.gameObject.SetActive(false);
         thirdIdea.gameObject.SetActive(false);
     }
-    [Header("--------------------------------------------------------------------------------\n" +
-    "   Settings  " +
-    "\n--------------------------------------------------------------------------------")]
-    [Header("Total ideas able to display per row i.e. Number of columns")]
-    public int ideasPerRow = 6;
-    private int currentIdeasPage = 0;
     /**
      * Clear idea list and reload it with current values
      */
@@ -94,11 +88,11 @@ public class InventionUIManager : MonoBehaviour
         int totalIdeaCount = 0;
         //loop through all possible ideas
         int ideaIndex = -1;
-        foreach (bool ideaFlag in InventionManager.instance.ideaObtainedFlags)
+        foreach (IdeaStats idea in InventionManager.instance.ideas)
         {
             ideaIndex++;
 
-            if (!ideaFlag) 
+            if (idea == null || !idea.obtained) 
                 continue;//Skip ideas not obtained for now - could show Question Mark or hint
 
             //used for scrolling
@@ -120,7 +114,7 @@ public class InventionUIManager : MonoBehaviour
             gridScript.cornerButton.gameObject.SetActive(false);
 
             //load image
-            byte[] bytes = InventionManager.instance.ideaImages[ideaIndex];
+            byte[] bytes = InventionManager.instance.ideas[ideaIndex].image;
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
@@ -142,6 +136,61 @@ public class InventionUIManager : MonoBehaviour
         //    cmpntScroll.size = 1.0f / numOfPage;
         //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
         //}
+    }
+    //************************** I D E A   S C R O L L **************************
+    /**
+     * This section controls the Owned Ideas scroll bar
+     */
+
+    [Header("--------------------------------------------------------------------------------\n" +
+    "   Settings  " +
+    "\n--------------------------------------------------------------------------------")]
+    [Header("Idea Box Scrollbar")]
+    public Scrollbar ideaScroll; //Unity scrollbar object
+    [Header("Total ideas able to display per row i.e. Number of columns")]
+    public int ideasPerRow = 6;
+    public float ideaCurrentStep = 0; //current scrollbar val
+    public float ideaLastStep = 0; //last scrollbar val
+    private int currentIdeasPage = 0; //current row scrolled to
+    public void IdeaScroll(float value)
+    {
+        int count = 0;//count total unique ideas owned
+        foreach (IdeaStats idea in InventionManager.instance.ideas)
+        {
+            if (idea != null && idea.obtained) count++;
+        }
+        int numOfPage = count / ideasPerRow;
+        if (numOfPage < 2)
+        {
+            ideaScroll.gameObject.SetActive(false);
+        }
+        else
+        {
+            ideaScroll.gameObject.SetActive(true);
+            ideaScroll.numberOfSteps = numOfPage;
+            ideaScroll.size = 1.0f / numOfPage;
+            ideaCurrentStep = Mathf.Round(ideaScroll.value * numOfPage);
+        }
+        if (ideaCurrentStep == ideaLastStep)
+            return; // no change
+        if (ideaCurrentStep > ideaLastStep)
+        {
+            currentIdeasPage++;
+        }
+        else
+        {
+            currentIdeasPage--;
+        }
+        if (currentIdeasPage > numOfPage)
+        {// past the end go to beg
+            currentIdeasPage = 0;
+        }
+        else if (currentIdeasPage < 0)
+        {//past beggining go to end
+            currentIdeasPage = numOfPage;
+        }
+        ideaLastStep = ideaCurrentStep;
+        LoadIdeasToScreen();
     }
     /** OBTAINED IDEA BUTTON BEHAVIOUR  
      @param ideaType   Idea to show on button
@@ -326,6 +375,9 @@ public class InventionUIManager : MonoBehaviour
                 //something is invented
                 InventionManager.instance.HandleNewInvention(possibleInvention);
                 outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.type + "!";
+                firstIdea.gameObject.SetActive(false);
+                secondIdea.gameObject.SetActive(false);
+                thirdIdea.gameObject.SetActive(false);
             }
             else if (ideaMatches == 2)
             {
