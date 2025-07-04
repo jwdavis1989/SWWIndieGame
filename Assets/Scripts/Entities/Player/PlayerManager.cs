@@ -121,7 +121,7 @@ public class PlayerManager : CharacterManager
         currentCharacterData.currentHealth = playerStatsManager.currentHealth;
         currentCharacterData.currentStamina = playerStatsManager.currentStamina;
 
-        //Add Weapon Arsenal Data later
+        //Weapons
         currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
         currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
         currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
@@ -132,6 +132,8 @@ public class PlayerManager : CharacterManager
         currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
         //Ideas
         currentCharacterData.ideas = InventionManager.instance.ideas;
+        //Inventions
+        currentCharacterData.inventions = InventionManager.instance.allInventions;
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
@@ -165,7 +167,6 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
-        //AttachCurrentlyEquippedWeaponObjectsToHand();
         //Load TinkerComponents
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
@@ -173,6 +174,8 @@ public class PlayerManager : CharacterManager
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
         //Ideas
         InventionManager.instance.ideas = currentCharacterData.ideas;
+        //Inventions
+        InventionManager.instance.allInventions = currentCharacterData.inventions;
     }
 
     public void ToggleFlashlight() {
