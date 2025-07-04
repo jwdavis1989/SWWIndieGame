@@ -134,8 +134,16 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         }
 
 
+        if (targetCharacter.isPerfectBlocking)
+        {
+            Debug.Log("Perfect Block Damage Taken: " + finalDamageDealt);
+        }
+        else
+        {
+            Debug.Log("Normal Block Damage Taken: " + finalDamageDealt);
+        }
+
         //Apply final damage to character's health
-        //Debug.Log("BlockedHPDmg: " + finalDamageDealt);
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
 
         //Calculate Poise Damage to determine if the character will be stunned
@@ -166,23 +174,18 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             {
                 if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
                 {
-                    Debug.Log("Weapon Block: " + result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f));
-                    Debug.Log(result + " * " + attackMotionValue + " * " + fullChargeModifier + " * " + (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f));
-                    if (targetCharacter.isPerfectBlocking) Debug.Log("PERFECT BLOCK!");
                     return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f);
                 }
                 else
                 {
-                    Debug.Log("Body Block");
                     return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.nonWeaponBlockingStrength) / 100f);
                 }
             }
             else
             {
-                Debug.Log("ERROR: Target isn't Blocking during BlockedHPDmg: " + finalDamageDealt);
                 return result * attackMotionValue * fullChargeModifier;
             }
-        
+
         }
         else return 0;
     }
