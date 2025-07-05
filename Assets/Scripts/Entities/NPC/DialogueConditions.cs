@@ -26,4 +26,16 @@ public class DialogueConditions : MonoBehaviour
     {
         canSeeDialogue = InventionManager.instance.CheckHasIdea(IdeaType.MetalPlating);
     }
+    public void CheckHasNotOpenedInventMenu()
+    {
+        canSeeDialogue = !JournalManager.instance.journalFlags.ContainsKey(JournalManager.hasOpenedInventMenuKey);
+    }
+    public void CheckIsFirst(NPCDialogue dialogue)
+    {
+        canSeeDialogue = dialogue.timesSpokenToMe <= 1;
+    }
+    public void CheckNotFirstDialogue(NPCDialogue dialogue)
+    {
+        canSeeDialogue = dialogue.timesSpokenToMe > 1;
+    }
 }

@@ -64,21 +64,20 @@ public class DialogueManager : MonoBehaviour
     }
     public void DialogueBoxContinue()
     {
-        if (dialogueText.text == currentDialogue.lines2[lineIndex].line)
+        if (dialogueText.text == currentDialogue.lines[lineIndex].line)
         {//if line is finished go to next line
             NextLine();
         }
         else //Complete current line
         {
             StopAllCoroutines();
-            dialogueText.text = currentDialogue.lines2[lineIndex].line;
+            dialogueText.text = currentDialogue.lines[lineIndex].line;
         }
     }
     public void PlayDialogue(NPCDialogue dialogue)
     {
         //Debug.Log("Handling Interact");
         if (dialogue != null){
-            dialogue.timesSpokenToMe++;
             //Debug.Log("Handling Interact Got Dialogue");
             player.isPerformingAction = true;
             player.canMove = false;
@@ -101,20 +100,21 @@ public class DialogueManager : MonoBehaviour
         //Debug.Log("Starting Dialogue");
         dialogueBox.gameObject.SetActive(true);
         //eventSystem.gameObject.SetActive(true);
-        lineIndex = 0;
-        StartCoroutine(TypeLine());
-        if (currentDialogue.lines2.Length > 1)
-        {
-            bottomText.text = "Continue";
-        }
-        else bottomText.text = "Exit";
+        lineIndex = -1;
+        NextLine();
+        //StartCoroutine(TypeLine());
+        //if (currentDialogue.lines.Length > 1)
+        //{
+        //    bottomText.text = "Continue";
+        //}
+        //else bottomText.text = "Exit";
     }
     /** Slowly type a line */
     IEnumerator TypeLine()
     {
         bool richTextTag = false;// Rich text tags should be printed out instantly so they aren't seen by the player
         char lastLetter = '\0'; // Use \ to escape and print <
-        foreach (char c in currentDialogue.lines2[lineIndex].line.ToCharArray())
+        foreach (char c in currentDialogue.lines[lineIndex].line.ToCharArray())
         {
             dialogueText.text += c;
             if (c == '<' && lastLetter != '\\')
@@ -129,7 +129,7 @@ public class DialogueManager : MonoBehaviour
     /** Go to the next line or exit dialogue menu if finished */
     void NextLine()
     {
-        if (lineIndex < currentDialogue.lines2.Length - 1)
+        if (lineIndex < currentDialogue.lines.Length - 1)
         { // there is a next line and we can go to it
             // Go to next line
             lineIndex++;
@@ -139,7 +139,7 @@ public class DialogueManager : MonoBehaviour
                 return;
             }
             dialogueText.text = "";
-            if (lineIndex < currentDialogue.lines2.Length - 1)
+            if (lineIndex < currentDialogue.lines.Length - 1)
             {
                 bottomText.text = "Continue";
             }
@@ -159,73 +159,74 @@ public class DialogueManager : MonoBehaviour
             // turn off dialogue UI
             dialogueBox.gameObject.SetActive(false);
             eventSystem.gameObject.SetActive(false);
+            //currentDialogue.SetColliderEnabled(true);
             //gameObject.SetActive(false);
         }
     }
-    public NPCDialogue HandleLocatingDialogueTargets()
-    {
-        //declarations
-        List<NPCDialogue> availableTargets = new List<NPCDialogue>();
-        NPCDialogue nearestTarget = null;
-        float lockOnRadius = 12f;
-        float minimumViewableAngle = -50f;
-        float maximumViewableAngle = 50f;
+    //public NPCDialogue HandleLocatingDialogueTargets()
+    //{
+    //    //declarations
+    //    List<NPCDialogue> availableTargets = new List<NPCDialogue>();
+    //    NPCDialogue nearestTarget = null;
+    //    float lockOnRadius = 12f;
+    //    float minimumViewableAngle = -50f;
+    //    float maximumViewableAngle = 50f;
 
-        //Will be used to determine the target closest to us
-        float shortestDistance = Mathf.Infinity;
+    //    //Will be used to determine the target closest to us
+    //    float shortestDistance = Mathf.Infinity;
 
-        //Uses a Character Layermask to improve efficiency
-        Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.instance.GetCharacterLayers());
+    //    //Uses a Character Layermask to improve efficiency
+    //    Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, WorldUtilityManager.instance.GetCharacterLayers());
 
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            NPCDialogue lockOnTarget = colliders[i].GetComponent<NPCDialogue>();
+    //    for (int i = 0; i < colliders.Length; i++)
+    //    {
+    //        NPCDialogue lockOnTarget = colliders[i].GetComponent<NPCDialogue>();
 
-            if (lockOnTarget != null)
-            {
-                //Check if they are within our Field of View
-                Vector3 lockOnTargetsDirection = lockOnTarget.transform.position - player.transform.position;
-                float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);
-                float viewableAngle = Vector3.Angle(lockOnTargetsDirection, PlayerCamera.instance.cameraObject.transform.forward);
+    //        if (lockOnTarget != null)
+    //        {
+    //            //Check if they are within our Field of View
+    //            Vector3 lockOnTargetsDirection = lockOnTarget.transform.position - player.transform.position;
+    //            float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);
+    //            float viewableAngle = Vector3.Angle(lockOnTargetsDirection, PlayerCamera.instance.cameraObject.transform.forward);
 
                 
-                //If the target is outside of the field of view or blocked by environment, check the next potential target
-                if (viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
-                {
-                    RaycastHit hit;
+    //            //If the target is outside of the field of view or blocked by environment, check the next potential target
+    //            if (viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
+    //            {
+    //                RaycastHit hit;
 
-                    //Check Line of sight by environment layers
-                    if (Physics.Linecast(player.playerCombatManager.LockOnTransform.position, lockOnTarget.transform.position, out hit, WorldUtilityManager.instance.GetEnvironmentLayers()))
-                    {
-                        //We hit something in the environment, blocking line of sight
-                        continue;
-                    }
-                    else
-                    {
-                        //Add the target to the available targets list since it's within Line of Sight
-                        availableTargets.Add(lockOnTarget);
-                    }
-                }
+    //                //Check Line of sight by environment layers
+    //                if (Physics.Linecast(player.playerCombatManager.LockOnTransform.position, lockOnTarget.transform.position, out hit, WorldUtilityManager.instance.GetEnvironmentLayers()))
+    //                {
+    //                    //We hit something in the environment, blocking line of sight
+    //                    continue;
+    //                }
+    //                else
+    //                {
+    //                    //Add the target to the available targets list since it's within Line of Sight
+    //                    availableTargets.Add(lockOnTarget);
+    //                }
+    //            }
 
-            }
-        }
+    //        }
+    //    }
 
-        //Sort through potential targets to see which one we lock onto first
-        for (int i = 0; i < availableTargets.Count; i++)
-        {
-            if (availableTargets[i] != null)
-            {
-                float distanceFromTarget = Vector3.Distance(player.transform.position, availableTargets[i].transform.position);
+    //    //Sort through potential targets to see which one we lock onto first
+    //    for (int i = 0; i < availableTargets.Count; i++)
+    //    {
+    //        if (availableTargets[i] != null)
+    //        {
+    //            float distanceFromTarget = Vector3.Distance(player.transform.position, availableTargets[i].transform.position);
 
-                if (distanceFromTarget < shortestDistance)
-                {
-                    shortestDistance = distanceFromTarget;
-                    nearestTarget = availableTargets[i];
-                }
-            }
-        }
-        return nearestTarget;
-    }
+    //            if (distanceFromTarget < shortestDistance)
+    //            {
+    //                shortestDistance = distanceFromTarget;
+    //                nearestTarget = availableTargets[i];
+    //            }
+    //        }
+    //    }
+    //    return nearestTarget;
+    //}
     //Interact Button during dialogue box
     void HandleDialogueContineuButton()
     {
@@ -243,20 +244,40 @@ public class DialogueManager : MonoBehaviour
     //returns true there is no condition or condition is true
     bool CheckLineCondition()
     {
-        string key = currentDialogue.lines2[lineIndex].conditionKey;
-        Debug.Log("CheckLineCondition key:" + key);
+        //string key = currentDialogue.lines2[lineIndex].conditionKey;
+        //Debug.Log("CheckLineCondition key:" + key);
+        //if (key == null || key.Trim() == "")
+        //    return true;
+        //Debug.Log("CheckLineCondition ContainsKey:" + JournalManager.instance.journalFlags.ContainsKey(key));
+        //return JournalManager.instance.journalFlags.ContainsKey(key) && JournalManager.instance.journalFlags[key];
+        bool journalConditionPass = false;
+        string key = currentDialogue.lines[lineIndex].conditionKey;
+        //Debug.Log("1: CheckLineCondition key:" + key + "| i="+lineIndex + "  Line:" + currentDialogue.lines[lineIndex].line);
         if (key == null || key.Trim() == "")
-            return true;
-        Debug.Log("CheckLineCondition ContainsKey:" + JournalManager.instance.journalFlags.ContainsKey(key));
-        return JournalManager.instance.journalFlags.ContainsKey(key) && JournalManager.instance.journalFlags[key];
-        //DialogueConditions dialogueConditions = currentDialogue.gameObject.GetComponent<DialogueConditions>();
-        //if (dialogueConditions == null)
-        //    return true;
-        //if (currentDialogue.lines2[lineIndex+1] == null || currentDialogue.lines2[lineIndex+1].condition == null)
-        //    return true;
-        //if (!currentDialogue.lines2[lineIndex + 1].condition.Yield().GetEnumerator().MoveNext())
-        //    return true;
-        //currentDialogue.lines2[lineIndex + 1].condition.Invoke();
-        //return dialogueConditions.canSeeDialogue;
+            journalConditionPass = true;
+        else
+            journalConditionPass = JournalManager.instance.journalFlags.ContainsKey(key) && JournalManager.instance.journalFlags[key];
+        //Debug.Log("2: CheckLineCondition ContainsKey:" + JournalManager.instance.journalFlags.ContainsKey(key));
+        //Debug.Log("JM:"+JournalManager.instance.journalFlags.Count);
+        
+        bool conditionEventPass = false;
+        DialogueConditions dialogueConditions = currentDialogue.gameObject.GetComponent<DialogueConditions>();
+        //check for lack of dialogue conditions
+        if (dialogueConditions == null)
+            conditionEventPass = true;
+        else if (currentDialogue.lines[lineIndex] == null || currentDialogue.lines[lineIndex].conditionEvent == null)
+            conditionEventPass = true;
+        else if (!currentDialogue.lines[lineIndex].conditionEvent.Yield().GetEnumerator().MoveNext())
+            conditionEventPass = true;
+        else if(currentDialogue.lines[lineIndex].conditionEvent.GetPersistentEventCount() == 0)
+            conditionEventPass= true;
+        else
+        {
+            currentDialogue.lines[lineIndex].conditionEvent.Invoke();
+            conditionEventPass = dialogueConditions.canSeeDialogue;
+        }
+        //Debug.Log("3: journalPass:"+journalConditionPass+" eventPass="+conditionEventPass);
+        bool canSayLine = journalConditionPass && conditionEventPass;
+        return canSayLine;
     }
 }

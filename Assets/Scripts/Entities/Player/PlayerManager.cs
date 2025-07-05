@@ -136,7 +136,7 @@ public class PlayerManager : CharacterManager
         currentCharacterData.inventions = InventionManager.instance.allInventions;
     }
 
-    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame) {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
 
@@ -175,7 +175,8 @@ public class PlayerManager : CharacterManager
         //Ideas
         InventionManager.instance.ideas = currentCharacterData.ideas;
         //Inventions
-        InventionManager.instance.allInventions = currentCharacterData.inventions;
+        if(!isNewGame)
+            InventionManager.instance.allInventions = currentCharacterData.inventions;
     }
 
     public void ToggleFlashlight() {

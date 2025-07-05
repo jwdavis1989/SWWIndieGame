@@ -11,7 +11,6 @@ public class JournalManager : MonoBehaviour
     void Start()
     {
         journalFlags[hasNotOpenedInventMenuKey] = true;
-        //TODO! LOAD/SAVE
     }
 
     // Update is called once per frame
@@ -41,6 +40,7 @@ public class JournalManager : MonoBehaviour
 
     //KEYS
     public static string hasNotOpenedInventMenuKey = "hasNotOpenedInventMenuKey";
+    public static string hasOpenedInventMenuKey = "hasOpenedInventMenuKey";
     public static string hasInventedSomethingKey = "hasInventedSomethingKey";
     public static string hasHalfInventionIdea = "hasHalfInventionIdea";
 }
