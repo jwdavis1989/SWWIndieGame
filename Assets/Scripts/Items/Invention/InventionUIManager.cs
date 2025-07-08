@@ -65,6 +65,7 @@ public class InventionUIManager : MonoBehaviour
     public void OpenInventionMenu()
     {
         JournalManager.instance.journalFlags[JournalManager.hasNotOpenedInventMenuKey] = false;
+        JournalManager.instance.journalFlags[JournalManager.hasOpenedInventMenuKey] = true;
         outputText.GetComponent<TextMeshProUGUI>().text = "???";
         LoadIdeasToScreen();
         LoadInventionsToScreen();
@@ -239,6 +240,7 @@ public class InventionUIManager : MonoBehaviour
      */
     void LoadInventionsToScreen()
     {
+        Debug.Log("LoadInventions");
         foreach (Transform child in allInventionsGrid.transform)
         {
             Destroy(child.gameObject);
@@ -249,11 +251,8 @@ public class InventionUIManager : MonoBehaviour
         //basic components
         int totalInventionCount = 0;
         //loop through all possible ideas
-        int ideaIndex = -1;
         foreach (InventionScript inventionScript in InventionManager.instance.allInventions)
         {
-            ideaIndex++;
-
             //used for scrolling
             totalInventionCount++;
             if (inventionsToSkip > 0)
