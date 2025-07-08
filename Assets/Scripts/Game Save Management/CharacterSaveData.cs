@@ -41,6 +41,8 @@ public class CharacterSaveData
     public float currentStamina = 100;
 
     public Dictionary<string, bool> journalFlags = new Dictionary<string, bool>();
+    public IdeaStats[] ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
+    public InventionScript[] inventions = new InventionScript[0];
 
     public CharacterSaveData()
     {

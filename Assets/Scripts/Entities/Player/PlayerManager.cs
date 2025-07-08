@@ -121,7 +121,7 @@ public class PlayerManager : CharacterManager
         currentCharacterData.currentHealth = playerStatsManager.currentHealth;
         currentCharacterData.currentStamina = playerStatsManager.currentStamina;
 
-        //Add Weapon Arsenal Data later
+        //Weapons
         currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
         currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
         currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
@@ -130,11 +130,13 @@ public class PlayerManager : CharacterManager
         currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
         //Journal flags
         currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
-        //Idea Images
-        InventionManager.instance.SaveIdeas();
+        //Ideas
+        currentCharacterData.ideas = InventionManager.instance.ideas;
+        //Inventions
+        currentCharacterData.inventions = InventionManager.instance.allInventions;
     }
 
-    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame) {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
 
@@ -165,12 +167,16 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
-        //AttachCurrentlyEquippedWeaponObjectsToHand();
         //Load TinkerComponents
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
+        //Ideas
+        InventionManager.instance.ideas = currentCharacterData.ideas;
+        //Inventions
+        if(!isNewGame)
+            InventionManager.instance.allInventions = currentCharacterData.inventions;
     }
 
     public void ToggleFlashlight() {

@@ -101,7 +101,6 @@ public class IdeaCameraController : MonoBehaviour
                 {   // Take photo
                     cameraLensCrosshair.SetActive(false);
                     takingPhoto = true;
-                    postProcessLayer.enabled = true;
                     StartCoroutine(TakeScreenshot());
                 }
             }
@@ -115,12 +114,13 @@ public class IdeaCameraController : MonoBehaviour
     IEnumerator TakeScreenshot()
     {
         yield return waitTime;//delay for crosshair
+        postProcessLayer.enabled = true;
         yield return frameEnd; //wait for end of frame
         //ScreenCapture.CaptureScreenshot("SomeLevel.png");
 
         int height = Screen.height * 75 / 100;
         int width = (int)(height * (4.0/3.0));
-        Debug.Log("Width:"+width+" \nHeight:"+height);
+        //Debug.Log("Width:"+width+" \nHeight:"+height);
         Texture2D screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
         int x = Screen.width / 2 - (width/2);
         int y = Screen.height / 2 - (height / 2);
