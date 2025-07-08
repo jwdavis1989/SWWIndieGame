@@ -3181,6 +3181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
+  deathVFX: {fileID: 3807916271835915907, guid: 54dfacbd747c888419e320ffb35f071e, type: 3}
 --- !u!82 &3972350763790113092
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3441,6 +3442,7 @@ MonoBehaviour:
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
+  isFalling: 0
   isBoosting: 0
   isRolling: 0
   applyRootMotion: 0
@@ -3449,6 +3451,11 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   isLockedOn: 0
+  isBlocking: 0
+  isPerfectBlocking: 0
+  perfectBlockModifier: 2
+  perfectBlockWindowDuration: 0.5
+  nonWeaponBlockingStrength: 30
   canBleed: 1
   isChargingAttack: 0
   isInvulnerable: 0
@@ -3529,6 +3536,7 @@ MonoBehaviour:
   canComboWithMainHandWeapon: 0
   canPerformRollingAttack: 0
   canPerformBackStepAttack: 0
+  canBlock: 1
   isAggro: 0
   aggroRange: 5
   minimumDetectionAngle: -35
@@ -3551,6 +3559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasFloatingHPBar: 1
+  characterHPBarObject: {fileID: 0}
   characterHPBar: {fileID: 2696317960427767882}
 --- !u!1 &3908097228846371053
 GameObject:
