@@ -8,8 +8,11 @@ public class InventionScript
     [Header("InventionScript is used to mark an object as an Invention")]
     public InventionType type;
     public IdeaType[] neededIdeas;
+    [Header("Invent UI icon")]
+    public Sprite icon;
     [Header("Used by InventionManager")]
     public bool hasObtained = false;
+    public DateTime createTime;
 
     public override string ToString()
     {

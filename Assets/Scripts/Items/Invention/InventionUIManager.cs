@@ -240,7 +240,6 @@ public class InventionUIManager : MonoBehaviour
      */
     void LoadInventionsToScreen()
     {
-        Debug.Log("LoadInventions");
         foreach (Transform child in allInventionsGrid.transform)
         {
             Destroy(child.gameObject);
@@ -267,7 +266,10 @@ public class InventionUIManager : MonoBehaviour
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
             if (inventionScript.hasObtained) {
                 gridScript.topText.text = inventionScript.ToString();
-                gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
+                if (inventionScript.icon != null)
+                    gridScript.mainButtonForeground.GetComponent<RawImage>().texture = inventionScript.icon.texture;
+                else
+                    gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
             }
             else
             {
@@ -367,22 +369,21 @@ public class InventionUIManager : MonoBehaviour
                 else if (usedIdeaTypes[1] == neededIdea) ideaMatches++;
                 else if (usedIdeaTypes[2] == neededIdea) ideaMatches++;
             }
-            if (ideaMatches == 3)
+            if (ideaMatches == 3) // something is invented
             {
                 JournalManager.instance.journalFlags[JournalManager.hasHalfInventionIdea] = false;//set to false so that dialogue doesn't play
                 JournalManager.instance.journalFlags[JournalManager.hasInventedSomethingKey] = true;
-                //something is invented
                 InventionManager.instance.HandleNewInvention(possibleInvention);
-                outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.type + "!";
+                outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.ToString() + "!";
                 firstIdea.gameObject.SetActive(false);
                 secondIdea.gameObject.SetActive(false);
                 thirdIdea.gameObject.SetActive(false);
+                LoadInventionsToScreen();
             }
-            else if (ideaMatches == 2)
+            else if (ideaMatches == 2) // almost invention
             {
                 JournalManager.instance.journalFlags[JournalManager.hasHalfInventionIdea] = true;
                 outputText.GetComponent<TextMeshProUGUI>().text = "Hmmm... There's something here";
-                //half idea
                 int usedIdeaUnmatched = 0;
                 int neededIdeaUnmatched = 0;
                 for (int i = 0; i < 3; i++)
@@ -394,7 +395,7 @@ public class InventionUIManager : MonoBehaviour
                     }
                     if (!match)
                     {
-                        //found unmatched used
+                        //found used idea to be removed
                         usedIdeaUnmatched = i;
 
                     }
@@ -408,7 +409,7 @@ public class InventionUIManager : MonoBehaviour
                     }
                     if (!match)
                     {
-                        //found unmatched needed
+                        //found needed idea to hint at
                         neededIdeaUnmatched = i;
 
                     }
