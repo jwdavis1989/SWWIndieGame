@@ -24,7 +24,8 @@ public class PlayerManager : CharacterManager
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         isPlayer = true;
         isRotatingAttacker = true;
         base.Awake();
@@ -34,7 +35,7 @@ public class PlayerManager : CharacterManager
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
         playerInteractionManager = GetComponent<PlayerInteractionManager>();
-        
+
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
         PlayerInputManager.instance.player = this;
@@ -63,7 +64,8 @@ public class PlayerManager : CharacterManager
         DebugMenu();
     }
 
-    protected override void LateUpdate() {
+    protected override void LateUpdate()
+    {
         base.LateUpdate();
         PlayerCamera.instance.HandleAllCameraActions();
     }
@@ -88,13 +90,14 @@ public class PlayerManager : CharacterManager
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
 
-    public override void ReviveCharacter() {
+    public override void ReviveCharacter()
+    {
         base.ReviveCharacter();
         canMove = true;
         isDead = false;
         playerStatsManager.currentHealth = playerStatsManager.maxHealth;
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
-        
+
 
         //Play Rebirth Effects here
 
@@ -103,7 +106,8 @@ public class PlayerManager : CharacterManager
 
     }
 
-    public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+    public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+    {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
 
@@ -136,7 +140,8 @@ public class PlayerManager : CharacterManager
         currentCharacterData.inventions = InventionManager.instance.allInventions;
     }
 
-    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame) {
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
+    {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
 
@@ -175,32 +180,41 @@ public class PlayerManager : CharacterManager
         //Ideas
         InventionManager.instance.ideas = currentCharacterData.ideas;
         //Inventions
-        if(!isNewGame)
+        if (!isNewGame)
             InventionManager.instance.allInventions = currentCharacterData.inventions;
     }
 
-    public void ToggleFlashlight() {
-        if (flashlight != null) {
-            if (flashlight.activeSelf) {
+    public void ToggleFlashlight()
+    {
+        if (flashlight != null)
+        {
+            if (flashlight.activeSelf)
+            {
                 flashlight.SetActive(false);
             }
-            else {
+            else
+            {
                 flashlight.SetActive(true);
             }
         }
-        else {
+        else
+        {
             Debug.Log("ERROR: Player Flashlight Instance Not Set in Editor.");
         }
 
-        if (cameraflashlight != null) {
-            if (cameraflashlight.activeSelf) {
+        if (cameraflashlight != null)
+        {
+            if (cameraflashlight.activeSelf)
+            {
                 cameraflashlight.SetActive(false);
             }
-            else {
+            else
+            {
                 cameraflashlight.SetActive(true);
             }
         }
-        else {
+        else
+        {
             Debug.Log("ERROR: Camera Flashlight Instance Not Set in Editor.");
         }
     }
@@ -246,17 +260,42 @@ public class PlayerManager : CharacterManager
     //     //WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(true);
     // }
 
-    public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex) {
+    public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex)
+    {
         PlayerWeaponManager.instance.ChangeWeapon(newActiveIndex);
     }
-    
+
     //Delete this later
-    private void DebugMenu() {
-        if (respawnCharacter) {
+    private void DebugMenu()
+    {
+        if (respawnCharacter)
+        {
             respawnCharacter = false;
             ReviveCharacter();
         }
     }
 
-    
+    public override void DisableInvulnerable()
+    {
+        if (!InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        {
+            isInvulnerable = false;
+        }
+    }
+
+    //Not currently being used because the dodge roll already begins invulnerability immediately, but is needed if that changes.
+    public void EnableRollerJointInvulnerable()
+    {
+        if (InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        {
+            isInvulnerable = true;
+        }
+    }
+
+    public override void DisableRollerJointInvulnerable()
+    {
+        isInvulnerable = false;
+    }
+
+
 }
