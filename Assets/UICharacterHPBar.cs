@@ -89,7 +89,10 @@ public class UICharacterHPBar : UIStatBar
     private void Update()
     {
         //Face the camera
-        transform.LookAt(transform.position + Camera.main.transform.forward);
+        if (Camera.main != null)
+        {   
+            transform.LookAt(transform.position + Camera.main.transform.forward);
+        }
 
         //Handle Text Slowly Disappearing if they haven't been damaged in a while
         if (hideBarTextTimer > 0)
