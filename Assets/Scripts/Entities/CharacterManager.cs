@@ -98,12 +98,12 @@ public class CharacterManager : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        
+
     }
 
     protected virtual void OnDisable()
     {
-        
+
     }
 
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
@@ -209,9 +209,14 @@ public class CharacterManager : MonoBehaviour
         isInvulnerable = true;
     }
 
-    public void DisableInvulnerable()
+    public virtual void DisableInvulnerable()
     {
         isInvulnerable = false;
+    }
+    
+    public virtual void DisableRollerJointInvulnerable()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
     
 }
