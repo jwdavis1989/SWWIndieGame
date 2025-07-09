@@ -38,6 +38,9 @@ public class DamageCollider : MonoBehaviour
     protected Vector3 directionFromAttackToDamageTarget;
     protected float dotValueFromAttackToDamageTarget;
 
+    [Header("Poise")]
+    public float poiseDamage = 25;  //Set a base for cases such as traps
+
     protected virtual void Awake()
     {
         damageCollider = GetComponent<Collider>();

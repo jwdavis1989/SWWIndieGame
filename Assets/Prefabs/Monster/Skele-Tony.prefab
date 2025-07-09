@@ -3181,6 +3181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
+  deathVFX: {fileID: 3807916271835915907, guid: 54dfacbd747c888419e320ffb35f071e, type: 3}
 --- !u!82 &3972350763790113092
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3291,7 +3292,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
   takeDamageGrunts:
-  - {fileID: 8300000, guid: 3a20c1f2fd4d44c4d9a6fabbec93be20, type: 3}
+  - {fileID: 8300000, guid: 68f7fb07fe8eeac4fb98d7eba26fd824, type: 3}
+  - {fileID: 8300000, guid: a775695000f506d44ab17df56e688370, type: 3}
+  - {fileID: 8300000, guid: 8b12816add5ab3c42b094aec5e1eb95c, type: 3}
+  - {fileID: 8300000, guid: c013371484d187849935e7da6b6ce999, type: 3}
+  - {fileID: 8300000, guid: bb68f82716561c94383c49538528cb26, type: 3}
+  - {fileID: 8300000, guid: 22e980b3bbb679248aee3c61fae2a722, type: 3}
 --- !u!95 &1852746499727577451
 Animator:
   serializedVersion: 5
@@ -3441,6 +3447,7 @@ MonoBehaviour:
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
+  isFalling: 0
   isBoosting: 0
   isRolling: 0
   applyRootMotion: 0
@@ -3449,6 +3456,11 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   isLockedOn: 0
+  isBlocking: 0
+  isPerfectBlocking: 0
+  perfectBlockModifier: 2
+  perfectBlockWindowDuration: 0.5
+  nonWeaponBlockingStrength: 30
   canBleed: 1
   isChargingAttack: 0
   isInvulnerable: 0
@@ -3529,6 +3541,7 @@ MonoBehaviour:
   canComboWithMainHandWeapon: 0
   canPerformRollingAttack: 0
   canPerformBackStepAttack: 0
+  canBlock: 1
   isAggro: 0
   aggroRange: 5
   minimumDetectionAngle: -35
@@ -3551,6 +3564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasFloatingHPBar: 1
+  characterHPBarObject: {fileID: 0}
   characterHPBar: {fileID: 2696317960427767882}
 --- !u!1 &3908097228846371053
 GameObject:
