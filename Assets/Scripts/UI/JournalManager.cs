@@ -7,6 +7,7 @@ public class JournalManager : MonoBehaviour
 {
     public static JournalManager instance;
     public Dictionary<string, bool> journalFlags = new Dictionary<string, bool>();
+    public string dateFormat = "YYY-MM-DD-HH-MM";
     // Start is called before the first frame update
     void Start()
     {
