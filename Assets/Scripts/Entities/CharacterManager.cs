@@ -98,12 +98,12 @@ public class CharacterManager : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        
+
     }
 
     protected virtual void OnDisable()
     {
-        
+
     }
 
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
@@ -127,15 +127,6 @@ public class CharacterManager : MonoBehaviour
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
 
         yield return new WaitForSeconds(5);
-
-        if (!isPlayer)
-        {
-            //If monster: Award players with Gold or items
-
-        }
-
-        //Disable Character
-
     }
 
     public IEnumerator ProcessPerfectBlockTimer()
@@ -218,9 +209,14 @@ public class CharacterManager : MonoBehaviour
         isInvulnerable = true;
     }
 
-    public void DisableInvulnerable()
+    public virtual void DisableInvulnerable()
     {
         isInvulnerable = false;
+    }
+    
+    public virtual void DisableRollerJointInvulnerable()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
     
 }

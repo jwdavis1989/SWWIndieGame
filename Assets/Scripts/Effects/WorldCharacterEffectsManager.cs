@@ -8,6 +8,7 @@ public class WorldCharacterEffectsManager : MonoBehaviour
     public static WorldCharacterEffectsManager instance;
     [Header("VFX")]
     public GameObject defaultBloodSplatterVFX;
+    public GameObject defaultDeathExplosionVFX;
 
     [Header("Damage")]
     public TakeHealthDamageCharacterEffect takeHealthDamageEffect;
