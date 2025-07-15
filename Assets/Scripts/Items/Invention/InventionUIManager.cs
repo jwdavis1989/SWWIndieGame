@@ -278,6 +278,10 @@ public class InventionUIManager : MonoBehaviour
             }
             gridScript.bottomText.text = "";
             gridScript.cornerButton.gameObject.SetActive(false);
+            //gridScript.cornerButton.OnPointerEnter(() =>
+            //{
+
+            //});
             //add button event
             //gridScript.mainButton.onClick.AddListener(() => OwnedIdeaOnclick(ideaType, gridScript));
         }

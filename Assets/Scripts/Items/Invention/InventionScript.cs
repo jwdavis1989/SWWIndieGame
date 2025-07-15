@@ -10,6 +10,7 @@ public class InventionScript
     public IdeaType[] neededIdeas;
     [Header("Invent UI icon")]
     public Sprite icon;
+    public string description;
     [Header("Used by InventionManager")]
     public bool hasObtained = false;
     public DateTime createTime;
