@@ -123,6 +123,7 @@ public class InventionManager : MonoBehaviour
             {
                 Debug.Log("Invented " + invention.type);//astest
                 invention.hasObtained = true;
+                invention.createTime = DateTime.UtcNow;
                 HandleNewInventionType(newInvention.type);
                 return;
             }
