@@ -65,6 +65,7 @@ public class WeaponStats
     [Header("Weapon Attributes")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
+    public float basePoiseDamage = 35f; //Base 35 in case it's caused by traps
     public float durability = 1;
     public float maxDurability = 1;
     public float block = 1.0f;
@@ -231,21 +232,19 @@ public class WeaponScript : MonoBehaviour
     }
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage() {
-        if (weaponDamageCollider == null) return;
-        //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
-        // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
-            //weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
-            weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
-        // }
-        // else {
-        //     //Monster CharacterManager Weapon Assignment in hypothetical rework
-        // }
+        if (weaponDamageCollider == null)
+        {
+            return;
+        }
+
+        weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
         weaponDamageCollider.isMainHand = !isSpecialWeapon;
         weaponDamageCollider.enabled = true;
 
         weaponDamageCollider.weaponFamily = weaponFamily;
         
         weaponDamageCollider.elementalStats = stats.elemental;
+        weaponDamageCollider.poiseDamage = stats.basePoiseDamage;
 
         //Turn the collider back off so it doesn't hurt anyone, ow
         weaponDamageCollider.enabled = false;

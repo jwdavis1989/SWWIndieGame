@@ -29,7 +29,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
     public float finalDamageDealt = 0f;      //Factors in all defenses and modifiers
 
     [Header("Poise")]
-    public float PoiseDamage = 0f;
+    public float poiseDamage = 35f;     //Base 35 in case it's caused by traps
     public bool poiseIsBroken = false;  //If a character's poise is broken, they will be "Stunned" and play a damage animation.
 
     [Header("Debuff Build-Up")]

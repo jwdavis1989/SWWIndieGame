@@ -79,7 +79,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
             //Check if target is blocking
             CheckForBlock(damageTarget);
-            
+
             //Check if target is invulnerable
 
             //Damage
@@ -159,6 +159,14 @@ public class MeleeWeaponDamageCollider : DamageCollider
                 default:
                     break;
             }
+
+            //Calculate Poise Damage
+            damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.basePoiseDamage;
+        }
+        else
+        {
+            //No WeaponManager found in character causing damage
+            damageEffect.poiseDamage = poiseDamage;
         }
 
         //Apply Motion Value
@@ -183,6 +191,11 @@ public class MeleeWeaponDamageCollider : DamageCollider
     protected override void GetBlockingDotValues(CharacterManager damageTarget)
     {
         base.GetBlockingDotValues(damageTarget);
+    }
+
+    protected void CalculatePoiseDamage()
+    {
+        
     }
 
 }

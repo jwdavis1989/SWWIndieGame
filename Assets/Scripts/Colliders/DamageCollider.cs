@@ -39,7 +39,8 @@ public class DamageCollider : MonoBehaviour
     protected float dotValueFromAttackToDamageTarget;
 
     [Header("Poise")]
-    public float poiseDamage = 25;  //Set a base for cases such as traps
+    public float poiseDamage = 35f;  //Set a base for cases such as traps
+    public float blockingStaminaDamage = 25;
 
     protected virtual void Awake()
     {
@@ -104,6 +105,13 @@ public class DamageCollider : MonoBehaviour
             //Elemental
             blockingTakeDamageEffect.elementalDamage = elementalStats;
 
+            //Apply Poise Damage
+            blockingTakeDamageEffect.poiseDamage = poiseDamage;
+
+            //Stamina Damage when Blocking
+            blockingStaminaDamage = poiseDamage;         //If we need to change this later to have unique stamina damage from poise, rewrite this line
+            blockingTakeDamageEffect.baseStaminaDamage = blockingStaminaDamage; //Ensures blockingStaminaDamage and poiseDamage are decoupled, for the line above
+
             //Armore Penetration
             blockingTakeDamageEffect.isReducedByArmor = isReducedByArmor;
 
@@ -156,6 +164,9 @@ public class DamageCollider : MonoBehaviour
 
         //Apply Motion Value
         damageEffect.attackMotionValue = attackMotionValue;
+
+        //Apply Poise Damage
+        damageEffect.poiseDamage = poiseDamage;
 
         //Apply Charge Bonus Damage Modifier
         damageEffect.fullChargeModifier = fullChargeModifier;
