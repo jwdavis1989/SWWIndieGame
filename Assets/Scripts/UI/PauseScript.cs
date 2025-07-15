@@ -97,16 +97,24 @@ public class PauseScript : MonoBehaviour
     }
     public void MainMenuClick()
     {
+
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
-        Destroy(GameObject.Find("Player"));
-        Destroy(GameObject.Find("Player Camera"));
-        Destroy(GameObject.Find("Player Input Manager"));
-        Destroy(GameObject.Find("Player UI Manager"));
-        Destroy(GameObject.Find("TinkerComponentManager"));
-        Destroy(GameObject.Find("WeaponController"));
-        Destroy(GameObject.Find("UpgradeMenuManager"));
-        Destroy(GameObject.Find("DontDestroyOnLoad"));
-        Destroy(GameObject.Find("MiniMap Camera"));
+
+        //Destroy(GameObject.Find("Player"));
+        //Destroy(GameObject.Find("Player Camera"));
+        //Destroy(GameObject.Find("Player Input Manager"));
+        //Destroy(GameObject.Find("Player UI Manager"));
+        //Destroy(GameObject.Find("TinkerComponentManager"));
+        //Destroy(GameObject.Find("WeaponController"));
+        //Destroy(GameObject.Find("UpgradeMenuManager"));
+        //Destroy(GameObject.Find("DontDestroyOnLoad"));
+        //Destroy(GameObject.Find("MiniMap Camera"));
+        Scene scne = GameObject.Find("Player").scene;
+        GameObject ddol = GameObject.Find("DontDestroyOnLoad");
+        foreach(GameObject obj in scne.GetRootGameObjects())
+        {
+            Destroy(obj);
+        }
         //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
         SceneManager.LoadScene(0);
         Unpause();
