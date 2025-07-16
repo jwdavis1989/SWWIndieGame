@@ -31,7 +31,11 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
     [Header("Poise")]
     public float poiseDamage = 0f;
-    public bool poiseIsBroken = false;  //If a character's poise is broken, they will be "Stunned" and play a damage animation.
+    //public bool poiseIsBroken = false;  //If a character's poise is broken, they will be "Stunned" and play a damage animation.
+
+    [Header("Stamina Damage")]
+    public float baseStaminaDamage;
+    public float finalStaminaDamage;
 
     [Header("Debuff Build-Up")]
     //Build up amounts for effects
@@ -75,6 +79,9 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         {
             //Calculate then apply the Damage
             ApplyDamage(character, characterCausingDamage);
+
+            //Calculate Stamina Cost of Blocking
+            CalculateStaminaDamage(character);
 
             //Check which direction damage came from
 
@@ -190,6 +197,40 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         else return 0;
     }
 
+    public void CalculateStaminaDamage(CharacterManager character)
+    {
+        float finalStaminaDamage = baseStaminaDamage;
+        float staminaDamageAbsorbtion = 0f;
+
+        if (character.characterWeaponManager != null && character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>() != null)
+        {
+            staminaDamageAbsorbtion = finalStaminaDamage * character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.stability / 100;
+        }
+
+        finalStaminaDamage = finalStaminaDamage - staminaDamageAbsorbtion;
+
+        character.characterStatsManager.currentStamina -= finalStaminaDamage;
+        character.characterStatsManager.ResetStaminaRegenTimer();
+    }
+
+    private bool CheckForGuardBreak(CharacterManager character)
+    {
+        bool result = false;
+        if (character.characterStatsManager.currentStamina <= 0)
+        {
+            character.characterAnimatorManager.lastDamageAnimationPlayed = "Guard_Break_01";
+            character.characterAnimatorManager.PlayTargetActionAnimation("Guard_Break_01", true);
+            character.isBlocking = false;
+
+            //Play SFX when Guard is Broken
+                //TODO
+
+            result = true;
+        }
+
+        return result;
+    }
+
     private void PlayDamageVFX(CharacterManager character)
     {
         //e.g. If we have Fire Damage, Play Fire Particle Effects
@@ -295,9 +336,9 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
         //1. Calculate an "Intensity" based on Poise Damage
         DamageIntensity damageIntensity = WorldUtilityManager.instance.GetDamageIntensityBasedOnPoiseDamage(poiseDamage);
+
         //2. Play a Proper Animation to match the "Intensity" of the blocked blow
 
-        //TODO: Check for Two-Hand status, if two-handing then use 2h version of block animations instead
         switch (damageIntensity)
         {
             case DamageIntensity.Ping:
@@ -317,12 +358,14 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
                 break;
         }
 
-        //If poise is broken, play a staggering damage animation
-        if (poiseIsBroken)
+        //If poise is broken, play a staggering damage animation instead
+        if (!CheckForGuardBreak(characterTakingDamage))
         {
+            //Play appropriate block impact animation
             characterTakingDamage.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
             characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
         }
+
     }
 
 }
