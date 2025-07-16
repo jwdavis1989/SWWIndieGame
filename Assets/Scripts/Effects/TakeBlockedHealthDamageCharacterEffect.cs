@@ -210,6 +210,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         finalStaminaDamage = finalStaminaDamage - staminaDamageAbsorbtion;
 
         character.characterStatsManager.currentStamina -= finalStaminaDamage;
+        character.characterStatsManager.ResetStaminaRegenTimer();
     }
 
     private bool CheckForGuardBreak(CharacterManager character)
@@ -357,7 +358,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
                 break;
         }
 
-        //If poise is broken, play a staggering damage animation
+        //If poise is broken, play a staggering damage animation instead
         if (!CheckForGuardBreak(characterTakingDamage))
         {
             //Play appropriate block impact animation
@@ -365,12 +366,6 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
         }
 
-
-        // if (poiseIsBroken)
-        // {
-        //     characterTakingDamage.characterAnimatorManager.lastDamageAnimationPlayed = damageAnimation;
-        //     characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
-        // }
     }
 
 }
