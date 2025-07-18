@@ -391,6 +391,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DebugTeleportToAlecDev2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1dec232e-b90d-46c2-9c2b-388446eec57a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""NextWeapon"",
                     ""type"": ""PassThrough"",
                     ""id"": ""3e3e861f-fb3e-42f7-9cd1-77f1b6df3609"",
@@ -894,6 +903,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Block"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e8431e9-943d-4c57-a1d9-f90d7de9d4f3"",
+                    ""path"": ""<Keyboard>/numpad5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToAlecDev2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1099,6 +1119,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToSurfaceDemo = m_PlayerActions.FindAction("DebugTeleportToSurfaceDemo", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToAlecDev2 = m_PlayerActions.FindAction("DebugTeleportToAlecDev2", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugFullResources = m_PlayerActions.FindAction("DebugFullResources", throwIfNotFound: true);
         m_PlayerActions_LockOn = m_PlayerActions.FindAction("LockOn", throwIfNotFound: true);
@@ -1283,6 +1304,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToSurfaceDemo;
+    private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev2;
     private readonly InputAction m_PlayerActions_NextWeapon;
     private readonly InputAction m_PlayerActions_DebugFullResources;
     private readonly InputAction m_PlayerActions_LockOn;
@@ -1311,6 +1333,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @DebugTeleportToSurfaceDemo => m_Wrapper.m_PlayerActions_DebugTeleportToSurfaceDemo;
+        public InputAction @DebugTeleportToAlecDev2 => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev2;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
         public InputAction @DebugFullResources => m_Wrapper.m_PlayerActions_DebugFullResources;
         public InputAction @LockOn => m_Wrapper.m_PlayerActions_LockOn;
@@ -1378,6 +1401,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToSurfaceDemo.started += instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.performed += instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.canceled += instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToAlecDev2.started += instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.performed += instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.canceled += instance.OnDebugTeleportToAlecDev2;
             @NextWeapon.started += instance.OnNextWeapon;
             @NextWeapon.performed += instance.OnNextWeapon;
             @NextWeapon.canceled += instance.OnNextWeapon;
@@ -1454,6 +1480,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToSurfaceDemo.started -= instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.performed -= instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.canceled -= instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToAlecDev2.started -= instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.performed -= instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.canceled -= instance.OnDebugTeleportToAlecDev2;
             @NextWeapon.started -= instance.OnNextWeapon;
             @NextWeapon.performed -= instance.OnNextWeapon;
             @NextWeapon.canceled -= instance.OnNextWeapon;
@@ -1597,6 +1626,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnDebugTeleportToSurfaceDemo(InputAction.CallbackContext context);
+        void OnDebugTeleportToAlecDev2(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
         void OnDebugFullResources(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
