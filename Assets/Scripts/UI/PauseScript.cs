@@ -97,27 +97,28 @@ public class PauseScript : MonoBehaviour
     }
     public void MainMenuClick()
     {
-
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
-
-        //Destroy(GameObject.Find("Player"));
-        //Destroy(GameObject.Find("Player Camera"));
-        //Destroy(GameObject.Find("Player Input Manager"));
-        //Destroy(GameObject.Find("Player UI Manager"));
-        //Destroy(GameObject.Find("TinkerComponentManager"));
-        //Destroy(GameObject.Find("WeaponController"));
-        //Destroy(GameObject.Find("UpgradeMenuManager"));
-        //Destroy(GameObject.Find("DontDestroyOnLoad"));
-        //Destroy(GameObject.Find("MiniMap Camera"));
-        Scene scne = GameObject.Find("Player").scene;
-        GameObject ddol = GameObject.Find("DontDestroyOnLoad");
-        foreach(GameObject obj in scne.GetRootGameObjects())
-        {
-            Destroy(obj);
-        }
+        Unpause();
+        //Destroy(GameObject.Find("DontDestroyOnLoad")); //Not a real object
+        Destroy(GameObject.Find("Player"));
+        Destroy(GameObject.Find("Player Camera"));
+        Destroy(GameObject.Find("Player Input Manager"));
+        //Destroy(GameObject.Find("Player UI Manager")); //For some reason destroying this causes issues on title screen
+        Destroy(GameObject.Find("TinkerComponentManager"));
+        Destroy(GameObject.Find("WeaponController"));
+        Destroy(GameObject.Find("MiniMap Camera"));
+        Destroy(GameObject.Find("JournalManager"));
+        Destroy(GameObject.Find("IdeaCameraController"));
+        Destroy(GameObject.Find("WorldMusicManager"));
+        Destroy(GameObject.Find("WorldSaveGameManager"));
+        //Scene scne = GameObject.Find("Player").scene;
+        //GameObject ddol = GameObject.Find("DontDestroyOnLoad");
+        //foreach(GameObject obj in scne.GetRootGameObjects())
+        //{
+        //    Destroy(obj);
+        //}
         //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
         SceneManager.LoadScene(0);
-        Unpause();
     }
     public void InventMenuClick()
     {

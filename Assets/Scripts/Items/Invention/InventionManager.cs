@@ -47,6 +47,22 @@ public class InventionManager : MonoBehaviour
     }
 
     //INVENTION
+    public bool[] SaveInventions()
+    {
+        bool[] rv = new bool[allInventions.Length];
+        for (int i = 0; i < allInventions.Length; i++)
+        {
+            rv[i] = allInventions[i] != null && allInventions[i].hasObtained;
+        }
+        return rv;
+    }
+    public void LoadInventions(bool[] inventions)
+    {
+        for (int i = 0;i < allInventions.Length; i++)
+        {
+            allInventions[i].hasObtained = inventions[i];
+        }
+    }
     /** returns true if the player has aquired the upgrade */
     public bool CheckHasUpgrade(InventionType inventType)
     {
