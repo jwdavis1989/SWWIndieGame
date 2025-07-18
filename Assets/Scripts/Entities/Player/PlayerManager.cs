@@ -137,7 +137,7 @@ public class PlayerManager : CharacterManager
         //Ideas
         currentCharacterData.ideas = InventionManager.instance.ideas;
         //Inventions
-        currentCharacterData.inventions = InventionManager.instance.allInventions;
+        currentCharacterData.inventions = InventionManager.instance.SaveInventions();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
@@ -181,7 +181,9 @@ public class PlayerManager : CharacterManager
         InventionManager.instance.ideas = currentCharacterData.ideas;
         //Inventions
         if (!isNewGame)
-            InventionManager.instance.allInventions = currentCharacterData.inventions;
+        {
+            InventionManager.instance.LoadInventions(currentCharacterData.inventions);
+        }
     }
 
     public void ToggleFlashlight()

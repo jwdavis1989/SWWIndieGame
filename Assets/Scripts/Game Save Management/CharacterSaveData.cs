@@ -42,7 +42,7 @@ public class CharacterSaveData
 
     public Dictionary<string, bool> journalFlags = new Dictionary<string, bool>();
     public IdeaStats[] ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
-    public InventionScript[] inventions = new InventionScript[0];
+    public bool[] inventions = new bool[0];
 
     public CharacterSaveData()
     {
