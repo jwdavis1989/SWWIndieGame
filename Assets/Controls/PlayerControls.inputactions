@@ -369,6 +369,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DebugTeleportToAlecDev2",
+                    "type": "Button",
+                    "id": "1dec232e-b90d-46c2-9c2b-388446eec57a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "NextWeapon",
                     "type": "PassThrough",
                     "id": "3e3e861f-fb3e-42f7-9cd1-77f1b6df3609",
@@ -870,6 +879,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e8431e9-943d-4c57-a1d9-f90d7de9d4f3",
+                    "path": "<Keyboard>/numpad5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTeleportToAlecDev2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

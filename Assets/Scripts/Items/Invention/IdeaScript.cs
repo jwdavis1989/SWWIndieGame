@@ -69,7 +69,7 @@ public enum IdeaType
     Golem,
     Dummy,
     Skeletony,
-
+    Tree,
     //Add new ideas here
 
     // Total unique ideas.
