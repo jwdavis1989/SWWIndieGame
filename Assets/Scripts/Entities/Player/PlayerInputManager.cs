@@ -177,7 +177,10 @@ public class PlayerInputManager : MonoBehaviour
                 player.transform.position = new Vector3(0, 60, 0);
                 SceneManager.LoadSceneAsync(2);
             });
-            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3); // JacobDev (rename) - 7/18/25: Western Town Mesa Ocean
+            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i => {
+                player.transform.position = new Vector3(0, 20, 0);
+                SceneManager.LoadSceneAsync(3); 
+            }); // JacobDev (rename) - 7/18/25: Western Town Mesa Ocean
             playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i =>
             {
                 player.transform.position = new Vector3(0, 9, 0);
@@ -185,8 +188,8 @@ public class PlayerInputManager : MonoBehaviour
             });
             playerControls.PlayerActions.DebugTeleportToAlecDev2.performed += (i =>
             {
-                // AlecDev - 7/18/25: this is tower in ocean
-                player.transform.position = new Vector3(0, 9, 0);
+                // AlecDev - 7/18/25: this is grass island
+                player.transform.position = new Vector3(-50, 21, -80);
                 SceneManager.LoadSceneAsync(5);
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
