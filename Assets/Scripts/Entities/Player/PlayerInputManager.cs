@@ -174,7 +174,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i =>
             {
                 // AlecDev - 7/18/25: this is tower in ocean
-                player.transform.position = new Vector3(0, 60, 0);
+                player.transform.position = new Vector3(0, 140, 0);
                 SceneManager.LoadSceneAsync(2);
             });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i => {
