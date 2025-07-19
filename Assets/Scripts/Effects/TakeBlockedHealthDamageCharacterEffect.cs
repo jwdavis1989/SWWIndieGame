@@ -223,7 +223,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             character.isBlocking = false;
 
             //Play SFX when Guard is Broken
-                //TODO
+            character.characterSoundFXManager.PlayGuardBrokenSoundFX();
 
             result = true;
         }
@@ -318,10 +318,12 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         {
             damagedCharacter.characterSoundFXManager.PlayTakeDamageGrunts();
         }
-        else
-        {
-            //Play a Pinging SFX based on how heavy the hit was
-        }
+        // else
+        // {
+        //     //Play a Pinging SFX based on how heavy the hit was
+        // }
+
+        damagedCharacter.characterSoundFXManager.PlayBlockSoundFX();
     }
 
     private void PlayDirectionalBasedBlockingAnimation(CharacterManager characterTakingDamage)
