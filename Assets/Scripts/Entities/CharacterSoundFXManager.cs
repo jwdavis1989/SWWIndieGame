@@ -120,7 +120,7 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     public virtual void PlayGuardBrokenSoundFX()
     {
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.guardBrokenSFX), 1f, 1.5f);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.guardBrokenSFX), 1f, 1.75f);
     }
 
 }
