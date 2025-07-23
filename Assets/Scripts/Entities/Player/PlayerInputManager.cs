@@ -173,14 +173,27 @@ public class PlayerInputManager : MonoBehaviour
             });
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i =>
             {
-                player.transform.position = new Vector3(0, 9, 0);
-                SceneManager.LoadSceneAsync(2);
+                player.transform.position = new Vector3(0, 140, 0);
+                SceneManager.LoadSceneAsync(2);// AlecDev - 7/19/25: this is tower in ocean
             });
-            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += i => SceneManager.LoadSceneAsync(3);
+            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i => {
+                player.transform.position = new Vector3(0, 20, 0);
+                SceneManager.LoadSceneAsync(3); // MesaDev - 7/19/25: Western Town Mesa Ocean
+            }); 
             playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i =>
             {
                 player.transform.position = new Vector3(0, 9, 0);
                 SceneManager.LoadSceneAsync(4);
+            });
+            playerControls.PlayerActions.DebugTeleportToAlecDev2.performed += (i =>
+            {
+                player.transform.position = new Vector3(-50, 21, -80);
+                SceneManager.LoadSceneAsync(5);// AlecDev - 7/19/25: this is a grassy pirate island
+            });
+            playerControls.PlayerActions.DebugTeleportToAlecDevDungeon.performed += (i =>
+            {
+                player.transform.position = new Vector3(0, 0, 0);
+                SceneManager.LoadSceneAsync(6);// AlecDev - 7/19/25: this is a alec dev dungeon
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
