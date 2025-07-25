@@ -9,7 +9,7 @@ public class SwingableDoorInteractable : Interactable
     public GameObject rightDoor;
     public bool isLocked = true;
     private float currentDoorOpenTimer = 0f;
-    private float maximumDoorOpenTimer = 3f;
+    private float maximumDoorOpenTimer = 1.1f;
     public float doorOpenAngle = 90f;
     public bool needsKey = false;
 
@@ -48,10 +48,12 @@ public class SwingableDoorInteractable : Interactable
             var doorYOffset = (doorOpenAngle / maximumDoorOpenTimer) * Time.deltaTime;
 
             //Move Left Door
-            leftDoor.transform.Rotate(new Vector3(0.0f, -doorYOffset, 0f));
+            if(leftDoor != null)
+                leftDoor.transform.Rotate(new Vector3(0.0f, -doorYOffset, 0f));
 
             //Move Right Door
-            rightDoor.transform.Rotate(new Vector3(0.0f, doorYOffset, 0f));
+            if(rightDoor != null)
+                rightDoor.transform.Rotate(new Vector3(0.0f, doorYOffset, 0f));
 
             yield return null;
         }
