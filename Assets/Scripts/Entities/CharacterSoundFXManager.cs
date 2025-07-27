@@ -123,4 +123,9 @@ public class CharacterSoundFXManager : MonoBehaviour
         PlayAdvancedSoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.guardBrokenSFX), 1f, 1.75f);
     }
 
+    public virtual void PlayPerfectGuardSFX()
+    {
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.perfectGuardFlourishSFX), 1f, 1f);
+    }
+
 }

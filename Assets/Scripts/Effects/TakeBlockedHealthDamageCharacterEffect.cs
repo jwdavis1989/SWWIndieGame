@@ -316,7 +316,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
         if (finalDamageDealt > 0f)
         {
-            damagedCharacter.characterSoundFXManager.PlayTakeDamageGrunts();
+            //damagedCharacter.characterSoundFXManager.PlayTakeDamageGrunts();
         }
         // else
         // {
@@ -324,6 +324,12 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         // }
 
         damagedCharacter.characterSoundFXManager.PlayBlockSoundFX();
+
+        //Add flourish to give impact to the player's successful Perfect Block
+        if (damagedCharacter.isPerfectBlocking)
+        {
+            damagedCharacter.characterSoundFXManager.PlayPerfectGuardSFX();
+        }
     }
 
     private void PlayDirectionalBasedBlockingAnimation(CharacterManager characterTakingDamage)
