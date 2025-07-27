@@ -36,8 +36,8 @@ public enum AttackType
     RollingLightAttack01,
     RollingHeavyAttack01,
     BackstepLightAttack01,
-    BackstepHeavyAttack01
-
+    BackstepHeavyAttack01,
+    Attack1
 }
 
 //Intensity of blocked attacks
