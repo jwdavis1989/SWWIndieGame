@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class CharacterAnimatorManager : MonoBehaviour
 {
@@ -163,12 +164,16 @@ public class CharacterAnimatorManager : MonoBehaviour
 
         //Keep track of last attack performed (For Combos)
         //Keep track of current attack type (Light, Heavy, etc.)
-        character.characterWeaponManager.currentAttackType = attackType;
+        if(character.characterWeaponManager != null)
+            character.characterWeaponManager.currentAttackType = attackType;
         character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;
 
 
         //Update Animation Set to Current Weapon's Animations
-        UpdateAnimatorControllerByWeapon(character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+        if (character.characterWeaponManager != null)
+            UpdateAnimatorControllerByWeapon(character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+        else
+            targetAnimation = targetAnimation != "Attack1"? "Attack1": "Attack_2";
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(targetAnimation, 0.2f);
         character.isPerformingAction = isPerformingAction;
