@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25726137, g: 0.68989986, b: 0.8192101, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9875,7 +9875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableText: 
   interactableCollider: {fileID: 337784160}
-  isClosed: 0
+  isClosed: 1
   leftDoor: {fileID: 635154662}
   rightDoor: {fileID: 0}
   doorOpenAngle: 90
@@ -20168,7 +20168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableText: 
   interactableCollider: {fileID: 651913211}
-  isClosed: 0
+  isClosed: 1
   leftDoor: {fileID: 1194537384}
   rightDoor: {fileID: 0}
   doorOpenAngle: 90
@@ -26118,6 +26118,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -91.706
       objectReference: {fileID: 0}
+    - target: {fileID: 209119299038696173, guid: 6ced95f04487bec4e81f51a934884b80, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 068d39ad2a610284589321a74477fca7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40401,7 +40405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactableText: 
   interactableCollider: {fileID: 1293916251}
-  isClosed: 0
+  isClosed: 1
   leftDoor: {fileID: 1655832120}
   rightDoor: {fileID: 0}
   doorOpenAngle: 90
@@ -47695,7 +47699,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 6004089f3101178419380a48a38bc4ce, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3f18fdfd532fe6145805dc7d930b0169, type: 2}
+      objectReference: {fileID: 2100000, guid: 62c98c00334912d4da396652c063e026, type: 2}
     - target: {fileID: 919132149155446097, guid: 6004089f3101178419380a48a38bc4ce, type: 3}
       propertyPath: m_Name
       value: SandGround04UW
@@ -62588,7 +62592,7 @@ PrefabInstance:
     - target: {fileID: 8689589981502276810, guid: 04c852aad9fc0b44f9d3e1319fdbfd09, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 3f18fdfd532fe6145805dc7d930b0169, type: 2}
+      objectReference: {fileID: 2100000, guid: 1cc3d617066c7e248bec8daec484b603, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
