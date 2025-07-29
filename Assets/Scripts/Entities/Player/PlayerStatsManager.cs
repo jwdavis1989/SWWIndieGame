@@ -26,11 +26,14 @@ public class PlayerStatsManager : CharacterStatsManager
             // CalculateStaminaBasedOnEnduranceLevel(endurance);
     }
 
-    public void FullyRestoreResources() {
+    public void FullyRestoreResources()
+    {
         SetNewMaxHealthValue();
         SetNewMaxStaminaValue();
-        if (player.isDead) {
+        if (player.isDead)
+        {
             player.ReviveCharacter();
         }
+        totalPoiseDamage = 0f;
     }
 }
