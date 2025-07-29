@@ -84,16 +84,19 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             //Play Damage VFX
             PlayDamageVFX(character);
 
-            //If Character is A.I., Check for new target if character causing damage is preset
+            //If Character is A.I., Check for new target if character causing damage is present
 
         }
 
     }
 
-    private void ApplyDamage(CharacterManager targetCharacter, CharacterManager characterCausingDamage) {
+    private void ApplyDamage(CharacterManager targetCharacter, CharacterManager characterCausingDamage)
+    {
         //Monsters or player created damage
-        if (characterCausingDamage != null) {
-            if (!targetCharacter.isPlayer) {
+        if (characterCausingDamage != null)
+        {
+            if (!targetCharacter.isPlayer)
+            {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                 if (isMainHand)
@@ -113,12 +116,14 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                     }
                 }
             }
-            else {
+            else
+            {
                 finalDamageDealt = CalculateNPCDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
         }
         //Traps and environmental hazards
-        else {
+        else
+        {
             finalDamageDealt = CalculateNPCDamage(targetCharacter);
         }
 
@@ -126,9 +131,18 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Apply final damage to character's health
         Debug.Log("HPDmg: " + finalDamageDealt);
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
-        
+
         //Calculate Poise Damage to determine if the character will be stunned
-        //TODO
+        targetCharacter.characterStatsManager.totalPoiseDamage -= poiseDamage;
+
+        float remainingPoise = targetCharacter.characterStatsManager.CalculateRemainingPoise();
+        if (remainingPoise <= 0)
+        {
+            poiseIsBroken = true;
+        }
+
+        //Reset the poise timer of the target creature
+        targetCharacter.characterStatsManager.currentPoiseResetTimer = targetCharacter.characterStatsManager.defaultPoiseResetTimer;
     }
 
     public float CalculateNPCDamage (CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f) {
@@ -235,9 +249,6 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             return;
         }
 
-        
-        //Calculate if Poise is broken
-        poiseIsBroken = true;
 
         if (angleHitFrom >= 145 && angleHitFrom <= 180) {
             //Play Front Animation

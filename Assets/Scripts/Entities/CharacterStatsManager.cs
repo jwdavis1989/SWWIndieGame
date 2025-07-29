@@ -15,15 +15,13 @@ public class CharacterStatsManager : MonoBehaviour
 
     //Elemental Defenses, currently changing to ElementalStats class
     public ElementalStats elementalDefenses = new ElementalStats();
-    // public float fireDefense = 0f;
-    // public float iceDefense = 0f;
-    // public float lightningDefense = 0f;
-    // public float windDefense = 0f;
-    // public float earthDefense = 0f;
-    // public float lightDefense = 0f;
-    // public float beastDefense = 0f;
-    // public float scalesDefense = 0f;
-    // public float techDefense = 0f;
+
+    [Header("Poise")]
+    public float totalPoiseDamage;              //How much poise damage we have taken
+    public float offensivePoiseBonus;           //The poise bonus gained from using weapons (Heavy weapons have a much larger bonus)
+    public float basePoiseDefense;              //Can be increased with some inventions
+    public float defaultPoiseResetTimer = 8f;   //Time it takes for pose damage to reset after being hit last
+    public float currentPoiseResetTimer = 0f;
 
     [Header("Health")]
     public float currentHealth = 1;
@@ -40,20 +38,25 @@ public class CharacterStatsManager : MonoBehaviour
     public float jumpStaminaCost = 0f;
     public float staminaTickTimer = 0.1f;
 
-    protected virtual void Awake() {
+    protected virtual void Awake()
+    {
         character = GetComponent<CharacterManager>();
     }
 
-    protected virtual void Start() {
+    protected virtual void Start()
+    {
         CalculateHealthBasedOnfortitudeLevel(fortitude);
         CalculateHealthBasedOnfortitudeLevel(endurance);
     }
 
-    public void Update() {
+    public virtual void Update()
+    {
         CheckHP();
+        HandlePoiseResetTimer();
     }
 
-    public float CalculateHealthBasedOnfortitudeLevel(int fortitude) {
+    public float CalculateHealthBasedOnfortitudeLevel(int fortitude)
+    {
         //Create an equation for how stamina is calculated
 
         //Use Mathf.RoundToInt and a float called stamina if your formula is more complex
@@ -64,7 +67,8 @@ public class CharacterStatsManager : MonoBehaviour
         //If simple formula, use this simpler and more efficient method
         return fortitude * 10f;
     }
-    public float CalculateStaminaBasedOnEnduranceLevel(int endurance) {
+    public float CalculateStaminaBasedOnEnduranceLevel(int endurance)
+    {
         //Create an equation for how stamina is calculated
 
         //Use Mathf.RoundToInt and a float called stamina if your formula is more complex
@@ -77,34 +81,42 @@ public class CharacterStatsManager : MonoBehaviour
     }
 
     //Only called when player gets an upgrade to these Resources
-    public void SetNewMaxHealthValue() {
+    public void SetNewMaxHealthValue()
+    {
         maxHealth = CalculateHealthBasedOnfortitudeLevel(fortitude);
         PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(maxHealth);
         currentHealth = maxHealth;
     }
-    public void SetNewMaxStaminaValue() {
+    public void SetNewMaxStaminaValue()
+    {
         maxStamina = CalculateStaminaBasedOnEnduranceLevel(endurance);
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(maxStamina);
         currentStamina = maxStamina;
     }
 
-    public void RegenerateStamina() {
+    public void RegenerateStamina()
+    {
 
-        if (character.isSprinting) {
+        if (character.isSprinting)
+        {
             return;
         }
 
-        if (character.isPerformingAction) {
+        if (character.isPerformingAction)
+        {
             return;
         }
 
         staminaRegenerationTimer += Time.deltaTime;
 
-        if (staminaRegenerationTimer >= staminaRegenerationDelay) {
-            if (currentStamina < maxStamina) {
+        if (staminaRegenerationTimer >= staminaRegenerationDelay)
+        {
+            if (currentStamina < maxStamina)
+            {
                 staminaTickTimer += Time.deltaTime;
 
-                if (staminaTickTimer >= 0.1) {
+                if (staminaTickTimer >= 0.1)
+                {
                     staminaTickTimer = 0;
                     currentStamina += staminaRegenAmount;
                 }
@@ -112,7 +124,8 @@ public class CharacterStatsManager : MonoBehaviour
         }
     }
 
-    public virtual void ResetStaminaRegenTimer() {
+    public virtual void ResetStaminaRegenTimer()
+    {
         staminaRegenerationTimer = 0;
     }
 
@@ -121,10 +134,11 @@ public class CharacterStatsManager : MonoBehaviour
         if (currentHealth <= 0 && !character.isDead)
         {
             //Disable Minimap Marker
-            if (character.miniMapSprite != null) {
+            if (character.miniMapSprite != null)
+            {
                 character.miniMapSprite.SetActive(false);
             }
-            
+
             StartCoroutine(character.ProcessDeathEvent());
         }
 
@@ -135,6 +149,20 @@ public class CharacterStatsManager : MonoBehaviour
         }
     }
 
-    
-    
+    public float CalculateRemainingPoise()
+    {
+        return basePoiseDefense + offensivePoiseBonus + totalPoiseDamage;
+    }
+
+    protected virtual void HandlePoiseResetTimer()
+    {
+        if (currentPoiseResetTimer > 0)
+        {
+            currentPoiseResetTimer -= Time.deltaTime;
+        }
+        else
+        {
+            totalPoiseDamage = 0;
+        }
+    }
 }
