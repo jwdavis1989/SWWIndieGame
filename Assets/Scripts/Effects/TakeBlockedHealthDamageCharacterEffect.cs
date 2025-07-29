@@ -234,10 +234,10 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
     private void PlayDamageVFX(CharacterManager character)
     {
         //e.g. If we have Fire Damage, Play Fire Particle Effects
-        if (finalDamageDealt > 0f)
-        {
-            character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
-        }
+        // if (finalDamageDealt > 0f)
+        // {
+        //     character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
+        // }
 
         //Play a Sparking Impact VFX for the blocking impact as well
 
@@ -316,7 +316,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
         if (finalDamageDealt > 0f)
         {
-            damagedCharacter.characterSoundFXManager.PlayTakeDamageGrunts();
+            //damagedCharacter.characterSoundFXManager.PlayTakeDamageGrunts();
         }
         // else
         // {
@@ -324,6 +324,12 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         // }
 
         damagedCharacter.characterSoundFXManager.PlayBlockSoundFX();
+
+        //Add flourish to give impact to the player's successful Perfect Block
+        if (damagedCharacter.isPerfectBlocking)
+        {
+            damagedCharacter.characterSoundFXManager.PlayPerfectGuardSFX();
+        }
     }
 
     private void PlayDirectionalBasedBlockingAnimation(CharacterManager characterTakingDamage)

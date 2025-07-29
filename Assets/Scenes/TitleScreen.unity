@@ -4114,18 +4114,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 797972881054226532, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: ac87f41251942154abc2290093fbe2b7, type: 2}
-    - target: {fileID: 797972881054226532, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675919013060181275, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1073745919
-      objectReference: {fileID: 0}
     - target: {fileID: 3557556730804515875, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
       propertyPath: m_Name
       value: IdeaCameraController
@@ -4169,30 +4157,6 @@ PrefabInstance:
     - target: {fileID: 4812313615822909584, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6511611065951331687, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1150
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217562874424695227, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: ideaLayers.m_Bits
-      value: 3137
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4841,6 +4805,44 @@ CapsuleCollider:
   m_Height: 0.23
   m_Direction: 1
   m_Center: {x: 0, y: 0.12, z: 0}
+--- !u!84 &1263951362
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1271229941
 GameObject:
   m_ObjectHideFlags: 0
@@ -6375,6 +6377,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1631826867}
   m_CullTransparentMesh: 1
+--- !u!84 &1652292498
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1657248207
 GameObject:
   m_ObjectHideFlags: 0
@@ -7791,6 +7831,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastDamageAnimationPlayed: 
+  hit_Forward_Ping_01: Hit_Forward_Ping_01
+  hit_Forward_Ping_02: Hit_Forward_Ping_02
+  hit_Backward_Ping_01: Hit_Backward_Ping_01
+  hit_Backward_Ping_02: Hit_Backward_Ping_02
+  hit_Right_Ping_01: Hit_Right_Ping_01
+  hit_Right_Ping_02: Hit_Right_Ping_02
+  hit_Left_Ping_01: Hit_Left_Ping_01
+  hit_Left_Ping_02: Hit_Left_Ping_02
+  forward_Ping_Damage: []
+  backward_Ping_Damage: []
+  right_Ping_Damage: []
+  left_Ping_Damage: []
   hit_Forward_Medium_01: Hit_Forward_Medium_01
   hit_Forward_Medium_02: Hit_Forward_Medium_02
   hit_Backward_Medium_01: Hit_Backward_Medium_01
@@ -8303,14 +8355,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: caveAmbience
-      value: 
-      objectReference: {fileID: 8300000, guid: 46d07e1dca5be7e49a49b8aeffbe0a32, type: 3}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: guardBrokenSFX.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 7d3fbdeed5ebed94a9e48456c3a050df, type: 3}
     - target: {fileID: 2406621850794021007, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.013680458
@@ -9268,6 +9312,11 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+  totalPoiseDamage: 0
+  offensivePoiseBonus: 0
+  basePoiseDefense: 80
+  defaultPoiseResetTimer: 8
+  currentPoiseResetTimer: 0
   currentHealth: 1
   maxHealth: 100
   currentStamina: 0
