@@ -234,10 +234,10 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
     private void PlayDamageVFX(CharacterManager character)
     {
         //e.g. If we have Fire Damage, Play Fire Particle Effects
-        if (finalDamageDealt > 0f)
-        {
-            character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
-        }
+        // if (finalDamageDealt > 0f)
+        // {
+        //     character.characterEffectsManager.PlayBloodSplatterVFX(contactPoint);
+        // }
 
         //Play a Sparking Impact VFX for the blocking impact as well
 
