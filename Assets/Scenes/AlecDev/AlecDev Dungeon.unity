@@ -7252,7 +7252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &804414069
 AudioListener:
   m_ObjectHideFlags: 0
@@ -7321,7 +7321,7 @@ Transform:
   m_GameObject: {fileID: 804414068}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.502026, y: 3.5944288, z: 17.332253}
+  m_LocalPosition: {x: -16.5, y: 7.3, z: 10.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16007,6 +16007,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 887632511094407200, guid: a3c75a3213fa73240af3f158dbafb45e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1472effaddb2a9c4592e06daf91cdad0, type: 2}
     - target: {fileID: 5603115806628100943, guid: a3c75a3213fa73240af3f158dbafb45e, type: 3}
       propertyPath: m_Name
       value: Metal Tile Large Room
