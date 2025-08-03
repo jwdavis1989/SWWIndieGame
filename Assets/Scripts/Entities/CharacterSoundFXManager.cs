@@ -8,6 +8,10 @@ public class CharacterSoundFXManager : MonoBehaviour
     public AudioSource audioSource;
     private int footStepSFXCount;
     private int runFootStepSFXCount;
+    public float walkFootStepPitch = 1f;
+    public float runFootStepPitch = 1.2f;
+    private float currentFootStepPitch;
+    private float lastFootStep;
 
     [SerializeField] protected AudioClip[] takeDamageGrunts;
 
@@ -20,6 +24,12 @@ public class CharacterSoundFXManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         footStepSFXCount = WorldSoundFXManager.instance.walkFootStepSFX.Length;
         runFootStepSFXCount = WorldSoundFXManager.instance.runFootStepSFX.Length;
+        currentFootStepPitch = walkFootStepPitch;
+    }
+
+    private void Update()
+    {
+        HandleFootStepSFX();
     }
 
     public void PlayAdvancedSoundFX(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool randomizePitch = true, float pitchRandomRange = 0.1f, bool canOverlap = false)
@@ -95,17 +105,33 @@ public class CharacterSoundFXManager : MonoBehaviour
     {
         if (characterManager.isGrounded && !characterManager.isPerformingAction)
         {
-            //PlayAdvancedSoundFX(WorldSoundFXManager.instance.walkFootStepSFX[Random.Range(0 , footStepSFXCount)], 1f, 1f, true, 0.1f, true);
-            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], 0.1f, 1.2f, true, 0.2f, true);
+            UpdateFootStepPitch();
+            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], 0.1f, currentFootStepPitch, true, 0.2f, true);
         }
     }
 
-    public void PlayRunFootStepSFX()
+    public void UpdateFootStepPitch()
     {
-        if (characterManager.isGrounded && !characterManager.isPerformingAction)
+        if (characterManager.isSprinting)
         {
-            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], 0.1f, 1f, true, 0.1f, true);
+            currentFootStepPitch = runFootStepPitch;
         }
+        else
+        {    
+            currentFootStepPitch = walkFootStepPitch;
+        }
+    }
+
+    public void HandleFootStepSFX()
+    {
+        var footStep = characterManager.animator.GetFloat("FootStepCurve");
+
+        if ((lastFootStep > 0 && footStep < 0) || (lastFootStep < 0 && footStep > 0))
+        {
+            PlayFootStepSFX();
+        }
+
+        lastFootStep = footStep;
     }
 
     public virtual void PlayTakeDamageGrunts()
