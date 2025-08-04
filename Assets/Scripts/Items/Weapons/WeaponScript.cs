@@ -207,6 +207,19 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Animations")]
     public AnimatorOverrideController weaponAnimatorOverride;
+    [SerializeField] protected string offHandSpellAnimation;
+
+    [Header("Weapon Family Specific")]
+    [Header("Magic Special Weapons")]
+    public float fullChargingTraitModifier = 1.25f;
+    [SerializeField] public GameObject spellCastWarmUpVFX;
+    [SerializeField] public GameObject spellProjectileVFX;
+    //TODO: Add full charge version of spell VFX
+    public AudioClip spellReleaseSFX;
+    public AudioClip spellProjectileSFX;
+
+
+
 
     public void Awake()
     {
@@ -231,7 +244,8 @@ public class WeaponScript : MonoBehaviour
         }
     }
     //TODO: Call this when you upgrade weapons too!
-    public void SetWeaponDamage() {
+    public void SetWeaponDamage()
+    {
         if (weaponDamageCollider == null)
         {
             return;
@@ -242,7 +256,7 @@ public class WeaponScript : MonoBehaviour
         weaponDamageCollider.enabled = true;
 
         weaponDamageCollider.weaponFamily = weaponFamily;
-        
+
         weaponDamageCollider.elementalStats = stats.elemental;
         weaponDamageCollider.poiseDamage = stats.basePoiseDamage;
 
@@ -280,7 +294,7 @@ public class WeaponScript : MonoBehaviour
     {
         //Debug.Log("Adding " + exp + " exp to " + stats.weaponName);//astest
         stats.currentExperiencePoints += exp;
-        while(stats.currentExperiencePoints >= stats.experiencePointsToNextLevel)
+        while (stats.currentExperiencePoints >= stats.experiencePointsToNextLevel)
         {
             stats.level++;
             stats.currentTinkerPoints += stats.tinkerPointsPerLvl;
@@ -315,7 +329,7 @@ public class WeaponScript : MonoBehaviour
         result += stats.attack * (stats.elemental.beastPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower);
         result += stats.attack * (stats.elemental.scalesPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower);
         result += stats.attack * (stats.elemental.techPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.techPower);
-        
+
         //Calculate block modifier
         float blockingState = targetCharacter.isPerfectBlocking ? targetCharacter.perfectBlockModifier : 1f;
 
@@ -336,9 +350,29 @@ public class WeaponScript : MonoBehaviour
             {
                 return result * attackMotionValue * fullChargeModifier;
             }
-        
+
         }
         else return 0;
+    }
+
+    public virtual void AttemptToCastSpell(CharacterManager character)
+    {
+        //
+    }
+
+    public virtual void SuccessfullyCastSpell(CharacterManager character)
+    {
+        //
+    }
+
+    protected virtual void InstantiateWarmUpSpellFX(CharacterManager character)
+    {
+        //
+    }
+
+    protected virtual void InstantiateWarmUpReleaseFX(CharacterManager character)
+    {
+        //
     }
 
 
