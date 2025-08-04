@@ -28,45 +28,67 @@ public class CharacterCombatManager : MonoBehaviour
         character = GetComponent<CharacterManager>();
     }
 
-    public virtual void SetTarget(CharacterManager newTarget) {
-        if (newTarget != null) {
+    public virtual void SetTarget(CharacterManager newTarget)
+    {
+        if (newTarget != null)
+        {
             currentTarget = newTarget;
         }
-        else {
+        else
+        {
             currentTarget = null;
         }
     }
-    
-    public virtual void EnableCanDoCombo() {
+
+    public virtual void EnableCanDoCombo()
+    {
         canComboWithMainHandWeapon = true;
     }
 
-    public virtual void DisableCanDoCombo() {
+    public virtual void DisableCanDoCombo()
+    {
         canComboWithMainHandWeapon = false;
     }
 
-    public void EnableCanDoRollingAttack() {
+    public void EnableCanDoRollingAttack()
+    {
         canPerformRollingAttack = true;
     }
 
-    public void DisableCanDoRollingAttack() {
+    public void DisableCanDoRollingAttack()
+    {
         canPerformRollingAttack = false;
     }
 
-    public void EnableCanDoBackStepAttack() {
+    public void EnableCanDoBackStepAttack()
+    {
         canPerformBackStepAttack = true;
     }
 
-    public void DisableCanDoBackStepAttack() {
+    public void DisableCanDoBackStepAttack()
+    {
         canPerformBackStepAttack = false;
     }
 
-    public void EnableLockOnVFX() {
+    public void EnableLockOnVFX()
+    {
         LockOnVFX.SetActive(true);
     }
 
-    public void DisableLockOnVFX() {
+    public void DisableLockOnVFX()
+    {
         LockOnVFX.SetActive(false);
+    }
+
+    //Animation Event Calls
+    public void InstantiateSpellWarmUpFX()
+    {
+        character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().InstantiateWarmUpSpellFX(character);
+    }
+
+    public void InstantiateSpellReleaseFX()
+    {
+        character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().InstantiateReleaseFX(character);
     }
 
 }

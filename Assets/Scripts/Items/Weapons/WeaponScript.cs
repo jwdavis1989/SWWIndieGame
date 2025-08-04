@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 /** 
  * Enum of all weapon types.
@@ -201,6 +202,7 @@ public class WeaponScript : MonoBehaviour
     [Header("Actions")]
     public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
     public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
+    public WeaponItemAction offHandCastMagicAttackAction;   //Off hand Magic Special Attack
 
     [Header("Projectile")]
     public GameObject projectile = null;
@@ -357,29 +359,44 @@ public class WeaponScript : MonoBehaviour
 
     public virtual void AttemptToCastSpell(CharacterManager character)
     {
-        //
+        if (!CanIUseThisSpecialAttack(character))
+        {
+            return;
+        }
+
+        character.characterAnimatorManager.PlayTargetActionAnimation(offHandSpellAnimation, true);
     }
 
     public virtual void SuccessfullyCastSpell(CharacterManager character)
     {
-        //
+        Debug.Log("Successfully Cast Spell");
     }
 
-    protected virtual void InstantiateWarmUpSpellFX(CharacterManager character)
+    public virtual void InstantiateWarmUpSpellFX(CharacterManager character)
     {
-        //
+        Debug.Log("Instantiate Warm Up Spell FX");
     }
 
-    protected virtual void InstantiateWarmUpReleaseFX(CharacterManager character)
+    public virtual void InstantiateReleaseFX(CharacterManager character)
     {
-        //
+        Debug.Log("Instantiate Release FX");
     }
 
+    protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
+    {
+        if (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
 }
 /** Change Log  
  *  Date         Developer  Description
  *  09/16/2024   Alec       New.
  *  06/23/2025   Jerry      Added Block/Perfect Block Mechanics.
+ *  08/04/2025   Jerry      Added Spell Casting Weapon Mechanics.
  *  
  * */
