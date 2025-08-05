@@ -227,6 +227,7 @@ public class WeaponScript : MonoBehaviour
     public float spellUpwardVelocityMultiplier = 7f;
     [SerializeField] public GameObject spellCastWarmUpVFX;
     [SerializeField] public GameObject spellProjectileVFX;
+    [SerializeField] public GameObject spellProjectileFullChargeVFX;
     //TODO: Add full charge version of spell VFX
     public AudioClip spellReleaseSFX;
     public AudioClip spellProjectileSFX;
@@ -426,7 +427,46 @@ public class WeaponScript : MonoBehaviour
         Vector3 forwardVelocity = instantiatedSpellProjectileFX.transform.forward * spellForwardVelocityMultiplier;
         Vector3 totalVelocity = upwardVelocity + forwardVelocity;
         spellRigidbody.velocity = totalVelocity;
+    }
 
+    public virtual void SuccessfullyCastSpellFullCharge(CharacterManager character)
+    {
+        Debug.Log("Successfully Cast Charged Spell");
+
+        //1. Destroy any Warm Up FX remaining from the spell
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //2. Instantiate the Projectile
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
+        GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileFullChargeVFX);
+
+        //3. Zero out its location and unparent it
+        instantiatedSpellProjectileFX.transform.parent = null;
+        instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
+
+        //4. Apply Damage to the projectiles damage collider
+        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
+        fireBallManager.InitializeFireBall(characterThatOwnsThisWeapon);
+
+        //5. Set the projectile's direction
+        if (character.isLockedOn)
+        {
+            instantiatedSpellProjectileFX.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);
+        }
+        else
+        {
+            instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+        }
+
+        //6. Set the projectile's velocity
+        Rigidbody spellRigidbody = instantiatedSpellProjectileFX.GetComponent<Rigidbody>();
+        Vector3 upwardVelocity = instantiatedSpellProjectileFX.transform.up * spellUpwardVelocityMultiplier;
+        Vector3 forwardVelocity = instantiatedSpellProjectileFX.transform.forward * spellForwardVelocityMultiplier;
+        Vector3 totalVelocity = upwardVelocity + forwardVelocity;
+        spellRigidbody.velocity = totalVelocity;
+
+        fireBallManager.isFullyCharged = true;
     }
 
     public virtual void InstantiateWarmUpSpellFX(CharacterManager character)

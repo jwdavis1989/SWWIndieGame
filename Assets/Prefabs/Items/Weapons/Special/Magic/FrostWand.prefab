@@ -153,14 +153,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponFamily: 11
-  meleeWeaponDamageCollider: {fileID: 0}
+  weaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
   spr: {fileID: 21300000, guid: 090fd1914a92564439fdb61d171bf12b, type: 3}
   hasObtained: 1
   stats:
     weaponType: 14
+    isMonsterWeapon: 0
     attack: 24
     maxAttack: 44
+    basePoiseDamage: 35
     durability: 100
     maxDurability: 134
     block: 0
@@ -202,8 +204,35 @@ MonoBehaviour:
     baseStaminaCost: 20
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
+    lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
+    lightRunningAttack01StaminaCostModifier: 1
+    lightRollingAttack01StaminaCostModifier: 1
+    lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
+    lightAttack03DamageMotionValue: 1.2
+    heavyAttack01DamageMotionValue: 1.4
+    heavyAttack02DamageMotionValue: 1.6
+    heavyChargedAttack01DamageMotionValue: 2
+    heavyChargedAttack02DamageMotionValue: 2.2
+    lightRunningAttack01DamageMotionValue: 1
+    lightRollingAttack01DamageMotionValue: 1
+    lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 0}
+  mainHandHeavyAttackAction: {fileID: 0}
+  offHandCastMagicAttackAction: {fileID: 11400000, guid: 8e9365bba282ba0448de4018a8f7ce12, type: 2}
+  projectile: {fileID: 0}
+  weaponAnimatorOverride: {fileID: 0}
+  offHandSpellAnimation: Spell_Off_Fire_Ball_Start_01
+  fullChargingTraitModifier: 1.25
+  spellForwardVelocityMultiplier: 15
+  spellUpwardVelocityMultiplier: 7
+  spellCastWarmUpVFX: {fileID: 0}
+  spellProjectileVFX: {fileID: 0}
+  spellProjectileFullChargeVFX: {fileID: 0}
+  spellReleaseSFX: {fileID: 0}
+  spellProjectileSFX: {fileID: 0}

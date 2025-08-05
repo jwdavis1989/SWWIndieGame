@@ -16,6 +16,7 @@ public class FireBallManager : SpellManager
     private GameObject instantiatedDestructionFX;
 
     private bool hasCollided = false;
+    public bool isFullyCharged = false;
     private Rigidbody fireBallRigidBody;
     private Coroutine destructionFXCoroutine;
 
@@ -64,7 +65,14 @@ public class FireBallManager : SpellManager
 
     public void InstantiateSpellDestructionFX()
     {
-        instantiatedDestructionFX = Instantiate(impactParticleVFX, transform.position, Quaternion.identity);
+        if (isFullyCharged)
+        {
+            instantiatedDestructionFX = Instantiate(impactParticleFullChargeVFX, transform.position, Quaternion.identity);
+        }
+        else
+        {   
+            instantiatedDestructionFX = Instantiate(impactParticleVFX, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 
