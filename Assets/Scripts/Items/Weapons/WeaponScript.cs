@@ -394,8 +394,10 @@ public class WeaponScript : MonoBehaviour
 
         //Debug.Log("[Before] characterThatOwnsThisWeapon: " + (characterThatOwnsThisWeapon != null));
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        //Debug.Log("[After] characterThatOwnsThisWeapon: " + (characterThatOwnsThisWeapon != null));
+        Debug.Log("[Player] characterThatOwnsThisWeapon: " + (characterThatOwnsThisWeapon != null));
         fireBallManager.InitializeFireBall(characterThatOwnsThisWeapon);
+        fireBallManager.characterCausingDamage = characterThatOwnsThisWeapon;
+        Debug.Log("[Player] fireBallManager.characterCausingDamage: " + (fireBallManager.characterCausingDamage != null));
 
         //3. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = null;

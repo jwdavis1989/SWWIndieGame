@@ -24,8 +24,10 @@ public class SpellProjectileDamageCollider : DamageCollider
 
         fireBallManager = GetComponentInParent<FireBallManager>();
         Debug.Log("fireBallManager: " + (fireBallManager != null));
-        Debug.Log("characterCausingDamage: " + (characterCausingDamage != null));
         //Debug.Log("characterCausingDamage.characterWeaponManager: " + (characterCausingDamage.characterWeaponManager != null));
+        characterCausingDamage = fireBallManager.characterCausingDamage;
+        Debug.Log("fireBallManager.characterCausingDamage: " + (fireBallManager.characterCausingDamage != null));
+        Debug.Log("characterCausingDamage: " + (characterCausingDamage != null));
         weaponThatOwnsThisCollider = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>();
         Debug.Log("weaponThatOwnsThisCollider: " + (weaponThatOwnsThisCollider != null));
         InitializeStats();

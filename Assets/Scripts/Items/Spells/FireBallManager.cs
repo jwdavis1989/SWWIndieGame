@@ -19,6 +19,7 @@ public class FireBallManager : SpellManager
     public bool isFullyCharged = false;
     private Rigidbody fireBallRigidBody;
     private Coroutine destructionFXCoroutine;
+    public CharacterManager characterCausingDamage;
 
     protected override void Awake()
     {
@@ -60,7 +61,8 @@ public class FireBallManager : SpellManager
 
     public void InitializeFireBall(CharacterManager characterCausingDamage)
     {
-        damageCollider.characterCausingDamage = characterCausingDamage;
+        this.characterCausingDamage = characterCausingDamage;
+        //damageCollider.characterCausingDamage = characterCausingDamage;
     }
 
     public void InstantiateSpellDestructionFX()
