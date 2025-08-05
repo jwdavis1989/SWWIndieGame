@@ -37,6 +37,7 @@ public enum AttackType
     RollingHeavyAttack01,
     BackstepLightAttack01,
     BackstepHeavyAttack01,
+    AreaSpellAttack01,
     Attack1
 }
 

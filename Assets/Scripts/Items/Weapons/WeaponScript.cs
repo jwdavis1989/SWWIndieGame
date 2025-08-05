@@ -109,6 +109,9 @@ public class WeaponStats
     //Backstepping
     public float lightBackstepAttack01StaminaCostModifier = 1f;
 
+    //Spells
+    public float areaSpellAttack01StaminaCostModifier = 1f;
+
     [Header("Motion Values")]
     //Light
     public float lightAttack01DamageMotionValue = 1f;
@@ -131,6 +134,9 @@ public class WeaponStats
 
     //Backstepping
     public float lightBackstepAttack01DamageMotionValue = 1f;
+
+    //Spells
+    public float areaSpellAttack01DamageMotionValue = 1f;
 
 
 }
@@ -184,6 +190,7 @@ public class ElementalStats
  */
 public class WeaponScript : MonoBehaviour
 {
+    private CharacterManager characterThatOwnsThisWeapon;
     [Header("Weapon Family - Important - Set in Prefab")]
     public WeaponFamily weaponFamily = 0;
 
@@ -217,7 +224,7 @@ public class WeaponScript : MonoBehaviour
     
     [Header("Projectile Velocity")]
     public float spellForwardVelocityMultiplier = 15f;
-    public float spellUpwardVelocityMultiplier = 3f;
+    public float spellUpwardVelocityMultiplier = 7f;
     [SerializeField] public GameObject spellCastWarmUpVFX;
     [SerializeField] public GameObject spellProjectileVFX;
     //TODO: Add full charge version of spell VFX
@@ -248,6 +255,9 @@ public class WeaponScript : MonoBehaviour
         {
             SetWeaponDamage();
         }
+
+        //Initialize Weapon Owner
+        characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
     }
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage()
@@ -378,26 +388,29 @@ public class WeaponScript : MonoBehaviour
         //1. Destroy any Warm Up FX remaining from the spell
         character.characterCombatManager.DestroyAllCurrentActionFX();
 
-        //2. Get any Colliders from the caster, so we can ignore them later
-        Collider[] characterColliders = character.GetComponentsInChildren<Collider>();
-        Collider characterCollisionCollider = character.GetComponent<Collider>();
-
-        //3. Instantiate the Projectile
+        //2. Instantiate the Projectile
         SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
         GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX);
 
-        //4. Zero out its location and unparent it
+        //3. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = null;
         instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
 
-        //5. Use the list of colliders from the Caster and now apply the ignore physics with the colliders from the projectile
+        //4. Apply Damage to the projectiles damage collider
+        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
+        fireBallManager.InitializeFireBall(characterThatOwnsThisWeapon);
 
+        //Alternative way to avoid colliding with self, but isn't needed as we already checked this in the SpellProjectileDamageCollider 
+        // Collider[] characterColliders = character.GetComponentsInChildren<Collider>();
+        // Collider characterCollisionCollider = character.GetComponent<Collider>();
+        //
+        // foreach (var collider in characterColliders)
+        // {
+        //     Physics.IgnoreCollision(collider, fireBallManager.damageCollider.GetComponent<Collider>(), true);
+        // }
 
-        //6. Apply Damage to the projectiles damage collider
-
-
-        //7. Set the projectile's direction
+        //5. Set the projectile's direction
         if (character.isLockedOn)
         {
             instantiatedSpellProjectileFX.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);
@@ -407,7 +420,7 @@ public class WeaponScript : MonoBehaviour
             instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
         }
 
-        //8. Set the projectile's velocity
+        //6. Set the projectile's velocity
         Rigidbody spellRigidbody = instantiatedSpellProjectileFX.GetComponent<Rigidbody>();
         Vector3 upwardVelocity = instantiatedSpellProjectileFX.transform.up * spellUpwardVelocityMultiplier;
         Vector3 forwardVelocity = instantiatedSpellProjectileFX.transform.forward * spellForwardVelocityMultiplier;
