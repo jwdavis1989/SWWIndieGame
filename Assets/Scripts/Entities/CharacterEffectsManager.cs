@@ -16,6 +16,9 @@ public class CharacterEffectsManager : MonoBehaviour
     [SerializeField] GameObject bloodSplatterVFX;
     [SerializeField] GameObject deathVFX;
 
+    [Header("Current Active VFX")]
+    public GameObject activeSpellWarmUpFX;
+
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();

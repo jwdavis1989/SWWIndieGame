@@ -214,6 +214,10 @@ public class WeaponScript : MonoBehaviour
     [Header("Weapon Family Specific")]
     [Header("Magic Special Weapons")]
     public float fullChargingTraitModifier = 1.25f;
+    
+    [Header("Projectile Velocity")]
+    public float spellForwardVelocityMultiplier = 15f;
+    public float spellUpwardVelocityMultiplier = 3f;
     [SerializeField] public GameObject spellCastWarmUpVFX;
     [SerializeField] public GameObject spellProjectileVFX;
     //TODO: Add full charge version of spell VFX
@@ -370,11 +374,61 @@ public class WeaponScript : MonoBehaviour
     public virtual void SuccessfullyCastSpell(CharacterManager character)
     {
         Debug.Log("Successfully Cast Spell");
+
+        //1. Destroy any Warm Up FX remaining from the spell
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //2. Get any Colliders from the caster, so we can ignore them later
+        Collider[] characterColliders = character.GetComponentsInChildren<Collider>();
+        Collider characterCollisionCollider = character.GetComponent<Collider>();
+
+        //3. Instantiate the Projectile
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
+        GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX);
+
+        //4. Zero out its location and unparent it
+        instantiatedSpellProjectileFX.transform.parent = null;
+        instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
+
+        //5. Use the list of colliders from the Caster and now apply the ignore physics with the colliders from the projectile
+
+
+        //6. Apply Damage to the projectiles damage collider
+
+
+        //7. Set the projectile's direction
+        if (character.isLockedOn)
+        {
+            instantiatedSpellProjectileFX.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);
+        }
+        else
+        {
+            instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+        }
+
+        //8. Set the projectile's velocity
+        Rigidbody spellRigidbody = instantiatedSpellProjectileFX.GetComponent<Rigidbody>();
+        Vector3 upwardVelocity = instantiatedSpellProjectileFX.transform.up * spellUpwardVelocityMultiplier;
+        Vector3 forwardVelocity = instantiatedSpellProjectileFX.transform.forward * spellForwardVelocityMultiplier;
+        Vector3 totalVelocity = upwardVelocity + forwardVelocity;
+        spellRigidbody.velocity = totalVelocity;
+
     }
 
     public virtual void InstantiateWarmUpSpellFX(CharacterManager character)
     {
         Debug.Log("Instantiate Warm Up Spell FX");
+
+        //1. Instantiate Warm Up at the correct place
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
+
+        //2. "Save" the warm up FX as a variable so it can be destroyed if the player is knocked out of the animation
+        GameObject instantiatedSpellWarmUpFX = Instantiate(spellCastWarmUpVFX);
+        instantiatedSpellWarmUpFX.transform.parent = spellOriginLocation.transform;
+        instantiatedSpellWarmUpFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellWarmUpFX.transform.localRotation = Quaternion.identity;
+        character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellWarmUpFX;
     }
 
     public virtual void InstantiateReleaseFX(CharacterManager character)

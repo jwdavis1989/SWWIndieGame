@@ -322,6 +322,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         if (poiseIsBroken)
         {
             characterTakingDamage.characterAnimatorManager.PlayTargetActionAnimation(damageAnimation, true);
+            characterCausingDamage.characterCombatManager.DestroyAllCurrentActionFX();
         }
         else
         {

@@ -213,7 +213,7 @@ public class CharacterManager : MonoBehaviour
     {
         isInvulnerable = false;
     }
-    
+
     public virtual void DisableRollerJointInvulnerable()
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.

@@ -86,9 +86,18 @@ public class CharacterCombatManager : MonoBehaviour
         character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().InstantiateWarmUpSpellFX(character);
     }
 
-    public void InstantiateSpellReleaseFX()
+    public void SuccessfullyCastSpell()
     {
-        character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().InstantiateReleaseFX(character);
+        character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().SuccessfullyCastSpell(character);
+    }
+
+    //Used to destroy things like a "Drawn Arrow" or "Spell Warm Up FX" when the character's poise is broken
+    public void DestroyAllCurrentActionFX()
+    {
+        if (character.characterEffectsManager.activeSpellWarmUpFX != null)
+        {
+            Destroy(character.characterEffectsManager.activeSpellWarmUpFX);
+        }
     }
 
 }
