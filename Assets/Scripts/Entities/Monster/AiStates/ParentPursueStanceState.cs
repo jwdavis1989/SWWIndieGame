@@ -21,7 +21,8 @@ public class ParentPursueStanceState : PursueTargetState
         else
         {
             //Instantiate the child monster
-            aiCharacter.gameObject.GetComponent<SpawningBehavior>().Spawn(aiCharacter.transform);
+            GameObject child = aiCharacter.gameObject.GetComponent<SpawningBehavior>().Spawn(aiCharacter.transform);
+            child.transform.position = child.transform.position + (child.transform.forward *1.25f);
             currentSpawnTimer = 0f;
         }
         //copied from old

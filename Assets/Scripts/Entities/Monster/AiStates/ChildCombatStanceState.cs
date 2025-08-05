@@ -15,6 +15,18 @@ public class ChildCombatStanceState : CombatStanceState
 
     public override AIState Tick(AICharacterManager aiCharacter)
     {
+        if (!aiCharacter.navMeshAgent.enabled)
+        {
+            aiCharacter.navMeshAgent.enabled = true;
+        }
+        //Rotate to face our target
+        aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
+
+        //If Target is no longer present, return to the Idle State
+        if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
+        {
+            return SwitchState(aiCharacter, aiCharacter.idleState);
+        }
         if (currentTimeUntilExplosion < timeUntilExplosion)
         {
             currentTimeUntilExplosion += Time.deltaTime;
@@ -25,10 +37,12 @@ public class ChildCombatStanceState : CombatStanceState
             //You might need to check if the player is locked onto the child, to unlock it
             if (!finished)
             {
-                finished = true;
-                GameObject explosion = aiCharacter.gameObject.GetComponent<SpawningBehavior>().Spawn(aiCharacter.transform);
-                aiCharacter.transform.SetParent(explosion.transform, true);
+                GameObject explosion = aiCharacter.gameObject.GetComponent<SpawningBehavior>().Spawn();
+                explosion.transform.position = aiCharacter.transform.position;
+                //aiCharacter.transform.SetParent(explosion.transform, true);
+                aiCharacter.statsManager.currentHealth = 0;
                 aiCharacter.ProcessDeathEvent(true);
+                finished = true;
             }
             
         }

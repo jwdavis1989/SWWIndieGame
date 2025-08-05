@@ -5,11 +5,11 @@ using UnityEngine;
 public class SpawningBehavior : MonoBehaviour
 {
     public GameObject spawnPrefab;
-    [Header("Time to wait before spawn. Resets automatically \n" +
-            "Combine with SelfDestructBehavior for a single spawn\n" +
-            "Can also set to 0 and call Spawn() in another script")]
-    public float spawnInterval= 1;
-    private float spawnTime = 0;
+    //[Header("Time to wait before spawn. Resets automatically \n" +
+    //        "Combine with SelfDestructBehavior for a single spawn\n" +
+    //        "Can also set to 0 and call Spawn() in another script")]
+    //public float spawnInterval= 1;
+    //private float spawnTime = 0;
     //public void Update()
     //{
     //    spawnTime += Time.deltaTime;

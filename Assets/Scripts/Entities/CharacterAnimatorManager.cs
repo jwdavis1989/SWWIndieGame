@@ -164,16 +164,12 @@ public class CharacterAnimatorManager : MonoBehaviour
 
         //Keep track of last attack performed (For Combos)
         //Keep track of current attack type (Light, Heavy, etc.)
-        if(character.characterWeaponManager != null)
-            character.characterWeaponManager.currentAttackType = attackType;
+        character.characterWeaponManager.currentAttackType = attackType;
         character.characterCombatManager.lastAttackAnimationPerformed = targetAnimation;
 
 
         //Update Animation Set to Current Weapon's Animations
-        if (character.characterWeaponManager != null)
-            UpdateAnimatorControllerByWeapon(character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>());
-        else
-            targetAnimation = targetAnimation != "Attack1"? "Attack1": "Attack_2";
+        UpdateAnimatorControllerByWeapon(character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>());
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(targetAnimation, 0.2f);
         character.isPerformingAction = isPerformingAction;
