@@ -385,22 +385,22 @@ public class WeaponScript : MonoBehaviour
     public virtual void SuccessfullyCastSpell(CharacterManager character)
     {
         Debug.Log("Successfully Cast Spell");
-
         //1. Destroy any Warm Up FX remaining from the spell
         character.characterCombatManager.DestroyAllCurrentActionFX();
 
         //2. Instantiate the Projectile
-        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
-        GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX);
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
+        GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX, spellOriginLocation.transform);
+
+        //Debug.Log("[Before] characterThatOwnsThisWeapon: " + (characterThatOwnsThisWeapon != null));
+        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
+        //Debug.Log("[After] characterThatOwnsThisWeapon: " + (characterThatOwnsThisWeapon != null));
+        fireBallManager.InitializeFireBall(characterThatOwnsThisWeapon);
 
         //3. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = null;
         instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
-
-        //4. Apply Damage to the projectiles damage collider
-        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(characterThatOwnsThisWeapon);
 
         //Alternative way to avoid colliding with self, but isn't needed as we already checked this in the SpellProjectileDamageCollider 
         // Collider[] characterColliders = character.GetComponentsInChildren<Collider>();
@@ -411,7 +411,7 @@ public class WeaponScript : MonoBehaviour
         //     Physics.IgnoreCollision(collider, fireBallManager.damageCollider.GetComponent<Collider>(), true);
         // }
 
-        //5. Set the projectile's direction
+        //4. Set the projectile's direction
         if (character.isLockedOn)
         {
             instantiatedSpellProjectileFX.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);

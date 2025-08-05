@@ -25,6 +25,8 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] bool heavyAttackInput = false;
     [SerializeField] bool holdHeavyAttackInput = false;
     [SerializeField] bool blockInput = false;
+    [SerializeField] bool specialAttackInput = false;
+    [SerializeField] bool holdSpecialAttackInput = false;
 
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
@@ -108,6 +110,8 @@ public class PlayerInputManager : MonoBehaviour
         HandleMainHandHeavyAttackInput();
         HandleBlockInput();
         HandleChargeMainHandHeavyAttackInput();
+        HandleChargeOffHandSpecialAttackInput();
+        HandleOffHandSpecialAttackInput();
         HandleGamePadRightWeaponSwapInput();
         HandleGamePadLeftWeaponSwapInput();
         HandleQueuedInputs();
@@ -134,6 +138,11 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.HeavyAttack.performed += i => heavyAttackInput = true;
             playerControls.PlayerActions.ChargeHeavyAttack.performed += i => holdHeavyAttackInput = true;
             playerControls.PlayerActions.ChargeHeavyAttack.canceled += i => holdHeavyAttackInput = false;
+            
+            //Special Weapon Attacking
+            playerControls.PlayerActions.SpecialAttack.performed += i => specialAttackInput = true;
+            playerControls.PlayerActions.ChargeSpecialAttack.performed += i => holdSpecialAttackInput = true;
+            playerControls.PlayerActions.ChargeSpecialAttack.canceled += i => holdSpecialAttackInput = false;
 
             //Attack Queueing
             playerControls.PlayerActions.QueueLightAttack.performed += i => QueueInput(ref queueLightAttackInput);
@@ -545,6 +554,26 @@ public class PlayerInputManager : MonoBehaviour
         //We only want to check for a charge if we are in an action that requires it (e.g. Attacking)
         if (player.isPerformingAction && !player.isBlocking) {
             player.isChargingAttack = holdHeavyAttackInput;
+        }
+    }
+
+    private void HandleOffHandSpecialAttackInput() {
+        if (specialAttackInput && !player.isBlocking) {
+            specialAttackInput = false;
+
+            //TODO: Return if we have a UI Window Open
+
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedSpecialWeapons[PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().offHandCastMagicAttackAction, 
+                                                PlayerWeaponManager.instance.ownedSpecialWeapons[PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>());
+            }
+        }
+    }
+
+    private void HandleChargeOffHandSpecialAttackInput() {
+        //We only want to check for a charge if we are in an action that requires it (e.g. Attacking)
+        if (player.isPerformingAction && !player.isBlocking) {
+            player.isChargingSpellAttack = holdSpecialAttackInput;
         }
     }
 

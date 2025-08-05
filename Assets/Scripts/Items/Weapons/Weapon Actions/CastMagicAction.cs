@@ -28,7 +28,7 @@ public class CastMagicAction : WeaponItemAction
 
     private void PerformSpellAttack(CharacterManager characterPerformingAction)
     {
-        characterPerformingAction.characterWeaponManager.ownedSpecialWeapons[characterPerformingAction.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().AttemptToCastSpell(characterPerformingAction);
+        characterPerformingAction.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().AttemptToCastSpell(characterPerformingAction);
     }
 
 }

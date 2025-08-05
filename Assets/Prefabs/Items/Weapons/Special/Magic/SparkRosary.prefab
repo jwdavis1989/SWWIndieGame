@@ -255,6 +255,7 @@ MonoBehaviour:
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -265,6 +266,7 @@ MonoBehaviour:
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 0}
   mainHandHeavyAttackAction: {fileID: 0}
   offHandCastMagicAttackAction: {fileID: 11400000, guid: 8e9365bba282ba0448de4018a8f7ce12, type: 2}
@@ -272,7 +274,10 @@ MonoBehaviour:
   weaponAnimatorOverride: {fileID: 0}
   offHandSpellAnimation: Spell_Off_Fire_Ball_Start_01
   fullChargingTraitModifier: 1.25
+  spellForwardVelocityMultiplier: 15
+  spellUpwardVelocityMultiplier: 7
   spellCastWarmUpVFX: {fileID: 7017378161147204679, guid: dce497e4ec4c91346bab67a7108853ce, type: 3}
   spellProjectileVFX: {fileID: 4845079000888395174, guid: f9dd8312464b8314ea46ebce4820ead7, type: 3}
+  spellProjectileFullChargeVFX: {fileID: 4845079000888395174, guid: f9dd8312464b8314ea46ebce4820ead7, type: 3}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}

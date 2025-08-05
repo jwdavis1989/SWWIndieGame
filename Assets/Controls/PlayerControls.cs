@@ -328,6 +328,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SpecialAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""d188ce77-11ab-4c17-a8b0-da03aa292fef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeSpecialAttack"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ffb433cc-7d8e-47c7-84ac-a88adf3314a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(pressPoint=0.1)"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""QueueHeavyAttack"",
                     ""type"": ""Button"",
                     ""id"": ""382b8827-c061-4c47-9104-3058340975a3"",
@@ -934,6 +952,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""DebugTeleportToAlecDevDungeon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ee314ef-99e7-45db-9c6d-8ad4a1c40681"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b09f93c-968a-4ebb-9ca5-4f0f5850ca7e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d6f7a64-6acd-4dac-80ea-7314a0020dbf"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChargeSpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""366921c3-0b97-49b3-85d6-0fe13aa4fc00"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChargeSpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1132,6 +1194,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_ChangeRightWeaponDPad = m_PlayerActions.FindAction("ChangeRightWeaponDPad", throwIfNotFound: true);
         m_PlayerActions_ChangeLeftWeaponDPad = m_PlayerActions.FindAction("ChangeLeftWeaponDPad", throwIfNotFound: true);
         m_PlayerActions_HeavyAttack = m_PlayerActions.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_PlayerActions_SpecialAttack = m_PlayerActions.FindAction("SpecialAttack", throwIfNotFound: true);
+        m_PlayerActions_ChargeSpecialAttack = m_PlayerActions.FindAction("ChargeSpecialAttack", throwIfNotFound: true);
         m_PlayerActions_QueueHeavyAttack = m_PlayerActions.FindAction("QueueHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_ChargeHeavyAttack = m_PlayerActions.FindAction("ChargeHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
@@ -1318,6 +1382,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_ChangeRightWeaponDPad;
     private readonly InputAction m_PlayerActions_ChangeLeftWeaponDPad;
     private readonly InputAction m_PlayerActions_HeavyAttack;
+    private readonly InputAction m_PlayerActions_SpecialAttack;
+    private readonly InputAction m_PlayerActions_ChargeSpecialAttack;
     private readonly InputAction m_PlayerActions_QueueHeavyAttack;
     private readonly InputAction m_PlayerActions_ChargeHeavyAttack;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
@@ -1348,6 +1414,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @ChangeRightWeaponDPad => m_Wrapper.m_PlayerActions_ChangeRightWeaponDPad;
         public InputAction @ChangeLeftWeaponDPad => m_Wrapper.m_PlayerActions_ChangeLeftWeaponDPad;
         public InputAction @HeavyAttack => m_Wrapper.m_PlayerActions_HeavyAttack;
+        public InputAction @SpecialAttack => m_Wrapper.m_PlayerActions_SpecialAttack;
+        public InputAction @ChargeSpecialAttack => m_Wrapper.m_PlayerActions_ChargeSpecialAttack;
         public InputAction @QueueHeavyAttack => m_Wrapper.m_PlayerActions_QueueHeavyAttack;
         public InputAction @ChargeHeavyAttack => m_Wrapper.m_PlayerActions_ChargeHeavyAttack;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
@@ -1403,6 +1471,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @SpecialAttack.started += instance.OnSpecialAttack;
+            @SpecialAttack.performed += instance.OnSpecialAttack;
+            @SpecialAttack.canceled += instance.OnSpecialAttack;
+            @ChargeSpecialAttack.started += instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.performed += instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.canceled += instance.OnChargeSpecialAttack;
             @QueueHeavyAttack.started += instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.performed += instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.canceled += instance.OnQueueHeavyAttack;
@@ -1485,6 +1559,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @SpecialAttack.started -= instance.OnSpecialAttack;
+            @SpecialAttack.performed -= instance.OnSpecialAttack;
+            @SpecialAttack.canceled -= instance.OnSpecialAttack;
+            @ChargeSpecialAttack.started -= instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.performed -= instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.canceled -= instance.OnChargeSpecialAttack;
             @QueueHeavyAttack.started -= instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.performed -= instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.canceled -= instance.OnQueueHeavyAttack;
@@ -1648,6 +1728,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnChangeRightWeaponDPad(InputAction.CallbackContext context);
         void OnChangeLeftWeaponDPad(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnSpecialAttack(InputAction.CallbackContext context);
+        void OnChargeSpecialAttack(InputAction.CallbackContext context);
         void OnQueueHeavyAttack(InputAction.CallbackContext context);
         void OnChargeHeavyAttack(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);

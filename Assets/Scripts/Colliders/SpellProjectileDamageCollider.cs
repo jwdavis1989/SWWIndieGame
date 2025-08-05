@@ -22,9 +22,13 @@ public class SpellProjectileDamageCollider : DamageCollider
     {
         base.Awake();
 
-        weaponThatOwnsThisCollider = characterCausingDamage.characterWeaponManager.ownedSpecialWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
-        InitializeStats();
         fireBallManager = GetComponentInParent<FireBallManager>();
+        Debug.Log("fireBallManager: " + (fireBallManager != null));
+        Debug.Log("characterCausingDamage: " + (characterCausingDamage != null));
+        //Debug.Log("characterCausingDamage.characterWeaponManager: " + (characterCausingDamage.characterWeaponManager != null));
+        weaponThatOwnsThisCollider = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>();
+        Debug.Log("weaponThatOwnsThisCollider: " + (weaponThatOwnsThisCollider != null));
+        InitializeStats();
     }
 
     protected void InitializeStats()
@@ -32,7 +36,7 @@ public class SpellProjectileDamageCollider : DamageCollider
         //Base Attack Power
         physicalDamage = weaponThatOwnsThisCollider.stats.attack;
         //damageEffect.weaponScript.stats = stats;
-
+        fullChargeModifier = weaponThatOwnsThisCollider.fullChargingTraitModifier;
         //Elemental
         elementalStats = weaponThatOwnsThisCollider.stats.elemental;
     }
@@ -113,7 +117,7 @@ public class SpellProjectileDamageCollider : DamageCollider
 
                 //Spell Attacks
                 case AttackType.AreaSpellAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedSpecialWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().stats.areaSpellAttack01DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().stats.areaSpellAttack01DamageMotionValue;
                     break;
 
                 //Default
@@ -122,7 +126,7 @@ public class SpellProjectileDamageCollider : DamageCollider
             }
 
             //Calculate Poise Damage
-            damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.ownedSpecialWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().stats.basePoiseDamage;
+            damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().stats.basePoiseDamage;
         }
         else
         {
