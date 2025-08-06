@@ -6,9 +6,11 @@ public class ResetActionFlag : StateMachineBehaviour
 {
     CharacterManager character;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        if (character == null) {
-            character = animator.GetComponent<CharacterManager>(); 
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (character == null)
+        {
+            character = animator.GetComponent<CharacterManager>();
         }
 
         //This is called when an action ends, and the state returns to "Empty"
@@ -22,15 +24,23 @@ public class ResetActionFlag : StateMachineBehaviour
         //TODO: Investigate if this is causing bugs for AI.
         //This was needed to keep enemies from being automatically set to no root motion
         //Which they use to move using their NavMeshes.
-        if (character.isPlayer) {
+        if (character.isPlayer)
+        {
             character.animator.applyRootMotion = false;
         }
 
-        //TODO: Investigate why this is causing error
-        if (character.characterCombatManager != null) {
+        //TODO: Investigate why this was causing error
+        if (character.characterCombatManager != null)
+        {
             character.characterCombatManager.DisableCanDoCombo();
             character.characterCombatManager.DisableCanDoRollingAttack();
             character.characterCombatManager.DisableCanDoBackStepAttack();
+        }
+
+        //Deletes spell VFX if character is interuptted during their spellcasting animation
+        if (character.characterEffectsManager.activeSpellWarmUpFX != null)
+        {
+            Destroy(character.characterEffectsManager.activeSpellWarmUpFX);
         }
     }
 
