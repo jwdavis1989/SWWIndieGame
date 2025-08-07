@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8510313f98bc2274cb6ea215a484e498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToLive: 5
+  secondsToLive: 3.5
 --- !u!1 &4248332146174084444
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +58,8 @@ GameObject:
   - component: {fileID: 8855086787462083521}
   - component: {fileID: 5140062186961709120}
   - component: {fileID: 1149759698659188446}
+  - component: {fileID: 8762812639459470780}
+  - component: {fileID: 8493385281422089479}
   m_Layer: 0
   m_Name: DamageCollider
   m_TagString: Untagged
@@ -113,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fca3a89be6140e4aa9df7f5db3a36b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicalDamage: 5
+  physicalDamage: 10
   elementalStats:
     firePower: 0
     icePower: 0
@@ -132,6 +134,34 @@ MonoBehaviour:
   environmentalHazardTickRate: 2
   poiseDamage: 35
   blockingStaminaDamage: 25
+--- !u!114 &8762812639459470780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248332146174084444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8510313f98bc2274cb6ea215a484e498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondsToLive: 0.25
+--- !u!114 &8493385281422089479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4248332146174084444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ea449433e4f6904b84530e8876969aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingScale: 0.75
+  maxScale: 3.25
+  enlargeTime: 0.25
 --- !u!1001 &4739396263261405338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -183,6 +213,22 @@ PrefabInstance:
     - target: {fileID: 4140358729628935189, guid: d973cc99ee643e945b435ec8d3e41e02, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496153104845648918, guid: d973cc99ee643e945b435ec8d3e41e02, type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496153104845648918, guid: d973cc99ee643e945b435ec8d3e41e02, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496153104845648918, guid: d973cc99ee643e945b435ec8d3e41e02, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 2.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496153104845648918, guid: d973cc99ee643e945b435ec8d3e41e02, type: 3}
+      propertyPath: InitialModule.startLifetime.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

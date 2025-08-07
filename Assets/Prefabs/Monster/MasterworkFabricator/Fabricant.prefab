@@ -9281,6 +9281,7 @@ GameObject:
   - component: {fileID: 5296059884117083492}
   - component: {fileID: 7680224634917828035}
   - component: {fileID: 2917579273476832219}
+  - component: {fileID: 4759998910804994776}
   m_Layer: 6
   m_Name: Fabricant
   m_TagString: Untagged
@@ -9716,9 +9717,9 @@ MonoBehaviour:
   canPerformBackStepAttack: 0
   canBlock: 1
   isAggro: 0
-  aggroRange: 15
-  minimumDetectionAngle: -180
-  maximumDetectionAngle: 180
+  aggroRange: 5
+  minimumDetectionAngle: -45
+  maximumDetectionAngle: 45
   distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
@@ -9752,6 +9753,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPrefab: {fileID: 3646435120374606057, guid: e0fa5301154210642baeeb0dcda1711e, type: 3}
+  max: 1
+  distance: 0
+  spawnList: []
+  auto: 0
+  spawnInterval: 1.5
+--- !u!114 &4759998910804994776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8275101353061020659}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8510313f98bc2274cb6ea215a484e498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  secondsToLive: 1.5
 --- !u!1 &8277991636806250185
 GameObject:
   m_ObjectHideFlags: 0
