@@ -22,11 +22,14 @@ public class SpawningBehavior : MonoBehaviour
     {
         if (!auto) 
             return;
-        spawnTime += Time.deltaTime;
+        else
+            spawnTime += Time.deltaTime;
+
         if (spawnTime >= spawnInterval)
         {
             spawnTime = 0;
-            if(spawnList.Count < max)
+            spawnList.RemoveAll(item => item == null);
+            if (spawnList.Count < max)
             {
                 Vector3 spawnPos = transform.position;
                 if (distance > 0)

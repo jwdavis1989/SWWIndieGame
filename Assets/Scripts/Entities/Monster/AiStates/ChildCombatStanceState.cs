@@ -33,9 +33,13 @@ public class ChildCombatStanceState : CombatStanceState
         //If Target is no longer present, return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
         {
-            UnityEngine.Debug.Log("IDLEING");
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
+        //If outside combat engagement range, switch to pursue target state
+        //if (aiCharacter.aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance)
+        //{
+        //    return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
+        //}
         //if (currentTimeUntilExplosion < timeUntilExplosion)
         //{
         //    currentTimeUntilExplosion += Time.deltaTime;
@@ -50,7 +54,7 @@ public class ChildCombatStanceState : CombatStanceState
         //    //aiCharacter.transform.SetParent(explosion.transform, true);
         //    aiCharacter.statsManager.currentHealth = 0;
         //    Destroy(aiCharacter.gameObject);
-        //    //aiCharacter.ProcessDeathEvent(true);
+        //aiCharacter.ProcessDeathEvent(true);
 
         //}
         return this;
