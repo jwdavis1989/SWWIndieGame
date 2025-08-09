@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpawningBehavior : MonoBehaviour
 {
-    [Header("SpawningBehavior can automate spawning or be provide spawn api to another script\n" +
+    [Header("SpawningBehavior can automate spawning or be provide spawn api to another script\n\n" +
         "Prefab to spawn")]
     public GameObject spawnPrefab;
     [Header("Maximum currently existing spawn")]
@@ -35,9 +35,9 @@ public class SpawningBehavior : MonoBehaviour
                 if (distance > 0)
                 {
                     //calculate randomized positon
-                    float x = spawnPos.x + Random.Range(spawnInterval, distance) * (Random.Range(0, 1) >= 0.5f ? -1 : 1);
-                    float z = spawnPos.z + Random.Range(spawnInterval, distance) * (Random.Range(0, 1) >= 0.5f ? -1 : 1);
-                    Vector3 direction = new Vector3(x, spawnPos.y+.025f, z);
+                    float x = spawnPos.x + Random.Range(0, distance) * (Random.Range(0, 10) >= 5 ? -1 : 1);
+                    float z = spawnPos.z + Random.Range(0, distance) * (Random.Range(0, 10) >= 5 ? -1 : 1);
+                    Vector3 direction = transform.forward;
                     RaycastHit hitInfo = new RaycastHit();
                     if (Physics.Raycast(transform.position, direction, out hitInfo, distance))
                     {
