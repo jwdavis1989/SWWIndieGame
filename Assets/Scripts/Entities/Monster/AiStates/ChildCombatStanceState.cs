@@ -18,6 +18,7 @@ public class ChildCombatStanceState : CombatStanceState
     {
         aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = true;
         aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = true;
+        aiCharacter.GetComponentInChildren<FlashingBehavior>().ActivateFlashing();
         if(aiCharacter.statsManager.currentHealth <= 0)
         {
             aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = false;

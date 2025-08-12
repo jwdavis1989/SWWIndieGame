@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fca3a89be6140e4aa9df7f5db3a36b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicalDamage: 10
+  physicalDamage: 20
   elementalStats:
     firePower: 0
     icePower: 0
@@ -129,11 +129,11 @@ MonoBehaviour:
   isMainHand: 0
   attackMotionValue: 1
   fullChargeModifier: 1
-  isReducedByArmor: 1
+  isReducedByArmor: 0
   isEnvironmentalHazard: 0
   environmentalHazardTickRate: 2
-  poiseDamage: 35
-  blockingStaminaDamage: 25
+  poiseDamage: 50
+  blockingStaminaDamage: 40
 --- !u!114 &8762812639459470780
 MonoBehaviour:
   m_ObjectHideFlags: 0
