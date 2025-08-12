@@ -492,6 +492,10 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellWarmUpFX.transform.localPosition = Vector3.zero;
         instantiatedSpellWarmUpFX.transform.localRotation = Quaternion.identity;
         character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellWarmUpFX;
+
+        //3. Drain Stamina
+        character.characterWeaponManager.currentAttackType = AttackType.AreaSpellAttack01;
+        character.CallDrainStaminaBasedOnAttack();
     }
 
     public virtual void InstantiateReleaseFX(CharacterManager character)
