@@ -393,15 +393,17 @@ public class WeaponScript : MonoBehaviour
         GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX);
 
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        //fireBallManager.characterCausingDamage = character;
         fireBallManager.InitializeFireBall(character);
-        fireBallManager.damageCollider.InitializeStats();
 
         //3. Zero out its location and unparent it
-        instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
-        instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
-        instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
-        instantiatedSpellProjectileFX.transform.parent = null;
+        // instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
+        // instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
+        // instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
+        // instantiatedSpellProjectileFX.transform.parent = null;
+
+        
+        instantiatedSpellProjectileFX.transform.position = spellOriginLocation.transform.position;
+        instantiatedSpellProjectileFX.transform.rotation = spellOriginLocation.transform.rotation;
 
         //Alternative way to avoid colliding with self, but isn't needed as we already checked this in the SpellProjectileDamageCollider 
         // Collider[] characterColliders = character.GetComponentsInChildren<Collider>();
@@ -438,18 +440,18 @@ public class WeaponScript : MonoBehaviour
         character.characterCombatManager.DestroyAllCurrentActionFX();
 
         //2. Instantiate the Projectile
-        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
         GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileFullChargeVFX);
 
-        //3. Zero out its location and unparent it
+        //3. Apply Damage to the projectiles damage collider
+        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
+        fireBallManager.InitializeFireBall(character);
+
+        //4. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
         instantiatedSpellProjectileFX.transform.parent = null;
-
-        //4. Apply Damage to the projectiles damage collider
-        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character);
 
         //5. Set the projectile's direction
         if (character.isLockedOn)

@@ -23,9 +23,6 @@ public class SpellProjectileDamageCollider : DamageCollider
         base.Awake();
 
         fireBallManager = GetComponentInParent<FireBallManager>();
-        //Debug.Log("characterCausingDamage.characterWeaponManager: " + (characterCausingDamage.characterWeaponManager != null));
-        //characterCausingDamage = fireBallManager.characterCausingDamage;
-        //InitializeStats();
     }
 
     public void InitializeStats()
