@@ -225,12 +225,11 @@ public class WeaponScript : MonoBehaviour
     public float fullChargingTraitModifier = 1.25f;
     
     [Header("Projectile Velocity")]
-    public float spellForwardVelocityMultiplier = 15f;
-    public float spellUpwardVelocityMultiplier = 7f;
+    public float spellForwardVelocityMultiplier = 7f;
+    public float spellUpwardVelocityMultiplier = 4f;
     [SerializeField] public GameObject spellCastWarmUpVFX;
     [SerializeField] public GameObject spellProjectileVFX;
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
-    //TODO: Add full charge version of spell VFX
     public AudioClip spellReleaseSFX;
     public AudioClip spellProjectileSFX;
 
