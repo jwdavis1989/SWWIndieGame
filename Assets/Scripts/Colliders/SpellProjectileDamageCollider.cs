@@ -27,12 +27,9 @@ public class SpellProjectileDamageCollider : DamageCollider
 
     public void InitializeStats()
     {
-        //characterCausingDamage = fireBallManager.characterCausingDamage;
         weaponThatOwnsThisCollider = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>();
         //Base Attack Power
         physicalDamage = weaponThatOwnsThisCollider.stats.attack;
-        //damageEffect.weaponScript.stats = stats;
-        fullChargeModifier = weaponThatOwnsThisCollider.fullChargingTraitModifier;
         //Elemental
         elementalStats = weaponThatOwnsThisCollider.stats.elemental;
     }

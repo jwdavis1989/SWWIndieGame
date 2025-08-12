@@ -62,6 +62,9 @@ public class FireBallManager : SpellManager
     {
         damageCollider.characterCausingDamage = characterCausingDamage;
         damageCollider.InitializeStats();
+        if (isFullyCharged) {
+            damageCollider.fullChargeModifier = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().fullChargingTraitModifier;
+        }
     }
 
     public void InstantiateSpellDestructionFX()

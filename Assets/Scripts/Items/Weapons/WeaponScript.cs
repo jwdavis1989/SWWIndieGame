@@ -408,7 +408,7 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
         instantiatedSpellProjectileFX.transform.parent = null;
 
-        
+
         // instantiatedSpellProjectileFX.transform.position = spellOriginLocation.transform.position;
         // instantiatedSpellProjectileFX.transform.rotation = spellOriginLocation.transform.rotation;
 
@@ -428,7 +428,9 @@ public class WeaponScript : MonoBehaviour
         }
         else
         {
-            instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+            //instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+            Vector3 newForward = character.transform.forward + new UnityEngine.Vector3(0, 0, 0);
+            instantiatedSpellProjectileFX.transform.forward = newForward;
         }
 
         //6. Set the projectile's velocity
@@ -441,8 +443,6 @@ public class WeaponScript : MonoBehaviour
 
     public virtual void SuccessfullyCastSpellFullCharge(CharacterManager character)
     {
-        Debug.Log("Successfully Cast Charged Spell");
-
         //1. Destroy any Warm Up FX remaining from the spell
         character.characterCombatManager.DestroyAllCurrentActionFX();
 
@@ -452,6 +452,7 @@ public class WeaponScript : MonoBehaviour
 
         //3. Apply Damage to the projectiles damage collider
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
+        fireBallManager.isFullyCharged = true;
         fireBallManager.InitializeFireBall(character);
 
         //4. Zero out its location and unparent it
@@ -482,8 +483,6 @@ public class WeaponScript : MonoBehaviour
 
     public virtual void InstantiateWarmUpSpellFX(CharacterManager character)
     {
-        Debug.Log("Instantiate Warm Up Spell FX");
-
         //1. Instantiate Warm Up at the correct place
         SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
 

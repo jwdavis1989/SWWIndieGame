@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AlwaysFaceCamera : MonoBehaviour
 {
-    void Update()
+    void LateUpdate()
     {
         if (Camera.main != null)
         {   
