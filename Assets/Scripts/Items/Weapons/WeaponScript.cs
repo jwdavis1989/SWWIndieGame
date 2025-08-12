@@ -199,6 +199,8 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
+    public float specialWeaponDamageMultiplier = 1.25f;
+
     [Header("Image used for menu icon")]
     public Sprite spr = null;
     [Header("Will appear as ??? on weapon sheet until obtained")]
@@ -352,6 +354,12 @@ public class WeaponScript : MonoBehaviour
 
         if (result > 0)
         {
+            //Special Weapons Deal 25% bonus Damage
+            if (isSpecialWeapon)
+            {
+                result *= specialWeaponDamageMultiplier;
+            }
+
             if (targetCharacter.isBlocking)
             {
                 if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
@@ -384,7 +392,6 @@ public class WeaponScript : MonoBehaviour
 
     public virtual void SuccessfullyCastSpell(CharacterManager character)
     {
-        Debug.Log("Successfully Cast Spell");
         //1. Destroy any Warm Up FX remaining from the spell
         character.characterCombatManager.DestroyAllCurrentActionFX();
 
@@ -396,14 +403,14 @@ public class WeaponScript : MonoBehaviour
         fireBallManager.InitializeFireBall(character);
 
         //3. Zero out its location and unparent it
-        // instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
-        // instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
-        // instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
-        // instantiatedSpellProjectileFX.transform.parent = null;
+        instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
+        instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
+        instantiatedSpellProjectileFX.transform.parent = null;
 
         
-        instantiatedSpellProjectileFX.transform.position = spellOriginLocation.transform.position;
-        instantiatedSpellProjectileFX.transform.rotation = spellOriginLocation.transform.rotation;
+        // instantiatedSpellProjectileFX.transform.position = spellOriginLocation.transform.position;
+        // instantiatedSpellProjectileFX.transform.rotation = spellOriginLocation.transform.rotation;
 
         //Alternative way to avoid colliding with self, but isn't needed as we already checked this in the SpellProjectileDamageCollider 
         // Collider[] characterColliders = character.GetComponentsInChildren<Collider>();
