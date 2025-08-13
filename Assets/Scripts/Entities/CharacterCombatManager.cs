@@ -91,6 +91,11 @@ public class CharacterCombatManager : MonoBehaviour
         character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyCastSpell(character);
     }
 
+    public void SuccessfullyFullChargeSpell()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyChargeSpell(character);
+    }
+
     public void SuccessfullyCastSpellFullCharge()
     {
         character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyCastSpellFullCharge(character);
