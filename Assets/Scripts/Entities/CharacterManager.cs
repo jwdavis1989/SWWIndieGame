@@ -83,7 +83,7 @@ public class CharacterManager : MonoBehaviour
         //Update Animation Flags
         animator?.SetBool("isGrounded", isGrounded);
         animator?.SetBool("isChargingAttack", isChargingAttack);
-        animator?.SetBool("isChargingSpellAttack", isChargingSpellAttack);
+        animator?.SetBool("isChargingSpell", isChargingSpellAttack);
         animator?.SetBool("isMoving", isMoving);
         animator?.SetBool("isBlocking", isBlocking);
     }

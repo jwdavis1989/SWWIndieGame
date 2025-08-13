@@ -70,17 +70,19 @@ public class PlayerInputManager : MonoBehaviour
 
 
     //Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         //Has to happen before we disable the instance
         DontDestroyOnLoad(gameObject);
 
         //When the scene changes, run this logic
         //This is to do with subscribing and might require research
         SceneManager.activeSceneChanged += OnSceneChange;
-        
+
         instance.enabled = false;
-        if (playerControls != null) {
-                playerControls.Disable();
+        if (playerControls != null)
+        {
+            playerControls.Disable();
         }
     }
 
@@ -122,7 +124,8 @@ public class PlayerInputManager : MonoBehaviour
     //Goals:
     //1. Read joystick values
     //2. Move Character using those values
-    private void OnEnable() {
+    private void OnEnable()
+    {
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
@@ -138,7 +141,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.HeavyAttack.performed += i => heavyAttackInput = true;
             playerControls.PlayerActions.ChargeHeavyAttack.performed += i => holdHeavyAttackInput = true;
             playerControls.PlayerActions.ChargeHeavyAttack.canceled += i => holdHeavyAttackInput = false;
-            
+
             //Special Weapon Attacking
             playerControls.PlayerActions.SpecialAttack.performed += i => specialAttackInput = true;
             playerControls.PlayerActions.ChargeSpecialAttack.performed += i => holdSpecialAttackInput = true;
@@ -149,10 +152,10 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.QueueHeavyAttack.performed += i => QueueInput(ref queueHeavyAttackInput);
 
             //Blocking
-                //Holding the input sets Blocking to true
-                playerControls.PlayerActions.Block.performed += i => blockInput = true;
-                //Releasing sets the Blocking to false
-                playerControls.PlayerActions.Block.canceled += i => HandleDisableBlock();
+            //Holding the input sets Blocking to true
+            playerControls.PlayerActions.Block.performed += i => blockInput = true;
+            //Releasing sets the Blocking to false
+            playerControls.PlayerActions.Block.canceled += i => HandleDisableBlock();
 
             //Switch Weapons on Gamepad
             playerControls.PlayerActions.ChangeRightWeaponDPad.performed += i => ChangeRightWeaponDPad = true;
@@ -185,10 +188,11 @@ public class PlayerInputManager : MonoBehaviour
                 player.transform.position = new Vector3(0, 140, 0);
                 SceneManager.LoadSceneAsync(2);// AlecDev - 7/19/25: this is tower in ocean
             });
-            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i => {
+            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i =>
+            {
                 player.transform.position = new Vector3(0, 20, 0);
                 SceneManager.LoadSceneAsync(3); // MesaDev - 7/19/25: Western Town Mesa Ocean
-            }); 
+            });
             playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i =>
             {
                 player.transform.position = new Vector3(0, 9, 0);
@@ -218,38 +222,47 @@ public class PlayerInputManager : MonoBehaviour
         playerControls.Enable();
     }
 
-    private void Awake() {
+    private void Awake()
+    {
 
         //Establish Singleton Instance
-        if (instance == null) {
+        if (instance == null)
+        {
             instance = this;
         }
-        else {
+        else
+        {
             Destroy(gameObject);
         }
     }
 
-    private void OnSceneChange(Scene oldScene, Scene newScene) {
+    private void OnSceneChange(Scene oldScene, Scene newScene)
+    {
         //If we are loading into our world scene, enable our player controls
         //if (newScene.buildIndex == WorldSaveGameManager.instance.GetWorldSceneIndex() /*Debug only*/ || newScene.buildIndex == 2 /*Debug only*/) {
-        if (newScene.buildIndex != 0) {
+        if (newScene.buildIndex != 0)
+        {
             //Script being enabled, not the game object
             instance.enabled = true;
-            if (playerControls != null) {
+            if (playerControls != null)
+            {
                 playerControls.Enable();
             }
         }
         //Otherwise, we're in a menu so disable player controls
         //This is so our player can't move around if we enter things like a character creation menu, etc
-        else {
+        else
+        {
             instance.enabled = false;
-            if (playerControls != null) {
+            if (playerControls != null)
+            {
                 playerControls.Disable();
             }
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         //If we destroy this object, we unsubcribe from this event
         //This is to do with subscribing and might require research
         SceneManager.activeSceneChanged -= OnSceneChange;
@@ -266,7 +279,7 @@ public class PlayerInputManager : MonoBehaviour
 
             //Interactable System Interact() call
             player.playerInteractionManager.Interact();
-            
+
         }
     }
     ////Interact Button during dialogue box
@@ -288,7 +301,7 @@ public class PlayerInputManager : MonoBehaviour
         if (useItemQuickslotInput && !player.isBlocking) // [1], (Y)
         {
             useItemQuickslotInput = false;
-            if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0) 
+            if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
                 return; //dont use on title screen
 
             //currently have camera here. Not sure if it gets it's own button or is an item
@@ -317,7 +330,8 @@ public class PlayerInputManager : MonoBehaviour
 
 
     //Movement
-    private void HandleMovementInput() {
+    private void HandleMovementInput()
+    {
         //check if busy
         if (DialogueManager.IsInDialogue() || IdeaCameraController.isBusy() || PauseScript.instance.gamePaused)
             return;
@@ -328,32 +342,39 @@ public class PlayerInputManager : MonoBehaviour
         moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
 
         //Clamp moveAmount's values to improve smoothness. Values will be 0, 0.5, or 1 (Optional)
-        if (moveAmount <= 0.5 && moveAmount > 0) {
+        if (moveAmount <= 0.5 && moveAmount > 0)
+        {
             moveAmount = 0.5f;
         }
-        else if (moveAmount > 0.5 && moveAmount <= 1) {
+        else if (moveAmount > 0.5 && moveAmount <= 1)
+        {
             moveAmount = 1;
         }
 
-        if (player == null) {
+        if (player == null)
+        {
             return;
         }
 
-        if (moveAmount != 0) {
+        if (moveAmount != 0)
+        {
             player.isMoving = true;
         }
-        else {
+        else
+        {
             player.isMoving = false;
         }
 
         //If not locked on
         //We pass 0 for horizontal because we're not locked on, as we always rotate to face the way we walk.
-        if (!player.isLockedOn || player.isSprinting) {
+        if (!player.isLockedOn || player.isSprinting)
+        {
             player.playerAnimationManager.UpdateAnimatorMovementParameters(0, moveAmount, player.isSprinting);
         }
         //If locked on
         //If we are locked on, we want to pass the horizontal and vertical
-        else {
+        else
+        {
             player.playerAnimationManager.UpdateAnimatorMovementParameters(horizontalInput, verticalInput, player.isSprinting);
         }
 
@@ -361,7 +382,7 @@ public class PlayerInputManager : MonoBehaviour
     private void HandleMouseKBWeaponSwapInput()
     {
         if (!player.isBlocking)
-        { 
+        {
             mouseWheelVerticalInput = mouseWheelInput.y;
             //if(mouseWheelVerticalInput != prevMouseWheelVerticalInput)
             //{
@@ -370,7 +391,7 @@ public class PlayerInputManager : MonoBehaviour
             if (mouseWheelVerticalInput == 1)
             {
                 PlayerWeaponManager.instance.nextWeapon();
-                
+
             }
             else if (mouseWheelVerticalInput == -1)
             {
@@ -380,28 +401,34 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleGamePadRightWeaponSwapInput() {
-        if (ChangeRightWeaponDPad && !player.isBlocking) {
+    private void HandleGamePadRightWeaponSwapInput()
+    {
+        if (ChangeRightWeaponDPad && !player.isBlocking)
+        {
             ChangeRightWeaponDPad = false;
-            
+
             PlayerWeaponManager.instance.nextWeapon();
         }
     }
 
-    private void HandleGamePadLeftWeaponSwapInput() {
-        if (ChangeLeftWeaponDPad && !player.isBlocking) {
+    private void HandleGamePadLeftWeaponSwapInput()
+    {
+        if (ChangeLeftWeaponDPad && !player.isBlocking)
+        {
             ChangeLeftWeaponDPad = false;
 
             PlayerWeaponManager.instance.nextSpecialWeapon();
         }
     }
 
-    private void HandleCameraMovementInput() {
+    private void HandleCameraMovementInput()
+    {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
     }
 
-    private void HandleMiniMapZoomToggle() {
+    private void HandleMiniMapZoomToggle()
+    {
         if (miniMapZoomToggleInput)
         {
             miniMapZoomToggleInput = false;
@@ -424,8 +451,10 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     //Actions
-    private void HandleDodgeInput() {
-        if (dodgeInput && !player.isBlocking) {
+    private void HandleDodgeInput()
+    {
+        if (dodgeInput && !player.isBlocking)
+        {
             dodgeInput = false;
 
             //If Menu or UI window is open, do nothing.
@@ -437,7 +466,8 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleSprintInput() {
+    private void HandleSprintInput()
+    {
         if (sprintInput)
         {
             //If Menu or UI window is open, do nothing.
@@ -476,38 +506,50 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleCameraFieldOfView() {
-        if (sprintInput) {
+    private void HandleCameraFieldOfView()
+    {
+        if (sprintInput)
+        {
             //Camera Zoom-Out Juice to give the illusion of great speed
-            if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting) {
-                if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum) {
+            if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting)
+            {
+                if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum)
+                {
                     PlayerCamera.instance.cameraObject.fieldOfView += sprintCameraFieldOfViewIncreaseSpeed * Time.deltaTime;
                 }
-                else {
+                else
+                {
                     PlayerCamera.instance.cameraObject.fieldOfView = sprintCameraFieldOfViewMaximum;
                 }
             }
             //Locked onto an enemy and need to reduce Field of View Extremely Rapidly
-            else if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView) {
+            else if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView)
+            {
                 PlayerCamera.instance.cameraObject.fieldOfView -= 3 * sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
             }
-            else {
+            else
+            {
                 PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
             }
         }
-        else {
+        else
+        {
             //Camera Zoom-Out Juice to give the illusion of Slowing Rapidly
-            if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting) {
+            if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting)
+            {
                 PlayerCamera.instance.cameraObject.fieldOfView -= sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
             }
-            else {
+            else
+            {
                 PlayerCamera.instance.cameraObject.fieldOfView = defaultCameraFieldOfView;
             }
         }
     }
 
-    private void HandleJumpInput() {
-        if (jumpInput && !player.isBlocking) {
+    private void HandleJumpInput()
+    {
+        if (jumpInput && !player.isBlocking)
+        {
             jumpInput = false;
 
             //If we have a UI window open, simply return without doing anything
@@ -519,8 +561,10 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleMainHandLightAttackInput() {
-        if (lightAttackInput && !player.isBlocking) {
+    private void HandleMainHandLightAttackInput()
+    {
+        if (lightAttackInput && !player.isBlocking)
+        {
             lightAttackInput = false;
 
             //Return if we have a UI Window Open
@@ -537,43 +581,73 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleMainHandHeavyAttackInput() {
-        if (heavyAttackInput && !player.isBlocking) {
+    private void HandleMainHandHeavyAttackInput()
+    {
+        if (heavyAttackInput && !player.isBlocking)
+        {
             heavyAttackInput = false;
 
             //TODO: Return if we have a UI Window Open
 
-            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction, 
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+            {
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction,
                                                 PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
             }
         }
     }
 
-    private void HandleChargeMainHandHeavyAttackInput() {
+    private void HandleChargeMainHandHeavyAttackInput()
+    {
         //We only want to check for a charge if we are in an action that requires it (e.g. Attacking)
-        if (player.isPerformingAction && !player.isBlocking) {
+        if (player.isPerformingAction && !player.isBlocking)
+        {
             player.isChargingAttack = holdHeavyAttackInput;
         }
     }
 
-    private void HandleOffHandSpecialAttackInput() {
-        if (specialAttackInput && !player.isBlocking) {
+    private void HandleOffHandSpecialAttackInput()
+    {
+        if (specialAttackInput && !player.isBlocking && !player.isPerformingAction)
+        {
             specialAttackInput = false;
 
             //TODO: Return if we have a UI Window Open
 
-            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0) {
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedSpecialWeapons[PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().offHandCastMagicAttackAction, 
-                                                PlayerWeaponManager.instance.ownedSpecialWeapons[PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>());
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0 && player.characterWeaponManager.isSpecialWeaponOffCooldown)
+            {
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().offHandCastMagicAttackAction,
+                                                PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>());
+
+                player.characterWeaponManager.ResetSpecialWeaponCooldownTimer();
             }
         }
     }
 
-    private void HandleChargeOffHandSpecialAttackInput() {
+    private void HandleChargeOffHandSpecialAttackInput()
+    {
         //We only want to check for a charge if we are in an action that requires it (e.g. Attacking)
-        if (player.isPerformingAction && !player.isBlocking) {
-            player.isChargingSpellAttack = holdSpecialAttackInput;
+        // if (player.isPerformingAction && !player.isBlocking)
+        // {
+        //     player.isChargingSpellAttack = holdSpecialAttackInput;
+        // }
+
+        //Check if the Weapon is a Magic Weapon
+        if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+        {
+            if (holdSpecialAttackInput /*&& !player.isBlocking*/)
+            {
+                WeaponFamily currentSpecialWeapon = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().weaponFamily;
+                if (currentSpecialWeapon == WeaponFamily.MagicRosary || currentSpecialWeapon == WeaponFamily.MagicWands
+                    || currentSpecialWeapon == WeaponFamily.MagicStaves || currentSpecialWeapon == WeaponFamily.MagicRings)
+                {
+                    player.isChargingSpellAttack = true;
+                }
+            }
+            else
+            {
+                player.isChargingSpellAttack = false;
+            }
         }
     }
 
@@ -663,26 +737,33 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void HandleLockOnSwitchTargetInput() {
-        if (lockOnSelectLeftInput) {
+    private void HandleLockOnSwitchTargetInput()
+    {
+        if (lockOnSelectLeftInput)
+        {
             lockOnSelectLeftInput = false;
 
-            if (player.isLockedOn) {
+            if (player.isLockedOn)
+            {
                 PlayerCamera.instance.HandleLocatingLockOnTargets();
 
-                if (PlayerCamera.instance.leftLockOnTarget != null) {
+                if (PlayerCamera.instance.leftLockOnTarget != null)
+                {
                     player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
                 }
             }
         }
 
-        if (lockOnSelectRightInput) {
+        if (lockOnSelectRightInput)
+        {
             lockOnSelectRightInput = false;
 
-            if (player.isLockedOn) {
+            if (player.isLockedOn)
+            {
                 PlayerCamera.instance.HandleLocatingLockOnTargets();
 
-                if (PlayerCamera.instance.rightLockOnTarget != null) {
+                if (PlayerCamera.instance.rightLockOnTarget != null)
+                {
                     player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
                 }
             }
@@ -690,13 +771,15 @@ public class PlayerInputManager : MonoBehaviour
 
     }
 
-    private void QueueInput(ref bool queuedInput) {
+    private void QueueInput(ref bool queuedInput)
+    {
         //Reset all queued inputs so only one can queue at a time
         ResetQueuedInputs();
 
         //TODO: Check for UI Window Being Open
 
-        if (player.isPerformingAction || player.isJumping) {
+        if (player.isPerformingAction || player.isJumping)
+        {
             //Since this is passed by reference, this will set the parameterized bool to true
             queuedInput = true;
 
@@ -706,33 +789,42 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
-    private void ResetQueuedInputs() {
+    private void ResetQueuedInputs()
+    {
         queueLightAttackInput = false;
         queueHeavyAttackInput = false;
     }
 
-    private void ProcessQueuedInput() {
-        if (player.isDead) {
+    private void ProcessQueuedInput()
+    {
+        if (player.isDead)
+        {
             return;
         }
 
-        if(queueLightAttackInput) {
+        if (queueLightAttackInput)
+        {
             lightAttackInput = true;
         }
-        else if (queueHeavyAttackInput) {
+        else if (queueHeavyAttackInput)
+        {
             heavyAttackInput = true;
         }
-        
+
     }
 
-    private void HandleQueuedInputs() {
-        if (InputQueueIsActive) {
+    private void HandleQueuedInputs()
+    {
+        if (InputQueueIsActive)
+        {
             //While the timer is above zero, keep attempting the input
-            if (queueInputTimer > 0f) {
+            if (queueInputTimer > 0f)
+            {
                 queueInputTimer -= Time.deltaTime;
                 ProcessQueuedInput();
             }
-            else {
+            else
+            {
                 ResetQueuedInputs();
                 InputQueueIsActive = false;
                 queueInputTimer = 0f;

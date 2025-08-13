@@ -83,17 +83,22 @@ public class CharacterCombatManager : MonoBehaviour
     //Animation Event Calls
     public void InstantiateSpellWarmUpFX()
     {
-        character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().InstantiateWarmUpSpellFX(character);
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().InstantiateWarmUpSpellFX(character);
     }
 
     public void SuccessfullyCastSpell()
     {
-        character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().SuccessfullyCastSpell(character);
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyCastSpell(character);
+    }
+
+    public void SuccessfullyFullChargeSpell()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyChargeSpell(character);
     }
 
     public void SuccessfullyCastSpellFullCharge()
     {
-        character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>().SuccessfullyCastSpellFullCharge(character);
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyCastSpellFullCharge(character);
     }
 
     //Used to destroy things like a "Drawn Arrow" or "Spell Warm Up FX" when the character's poise is broken
@@ -101,7 +106,7 @@ public class CharacterCombatManager : MonoBehaviour
     {
         if (character.characterEffectsManager.activeSpellWarmUpFX != null)
         {
-            Destroy(character.characterEffectsManager.activeSpellWarmUpFX);
+            Destroy(character.characterEffectsManager.activeSpellWarmUpFX.gameObject);
         }
     }
 
