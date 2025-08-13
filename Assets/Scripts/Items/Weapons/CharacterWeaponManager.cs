@@ -18,6 +18,11 @@ public class CharacterWeaponManager : MonoBehaviour
     [Header("Weapon Combo System")]
     public AttackType currentAttackType;
 
+    [Header("Special Weapon Cooldown")]
+    public float specialtyCooldown = 5f;
+    public float specialtyCooldownTimer = 0;
+    public bool isSpecialWeaponOffCooldown = true;
+
     /**
      * Shorthands to access Main/Off hand weapons
      */
@@ -52,6 +57,12 @@ public class CharacterWeaponManager : MonoBehaviour
             }
         }
     }
+
+    public void Update()
+    {
+        HandleSpecialWeaponCooldown();
+    }
+    
     /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
@@ -68,7 +79,8 @@ public class CharacterWeaponManager : MonoBehaviour
 
             //Update Equipped Weapon Icon if this is your first special weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0)
+            {
                 PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
             }
         }
@@ -79,7 +91,8 @@ public class CharacterWeaponManager : MonoBehaviour
 
             //Update Equipped Weapon Icon if this is your first weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0)
+            {
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }
@@ -251,7 +264,26 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
 
-    public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponScript weaponPerformingAction) {
+    public void HandleSpecialWeaponCooldown()
+    {
+        if (!isSpecialWeaponOffCooldown && specialtyCooldownTimer >= 0)
+        {
+            specialtyCooldownTimer -= Time.deltaTime;
+        }
+        else
+        {
+            isSpecialWeaponOffCooldown = true;
+        }
+    }
+
+    public virtual void ResetSpecialWeaponCooldownTimer()
+    {
+        specialtyCooldownTimer = specialtyCooldown;
+        isSpecialWeaponOffCooldown = false;
+    }
+
+    public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponScript weaponPerformingAction)
+    {
         //Way shown in tutorial, might not make sense for our version
         //weaponAction.AttemptToPerformAction(characterThatOwnsThisArsenal, weaponPerformingAction);
 

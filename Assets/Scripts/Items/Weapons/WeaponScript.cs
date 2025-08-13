@@ -77,8 +77,6 @@ public class WeaponStats
     public ElementalStats maxElemental;
     public float speed = 1.0f;
     public float maxSpeed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float maxSpecialtyCooldown = 0; // Unused?
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
     public float currentDurability = 1.0f;
@@ -492,7 +490,7 @@ public class WeaponScript : MonoBehaviour
 
         //Save the VFX to delete later
         character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellChargeVFX;
-        
+
         //Zero out its location and unparent it
         instantiatedSpellChargeVFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellChargeVFX.transform.localPosition = Vector3.zero;
