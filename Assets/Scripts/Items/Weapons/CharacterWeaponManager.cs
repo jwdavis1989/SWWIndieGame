@@ -18,6 +18,12 @@ public class CharacterWeaponManager : MonoBehaviour
     [Header("Weapon Combo System")]
     public AttackType currentAttackType;
 
+    [Header("Special Weapon Cooldown")]
+    public float specialtyCooldown = 5f;
+    public float specialtyCooldownTimer = 0;
+    public bool isSpecialWeaponOffCooldown = true;
+    public float quickChargeCapacitorCooldownMultiplier = 0.8f;
+
     /**
      * Shorthands to access Main/Off hand weapons
      */
@@ -52,6 +58,12 @@ public class CharacterWeaponManager : MonoBehaviour
             }
         }
     }
+
+    public void Update()
+    {
+        HandleSpecialWeaponCooldown();
+    }
+
     /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
@@ -68,7 +80,8 @@ public class CharacterWeaponManager : MonoBehaviour
 
             //Update Equipped Weapon Icon if this is your first special weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0)
+            {
                 PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
             }
         }
@@ -79,7 +92,8 @@ public class CharacterWeaponManager : MonoBehaviour
 
             //Update Equipped Weapon Icon if this is your first weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0)
+            {
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }
@@ -101,8 +115,12 @@ public class CharacterWeaponManager : MonoBehaviour
             //Play the weapon swap animation
             characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Right_Weapon_01", false, false, true, true);
 
+            //Update Weapon Animator Controller to fit new Weapon
+            characterThatOwnsThisArsenal.characterAnimatorManager.UpdateAnimatorControllerByWeapon(ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>());
+
             //Update Weapon Slot UI for the player only
-            if (characterThatOwnsThisArsenal.isPlayer) {
+            if (characterThatOwnsThisArsenal.isPlayer)
+            {
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }
@@ -247,7 +265,30 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
 
-    public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponScript weaponPerformingAction) {
+    public void HandleSpecialWeaponCooldown()
+    {
+        if (!isSpecialWeaponOffCooldown && specialtyCooldownTimer >= 0)
+        {
+            specialtyCooldownTimer -= Time.deltaTime;
+        }
+        else
+        {
+            isSpecialWeaponOffCooldown = true;
+        }
+    }
+
+    public virtual void ResetSpecialWeaponCooldownTimer()
+    {
+        specialtyCooldownTimer = specialtyCooldown;
+        if (characterThatOwnsThisArsenal.isPlayer && InventionManager.instance.CheckHasUpgrade(InventionType.QuickChargeCapacitory))
+        {
+            specialtyCooldownTimer *= quickChargeCapacitorCooldownMultiplier;
+        }
+        isSpecialWeaponOffCooldown = false;
+    }
+
+    public void PerformWeaponBasedAction(WeaponItemAction weaponAction, WeaponScript weaponPerformingAction)
+    {
         //Way shown in tutorial, might not make sense for our version
         //weaponAction.AttemptToPerformAction(characterThatOwnsThisArsenal, weaponPerformingAction);
 
@@ -316,6 +357,11 @@ public class CharacterWeaponManager : MonoBehaviour
                 staminaDeducted *= currentWeapon.stats.lightBackstepAttack01StaminaCostModifier;
                 break;
 
+            //Magic Attacks
+            case AttackType.AreaSpellAttack01:
+                staminaDeducted *= currentWeapon.stats.areaSpellAttack01StaminaCostModifier;
+                break;
+
             //Default
             default:
                 break;
@@ -332,23 +378,23 @@ public class CharacterWeaponManager : MonoBehaviour
         switch (GetMainHand().weaponFamily) {
                 case WeaponFamily.Swords:
                     meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 1f, true, 0.1f);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
                     break;
                 case WeaponFamily.GreatSwords:
                     meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.heavySlashingWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 0.8f, true, 0.1f);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 0.8f, true, 0.1f);
                     break;
                 case WeaponFamily.HammersOrWrenches:
                     meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.bludgeoningWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 1f, true, 0.1f);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
                     break;
                 case WeaponFamily.Scythes:
                     meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.scytheWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 0.8f, true, 0.1f);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 0.8f, true, 0.1f);
                     break;
                 case WeaponFamily.Daggers:
                     meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.piercingWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 1, 1f, true, 0.1f);
+                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
                     break;
                 case WeaponFamily.NotYetSet:
                     Debug.Log("Weapon Family not set on Prefab!");

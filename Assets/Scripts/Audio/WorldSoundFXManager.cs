@@ -25,6 +25,9 @@ public class WorldSoundFXManager : MonoBehaviour
     public AudioClip[] lightningImpactSFX;
     public AudioClip[] lightImpactSFX;
     public AudioClip[] earthImpactSFX;
+    public AudioClip[] blockedImpactSFX;
+    public AudioClip[] guardBrokenSFX;
+    public AudioClip[] perfectGuardFlourishSFX;
 
     [Header("Action Sounds")]
     public AudioClip[] rollSFX;

@@ -234,6 +234,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Block",
+                    "type": "PassThrough",
+                    "id": "292d0ea2-6b2e-4837-bbf9-d979558a2b57",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "eb3b17ec-f97f-4150-ad78-e1a6a063ea72",
@@ -297,6 +306,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SpecialAttack",
+                    "type": "Button",
+                    "id": "d188ce77-11ab-4c17-a8b0-da03aa292fef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChargeSpecialAttack",
+                    "type": "PassThrough",
+                    "id": "ffb433cc-7d8e-47c7-84ac-a88adf3314a6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(pressPoint=0.1)",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "QueueHeavyAttack",
                     "type": "Button",
                     "id": "382b8827-c061-4c47-9104-3058340975a3",
@@ -354,6 +381,24 @@
                     "name": "DebugTeleportToSurfaceDemo",
                     "type": "Button",
                     "id": "1cfe77a2-7b8a-412d-9528-86904544d839",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugTeleportToAlecDev2",
+                    "type": "Button",
+                    "id": "1dec232e-b90d-46c2-9c2b-388446eec57a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugTeleportToAlecDevDungeon",
+                    "type": "Button",
+                    "id": "4c2b165b-a086-47ab-9194-8ddb10071c2a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -839,6 +884,94 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseItemQuickSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4789d9f7-ab2b-4484-bf82-714173360931",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb485567-a7b5-4d6c-8105-9397f33d6bd6",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e8431e9-943d-4c57-a1d9-f90d7de9d4f3",
+                    "path": "<Keyboard>/numpad5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTeleportToAlecDev2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35390994-dc60-4e19-a636-b47ddd3c04e6",
+                    "path": "<Keyboard>/numpad6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugTeleportToAlecDevDungeon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ee314ef-99e7-45db-9c6d-8ad4a1c40681",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b09f93c-968a-4ebb-9ca5-4f0f5850ca7e",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpecialAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d6f7a64-6acd-4dac-80ea-7314a0020dbf",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChargeSpecialAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "366921c3-0b97-49b3-85d6-0fe13aa4fc00",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChargeSpecialAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

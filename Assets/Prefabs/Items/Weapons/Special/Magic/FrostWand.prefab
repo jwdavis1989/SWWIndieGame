@@ -1,0 +1,285 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &787263550920880903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3251594295845477386}
+  - component: {fileID: 2337119068084869673}
+  - component: {fileID: 4102494510766856222}
+  - component: {fileID: 6873427394410685659}
+  m_Layer: 6
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3251594295845477386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787263550920880903}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.051977124, y: -0.03311308, z: 0.21417022, w: 0.97485024}
+  m_LocalPosition: {x: -0.0069, y: 0.1525, z: -0.012}
+  m_LocalScale: {x: 0.185, y: 0.05, z: 0.185}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8130850429207198863}
+  m_LocalEulerAnglesHint: {x: 355, y: 355, z: 25}
+--- !u!33 &2337119068084869673
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787263550920880903}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4102494510766856222
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787263550920880903}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d0b557d96cca7f74a917e3c577e2d88c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &6873427394410685659
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787263550920880903}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!1 &1847124638102049318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8130850429207198863}
+  - component: {fileID: 5269407390337821213}
+  m_Layer: 6
+  m_Name: FrostWand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8130850429207198863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847124638102049318}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3251594295845477386}
+  - {fileID: 3710056225304783668}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5269407390337821213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847124638102049318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponFamily: 11
+  weaponDamageCollider: {fileID: 0}
+  isSpecialWeapon: 1
+  specialWeaponDamageMultiplier: 1.25
+  spr: {fileID: 21300000, guid: 090fd1914a92564439fdb61d171bf12b, type: 3}
+  hasObtained: 1
+  stats:
+    weaponType: 14
+    isMonsterWeapon: 0
+    attack: 24
+    maxAttack: 44
+    basePoiseDamage: 80
+    durability: 100
+    maxDurability: 134
+    block: 0
+    maxBlock: 0
+    stability: 0
+    maxStability: 0
+    elemental:
+      firePower: 0
+      icePower: 18
+      lightningPower: 0
+      windPower: 0
+      earthPower: 0
+      lightPower: 0
+      beastPower: 0
+      scalesPower: 0
+      techPower: 0
+    maxElemental:
+      firePower: 45
+      icePower: 45
+      lightningPower: 45
+      windPower: 45
+      earthPower: 45
+      lightPower: 45
+      beastPower: 45
+      scalesPower: 45
+      techPower: 45
+    speed: 1
+    maxSpeed: 1
+    specialtyCooldown: 5
+    maxSpecialtyCooldown: 5
+    xpToLevel: 100
+    tinkerPointsPerLvl: 1
+    currentDurability: 1
+    level: 1
+    currentExperiencePoints: 0
+    experiencePointsToNextLevel: 100
+    currentTinkerPoints: 1
+    weaponName: Frost Force Caster
+    baseStaminaCost: 20
+    lightAttack01StaminaCostModifier: 1
+    lightAttack02StaminaCostModifier: 1
+    lightAttack03StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1
+    heavyAttack02StaminaCostModifier: 1
+    lightRunningAttack01StaminaCostModifier: 1
+    lightRollingAttack01StaminaCostModifier: 1
+    lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
+    lightAttack01DamageMotionValue: 1
+    lightAttack02DamageMotionValue: 1.1
+    lightAttack03DamageMotionValue: 1.2
+    heavyAttack01DamageMotionValue: 1.4
+    heavyAttack02DamageMotionValue: 1.6
+    heavyChargedAttack01DamageMotionValue: 2
+    heavyChargedAttack02DamageMotionValue: 2.2
+    lightRunningAttack01DamageMotionValue: 1
+    lightRollingAttack01DamageMotionValue: 1
+    lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
+  mainHandLightAttackAction: {fileID: 0}
+  mainHandHeavyAttackAction: {fileID: 0}
+  offHandCastMagicAttackAction: {fileID: 11400000, guid: 8e9365bba282ba0448de4018a8f7ce12, type: 2}
+  projectile: {fileID: 0}
+  weaponAnimatorOverride: {fileID: 0}
+  offHandSpellAnimation: Spell_Off_Fire_Ball_Start_01
+  fullChargingTraitModifier: 1.25
+  spellForwardVelocityMultiplier: 7
+  spellUpwardVelocityMultiplier: 4
+  spellCastWarmUpVFX: {fileID: 7017378161147204679, guid: 5e3b59b95ca3bd64e972f39d0e1e2e22, type: 3}
+  spellChargeVFX: {fileID: 7017378161147204679, guid: b32ad6409e2336941aaa8669e2347a1d, type: 3}
+  spellProjectileVFX: {fileID: 4845079000888395174, guid: ac3f58ce1b3c28b42a6c61a6dd06f303, type: 3}
+  spellProjectileFullChargeVFX: {fileID: 4845079000888395174, guid: f993e9c24bbe0294da03a524ae80b168, type: 3}
+  spellReleaseSFX: {fileID: 0}
+  spellProjectileSFX: {fileID: 0}
+--- !u!1 &4249499120977974121
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3710056225304783668}
+  - component: {fileID: 2200694666862565824}
+  m_Layer: 0
+  m_Name: SpellOriginLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3710056225304783668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4249499120977974121}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.023, y: 0.015, z: 0.001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8130850429207198863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2200694666862565824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4249499120977974121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcb54a6b4f323c4ca1432db52726c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

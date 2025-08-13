@@ -21,50 +21,93 @@ public class CharacterCombatManager : MonoBehaviour
     public bool canComboWithMainHandWeapon = false;
     public bool canPerformRollingAttack = false;
     public bool canPerformBackStepAttack = false;
+    public bool canBlock = true;
 
-    public virtual void Awake() {
+    public virtual void Awake()
+    {
         character = GetComponent<CharacterManager>();
     }
 
-    public virtual void SetTarget(CharacterManager newTarget) {
-        if (newTarget != null) {
+    public virtual void SetTarget(CharacterManager newTarget)
+    {
+        if (newTarget != null)
+        {
             currentTarget = newTarget;
         }
-        else {
+        else
+        {
             currentTarget = null;
         }
     }
-    
-    public virtual void EnableCanDoCombo() {
+
+    public virtual void EnableCanDoCombo()
+    {
         canComboWithMainHandWeapon = true;
     }
 
-    public virtual void DisableCanDoCombo() {
+    public virtual void DisableCanDoCombo()
+    {
         canComboWithMainHandWeapon = false;
     }
 
-    public void EnableCanDoRollingAttack() {
+    public void EnableCanDoRollingAttack()
+    {
         canPerformRollingAttack = true;
     }
 
-    public void DisableCanDoRollingAttack() {
+    public void DisableCanDoRollingAttack()
+    {
         canPerformRollingAttack = false;
     }
 
-    public void EnableCanDoBackStepAttack() {
+    public void EnableCanDoBackStepAttack()
+    {
         canPerformBackStepAttack = true;
     }
 
-    public void DisableCanDoBackStepAttack() {
+    public void DisableCanDoBackStepAttack()
+    {
         canPerformBackStepAttack = false;
     }
 
-    public void EnableLockOnVFX() {
+    public void EnableLockOnVFX()
+    {
         LockOnVFX.SetActive(true);
     }
 
-    public void DisableLockOnVFX() {
+    public void DisableLockOnVFX()
+    {
         LockOnVFX.SetActive(false);
+    }
+
+    //Animation Event Calls
+    public void InstantiateSpellWarmUpFX()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().InstantiateWarmUpSpellFX(character);
+    }
+
+    public void SuccessfullyCastSpell()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyCastSpell(character);
+    }
+
+    public void SuccessfullyFullChargeSpell()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyChargeSpell(character);
+    }
+
+    public void SuccessfullyCastSpellFullCharge()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyCastSpellFullCharge(character);
+    }
+
+    //Used to destroy things like a "Drawn Arrow" or "Spell Warm Up FX" when the character's poise is broken
+    public void DestroyAllCurrentActionFX()
+    {
+        if (character.characterEffectsManager.activeSpellWarmUpFX != null)
+        {
+            Destroy(character.characterEffectsManager.activeSpellWarmUpFX.gameObject);
+        }
     }
 
 }

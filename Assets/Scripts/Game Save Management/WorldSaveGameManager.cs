@@ -257,7 +257,7 @@ public class WorldSaveGameManager : MonoBehaviour
         saveFileDataWriter.saveFileName = fileName;
         currentCharacterData = saveFileDataWriter.LoadSaveFile();
 
-        StartCoroutine(LoadWorldScene());
+        StartCoroutine(LoadWorldScene(false));
     }
 
     public void SaveGame() {
@@ -330,7 +330,7 @@ public class WorldSaveGameManager : MonoBehaviour
         characterSlot10 = saveFileDataWriter.LoadSaveFile();
     }
 
-    public IEnumerator LoadWorldScene() {
+    public IEnumerator LoadWorldScene(bool isNewGame = true) {
         //If you only have 1 entry scene
         //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
 
@@ -344,7 +344,7 @@ public class WorldSaveGameManager : MonoBehaviour
         //If you want to use different scenes for levels in your project, use this
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
         //Give player object data from file
-        player.LoadGameFromCurrentCharacterData(ref currentCharacterData);
+        player.LoadGameFromCurrentCharacterData(ref currentCharacterData, isNewGame);
         yield return null;
     }
 

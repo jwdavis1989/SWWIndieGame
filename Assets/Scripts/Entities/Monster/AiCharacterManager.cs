@@ -82,17 +82,26 @@ public class AICharacterManager : CharacterManager
             characterAnimatorManager.PlayTargetActionAnimation("Dead_01", true);
         }
 
+        if (!isPlayer)
+        {
+            characterUIManager.characterHPBar.enabled = false;
+        }
+
+        yield return new WaitForSeconds(2);
+
         //Play Death SFX
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
         if (!isPlayer)
         {
             //If monster: Award players with Gold or items
             GetComponent<AICharacterStatsManager>().DoAllDrops(isHitByMainHand, isHitByOffHand);
-            characterUIManager.characterHPBar.enabled = false;
+
+            //Explode!
+            characterEffectsManager.PlayDeathVFX();
+
+            //Disable or Despawn Character
+            Destroy(this.gameObject);
         }
-
-        yield return new WaitForSeconds(5);
-
     }
     
     public void ProcessStateMachine() {

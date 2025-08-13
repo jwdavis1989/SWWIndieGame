@@ -670,6 +670,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &114944389
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &115221498
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,6 +974,44 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1533339198722137681, guid: 397247a265c22034298f9d5a440e683e, type: 3}
   m_PrefabInstance: {fileID: 207718654}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &253200269
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &369286020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1451,6 +1527,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1598391671035646725, guid: ce0f1dea9d2aa4240a049a23f07ca852, type: 3}
   m_PrefabInstance: {fileID: 3889511982359576649}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &498840691
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &571041655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2944,7 +3058,7 @@ MonoBehaviour:
   deleteCharacterSlotPopUp: {fileID: 1588211740}
   currentSelectedSlot: 10
   menuScrollSFX: {fileID: 8300000, guid: b10152f1895e7d4408b51926bb55b560, type: 3}
-  enterGameSFX: {fileID: 8300000, guid: 01d8b4f6c61099247ac99d5303d8df64, type: 3}
+  enterGameSFX: {fileID: 8300000, guid: 30766ebae1cabea4b814fe678c7791fa, type: 3}
 --- !u!82 &1062043394
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3179,139 +3293,67 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2274879492100169878, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
   m_PrefabInstance: {fileID: 5085242756249127458}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1076579489 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3858894723053109326, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-  m_PrefabInstance: {fileID: 5085242756249127458}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1116234059
-GameObject:
+--- !u!1001 &1106056207
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1116234060}
-  - component: {fileID: 1116234062}
-  - component: {fileID: 1116234061}
-  m_Layer: 6
-  m_Name: (Optional) Wider Flashlight Cone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1116234060
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116234059}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -9.641761e-10, z: -0.0000000035983538, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1076579489}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1116234061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116234059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f01d29d88278f45458d99e6b5199e920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strength: 0.1
-  useScattering: 0
-  overrideScattering: 0
-  overridingScattering: 0.5
-  scatteringBias: 0
-  useColorTemperatureTint: 0
-  overrideColor: 0
-  overridingColor: {r: 1, g: 1, b: 1, a: 1}
-  useShadow: 1
-  useCookie: 1
-  cookieMapRenderTexture: {fileID: 1888757014}
-  enableOutOfPhaseColor: 0
-  outOfPhaseColorStrength: 0.1
-  outOfPhaseColor: {r: 0, g: 1, b: 1, a: 1}
-  customDistanceFalloffThreshold: 0.5
-  customDistanceFalloffPower: 2
-  customCookieDistanceFalloffStartThreshold: 0.1
-  customCookieDistanceFalloffEndThreshold: 0.25
-  customCookieDistanceFalloffPower: 2
-  customAngularFalloffThreshold: 0.8
-  customAngularFalloffPower: 2
---- !u!108 &1116234062
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116234059}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 0
-  m_Shape: 0
-  m_Color: {r: 0.7137255, g: 1, b: 0.95686275, a: 1}
-  m_Intensity: 1.5
-  m_Range: 30
-  m_SpotAngle: 60
-  m_InnerSpotAngle: 1
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 2
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 2800000, guid: 34ccd3dd20ecb664fa04564ca465fd8c, type: 3}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4087
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 0
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4887467203169672029, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: dateFormat
+      value: YYY-MM-DD HH:MM
+      objectReference: {fileID: 0}
+    - target: {fileID: 8242142066424758843, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_Name
+      value: JournalManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467970619337334629, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b26a29b722fcc194798fcc88bb71b168, type: 3}
 --- !u!1001 &1141389998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3503,7 +3545,7 @@ PrefabInstance:
     - target: {fileID: -3287904155548602526, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f424a553abc4ed341b4ff624369b9111, type: 2}
+      objectReference: {fileID: 2100000, guid: f13a3c426c9d91942ae1d37e689c4eb6, type: 2}
     - target: {fileID: -3214267034143217929, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -3676,6 +3718,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3943654386839469758, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3948933247560734027, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -3744,6 +3790,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6728297642402996013, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6748995668481900857, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -3784,6 +3834,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 88e5839c4ea808949a8bf40faafff042, type: 2}
+    - target: {fileID: 8277895961670775464, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8817898888258712963, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -4072,18 +4126,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 797972881054226532, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: ac87f41251942154abc2290093fbe2b7, type: 2}
-    - target: {fileID: 797972881054226532, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1675919013060181275, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1073745919
-      objectReference: {fileID: 0}
     - target: {fileID: 3557556730804515875, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
       propertyPath: m_Name
       value: IdeaCameraController
@@ -4127,30 +4169,6 @@ PrefabInstance:
     - target: {fileID: 4812313615822909584, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6511611065951331687, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1150
-      objectReference: {fileID: 0}
-    - target: {fileID: 6542457136125028428, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -125
-      objectReference: {fileID: 0}
-    - target: {fileID: 7217562874424695227, guid: 6dc6cc7d3c1b20e49a49a1b9ea3f3271, type: 3}
-      propertyPath: ideaLayers.m_Bits
-      value: 3137
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4933,44 +4951,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271229941}
   m_CullTransparentMesh: 1
---- !u!84 &1281299204
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1001 &1282293561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6408,6 +6388,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657248207}
   m_CullTransparentMesh: 1
+--- !u!84 &1674906128
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1689852542
 GameObject:
   m_ObjectHideFlags: 0
@@ -6725,44 +6743,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a0b00adac9454a408d87b8d697256e8, type: 3}
---- !u!84 &1888757014
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!136 &1895216762
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7651,44 +7631,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4894937217335537802, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
   m_PrefabInstance: {fileID: 8441853390447065137}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &2112260666
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!4 &2125440740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6515712193588681746, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
@@ -7790,6 +7732,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
+  deathVFX: {fileID: 0}
+  activeSpellWarmUpFX: {fileID: 0}
   effectToTest: {fileID: 11400000, guid: 98e137eb7caa49c4eac3f48ee0355761, type: 2}
   ProcessEffect: 0
 --- !u!224 &1614292168417612504
@@ -7824,6 +7768,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastDamageAnimationPlayed: 
+  hit_Forward_Ping_01: Hit_Forward_Ping_01
+  hit_Forward_Ping_02: Hit_Forward_Ping_02
+  hit_Backward_Ping_01: Hit_Backward_Ping_01
+  hit_Backward_Ping_02: Hit_Backward_Ping_02
+  hit_Right_Ping_01: Hit_Right_Ping_01
+  hit_Right_Ping_02: Hit_Right_Ping_02
+  hit_Left_Ping_01: Hit_Left_Ping_01
+  hit_Left_Ping_02: Hit_Left_Ping_02
+  forward_Ping_Damage: []
+  backward_Ping_Damage: []
+  right_Ping_Damage: []
+  left_Ping_Damage: []
   hit_Forward_Medium_01: Hit_Forward_Medium_01
   hit_Forward_Medium_02: Hit_Forward_Medium_02
   hit_Backward_Medium_01: Hit_Backward_Medium_01
@@ -7872,7 +7828,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.9, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4970592889241311405}
@@ -8177,13 +8133,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3812537201477898178, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
-      propertyPath: dungeonTheme01
+      propertyPath: overworldTheme01
       value: 
-      objectReference: {fileID: 8300000, guid: 2c43c4b1d62c46048903b9588fa5c88e, type: 3}
-    - target: {fileID: 3812537201477898178, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
-      propertyPath: titleScreenTheme01
-      value: 
-      objectReference: {fileID: 8300000, guid: 11d8541d8f629814abff72420b962c3c, type: 3}
+      objectReference: {fileID: 8300000, guid: b5c2e27ac9f247b45948a48ba322d83b, type: 3}
     - target: {fileID: 5642161297977373760, guid: 988fc7a25f178ab41aa8ea44f98aa873, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.43239695
@@ -8340,18 +8292,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: caveAmbience
-      value: 
-      objectReference: {fileID: 8300000, guid: 46d07e1dca5be7e49a49b8aeffbe0a32, type: 3}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: jumpJetAirSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 459488eba8797a946a07ff6ce6f3849c, type: 3}
-    - target: {fileID: 476021741734607624, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
-      propertyPath: dungeonTheme01
-      value: 
-      objectReference: {fileID: 8300000, guid: 2c43c4b1d62c46048903b9588fa5c88e, type: 3}
     - target: {fileID: 2406621850794021007, guid: a24d4cc92ac26a042bd82fb40f5db6cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.013680458
@@ -8468,6 +8408,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9027134512873853145, guid: 5059752dc52f79d49a09909515f4d772, type: 3}
+      propertyPath: defaultDeathExplosionVFX
+      value: 
+      objectReference: {fileID: 3807916271835915907, guid: 54dfacbd747c888419e320ffb35f071e, type: 3}
+    - target: {fileID: 9027134512873853145, guid: 5059752dc52f79d49a09909515f4d772, type: 3}
+      propertyPath: instantEffects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027134512873853145, guid: 5059752dc52f79d49a09909515f4d772, type: 3}
+      propertyPath: instantEffects.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ba78255da06bb6445b040a0b72c09714, type: 2}
+    - target: {fileID: 9027134512873853145, guid: 5059752dc52f79d49a09909515f4d772, type: 3}
+      propertyPath: takeBlockedHealthDamageCharacterEffect
+      value: 
+      objectReference: {fileID: 11400000, guid: ba78255da06bb6445b040a0b72c09714, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8637,6 +8593,7 @@ MonoBehaviour:
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
+  isFalling: 0
   isBoosting: 0
   isRolling: 0
   applyRootMotion: 0
@@ -8645,8 +8602,14 @@ MonoBehaviour:
   isMoving: 0
   isSprinting: 0
   isLockedOn: 0
+  isBlocking: 0
+  isPerfectBlocking: 0
+  perfectBlockModifier: 2
+  perfectBlockWindowDuration: 0.5
+  nonWeaponBlockingStrength: 30
   canBleed: 1
   isChargingAttack: 0
+  isChargingSpellAttack: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
@@ -8799,10 +8762,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1011685036457754930, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024506533354755804, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1111507515892314073, guid: b9827e6f61f592245b8e053dccc786f3, type: 3}
@@ -9044,22 +9003,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 4202956625226732820}
-    - target: {fileID: 915837811372269487, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: lockedCameraHeight
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 915837811372269487, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: maximumViewableAngle
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 915837811372269487, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: minimumViewableAngle
-      value: -70
-      objectReference: {fileID: 0}
     - target: {fileID: 2089660518784529226, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: cookieMapRenderTexture
       value: 
-      objectReference: {fileID: 2112260666}
+      objectReference: {fileID: 1674906128}
     - target: {fileID: 2303989768072336991, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: frustumSettings.baseSettings
       value: 
@@ -9112,16 +9059,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 6922152730407506426, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 6158356203261551149, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
+      propertyPath: cookieMapRenderTexture
+      value: 
+      objectReference: {fileID: 114944389}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3858894723053109326, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1116234060}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
 --- !u!1 &5789412399998155276
@@ -9154,6 +9098,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
+  walkFootStepPitch: 1
+  runFootStepPitch: 1.2
   takeDamageGrunts: []
   sprintBoosterAudioSource: {fileID: 0}
 --- !u!1 &6063556064147133994
@@ -9302,6 +9248,11 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+  totalPoiseDamage: 0
+  offensivePoiseBonus: 0
+  basePoiseDefense: 80
+  defaultPoiseResetTimer: 8
+  currentPoiseResetTimer: 0
   currentHealth: 1
   maxHealth: 100
   currentStamina: 0
@@ -9895,10 +9846,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4988289530278428140, guid: 3a6d98709a697814bb50677484bda47e, type: 3}
-      propertyPath: sprintCameraFieldOfViewMaximum
-      value: 90
-      objectReference: {fileID: 0}
     - target: {fileID: 7295594713699739016, guid: 3a6d98709a697814bb50677484bda47e, type: 3}
       propertyPath: m_Name
       value: Player Input Manager
@@ -9976,6 +9923,7 @@ MonoBehaviour:
   canComboWithMainHandWeapon: 0
   canPerformRollingAttack: 0
   canPerformBackStepAttack: 0
+  canBlock: 1
 --- !u!114 &8671731848262977638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10154,3 +10102,4 @@ SceneRoots:
   - {fileID: 2243634381851867460}
   - {fileID: 2734879239356093117}
   - {fileID: 1143682422}
+  - {fileID: 1106056207}

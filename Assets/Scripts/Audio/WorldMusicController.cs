@@ -61,15 +61,13 @@ public class WorldMusicController : MonoBehaviour
         switch (newScene.name)
         {
             case "TitleScreen":
-                PlayAdvancedMusic(titleScreenTheme01, 0.25f); 
+                PlayAdvancedMusic(titleScreenTheme01, 0.15f); 
                 return;
             case "JerryDev":
-                PlayAdvancedMusic(dungeonTheme01, 0.15f); 
+                PlayAdvancedMusic(dungeonTheme01, 0.05f); 
                 return;
             case "AlecDev":
                 PlayAdvancedMusic(overworldTheme01); 
-                return;  
-            case "JacobDev":
                 return;  
             default: 
                 return;

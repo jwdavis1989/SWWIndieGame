@@ -24,7 +24,8 @@ public class PlayerManager : CharacterManager
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         isPlayer = true;
         isRotatingAttacker = true;
         base.Awake();
@@ -34,7 +35,7 @@ public class PlayerManager : CharacterManager
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
         playerInteractionManager = GetComponent<PlayerInteractionManager>();
-        
+
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
         PlayerInputManager.instance.player = this;
@@ -63,7 +64,8 @@ public class PlayerManager : CharacterManager
         DebugMenu();
     }
 
-    protected override void LateUpdate() {
+    protected override void LateUpdate()
+    {
         base.LateUpdate();
         PlayerCamera.instance.HandleAllCameraActions();
     }
@@ -88,13 +90,14 @@ public class PlayerManager : CharacterManager
         return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
 
-    public override void ReviveCharacter() {
+    public override void ReviveCharacter()
+    {
         base.ReviveCharacter();
         canMove = true;
         isDead = false;
         playerStatsManager.currentHealth = playerStatsManager.maxHealth;
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
-        
+
 
         //Play Rebirth Effects here
 
@@ -103,7 +106,8 @@ public class PlayerManager : CharacterManager
 
     }
 
-    public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+    public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+    {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
 
@@ -121,18 +125,23 @@ public class PlayerManager : CharacterManager
         currentCharacterData.currentHealth = playerStatsManager.currentHealth;
         currentCharacterData.currentStamina = playerStatsManager.currentStamina;
 
-        //Add Weapon Arsenal Data later
+        //Weapons
         currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
         currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
         currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
         //Tinker Components owned
         currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
         currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
-        //Idea Images
-        InventionManager.instance.SaveIdeas();
+        //Journal flags
+        currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
+        //Ideas
+        currentCharacterData.ideas = InventionManager.instance.ideas;
+        //Inventions
+        currentCharacterData.inventions = InventionManager.instance.SaveInventions();
     }
 
-    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData) {
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
+    {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
 
@@ -163,44 +172,63 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
-        //AttachCurrentlyEquippedWeaponObjectsToHand();
         //Load TinkerComponents
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
         TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
+        //Load Journal Flags
+        JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
+        //Ideas
+        InventionManager.instance.ideas = currentCharacterData.ideas;
+        //Inventions
+        if (!isNewGame)
+        {
+            InventionManager.instance.LoadInventions(currentCharacterData.inventions);
+        }
     }
 
-    public void ToggleFlashlight() {
-        if (flashlight != null) {
-            if (flashlight.activeSelf) {
+    public void ToggleFlashlight()
+    {
+        if (flashlight != null)
+        {
+            if (flashlight.activeSelf)
+            {
                 flashlight.SetActive(false);
             }
-            else {
+            else
+            {
                 flashlight.SetActive(true);
             }
         }
-        else {
+        else
+        {
             Debug.Log("ERROR: Player Flashlight Instance Not Set in Editor.");
         }
 
-        if (cameraflashlight != null) {
-            if (cameraflashlight.activeSelf) {
+        if (cameraflashlight != null)
+        {
+            if (cameraflashlight.activeSelf)
+            {
                 cameraflashlight.SetActive(false);
             }
-            else {
+            else
+            {
                 cameraflashlight.SetActive(true);
             }
         }
-        else {
+        else
+        {
             Debug.Log("ERROR: Camera Flashlight Instance Not Set in Editor.");
         }
     }
-    
-    public void DebugAddWeapon() {
+
+    public void DebugAddWeapon()
+    {
         WeaponScript weaponScript;
         WeaponType weaponType;
         bool isSpecial;
-        
-        for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++) {
+
+        for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++)
+        {
             weaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
             weaponType = weaponScript.stats.weaponType;
             isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
@@ -234,17 +262,42 @@ public class PlayerManager : CharacterManager
     //     //WeaponsController.instance.currentlyOwnedWeapons[WeaponsController.instance.indexOfCurrentlyEquippedWeapon].SetActive(true);
     // }
 
-    public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex) {
+    public void ChangeCurrentlyEquippedWeaponObject(int newActiveIndex)
+    {
         PlayerWeaponManager.instance.ChangeWeapon(newActiveIndex);
     }
-    
+
     //Delete this later
-    private void DebugMenu() {
-        if (respawnCharacter) {
+    private void DebugMenu()
+    {
+        if (respawnCharacter)
+        {
             respawnCharacter = false;
             ReviveCharacter();
         }
     }
 
-    
+    public override void DisableInvulnerable()
+    {
+        if (!InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        {
+            isInvulnerable = false;
+        }
+    }
+
+    //Not currently being used because the dodge roll already begins invulnerability immediately, but is needed if that changes.
+    public void EnableRollerJointInvulnerable()
+    {
+        if (InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        {
+            isInvulnerable = true;
+        }
+    }
+
+    public override void DisableRollerJointInvulnerable()
+    {
+        isInvulnerable = false;
+    }
+
+
 }

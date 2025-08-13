@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 /** 
  * Enum of all weapon types.
@@ -65,6 +66,7 @@ public class WeaponStats
     [Header("Weapon Attributes")]
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
+    public float basePoiseDamage = 35f; //Base 35 in case it's caused by traps
     public float durability = 1;
     public float maxDurability = 1;
     public float block = 1.0f;
@@ -75,8 +77,6 @@ public class WeaponStats
     public ElementalStats maxElemental;
     public float speed = 1.0f;
     public float maxSpeed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float maxSpecialtyCooldown = 0; // Unused?
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
     public float currentDurability = 1.0f;
@@ -107,6 +107,9 @@ public class WeaponStats
     //Backstepping
     public float lightBackstepAttack01StaminaCostModifier = 1f;
 
+    //Spells
+    public float areaSpellAttack01StaminaCostModifier = 1f;
+
     [Header("Motion Values")]
     //Light
     public float lightAttack01DamageMotionValue = 1f;
@@ -129,6 +132,9 @@ public class WeaponStats
 
     //Backstepping
     public float lightBackstepAttack01DamageMotionValue = 1f;
+
+    //Spells
+    public float areaSpellAttack01DamageMotionValue = 1f;
 
 
 }
@@ -182,6 +188,7 @@ public class ElementalStats
  */
 public class WeaponScript : MonoBehaviour
 {
+    private CharacterManager characterThatOwnsThisWeapon;
     [Header("Weapon Family - Important - Set in Prefab")]
     public WeaponFamily weaponFamily = 0;
 
@@ -190,6 +197,8 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
+    public float specialWeaponDamageMultiplier = 1.25f;
+
     [Header("Image used for menu icon")]
     public Sprite spr = null;
     [Header("Will appear as ??? on weapon sheet until obtained")]
@@ -200,18 +209,42 @@ public class WeaponScript : MonoBehaviour
     [Header("Actions")]
     public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
     public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
+    public WeaponItemAction offHandCastMagicAttackAction;   //Off hand Magic Special Attack
 
     [Header("Projectile")]
     public GameObject projectile = null;
 
-    public void Awake() {
+    [Header("Animations")]
+    public AnimatorOverrideController weaponAnimatorOverride;
+    [SerializeField] protected string offHandSpellAnimation;
+
+    [Header("Weapon Family Specific")]
+    [Header("Magic Special Weapons")]
+    public float fullChargingTraitModifier = 1.25f;
+    
+    [Header("Projectile Velocity")]
+    public float spellForwardVelocityMultiplier = 7f;
+    public float spellUpwardVelocityMultiplier = 4f;
+    [SerializeField] public GameObject spellCastWarmUpVFX;
+    [SerializeField] public GameObject spellChargeVFX;
+    [SerializeField] public GameObject spellProjectileVFX;
+    [SerializeField] public GameObject spellProjectileFullChargeVFX;
+    public AudioClip spellReleaseSFX;
+    public AudioClip spellProjectileSFX;
+
+
+
+
+    public void Awake()
+    {
         if (isSpecialWeapon)
         {
-            if(projectile != null)
+            if (projectile != null)
             {
                 weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
             }
-            else { 
+            else
+            {
                 weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
             }
         }
@@ -219,37 +252,30 @@ public class WeaponScript : MonoBehaviour
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
         }
-        if (weaponDamageCollider) {
+        if (weaponDamageCollider)
+        {
             SetWeaponDamage();
         }
+
+        //Initialize Weapon Owner
+        characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
     }
     //TODO: Call this when you upgrade weapons too!
-    public void SetWeaponDamage() {
-        if (weaponDamageCollider == null) return;
-        //Redundant check for now, but can be used later if we decide to update monsters to use the weapon system
-        // if (WeaponsController.instance.characterThatOwnsThisArsenal.isPlayer) {
-            //weaponDamageCollider.characterCausingDamage = PlayerWeaponManager.instance.characterThatOwnsThisArsenal;
-            weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
-        // }
-        // else {
-        //     //Monster CharacterManager Weapon Assignment in hypothetical rework
-        // }
+    public void SetWeaponDamage()
+    {
+        if (weaponDamageCollider == null)
+        {
+            return;
+        }
+
+        weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
         weaponDamageCollider.isMainHand = !isSpecialWeapon;
         weaponDamageCollider.enabled = true;
 
         weaponDamageCollider.weaponFamily = weaponFamily;
-        
-        //weaponDamageCollider.physicalDamage = stats.attack;
-        //weaponDamageCollider.fireDamage = stats.elemental.firePower;
-        //weaponDamageCollider.iceDamage = stats.elemental.icePower;
-        //weaponDamageCollider.lightningDamage = stats.elemental.lightningPower;
-        //weaponDamageCollider.windDamage = stats.elemental.windPower;
-        //weaponDamageCollider.earthDamage = stats.elemental.earthPower;
-        //weaponDamageCollider.lightDamage = stats.elemental.lightPower;
-        //weaponDamageCollider.beastDamage = stats.elemental.beastPower;
-        //weaponDamageCollider.scalesDamage = stats.elemental.scalesPower;
-        //weaponDamageCollider.techDamage = stats.elemental.techPower;
+
         weaponDamageCollider.elementalStats = stats.elemental;
+        weaponDamageCollider.poiseDamage = stats.basePoiseDamage;
 
         //Turn the collider back off so it doesn't hurt anyone, ow
         weaponDamageCollider.enabled = false;
@@ -285,7 +311,7 @@ public class WeaponScript : MonoBehaviour
     {
         //Debug.Log("Adding " + exp + " exp to " + stats.weaponName);//astest
         stats.currentExperiencePoints += exp;
-        while(stats.currentExperiencePoints >= stats.experiencePointsToNextLevel)
+        while (stats.currentExperiencePoints >= stats.experiencePointsToNextLevel)
         {
             stats.level++;
             stats.currentTinkerPoints += stats.tinkerPointsPerLvl;
@@ -321,16 +347,194 @@ public class WeaponScript : MonoBehaviour
         result += stats.attack * (stats.elemental.scalesPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower);
         result += stats.attack * (stats.elemental.techPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.techPower);
 
-        if(result > 0) {
-            return result * attackMotionValue * fullChargeModifier;
+        //Calculate block modifier
+        float blockingState = targetCharacter.isPerfectBlocking ? targetCharacter.perfectBlockModifier : 1f;
+
+        if (result > 0)
+        {
+            //Special Weapons Deal 25% bonus Damage
+            if (isSpecialWeapon)
+            {
+                result *= specialWeaponDamageMultiplier;
+            }
+
+            if (targetCharacter.isBlocking)
+            {
+                if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
+                {
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f);
+                }
+                else
+                {
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.nonWeaponBlockingStrength) / 100f);
+                }
+            }
+            else
+            {
+                return result * attackMotionValue * fullChargeModifier;
+            }
+
         }
         else return 0;
     }
 
+    public virtual void AttemptToCastSpell(CharacterManager character)
+    {
+        if (!CanIUseThisSpecialAttack(character))
+        {
+            return;
+        }
+
+        character.characterAnimatorManager.PlayTargetActionAnimation(offHandSpellAnimation, true);
+    }
+
+    public virtual void SuccessfullyCastSpell(CharacterManager character)
+    {
+        //1. Destroy any Warm Up FX remaining from the spell
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //2. Instantiate the Projectile
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
+        GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX);
+
+        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
+        fireBallManager.InitializeFireBall(character);
+
+        //3. Zero out its location and unparent it
+        instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
+        instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
+        instantiatedSpellProjectileFX.transform.parent = null;
+
+
+        // instantiatedSpellProjectileFX.transform.position = spellOriginLocation.transform.position;
+        // instantiatedSpellProjectileFX.transform.rotation = spellOriginLocation.transform.rotation;
+
+        //Alternative way to avoid colliding with self, but isn't needed as we already checked this in the SpellProjectileDamageCollider 
+        // Collider[] characterColliders = character.GetComponentsInChildren<Collider>();
+        // Collider characterCollisionCollider = character.GetComponent<Collider>();
+        //
+        // foreach (var collider in characterColliders)
+        // {
+        //     Physics.IgnoreCollision(collider, fireBallManager.damageCollider.GetComponent<Collider>(), true);
+        // }
+
+        //4. Set the projectile's direction
+        if (character.isLockedOn)
+        {
+            instantiatedSpellProjectileFX.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);
+        }
+        else
+        {
+            //instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+            Vector3 newForward = character.transform.forward + new UnityEngine.Vector3(0, 0, 0);
+            instantiatedSpellProjectileFX.transform.forward = newForward;
+        }
+
+        //6. Set the projectile's velocity
+        Rigidbody spellRigidbody = instantiatedSpellProjectileFX.GetComponent<Rigidbody>();
+        Vector3 upwardVelocity = instantiatedSpellProjectileFX.transform.up * spellUpwardVelocityMultiplier;
+        Vector3 forwardVelocity = instantiatedSpellProjectileFX.transform.forward * spellForwardVelocityMultiplier;
+        Vector3 totalVelocity = upwardVelocity + forwardVelocity;
+        spellRigidbody.velocity = totalVelocity;
+    }
+
+    public virtual void SuccessfullyCastSpellFullCharge(CharacterManager character)
+    {
+        //1. Destroy any Warm Up FX remaining from the spell
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //2. Instantiate the Projectile
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
+        GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileFullChargeVFX);
+
+        //3. Apply Damage to the projectiles damage collider
+        FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
+        fireBallManager.isFullyCharged = true;
+        fireBallManager.InitializeFireBall(character);
+
+        //4. Zero out its location and unparent it
+        instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
+        instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
+        instantiatedSpellProjectileFX.transform.parent = null;
+
+        //5. Set the projectile's direction
+        if (character.isLockedOn)
+        {
+            instantiatedSpellProjectileFX.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);
+        }
+        else
+        {
+            instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+        }
+
+        //6. Set the projectile's velocity
+        Rigidbody spellRigidbody = instantiatedSpellProjectileFX.GetComponent<Rigidbody>();
+        Vector3 upwardVelocity = instantiatedSpellProjectileFX.transform.up * spellUpwardVelocityMultiplier;
+        Vector3 forwardVelocity = instantiatedSpellProjectileFX.transform.forward * spellForwardVelocityMultiplier;
+        Vector3 totalVelocity = upwardVelocity + forwardVelocity;
+        spellRigidbody.velocity = totalVelocity;
+
+        fireBallManager.isFullyCharged = true;
+    }
+
+    public void SuccessfullyChargeSpell(CharacterManager character)
+    {
+        //Destroy any Warm Up FX remaining from the spell
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //Instantiate the VFZ
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
+        GameObject instantiatedSpellChargeVFX = Instantiate(spellChargeVFX);
+
+        //Save the VFX to delete later
+        character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellChargeVFX;
+
+        //Zero out its location and unparent it
+        instantiatedSpellChargeVFX.transform.parent = spellOriginLocation.transform;
+        instantiatedSpellChargeVFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellChargeVFX.transform.localRotation = Quaternion.identity;
+
+    }
+
+    public virtual void InstantiateWarmUpSpellFX(CharacterManager character)
+    {
+        //1. Instantiate Warm Up at the correct place
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
+
+        //2. "Save" the warm up FX as a variable so it can be destroyed if the player is knocked out of the animation
+        GameObject instantiatedSpellWarmUpFX = Instantiate(spellCastWarmUpVFX);
+        instantiatedSpellWarmUpFX.transform.parent = spellOriginLocation.transform;
+        instantiatedSpellWarmUpFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellWarmUpFX.transform.localRotation = Quaternion.identity;
+        character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellWarmUpFX;
+
+        //3. Drain Stamina
+        character.characterWeaponManager.currentAttackType = AttackType.AreaSpellAttack01;
+        character.CallDrainStaminaBasedOnAttack();
+    }
+
+    public virtual void InstantiateReleaseFX(CharacterManager character)
+    {
+        Debug.Log("Instantiate Release FX");
+    }
+
+    protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
+    {
+        if (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
 }
 /** Change Log  
  *  Date         Developer  Description
  *  09/16/2024   Alec       New.
+ *  06/23/2025   Jerry      Added Block/Perfect Block Mechanics.
+ *  08/04/2025   Jerry      Added Spell Casting Weapon Mechanics.
  *  
  * */

@@ -14,27 +14,50 @@ public class CharacterEffectsManager : MonoBehaviour
 
     [Header("VFX")]
     [SerializeField] GameObject bloodSplatterVFX;
+    [SerializeField] GameObject deathVFX;
 
-    protected virtual void Awake() {
+    [Header("Current Active VFX")]
+    public GameObject activeSpellWarmUpFX;
+
+    protected virtual void Awake()
+    {
         character = GetComponent<CharacterManager>();
     }
 
-    public virtual void ProcessInstantEffect(InstantCharacterEffect effect) {
+    public virtual void ProcessInstantEffect(InstantCharacterEffect effect)
+    {
         //Take in an effect
         //Process it
         effect.ProcessEffect(character);
     }
 
-    public void PlayBloodSplatterVFX(Vector3 contactPoint) {
+    public void PlayBloodSplatterVFX(Vector3 contactPoint)
+    {
         //If we manually have placed a blood splatter VFX on this model, play its version
-        if (bloodSplatterVFX != null) {
+        if (bloodSplatterVFX != null)
+        {
             GameObject bloodSplatter = Instantiate(bloodSplatterVFX, contactPoint, Quaternion.identity);
         }
         //Else we use the generic version we have elsewhere
-        else {
-            if (character.canBleed) {
+        else
+        {
+            if (character.canBleed)
+            {
                 GameObject bloodSplatter = Instantiate(WorldCharacterEffectsManager.instance.defaultBloodSplatterVFX, contactPoint, Quaternion.identity);
             }
         }
     }
+
+    public void PlayDeathVFX()
+    {
+        if (deathVFX != null)
+        {
+            Instantiate(deathVFX, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(WorldCharacterEffectsManager.instance.defaultDeathExplosionVFX, transform.position, Quaternion.identity);
+        }
+    }
+
 }

@@ -46,6 +46,12 @@ public class IdeaCameraController : MonoBehaviour
     float upAndDownRotationSpeed = 220f;
     float minimumPivot = -30f;
     float maximumPivot = 60f;
+
+    [Header("Steve Audio")]
+    public AudioClip[] steveAudioClipAffirmative;
+    public AudioClip[] steveAudioClipNegative; 
+    public AudioClip[] steveAudioClipScan; 
+
     public void Awake()
     {
         if (instance == null)
@@ -101,7 +107,6 @@ public class IdeaCameraController : MonoBehaviour
                 {   // Take photo
                     cameraLensCrosshair.SetActive(false);
                     takingPhoto = true;
-                    postProcessLayer.enabled = true;
                     StartCoroutine(TakeScreenshot());
                 }
             }
@@ -115,12 +120,13 @@ public class IdeaCameraController : MonoBehaviour
     IEnumerator TakeScreenshot()
     {
         yield return waitTime;//delay for crosshair
+        postProcessLayer.enabled = true;
         yield return frameEnd; //wait for end of frame
         //ScreenCapture.CaptureScreenshot("SomeLevel.png");
 
         int height = Screen.height * 75 / 100;
         int width = (int)(height * (4.0/3.0));
-        Debug.Log("Width:"+width+" \nHeight:"+height);
+        //Debug.Log("Width:"+width+" \nHeight:"+height);
         Texture2D screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
         int x = Screen.width / 2 - (width/2);
         int y = Screen.height / 2 - (height / 2);
@@ -141,10 +147,16 @@ public class IdeaCameraController : MonoBehaviour
         //end flash
         flashGraphic.SetActive(false);
         // if idea was in the capture set text
-        if (idea == null) {
+        if (idea == null)
+        {
             ideaPhotoText.text = "No idea here!";
-        }else if (InventionManager.instance.CheckHasIdea(idea.type)){
-
+            oldPhotoFrame.SetActive(false);
+            
+            //Play Steve audio - Negative
+            WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipNegative));
+        }
+        else if (InventionManager.instance.CheckHasIdea(idea.type))
+        {
             ideaPhotoText.text = "Idea " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
             previewControlsText.text += "\n<s> Replace Photo - [Enter] / (A)</s>";
@@ -153,13 +165,21 @@ public class IdeaCameraController : MonoBehaviour
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             oldPhoto.GetComponent<RawImage>().texture = texture;
-         }else{
+
+            //Play Steve audio - Scan
+            WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipScan));
+        }
+        else
+        {
             InventionManager.instance.SetHasIdea(idea.type);
             ideaPhotoText.text = "New idea! - " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
             ReplacePhoto(idea.type);
             oldPhotoFrame.SetActive(false);
-         }
+
+            //Play Steve audio - Affirmative
+            WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipAffirmative));
+        }
         //load the picture we just took
         StartCoroutine(LoadCaptureToScreen());
     }

@@ -256,6 +256,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Block"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""292d0ea2-6b2e-4837-bbf9-d979558a2b57"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""eb3b17ec-f97f-4150-ad78-e1a6a063ea72"",
@@ -319,6 +328,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SpecialAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""d188ce77-11ab-4c17-a8b0-da03aa292fef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChargeSpecialAttack"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ffb433cc-7d8e-47c7-84ac-a88adf3314a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(pressPoint=0.1)"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""QueueHeavyAttack"",
                     ""type"": ""Button"",
                     ""id"": ""382b8827-c061-4c47-9104-3058340975a3"",
@@ -376,6 +403,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""DebugTeleportToSurfaceDemo"",
                     ""type"": ""Button"",
                     ""id"": ""1cfe77a2-7b8a-412d-9528-86904544d839"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugTeleportToAlecDev2"",
+                    ""type"": ""Button"",
+                    ""id"": ""1dec232e-b90d-46c2-9c2b-388446eec57a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugTeleportToAlecDevDungeon"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c2b165b-a086-47ab-9194-8ddb10071c2a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -863,6 +908,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""UseItemQuickSlot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4789d9f7-ab2b-4484-bf82-714173360931"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb485567-a7b5-4d6c-8105-9397f33d6bd6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e8431e9-943d-4c57-a1d9-f90d7de9d4f3"",
+                    ""path"": ""<Keyboard>/numpad5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToAlecDev2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""35390994-dc60-4e19-a636-b47ddd3c04e6"",
+                    ""path"": ""<Keyboard>/numpad6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugTeleportToAlecDevDungeon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ee314ef-99e7-45db-9c6d-8ad4a1c40681"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b09f93c-968a-4ebb-9ca5-4f0f5850ca7e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d6f7a64-6acd-4dac-80ea-7314a0020dbf"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChargeSpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""366921c3-0b97-49b3-85d6-0fe13aa4fc00"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChargeSpecialAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1053,6 +1186,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
         m_PlayerActions_Dodge = m_PlayerActions.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
+        m_PlayerActions_Block = m_PlayerActions.FindAction("Block", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_ToggleFlashlight = m_PlayerActions.FindAction("ToggleFlashlight", throwIfNotFound: true);
         m_PlayerActions_LightAttack = m_PlayerActions.FindAction("LightAttack", throwIfNotFound: true);
@@ -1060,6 +1194,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_ChangeRightWeaponDPad = m_PlayerActions.FindAction("ChangeRightWeaponDPad", throwIfNotFound: true);
         m_PlayerActions_ChangeLeftWeaponDPad = m_PlayerActions.FindAction("ChangeLeftWeaponDPad", throwIfNotFound: true);
         m_PlayerActions_HeavyAttack = m_PlayerActions.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_PlayerActions_SpecialAttack = m_PlayerActions.FindAction("SpecialAttack", throwIfNotFound: true);
+        m_PlayerActions_ChargeSpecialAttack = m_PlayerActions.FindAction("ChargeSpecialAttack", throwIfNotFound: true);
         m_PlayerActions_QueueHeavyAttack = m_PlayerActions.FindAction("QueueHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_ChargeHeavyAttack = m_PlayerActions.FindAction("ChargeHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
@@ -1067,6 +1203,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToSurfaceDemo = m_PlayerActions.FindAction("DebugTeleportToSurfaceDemo", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToAlecDev2 = m_PlayerActions.FindAction("DebugTeleportToAlecDev2", throwIfNotFound: true);
+        m_PlayerActions_DebugTeleportToAlecDevDungeon = m_PlayerActions.FindAction("DebugTeleportToAlecDevDungeon", throwIfNotFound: true);
         m_PlayerActions_NextWeapon = m_PlayerActions.FindAction("NextWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugFullResources = m_PlayerActions.FindAction("DebugFullResources", throwIfNotFound: true);
         m_PlayerActions_LockOn = m_PlayerActions.FindAction("LockOn", throwIfNotFound: true);
@@ -1236,6 +1374,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_Dodge;
     private readonly InputAction m_PlayerActions_Sprint;
+    private readonly InputAction m_PlayerActions_Block;
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_ToggleFlashlight;
     private readonly InputAction m_PlayerActions_LightAttack;
@@ -1243,6 +1382,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_ChangeRightWeaponDPad;
     private readonly InputAction m_PlayerActions_ChangeLeftWeaponDPad;
     private readonly InputAction m_PlayerActions_HeavyAttack;
+    private readonly InputAction m_PlayerActions_SpecialAttack;
+    private readonly InputAction m_PlayerActions_ChargeSpecialAttack;
     private readonly InputAction m_PlayerActions_QueueHeavyAttack;
     private readonly InputAction m_PlayerActions_ChargeHeavyAttack;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
@@ -1250,6 +1391,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToSurfaceDemo;
+    private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev2;
+    private readonly InputAction m_PlayerActions_DebugTeleportToAlecDevDungeon;
     private readonly InputAction m_PlayerActions_NextWeapon;
     private readonly InputAction m_PlayerActions_DebugFullResources;
     private readonly InputAction m_PlayerActions_LockOn;
@@ -1263,6 +1406,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Dodge => m_Wrapper.m_PlayerActions_Dodge;
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
+        public InputAction @Block => m_Wrapper.m_PlayerActions_Block;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @ToggleFlashlight => m_Wrapper.m_PlayerActions_ToggleFlashlight;
         public InputAction @LightAttack => m_Wrapper.m_PlayerActions_LightAttack;
@@ -1270,6 +1414,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @ChangeRightWeaponDPad => m_Wrapper.m_PlayerActions_ChangeRightWeaponDPad;
         public InputAction @ChangeLeftWeaponDPad => m_Wrapper.m_PlayerActions_ChangeLeftWeaponDPad;
         public InputAction @HeavyAttack => m_Wrapper.m_PlayerActions_HeavyAttack;
+        public InputAction @SpecialAttack => m_Wrapper.m_PlayerActions_SpecialAttack;
+        public InputAction @ChargeSpecialAttack => m_Wrapper.m_PlayerActions_ChargeSpecialAttack;
         public InputAction @QueueHeavyAttack => m_Wrapper.m_PlayerActions_QueueHeavyAttack;
         public InputAction @ChargeHeavyAttack => m_Wrapper.m_PlayerActions_ChargeHeavyAttack;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
@@ -1277,6 +1423,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @DebugTeleportToSurfaceDemo => m_Wrapper.m_PlayerActions_DebugTeleportToSurfaceDemo;
+        public InputAction @DebugTeleportToAlecDev2 => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev2;
+        public InputAction @DebugTeleportToAlecDevDungeon => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDevDungeon;
         public InputAction @NextWeapon => m_Wrapper.m_PlayerActions_NextWeapon;
         public InputAction @DebugFullResources => m_Wrapper.m_PlayerActions_DebugFullResources;
         public InputAction @LockOn => m_Wrapper.m_PlayerActions_LockOn;
@@ -1299,6 +1447,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Block.started += instance.OnBlock;
+            @Block.performed += instance.OnBlock;
+            @Block.canceled += instance.OnBlock;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -1320,6 +1471,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
+            @SpecialAttack.started += instance.OnSpecialAttack;
+            @SpecialAttack.performed += instance.OnSpecialAttack;
+            @SpecialAttack.canceled += instance.OnSpecialAttack;
+            @ChargeSpecialAttack.started += instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.performed += instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.canceled += instance.OnChargeSpecialAttack;
             @QueueHeavyAttack.started += instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.performed += instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.canceled += instance.OnQueueHeavyAttack;
@@ -1341,6 +1498,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToSurfaceDemo.started += instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.performed += instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.canceled += instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToAlecDev2.started += instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.performed += instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.canceled += instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDevDungeon.started += instance.OnDebugTeleportToAlecDevDungeon;
+            @DebugTeleportToAlecDevDungeon.performed += instance.OnDebugTeleportToAlecDevDungeon;
+            @DebugTeleportToAlecDevDungeon.canceled += instance.OnDebugTeleportToAlecDevDungeon;
             @NextWeapon.started += instance.OnNextWeapon;
             @NextWeapon.performed += instance.OnNextWeapon;
             @NextWeapon.canceled += instance.OnNextWeapon;
@@ -1372,6 +1535,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Block.started -= instance.OnBlock;
+            @Block.performed -= instance.OnBlock;
+            @Block.canceled -= instance.OnBlock;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -1393,6 +1559,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
+            @SpecialAttack.started -= instance.OnSpecialAttack;
+            @SpecialAttack.performed -= instance.OnSpecialAttack;
+            @SpecialAttack.canceled -= instance.OnSpecialAttack;
+            @ChargeSpecialAttack.started -= instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.performed -= instance.OnChargeSpecialAttack;
+            @ChargeSpecialAttack.canceled -= instance.OnChargeSpecialAttack;
             @QueueHeavyAttack.started -= instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.performed -= instance.OnQueueHeavyAttack;
             @QueueHeavyAttack.canceled -= instance.OnQueueHeavyAttack;
@@ -1414,6 +1586,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToSurfaceDemo.started -= instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.performed -= instance.OnDebugTeleportToSurfaceDemo;
             @DebugTeleportToSurfaceDemo.canceled -= instance.OnDebugTeleportToSurfaceDemo;
+            @DebugTeleportToAlecDev2.started -= instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.performed -= instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDev2.canceled -= instance.OnDebugTeleportToAlecDev2;
+            @DebugTeleportToAlecDevDungeon.started -= instance.OnDebugTeleportToAlecDevDungeon;
+            @DebugTeleportToAlecDevDungeon.performed -= instance.OnDebugTeleportToAlecDevDungeon;
+            @DebugTeleportToAlecDevDungeon.canceled -= instance.OnDebugTeleportToAlecDevDungeon;
             @NextWeapon.started -= instance.OnNextWeapon;
             @NextWeapon.performed -= instance.OnNextWeapon;
             @NextWeapon.canceled -= instance.OnNextWeapon;
@@ -1542,6 +1720,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnDodge(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnBlock(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnToggleFlashlight(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
@@ -1549,6 +1728,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnChangeRightWeaponDPad(InputAction.CallbackContext context);
         void OnChangeLeftWeaponDPad(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnSpecialAttack(InputAction.CallbackContext context);
+        void OnChargeSpecialAttack(InputAction.CallbackContext context);
         void OnQueueHeavyAttack(InputAction.CallbackContext context);
         void OnChargeHeavyAttack(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);
@@ -1556,6 +1737,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnDebugTeleportToSurfaceDemo(InputAction.CallbackContext context);
+        void OnDebugTeleportToAlecDev2(InputAction.CallbackContext context);
+        void OnDebugTeleportToAlecDevDungeon(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
         void OnDebugFullResources(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
