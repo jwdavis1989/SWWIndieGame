@@ -23,22 +23,13 @@ public class SpellProjectileDamageCollider : DamageCollider
         base.Awake();
 
         fireBallManager = GetComponentInParent<FireBallManager>();
-        Debug.Log("fireBallManager: " + (fireBallManager != null));
-        //Debug.Log("characterCausingDamage.characterWeaponManager: " + (characterCausingDamage.characterWeaponManager != null));
-        characterCausingDamage = fireBallManager.characterCausingDamage;
-        Debug.Log("fireBallManager.characterCausingDamage: " + (fireBallManager.characterCausingDamage != null));
-        Debug.Log("characterCausingDamage: " + (characterCausingDamage != null));
-        weaponThatOwnsThisCollider = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>();
-        Debug.Log("weaponThatOwnsThisCollider: " + (weaponThatOwnsThisCollider != null));
-        InitializeStats();
     }
 
-    protected void InitializeStats()
+    public void InitializeStats()
     {
+        weaponThatOwnsThisCollider = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>();
         //Base Attack Power
         physicalDamage = weaponThatOwnsThisCollider.stats.attack;
-        //damageEffect.weaponScript.stats = stats;
-        fullChargeModifier = weaponThatOwnsThisCollider.fullChargingTraitModifier;
         //Elemental
         elementalStats = weaponThatOwnsThisCollider.stats.elemental;
     }

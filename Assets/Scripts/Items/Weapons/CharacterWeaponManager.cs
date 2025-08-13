@@ -320,6 +320,11 @@ public class CharacterWeaponManager : MonoBehaviour
                 staminaDeducted *= currentWeapon.stats.lightBackstepAttack01StaminaCostModifier;
                 break;
 
+            //Magic Attacks
+            case AttackType.AreaSpellAttack01:
+                staminaDeducted *= currentWeapon.stats.areaSpellAttack01StaminaCostModifier;
+                break;
+
             //Default
             default:
                 break;
