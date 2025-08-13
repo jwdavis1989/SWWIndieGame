@@ -152,6 +152,7 @@ public class InventionManager : MonoBehaviour
         switch (newInventionType)
         {
             case InventionType.QuickChargeCapacitory:
+                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.QuickChargeCapacitory);
                 break;
             case InventionType.PredictiveNeuralLink:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.PredictiveNeuralLink);

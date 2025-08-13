@@ -22,6 +22,7 @@ public class CharacterWeaponManager : MonoBehaviour
     public float specialtyCooldown = 5f;
     public float specialtyCooldownTimer = 0;
     public bool isSpecialWeaponOffCooldown = true;
+    public float quickChargeCapacitorCooldownMultiplier = 0.8f;
 
     /**
      * Shorthands to access Main/Off hand weapons
@@ -62,7 +63,7 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         HandleSpecialWeaponCooldown();
     }
-    
+
     /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
@@ -279,6 +280,10 @@ public class CharacterWeaponManager : MonoBehaviour
     public virtual void ResetSpecialWeaponCooldownTimer()
     {
         specialtyCooldownTimer = specialtyCooldown;
+        if (characterThatOwnsThisArsenal.isPlayer && InventionManager.instance.CheckHasUpgrade(InventionType.QuickChargeCapacitory))
+        {
+            specialtyCooldownTimer *= quickChargeCapacitorCooldownMultiplier;
+        }
         isSpecialWeaponOffCooldown = false;
     }
 
