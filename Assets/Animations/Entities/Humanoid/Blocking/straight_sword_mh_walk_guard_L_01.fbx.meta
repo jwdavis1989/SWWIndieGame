@@ -55,22 +55,60 @@ ModelImporter:
       heightFromFeet: 0
       mirror: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.24337748
-        functionName: PlayFootStepSFX
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.81705296
-        functionName: PlayFootStepSFX
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      curves:
+      - name: FootStepCurve
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: -2.6124032
+            tangentMode: 69
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.3827893
+            value: 0
+            inSlope: -2.6124032
+            outSlope: -8.531646
+            tangentMode: 69
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.5
+            value: -1
+            inSlope: -8.531646
+            outSlope: 2.4157703
+            tangentMode: 69
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.9139466
+            value: 0
+            inSlope: 2.4157703
+            outSlope: 11.620695
+            tangentMode: 69
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 1
+            inSlope: 11.620695
+            outSlope: 0
+            tangentMode: 69
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

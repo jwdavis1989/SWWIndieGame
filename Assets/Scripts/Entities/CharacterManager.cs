@@ -49,6 +49,7 @@ public class CharacterManager : MonoBehaviour
     public float nonWeaponBlockingStrength = 30f;
     public bool canBleed = true;
     public bool isChargingAttack = false;
+    public bool isChargingSpellAttack = false;
     public bool isInvulnerable = false;
 
     [Header("Minimap Sprite")]
@@ -82,6 +83,7 @@ public class CharacterManager : MonoBehaviour
         //Update Animation Flags
         animator?.SetBool("isGrounded", isGrounded);
         animator?.SetBool("isChargingAttack", isChargingAttack);
+        animator?.SetBool("isChargingSpellAttack", isChargingSpellAttack);
         animator?.SetBool("isMoving", isMoving);
         animator?.SetBool("isBlocking", isBlocking);
     }
@@ -213,7 +215,7 @@ public class CharacterManager : MonoBehaviour
     {
         isInvulnerable = false;
     }
-    
+
     public virtual void DisableRollerJointInvulnerable()
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
