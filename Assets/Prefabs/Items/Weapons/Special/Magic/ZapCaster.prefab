@@ -49,6 +49,7 @@ MonoBehaviour:
   weaponFamily: 10
   weaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
+  specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: ab89822e4a554994387e2d81ba0a53b7, type: 3}
   hasObtained: 1
   stats:
@@ -126,8 +127,9 @@ MonoBehaviour:
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 7017378161147204679, guid: 5e3b59b95ca3bd64e972f39d0e1e2e22, type: 3}
+  spellChargeVFX: {fileID: 7017378161147204679, guid: b32ad6409e2336941aaa8669e2347a1d, type: 3}
   spellProjectileVFX: {fileID: 4845079000888395174, guid: ac3f58ce1b3c28b42a6c61a6dd06f303, type: 3}
-  spellProjectileFullChargeVFX: {fileID: 4845079000888395174, guid: ac3f58ce1b3c28b42a6c61a6dd06f303, type: 3}
+  spellProjectileFullChargeVFX: {fileID: 4845079000888395174, guid: f993e9c24bbe0294da03a524ae80b168, type: 3}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
 --- !u!1 &7722228540868789105

@@ -77,8 +77,6 @@ public class WeaponStats
     public ElementalStats maxElemental;
     public float speed = 1.0f;
     public float maxSpeed = 1.0f;
-    public float specialtyCooldown = 0;
-    public float maxSpecialtyCooldown = 0; // Unused?
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
     public float currentDurability = 1.0f;
@@ -228,6 +226,7 @@ public class WeaponScript : MonoBehaviour
     public float spellForwardVelocityMultiplier = 7f;
     public float spellUpwardVelocityMultiplier = 4f;
     [SerializeField] public GameObject spellCastWarmUpVFX;
+    [SerializeField] public GameObject spellChargeVFX;
     [SerializeField] public GameObject spellProjectileVFX;
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
     public AudioClip spellReleaseSFX;
@@ -478,6 +477,25 @@ public class WeaponScript : MonoBehaviour
         spellRigidbody.velocity = totalVelocity;
 
         fireBallManager.isFullyCharged = true;
+    }
+
+    public void SuccessfullyChargeSpell(CharacterManager character)
+    {
+        //Destroy any Warm Up FX remaining from the spell
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //Instantiate the VFZ
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
+        GameObject instantiatedSpellChargeVFX = Instantiate(spellChargeVFX);
+
+        //Save the VFX to delete later
+        character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellChargeVFX;
+
+        //Zero out its location and unparent it
+        instantiatedSpellChargeVFX.transform.parent = spellOriginLocation.transform;
+        instantiatedSpellChargeVFX.transform.localPosition = Vector3.zero;
+        instantiatedSpellChargeVFX.transform.localRotation = Quaternion.identity;
+
     }
 
     public virtual void InstantiateWarmUpSpellFX(CharacterManager character)

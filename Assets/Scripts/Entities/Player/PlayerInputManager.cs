@@ -614,10 +614,12 @@ public class PlayerInputManager : MonoBehaviour
 
             //TODO: Return if we have a UI Window Open
 
-            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
+            if (PlayerWeaponManager.instance.ownedWeapons.Count > 0 && player.characterWeaponManager.isSpecialWeaponOffCooldown)
             {
                 PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().offHandCastMagicAttackAction,
                                                 PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>());
+
+                player.characterWeaponManager.ResetSpecialWeaponCooldownTimer();
             }
         }
     }
