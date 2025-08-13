@@ -5,26 +5,31 @@ using UnityEngine;
 
 public class ParentPursueStanceState : PursueTargetState
 {
-    [Header("ParentPursueStanceState is a child of pursue target state")]
-    float spawnTimer = 1.5f;
-    float currentSpawnTimer = 0f;
+    //[Header("ParentPursueStanceState is a child of pursue target state")]
+    //float spawnInterval = 1.5f;
+    //float currentSpawnTimer = 0f;
     public void Update()
     {
-        currentSpawnTimer += Time.deltaTime;
+        //currentSpawnTimer += Time.deltaTime;
     }
     public override AIState Tick(AICharacterManager aiCharacter)
     {
-        if (currentSpawnTimer < spawnTimer)
-        {
-            currentSpawnTimer += Time.deltaTime;
-}
-        else
-        {
-            //Instantiate the child monster
-            GameObject child = aiCharacter.gameObject.GetComponent<SpawningBehavior>().Spawn(aiCharacter.transform);
-            child.transform.position = child.transform.position + (child.transform.forward *1.25f);
-            currentSpawnTimer = 0f;
-        }
+        //if (currentSpawnTimer < spawnInterval)
+        //{
+        //    //currentSpawnTimer += Time.deltaTime;
+        //}
+        //else
+        //{
+        //    //spawner will handle max spawns
+        //    SpawningBehavior spawner = aiCharacter.gameObject.GetComponent<SpawningBehavior>();
+        //    //Instantiate the child monster
+        //    GameObject child = spawner.Spawn();
+        //    if (child != null)
+        //    {
+        //        child.transform.position = aiCharacter.transform.position + (aiCharacter.transform.forward * 1.25f);
+        //    }
+        //    currentSpawnTimer = 0f;
+        //}
         //copied from old
         //Check if we're performing an action. If so, then do nothing until the action is finshed
         if (aiCharacter.isPerformingAction)

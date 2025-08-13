@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 [CreateAssetMenu(menuName = "A.I./States/ChildCombatStanceState")]
@@ -15,6 +16,14 @@ public class ChildCombatStanceState : CombatStanceState
 
     public override AIState Tick(AICharacterManager aiCharacter)
     {
+        aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = true;
+        aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = true;
+        aiCharacter.GetComponentInChildren<FlashingBehavior>().ActivateFlashing();
+        if(aiCharacter.statsManager.currentHealth <= 0)
+        {
+            aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = false;
+            aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = false;
+        }
         if (!aiCharacter.navMeshAgent.enabled)
         {
             aiCharacter.navMeshAgent.enabled = true;
@@ -27,25 +36,28 @@ public class ChildCombatStanceState : CombatStanceState
         {
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
-        if (currentTimeUntilExplosion < timeUntilExplosion)
-        {
-            currentTimeUntilExplosion += Time.deltaTime;
-        } 
-        else
-        {
-            //Instantiate the explosion DamageCollider prefab, that includes the ExplosionPuff particle VFX
-            //You might need to check if the player is locked onto the child, to unlock it
-            if (!finished)
-            {
-                GameObject explosion = aiCharacter.gameObject.GetComponent<SpawningBehavior>().Spawn();
-                explosion.transform.position = aiCharacter.transform.position;
-                //aiCharacter.transform.SetParent(explosion.transform, true);
-                aiCharacter.statsManager.currentHealth = 0;
-                aiCharacter.ProcessDeathEvent(true);
-                finished = true;
-            }
-            
-        }
+        //If outside combat engagement range, switch to pursue target state
+        //if (aiCharacter.aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance)
+        //{
+        //    return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
+        //}
+        //if (currentTimeUntilExplosion < timeUntilExplosion)
+        //{
+        //    currentTimeUntilExplosion += Time.deltaTime;
+        //}
+        //else
+        //{
+        //    //Instantiate the explosion DamageCollider prefab, that includes the ExplosionPuff particle VFX
+        //    //You might need to check if the player is locked onto the child, to unlock it
+        //    UnityEngine.Debug.Log("EXPLODING");
+        //    GameObject explosion = aiCharacter.gameObject.GetComponent<SpawningBehavior>().Spawn();
+        //    explosion.transform.position = aiCharacter.transform.position;
+        //    //aiCharacter.transform.SetParent(explosion.transform, true);
+        //    aiCharacter.statsManager.currentHealth = 0;
+        //    Destroy(aiCharacter.gameObject);
+        //aiCharacter.ProcessDeathEvent(true);
+
+        //}
         return this;
     }
 
