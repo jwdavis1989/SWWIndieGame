@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 [CreateAssetMenu(menuName = "A.I./States/ChildCombatStanceState")]
 public class ChildCombatStanceState : CombatStanceState
 {
@@ -17,12 +18,16 @@ public class ChildCombatStanceState : CombatStanceState
     public override AIState Tick(AICharacterManager aiCharacter)
     {
         aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = true;
-        aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = true;
-        aiCharacter.GetComponentInChildren<FlashingBehavior>().ActivateFlashing();
-        if(aiCharacter.statsManager.currentHealth <= 0)
+        aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>().ActivateFlashing();
+        aiCharacter.animator.speed = 3;
+        //aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = true;
+        if (aiCharacter.gameObject.GetComponent<SpawningBehavior>().spawnList.Count > 0)
+            aiCharacter.statsManager.currentHealth = 0;
+        if (aiCharacter.statsManager.currentHealth <= 0)
         {
             aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = false;
-            aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = false;
+            aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>().DeactivateFlashing();
+            //aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = false;
         }
         if (!aiCharacter.navMeshAgent.enabled)
         {
@@ -56,7 +61,9 @@ public class ChildCombatStanceState : CombatStanceState
         //    aiCharacter.statsManager.currentHealth = 0;
         //    Destroy(aiCharacter.gameObject);
         //aiCharacter.ProcessDeathEvent(true);
-
+        NavMeshPath path = new NavMeshPath();
+        aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+        aiCharacter.navMeshAgent.SetPath(path);
         //}
         return this;
     }

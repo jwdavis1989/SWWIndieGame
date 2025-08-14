@@ -8993,8 +8993,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 100
-  m_Acceleration: 80
+  m_Speed: 50
+  m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 2
@@ -9628,6 +9628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
   deathVFX: {fileID: 3807916271835915907, guid: 54dfacbd747c888419e320ffb35f071e, type: 3}
+  activeSpellWarmUpFX: {fileID: 0}
 --- !u!82 &1362106527690768097
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9737,6 +9738,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
+  walkFootStepPitch: 1
+  runFootStepPitch: 1.2
   takeDamageGrunts:
   - {fileID: 8300000, guid: 68f7fb07fe8eeac4fb98d7eba26fd824, type: 3}
   - {fileID: 8300000, guid: a775695000f506d44ab17df56e688370, type: 3}
@@ -9823,6 +9826,10 @@ MonoBehaviour:
   mainHandWeaponAnchor: {fileID: 5737470989084022485}
   offHandWeaponAnchor: {fileID: 8895619688233480048}
   currentAttackType: 0
+  specialtyCooldown: 5
+  specialtyCooldownTimer: 0
+  isSpecialWeaponOffCooldown: 1
+  quickChargeCapacitorCooldownMultiplier: 0.8
 --- !u!54 &456844161752120569
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9921,6 +9928,7 @@ MonoBehaviour:
   nonWeaponBlockingStrength: 30
   canBleed: 1
   isChargingAttack: 0
+  isChargingSpellAttack: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 3050506536943370000}
   characterName: Masterwork Fabricant
