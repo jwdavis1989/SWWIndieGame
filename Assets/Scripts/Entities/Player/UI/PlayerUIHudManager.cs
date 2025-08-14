@@ -44,7 +44,7 @@ public class PlayerUIHudManager : MonoBehaviour
         staminaBar.gameObject.SetActive(true);
     }
 
-    //Remember to call this after a weapon has been added to your hand, or maybe arsenal(?)
+    //Remember to call this after a weapon has been added to your hand, or arsenal
     public void SetRightWeaponQuickSlotIcon() {
         if (PlayerWeaponManager.instance != null) {
             GameObject currentRightWeapon = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon];
@@ -70,17 +70,22 @@ public class PlayerUIHudManager : MonoBehaviour
 
     }
 
-    public void SetLeftWeaponQuickSlotIcon() {
-        if (PlayerWeaponManager.instance != null) {
+    //Remember to call this after a weapon has been added to your hand, or arsenal
+    public void SetLeftWeaponQuickSlotIcon()
+    {
+        if (PlayerWeaponManager.instance != null)
+        {
             GameObject currentLeftWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons[PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon];
-            if (currentLeftWeapon == null) {
+            if (currentLeftWeapon == null)
+            {
                 leftWeaponQuickSlotIcon.enabled = false;
                 leftWeaponQuickSlotIcon.sprite = null;
                 Debug.Log("No Left Hand Weapon Currently Equipped.");
                 return;
             }
 
-            if (currentLeftWeapon.GetComponent<WeaponScript>().spr == null) {
+            if (currentLeftWeapon.GetComponent<WeaponScript>().spr == null)
+            {
                 Debug.Log("ERROR: Item has no Item Icon!");
                 return;
             }
@@ -88,7 +93,8 @@ public class PlayerUIHudManager : MonoBehaviour
             leftWeaponQuickSlotIcon.enabled = true;
             leftWeaponQuickSlotIcon.sprite = currentLeftWeapon.GetComponent<WeaponScript>().spr;
         }
-        else {
+        else
+        {
             Debug.Log("ERROR: PlayerWeaponManager.instance does not exist!");
             return;
         }

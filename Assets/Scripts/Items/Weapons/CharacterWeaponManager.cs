@@ -46,14 +46,17 @@ public class CharacterWeaponManager : MonoBehaviour
             characterThatOwnsThisArsenal = gameObject.GetComponent<CharacterManager>();
         }
 
-        if (ownedWeapons.Count > 0) {
+        if (ownedWeapons.Count > 0)
+        {
             List<WeaponType> weaponTypes = new List<WeaponType>();
-            foreach (var weapon in ownedWeapons) {
+            foreach (var weapon in ownedWeapons)
+            {
                 weaponTypes.Add(weapon.GetComponent<WeaponScript>().stats.weaponType);
             }
             ownedWeapons = new List<GameObject>();
-            
-            foreach (WeaponType weaponType in weaponTypes) {
+
+            foreach (WeaponType weaponType in weaponTypes)
+            {
                 AddWeaponToCurrentWeapons(weaponType);
             }
         }
