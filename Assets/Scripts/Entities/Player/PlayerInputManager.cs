@@ -747,10 +747,12 @@ public class PlayerInputManager : MonoBehaviour
             {
                 PlayerCamera.instance.HandleLocatingLockOnTargets();
 
-                if (PlayerCamera.instance.leftLockOnTarget != null)
+                if (PlayerCamera.instance.leftLockOnTarget != null && player.playerCombatManager.currentTarget != PlayerCamera.instance.leftLockOnTarget)
                 {
                     player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
                 }
+                else if (PlayerCamera.instance.rightLockOnTarget != null)
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
             }
         }
 
@@ -762,10 +764,12 @@ public class PlayerInputManager : MonoBehaviour
             {
                 PlayerCamera.instance.HandleLocatingLockOnTargets();
 
-                if (PlayerCamera.instance.rightLockOnTarget != null)
+                if (PlayerCamera.instance.rightLockOnTarget != null && player.playerCombatManager.currentTarget != PlayerCamera.instance.rightLockOnTarget)
                 {
                     player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
                 }
+                else if(PlayerCamera.instance.leftLockOnTarget != null)
+                    player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
             }
         }
 
