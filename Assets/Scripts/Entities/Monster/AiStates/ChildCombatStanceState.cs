@@ -7,27 +7,27 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "A.I./States/ChildCombatStanceState")]
 public class ChildCombatStanceState : CombatStanceState
 {
-    float timeUntilExplosion = 1.5f;
-    float currentTimeUntilExplosion = 0f;
-    bool finished = false;
-    public void Update()
-    {
-        currentTimeUntilExplosion += Time.deltaTime;
-    }
+    //float timeUntilExplosion = 1.5f;
+    //float currentTimeUntilExplosion = 0f;
+    //bool finished = false;
+    //public void Update()
+    //{
+    //    currentTimeUntilExplosion += Time.deltaTime;
+    //}
 
     public override AIState Tick(AICharacterManager aiCharacter)
     {
-        aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = true;
-        aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>().ActivateFlashing();
-        aiCharacter.animator.speed = 3;
-        //aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = true;
-        if (aiCharacter.gameObject.GetComponent<SpawningBehavior>().spawnList.Count > 0)
+        SpawningBehavior explosionSpawner = aiCharacter.gameObject.GetComponent<SpawningBehavior>();
+        FlashingBehavior flashingLight = aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>();
+        explosionSpawner.auto = true; // spawn explosion after interval
+        flashingLight.ActivateFlashing(); //flashing light effect
+        aiCharacter.animator.speed = 3; // speed up
+        if (explosionSpawner.spawnList.Count > 0)//exploded
             aiCharacter.statsManager.currentHealth = 0;
         if (aiCharacter.statsManager.currentHealth <= 0)
-        {
-            aiCharacter.gameObject.GetComponent<SpawningBehavior>().auto = false;
-            aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>().DeactivateFlashing();
-            //aiCharacter.gameObject.GetComponent<SelfDestructBehavior>().enabled = false;
+        {//don't flash and explode if killed
+            explosionSpawner.auto = false;
+            flashingLight.DeactivateFlashing();
         }
         if (!aiCharacter.navMeshAgent.enabled)
         {
@@ -35,6 +35,10 @@ public class ChildCombatStanceState : CombatStanceState
         }
         //Rotate to face our target
         aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
+        //movement
+        NavMeshPath path = new NavMeshPath();
+        aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+        aiCharacter.navMeshAgent.SetPath(path);
 
         //If Target is no longer present, return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
@@ -61,9 +65,7 @@ public class ChildCombatStanceState : CombatStanceState
         //    aiCharacter.statsManager.currentHealth = 0;
         //    Destroy(aiCharacter.gameObject);
         //aiCharacter.ProcessDeathEvent(true);
-        NavMeshPath path = new NavMeshPath();
-        aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
-        aiCharacter.navMeshAgent.SetPath(path);
+
         //}
         return this;
     }
