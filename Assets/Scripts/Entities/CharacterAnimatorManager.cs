@@ -176,6 +176,9 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.canRotate = canRotate;
         character.canMove = canMove;
 
+        //Set Character isAttacking Flag
+        character.isAttacking = true;
+
         //Decide if our attack can be parried
 
     }

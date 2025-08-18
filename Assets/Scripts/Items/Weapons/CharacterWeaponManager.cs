@@ -345,6 +345,14 @@ public class CharacterWeaponManager : MonoBehaviour
                 staminaDeducted *= currentWeapon.stats.heavyAttack02StaminaCostModifier;
                 break;
 
+            //Jumping Attacks
+            case AttackType.LightJumpAttack01:
+                staminaDeducted *= currentWeapon.stats.lightJumpAttack01StaminaCostModifier;
+                break;
+            case AttackType.HeavyJumpAttack01:
+                staminaDeducted *= currentWeapon.stats.heavyJumpAttack01StaminaCostModifier;
+                break;
+
             //Running Attacks
             case AttackType.RunningLightAttack01:
                 staminaDeducted *= currentWeapon.stats.lightRunningAttack01StaminaCostModifier;
