@@ -46,14 +46,17 @@ public class CharacterWeaponManager : MonoBehaviour
             characterThatOwnsThisArsenal = gameObject.GetComponent<CharacterManager>();
         }
 
-        if (ownedWeapons.Count > 0) {
+        if (ownedWeapons.Count > 0)
+        {
             List<WeaponType> weaponTypes = new List<WeaponType>();
-            foreach (var weapon in ownedWeapons) {
+            foreach (var weapon in ownedWeapons)
+            {
                 weaponTypes.Add(weapon.GetComponent<WeaponScript>().stats.weaponType);
             }
             ownedWeapons = new List<GameObject>();
-            
-            foreach (WeaponType weaponType in weaponTypes) {
+
+            foreach (WeaponType weaponType in weaponTypes)
+            {
                 AddWeaponToCurrentWeapons(weaponType);
             }
         }
@@ -340,6 +343,14 @@ public class CharacterWeaponManager : MonoBehaviour
                 break;
             case AttackType.ChargedAttack02:
                 staminaDeducted *= currentWeapon.stats.heavyAttack02StaminaCostModifier;
+                break;
+
+            //Jumping Attacks
+            case AttackType.LightJumpAttack01:
+                staminaDeducted *= currentWeapon.stats.lightJumpAttack01StaminaCostModifier;
+                break;
+            case AttackType.HeavyJumpAttack01:
+                staminaDeducted *= currentWeapon.stats.heavyJumpAttack01StaminaCostModifier;
                 break;
 
             //Running Attacks

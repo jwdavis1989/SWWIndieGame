@@ -98,6 +98,10 @@ public class WeaponStats
     public float heavyAttack01StaminaCostModifier = 1.2f;
     public float heavyAttack02StaminaCostModifier = 1.2f;
 
+    //Jump Attacks
+    public float lightJumpAttack01StaminaCostModifier = 1f;
+    public float heavyJumpAttack01StaminaCostModifier = 1.5f;
+
     //Running
     public float lightRunningAttack01StaminaCostModifier = 1f;
 
@@ -123,6 +127,10 @@ public class WeaponStats
     //Charged Heavy
     public float heavyChargedAttack01DamageMotionValue = 2.0f;
     public float heavyChargedAttack02DamageMotionValue = 2.2f;
+
+    //Jump Attacks
+    public float lightJumpAttack01DamageMotionValue = 1f;
+    public float heavyJumpAttack01DamageMotionValue = 1.8f;
 
     //Running
     public float lightRunningAttack01DamageMotionValue = 1f;
