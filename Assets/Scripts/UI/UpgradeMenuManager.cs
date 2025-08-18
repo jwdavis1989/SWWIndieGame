@@ -99,7 +99,7 @@ public class UpgradeMenuManager : MonoBehaviour
             wpns.ownedWeapons[wpns.indexOfEquippedWeapon].GetComponent<WeaponScript>();
         wpn.stats.level++;
         wpn.stats.currentTinkerPoints += wpn.stats.tinkerPointsPerLvl;
-        Debug.Log("Leveled up " + wpn.stats.weaponName + " to level " + wpn.stats.level + ".");
+        //Debug.Log("Leveled up " + wpn.stats.weaponName + " to level " + wpn.stats.level + ".");
         LoadEquippedWeapons();//update screen
         LoadWeaponsToScreen();
         LoadComponentsToScreen();
@@ -236,6 +236,7 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt.mainButton.interactable = true;
                     myBtnScrpt.bottomText.text = "Evolve!";
                     myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt.mainButton.onClick.RemoveAllListeners();
                     myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
                     {
                         weaponCntrller.EvolveWeapon(equippedWpn, evolves[0], PlayerWeaponManager.instance);
@@ -262,6 +263,7 @@ public class UpgradeMenuManager : MonoBehaviour
                     myBtnScrpt2.mainButton.interactable = true;
                     myBtnScrpt2.bottomText.text = "Evolve!";
                     myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt2.mainButton.onClick.RemoveAllListeners();
                     myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
                     {
                         weaponCntrller.EvolveWeapon(equippedWpn, evolves[1], PlayerWeaponManager.instance);
