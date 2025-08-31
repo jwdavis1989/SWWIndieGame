@@ -335,8 +335,13 @@ public class WeaponScript : MonoBehaviour
     public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
         if (stats.durability > 0)
-            stats.durability--; // Reduce durability
-        else 
+        {
+            if (!InventionManager.instance.CheckHasUpgrade(InventionType.DaedalusNanoMaterials)) //no upgrade
+                stats.durability--; // Reduce durability
+            else if (UnityEngine.Random.Range(0, 10) != 1) // 90% chance to reduce durability
+                stats.durability--; // Reduce durability
+        }
+        else
             return 0; // The weapon is broken. Return without doing damage
         
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);
