@@ -342,6 +342,16 @@ public class WeaponScript : MonoBehaviour
     //}
     public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
+        if (stats.durability > 0)
+        {
+            if (!InventionManager.instance.CheckHasUpgrade(InventionType.DaedalusNanoMaterials)) //no upgrade
+                stats.durability--; // Reduce durability
+            else if (UnityEngine.Random.Range(0, 10) != 1) // 90% chance to reduce durability
+                stats.durability--; // Reduce durability
+        }
+        else
+            return 0; // The weapon is broken. Return without doing damage
+        
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.

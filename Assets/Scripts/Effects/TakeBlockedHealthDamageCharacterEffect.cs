@@ -111,10 +111,11 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             if (!targetCharacter.isPlayer)
             {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
-                //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                WeaponScript weapon;
                 if (isMainHand)
                 {
-                    finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                    weapon = PlayerWeaponManager.instance.GetMainHand();
+                    
                     if (enemy != null)
                     {
                         enemy.isHitByMainHand = true;
@@ -122,12 +123,13 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
                 }
                 else
                 {
-                    finalDamageDealt = PlayerWeaponManager.instance.GetOffHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                    weapon = PlayerWeaponManager.instance.GetOffHand();
                     if (enemy != null)
                     {
                         enemy.isHitByOffHand = true;
                     }
                 }
+                finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
             else
             {
@@ -181,7 +183,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             {
                 if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
                 {
-                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f);
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.GetMainHand().stats.block) / 100f);
                 }
                 else
                 {
@@ -202,9 +204,9 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         float finalStaminaDamage = baseStaminaDamage;
         float staminaDamageAbsorbtion = 0f;
 
-        if (character.characterWeaponManager != null && character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>() != null)
+        if (character.characterWeaponManager != null && character.characterWeaponManager.GetMainHand() != null)
         {
-            staminaDamageAbsorbtion = finalStaminaDamage * character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.stability / 100;
+            staminaDamageAbsorbtion = finalStaminaDamage * character.characterWeaponManager.GetMainHand().stats.stability / 100;
         }
 
         finalStaminaDamage = finalStaminaDamage - staminaDamageAbsorbtion;

@@ -17,6 +17,10 @@ public class MiniMapRevealCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Reveal();
+    }
+    public void Reveal()
+    {
         miniMapTile.SetActive(true);
         miniMapRevealCollider.enabled = false;
     }

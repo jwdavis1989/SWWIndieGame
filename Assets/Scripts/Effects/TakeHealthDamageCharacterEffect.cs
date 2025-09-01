@@ -102,9 +102,10 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                WeaponScript weapon;
                 if (isMainHand)
                 {
-                    finalDamageDealt = PlayerWeaponManager.instance.GetMainHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                    weapon = PlayerWeaponManager.instance.GetMainHand();
                     if (enemy != null)
                     {
                         enemy.isHitByMainHand = true;
@@ -112,12 +113,13 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                 }
                 else
                 {
-                    finalDamageDealt = PlayerWeaponManager.instance.GetOffHand().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                    weapon = PlayerWeaponManager.instance.GetOffHand();
                     if (enemy != null)
                     {
                         enemy.isHitByOffHand = true;
                     }
                 }
+                finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
             }
             else
             {
