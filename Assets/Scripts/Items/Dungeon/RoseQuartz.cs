@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RoseQuartz : InventoryItem
@@ -12,11 +13,10 @@ public class RoseQuartz : InventoryItem
     }
     public void RevealEnemies()
     {
-        MiniMapRevealCollider[] minimapRevealers = FindObjectsOfType<MiniMapRevealCollider>();
-        foreach (MiniMapRevealCollider revealer in minimapRevealers)
+        AICharacterManager[] minimapRevealers = FindObjectsOfType<AICharacterManager>();
+        foreach (AICharacterManager aiCharacter in minimapRevealers)
         {
-            //TODO Check if enemy or wall
-            revealer.Reveal();
+            aiCharacter.miniMapSprite.SetActive(true);
         }
     }
 }
