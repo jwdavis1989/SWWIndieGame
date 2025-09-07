@@ -30,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5698167946132662268}
   - {fileID: 9053877459847843677}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,6 +49,7 @@ MonoBehaviour:
   weaponFamily: 5
   weaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
+  specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: f3a8210d9ca7e8f4cb8291f7192dcf17, type: 3}
   hasObtained: 1
   stats:
@@ -84,8 +86,6 @@ MonoBehaviour:
       techPower: 34
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 5
-    maxSpecialtyCooldown: 5
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -100,9 +100,12 @@ MonoBehaviour:
     lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 1.5
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -110,13 +113,113 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 0}
   mainHandHeavyAttackAction: {fileID: 0}
+  offHandCastMagicAttackAction: {fileID: 0}
   projectile: {fileID: 0}
   weaponAnimatorOverride: {fileID: 0}
+  offHandSpellAnimation: 
+  fullChargingTraitModifier: 1.25
+  spellForwardVelocityMultiplier: 7
+  spellUpwardVelocityMultiplier: 4
+  spellCastWarmUpVFX: {fileID: 0}
+  spellChargeVFX: {fileID: 0}
+  spellProjectileVFX: {fileID: 0}
+  spellProjectileFullChargeVFX: {fileID: 0}
+  spellReleaseSFX: {fileID: 0}
+  spellProjectileSFX: {fileID: 0}
+--- !u!1001 &5231297052846866455
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8130850429207198863}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.05528682
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.05528682
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.05528682
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.011
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.038
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5146612
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.12193723
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.16121688
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.8332252
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 8.23
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -21.9
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 115
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4de8ceb38c52d134f90571b92e5a624a, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e342d41d7f6eca24b89f5c592bb8e7f9, type: 2}
+    - target: {fileID: 919132149155446097, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+      propertyPath: m_Name
+      value: FlintlockNOTEXTURE_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+--- !u!4 &5698167946132662268 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 478dcb5c95dacd44a959200dd650b018, type: 3}
+  m_PrefabInstance: {fileID: 5231297052846866455}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9055159541996182497
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -128,6 +231,10 @@ PrefabInstance:
     - target: {fileID: 1746743948028706, guid: 06d5955ec0ad0a647971bfeea7cd9f8a, type: 3}
       propertyPath: m_Name
       value: SM_Wep_Revolver_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 1746743948028706, guid: 06d5955ec0ad0a647971bfeea7cd9f8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4422459223594172, guid: 06d5955ec0ad0a647971bfeea7cd9f8a, type: 3}
       propertyPath: m_LocalPosition.x
