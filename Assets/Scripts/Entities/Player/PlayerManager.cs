@@ -250,6 +250,10 @@ public class PlayerManager : CharacterManager
                 }
             }
         }
+
+        //Update Weapon HUD Display
+        PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+        PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
     }
 
     // public void AttachCurrentlyEquippedWeaponObjectsToHand() {

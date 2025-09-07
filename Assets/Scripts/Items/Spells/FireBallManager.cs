@@ -33,14 +33,16 @@ public class FireBallManager : SpellManager
 
         if (spellTargetCharacter != null)
         {
-            transform.LookAt(spellTargetCharacter.transform);
+            transform.LookAt(spellTargetCharacter.characterCombatManager.LockOnTransform.position);
         }
 
-        if (fireBallRigidBody != null)
-        {
-            Vector3 currentVelocity = fireBallRigidBody.velocity;
-            fireBallRigidBody.velocity = transform.forward + currentVelocity;
-        }
+        //TODO: Technichally erroneous, consider commenting out then increasing the momentum of the spell's forward/upward velocities
+            if (fireBallRigidBody != null)
+            {
+                Vector3 currentVelocity = fireBallRigidBody.velocity;
+                fireBallRigidBody.velocity = transform.forward + currentVelocity;
+            }
+        //END OF COMMENT OUT SECTION
     }
 
     private void OnCollisionEnter(Collision collision)
