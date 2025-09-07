@@ -59,7 +59,7 @@ public enum WeaponFamily {
 [Serializable]
 public class WeaponStats
 {
-    [Header("Weapon Type - Important - Set in Prefab")]
+    [Header("Weapon Type")]
     public WeaponType weaponType = 0;
     public bool isMonsterWeapon = false;
 

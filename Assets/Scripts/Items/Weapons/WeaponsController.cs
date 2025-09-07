@@ -24,7 +24,7 @@ public class WeaponsController : MonoBehaviour
     "   Use this if adding a weapon to the game world\n" +
     "   Use PlayerWeaponManager to add directly to the player\n" +
     "   Use CharacterWeaponManager to add to another character")]
-    [Header("List of all weapons. Will use prefab added in Editor. Stats intialized by JSON")]
+    [Header("List of all weapons. Will use prefab added in Editor.")]
     public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
     [Header("JSON containing base stats")]
     public TextAsset baseWeaponJsonFile; // json file with intilizing stats that will overwrite prefab
