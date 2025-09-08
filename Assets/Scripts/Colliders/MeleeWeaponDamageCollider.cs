@@ -147,6 +147,14 @@ public class MeleeWeaponDamageCollider : DamageCollider
                     attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyAttack02DamageMotionValue;
                     break;
 
+                //Jumping Attacks
+                case AttackType.LightJumpAttack01:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetEquippedWeapon().GetComponent<WeaponScript>().stats.lightJumpAttack01DamageMotionValue;
+                    break;
+                case AttackType.HeavyJumpAttack01:
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetEquippedWeapon().GetComponent<WeaponScript>().stats.heavyJumpAttack01DamageMotionValue;
+                    break;
+
                 //Charge Heavy Attacks
                 case AttackType.ChargedAttack01:
                     attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyChargedAttack01DamageMotionValue;

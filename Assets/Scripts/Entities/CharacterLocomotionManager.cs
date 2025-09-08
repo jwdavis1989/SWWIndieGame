@@ -118,4 +118,12 @@ public class CharacterLocomotionManager : MonoBehaviour
         character.canRotate = false;
     }
 
+    public void JumpAttackQuickFall()
+    {
+        if (!character.isGrounded)
+        {   
+            yVelocity *= 3;
+        }
+    }
+    
 }
