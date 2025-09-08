@@ -39,7 +39,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Dodge")]
     private Vector3 rollDirection;
-    [SerializeField] float airBoostSpeed = 15f;
+    [SerializeField] float airBoostSpeed = 150f;
+    public float icarusBoosterDashSpeedMultiplier = 2f;
     public GameObject forceFieldGraphic;
 
 
@@ -330,6 +331,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 //Play roll animation
                 player.playerAnimationManager.PlayTargetActionAnimation("Roll_Forward_01", true);
                 player.isRolling = true;
+
+                //Subtract Stamina for roll
+                player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
             }
             else
             {
@@ -347,7 +351,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 jumpDirection.Normalize();
 
                 //Movement caused by boosting
-                player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
+                if (InventionManager.instance.CheckHasUpgrade(InventionType.IcarusBoosters))
+                {
+                    //Player has Icarus Boosters
+                    player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
+                }
+                else
+                {
+                    player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
+                }
 
                 //Set player facing
                 playerRotation = Quaternion.LookRotation(jumpDirection);
@@ -358,6 +370,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
                 //Play Boost SFX
                 player.playerSoundFXManager.PlayAirDashSoundFX();
+
+                //Subtract Stamina for airdash
+                player.playerStatsManager.currentStamina -= player.playerStatsManager.airDashStaminaCost;
             }
 
             //Activate Force Field Graphic
@@ -366,8 +381,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             //Set Stamina regen delay to 0
             player.playerStatsManager.ResetStaminaRegenTimer();
 
-            //Subtract Stamina for roll or airdash
-            player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
         }
         //Backstep if stationary before
         else
@@ -512,5 +525,5 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             backBoosters.SetActive(false);
         }
     }
-    
+
 }

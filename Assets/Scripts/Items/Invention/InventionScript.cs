@@ -55,7 +55,7 @@ public enum InventionType
 {
     QuickChargeCapacitory,
     PredictiveNeuralLink,
-    IcarausBoosters,
+    IcarusBoosters,
     TreasureScanner,
     GolemEndoplating,
     Alternator,
