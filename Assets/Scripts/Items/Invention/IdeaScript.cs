@@ -66,6 +66,7 @@ public enum IdeaType
     Motor,
     Wiring,
     TreasureChest,
+    Flashlight,
     Golem,
     Dummy,
     Skeletony,
