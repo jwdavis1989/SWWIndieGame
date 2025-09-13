@@ -157,7 +157,8 @@ public class InventionManager : MonoBehaviour
             case InventionType.PredictiveNeuralLink:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.PredictiveNeuralLink);
                 break;
-            case InventionType.IcarausBoosters:
+            case InventionType.IcarusBoosters:
+                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.IcarusBoosters);
                 break;
             case InventionType.TreasureScanner:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.TreasureScanner);
