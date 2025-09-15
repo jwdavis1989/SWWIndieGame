@@ -100,7 +100,7 @@ public class WeaponStats
 
     //Jump Attacks
     public float lightJumpAttack01StaminaCostModifier = 1f;
-    public float heavyJumpAttack01StaminaCostModifier = 1.5f;
+    public float heavyJumpAttack01StaminaCostModifier = 4f;
 
     //Running
     public float lightRunningAttack01StaminaCostModifier = 1f;
@@ -200,8 +200,9 @@ public class WeaponScript : MonoBehaviour
     [Header("Weapon Family - Important - Set in Prefab")]
     public WeaponFamily weaponFamily = 0;
 
-    [Header("Weapon Damage Collider")]
+    [Header("Weapon Damage Colliders")]
     [SerializeField] public MeleeWeaponDamageCollider weaponDamageCollider;
+    [SerializeField] public MeleeJumpAttackDamageCollider jumpAttackWeaponDamageCollider;
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
@@ -229,7 +230,7 @@ public class WeaponScript : MonoBehaviour
     [Header("Weapon Family Specific")]
     [Header("Magic Special Weapons")]
     public float fullChargingTraitModifier = 1.25f;
-    
+
     [Header("Projectile Velocity")]
     public float spellForwardVelocityMultiplier = 7f;
     public float spellUpwardVelocityMultiplier = 4f;
@@ -259,17 +260,24 @@ public class WeaponScript : MonoBehaviour
         else
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+            jumpAttackWeaponDamageCollider = GetComponentInChildren<MeleeJumpAttackDamageCollider>();
         }
+
         if (weaponDamageCollider)
         {
-            SetWeaponDamage();
+            SetWeaponDamage(weaponDamageCollider);
+        }
+
+        if (jumpAttackWeaponDamageCollider)
+        {
+            SetWeaponDamage(jumpAttackWeaponDamageCollider);
         }
 
         //Initialize Weapon Owner
         characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
     }
     //TODO: Call this when you upgrade weapons too!
-    public void SetWeaponDamage()
+    public void SetWeaponDamage(MeleeWeaponDamageCollider weaponDamageCollider)
     {
         if (weaponDamageCollider == null)
         {
@@ -548,6 +556,81 @@ public class WeaponScript : MonoBehaviour
         return true;
     }
 
+    // Minimum Threshold determines a cut off before we start allowing an element to be high enough to count for elemental graphics and effects
+    public ElementalDamageType GetHighestElementalStat(float minimumThreshold = 0)
+    {
+        ElementalDamageType highestElement;
+        List<float> elementalComparisonList = new List<float>();
+        int highestElementStatIndex = -1;
+        float currentHighestElementStat = minimumThreshold;
+
+        //Set the values of the Comparison List to the weapon's elements
+        elementalComparisonList.Add(stats.elemental.firePower);
+        elementalComparisonList.Add(stats.elemental.icePower);
+        elementalComparisonList.Add(stats.elemental.lightningPower);
+        elementalComparisonList.Add(stats.elemental.windPower);
+        elementalComparisonList.Add(stats.elemental.earthPower);
+        elementalComparisonList.Add(stats.elemental.lightPower);
+        elementalComparisonList.Add(stats.elemental.beastPower);
+        elementalComparisonList.Add(stats.elemental.scalesPower);
+        elementalComparisonList.Add(stats.elemental.techPower);
+
+        //Determine highest elemental stat
+        for (int i = 0; i < elementalComparisonList.Count; i++)
+        {
+            if (elementalComparisonList[i] > currentHighestElementStat)
+            {
+                currentHighestElementStat = elementalComparisonList[i];
+                highestElementStatIndex = i;
+            }
+        }
+
+        switch (highestElementStatIndex)
+        {
+            case 0:
+                highestElement = ElementalDamageType.Fire;
+                //Debug.Log("Highest Element: Fire");
+                break;
+            case 1:
+                highestElement = ElementalDamageType.Ice;
+                //Debug.Log("Highest Element: Ice");
+                break;
+            case 2:
+                highestElement = ElementalDamageType.Lightning;
+                //Debug.Log("Highest Element: Lightning");
+                break;
+            case 3:
+                highestElement = ElementalDamageType.Wind;
+                //Debug.Log("Highest Element: Wind");
+                break;
+            case 4:
+                highestElement = ElementalDamageType.Earth;
+                //Debug.Log("Highest Element: Earth");
+                break;
+            case 5:
+                highestElement = ElementalDamageType.Light;
+                //Debug.Log("Highest Element: Light");
+                break;
+            case 6:
+                highestElement = ElementalDamageType.Beast;
+                //Debug.Log("Highest Element: Beast");
+                break;
+            case 7:
+                highestElement = ElementalDamageType.Scales;
+                //Debug.Log("Highest Element: Scales");
+                break;
+            case 8:
+                highestElement = ElementalDamageType.Tech;
+                //Debug.Log("Highest Element: Tech");
+                break;
+            default:
+                highestElement = ElementalDamageType.Unaspected;
+                //Debug.Log("Highest Element: Unaspected");
+                break;
+        }
+
+        return highestElement;
+    }
 }
 /** Change Log  
  *  Date         Developer  Description

@@ -43,6 +43,20 @@ public enum AttackType
     Attack1
 }
 
+public enum ElementalDamageType
+{
+    Unaspected,
+    Fire,
+    Ice,
+    Lightning,
+    Wind,
+    Earth,
+    Light,
+    Beast,
+    Scales,
+    Tech
+}
+
 //Intensity of blocked attacks
 public enum DamageIntensity
 {
