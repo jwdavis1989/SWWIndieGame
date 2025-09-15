@@ -320,6 +320,12 @@ public class CharacterWeaponManager : MonoBehaviour
     public void CloseJumpAttackDamageCollider() {
         ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.DisableDamageCollider();
     }
+
+    public void PlayJumpAttackImpactVFX()
+    {
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.PlayJumpAttackImpactVFX();
+    }
+
     public void DrainStaminaBasedOnAttack()
     {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();

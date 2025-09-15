@@ -204,6 +204,11 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.CloseJumpAttackDamageCollider();
     }
 
+    public void CallPlayJumpAttackImpactVFX()
+    {
+        characterWeaponManager.PlayJumpAttackImpactVFX();
+    }
+
     public void EnableCanRotate()
     {
         if (isRotatingAttacker)

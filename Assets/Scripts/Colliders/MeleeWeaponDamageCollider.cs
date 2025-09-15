@@ -84,6 +84,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
             //Damage
             DamageTarget(damageTarget);
+            
         }
         //}
     }
@@ -203,7 +204,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
     protected void CalculatePoiseDamage()
     {
-        
+
     }
 
 }
