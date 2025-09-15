@@ -100,7 +100,7 @@ public class WeaponStats
 
     //Jump Attacks
     public float lightJumpAttack01StaminaCostModifier = 1f;
-    public float heavyJumpAttack01StaminaCostModifier = 1.5f;
+    public float heavyJumpAttack01StaminaCostModifier = 4f;
 
     //Running
     public float lightRunningAttack01StaminaCostModifier = 1f;
