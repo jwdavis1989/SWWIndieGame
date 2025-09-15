@@ -194,6 +194,16 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.CloseDamageCollider();
     }
 
+    public void CallOpenJumpAttackDamageCollider()
+    {
+        characterWeaponManager.OpenJumpAttackDamageCollider();
+    }
+
+    public void CallCloseJumpAttackDamageCollider()
+    {
+        characterWeaponManager.CloseJumpAttackDamageCollider();
+    }
+
     public void EnableCanRotate()
     {
         if (isRotatingAttacker)

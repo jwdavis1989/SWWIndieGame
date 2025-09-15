@@ -200,8 +200,9 @@ public class WeaponScript : MonoBehaviour
     [Header("Weapon Family - Important - Set in Prefab")]
     public WeaponFamily weaponFamily = 0;
 
-    [Header("Weapon Damage Collider")]
+    [Header("Weapon Damage Colliders")]
     [SerializeField] public MeleeWeaponDamageCollider weaponDamageCollider;
+    [SerializeField] public MeleeJumpAttackDamageCollider jumpAttackWeaponDamageCollider;
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
@@ -259,17 +260,24 @@ public class WeaponScript : MonoBehaviour
         else
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+            jumpAttackWeaponDamageCollider = GetComponentInChildren<MeleeJumpAttackDamageCollider>();
         }
+
         if (weaponDamageCollider)
         {
-            SetWeaponDamage();
+            SetWeaponDamage(weaponDamageCollider);
+        }
+
+        if (jumpAttackWeaponDamageCollider)
+        {
+            SetWeaponDamage(jumpAttackWeaponDamageCollider);
         }
 
         //Initialize Weapon Owner
         characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
     }
     //TODO: Call this when you upgrade weapons too!
-    public void SetWeaponDamage()
+    public void SetWeaponDamage(MeleeWeaponDamageCollider weaponDamageCollider)
     {
         if (weaponDamageCollider == null)
         {
