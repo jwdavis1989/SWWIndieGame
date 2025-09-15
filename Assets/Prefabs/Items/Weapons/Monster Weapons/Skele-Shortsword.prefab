@@ -1,5 +1,103 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1788337184631688780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4017159122547380442}
+  - component: {fileID: 4211892757563520329}
+  - component: {fileID: 8605334601472912077}
+  m_Layer: 8
+  m_Name: Jump Damage Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4017159122547380442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788337184631688780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalPosition: {x: 0, y: 0.0020000003, z: 0.013}
+  m_LocalScale: {x: 1, y: 0.5, z: 1.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5783575807394235614}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4211892757563520329
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788337184631688780}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.35
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &8605334601472912077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788337184631688780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac097a6ebe1dd8459fabe3252f2f97b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalDamage: 0
+  elementalStats:
+    firePower: 0
+    icePower: 0
+    lightningPower: 0
+    windPower: 0
+    earthPower: 0
+    lightPower: 0
+    beastPower: 0
+    scalesPower: 0
+    techPower: 0
+  isMainHand: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
+  isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
+  poiseDamage: 35
+  blockingStaminaDamage: 25
+  characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
+  lightAttack02DamageMotionValue: 0
+  lightAttack03DamageMotionValue: 0
+  heavyAttack01DamageMotionValue: 0
+  heavyAttack02DamageMotionValue: 0
+  heavyChargedAttack01DamageMotionValue: 0
+  heavyChargedAttack02DamageMotionValue: 0
+  lightRunningAttack01DamageMotionValue: 0
+  lightRollingAttack01DamageMotionValue: 0
+  lightBackstepAttack01DamageMotionValue: 0
+  weaponFamily: 0
+  fireJumpAttackVFX: {fileID: 0}
 --- !u!1 &4976341019228924520
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +130,7 @@ Transform:
   m_Children:
   - {fileID: 538583682440152142}
   - {fileID: 6065269517916178764}
+  - {fileID: 4017159122547380442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7080999268907457629
@@ -48,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFamily: 0
   weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
   specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: d511495ea09ac9e49b881bcf17f09b19, type: 3}
@@ -98,10 +198,10 @@ MonoBehaviour:
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
     lightAttack03StaminaCostModifier: 1
-    heavyAttack01StaminaCostModifier: 1
-    heavyAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1.2
+    heavyAttack02StaminaCostModifier: 1.2
     lightJumpAttack01StaminaCostModifier: 1
-    heavyJumpAttack01StaminaCostModifier: 1.5
+    heavyJumpAttack01StaminaCostModifier: 4
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1

@@ -308,16 +308,37 @@ public class CharacterWeaponManager : MonoBehaviour
     public void CloseDamageCollider() {
         ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponDamageCollider.DisableDamageCollider();
     }
-    public void DrainStaminaBasedOnAttack() {
+    public void OpenJumpAttackDamageCollider() {
+        //Uncomment if you want to add a check to ensure both colliders can't be open at the same time
+        //CloseDamageCollider();
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.EnableDamageCollider();
+        //Play Whoosh SFX
+        //TODO: Change this to a new sound function for the impact maybe
+        PlayMeleeWeaponSwingSFX();
+    }
+
+    public void CloseJumpAttackDamageCollider() {
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.DisableDamageCollider();
+    }
+
+    public void PlayJumpAttackImpactVFX()
+    {
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.PlayJumpAttackImpactVFX();
+    }
+
+    public void DrainStaminaBasedOnAttack()
+    {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
-        
-        if (currentWeapon == null) {
+
+        if (currentWeapon == null)
+        {
             return;
         }
 
         float staminaDeducted = currentWeapon.stats.baseStaminaCost;
 
-        switch (currentAttackType) {
+        switch (currentAttackType)
+        {
             //Light Attacks
             case AttackType.LightAttack01:
                 staminaDeducted *= currentWeapon.stats.lightAttack01StaminaCostModifier;

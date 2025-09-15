@@ -20,6 +20,7 @@ public class CharacterLocomotionManager : MonoBehaviour
     [SerializeField] protected float groundedYVelocity = -20f;
     //The force at which our character begins to fall when ungrounded. This value increases over time when in the air. 
     [SerializeField] protected float fallStartYVelocity = -7f;
+    public float JumpAttackQuickFallSpeedModifier = 12f;
 
     protected bool fallingVelocityHasBeenSet = false;
     protected float inAirTimer = 0f;
@@ -122,7 +123,7 @@ public class CharacterLocomotionManager : MonoBehaviour
     {
         if (!character.isGrounded)
         {   
-            yVelocity *= 3;
+            yVelocity *= JumpAttackQuickFallSpeedModifier;
         }
     }
     

@@ -94,6 +94,104 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1671466233795320417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1624755376684360919}
+  - component: {fileID: 2626999879653015941}
+  - component: {fileID: 3431056345785130345}
+  m_Layer: 8
+  m_Name: Jump Damage Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1624755376684360919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671466233795320417}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalPosition: {x: 0, y: 0.0020000003, z: 0.013}
+  m_LocalScale: {x: 1, y: 0.5, z: 1.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8130850429207198863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2626999879653015941
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671466233795320417}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.7
+  m_Center: {x: 0, y: 1.25, z: 0}
+--- !u!114 &3431056345785130345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671466233795320417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac097a6ebe1dd8459fabe3252f2f97b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalDamage: 0
+  elementalStats:
+    firePower: 0
+    icePower: 0
+    lightningPower: 0
+    windPower: 0
+    earthPower: 0
+    lightPower: 0
+    beastPower: 0
+    scalesPower: 0
+    techPower: 0
+  isMainHand: 0
+  attackMotionValue: 1
+  fullChargeModifier: 1
+  isReducedByArmor: 1
+  isEnvironmentalHazard: 0
+  environmentalHazardTickRate: 2
+  poiseDamage: 35
+  blockingStaminaDamage: 25
+  characterCausingDamage: {fileID: 0}
+  lightAttack01DamageMotionValue: 0
+  lightAttack02DamageMotionValue: 0
+  lightAttack03DamageMotionValue: 0
+  heavyAttack01DamageMotionValue: 0
+  heavyAttack02DamageMotionValue: 0
+  heavyChargedAttack01DamageMotionValue: 0
+  heavyChargedAttack02DamageMotionValue: 0
+  lightRunningAttack01DamageMotionValue: 0
+  lightRollingAttack01DamageMotionValue: 0
+  lightBackstepAttack01DamageMotionValue: 0
+  weaponFamily: 0
+  fireJumpAttackVFX: {fileID: 1549257713381026176, guid: 0fa811dea00d6c8409b1ddae7ddd537c, type: 3}
 --- !u!1 &1847124638102049318
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +225,7 @@ Transform:
   - {fileID: 2282369118333398337}
   - {fileID: 7010919657417002845}
   - {fileID: 8974767496508288075}
+  - {fileID: 1624755376684360919}
   - {fileID: 7521103631610412770}
   - {fileID: 4603378424090745148}
   - {fileID: 3759063050884388223}
@@ -147,7 +246,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFamily: 0
   weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
+  specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: 198bd997837aae149bbb47d8adf83b36, type: 3}
   hasObtained: 1
   stats:
@@ -184,8 +285,6 @@ MonoBehaviour:
       techPower: 45
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 0
-    maxSpecialtyCooldown: 0
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -198,11 +297,14 @@ MonoBehaviour:
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
     lightAttack03StaminaCostModifier: 1
-    heavyAttack01StaminaCostModifier: 1
-    heavyAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1.2
+    heavyAttack02StaminaCostModifier: 1.2
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 4
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -210,13 +312,27 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
+  offHandCastMagicAttackAction: {fileID: 0}
   projectile: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 1d7f32233af26c44899feb699f25e05b, type: 2}
+  offHandSpellAnimation: 
+  fullChargingTraitModifier: 1.25
+  spellForwardVelocityMultiplier: 7
+  spellUpwardVelocityMultiplier: 4
+  spellCastWarmUpVFX: {fileID: 0}
+  spellChargeVFX: {fileID: 0}
+  spellProjectileVFX: {fileID: 0}
+  spellProjectileFullChargeVFX: {fileID: 0}
+  spellReleaseSFX: {fileID: 0}
+  spellProjectileSFX: {fileID: 0}
 --- !u!1 &5687603947947713818
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,8 +468,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 2.58, z: 0.15}
-  m_Center: {x: 0, y: 0.94, z: 0}
+  m_Size: {x: 0.5, y: 3.22, z: 0.175}
+  m_Center: {x: 0, y: 0.59, z: 0}
 --- !u!114 &7948707313356270041
 MonoBehaviour:
   m_ObjectHideFlags: 0
