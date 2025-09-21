@@ -202,7 +202,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Weapon Damage Colliders")]
     [SerializeField] public MeleeWeaponDamageCollider weaponDamageCollider;
-    [SerializeField] public MeleeJumpAttackDamageCollider jumpAttackWeaponDamageCollider;
+    [SerializeField] public GameObject jumpAttackWeaponDamageCollider;
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
@@ -260,17 +260,11 @@ public class WeaponScript : MonoBehaviour
         else
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-            jumpAttackWeaponDamageCollider = GetComponentInChildren<MeleeJumpAttackDamageCollider>();
         }
 
         if (weaponDamageCollider)
         {
             SetWeaponDamage(weaponDamageCollider);
-        }
-
-        if (jumpAttackWeaponDamageCollider)
-        {
-            SetWeaponDamage(jumpAttackWeaponDamageCollider);
         }
 
         //Initialize Weapon Owner
@@ -290,6 +284,7 @@ public class WeaponScript : MonoBehaviour
 
         weaponDamageCollider.weaponFamily = weaponFamily;
 
+        weaponDamageCollider.physicalDamage = stats.attack;
         weaponDamageCollider.elementalStats = stats.elemental;
         weaponDamageCollider.poiseDamage = stats.basePoiseDamage;
 
@@ -555,6 +550,22 @@ public class WeaponScript : MonoBehaviour
 
         return true;
     }
+
+    public void InstantiateJumpAttackCollider()
+    {
+        GameObject newJumpAttackColliderObject = Instantiate(jumpAttackWeaponDamageCollider, transform.position, Quaternion.identity);
+        MeleeJumpAttackDamageCollider newJumpAttackDamageCollider = newJumpAttackColliderObject.GetComponent<MeleeJumpAttackDamageCollider>();
+        SetWeaponDamage(newJumpAttackDamageCollider);
+        newJumpAttackDamageCollider.enabled = true;
+        newJumpAttackDamageCollider.EnableDamageCollider();
+
+        //Might matter, but currently we don't seem to need to do this
+        //newJumpAttackDamageCollider.weaponThatOwnsThisCollider = this;
+
+        //Switch for Greatest Element:
+        //case 1: Fire
+        newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
+    } 
 
     // Minimum Threshold determines a cut off before we start allowing an element to be high enough to count for elemental graphics and effects
     public ElementalDamageType GetHighestElementalStat(float minimumThreshold = 0)

@@ -199,11 +199,6 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.OpenJumpAttackDamageCollider();
     }
 
-    public void CallCloseJumpAttackDamageCollider()
-    {
-        characterWeaponManager.CloseJumpAttackDamageCollider();
-    }
-
     public void CallPlayJumpAttackImpactVFX()
     {
         characterWeaponManager.PlayJumpAttackImpactVFX();

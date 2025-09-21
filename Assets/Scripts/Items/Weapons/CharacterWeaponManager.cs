@@ -309,21 +309,17 @@ public class CharacterWeaponManager : MonoBehaviour
         ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponDamageCollider.DisableDamageCollider();
     }
     public void OpenJumpAttackDamageCollider() {
-        //Uncomment if you want to add a check to ensure both colliders can't be open at the same time
-        //CloseDamageCollider();
-        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.EnableDamageCollider();
         //Play Whoosh SFX
-        //TODO: Change this to a new sound function for the impact maybe
         PlayMeleeWeaponSwingSFX();
     }
 
     public void CloseJumpAttackDamageCollider() {
-        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.DisableDamageCollider();
+        //ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.DisableDamageCollider();
     }
 
     public void PlayJumpAttackImpactVFX()
     {
-        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.PlayJumpAttackImpactVFX();
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().InstantiateJumpAttackCollider();
     }
 
     public void DrainStaminaBasedOnAttack()
