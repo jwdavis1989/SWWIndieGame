@@ -9,11 +9,14 @@ public class PauseScript : MonoBehaviour
     public bool gamePaused = false;
     public bool debugMode = false;
     [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject mainPauseMenu;
-    [SerializeField] GameObject upgradeMenu;
+    [SerializeField] GameObject mainPauseMenu;//old
+    [SerializeField] GameObject weaponMenu;
     [SerializeField] GameObject inventMenu;
     [SerializeField] GameObject DebugSaveGameButton;
     [SerializeField] GameObject DebugAddItemButton;
+
+    //new menu
+    [SerializeField] GameObject topPanelButtons;
 
     [Header("Controls")]
     [SerializeField] bool pauseInput = false;
@@ -35,11 +38,17 @@ public class PauseScript : MonoBehaviour
     }
     public void Start()
     {
+        if (debugMode) return;//ASTEST
+
         DontDestroyOnLoad(gameObject);
-        upgradeMenu.SetActive(false);
-        mainPauseMenu.SetActive(false);
-        pauseMenu.SetActive(false);
-        inventMenu.SetActive(false);
+        if(weaponMenu != null)
+        weaponMenu.SetActive(false);
+        if (mainPauseMenu != null)
+            mainPauseMenu.SetActive(false);
+        if (pauseMenu != null)
+            pauseMenu.SetActive(false);
+        if (inventMenu != null)
+            inventMenu.SetActive(false);
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
@@ -80,22 +89,28 @@ public class PauseScript : MonoBehaviour
         yield return frameEnd; //wait for end of frame
         Unpause();
     }
-    public void UpgradeMenuClick()
+    public void WeaponMenuClick()
     {
-        mainPauseMenu.SetActive(false);
-        upgradeMenu.SetActive(true);
+        if(mainPauseMenu != null)
+            mainPauseMenu.SetActive(false);
+        if (weaponMenu != null)
+            weaponMenu.SetActive(true);
     }
-    public void UpgradeMenuBackClick()
+    public void WeaponMenuBackClick()
     {
-        upgradeMenu.SetActive(false);
-        mainPauseMenu.SetActive(true);
+        if (weaponMenu != null)
+            weaponMenu.SetActive(false);
+        if (mainPauseMenu != null)
+            mainPauseMenu.SetActive(true);
     }
     public void InventMenuBackClick()
     {
-        inventMenu.SetActive(false);
-        mainPauseMenu.SetActive(true);
+        if (inventMenu != null)
+            inventMenu.SetActive(false);
+        if (mainPauseMenu != null)
+            mainPauseMenu.SetActive(true);
     }
-    public void MainMenuClick()
+    public void ExitGameClick()
     {
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
         Unpause();
@@ -123,7 +138,7 @@ public class PauseScript : MonoBehaviour
     public void InventMenuClick()
     {
         mainPauseMenu.SetActive(false);
-        upgradeMenu.SetActive(false);
+        weaponMenu.SetActive(false);
         inventMenu.SetActive(true);
         InventionUIManager.instance.OpenInventionMenu();
     }
@@ -180,7 +195,7 @@ public class PauseScript : MonoBehaviour
         //PlayerInputManager.instance.enabled = true;
         Time.timeScale = 1;
         gamePaused = false;
-        upgradeMenu.SetActive(false);
+        weaponMenu.SetActive(false);
         mainPauseMenu.SetActive(true);
         pauseMenu.SetActive(false);
         inventMenu.SetActive(false);
