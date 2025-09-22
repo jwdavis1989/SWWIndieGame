@@ -75,6 +75,7 @@ MonoBehaviour:
       beastPower: 10
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 34
       icePower: 34
@@ -85,6 +86,7 @@ MonoBehaviour:
       beastPower: 34
       scalesPower: 34
       techPower: 34
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
     xpToLevel: 100
@@ -135,6 +137,7 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  isInDebugMode: 0
 --- !u!1 &7105071253258005747
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +215,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   isMainHand: 0
   attackMotionValue: 1
   fullChargeModifier: 1
@@ -297,9 +301,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 71c9764b4c8bc0b4da4eff4a047174f5, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: beea7f802dd068847b2fd37a62c977a7, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: da7dd9f3265f8f84bb13a62834441144, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
-      objectReference: {fileID: 2100000, guid: d5b2ad76892997a47b9a05af3e9dccee, type: 2}
+      objectReference: {fileID: 2100000, guid: da7dd9f3265f8f84bb13a62834441144, type: 2}
     - target: {fileID: 919132149155446097, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
       propertyPath: m_Name
       value: ShortswordNOTEXTURE_01
