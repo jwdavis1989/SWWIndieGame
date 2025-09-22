@@ -55,6 +55,9 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Minimap Sprite")]
     public GameObject miniMapSprite;
+    
+    [Header("Debug Mode")]
+    public bool isInDebugMode = false;
 
     protected virtual void Awake()
     {
