@@ -252,6 +252,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "QueueJump",
+                    "type": "Button",
+                    "id": "046055d5-e486-4b8d-811f-8e16dd3e15ea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "ToggleFlashlight",
                     "type": "Button",
                     "id": "e11afb79-a6b8-45d4-8e07-78df9d7336d7",
@@ -972,6 +981,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChargeSpecialAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7cde6401-530f-409d-969f-21a295a0f30e",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueueJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a8c6d56-e75d-4633-bf35-84e329aacc44",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QueueJump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

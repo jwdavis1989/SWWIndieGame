@@ -55,6 +55,9 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Minimap Sprite")]
     public GameObject miniMapSprite;
+    
+    [Header("Debug Mode")]
+    public bool isInDebugMode = false;
 
     protected virtual void Awake()
     {
@@ -197,11 +200,6 @@ public class CharacterManager : MonoBehaviour
     public void CallOpenJumpAttackDamageCollider()
     {
         characterWeaponManager.OpenJumpAttackDamageCollider();
-    }
-
-    public void CallCloseJumpAttackDamageCollider()
-    {
-        characterWeaponManager.CloseJumpAttackDamageCollider();
     }
 
     public void CallPlayJumpAttackImpactVFX()

@@ -39,10 +39,11 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Queued Inputs")]
     [SerializeField] bool InputQueueIsActive = false;
-    [SerializeField] float defaultQueueInputTimer = 0.5f;
+    [SerializeField] float defaultQueueInputTimer = 0.25f;
     [SerializeField] float queueInputTimer = 0f;
     [SerializeField] bool queueLightAttackInput = false;
     [SerializeField] bool queueHeavyAttackInput = false;
+    [SerializeField] bool queueJumpInput = false;
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
@@ -147,9 +148,10 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.ChargeSpecialAttack.performed += i => holdSpecialAttackInput = true;
             playerControls.PlayerActions.ChargeSpecialAttack.canceled += i => holdSpecialAttackInput = false;
 
-            //Attack Queueing
+            //Input Queueing
             playerControls.PlayerActions.QueueLightAttack.performed += i => QueueInput(ref queueLightAttackInput);
             playerControls.PlayerActions.QueueHeavyAttack.performed += i => QueueInput(ref queueHeavyAttackInput);
+            playerControls.PlayerActions.QueueJump.performed        += i => QueueInput(ref queueJumpInput);
 
             //Blocking
             //Holding the input sets Blocking to true
@@ -780,7 +782,9 @@ public class PlayerInputManager : MonoBehaviour
         //Reset all queued inputs so only one can queue at a time
         ResetQueuedInputs();
 
-        //TODO: Check for UI Window Being Open
+        //Check for UI Window, Dialogue, or Title Screen Being Open
+        if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
+                return; 
 
         if (player.isPerformingAction || player.isJumping)
         {
@@ -797,6 +801,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         queueLightAttackInput = false;
         queueHeavyAttackInput = false;
+        queueJumpInput = false;
     }
 
     private void ProcessQueuedInput()
@@ -813,6 +818,10 @@ public class PlayerInputManager : MonoBehaviour
         else if (queueHeavyAttackInput)
         {
             heavyAttackInput = true;
+        }
+        else if (queueJumpInput)
+        {
+            jumpInput = true;
         }
 
     }
