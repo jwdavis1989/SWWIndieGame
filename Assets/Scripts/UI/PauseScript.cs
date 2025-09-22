@@ -38,6 +38,8 @@ public class PauseScript : MonoBehaviour
     }
     public void Start()
     {
+        if (debugMode) return;//ASTEST
+
         DontDestroyOnLoad(gameObject);
         if(weaponMenu != null)
         weaponMenu.SetActive(false);
@@ -89,18 +91,24 @@ public class PauseScript : MonoBehaviour
     }
     public void WeaponMenuClick()
     {
-        mainPauseMenu.SetActive(false);
-        weaponMenu.SetActive(true);
+        if(mainPauseMenu != null)
+            mainPauseMenu.SetActive(false);
+        if (weaponMenu != null)
+            weaponMenu.SetActive(true);
     }
     public void WeaponMenuBackClick()
     {
-        weaponMenu.SetActive(false);
-        mainPauseMenu.SetActive(true);
+        if (weaponMenu != null)
+            weaponMenu.SetActive(false);
+        if (mainPauseMenu != null)
+            mainPauseMenu.SetActive(true);
     }
     public void InventMenuBackClick()
     {
-        inventMenu.SetActive(false);
-        mainPauseMenu.SetActive(true);
+        if (inventMenu != null)
+            inventMenu.SetActive(false);
+        if (mainPauseMenu != null)
+            mainPauseMenu.SetActive(true);
     }
     public void ExitGameClick()
     {
