@@ -2448,7 +2448,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 963177605}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1180390132}
+        m_TargetAssemblyTypeName: PauseScript, Assembly-CSharp
+        m_MethodName: WeaponMenuClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &963177605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3048,6 +3060,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1180390131}
+  - component: {fileID: 1180390132}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -3077,6 +3090,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1180390132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180390130}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8bb10f71f7f76744b5def95219473b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePaused: 0
+  debugMode: 0
+  pauseMenu: {fileID: 1180390130}
+  mainPauseMenu: {fileID: 0}
+  weaponMenu: {fileID: 1754480451}
+  inventMenu: {fileID: 0}
+  DebugSaveGameButton: {fileID: 0}
+  DebugAddItemButton: {fileID: 0}
+  topPanelButtons: {fileID: 457628437}
+  pauseInput: 0
+  mainPauseMenuEvents: {fileID: 310650391}
 --- !u!1 &1217277974
 GameObject:
   m_ObjectHideFlags: 0
