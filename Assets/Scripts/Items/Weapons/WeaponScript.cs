@@ -34,7 +34,8 @@ public enum WeaponType
     UNKNOWN
 }
 
-public enum WeaponFamily {
+public enum WeaponFamily
+{
     Swords,
     GreatSwords,
     HammersOrWrenches,
@@ -161,6 +162,7 @@ public class ElementalStats
     public float beastPower = 0;
     public float scalesPower = 0;
     public float techPower = 0;
+    public ElementalDamageType currentHighestElementalStat;
     public ElementalStats Subract(ElementalStats subtractor)
     {
         ElementalStats diff = new ElementalStats();
@@ -267,6 +269,8 @@ public class WeaponScript : MonoBehaviour
             SetWeaponDamage(weaponDamageCollider);
         }
 
+        stats.elemental.currentHighestElementalStat = GetHighestElementalStat();
+
         //Initialize Weapon Owner
         characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
     }
@@ -314,6 +318,9 @@ public class WeaponScript : MonoBehaviour
         //Backstepping
         weaponDamageCollider.lightBackstepAttack01DamageMotionValue = stats.lightBackstepAttack01DamageMotionValue;
 
+        //Update Highest Elemental Value
+        stats.elemental.currentHighestElementalStat = GetHighestElementalStat();
+
     }
     /**
      * Add Exp to a weapon and level it up if possible
@@ -354,7 +361,7 @@ public class WeaponScript : MonoBehaviour
         }
         else
             return 0; // The weapon is broken. Return without doing damage
-        
+
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
         //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
@@ -559,13 +566,51 @@ public class WeaponScript : MonoBehaviour
         newJumpAttackDamageCollider.enabled = true;
         newJumpAttackDamageCollider.EnableDamageCollider();
 
-        //Might matter, but currently we don't seem to need to do this
-        //newJumpAttackDamageCollider.weaponThatOwnsThisCollider = this;
-
         //Switch for Greatest Element:
-        //case 1: Fire
-        newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
-    } 
+        switch (stats.elemental.currentHighestElementalStat)
+        {
+            case ElementalDamageType.Fire:
+                newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Fire");
+                break;
+            case ElementalDamageType.Ice:
+                newJumpAttackDamageCollider.iceJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Ice");
+                break;
+            case ElementalDamageType.Lightning:
+                newJumpAttackDamageCollider.lightningJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Lightning");
+                break;
+            case ElementalDamageType.Wind:
+                newJumpAttackDamageCollider.windJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Wind");
+                break;
+            case ElementalDamageType.Earth:
+                newJumpAttackDamageCollider.earthJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Earth");
+                break;
+            case ElementalDamageType.Light:
+                newJumpAttackDamageCollider.lightJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Light");
+                break;
+            case ElementalDamageType.Beast:
+                newJumpAttackDamageCollider.beastJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Beast");
+                break;
+            case ElementalDamageType.Scales:
+                newJumpAttackDamageCollider.scalesJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Scales");
+                break;
+            case ElementalDamageType.Tech:
+                newJumpAttackDamageCollider.techJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Tech");
+                break;
+            default:
+                newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
+                Debug.Log("Highest Element: Default Case");
+                break;
+        }
+    }
 
     // Minimum Threshold determines a cut off before we start allowing an element to be high enough to count for elemental graphics and effects
     public ElementalDamageType GetHighestElementalStat(float minimumThreshold = 0)
