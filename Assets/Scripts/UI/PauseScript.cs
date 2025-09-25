@@ -11,6 +11,7 @@ public class PauseScript : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject mainPauseMenu;//old
     [SerializeField] GameObject weaponMenu;
+    [SerializeField] GameObject weaponMenuSideBar;//separate for now
     [SerializeField] GameObject inventMenu;
     [SerializeField] GameObject DebugSaveGameButton;
     [SerializeField] GameObject DebugAddItemButton;
@@ -42,7 +43,9 @@ public class PauseScript : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         if(weaponMenu != null)
-        weaponMenu.SetActive(false);
+            weaponMenu.SetActive(false);
+        if (weaponMenuSideBar != null)
+            weaponMenuSideBar.SetActive(false);
         if (mainPauseMenu != null)
             mainPauseMenu.SetActive(false);
         if (pauseMenu != null)
@@ -95,6 +98,8 @@ public class PauseScript : MonoBehaviour
             mainPauseMenu.SetActive(false);
         if (weaponMenu != null)
             weaponMenu.SetActive(true);
+        if (weaponMenuSideBar != null)
+            weaponMenuSideBar.SetActive(true);
     }
     public void WeaponMenuBackClick()
     {
@@ -171,17 +176,17 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 0;
         gamePaused = true;
         pauseMenu.SetActive(true);
-        mainPauseMenu.SetActive(true);
-        if (debugMode)
-        {
-            DebugSaveGameButton.SetActive(true);
-            DebugAddItemButton.SetActive(true);
-        }
-        else
-        {
-            DebugSaveGameButton.SetActive(false);
-            DebugAddItemButton.SetActive(false);
-        }
+        //mainPauseMenu.SetActive(true);
+        //if (debugMode)
+        //{
+        //    DebugSaveGameButton.SetActive(true);
+        //    DebugAddItemButton.SetActive(true);
+        //}
+        //else
+        //{
+        //    DebugSaveGameButton.SetActive(false);
+        //    DebugAddItemButton.SetActive(false);
+        //}
 
         //Disable Controls
         PlayerInputManager.instance.playerControls.Disable();
@@ -196,7 +201,7 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 1;
         gamePaused = false;
         weaponMenu.SetActive(false);
-        mainPauseMenu.SetActive(true);
+        //mainPauseMenu.SetActive(true);
         pauseMenu.SetActive(false);
         inventMenu.SetActive(false);
         mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
@@ -211,6 +216,7 @@ public class PauseScript : MonoBehaviour
     {
         if (pauseInput) // [Esc], (Start/Menu)
         {
+            Debug.Log("PAUSE INPUT");
             pauseInput = false;
             PauseUnpause();
         }

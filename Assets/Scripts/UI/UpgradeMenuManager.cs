@@ -26,7 +26,8 @@ public class UpgradeMenuManager : MonoBehaviour
     public GameObject componentsGrid;
     public int curComponentPage = 0;
     [Header("Prefab for item UI object")]
-    public GameObject elementPrefab;
+    public GameObject tinkerComponentPrefab;
+    public GameObject weaponButton;
     [Header("Buttons")]
     public Button breakdownBtn;
     //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
@@ -36,9 +37,9 @@ public class UpgradeMenuManager : MonoBehaviour
     //called when arriving at this menu
     private void OnEnable()
     {
-        wpnScroll.value = 0;
+        //wpnScroll.value = 0;
         curWeaponPage = 0;
-        cmpntScroll.value = 0;
+        //cmpntScroll.value = 0;
         curComponentPage = 0;
         activeWeapon = null;
         LoadComponentsToScreen();
@@ -54,7 +55,7 @@ public class UpgradeMenuManager : MonoBehaviour
         { //grid system become null when equipping weapon because the grid is reloaded
             eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
         }
-        if (activeWeapon != null && activeWeapon.GetComponent<WeaponScript>().stats.level >= 5)
+        if (breakdownBtn != null && activeWeapon != null && activeWeapon.GetComponent<WeaponScript>().stats.level >= 5)
         {
             breakdownBtn.interactable = true;
         }
@@ -112,9 +113,10 @@ public class UpgradeMenuManager : MonoBehaviour
     public Scrollbar wpnScroll;
     public float currentStep = 0;
     public float lastStep = 0;
-    public const int wpnPerRow = 3;
+    public const int wpnPerRow = 1;
     public void WeaponScroll(float value)
     {
+        return;
         int weaponsCount = PlayerWeaponManager.instance.ownedWeapons.Count + PlayerWeaponManager.instance.ownedSpecialWeapons.Count;
         int numOfPage = weaponsCount / wpnPerRow;
         if (numOfPage < 2)
@@ -159,7 +161,7 @@ public class UpgradeMenuManager : MonoBehaviour
     public Scrollbar cmpntScroll;
     public float cmpntCurrentStep = 0;
     public float cmpntLastStep = 0;
-    public const int cmpntPerRow = 6;
+    public const int cmpntPerRow = 14;
     public void ComponentScroll(float value)
     {
         int count = 0;//count total unique components owned
@@ -283,8 +285,8 @@ public class UpgradeMenuManager : MonoBehaviour
         else
         {
             text = "Equipped - None\n\n\n\n";
-            wpnEvolveBtn1.SetActive(false);
-            wpnEvolveBtn2.SetActive(false);
+            //wpnEvolveBtn1.SetActive(false);
+            //wpnEvolveBtn2.SetActive(false);
         }
         GameObject equippedSpecialWpn = PlayerWeaponManager.instance.GetEquippedWeapon(true);
         if (equippedSpecialWpn)//special weapon stats
@@ -374,7 +376,7 @@ public class UpgradeMenuManager : MonoBehaviour
         int numOfPage = (playerWpns.ownedWeapons.Count + playerWpns.ownedSpecialWeapons.Count) / wpnPerRow;
         wpnScroll.numberOfSteps = numOfPage;
         wpnScroll.size = 1.0f / numOfPage;
-        int maxDisplayed = 6;
+        int maxDisplayed = 3;
         int displayed = 0;
         foreach (Transform child in weaponsGrid.transform)
         {
@@ -388,20 +390,20 @@ public class UpgradeMenuManager : MonoBehaviour
             if (wpn == null) continue;
             displayed++;
             WeaponScript wpnScrpt = wpn.GetComponent<WeaponScript>();
-            GameObject gridElement = Instantiate(elementPrefab, weaponsGrid.transform);
-            GridElementController gridScript = gridElement.GetComponent<GridElementController>();
-            gridScript.topText.text = wpnScrpt.stats.weaponName;
-            gridScript.bottomText.text = "Lvl " + wpnScrpt.stats.level;
-            gridScript.cornerButton.gameObject.SetActive(true);
+            GameObject gridElement = Instantiate(weaponButton, weaponsGrid.transform);
+            WeaponButtonUI gridScript = gridElement.GetComponent<WeaponButtonUI>();
+            //gridScript.topText.text = wpnScrpt.stats.weaponName;
+            //gridScript.bottomText.text = "Lvl " + wpnScrpt.stats.level;
+            //gridScript.cornerButton.gameObject.SetActive(true);
             if (wpnScrpt.spr)//load icon
                 gridScript.mainButtonForeground.GetComponent<Image>().sprite = wpnScrpt.spr;
             if (i == playerWpns.indexOfEquippedWeapon)
             {//mark equipped weapon
                 gridScript.mainButton.GetComponent<Image>().color = Color.green;
-                gridScript.cornerButton.gameObject.SetActive(false);
+                //gridScript.cornerButton.gameObject.SetActive(false);
             }
-            else 
-                gridScript.cornerButton.gameObject.SetActive(true);
+            //else 
+            //    gridScript.cornerButton.gameObject.SetActive(true);
             if (wpn == activeWeapon)
             {//mark actively editing weapon
                 gridScript.mainButton.GetComponent<Image>().color = Color.red;
@@ -415,13 +417,13 @@ public class UpgradeMenuManager : MonoBehaviour
                 LoadEquippedWeapons();
                 LoadComponentsToScreen();
             });
-            gridScript.cornerButton.onClick.AddListener(() =>
-            {
-                playerWpns.ChangeWeapon(gridScript.index);//equip weapon
-                LoadWeaponsToScreen(true);
-                LoadEquippedWeapons();
-                LoadComponentsToScreen();
-            });
+            //gridScript.cornerButton.onClick.AddListener(() =>
+            //{
+            //    playerWpns.ChangeWeapon(gridScript.index);//equip weapon
+            //    LoadWeaponsToScreen(true);
+            //    LoadEquippedWeapons();
+            //    LoadComponentsToScreen();
+            //});
         }
         int wpnsToSkip = curWeaponPage * wpnPerRow - playerWpns.ownedWeapons.Count;
         int index = 0;
@@ -435,7 +437,7 @@ public class UpgradeMenuManager : MonoBehaviour
             if (weapon == null) continue;
             if (++displayed > maxDisplayed) break;
             WeaponScript wpnScrpt = weapon.GetComponent<WeaponScript>();
-            GameObject gridElement = Instantiate(elementPrefab, weaponsGrid.transform);
+            GameObject gridElement = Instantiate(weaponButton, weaponsGrid.transform);
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
             gridScript.topText.text = wpnScrpt.stats.weaponName;
             gridScript.bottomText.text = "Lvl " + wpnScrpt.stats.level;
@@ -482,7 +484,7 @@ public class UpgradeMenuManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         int displayedCount = 0;
-        int maxDisplayed = 12;
+        int maxDisplayed = 28;
         int componentsToSkip = curComponentPage * cmpntPerRow;
         //basic components
         foreach (GameObject component in TinkerComponentManager.instance.baseComponents)
@@ -497,26 +499,26 @@ public class UpgradeMenuManager : MonoBehaviour
                     continue;
                 }
                 if (++displayedCount > maxDisplayed) break;
-                Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
-                GridElementController gridScript = gridElement.GetComponent<GridElementController>();
-                gridScript.topText.text = componentScript.stats.itemName;
-                gridScript.bottomText.text = "" + componentScript.stats.count;
-                gridScript.cornerButton.gameObject.SetActive(false);
+                Object gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
+                TinkerComponentUI tinkerComponent = gridElement.GetComponent<TinkerComponentUI>();
+                //tinkerComponent.tooltip.text = componentScript.stats.itemName;
+                tinkerComponent.countText.text = "" + componentScript.stats.count;
+                //tinkerComponent.cornerButton.gameObject.SetActive(false);
                 if(componentScript.spr)//Icon
-                    gridScript.mainButtonForeground.GetComponent<Image>().sprite = componentScript.spr;
+                    tinkerComponent.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, component))
                 {
                     /**   ADD EVENT TO COMPONENT CLICK   */
-                    gridScript.mainButton.onClick.AddListener(() =>
+                    tinkerComponent.mainButton.onClick.AddListener(() =>
                     {
                         //if (PlayerWeaponManager.instance.GetEquippedWeapon() != null && TinkerComponentManager.instance.UseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                         if (activeWeapon != null && TinkerComponentManager.instance.UseComponent(activeWeapon, component))
                         {
-                            int newCount = gridScript.bottomText.text.Trim().ParseLargeInteger() - 1;
+                            int newCount = tinkerComponent.countText.text.Trim().ParseLargeInteger() - 1;
                             if (newCount > 0)
                             {
-                                gridScript.bottomText.text = "" + newCount;
+                                tinkerComponent.countText.text = "" + newCount;
                             }
                             else Destroy(gridElement);
                             LoadEquippedWeapons();
@@ -528,7 +530,7 @@ public class UpgradeMenuManager : MonoBehaviour
                         }
                     });
                 }// cant use component. disable the button
-                else gridScript.mainButton.interactable = false;
+                else tinkerComponent.mainButton.interactable = false;
             }
         }
         //weapon components
@@ -541,7 +543,7 @@ public class UpgradeMenuManager : MonoBehaviour
             }
             if (++displayedCount > maxDisplayed) break;
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
-            Object gridElement = Instantiate(elementPrefab, componentsGrid.transform);
+            Object gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
             gridScript.topText.text = componentScript.stats.itemName;
             gridScript.bottomText.text = "Atk:" + componentScript.stats.attack;

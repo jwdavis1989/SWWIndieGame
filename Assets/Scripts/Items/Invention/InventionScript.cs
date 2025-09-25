@@ -61,5 +61,6 @@ public enum InventionType
     Alternator,
     RollerJoints,
     EnemyRadar,
-    DaedalusNanoMaterials
+    DaedalusNanoMaterials,
+    SyntheticDiamond
 }

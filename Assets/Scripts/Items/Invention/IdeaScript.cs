@@ -31,7 +31,7 @@ public class IdeaScript : MonoBehaviour
 }
 
 public enum IdeaType
-{
+{//add new idea to bottom (else prefabs will be off), Could use list of strings+Hashtable instead of enum -\('_')/-
     Battery,
     Wires,
     MetalPlating,
@@ -71,6 +71,9 @@ public enum IdeaType
     Dummy,
     Skeletony,
     Tree,
+    Coal,
+    Piston,
+    Forge,
     //Add new ideas here
 
     // Total unique ideas.
