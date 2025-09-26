@@ -31,7 +31,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6065269517916178764}
-  - {fileID: 1643883618653487066}
   - {fileID: 2772857410443742475}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49,7 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFamily: 0
   weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 4862988502895012156, guid: 4790800cb316f2f479ac2620ab078ac7, type: 3}
   isSpecialWeapon: 0
+  specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: d511495ea09ac9e49b881bcf17f09b19, type: 3}
   hasObtained: 1
   stats:
@@ -74,6 +75,7 @@ MonoBehaviour:
       beastPower: 10
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 34
       icePower: 34
@@ -84,10 +86,9 @@ MonoBehaviour:
       beastPower: 34
       scalesPower: 34
       techPower: 34
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 0
-    maxSpecialtyCooldown: 0
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -100,11 +101,14 @@ MonoBehaviour:
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
     lightAttack03StaminaCostModifier: 1
-    heavyAttack01StaminaCostModifier: 1
-    heavyAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1.2
+    heavyAttack02StaminaCostModifier: 1.2
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 4
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -112,13 +116,28 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
+  offHandCastMagicAttackAction: {fileID: 0}
   projectile: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 1d7f32233af26c44899feb699f25e05b, type: 2}
+  offHandSpellAnimation: 
+  fullChargingTraitModifier: 1.25
+  spellForwardVelocityMultiplier: 7
+  spellUpwardVelocityMultiplier: 4
+  spellCastWarmUpVFX: {fileID: 0}
+  spellChargeVFX: {fileID: 0}
+  spellProjectileVFX: {fileID: 0}
+  spellProjectileFullChargeVFX: {fileID: 0}
+  spellReleaseSFX: {fileID: 0}
+  spellProjectileSFX: {fileID: 0}
+  isInDebugMode: 0
 --- !u!1 &7105071253258005747
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,6 +215,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   isMainHand: 0
   attackMotionValue: 1
   fullChargeModifier: 1
@@ -216,89 +236,6 @@ MonoBehaviour:
   lightRollingAttack01DamageMotionValue: 0
   lightBackstepAttack01DamageMotionValue: 0
   weaponFamily: 0
---- !u!1 &8572077701968115525
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1643883618653487066}
-  - component: {fileID: 4811937892969682438}
-  - component: {fileID: 4652095504400643474}
-  m_Layer: 6
-  m_Name: Sword4_Blue
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1643883618653487066
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8572077701968115525}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 0.75}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5783575807394235614}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 270}
---- !u!33 &4811937892969682438
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8572077701968115525}
-  m_Mesh: {fileID: 2763774367042099228, guid: 26430834ea307e24083f9e03d7fc4f0f, type: 3}
---- !u!23 &4652095504400643474
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8572077701968115525}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 33a16add35bcca3468a326685219fd7d, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &2445897025950214880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,9 +301,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 71c9764b4c8bc0b4da4eff4a047174f5, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: beea7f802dd068847b2fd37a62c977a7, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: da7dd9f3265f8f84bb13a62834441144, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
-      objectReference: {fileID: 2100000, guid: d5b2ad76892997a47b9a05af3e9dccee, type: 2}
+      objectReference: {fileID: 2100000, guid: da7dd9f3265f8f84bb13a62834441144, type: 2}
     - target: {fileID: 919132149155446097, guid: e935fcbe37666ac4e9765c86e8cd71cf, type: 3}
       propertyPath: m_Name
       value: ShortswordNOTEXTURE_01

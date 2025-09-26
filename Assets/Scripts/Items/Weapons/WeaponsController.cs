@@ -41,8 +41,7 @@ public class WeaponsController : MonoBehaviour
     {
         // Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
-        // Load base stats for weapons from json
-        LoadAllWeaponTypes();
+        SortWeaponsByType();
         // If debug mode is on run some basic tests
         RunTests();
     }
@@ -55,8 +54,7 @@ public class WeaponsController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    //After commenting the part using json this is just sorting the weapon prefabs by type which is still important
-    public void LoadAllWeaponTypes()
+    public void SortWeaponsByType()
     {
         //add prefabs to initilizer array sorted by weapon type
         GameObject[] weaponsInitilizer = new GameObject[(int)WeaponType.UNKNOWN];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
@@ -64,29 +62,6 @@ public class WeaponsController : MonoBehaviour
         {
             weaponsInitilizer[(int)weapon.GetComponent<WeaponScript>().stats.weaponType] = weapon;
         }
-        //read json file and initilize stats
-        //WeaponsArray weaponsJsons = JsonUtility.FromJson<WeaponsArray>(baseWeaponJsonFile.text);
-        //foreach (WeaponStats weaponStat in weaponsJsons.weaponStats)
-        //{
-        //    int i = (int)weaponStat.weaponType;
-        //    if (weaponsInitilizer[i] != null)
-        //    {   // prefab is loaded, copy stats over
-        //        if (debugMode) Debug.Log("Prefab loaded for " + i + " type:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponName);//astest
-        //        weaponsInitilizer[i].GetComponent<WeaponScript>().stats = weaponStat;
-        //    }
-        //    else
-        //    {   // no prefab, create a new empty object
-        //        // Warning: currently attack() is virtual & cannot be called for base weapons, need SwordScript or WrenchScript
-        //        //          Stats can be viewed for these however
-        //        weaponsInitilizer[i] = new GameObject("Empty");
-        //        weaponsInitilizer[i].AddComponent(typeof(WeaponScript));
-        //        weaponsInitilizer[i].GetComponent<WeaponScript>().stats = weaponStat;
-        //        weaponsInitilizer[i].GetComponent<WeaponScript>().SetWeaponDamage();
-        //        if (debugMode) Debug.Log("created object for " + i + " type:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponName); //astest
-        //    }
-        //    if (debugMode) Debug.Log("Weapon " + i + ": WeaponType:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.weaponType
-        //        + " Atk:" + weaponsInitilizer[i].GetComponent<WeaponScript>().stats.attack); //astest
-        //}
         //Set weapons here
         baseWeapons = weaponsInitilizer;
     }

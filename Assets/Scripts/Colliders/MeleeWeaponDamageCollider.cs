@@ -48,12 +48,15 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
     protected void InitializeStats()
     {
-        //Base Attack Power
-        physicalDamage = weaponThatOwnsThisCollider.stats.attack;
-        //damageEffect.weaponScript.stats = stats;
+        if (weaponThatOwnsThisCollider)
+        {
+            //Base Attack Power
+            physicalDamage = weaponThatOwnsThisCollider.stats.attack;
+            //damageEffect.weaponScript.stats = stats;
 
-        //Elemental
-        elementalStats = weaponThatOwnsThisCollider.stats.elemental;
+            //Elemental
+            elementalStats = weaponThatOwnsThisCollider.stats.elemental;
+        }
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -84,6 +87,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
             //Damage
             DamageTarget(damageTarget);
+            
         }
         //}
     }
@@ -203,7 +207,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
     protected void CalculatePoiseDamage()
     {
-        
+
     }
 
 }

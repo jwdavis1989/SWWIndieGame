@@ -274,6 +274,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""QueueJump"",
+                    ""type"": ""Button"",
+                    ""id"": ""046055d5-e486-4b8d-811f-8e16dd3e15ea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ToggleFlashlight"",
                     ""type"": ""Button"",
                     ""id"": ""e11afb79-a6b8-45d4-8e07-78df9d7336d7"",
@@ -996,6 +1005,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ChargeSpecialAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7cde6401-530f-409d-969f-21a295a0f30e"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a8c6d56-e75d-4633-bf35-84e329aacc44"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QueueJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1188,6 +1219,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Block = m_PlayerActions.FindAction("Block", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
+        m_PlayerActions_QueueJump = m_PlayerActions.FindAction("QueueJump", throwIfNotFound: true);
         m_PlayerActions_ToggleFlashlight = m_PlayerActions.FindAction("ToggleFlashlight", throwIfNotFound: true);
         m_PlayerActions_LightAttack = m_PlayerActions.FindAction("LightAttack", throwIfNotFound: true);
         m_PlayerActions_QueueLightAttack = m_PlayerActions.FindAction("QueueLightAttack", throwIfNotFound: true);
@@ -1376,6 +1408,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Block;
     private readonly InputAction m_PlayerActions_Jump;
+    private readonly InputAction m_PlayerActions_QueueJump;
     private readonly InputAction m_PlayerActions_ToggleFlashlight;
     private readonly InputAction m_PlayerActions_LightAttack;
     private readonly InputAction m_PlayerActions_QueueLightAttack;
@@ -1408,6 +1441,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @Block => m_Wrapper.m_PlayerActions_Block;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
+        public InputAction @QueueJump => m_Wrapper.m_PlayerActions_QueueJump;
         public InputAction @ToggleFlashlight => m_Wrapper.m_PlayerActions_ToggleFlashlight;
         public InputAction @LightAttack => m_Wrapper.m_PlayerActions_LightAttack;
         public InputAction @QueueLightAttack => m_Wrapper.m_PlayerActions_QueueLightAttack;
@@ -1453,6 +1487,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @QueueJump.started += instance.OnQueueJump;
+            @QueueJump.performed += instance.OnQueueJump;
+            @QueueJump.canceled += instance.OnQueueJump;
             @ToggleFlashlight.started += instance.OnToggleFlashlight;
             @ToggleFlashlight.performed += instance.OnToggleFlashlight;
             @ToggleFlashlight.canceled += instance.OnToggleFlashlight;
@@ -1541,6 +1578,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @QueueJump.started -= instance.OnQueueJump;
+            @QueueJump.performed -= instance.OnQueueJump;
+            @QueueJump.canceled -= instance.OnQueueJump;
             @ToggleFlashlight.started -= instance.OnToggleFlashlight;
             @ToggleFlashlight.performed -= instance.OnToggleFlashlight;
             @ToggleFlashlight.canceled -= instance.OnToggleFlashlight;
@@ -1722,6 +1762,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnQueueJump(InputAction.CallbackContext context);
         void OnToggleFlashlight(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnQueueLightAttack(InputAction.CallbackContext context);

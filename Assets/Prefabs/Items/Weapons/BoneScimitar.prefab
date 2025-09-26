@@ -30,8 +30,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7935371202563298210}
   - {fileID: 7002889166183869866}
-  - {fileID: 2457901244686193971}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2917005456082049530
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFamily: 0
   weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 4862988502895012156, guid: 4790800cb316f2f479ac2620ab078ac7, type: 3}
   isSpecialWeapon: 0
   specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: 7e27f95cfd8e96f458ac8ce1571f04d0, type: 3}
@@ -86,8 +87,6 @@ MonoBehaviour:
       techPower: 45
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 0
-    maxSpecialtyCooldown: 0
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -100,8 +99,10 @@ MonoBehaviour:
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
     lightAttack03StaminaCostModifier: 1
-    heavyAttack01StaminaCostModifier: 1
-    heavyAttack02StaminaCostModifier: 1
+    heavyAttack01StaminaCostModifier: 1.2
+    heavyAttack02StaminaCostModifier: 1.2
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 4
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
@@ -113,6 +114,8 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
@@ -127,6 +130,7 @@ MonoBehaviour:
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
+  spellChargeVFX: {fileID: 0}
   spellProjectileVFX: {fileID: 0}
   spellProjectileFullChargeVFX: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
@@ -157,12 +161,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4029110176930541267}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0.011999034, z: -0.98}
-  m_LocalScale: {x: 5.999505, y: 2.5, z: 82.95429}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalPosition: {x: 0, y: 0.0011000022, z: 0.17560002}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 1.6500002}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7002889166183869866}
+  m_Father: {fileID: 8130850429207198863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6636901035085857461
 BoxCollider:
@@ -183,7 +187,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.55, y: 2.5, z: 0.075}
+  m_Size: {x: 0.75, y: 2.58, z: 0.1}
   m_Center: {x: 0, y: 0.94, z: 0}
 --- !u!114 &3686604803176733965
 MonoBehaviour:
@@ -228,89 +232,6 @@ MonoBehaviour:
   lightRollingAttack01DamageMotionValue: 0
   lightBackstepAttack01DamageMotionValue: 0
   weaponFamily: 0
---- !u!1 &8162462757089158816
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2457901244686193971}
-  - component: {fileID: 1163970147535320748}
-  - component: {fileID: 7394566836785102321}
-  m_Layer: 6
-  m_Name: Sword11_Bone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2457901244686193971
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8162462757089158816}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.75}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8130850429207198863}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 270}
---- !u!33 &1163970147535320748
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8162462757089158816}
-  m_Mesh: {fileID: -8592685088367404466, guid: b2e5052c2f356c14692d8e60f29d1029, type: 3}
---- !u!23 &7394566836785102321
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8162462757089158816}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 145145c843892ac44b405716fb4d77c4, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &7396594947638381121
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -381,10 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 53701ef8a0b97c246943e9fe2bbf3c84, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7935371202563298210}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53701ef8a0b97c246943e9fe2bbf3c84, type: 3}
 --- !u!4 &7002889166183869866 stripped

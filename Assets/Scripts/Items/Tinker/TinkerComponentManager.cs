@@ -200,7 +200,7 @@ public class TinkerComponentManager : MonoBehaviour
                 {
                     weaponComponents.Remove(tinkerComponentPassed);
                 }
-                weapon.SetWeaponDamage();
+                weapon.SetWeaponDamage(weapon.weaponDamageCollider);
             }
         }
         return canUpgrade;

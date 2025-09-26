@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6197996331823662604
 Transform:
   m_ObjectHideFlags: 0
@@ -30,8 +30,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8086861256824511913}
+  m_Children: []
   m_Father: {fileID: 8130850429207198863}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 270}
 --- !u!33 &3057339133150640273
@@ -114,6 +113,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 107509967494288417}
+  - {fileID: 8086861256824511913}
   - {fileID: 6197996331823662604}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -130,14 +131,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponFamily: 4
-  meleeWeaponDamageCollider: {fileID: 0}
+  weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
+  specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: d511495ea09ac9e49b881bcf17f09b19, type: 3}
   hasObtained: 1
   stats:
     weaponType: 6
+    isMonsterWeapon: 0
     attack: 15
     maxAttack: 36
+    basePoiseDamage: 35
     durability: 100
     maxDurability: 134
     block: 0
@@ -154,6 +159,7 @@ MonoBehaviour:
       beastPower: 10
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 34
       icePower: 34
@@ -164,10 +170,9 @@ MonoBehaviour:
       beastPower: 34
       scalesPower: 34
       techPower: 34
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 5
-    maxSpecialtyCooldown: 5
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -179,11 +184,44 @@ MonoBehaviour:
     baseStaminaCost: 20
     lightAttack01StaminaCostModifier: 1
     lightAttack02StaminaCostModifier: 1
+    lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 4
+    lightRunningAttack01StaminaCostModifier: 1
+    lightRollingAttack01StaminaCostModifier: 1
+    lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
+    lightAttack03DamageMotionValue: 1.2
+    heavyAttack01DamageMotionValue: 1.4
+    heavyAttack02DamageMotionValue: 1.6
+    heavyChargedAttack01DamageMotionValue: 2
+    heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
+    lightRunningAttack01DamageMotionValue: 1
+    lightRollingAttack01DamageMotionValue: 1
+    lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 0}
+  mainHandHeavyAttackAction: {fileID: 0}
+  offHandCastMagicAttackAction: {fileID: 0}
+  projectile: {fileID: 0}
+  weaponAnimatorOverride: {fileID: 0}
+  offHandSpellAnimation: 
+  fullChargingTraitModifier: 1.25
+  spellForwardVelocityMultiplier: 7
+  spellUpwardVelocityMultiplier: 4
+  spellCastWarmUpVFX: {fileID: 0}
+  spellChargeVFX: {fileID: 0}
+  spellProjectileVFX: {fileID: 0}
+  spellProjectileFullChargeVFX: {fileID: 0}
+  spellReleaseSFX: {fileID: 0}
+  spellProjectileSFX: {fileID: 0}
+  isInDebugMode: 0
 --- !u!1 &5735862448107930963
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,12 +248,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5735862448107930963}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.002, y: 0.263, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
+  m_LocalPosition: {x: 0, y: 0.000500001, z: -0.06575}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6197996331823662604}
+  m_Father: {fileID: 8130850429207198863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1223214229697803981
 BoxCollider:
@@ -236,7 +274,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 1.9, z: 0.05}
+  m_Size: {x: 1, y: 3.43, z: 0.68}
   m_Center: {x: 0, y: 0.94, z: 0}
 --- !u!114 &5738887633105001005
 MonoBehaviour:
@@ -251,20 +289,120 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physicalDamage: 0
-  fireDamage: 0
-  iceDamage: 0
-  lightningDamage: 0
-  windDamage: 0
-  earthDamage: 0
-  lightDamage: 0
-  beastDamage: 0
-  scalesDamage: 0
-  techDamage: 0
+  elementalStats:
+    firePower: 0
+    icePower: 0
+    lightningPower: 0
+    windPower: 0
+    earthPower: 0
+    lightPower: 0
+    beastPower: 0
+    scalesPower: 0
+    techPower: 0
+    currentHighestElementalStat: 0
+  isMainHand: 0
   attackMotionValue: 1
   fullChargeModifier: 1
   isReducedByArmor: 1
   isEnvironmentalHazard: 0
   environmentalHazardTickRate: 2
+  poiseDamage: 35
+  blockingStaminaDamage: 25
   characterCausingDamage: {fileID: 0}
   lightAttack01DamageMotionValue: 0
+  lightAttack02DamageMotionValue: 0
+  lightAttack03DamageMotionValue: 0
+  heavyAttack01DamageMotionValue: 0
+  heavyAttack02DamageMotionValue: 0
+  heavyChargedAttack01DamageMotionValue: 0
+  heavyChargedAttack02DamageMotionValue: 0
+  lightRunningAttack01DamageMotionValue: 0
+  lightRollingAttack01DamageMotionValue: 0
+  lightBackstepAttack01DamageMotionValue: 0
   weaponFamily: 0
+--- !u!1001 &501952087286019018
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8130850429207198863}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.03356815
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.15471399
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.37128296
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8884cbb653178f14bb2946658716c783, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 283f8d29d4ba2b84c8de1ed14638e318, type: 2}
+    - target: {fileID: 919132149155446097, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+      propertyPath: m_Name
+      value: DaggerNOTEXTURE_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+--- !u!4 &107509967494288417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 72f489a3f5a8d904c92a72fa5e093bab, type: 3}
+  m_PrefabInstance: {fileID: 501952087286019018}
+  m_PrefabAsset: {fileID: 0}

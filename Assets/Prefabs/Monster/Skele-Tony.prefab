@@ -599,8 +599,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 15}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1.5, y: 1.1, z: 1.5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3066726148105334156}
   - {fileID: 4426453901275089023}
@@ -629,6 +629,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -7
+  JumpAttackQuickFallSpeedModifier: 12
 --- !u!114 &6097093070088277279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,6 +644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
   deathVFX: {fileID: 3807916271835915907, guid: 54dfacbd747c888419e320ffb35f071e, type: 3}
+  activeSpellWarmUpFX: {fileID: 0}
 --- !u!82 &3972350763790113092
 AudioSource:
   m_ObjectHideFlags: 0
@@ -752,6 +754,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
+  walkFootStepPitch: 1
+  runFootStepPitch: 1.2
   takeDamageGrunts:
   - {fileID: 8300000, guid: 68f7fb07fe8eeac4fb98d7eba26fd824, type: 3}
   - {fileID: 8300000, guid: a775695000f506d44ab17df56e688370, type: 3}
@@ -838,6 +842,10 @@ MonoBehaviour:
   mainHandWeaponAnchor: {fileID: 6192227546992571412}
   offHandWeaponAnchor: {fileID: 6524956729635165840}
   currentAttackType: 0
+  specialtyCooldown: 5
+  specialtyCooldownTimer: 0
+  isSpecialWeaponOffCooldown: 1
+  quickChargeCapacitorCooldownMultiplier: 0.8
 --- !u!54 &183252109366728886
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -923,6 +931,7 @@ MonoBehaviour:
   isFalling: 0
   isBoosting: 0
   isRolling: 0
+  isAttacking: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
@@ -936,6 +945,7 @@ MonoBehaviour:
   nonWeaponBlockingStrength: 30
   canBleed: 1
   isChargingAttack: 0
+  isChargingSpellAttack: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 3383964005519773742}
   characterName: Skele-Tony
@@ -989,6 +999,7 @@ MonoBehaviour:
   staminaRegenAmount: 2.5
   sprintingStaminaCost: 12
   dodgeStaminaCost: 25
+  airDashStaminaCost: 50
   jumpStaminaCost: 0
   staminaTickTimer: 0.1
   goldDrop: 100
@@ -1258,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2329055512903269805, guid: ca41d50ab4b80934d9a9b7556d51c26e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

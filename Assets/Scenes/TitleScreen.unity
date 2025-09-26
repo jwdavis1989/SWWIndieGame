@@ -974,44 +974,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1533339198722137681, guid: 397247a265c22034298f9d5a440e683e, type: 3}
   m_PrefabInstance: {fileID: 207718654}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &253200269
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1001 &369286020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1527,44 +1489,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1598391671035646725, guid: ce0f1dea9d2aa4240a049a23f07ca852, type: 3}
   m_PrefabInstance: {fileID: 3889511982359576649}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &498840691
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1001 &571041655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3421,7 +3345,7 @@ PrefabInstance:
     - target: {fileID: -7823293702887809713, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 95a4ee7fac041c6488c959f1c8091a18, type: 2}
+      objectReference: {fileID: 2100000, guid: 265fd318b5b9c3b4e86ca1f69983f1fb, type: 2}
     - target: {fileID: -7712642292541917249, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -5392,6 +5316,44 @@ CapsuleCollider:
   m_Height: 0.49
   m_Direction: 1
   m_Center: {x: 0, y: 0.33, z: 0}
+--- !u!84 &1356440125
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1398959181
 GameObject:
   m_ObjectHideFlags: 0
@@ -6388,6 +6350,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657248207}
   m_CullTransparentMesh: 1
+--- !u!84 &1672657581
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!84 &1674906128
 RenderTexture:
   m_ObjectHideFlags: 0
@@ -8206,6 +8206,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: -20, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -5
+  JumpAttackQuickFallSpeedModifier: 12
   rightBoosters: {fileID: 3583366393923518017}
   leftBoosters: {fileID: 7105567362008579310}
   backBoosters: {fileID: 494810297}
@@ -8220,7 +8221,8 @@ MonoBehaviour:
   jumpHeight: 4
   jumpForwardSpeed: 5
   freeFallSpeed: 2
-  airBoostSpeed: 15
+  airBoostSpeed: 150
+  icarusBoosterDashSpeedMultiplier: 2
   forceFieldGraphic: {fileID: 0}
 --- !u!1001 &3219523348160780665
 PrefabInstance:
@@ -8596,6 +8598,7 @@ MonoBehaviour:
   isFalling: 0
   isBoosting: 0
   isRolling: 0
+  isAttacking: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
@@ -8612,6 +8615,7 @@ MonoBehaviour:
   isChargingSpellAttack: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 0}
+  isInDebugMode: 0
   playerLocomotionManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
   playerAnimationManager: {fileID: 0}
@@ -9248,6 +9252,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   totalPoiseDamage: 0
   offensivePoiseBonus: 0
   basePoiseDefense: 80
@@ -9262,6 +9267,7 @@ MonoBehaviour:
   staminaRegenAmount: 2.5
   sprintingStaminaCost: 12
   dodgeStaminaCost: 25
+  airDashStaminaCost: 50
   jumpStaminaCost: 0
   staminaTickTimer: 0.1
   characterName: Character Name
@@ -9673,8 +9679,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 2125440740}
     m_Modifications:
     - target: {fileID: 1600902760363742656, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
+      propertyPath: m_BendingStiffness
+      value: 0.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 1600902760363742656, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
       propertyPath: m_StretchingStiffness
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1866778009975147775, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
+      propertyPath: m_BendingStiffness
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: 1866778009975147775, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
       propertyPath: m_StretchingStiffness
@@ -9846,6 +9860,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4988289530278428140, guid: 3a6d98709a697814bb50677484bda47e, type: 3}
+      propertyPath: defaultQueueInputTimer
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 7295594713699739016, guid: 3a6d98709a697814bb50677484bda47e, type: 3}
       propertyPath: m_Name
       value: Player Input Manager
@@ -9944,6 +9962,10 @@ MonoBehaviour:
   mainHandWeaponAnchor: {fileID: 1416436979}
   offHandWeaponAnchor: {fileID: 877648542}
   currentAttackType: 0
+  specialtyCooldown: 5
+  specialtyCooldownTimer: 0
+  isSpecialWeaponOffCooldown: 1
+  quickChargeCapacitorCooldownMultiplier: 0.8
 --- !u!114 &8671731848262977639
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -74,6 +74,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2615502080346363408}
   - {fileID: 8672117909087263554}
   - {fileID: 6633539134048135499}
   m_Father: {fileID: 0}
@@ -92,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFamily: 10
   weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
   specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: ab89822e4a554994387e2d81ba0a53b7, type: 3}
@@ -118,6 +120,7 @@ MonoBehaviour:
       beastPower: 0
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 45
       icePower: 45
@@ -128,10 +131,9 @@ MonoBehaviour:
       beastPower: 45
       scalesPower: 45
       techPower: 45
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 5
-    maxSpecialtyCooldown: 5
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -146,6 +148,8 @@ MonoBehaviour:
     lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 4
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
@@ -157,6 +161,8 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
@@ -176,6 +182,7 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 4845079000888395174, guid: f993e9c24bbe0294da03a524ae80b168, type: 3}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  isInDebugMode: 0
 --- !u!1 &6113844736066265108
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8672117909087263554
 Transform:
   m_ObjectHideFlags: 0
@@ -283,3 +290,77 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!1001 &2577915192917258747
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8130850429207198863}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.027
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.196
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.014
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.97485024
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.051977124
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.03311308
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.21417022
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 355
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 355
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 326ac8700a3e38046900d402004952ca, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: be25638205ca4d440a3c45a8bebbe8d3, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 21078819f3252f8429b9aa6f29a2bb3b, type: 2}
+    - target: {fileID: 919132149155446097, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+      propertyPath: m_Name
+      value: BurnBracerNOTEXTURE_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+--- !u!4 &2615502080346363408 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 68f323de7c7bee0459885efe2b351798, type: 3}
+  m_PrefabInstance: {fileID: 2577915192917258747}
+  m_PrefabAsset: {fileID: 0}

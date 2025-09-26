@@ -308,16 +308,33 @@ public class CharacterWeaponManager : MonoBehaviour
     public void CloseDamageCollider() {
         ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponDamageCollider.DisableDamageCollider();
     }
-    public void DrainStaminaBasedOnAttack() {
+    public void OpenJumpAttackDamageCollider() {
+        //Play Whoosh SFX
+        PlayMeleeWeaponSwingSFX();
+    }
+
+    public void CloseJumpAttackDamageCollider() {
+        //ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.DisableDamageCollider();
+    }
+
+    public void PlayJumpAttackImpactVFX()
+    {
+        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().InstantiateJumpAttackCollider();
+    }
+
+    public void DrainStaminaBasedOnAttack()
+    {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
-        
-        if (currentWeapon == null) {
+
+        if (currentWeapon == null)
+        {
             return;
         }
 
         float staminaDeducted = currentWeapon.stats.baseStaminaCost;
 
-        switch (currentAttackType) {
+        switch (currentAttackType)
+        {
             //Light Attacks
             case AttackType.LightAttack01:
                 staminaDeducted *= currentWeapon.stats.lightAttack01StaminaCostModifier;
