@@ -19,6 +19,7 @@ public class PauseScript : MonoBehaviour
     //new menu
     [SerializeField] GameObject topPanelButtons;
     public GameObject playerHud;
+    MenuTab lastMenuTab = MenuTab.Weapons;
     //public CanvasGroup hudGroup;
 
     [Header("Controls")]
@@ -81,11 +82,11 @@ public class PauseScript : MonoBehaviour
         }
     }
 
-    public void ContinueClick()
-    {
-        Unpause();
-        StartCoroutine(WaitToEndOfFrameThenContinue());
-    }
+    //public void ContinueClick()
+    //{
+    //    Unpause();
+    //    StartCoroutine(WaitToEndOfFrameThenContinue());
+    //}
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
@@ -100,6 +101,7 @@ public class PauseScript : MonoBehaviour
             weaponMenuSideBar.SetActive(true);
         if(inventMenu != null)
             inventMenu.SetActive(false);
+        lastMenuTab = MenuTab.Weapons;
     }
     //public void WeaponMenuBackClick()
     //{
@@ -145,6 +147,7 @@ public class PauseScript : MonoBehaviour
         if(inventMenu != null)
         inventMenu.SetActive(true);
         InventionUIManager.instance.OpenInventionMenu();
+        lastMenuTab = MenuTab.Invent;
     }
     public void DebugSaveGameCLick()
     {
@@ -193,6 +196,22 @@ public class PauseScript : MonoBehaviour
         //Set bool so the Interactable system understands a Menu window has opened
         PlayerUIManager.instance.menuWindowIsOpen = true;
         playerHud.SetActive(false);
+        switch (lastMenuTab)
+        {//go to last menu the player had open
+            case MenuTab.Weapons:
+                WeaponMenuClick();
+                break;
+            case MenuTab.Inventory:
+                break;
+            case MenuTab.Invent:
+                InventMenuClick();
+                break;
+            case MenuTab.Options:
+                break;
+            default:
+                WeaponMenuClick();
+                break;
+        } 
     }
     void Unpause()
     {
@@ -201,6 +220,7 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 1;
         gamePaused = false;
         weaponMenu.SetActive(false);
+        weaponMenuSideBar.SetActive(false);
         //mainPauseMenu.SetActive(true);
         pauseMenu.SetActive(false);
         inventMenu.SetActive(false);
@@ -221,5 +241,13 @@ public class PauseScript : MonoBehaviour
             pauseInput = false;
             PauseUnpause();
         }
+    }
+    public enum MenuTab
+    {
+        Weapons,
+        Inventory,
+        Invent,
+        Options,
+        ExitGame
     }
 }

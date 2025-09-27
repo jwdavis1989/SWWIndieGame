@@ -16,6 +16,8 @@ public class UpgradeMenuManager : MonoBehaviour
     public TextMeshProUGUI elementalStatsText;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI tinkerPointsCountText;
+    public Transform weaponPreviewHolder;
+    public GameObject currentWeaponPreview;
     public GameObject wpnEvolveBtn1;
     public GameObject wpnEvolveBtn2;
     public GameObject specWpnEvolveBtn1;
@@ -117,45 +119,45 @@ public class UpgradeMenuManager : MonoBehaviour
     public float currentStep = 0;
     public float lastStep = 0;
     public const int wpnPerRow = 1;
-    public void WeaponScroll(float value)
-    {
-        return;
-        int weaponsCount = PlayerWeaponManager.instance.ownedWeapons.Count + PlayerWeaponManager.instance.ownedSpecialWeapons.Count;
-        int numOfPage = weaponsCount / wpnPerRow;
-        if (numOfPage < 2)
-        {
-            wpnScroll.gameObject.SetActive(false);
-        }
-        else
-        {
-            wpnScroll.gameObject.SetActive(true);
-            wpnScroll.numberOfSteps = numOfPage;
-            wpnScroll.size = 1.0f / numOfPage;
-            currentStep = Mathf.Round(wpnScroll.value * numOfPage);
-        }
-        if (currentStep == lastStep)
-        {
-            return; //no change
-        }
-        if (currentStep > lastStep)
-        {
-            curWeaponPage++;
-        }
-        else
-        {
-            curWeaponPage--;
-        }
-        if (curWeaponPage > numOfPage)
-        {// past the end go to beg
-            curWeaponPage = 0;
-        }
-        else if (curWeaponPage < 0)
-        {//past beggining go to end
-            curWeaponPage = numOfPage;
-        }
-        lastStep = currentStep;
-        LoadWeaponsToScreen();
-    }
+    //public void WeaponScroll(float value)
+    //{
+    //    return;
+    //    int weaponsCount = PlayerWeaponManager.instance.ownedWeapons.Count + PlayerWeaponManager.instance.ownedSpecialWeapons.Count;
+    //    int numOfPage = weaponsCount / wpnPerRow;
+    //    if (numOfPage < 2)
+    //    {
+    //        wpnScroll.gameObject.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        wpnScroll.gameObject.SetActive(true);
+    //        wpnScroll.numberOfSteps = numOfPage;
+    //        wpnScroll.size = 1.0f / numOfPage;
+    //        currentStep = Mathf.Round(wpnScroll.value * numOfPage);
+    //    }
+    //    if (currentStep == lastStep)
+    //    {
+    //        return; //no change
+    //    }
+    //    if (currentStep > lastStep)
+    //    {
+    //        curWeaponPage++;
+    //    }
+    //    else
+    //    {
+    //        curWeaponPage--;
+    //    }
+    //    if (curWeaponPage > numOfPage)
+    //    {// past the end go to beg
+    //        curWeaponPage = 0;
+    //    }
+    //    else if (curWeaponPage < 0)
+    //    {//past beggining go to end
+    //        curWeaponPage = numOfPage;
+    //    }
+    //    lastStep = currentStep;
+    //    LoadWeaponsToScreen();
+    //}
     //************************** C O M P O N E N T   S C R O L L **************************
     /**
      * This section controls the Component scroll bar
@@ -217,6 +219,16 @@ public class UpgradeMenuManager : MonoBehaviour
         GameObject equippedWpn = PlayerWeaponManager.instance.GetEquippedWeapon();
         if (equippedWpn)
         {
+            //preview
+            if(currentWeaponPreview != null)
+                Destroy(currentWeaponPreview);
+            currentWeaponPreview = Instantiate(equippedWpn, weaponPreviewHolder);
+            currentWeaponPreview.transform.localPosition = new Vector3(0, -0.5f, 0);
+            currentWeaponPreview.transform.localRotation = Quaternion.Euler(90f, 90f, 0);
+            currentWeaponPreview.layer = LayerMask.NameToLayer("WeaponPreview");
+            foreach (Transform t in currentWeaponPreview.GetComponentsInChildren<Transform>())
+                t.gameObject.layer = LayerMask.NameToLayer("WeaponPreview");
+            //stats
             WeaponScript wpn = equippedWpn.GetComponent<WeaponScript>();
             weaponPreviewHeaderText.text = wpn.stats.weaponName;
             tinkerPointsCountText.text = ""+wpn.stats.currentTinkerPoints;
@@ -382,7 +394,7 @@ public class UpgradeMenuManager : MonoBehaviour
      */
     void LoadWeaponsToScreen(bool setCursor = false)
     {
-        WeaponScroll(0);
+        //WeaponScroll(0);
         PlayerWeaponManager playerWpns = PlayerWeaponManager.instance;
         int numOfPage = (playerWpns.ownedWeapons.Count + playerWpns.ownedSpecialWeapons.Count) / wpnPerRow;
         wpnScroll.numberOfSteps = numOfPage;
@@ -401,28 +413,29 @@ public class UpgradeMenuManager : MonoBehaviour
             if (wpn == null) continue;
             displayed++;
             WeaponScript wpnScrpt = wpn.GetComponent<WeaponScript>();
-            GameObject gridElement = Instantiate(weaponButton, weaponsGrid.transform);
-            WeaponButtonUI gridScript = gridElement.GetComponent<WeaponButtonUI>();
+            GameObject gridElement = Instantiate(this.weaponButton, weaponsGrid.transform);
+            WeaponButtonUI weaponButton = gridElement.GetComponent<WeaponButtonUI>();
             //gridScript.topText.text = wpnScrpt.stats.weaponName;
             //gridScript.bottomText.text = "Lvl " + wpnScrpt.stats.level;
             //gridScript.cornerButton.gameObject.SetActive(true);
             if (wpnScrpt.spr)//load icon
-                gridScript.mainButtonForeground.GetComponent<Image>().sprite = wpnScrpt.spr;
-            if (i == playerWpns.indexOfEquippedWeapon)
-            {//mark equipped weapon
-                gridScript.mainButton.GetComponent<Image>().color = Color.green;
-                //gridScript.cornerButton.gameObject.SetActive(false);
-            }
-            //else 
+                weaponButton.mainButtonForeground.GetComponent<Image>().sprite = wpnScrpt.spr;
+            //if (i == playerWpns.indexOfEquippedWeapon)
+            //{//mark equipped weapon
+            //    weaponButton.mainButton.GetComponent<Image>().color = Color.green;
+            //    //gridScript.cornerButton.gameObject.SetActive(false);
+            //}
+            //else
             //    gridScript.cornerButton.gameObject.SetActive(true);
-            if (wpn == activeWeapon)
-            {//mark actively editing weapon
-                gridScript.mainButton.GetComponent<Image>().color = Color.red;
-            }
+            //if (wpn == activeWeapon)
+            //{//mark actively editing weapon
+            //    weaponButton.mainButton.GetComponent<Image>().color = Color.red;
+            //}
             /**   ADD UNSPECIAL WEAPON CLICK EVENTS   */
-            gridScript.index = i;
-            gridScript.mainButton.onClick.AddListener(() =>
+            weaponButton.index = i;
+            weaponButton.mainButton.onClick.AddListener(() =>
             {
+                playerWpns.ChangeWeapon(weaponButton.index);//equip weapon
                 activeWeapon = wpn;//set actively editing
                 LoadWeaponsToScreen(true);
                 LoadEquippedWeapons();

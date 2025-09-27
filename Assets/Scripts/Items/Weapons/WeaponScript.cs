@@ -279,6 +279,7 @@ public class WeaponScript : MonoBehaviour
         characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
 
         //Activate Debug Mode if Weapon Manager is in Debug Mode
+        if(characterThatOwnsThisWeapon != null)
         isInDebugMode = characterThatOwnsThisWeapon.isInDebugMode;
     }
     //TODO: Call this when you upgrade weapons too!
@@ -289,6 +290,7 @@ public class WeaponScript : MonoBehaviour
             return;
         }
 
+        if(GetComponentInParent<CharacterWeaponManager>() != null)
         weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
         weaponDamageCollider.isMainHand = !isSpecialWeapon;
         weaponDamageCollider.enabled = true;
