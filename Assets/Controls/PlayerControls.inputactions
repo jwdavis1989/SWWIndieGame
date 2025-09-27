@@ -1022,6 +1022,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwitchMenuRight",
+                    "type": "Button",
+                    "id": "9336fd10-c0b3-4d44-9cf5-7780cc35c29e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchMenuLeft",
+                    "type": "Button",
+                    "id": "ee1c3498-e38f-4336-a1c8-5579fe4723c4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "PauseButton",
                     "type": "Button",
                     "id": "fdf83cdf-0968-4131-bb9d-832faeb26fc5",
@@ -1177,6 +1195,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "UIButtonX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88eeebaa-073a-4e0c-8301-5075c42ced6d",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMenuRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a07ae907-5e85-4708-a540-88f87866f246",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchMenuLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1044,6 +1044,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SwitchMenuRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""9336fd10-c0b3-4d44-9cf5-7780cc35c29e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMenuLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee1c3498-e38f-4336-a1c8-5579fe4723c4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""PauseButton"",
                     ""type"": ""Button"",
                     ""id"": ""fdf83cdf-0968-4131-bb9d-832faeb26fc5"",
@@ -1201,6 +1219,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""UIButtonX"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88eeebaa-073a-4e0c-8301-5075c42ced6d"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a07ae907-5e85-4708-a540-88f87866f246"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1247,6 +1287,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_DialogueContinue = m_UI.FindAction("DialogueContinue", throwIfNotFound: true);
+        m_UI_SwitchMenuRight = m_UI.FindAction("SwitchMenuRight", throwIfNotFound: true);
+        m_UI_SwitchMenuLeft = m_UI.FindAction("SwitchMenuLeft", throwIfNotFound: true);
         m_UI_PauseButton = m_UI.FindAction("PauseButton", throwIfNotFound: true);
         m_UI_CaptureIdeaPhotoBtn = m_UI.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
         m_UI_MiniMapResize = m_UI.FindAction("MiniMapResize", throwIfNotFound: true);
@@ -1675,6 +1717,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_DialogueContinue;
+    private readonly InputAction m_UI_SwitchMenuRight;
+    private readonly InputAction m_UI_SwitchMenuLeft;
     private readonly InputAction m_UI_PauseButton;
     private readonly InputAction m_UI_CaptureIdeaPhotoBtn;
     private readonly InputAction m_UI_MiniMapResize;
@@ -1684,6 +1728,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @DialogueContinue => m_Wrapper.m_UI_DialogueContinue;
+        public InputAction @SwitchMenuRight => m_Wrapper.m_UI_SwitchMenuRight;
+        public InputAction @SwitchMenuLeft => m_Wrapper.m_UI_SwitchMenuLeft;
         public InputAction @PauseButton => m_Wrapper.m_UI_PauseButton;
         public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_UI_CaptureIdeaPhotoBtn;
         public InputAction @MiniMapResize => m_Wrapper.m_UI_MiniMapResize;
@@ -1700,6 +1746,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DialogueContinue.started += instance.OnDialogueContinue;
             @DialogueContinue.performed += instance.OnDialogueContinue;
             @DialogueContinue.canceled += instance.OnDialogueContinue;
+            @SwitchMenuRight.started += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled += instance.OnSwitchMenuRight;
+            @SwitchMenuLeft.started += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled += instance.OnSwitchMenuLeft;
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
@@ -1719,6 +1771,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DialogueContinue.started -= instance.OnDialogueContinue;
             @DialogueContinue.performed -= instance.OnDialogueContinue;
             @DialogueContinue.canceled -= instance.OnDialogueContinue;
+            @SwitchMenuRight.started -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled -= instance.OnSwitchMenuRight;
+            @SwitchMenuLeft.started -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled -= instance.OnSwitchMenuLeft;
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
@@ -1791,6 +1849,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnDialogueContinue(InputAction.CallbackContext context);
+        void OnSwitchMenuRight(InputAction.CallbackContext context);
+        void OnSwitchMenuLeft(InputAction.CallbackContext context);
         void OnPauseButton(InputAction.CallbackContext context);
         void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
         void OnMiniMapResize(InputAction.CallbackContext context);

@@ -1,31 +1,37 @@
+using NUnit.Framework.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseScript : MonoBehaviour
 {
     public bool gamePaused = false;
-    public bool debugMode = false;
+    
     [SerializeField] GameObject pauseMenu;
     //[SerializeField] GameObject mainPauseMenu;//old
+    [Header("Menus")]
     [SerializeField] GameObject weaponMenu;
     [SerializeField] GameObject weaponMenuSideBar;//separate for now
+    [SerializeField] GameObject inventoryMenu;
     [SerializeField] GameObject inventMenu;
-    [SerializeField] GameObject DebugSaveGameButton;
-    [SerializeField] GameObject DebugAddItemButton;
-
-    //new menu
+    [SerializeField] GameObject optionsMenu;
+    [SerializeField] GameObject exitMenu;
     [SerializeField] GameObject topPanelButtons;
     public GameObject playerHud;
     MenuTab lastMenuTab = MenuTab.Weapons;
-    //public CanvasGroup hudGroup;
-
     [Header("Controls")]
     [SerializeField] bool pauseInput = false;
+    [SerializeField] bool menuLeftInput = false;
+    [SerializeField] bool menuRightInput = false;
     PlayerControls playerControls;
     public EventSystem mainPauseMenuEvents;
+    [Header("Debug")]
+    public bool debugMode = false;
+    [SerializeField] GameObject DebugSaveGameButton;
+    [SerializeField] GameObject DebugAddItemButton;
 
     [Header("Pause is a singleton")]
     public static PauseScript instance;
@@ -42,21 +48,15 @@ public class PauseScript : MonoBehaviour
     }
     public void Start()
     {
-        if (debugMode) return;//ASTEST
-
         DontDestroyOnLoad(gameObject);
-        if(weaponMenu != null)
-            weaponMenu.SetActive(false);
-        if (weaponMenuSideBar != null)
-            weaponMenuSideBar.SetActive(false);
-        if (pauseMenu != null)
-            pauseMenu.SetActive(false);
-        if (inventMenu != null)
-            inventMenu.SetActive(false);
+        if (debugMode) return;//ASTEST
+        DisableAllMenus();
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
             playerControls.UI.PauseButton.performed += i => pauseInput = true;
+            playerControls.UI.SwitchMenuLeft.performed += i => menuLeftInput = true;
+            playerControls.UI.SwitchMenuRight.performed += i => menuRightInput = true;
             playerControls.Enable();
         }
     }
@@ -73,6 +73,7 @@ public class PauseScript : MonoBehaviour
 
         //}
         HandlePauseInput();
+        HandleSwitchMenuInput();
         if (gamePaused)
         {
             if (mainPauseMenuEvents.currentSelectedGameObject == null)
@@ -95,12 +96,9 @@ public class PauseScript : MonoBehaviour
     }
     public void WeaponMenuClick()
     {
+        DisableAllMenus();
         if (weaponMenu != null)
             weaponMenu.SetActive(true);
-        if (weaponMenuSideBar != null)
-            weaponMenuSideBar.SetActive(true);
-        if(inventMenu != null)
-            inventMenu.SetActive(false);
         lastMenuTab = MenuTab.Weapons;
     }
     //public void WeaponMenuBackClick()
@@ -113,7 +111,46 @@ public class PauseScript : MonoBehaviour
         if (inventMenu != null)
             inventMenu.SetActive(false);
     }
-    public void ExitGameClick()
+    public void InventoryMenuClick()
+    {
+        DisableAllMenus();
+        if (inventoryMenu != null)
+            inventoryMenu.SetActive(true);
+        lastMenuTab = MenuTab.Inventory;
+    }
+    public void InventMenuClick()
+    {
+        DisableAllMenus();
+        if (inventMenu != null)
+        {
+            inventMenu.SetActive(true);
+            InventionUIManager.instance.OpenInventionMenu();
+        }
+        lastMenuTab = MenuTab.Invent;
+    }
+    void DisableAllMenus()
+    {
+        if (weaponMenu != null) weaponMenu.SetActive(false);
+        if (weaponMenuSideBar != null) weaponMenuSideBar.SetActive(false);
+        if (inventMenu != null) inventMenu.SetActive(false);
+        if (exitMenu != null) exitMenu.SetActive(false);
+        if (inventoryMenu != null) inventoryMenu.SetActive(false);
+        if (optionsMenu != null) optionsMenu.SetActive(false);
+    }
+    public void OptionsMenuClick()
+    {
+        DisableAllMenus();
+        if (optionsMenu!= null) optionsMenu.SetActive(true);
+        lastMenuTab = MenuTab.Options;
+    }
+    public void ExitMenuClick()
+    {
+        DisableAllMenus();
+        if (exitMenu != null)
+            exitMenu.SetActive(true);
+        lastMenuTab = MenuTab.ExitGame;
+    }
+    public void MainMenuClick()
     {
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
         Unpause();
@@ -137,17 +174,6 @@ public class PauseScript : MonoBehaviour
         //}
         //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
         SceneManager.LoadScene(0);
-    }
-    public void InventMenuClick()
-    {
-        if(weaponMenu != null)
-        weaponMenu.SetActive(false);
-        if(weaponMenuSideBar != null)
-            weaponMenuSideBar.SetActive(false);
-        if(inventMenu != null)
-        inventMenu.SetActive(true);
-        InventionUIManager.instance.OpenInventionMenu();
-        lastMenuTab = MenuTab.Invent;
     }
     public void DebugSaveGameCLick()
     {
@@ -241,6 +267,59 @@ public class PauseScript : MonoBehaviour
             pauseInput = false;
             PauseUnpause();
         }
+    }
+    void HandleSwitchMenuInput()
+    {
+        GameObject newBtnSelected;
+        if (menuLeftInput)
+        {
+            menuLeftInput = false;
+            switch (lastMenuTab)
+            {
+                case MenuTab.ExitGame:
+                    lastMenuTab = MenuTab.Options;
+                    OptionsMenuClick();
+                    break;
+                case MenuTab.Options:
+                    lastMenuTab = MenuTab.Invent;
+
+                    InventMenuClick();
+                    break;
+                case MenuTab.Invent:
+                    lastMenuTab = MenuTab.Inventory;
+                    InventoryMenuClick();
+                    break;
+                case MenuTab.Inventory:
+                    lastMenuTab = MenuTab.Weapons;
+                    WeaponMenuClick();
+                    break;
+            }
+        }
+        else if (menuRightInput)
+        {
+            menuRightInput = false;
+            switch (lastMenuTab)
+            {
+                case MenuTab.Weapons:
+                    lastMenuTab = MenuTab.Inventory; 
+                    InventoryMenuClick();
+                    break;
+                case MenuTab.Inventory:
+                    lastMenuTab = MenuTab.Invent;
+                    InventMenuClick();
+                    break;
+                case MenuTab.Invent:
+                    lastMenuTab = MenuTab.Options;
+                    OptionsMenuClick();
+                    break;
+                case MenuTab.Options:
+                    lastMenuTab = MenuTab.ExitGame;
+                    ExitMenuClick();
+                    break;
+            }
+        }
+        newBtnSelected = topPanelButtons.transform.GetChild(1 + (int)lastMenuTab).gameObject;
+        newBtnSelected.GetComponent<Button>().Select();
     }
     public enum MenuTab
     {
