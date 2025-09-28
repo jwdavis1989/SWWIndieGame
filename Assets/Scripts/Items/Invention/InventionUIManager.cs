@@ -108,13 +108,12 @@ public class InventionUIManager : MonoBehaviour
             IdeaType ideaType = (IdeaType)ideaIndex;
             string ideaName = GetIdeaString(ideaType);
             gridScript.topText.text = ideaName;
-            gridScript.bottomText.text = "";
-            gridScript.cornerButton.gameObject.SetActive(false);
 
             //load image
             byte[] bytes = InventionManager.instance.ideas[ideaIndex].image;
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
+            Debug.Log("Setting idea pic");
             gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
 
             //add owned IDEA BUTTON BEHAVIOUR  
