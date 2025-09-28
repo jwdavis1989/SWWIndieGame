@@ -56,19 +56,13 @@ public class UpgradeMenuManager : MonoBehaviour
         LoadComponentsToScreen();
         LoadWeaponsToScreen();
         LoadEquippedWeapons();
-        if (playerControls == null)
-        {
-            playerControls = new PlayerControls();
-            playerControls.UI.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
-            playerControls.UI.SwitchWeaponUp.performed += i => switchWeaponUp = true;
-            playerControls.UI.SwitchWeaponDown.performed += i => switchWeaponDown = true;
-        }
     }
     // Start is called before the first frame update
     void Start()
     {
         if (playerControls == null)
         {
+            Debug.Log("setting weapon menu controls...");
             playerControls = new PlayerControls();
             playerControls.UI.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
             playerControls.UI.SwitchWeaponUp.performed += i => switchWeaponUp = true;
@@ -100,12 +94,11 @@ public class UpgradeMenuManager : MonoBehaviour
     //Input
     void HandleWeaponPreviewInput()
     {
-        Debug.Log("HandleWeaponPreviewInput " + previewCameraInput.x + " " + previewCameraInput);
+        //Debug.Log("HandleWeaponPreviewInput " + previewCameraInput.x + " " + previewCameraInput);
     }
     float wpnScrollVal = 0;
     void HandleSwitchWeaponInput()
     {
-        Debug.Log("HandleSwitchWeaponInput");
         if (switchWeaponUp)
         {
             Debug.Log("switchWeaponUp");
@@ -288,12 +281,14 @@ public class UpgradeMenuManager : MonoBehaviour
             tinkerPointsCountText.text = ""+wpn.stats.currentTinkerPoints;
             WeaponStats stats = wpn.stats;
             ElementalStats el = stats.elemental;
-            primaryStats = "\nAttack: " + stats.attack + "  \tBlock: " + stats.block +
-            "\nDurability: " + stats.durability + "\tStability: " + stats.stability;
-            elementalStats = "\nFire: " + el.firePower + "\tEarth: " + el.earthPower 
-            + "\nIce: " + el.icePower + "\tLight: " + el.lightPower
+            primaryStats = 
+              "\nAttack: " + stats.attack + "  \t\tBlock: " + stats.block 
+            + "\nDurability: " + stats.durability + "\tStability: " + stats.stability;
+            elementalStats = 
+              "\nFire: " + el.firePower + "\t\tEarth: " + el.earthPower 
+            + "\nIce: "  + el.icePower  + "\t\tLight: "  + el.lightPower
             + "\nLightning: " + el.lightningPower + "\tBeast: " + el.beastPower
-            + "\nWind: " + el.windPower + "\tScale: " + el.scalesPower 
+            + "\nWind: " + el.windPower + "\t\tScale: " + el.scalesPower 
             + "\nTech: " + el.techPower;
             //weapon evolves
             //WeaponsController weaponCntrller = WeaponsController.instance;
