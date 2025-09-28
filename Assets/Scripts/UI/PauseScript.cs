@@ -28,6 +28,7 @@ public class PauseScript : MonoBehaviour
     [SerializeField] bool menuRightInput = false;
     PlayerControls playerControls;
     public EventSystem mainPauseMenuEvents;
+    public GameObject mainMenuButton;
     [Header("Debug")]
     public bool debugMode = false;
     [SerializeField] GameObject DebugSaveGameButton;
@@ -99,6 +100,8 @@ public class PauseScript : MonoBehaviour
         DisableAllMenus();
         if (weaponMenu != null)
             weaponMenu.SetActive(true);
+        if (weaponMenuSideBar != null)
+            weaponMenuSideBar.SetActive(true);
         lastMenuTab = MenuTab.Weapons;
     }
     //public void WeaponMenuBackClick()
@@ -148,6 +151,8 @@ public class PauseScript : MonoBehaviour
         DisableAllMenus();
         if (exitMenu != null)
             exitMenu.SetActive(true);
+        if(mainMenuButton != null)
+            mainPauseMenuEvents.SetSelectedGameObject(mainMenuButton);
         lastMenuTab = MenuTab.ExitGame;
     }
     public void MainMenuClick()
@@ -174,6 +179,10 @@ public class PauseScript : MonoBehaviour
         //}
         //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
         SceneManager.LoadScene(0);
+    }
+    public void ExitGameClicked()
+    {
+        Application.Quit();
     }
     public void DebugSaveGameCLick()
     {

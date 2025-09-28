@@ -9,4 +9,5 @@ public class WeaponButtonUI : MonoBehaviour
     public Button mainButton;
     public GameObject mainButtonForeground;
     public int index = 0;
+    public TextMeshProUGUI tooltip;
 }
