@@ -1078,6 +1078,51 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMenuLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee1c3498-e38f-4336-a1c8-5579fe4723c4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMenuRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""9336fd10-c0b3-4d44-9cf5-7780cc35c29e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""3e445df9-b73d-4717-a735-adfd76670660"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee11f0b6-2895-4016-9934-e7bcfa44a90c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeaponPreviewMovement"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""a2b42dc1-0a59-4142-96d6-6fd039d403af"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1201,6 +1246,116 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""UIButtonX"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a07ae907-5e85-4708-a540-88f87866f246"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88eeebaa-073a-4e0c-8301-5075c42ced6d"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Right Stick"",
+                    ""id"": ""87112ec8-f445-46dd-8887-0fb7ff4287e7"",
+                    ""path"": ""2DVector(mode=2)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponPreviewMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""90c30e5a-35c6-40c5-ae17-71800652ec99"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponPreviewMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a3ad339f-4a62-4f01-abdf-0ecd7cc90b40"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponPreviewMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""6bef09e0-6413-4679-88d0-a099f7e473c1"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponPreviewMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e8244641-1b07-4ad5-86d9-6b739360b1be"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponPreviewMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f6575be-65f1-464d-8c26-4153576bdd8a"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponPreviewMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""369d8d25-4581-43d3-aca4-732f6cff38f6"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d9e709d-e12b-45e0-96e7-5bfaf30669f0"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1251,6 +1406,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_CaptureIdeaPhotoBtn = m_UI.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
         m_UI_MiniMapResize = m_UI.FindAction("MiniMapResize", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
+        m_UI_SwitchMenuLeft = m_UI.FindAction("SwitchMenuLeft", throwIfNotFound: true);
+        m_UI_SwitchMenuRight = m_UI.FindAction("SwitchMenuRight", throwIfNotFound: true);
+        m_UI_SwitchWeaponUp = m_UI.FindAction("SwitchWeaponUp", throwIfNotFound: true);
+        m_UI_SwitchWeaponDown = m_UI.FindAction("SwitchWeaponDown", throwIfNotFound: true);
+        m_UI_WeaponPreviewMovement = m_UI.FindAction("WeaponPreviewMovement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1679,6 +1839,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_CaptureIdeaPhotoBtn;
     private readonly InputAction m_UI_MiniMapResize;
     private readonly InputAction m_UI_UIButtonX;
+    private readonly InputAction m_UI_SwitchMenuLeft;
+    private readonly InputAction m_UI_SwitchMenuRight;
+    private readonly InputAction m_UI_SwitchWeaponUp;
+    private readonly InputAction m_UI_SwitchWeaponDown;
+    private readonly InputAction m_UI_WeaponPreviewMovement;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -1688,6 +1853,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_UI_CaptureIdeaPhotoBtn;
         public InputAction @MiniMapResize => m_Wrapper.m_UI_MiniMapResize;
         public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
+        public InputAction @SwitchMenuLeft => m_Wrapper.m_UI_SwitchMenuLeft;
+        public InputAction @SwitchMenuRight => m_Wrapper.m_UI_SwitchMenuRight;
+        public InputAction @SwitchWeaponUp => m_Wrapper.m_UI_SwitchWeaponUp;
+        public InputAction @SwitchWeaponDown => m_Wrapper.m_UI_SwitchWeaponDown;
+        public InputAction @WeaponPreviewMovement => m_Wrapper.m_UI_WeaponPreviewMovement;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1712,6 +1882,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started += instance.OnUIButtonX;
             @UIButtonX.performed += instance.OnUIButtonX;
             @UIButtonX.canceled += instance.OnUIButtonX;
+            @SwitchMenuLeft.started += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled += instance.OnSwitchMenuLeft;
+            @SwitchMenuRight.started += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled += instance.OnSwitchMenuRight;
+            @SwitchWeaponUp.started += instance.OnSwitchWeaponUp;
+            @SwitchWeaponUp.performed += instance.OnSwitchWeaponUp;
+            @SwitchWeaponUp.canceled += instance.OnSwitchWeaponUp;
+            @SwitchWeaponDown.started += instance.OnSwitchWeaponDown;
+            @SwitchWeaponDown.performed += instance.OnSwitchWeaponDown;
+            @SwitchWeaponDown.canceled += instance.OnSwitchWeaponDown;
+            @WeaponPreviewMovement.started += instance.OnWeaponPreviewMovement;
+            @WeaponPreviewMovement.performed += instance.OnWeaponPreviewMovement;
+            @WeaponPreviewMovement.canceled += instance.OnWeaponPreviewMovement;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -1731,6 +1916,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started -= instance.OnUIButtonX;
             @UIButtonX.performed -= instance.OnUIButtonX;
             @UIButtonX.canceled -= instance.OnUIButtonX;
+            @SwitchMenuLeft.started -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled -= instance.OnSwitchMenuLeft;
+            @SwitchMenuRight.started -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled -= instance.OnSwitchMenuRight;
+            @SwitchWeaponUp.started -= instance.OnSwitchWeaponUp;
+            @SwitchWeaponUp.performed -= instance.OnSwitchWeaponUp;
+            @SwitchWeaponUp.canceled -= instance.OnSwitchWeaponUp;
+            @SwitchWeaponDown.started -= instance.OnSwitchWeaponDown;
+            @SwitchWeaponDown.performed -= instance.OnSwitchWeaponDown;
+            @SwitchWeaponDown.canceled -= instance.OnSwitchWeaponDown;
+            @WeaponPreviewMovement.started -= instance.OnWeaponPreviewMovement;
+            @WeaponPreviewMovement.performed -= instance.OnWeaponPreviewMovement;
+            @WeaponPreviewMovement.canceled -= instance.OnWeaponPreviewMovement;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -1795,5 +1995,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
         void OnMiniMapResize(InputAction.CallbackContext context);
         void OnUIButtonX(InputAction.CallbackContext context);
+        void OnSwitchMenuLeft(InputAction.CallbackContext context);
+        void OnSwitchMenuRight(InputAction.CallbackContext context);
+        void OnSwitchWeaponUp(InputAction.CallbackContext context);
+        void OnSwitchWeaponDown(InputAction.CallbackContext context);
+        void OnWeaponPreviewMovement(InputAction.CallbackContext context);
     }
 }

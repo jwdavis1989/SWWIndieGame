@@ -1,0 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class TinkerComponentUI : MonoBehaviour
+{
+    public TextMeshProUGUI tooltip;//Text on hover/help?
+    public TextMeshProUGUI countText;
+    public Button mainButton;
+    public GameObject foregroundIcon;
+    public int index = 0;
+    // Start is called before the first frame update
+}
