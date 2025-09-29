@@ -115,6 +115,8 @@ public class SpellProjectileDamageCollider : DamageCollider
 
                 //Default
                 default:
+                    attackMotionValue = 1;
+                    Debug.Log("ERROR: Spell Attack Type not set.");
                     break;
             }
 

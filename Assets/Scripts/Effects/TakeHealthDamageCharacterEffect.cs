@@ -101,13 +101,13 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             if (!targetCharacter.isPlayer)
             {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
-                if (targetCharacter.characterWeaponManager == null)
+                if (characterCausingDamage.characterWeaponManager == null)
                     Debug.LogError("ERROR: Weapon manager not set!");
                 //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
                 WeaponScript weapon;
                 if (isMainHand)
                 {
-                    weapon = targetCharacter.characterWeaponManager.GetMainHand();
+                    weapon = characterCausingDamage.characterWeaponManager.GetMainHand();
                     if (enemy != null)
                     {
                         enemy.isHitByMainHand = true;
@@ -115,7 +115,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                 }
                 else
                 {
-                    weapon = targetCharacter.characterWeaponManager.GetOffHand();
+                    weapon = characterCausingDamage.characterWeaponManager.GetOffHand();
                     if (enemy != null)
                     {
                         enemy.isHitByOffHand = true;
