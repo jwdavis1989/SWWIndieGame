@@ -210,6 +210,7 @@ public class PauseScript : MonoBehaviour
     {
         //PlayerInputManager.instance.enabled = false;
         playerControls.PlayerActions.Disable();
+        playerControls.UI.Enable();
         Time.timeScale = 0;
         gamePaused = true;
         pauseMenu.SetActive(true);
@@ -251,6 +252,7 @@ public class PauseScript : MonoBehaviour
     void Unpause()
     {
         playerControls.PlayerActions.Enable();
+        playerControls.UI.Disable();
         //PlayerInputManager.instance.enabled = true;
         Time.timeScale = 1;
         gamePaused = false;

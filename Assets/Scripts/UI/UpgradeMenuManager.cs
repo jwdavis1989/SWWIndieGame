@@ -34,11 +34,11 @@ public class UpgradeMenuManager : MonoBehaviour
     public GameObject tinkerComponentPrefab;
     public GameObject weaponButton;
     [Header("Input")]
+    [SerializeField] bool switchWeaponUp = false;
+    [SerializeField] bool switchWeaponDown = false;
     [Header("Camera Movement Input")]
     PlayerControls playerControls;
     [SerializeField] Vector2 previewCameraInput;
-    [SerializeField] bool switchWeaponUp = false;
-    [SerializeField] bool switchWeaponDown = false;
     [Header("Buttons")]
     public Button breakdownBtn;
     //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
@@ -67,6 +67,7 @@ public class UpgradeMenuManager : MonoBehaviour
             playerControls.UI.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
             playerControls.UI.SwitchWeaponUp.performed += i => switchWeaponUp = true;
             playerControls.UI.SwitchWeaponDown.performed += i => switchWeaponDown = true;
+            playerControls.Enable();
         }
     }
     // Update is called once per frame
@@ -104,18 +105,21 @@ public class UpgradeMenuManager : MonoBehaviour
             Debug.Log("switchWeaponUp");
             switchWeaponUp = false;
             curWeaponPage++;
-            wpnScrollVal += 0.1f;
-            WeaponScroll(wpnScrollVal);
+            //wpnScrollVal += 0.1f;
+            //WeaponScroll(wpnScrollVal);
             LoadWeaponsToScreen();
         }
         else if (switchWeaponDown)
         {
             Debug.Log("switchWeaponDown");
             switchWeaponDown = false;
-            curWeaponPage--;
-            wpnScrollVal -= 0.1f;
-            WeaponScroll(wpnScrollVal);
-            LoadWeaponsToScreen();
+            if (curWeaponPage > 0)
+            {
+                curWeaponPage--;
+                //wpnScrollVal -= 0.1f;
+                //WeaponScroll(wpnScrollVal);
+                LoadWeaponsToScreen();
+            }
         }
     }
     //************************** B U T T O N S **************************
