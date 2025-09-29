@@ -153,6 +153,7 @@ public class PauseScript : MonoBehaviour
             exitMenu.SetActive(true);
         if(mainMenuButton != null)
             mainPauseMenuEvents.SetSelectedGameObject(mainMenuButton);
+        mainMenuButton.GetComponent<Button>().Select();
         lastMenuTab = MenuTab.ExitGame;
     }
     public void MainMenuClick()
@@ -252,7 +253,7 @@ public class PauseScript : MonoBehaviour
     void Unpause()
     {
         playerControls.PlayerActions.Enable();
-        playerControls.UI.Disable();
+        //playerControls.UI.Disable();//Currently causes game to be unpauseable
         //PlayerInputManager.instance.enabled = true;
         Time.timeScale = 1;
         gamePaused = false;

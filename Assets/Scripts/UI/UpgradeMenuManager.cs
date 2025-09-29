@@ -16,6 +16,7 @@ public class UpgradeMenuManager : MonoBehaviour
     public TextMeshProUGUI elementalStatsText;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI tinkerPointsCountText;
+    [Header("Weapon Preview")]
     public Transform weaponPreviewHolder;
     public GameObject currentWeaponPreview;
     //public GameObject wpnEvolveBtn1;
@@ -62,7 +63,7 @@ public class UpgradeMenuManager : MonoBehaviour
     {
         if (playerControls == null)
         {
-            Debug.Log("setting weapon menu controls...");
+            //Debug.Log("setting weapon menu controls...");
             playerControls = new PlayerControls();
             playerControls.UI.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
             playerControls.UI.SwitchWeaponUp.performed += i => switchWeaponUp = true;
@@ -93,16 +94,25 @@ public class UpgradeMenuManager : MonoBehaviour
         HandleSwitchWeaponInput();
     }
     //Input
+    float rotationSpeed = 75f;
     void HandleWeaponPreviewInput()
     {
-        //Debug.Log("HandleWeaponPreviewInput " + previewCameraInput.x + " " + previewCameraInput);
+        float rotationSpeed = 75f;
+        if (previewCameraInput.x > 0.75f)
+        {
+            currentWeaponPreview.transform.Rotate(Vector3.forward * rotationSpeed * Time.unscaledDeltaTime);
+        }
+        else if (previewCameraInput.x < -0.75f)
+        {
+            currentWeaponPreview.transform.Rotate(Vector3.back * rotationSpeed * Time.unscaledDeltaTime);
+        }
     }
     float wpnScrollVal = 0;
     void HandleSwitchWeaponInput()
     {
         if (switchWeaponUp)
         {
-            Debug.Log("switchWeaponUp");
+            //Debug.Log("switchWeaponUp");
             switchWeaponUp = false;
             curWeaponPage++;
             //wpnScrollVal += 0.1f;
@@ -111,7 +121,7 @@ public class UpgradeMenuManager : MonoBehaviour
         }
         else if (switchWeaponDown)
         {
-            Debug.Log("switchWeaponDown");
+            //Debug.Log("switchWeaponDown");
             switchWeaponDown = false;
             if (curWeaponPage > 0)
             {
