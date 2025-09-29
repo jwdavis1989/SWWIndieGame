@@ -134,37 +134,37 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
                 //Light Attacks
                 case AttackType.LightAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.lightAttack01DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightAttack01DamageMotionValue;
                     break;
                 case AttackType.LightAttack02:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.lightAttack02DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightAttack02DamageMotionValue;
                     break;
                 case AttackType.LightAttack03:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.lightAttack03DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightAttack03DamageMotionValue;
                     break;
 
                 //Heavy Attacks
                 case AttackType.HeavyAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyAttack01DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyAttack01DamageMotionValue;
                     break;
                 case AttackType.HeavyAttack02:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyAttack02DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyAttack02DamageMotionValue;
                     break;
 
                 //Jumping Attacks
                 case AttackType.LightJumpAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetEquippedWeapon().GetComponent<WeaponScript>().stats.lightJumpAttack01DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightJumpAttack01DamageMotionValue;
                     break;
                 case AttackType.HeavyJumpAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetEquippedWeapon().GetComponent<WeaponScript>().stats.heavyJumpAttack01DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyJumpAttack01DamageMotionValue;
                     break;
 
                 //Charge Heavy Attacks
                 case AttackType.ChargedAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyChargedAttack01DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyChargedAttack01DamageMotionValue;
                     break;
                 case AttackType.ChargedAttack02:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.heavyChargedAttack02DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyChargedAttack02DamageMotionValue;
                     break;
 
                 //Default
@@ -173,7 +173,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
             }
 
             //Calculate Poise Damage
-            damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.ownedWeapons[characterCausingDamage.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.basePoiseDamage;
+            damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.GetMainHand().stats.basePoiseDamage;
         }
         else
         {

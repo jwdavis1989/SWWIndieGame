@@ -11,6 +11,7 @@ using UnityEngine.UI;
 
 public class UpgradeMenuManager : MonoBehaviour
 {
+    [Header("Weapon Menu\n")]
     [Header("Equipped weapons")]
     public TextMeshProUGUI primaryStatsText;
     public TextMeshProUGUI elementalStatsText;
@@ -93,7 +94,8 @@ public class UpgradeMenuManager : MonoBehaviour
         HandleWeaponPreviewInput();
         HandleSwitchWeaponInput();
     }
-    //Input
+
+    //**************************** I N P U T ****************************
     float rotationSpeed = 75f;
     void HandleWeaponPreviewInput()
     {
@@ -114,10 +116,16 @@ public class UpgradeMenuManager : MonoBehaviour
         {
             //Debug.Log("switchWeaponUp");
             switchWeaponUp = false;
-            curWeaponPage++;
-            //wpnScrollVal += 0.1f;
-            //WeaponScroll(wpnScrollVal);
-            LoadWeaponsToScreen();
+            int DISPLAYED_PAGES = 3;
+            if(curWeaponPage < PlayerWeaponManager.instance.TotalWeapons() - DISPLAYED_PAGES)
+            {
+                curWeaponPage++;
+                LoadWeaponsToScreen();
+            }else if (curWeaponPage == PlayerWeaponManager.instance.TotalWeapons() - DISPLAYED_PAGES)
+            {
+                curWeaponPage++;
+                LoadWeaponsToScreen(1);
+            }
         }
         else if (switchWeaponDown)
         {
@@ -162,9 +170,8 @@ public class UpgradeMenuManager : MonoBehaviour
      */
     public void DebugLvlUpEquippedWeapon()
     {
-        PlayerWeaponManager wpns = PlayerWeaponManager.instance;
-        WeaponScript wpn = activeWeapon != null? activeWeapon.GetComponent<WeaponScript>() :
-            wpns.ownedWeapons[wpns.indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        PlayerWeaponManager wpnManager = PlayerWeaponManager.instance;
+        WeaponScript wpn = activeWeapon != null? activeWeapon.GetComponent<WeaponScript>() :wpnManager.GetMainHand();
         wpn.stats.level++;
         wpn.stats.currentTinkerPoints += wpn.stats.tinkerPointsPerLvl;
         //Debug.Log("Leveled up " + wpn.stats.weaponName + " to level " + wpn.stats.level + ".");
@@ -455,7 +462,7 @@ public class UpgradeMenuManager : MonoBehaviour
     /**
      * Clear weapons grid and reload it with current values
      */
-    void LoadWeaponsToScreen()
+    void LoadWeaponsToScreen(int extra = 0)
     {
         //WeaponScroll(0);
         PlayerWeaponManager playerWpns = PlayerWeaponManager.instance;
@@ -563,6 +570,11 @@ public class UpgradeMenuManager : MonoBehaviour
             //    LoadComponentsToScreen();
             //});
             index++;
+        }
+        if (extra > 0)
+        {
+            Instantiate(this.weaponButton, weaponsGrid.transform)
+                .GetComponent<WeaponButtonUI>().mainButtonForeground.SetActive(false);
         }
     }
     /**
