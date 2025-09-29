@@ -22,7 +22,6 @@ public class InventionUIManager : MonoBehaviour
     [Header("(TODO) Displayed Inventions")]
     public GameObject allInventionsGrid;
     [Header("Input")]
-    public GameObject returnButton;
     public GameObject inventButton;
     public EventSystem eventSystem;
     [Header("Output")]
@@ -57,8 +56,6 @@ public class InventionUIManager : MonoBehaviour
                 Transform[] allChildren = ownedIdeasGrid.transform.GetComponentsInChildren<Transform>();
                 if(allChildren.Length > 0)
                     eventSystem.SetSelectedGameObject(allChildren[0].gameObject);
-                else if (returnButton != null) 
-                    eventSystem.SetSelectedGameObject(returnButton.gameObject);
             }
         }
     }
@@ -111,13 +108,12 @@ public class InventionUIManager : MonoBehaviour
             IdeaType ideaType = (IdeaType)ideaIndex;
             string ideaName = GetIdeaString(ideaType);
             gridScript.topText.text = ideaName;
-            gridScript.bottomText.text = "";
-            gridScript.cornerButton.gameObject.SetActive(false);
 
             //load image
             byte[] bytes = InventionManager.instance.ideas[ideaIndex].image;
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
+            Debug.Log("Setting idea pic");
             gridScript.mainButtonForeground.GetComponent<RawImage>().texture = texture;
 
             //add owned IDEA BUTTON BEHAVIOUR  
@@ -259,25 +255,27 @@ public class InventionUIManager : MonoBehaviour
                 inventionsToSkip--;
                 continue;
             }
-            if (++displayedCount > maxDisplayed) break;
+            //if (++displayedCount > maxDisplayed) break;
 
             //display an invention
-            Object gridElement = Instantiate(gridElementPrefab, allInventionsGrid.transform);
-            GridElementController gridScript = gridElement.GetComponent<GridElementController>();
-            if (inventionScript.hasObtained) {
+            if (inventionScript.hasObtained)
+            {
+                if (++displayedCount > maxDisplayed) break;
+                Object gridElement = Instantiate(gridElementPrefab, allInventionsGrid.transform);
+                GridElementController gridScript = gridElement.GetComponent<GridElementController>();
                 gridScript.topText.text = inventionScript.ToString();
                 if (inventionScript.icon != null)
                     gridScript.mainButtonForeground.GetComponent<RawImage>().texture = inventionScript.icon.texture;
                 else
                     gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
+                gridScript.bottomText.text = "";
+                gridScript.cornerButton.gameObject.SetActive(false);
             }
             else
             {
-                gridScript.topText.text = inventionScript.GetMysteryString();
-                gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
+                //gridScript.topText.text = inventionScript.GetMysteryString();
+                //gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
             }
-            gridScript.bottomText.text = "";
-            gridScript.cornerButton.gameObject.SetActive(false);
             //gridScript.cornerButton.OnPointerEnter(() =>
             //{
 
@@ -447,10 +445,6 @@ public class InventionUIManager : MonoBehaviour
                 }
             }
         }
-    }
-    public void OnReturnClick()
-    {
-        PauseScript.instance.InventMenuBackClick();
     }
     public string GetIdeaString(IdeaType type)
     {

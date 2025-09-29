@@ -178,6 +178,9 @@ public class InventionManager : MonoBehaviour
                 break;
             case InventionType.DaedalusNanoMaterials:
                 break;
+            case InventionType.SyntheticDiamond:
+                ItemDropManager.DropComponent(TinkerComponentType.Diamond, player.transform);
+                break;
             default:
                 Debug.Log("Unhandled Invent Type");
                 break;
