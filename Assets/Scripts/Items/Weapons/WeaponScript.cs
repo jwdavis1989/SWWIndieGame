@@ -208,6 +208,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
+    public bool isWristWeapon = false;
     public float specialWeaponDamageMultiplier = 1.25f;
 
     [Header("Image used for menu icon")]

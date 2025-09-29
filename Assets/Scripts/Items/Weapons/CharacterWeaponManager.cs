@@ -14,6 +14,7 @@ public class CharacterWeaponManager : MonoBehaviour
     [Header("Weapon Attachment to Character")]
     public GameObject mainHandWeaponAnchor;
     public GameObject offHandWeaponAnchor;
+    public GameObject wristOffHandWeaponAnchor;
 
     [Header("Weapon Combo System")]
     public AttackType currentAttackType;
@@ -83,11 +84,19 @@ public class CharacterWeaponManager : MonoBehaviour
     public WeaponScript AddWeaponToCurrentWeapons(WeaponType weaponType)
     {
         int i = (int)weaponType;
-        bool isSpecial = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>().isSpecialWeapon;
+        WeaponScript newWeapon = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
         GameObject weaponToAdd;
-        if (isSpecial)
+        if (newWeapon.isSpecialWeapon)
         {
-            weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
+            if (!newWeapon.isWristWeapon)
+            {
+                weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
+            }
+            else
+            {
+                weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, wristOffHandWeaponAnchor.transform);
+            }
+            
             ownedSpecialWeapons.Add(weaponToAdd);
 
             //Update Equipped Weapon Icon if this is your first special weapon

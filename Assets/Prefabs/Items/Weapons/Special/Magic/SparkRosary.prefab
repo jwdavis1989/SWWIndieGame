@@ -199,7 +199,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFamily: 10
   weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
+  isWristWeapon: 1
   specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: 8563cee664c6a4941a031f4ab9342599, type: 3}
   hasObtained: 1
@@ -225,6 +227,7 @@ MonoBehaviour:
       beastPower: 0
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 34
       icePower: 34
@@ -235,10 +238,9 @@ MonoBehaviour:
       beastPower: 34
       scalesPower: 34
       techPower: 34
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 5
-    maxSpecialtyCooldown: 5
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -253,6 +255,8 @@ MonoBehaviour:
     lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 4
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
@@ -264,6 +268,8 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
@@ -283,3 +289,4 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 4845079000888395174, guid: f993e9c24bbe0294da03a524ae80b168, type: 3}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  isInDebugMode: 0
