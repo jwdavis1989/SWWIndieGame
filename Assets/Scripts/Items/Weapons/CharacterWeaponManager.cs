@@ -66,7 +66,16 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         HandleSpecialWeaponCooldown();
     }
-
+    //Helper
+    public int TotalWeapons()
+    {
+        int total = 0;
+        if(ownedWeapons != null)
+            total += ownedWeapons.Count;
+        if(ownedSpecialWeapons != null)
+            total += ownedSpecialWeapons.Count;
+        return total;
+    }
     /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added

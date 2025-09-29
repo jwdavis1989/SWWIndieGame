@@ -577,8 +577,7 @@ public class PlayerInputManager : MonoBehaviour
 
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
             {
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction,
-                                                PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.GetMainHand().mainHandLightAttackAction, PlayerWeaponManager.instance.GetMainHand());
             }
         }
     }
@@ -593,8 +592,8 @@ public class PlayerInputManager : MonoBehaviour
 
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
             {
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction,
-                                                PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.GetMainHand().mainHandHeavyAttackAction,
+                                                PlayerWeaponManager.instance.GetMainHand().GetComponent<WeaponScript>());
             }
         }
     }

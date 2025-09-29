@@ -169,7 +169,7 @@ public class CharacterAnimatorManager : MonoBehaviour
 
 
         //Update Animation Set to Current Weapon's Animations
-        UpdateAnimatorControllerByWeapon(character.characterWeaponManager.ownedWeapons[character.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+        UpdateAnimatorControllerByWeapon(character.characterWeaponManager.GetMainHand());
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(targetAnimation, 0.2f);
         character.isPerformingAction = isPerformingAction;
