@@ -392,7 +392,7 @@ public class PlayerInputManager : MonoBehaviour
             //}
             if (mouseWheelVerticalInput == 1)
             {
-                PlayerWeaponManager.instance.nextWeapon();
+                PlayerWeaponManager.instance.NextWeapon();
 
             }
             else if (mouseWheelVerticalInput == -1)
@@ -409,7 +409,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             ChangeRightWeaponDPad = false;
 
-            PlayerWeaponManager.instance.nextWeapon();
+            PlayerWeaponManager.instance.NextWeapon();
         }
     }
 

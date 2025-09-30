@@ -275,7 +275,7 @@ public class PauseScript : MonoBehaviour
     {
         if (pauseInput) // [Esc], (Start/Menu)
         {
-            Debug.Log("PAUSE INPUT");
+            //Debug.Log("PAUSE INPUT");
             pauseInput = false;
             PauseUnpause();
         }

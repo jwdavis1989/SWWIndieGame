@@ -147,7 +147,7 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     //find next weapon and call ChangeWeapon
-    public void nextWeapon()
+    public void NextWeapon()
     {
         int totalWeapons = ownedWeapons.Count;
         int newWeaponIndex = indexOfEquippedWeapon;
@@ -158,7 +158,7 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     //find prev weapon and call ChangeWeapon
-    public void prevWeapon()
+    public void PrevWeapon()
     {
         int totalWeapons = ownedWeapons.Count;
         int newWeaponIndex = indexOfEquippedWeapon;
