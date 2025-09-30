@@ -54,8 +54,11 @@ public class InventionUIManager : MonoBehaviour
         {   // Handle for lost cursor
             if (ownedIdeasGrid != null){
                 Transform[] allChildren = ownedIdeasGrid.transform.GetComponentsInChildren<Transform>();
-                if(allChildren.Length > 0)
+                if (allChildren.Length > 0)
+                {
                     eventSystem.SetSelectedGameObject(allChildren[0].gameObject);
+                    Debug.Log("SETTING SELECTED GAME OBJECT INVENTION MANAGER");
+                }
             }
         }
     }

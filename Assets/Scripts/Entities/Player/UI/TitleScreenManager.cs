@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TitleScreenManager : MonoBehaviour
@@ -48,6 +49,14 @@ public class TitleScreenManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    //EventSystem eventSystem;
+    //public void Update()
+    //{
+    //    if(eventSystem == null)
+    //        eventSystem = FindObjectOfType<EventSystem>();
+    //    if(eventSystem.currentSelectedGameObject == null)
+    //        eventSystem.SetSelectedGameObject(FindAnyObjectByType<Button>().gameObject);
+    //}
     public void StartNewGame() {
         PlayStartGameSFX();
         WorldSaveGameManager.instance.AttemptToCreateNewGame();

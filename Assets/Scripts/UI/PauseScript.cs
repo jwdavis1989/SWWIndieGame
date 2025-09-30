@@ -80,6 +80,7 @@ public class PauseScript : MonoBehaviour
             if (mainPauseMenuEvents.currentSelectedGameObject == null)
             {   // Handle for lost cursor
                 mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
+                Debug.Log("SETTING SELECTED GAME OBJECT PAUSE MANAGER");
             }
         }
     }
@@ -286,6 +287,7 @@ public class PauseScript : MonoBehaviour
         if (menuLeftInput)
         {
             menuLeftInput = false;
+            if (!gamePaused) return;
             switch (lastMenuTab)
             {
                 case MenuTab.ExitGame:
@@ -310,6 +312,7 @@ public class PauseScript : MonoBehaviour
         else if (menuRightInput)
         {
             menuRightInput = false;
+            if (!gamePaused) return;
             switch (lastMenuTab)
             {
                 case MenuTab.Weapons:
@@ -330,8 +333,11 @@ public class PauseScript : MonoBehaviour
                     break;
             }
         }
-        newBtnSelected = topPanelButtons.transform.GetChild(1 + (int)lastMenuTab).gameObject;
-        newBtnSelected.GetComponent<Button>().Select();
+        if (gamePaused)
+        {
+            newBtnSelected = topPanelButtons.transform.GetChild(1 + (int)lastMenuTab).gameObject;
+            newBtnSelected.GetComponent<Button>().Select();
+        }
     }
     public enum MenuTab
     {
