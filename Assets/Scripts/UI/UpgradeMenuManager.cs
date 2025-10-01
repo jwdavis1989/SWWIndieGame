@@ -324,18 +324,26 @@ public class UpgradeMenuManager : MonoBehaviour
             //PlayerWeaponManager.instance.GetMainHand();
         if (activeWeapon)
         {
+            WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
             //preview
-            if(currentWeaponPreview != null)
+            if (currentWeaponPreview != null)
                 Destroy(currentWeaponPreview);
             currentWeaponPreview = Instantiate(activeWeapon, weaponPreviewHolder);
             currentWeaponPreview.SetActive(true);
-            currentWeaponPreview.transform.localPosition = new Vector3(0, -0.5f, 0);
-            currentWeaponPreview.transform.localRotation = Quaternion.Euler(90f, 90f, 0);
+            if (wpn.isSpecialWeapon && wpn.stats.weaponType != WeaponType.Dagger && wpn.stats.weaponType != WeaponType.BowieKnife)
+            {
+                currentWeaponPreview.transform.localPosition = new Vector3(0.15f, -0.05f, -1f);
+                currentWeaponPreview.transform.localRotation = Quaternion.Euler(340f, 295f, 305f);
+            }
+            else
+            {
+                currentWeaponPreview.transform.localPosition = new Vector3(0, -0.5f, 0);
+                currentWeaponPreview.transform.localRotation = Quaternion.Euler(90f, 90f, 0);
+            }
             currentWeaponPreview.layer = LayerMask.NameToLayer("WeaponPreview");
             foreach (Transform t in currentWeaponPreview.GetComponentsInChildren<Transform>())
                 t.gameObject.layer = LayerMask.NameToLayer("WeaponPreview");
             //stats
-            WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
             weaponPreviewHeaderText.text = wpn.stats.weaponName;
             tinkerPointsCountText.text = ""+wpn.stats.currentTinkerPoints;
             WeaponStats stats = wpn.stats;
