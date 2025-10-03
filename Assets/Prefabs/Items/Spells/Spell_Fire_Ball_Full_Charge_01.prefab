@@ -9693,6 +9693,7 @@ GameObject:
   - component: {fileID: 6008454596517819455}
   - component: {fileID: 3187747432448415844}
   - component: {fileID: 7123358339368691151}
+  - component: {fileID: 4280296166588349657}
   m_Layer: 0
   m_Name: Spell_Fire_Ball_Full_Charge_01
   m_TagString: Untagged
@@ -9921,6 +9922,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce71fa139ffbe540a6046b281a2500f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4280296166588349657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017378161147204679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a63172e0f7545546b6c6b932a7844be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireSpellVFX: {fileID: 0}
+  iceSpellVFX: {fileID: 0}
+  lightningSpellVFX: {fileID: 0}
+  windSpellVFX: {fileID: 0}
+  earthSpellVFX: {fileID: 0}
+  lightSpellVFX: {fileID: 0}
+  beastSpellVFX: {fileID: 0}
+  scalesSpellVFX: {fileID: 0}
+  techSpellVFX: {fileID: 0}
 --- !u!1 &8994022360893826163
 GameObject:
   m_ObjectHideFlags: 0

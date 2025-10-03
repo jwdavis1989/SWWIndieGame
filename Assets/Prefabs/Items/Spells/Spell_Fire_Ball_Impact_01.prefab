@@ -14653,6 +14653,7 @@ GameObject:
   - component: {fileID: 127685042654391878}
   - component: {fileID: 4049490715992562579}
   - component: {fileID: 4929898777224078983}
+  - component: {fileID: 3587139182760655158}
   m_Layer: 0
   m_Name: Spell_Fire_Ball_Impact_01
   m_TagString: Untagged
@@ -19799,6 +19800,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilDestroyed: 5
+--- !u!114 &3587139182760655158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549257713381026176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a63172e0f7545546b6c6b932a7844be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireSpellVFX: {fileID: 0}
+  iceSpellVFX: {fileID: 0}
+  lightningSpellVFX: {fileID: 0}
+  windSpellVFX: {fileID: 0}
+  earthSpellVFX: {fileID: 0}
+  lightSpellVFX: {fileID: 0}
+  beastSpellVFX: {fileID: 0}
+  scalesSpellVFX: {fileID: 0}
+  techSpellVFX: {fileID: 0}
 --- !u!1 &2613157555258672762
 GameObject:
   m_ObjectHideFlags: 0

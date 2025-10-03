@@ -545,6 +545,7 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellWarmUpFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellWarmUpFX.transform.localPosition = Vector3.zero;
         instantiatedSpellWarmUpFX.transform.localRotation = Quaternion.identity;
+        instantiatedSpellWarmUpFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
         character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellWarmUpFX;
 
         //3. Drain Stamina
