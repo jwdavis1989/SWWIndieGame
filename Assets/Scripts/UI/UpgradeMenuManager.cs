@@ -38,6 +38,7 @@ public class UpgradeMenuManager : MonoBehaviour
     [Header("Input")]
     [SerializeField] bool switchWeaponUp = false;
     [SerializeField] bool switchWeaponDown = false;
+    [SerializeField] bool equipWeaponInput = false;
     [Header("Camera Movement Input")]
     PlayerControls playerControls;
     [SerializeField] Vector2 previewCameraInput;
@@ -67,9 +68,10 @@ public class UpgradeMenuManager : MonoBehaviour
         {
             //Debug.Log("setting weapon menu controls...");
             playerControls = new PlayerControls();
-            playerControls.UI.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
-            playerControls.UI.SwitchWeaponUp.performed += i => switchWeaponUp = true;
-            playerControls.UI.SwitchWeaponDown.performed += i => switchWeaponDown = true;
+            playerControls.PauseMenu.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
+            playerControls.PauseMenu.SwitchWeaponUp.performed += i => switchWeaponUp = true;
+            playerControls.PauseMenu.SwitchWeaponDown.performed += i => switchWeaponDown = true;
+            playerControls.PauseMenu.EquipWeapon.performed += i => equipWeaponInput = true;
             playerControls.Enable();
         }
     }
@@ -82,7 +84,6 @@ public class UpgradeMenuManager : MonoBehaviour
             if (componentsGrid.transform.childCount > 0)
             {
                 eventSystem.SetSelectedGameObject(componentsGrid.transform.GetChild(0).gameObject);
-                Debug.Log("SETTING SELECTED GAME OBJECT WEAPON MANAGER");
                 componentsGrid.transform.GetChild(0).GetComponentInChildren<Button>().Select();
             }
         }
@@ -96,9 +97,9 @@ public class UpgradeMenuManager : MonoBehaviour
         //}
         HandleWeaponPreviewInput();
         HandleSwitchWeaponInput();
+        HandleEquipWeaponInput();
         if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf)
         {
-            Debug.Log("ACTIVATING WEAPON PREVIEW");
             currentWeaponPreview.SetActive(true);
         }
     }
@@ -171,10 +172,22 @@ public class UpgradeMenuManager : MonoBehaviour
             }
         }
     }
-    //************************** B U T T O N S **************************
-    /**
-     * Turn active weapon into a component
-     */
+    void HandleEquipWeaponInput()
+    {
+        if (equipWeaponInput)
+        {
+            Debug.Log("HandleEquipWeaponInput");
+            equipWeaponInput = false;
+            if (activeWeapon)
+            {
+                PlayerWeaponManager.instance.EquipWeapon(activeWeapon);
+            }
+        }
+    }
+            //************************** B U T T O N S **************************
+            /**
+             * Turn active weapon into a component
+             */
     public void BreakDownActiveWeapon()
     {
         try

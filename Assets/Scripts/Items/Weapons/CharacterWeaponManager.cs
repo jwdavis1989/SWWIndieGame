@@ -123,9 +123,26 @@ public class CharacterWeaponManager : MonoBehaviour
         currentWeaponScript.hasObtained = true;
         return weaponToAdd.GetComponent<WeaponScript>();
     }
-    /**
-     * Change equipped weapon
-     */
+    public void EquipWeapon(GameObject weapon)
+    {
+        int index = -1;
+        index = ownedWeapons.FindIndex((wpn) =>
+        {
+            return wpn == weapon;
+        });
+        if(index == -1)
+            index = ownedSpecialWeapons.FindIndex((wpn) =>
+            {
+                return wpn == weapon;
+            });
+        if (index != -1)
+            ChangeWeapon(index);
+        else
+            Debug.LogWarning("EquipWeapon called and not found");
+    }
+        /**
+         * Change equipped weapon
+         */
     public void ChangeWeapon(int index)
     {
         if (index < ownedWeapons.Count && ownedWeapons[index] != null)

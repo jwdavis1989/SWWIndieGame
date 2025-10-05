@@ -974,6 +974,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1533339198722137681, guid: 397247a265c22034298f9d5a440e683e, type: 3}
   m_PrefabInstance: {fileID: 207718654}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &341698766 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7456092344154172275, guid: 398b3cd13438b474e8e5ce5035ea2f02, type: 3}
+  m_PrefabInstance: {fileID: 831941577}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &369286020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1773,6 +1784,44 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1533339198722137681, guid: 397247a265c22034298f9d5a440e683e, type: 3}
   m_PrefabInstance: {fileID: 632669735}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &662060728
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &687577144
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,44 +3356,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bb10f71f7f76744b5def95219473b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!84 &842119544
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &877648542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9074875752220091198, guid: dc704eb8c2db37a45959b07ba7cb3925, type: 3}
@@ -7224,44 +7235,6 @@ RenderTexture:
   m_Dimension: 2
   m_VolumeDepth: 1
   m_ShadowSamplingMode: 2
---- !u!84 &1688957924
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1689852542
 GameObject:
   m_ObjectHideFlags: 0
@@ -8415,6 +8388,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4894937217335537802, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
   m_PrefabInstance: {fileID: 8441853390447065137}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &2117074124
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!4 &2125440740 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6515712193588681746, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
@@ -10800,8 +10811,222 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7295594713699739016, guid: 3a6d98709a697814bb50677484bda47e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8573831688137319856}
   m_SourcePrefab: {fileID: 100100000, guid: 3a6d98709a697814bb50677484bda47e, type: 3}
+--- !u!1 &8573831688137319855 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7295594713699739016, guid: 3a6d98709a697814bb50677484bda47e, type: 3}
+  m_PrefabInstance: {fileID: 8573831688137319854}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8573831688137319856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573831688137319855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 3e2e17d40f37e8a4682afac7ffefb189, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 341698766}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f4f77b0f-d395-4ee5-aa96-4836e878c7a5
+    m_ActionName: Player Movement/Movement[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/leftStick/right,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 645633c4-5681-451c-8cd3-a0058e24b166
+    m_ActionName: Player Camera/Movement[/XInputControllerWindows/rightStick/up,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/rightStick/right,/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d4408067-8521-4684-bc30-7ac35eb47372
+    m_ActionName: Player Actions/Dodge[/XInputControllerWindows/buttonEast,/Keyboard/ctrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8bd75a9b-dd8c-4133-966f-db57c9c1a6ce
+    m_ActionName: Player Actions/Sprint[/XInputControllerWindows/buttonEast,/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 292d0ea2-6b2e-4837-bbf9-d979558a2b57
+    m_ActionName: Player Actions/Block[/XInputControllerWindows/leftShoulder,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eb3b17ec-f97f-4150-ad78-e1a6a063ea72
+    m_ActionName: Player Actions/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 046055d5-e486-4b8d-811f-8e16dd3e15ea
+    m_ActionName: Player Actions/QueueJump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e11afb79-a6b8-45d4-8e07-78df9d7336d7
+    m_ActionName: Player Actions/ToggleFlashlight[/XInputControllerWindows/leftStickPress,/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3a1c8636-a073-4ba6-809b-bde77a31ee15
+    m_ActionName: Player Actions/LightAttack[/XInputControllerWindows/rightShoulder,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 03aa6557-0fa7-46e5-8209-e9d802d59001
+    m_ActionName: Player Actions/QueueLightAttack[/XInputControllerWindows/rightShoulder,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dd6fda8c-f7f7-4126-8a50-2609a43a0511
+    m_ActionName: Player Actions/ChangeRightWeaponDPad[/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 29002326-7506-4c60-aaca-d645dd117142
+    m_ActionName: Player Actions/ChangeLeftWeaponDPad[/XInputControllerWindows/dpad/left]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bd2961e7-6a6d-4053-ad74-91db3d69a466
+    m_ActionName: Player Actions/HeavyAttack[/XInputControllerWindows/rightTrigger,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d188ce77-11ab-4c17-a8b0-da03aa292fef
+    m_ActionName: Player Actions/SpecialAttack[/XInputControllerWindows/leftTrigger,/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ffb433cc-7d8e-47c7-84ac-a88adf3314a6
+    m_ActionName: Player Actions/ChargeSpecialAttack[/XInputControllerWindows/leftTrigger,/Keyboard/q]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 382b8827-c061-4c47-9104-3058340975a3
+    m_ActionName: Player Actions/QueueHeavyAttack[/XInputControllerWindows/rightTrigger,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a71620a7-becd-4735-9452-1dedc8db015a
+    m_ActionName: Player Actions/ChargeHeavyAttack[/XInputControllerWindows/rightTrigger,/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3f262bab-6163-4916-913b-6645f359e00b
+    m_ActionName: Player Actions/DebugTestAddWeapon[/Keyboard/numpadPlus]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6dd9e535-836f-4964-bad6-cd3e298713d1
+    m_ActionName: Player Actions/DebugTeleportToJerryDev[/Keyboard/numpad1]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: be383daf-aa62-4dd2-96ba-5c8f03d173a9
+    m_ActionName: Player Actions/DebugTeleportToAlecDev[/Keyboard/numpad2]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fa5e17fd-dcea-423a-a674-1974ac9a7ce7
+    m_ActionName: Player Actions/DebugTeleportToJacobDev[/Keyboard/numpad3]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1cfe77a2-7b8a-412d-9528-86904544d839
+    m_ActionName: Player Actions/DebugTeleportToSurfaceDemo[/Keyboard/numpad4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1dec232e-b90d-46c2-9c2b-388446eec57a
+    m_ActionName: Player Actions/DebugTeleportToAlecDev2[/Keyboard/numpad5]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4c2b165b-a086-47ab-9194-8ddb10071c2a
+    m_ActionName: Player Actions/DebugTeleportToAlecDevDungeon[/Keyboard/numpad6]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3e3e861f-fb3e-42f7-9cd1-77f1b6df3609
+    m_ActionName: Player Actions/NextWeapon[/Mouse/scroll/up,/Mouse/scroll/down]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2d0e4d85-af8f-4b29-964a-f05c6a53d363
+    m_ActionName: Player Actions/DebugFullResources[/Keyboard/numpadPeriod]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 78ba601b-73b7-4233-9faf-034ceaebacdc
+    m_ActionName: Player Actions/LockOn[/XInputControllerWindows/rightStickPress,/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: af4678c2-669d-402e-a7d0-f27aef98a7c6
+    m_ActionName: Player Actions/SeekLeftLockOnTarget[/XInputControllerWindows/rightStick/left]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7a58e275-92fc-49ca-ab0b-15f532837cd1
+    m_ActionName: Player Actions/SeekRightLockOnTarget[/XInputControllerWindows/rightStick/right,/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b53bab46-37ad-415e-a517-60eafd2ef95d
+    m_ActionName: Player Actions/Interact[/Keyboard/e,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 527cd677-7010-4984-bc53-8c5c616b0bbc
+    m_ActionName: Player Actions/UseItemQuickSlot[/Keyboard/1,/XInputControllerWindows/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ef92f6aa-327e-4cc7-958d-798b0088b416
+    m_ActionName: UI/DialogueContinue[/XInputControllerWindows/buttonSouth,/XInputControllerWindows/buttonWest,/Keyboard/e,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 831941578}
+        m_TargetAssemblyTypeName: PauseScript, Assembly-CSharp
+        m_MethodName: HandlePauseInput
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fdf83cdf-0968-4131-bb9d-832faeb26fc5
+    m_ActionName: UI/PauseButton[/Keyboard/escape,/XInputControllerWindows/start]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 28878abf-a4e8-4a58-97ce-36e8fba73f88
+    m_ActionName: UI/CaptureIdeaPhotoBtn[/Keyboard/space,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dc345c32-cc8b-4cbd-b017-f2d05c9c2c13
+    m_ActionName: UI/MiniMapResize[/XInputControllerWindows/select,/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 76039eff-44b8-4d4c-b31c-fb14f851c692
+    m_ActionName: UI/UIButtonX[/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ee1c3498-e38f-4336-a1c8-5579fe4723c4
+    m_ActionName: UI/SwitchMenuLeft[/XInputControllerWindows/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9336fd10-c0b3-4d44-9cf5-7780cc35c29e
+    m_ActionName: UI/SwitchMenuRight[/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3e445df9-b73d-4717-a735-adfd76670660
+    m_ActionName: UI/SwitchWeaponUp[/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ee11f0b6-2895-4016-9934-e7bcfa44a90c
+    m_ActionName: UI/SwitchWeaponDown[/XInputControllerWindows/leftShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a2b42dc1-0a59-4142-96d6-6fd039d403af
+    m_ActionName: UI/WeaponPreviewMovement[/XInputControllerWindows/rightStick/up,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/rightStick/right,/Mouse/delta]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Gamepad
+  m_DefaultActionMap: Player Movement
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!95 &8671731848262977635
 Animator:
   serializedVersion: 5
