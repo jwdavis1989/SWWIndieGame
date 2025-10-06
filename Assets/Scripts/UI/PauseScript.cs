@@ -57,15 +57,15 @@ public class PauseScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         if (debugMode) return;//ASTEST
         DisableAllMenus();
-        if (playerInput == null)
-        {
-            playerInput = PlayerInputManager.instance.gameObject.GetComponent<PlayerInput>();
-            playerInput.onControlsChanged += OnControlsChanged;
-            //playerInput.actions["PauseButton"].performed += i => pauseInput = true;
-            //playerInput.actions["SwitchMenuLeft"].performed += i => menuLeftInput = true;
-            //playerInput.actions["SwitchMenuRight"].performed += i => menuRightInput = true;
-            playerInput.enabled = true;
-        }
+        //if (playerInput == null)
+        //{
+        //    playerInput = PlayerInputManager.instance.gameObject.GetComponent<PlayerInput>();
+        //    playerInput.onControlsChanged += OnControlsChanged;
+        //    //playerInput.actions["PauseButton"].performed += i => pauseInput = true;
+        //    //playerInput.actions["SwitchMenuLeft"].performed += i => menuLeftInput = true;
+        //    //playerInput.actions["SwitchMenuRight"].performed += i => menuRightInput = true;
+        //    playerInput.enabled = true;
+        //}
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
@@ -90,6 +90,7 @@ public class PauseScript : MonoBehaviour
         //}
         HandlePauseInput();
         HandleSwitchMenuInput();
+        //CheckControlsChanged();
         //if (gamePaused)
         //{
         //    if (mainPauseMenuEvents.currentSelectedGameObject == null)
@@ -99,23 +100,47 @@ public class PauseScript : MonoBehaviour
         //    }
         //}
     }
-    private void OnControlsChanged(PlayerInput obj)
-    {
-        Debug.Log("Switched to: " + obj.currentControlScheme);
+    //private void OnControlsChanged(PlayerInput obj)
+    //{
+    //    Debug.Log("Switched to: " + obj.currentControlScheme);
 
-        if (obj.currentControlScheme == "Gamepad")
-        {
-            // Show controller UI
-            foreach(GameObject gamepadeUI in gamepadControlsUI)
-                gamepadeUI.SetActive(true);
-        }
-        else if (obj.currentControlScheme == "KeyboardMouse")
-        {
-            // Show KB/M UI
-            foreach (GameObject gamepadeUI in gamepadControlsUI)
-                gamepadeUI.SetActive(false);
-        }
-    }
+    //    if (obj.currentControlScheme == "Gamepad")
+    //    {
+    //        // Show controller UI
+    //        foreach(GameObject gamepadeUI in gamepadControlsUI)
+    //            gamepadeUI.SetActive(true);
+    //    }
+    //    else if (obj.currentControlScheme == "KeyboardMouse")
+    //    {
+    //        // Show KB/M UI
+    //        foreach (GameObject gamepadeUI in gamepadControlsUI)
+    //            gamepadeUI.SetActive(false);
+    //    }
+    //}
+    //string lastDevice = "Gamepad";
+    //private void CheckControlsChanged()
+    //{
+    //    string currentDevice = Keyboard.current.wasUpdatedThisFrame ? "Keyboard" :
+    //                     Mouse.current.wasUpdatedThisFrame ? "Mouse" :
+    //                     Gamepad.current?.wasUpdatedThisFrame == true ? "Gamepad" : lastDevice;
+    //    if (lastDevice != currentDevice)
+    //    {
+    //        Debug.Log("Device changed to " + currentDevice);
+    //        lastDevice = currentDevice;
+    //        if(currentDevice == "Gamepad")
+    //        {
+    //            // Show controller UI
+    //            foreach (GameObject gamepadeUI in gamepadControlsUI)
+    //                gamepadeUI.SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            // Show KB/M UI
+    //            foreach (GameObject gamepadeUI in gamepadControlsUI)
+    //                gamepadeUI.SetActive(false);
+    //        }
+    //    }
+    //}
 
     //public void ContinueClick()
     //{
@@ -316,7 +341,7 @@ public class PauseScript : MonoBehaviour
     }
     void HandleSwitchMenuInput()
     {
-        GameObject newBtnSelected;
+        //GameObject newBtnSelected;
         if (menuLeftInput)
         {
             menuLeftInput = false;

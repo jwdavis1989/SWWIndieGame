@@ -181,6 +181,7 @@ public class UpgradeMenuManager : MonoBehaviour
             if (activeWeapon)
             {
                 PlayerWeaponManager.instance.EquipWeapon(activeWeapon);
+                LoadWeaponsToScreen();//to disable/enable buttons
             }
         }
     }
@@ -574,11 +575,12 @@ public class UpgradeMenuManager : MonoBehaviour
             //gridScript.cornerButton.gameObject.SetActive(true);
             if (wpnScrpt.spr)//load icon
                 weaponButton.mainButtonForeground.GetComponent<Image>().sprite = wpnScrpt.spr;
-            //if (i == playerWpns.indexOfEquippedWeapon)
-            //{//mark equipped weapon
-            //    weaponButton.mainButton.GetComponent<Image>().color = Color.green;
-            //    //gridScript.cornerButton.gameObject.SetActive(false);
-            //}
+            if (i == playerWpns.indexOfEquippedWeapon)
+            {//mark equipped weapon
+                weaponButton.mainButton.interactable = false;
+                    //.GetComponent<Image>().color = Color.green;
+                //gridScript.cornerButton.gameObject.SetActive(false);
+            }
             //else
             //    gridScript.cornerButton.gameObject.SetActive(true);
             //if (wpn == activeWeapon)
@@ -630,14 +632,16 @@ public class UpgradeMenuManager : MonoBehaviour
                 weaponButton.tooltip.text = wpnScrpt.stats.weaponName;
             if (wpnScrpt.spr)//load icon
                 weaponButton.mainButtonForeground.GetComponent<Image>().sprite = wpnScrpt.spr;
-            //if (index == playerWpns.indexOfEquippedSpecialWeapon)
-            //{//mark equipped weapon
-            //    gridScript.mainButton.GetComponent<Image>().color = Color.green;
-            //    gridScript.cornerButton.gameObject.SetActive(false);
-            //}
-            //else 
-            //    gridScript.cornerButton.gameObject.SetActive(true);
-            if (weapon == activeWeapon)
+            if (index == playerWpns.indexOfEquippedSpecialWeapon)
+            {//mark equipped weapon
+                weaponButton.mainButton.interactable = false;
+            }
+             //    gridScript.mainButton.GetComponent<Image>().color = Color.green;
+             //    gridScript.cornerButton.gameObject.SetActive(false);
+             //}
+             //else 
+             //    gridScript.cornerButton.gameObject.SetActive(true);
+                if (weapon == activeWeapon)
             {//mark actively editing weapon
                 weaponButton.mainButton.Select();
             }
