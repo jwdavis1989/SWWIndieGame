@@ -57,7 +57,6 @@ public class InventionUIManager : MonoBehaviour
                 if (allChildren.Length > 0)
                 {
                     eventSystem.SetSelectedGameObject(allChildren[0].gameObject);
-                    Debug.Log("SETTING SELECTED GAME OBJECT INVENTION MANAGER");
                 }
             }
         }
