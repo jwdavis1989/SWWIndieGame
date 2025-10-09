@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UpgradeMenuManager : MonoBehaviour
+public class WeaponMenuManager : MonoBehaviour
 {
     [Header("Weapon Menu\n")]
     [Header("Equipped weapons")]
