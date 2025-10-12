@@ -532,6 +532,7 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellChargeVFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellChargeVFX.transform.localPosition = Vector3.zero;
         instantiatedSpellChargeVFX.transform.localRotation = Quaternion.identity;
+        instantiatedSpellChargeVFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
     }
 
