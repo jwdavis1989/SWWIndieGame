@@ -44496,6 +44496,7 @@ GameObject:
   - component: {fileID: 8074686968109677698}
   - component: {fileID: 4964082453737198944}
   - component: {fileID: 5957703832376078826}
+  - component: {fileID: 969060796392654976}
   m_Layer: 0
   m_Name: LightSpellVFX
   m_TagString: Untagged
@@ -49512,7 +49513,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 26c6842862aa99e49a498662bec469ac, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8fbfd3a20c3e92e44a9f5c64f6c0c922, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.6
   m_Pitch: 1
@@ -49598,6 +49599,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &969060796392654976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706789287765688064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b67737eef845247b4d9c1ce5731dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrimBeginningInSeconds: 0.469
 --- !u!1 &2796540293169898872
 GameObject:
   m_ObjectHideFlags: 0

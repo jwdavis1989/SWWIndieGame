@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class TrimAudioStartBySeconds : MonoBehaviour
 {
-    private AudioSource audioSource;
     public float TrimBeginningInSeconds = 0f;
 
-    // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        audioSource = GetComponent<AudioSource>();
-    }
-
-    void Awake()
-    {
-        audioSource.time = TrimBeginningInSeconds;
+        GetComponent<AudioSource>().time = TrimBeginningInSeconds;
     }
 }
