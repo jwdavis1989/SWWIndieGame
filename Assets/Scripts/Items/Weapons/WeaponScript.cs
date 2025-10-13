@@ -434,6 +434,9 @@ public class WeaponScript : MonoBehaviour
         SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
         GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX);
 
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedSpellProjectileFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
         fireBallManager.InitializeFireBall(character);
 
@@ -442,6 +445,7 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
         instantiatedSpellProjectileFX.transform.parent = null;
+        instantiatedSpellProjectileFX.transform.localScale = Vector3.one;
 
 
         // instantiatedSpellProjectileFX.transform.position = spellOriginLocation.transform.position;
@@ -532,6 +536,8 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellChargeVFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellChargeVFX.transform.localPosition = Vector3.zero;
         instantiatedSpellChargeVFX.transform.localRotation = Quaternion.identity;
+
+        //Update the VFX to match the highest element of the magic weapon
         instantiatedSpellChargeVFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
     }
@@ -546,6 +552,8 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellWarmUpFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellWarmUpFX.transform.localPosition = Vector3.zero;
         instantiatedSpellWarmUpFX.transform.localRotation = Quaternion.identity;
+
+        //Update the VFX to match the highest element of the magic weapon
         instantiatedSpellWarmUpFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
         character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellWarmUpFX;
 
