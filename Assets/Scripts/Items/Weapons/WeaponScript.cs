@@ -545,6 +545,8 @@ public class WeaponScript : MonoBehaviour
         //Update the VFX to match the highest element of the magic weapon
         instantiatedSpellChargeVFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
+        instantiatedSpellChargeVFX.transform.localScale = new Vector3(0.7f, 0.7f/0.9f, 0.7f);
+
     }
 
     public virtual void InstantiateWarmUpSpellFX(CharacterManager character)
