@@ -660,10 +660,10 @@ public class WeaponMenuManager : MonoBehaviour
              //}
              //else 
              //    gridScript.cornerButton.gameObject.SetActive(true);
-                if (weapon == activeWeapon)
-            {//mark actively editing weapon
-                weaponButton.mainButton.Select();
-            }
+            //    if (weapon == activeWeapon)
+            //{//mark actively editing weapon
+            //    weaponButton.mainButton.Select();
+            //}
             weaponButton.index = index;
             /**   ADD SPECIAL WEAPON CLICK EVENTS   */
             weaponButton.mainButton.onClick.AddListener(() =>
