@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UpgradeMenuManager : MonoBehaviour
+public class WeaponMenuManager : MonoBehaviour
 {
     [Header("Weapon Menu\n")]
     [Header("Equipped weapons")]
@@ -106,11 +106,15 @@ public class UpgradeMenuManager : MonoBehaviour
 
     //**************************** I N P U T ****************************
     float rotationSpeed = 75f;
+    float zoomSpeed = 50f;
+    float maxZoomDistance = 0.5f;
+    float minZoomDistance = -0.5f;
     void HandleWeaponPreviewInput()
     {
         if (activeWeapon == null)
             return;
         float rotationSpeed = 75f;
+        //rotate
         if (previewCameraInput.x > 0.75f)
         {
             currentWeaponPreview.transform.Rotate(Vector3.forward * rotationSpeed * Time.unscaledDeltaTime);
@@ -118,6 +122,21 @@ public class UpgradeMenuManager : MonoBehaviour
         else if (previewCameraInput.x < -0.75f)
         {
             currentWeaponPreview.transform.Rotate(Vector3.back * rotationSpeed * Time.unscaledDeltaTime);
+        }
+        //zoom
+        if (previewCameraInput.y > 0.75f && currentWeaponPreview.transform.position.z >= minZoomDistance)
+        {
+            Vector3 newPosition = currentWeaponPreview.transform.position;
+            newPosition.z -= 0.1f * Time.unscaledDeltaTime;
+            newPosition.z = Mathf.Max(newPosition.z, minZoomDistance);
+            currentWeaponPreview.transform.position = newPosition;
+        }
+        else if (previewCameraInput.y < -0.75f && currentWeaponPreview.transform.position.z <= maxZoomDistance)
+        {
+            Vector3 newPosition = currentWeaponPreview.transform.position;
+            newPosition.z += 0.1f * Time.unscaledDeltaTime;
+            newPosition.z = Mathf.Min(newPosition.z, maxZoomDistance);
+            currentWeaponPreview.transform.position = newPosition;
         }
     }
     //float wpnScrollVal = 0;
