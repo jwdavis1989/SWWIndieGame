@@ -67,7 +67,16 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         HandleSpecialWeaponCooldown();
     }
-
+    //Helper
+    public int TotalWeapons()
+    {
+        int total = 0;
+        if(ownedWeapons != null)
+            total += ownedWeapons.Count;
+        if(ownedSpecialWeapons != null)
+            total += ownedSpecialWeapons.Count;
+        return total;
+    }
     /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
@@ -114,9 +123,25 @@ public class CharacterWeaponManager : MonoBehaviour
         currentWeaponScript.hasObtained = true;
         return weaponToAdd.GetComponent<WeaponScript>();
     }
-    /**
-     * Change equipped weapon
-     */
+    public void EquipWeapon(GameObject weapon)
+    {
+        Debug.Log("Active weapon is " + weapon.name);//astest
+        int index = -1;
+        index = ownedWeapons.FindIndex(wpn => wpn == weapon);
+        if (index == -1)
+        {
+            index = ownedSpecialWeapons.FindIndex(wpn => wpn == weapon);
+            if (index != -1)
+                ChangeSpecialWeapon(index);
+            else
+                Debug.LogWarning("EquipWeapon called and not found");
+        }
+        else
+            ChangeWeapon(index);
+    }
+        /**
+         * Change equipped weapon
+         */
     public void ChangeWeapon(int index)
     {
         if (index < ownedWeapons.Count && ownedWeapons[index] != null)
@@ -138,7 +163,7 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     //find next weapon and call ChangeWeapon
-    public void nextWeapon()
+    public void NextWeapon()
     {
         int totalWeapons = ownedWeapons.Count;
         int newWeaponIndex = indexOfEquippedWeapon;
@@ -149,7 +174,7 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     //find prev weapon and call ChangeWeapon
-    public void prevWeapon()
+    public void PrevWeapon()
     {
         int totalWeapons = ownedWeapons.Count;
         int newWeaponIndex = indexOfEquippedWeapon;

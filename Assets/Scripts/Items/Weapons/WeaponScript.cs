@@ -399,7 +399,7 @@ public class WeaponScript : MonoBehaviour
             {
                 if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
                 {
-                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f);
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.GetMainHand().stats.block) / 100f);
                 }
                 else
                 {
@@ -552,7 +552,7 @@ public class WeaponScript : MonoBehaviour
     public virtual void InstantiateWarmUpSpellFX(CharacterManager character)
     {
         //1. Instantiate Warm Up at the correct place
-        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetOffHand().gameObject.GetComponentInChildren<SpellOriginLocation>();
 
         //2. "Save" the warm up FX as a variable so it can be destroyed if the player is knocked out of the animation
         GameObject instantiatedSpellWarmUpFX = Instantiate(spellCastWarmUpVFX);

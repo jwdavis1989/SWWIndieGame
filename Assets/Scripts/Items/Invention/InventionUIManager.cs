@@ -54,8 +54,10 @@ public class InventionUIManager : MonoBehaviour
         {   // Handle for lost cursor
             if (ownedIdeasGrid != null){
                 Transform[] allChildren = ownedIdeasGrid.transform.GetComponentsInChildren<Transform>();
-                if(allChildren.Length > 0)
+                if (allChildren.Length > 0)
+                {
                     eventSystem.SetSelectedGameObject(allChildren[0].gameObject);
+                }
             }
         }
     }
@@ -268,8 +270,8 @@ public class InventionUIManager : MonoBehaviour
                     gridScript.mainButtonForeground.GetComponent<RawImage>().texture = inventionScript.icon.texture;
                 else
                     gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
-                gridScript.bottomText.text = "";
-                gridScript.cornerButton.gameObject.SetActive(false);
+                //gridScript.bottomText.text = "";
+                //gridScript.cornerButton.gameObject.SetActive(false);
             }
             else
             {

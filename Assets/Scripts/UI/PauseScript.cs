@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -29,6 +30,10 @@ public class PauseScript : MonoBehaviour
     PlayerControls playerControls;
     public EventSystem mainPauseMenuEvents;
     public GameObject mainMenuButton;
+    [Header("Controls Help")]
+    PlayerInput playerInput;
+    public List<GameObject> gamepadControlsUI;
+    GameObject keyboardControlsUI;
     [Header("Debug")]
     public bool debugMode = false;
     [SerializeField] GameObject DebugSaveGameButton;
@@ -52,17 +57,27 @@ public class PauseScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         if (debugMode) return;//ASTEST
         DisableAllMenus();
+        //if (playerInput == null)
+        //{
+        //    playerInput = PlayerInputManager.instance.gameObject.GetComponent<PlayerInput>();
+        //    playerInput.onControlsChanged += OnControlsChanged;
+        //    //playerInput.actions["PauseButton"].performed += i => pauseInput = true;
+        //    //playerInput.actions["SwitchMenuLeft"].performed += i => menuLeftInput = true;
+        //    //playerInput.actions["SwitchMenuRight"].performed += i => menuRightInput = true;
+        //    playerInput.enabled = true;
+        //}
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.UI.PauseButton.performed += i => pauseInput = true;
-            playerControls.UI.SwitchMenuLeft.performed += i => menuLeftInput = true;
-            playerControls.UI.SwitchMenuRight.performed += i => menuRightInput = true;
+            playerControls.PauseMenu.PauseButton.performed += i => pauseInput = true;
+            playerControls.PauseMenu.SwitchMenuLeft.performed += i => menuLeftInput = true;
+            playerControls.PauseMenu.SwitchMenuRight.performed += i => menuRightInput = true;
             playerControls.Enable();
         }
     }
     void Update()
     {
+
         //if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
         //    ) && gamePaused == false && SceneManager.GetActiveScene().buildIndex != 0)
         //{
@@ -75,14 +90,57 @@ public class PauseScript : MonoBehaviour
         //}
         HandlePauseInput();
         HandleSwitchMenuInput();
-        if (gamePaused)
-        {
-            if (mainPauseMenuEvents.currentSelectedGameObject == null)
-            {   // Handle for lost cursor
-                mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
-            }
-        }
+        //CheckControlsChanged();
+        //if (gamePaused)
+        //{
+        //    if (mainPauseMenuEvents.currentSelectedGameObject == null)
+        //    {   // Handle for lost cursor
+        //        mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
+        //        Debug.Log("SETTING SELECTED GAME OBJECT PAUSE MANAGER");
+        //    }
+        //}
     }
+    //private void OnControlsChanged(PlayerInput obj)
+    //{
+    //    Debug.Log("Switched to: " + obj.currentControlScheme);
+
+    //    if (obj.currentControlScheme == "Gamepad")
+    //    {
+    //        // Show controller UI
+    //        foreach(GameObject gamepadeUI in gamepadControlsUI)
+    //            gamepadeUI.SetActive(true);
+    //    }
+    //    else if (obj.currentControlScheme == "KeyboardMouse")
+    //    {
+    //        // Show KB/M UI
+    //        foreach (GameObject gamepadeUI in gamepadControlsUI)
+    //            gamepadeUI.SetActive(false);
+    //    }
+    //}
+    //string lastDevice = "Gamepad";
+    //private void CheckControlsChanged()
+    //{
+    //    string currentDevice = Keyboard.current.wasUpdatedThisFrame ? "Keyboard" :
+    //                     Mouse.current.wasUpdatedThisFrame ? "Mouse" :
+    //                     Gamepad.current?.wasUpdatedThisFrame == true ? "Gamepad" : lastDevice;
+    //    if (lastDevice != currentDevice)
+    //    {
+    //        Debug.Log("Device changed to " + currentDevice);
+    //        lastDevice = currentDevice;
+    //        if(currentDevice == "Gamepad")
+    //        {
+    //            // Show controller UI
+    //            foreach (GameObject gamepadeUI in gamepadControlsUI)
+    //                gamepadeUI.SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            // Show KB/M UI
+    //            foreach (GameObject gamepadeUI in gamepadControlsUI)
+    //                gamepadeUI.SetActive(false);
+    //        }
+    //    }
+    //}
 
     //public void ContinueClick()
     //{
@@ -133,6 +191,7 @@ public class PauseScript : MonoBehaviour
     }
     void DisableAllMenus()
     {
+        mainPauseMenuEvents.SetSelectedGameObject(null);
         if (weaponMenu != null) weaponMenu.SetActive(false);
         if (weaponMenuSideBar != null) weaponMenuSideBar.SetActive(false);
         if (inventMenu != null) inventMenu.SetActive(false);
@@ -271,21 +330,22 @@ public class PauseScript : MonoBehaviour
         PlayerUIManager.instance.menuWindowIsOpen = false;
         playerHud.SetActive(true);
     }
-    void HandlePauseInput()
+    public void HandlePauseInput()
     {
         if (pauseInput) // [Esc], (Start/Menu)
         {
-            Debug.Log("PAUSE INPUT");
+            //Debug.Log("PAUSE INPUT");
             pauseInput = false;
             PauseUnpause();
         }
     }
     void HandleSwitchMenuInput()
     {
-        GameObject newBtnSelected;
+        //GameObject newBtnSelected;
         if (menuLeftInput)
         {
             menuLeftInput = false;
+            if (!gamePaused) return;
             switch (lastMenuTab)
             {
                 case MenuTab.ExitGame:
@@ -310,6 +370,7 @@ public class PauseScript : MonoBehaviour
         else if (menuRightInput)
         {
             menuRightInput = false;
+            if (!gamePaused) return;
             switch (lastMenuTab)
             {
                 case MenuTab.Weapons:
@@ -330,8 +391,11 @@ public class PauseScript : MonoBehaviour
                     break;
             }
         }
-        newBtnSelected = topPanelButtons.transform.GetChild(1 + (int)lastMenuTab).gameObject;
-        newBtnSelected.GetComponent<Button>().Select();
+        //if (gamePaused)
+        //{
+        //    newBtnSelected = topPanelButtons.transform.GetChild(1 + (int)lastMenuTab).gameObject;
+        //    newBtnSelected.GetComponent<Button>().Select();
+        //}
     }
     public enum MenuTab
     {

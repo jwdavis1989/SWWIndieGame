@@ -47,7 +47,7 @@ public class PlayerUIHudManager : MonoBehaviour
     //Remember to call this after a weapon has been added to your hand, or arsenal
     public void SetRightWeaponQuickSlotIcon() {
         if (PlayerWeaponManager.instance != null) {
-            GameObject currentRightWeapon = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon];
+            GameObject currentRightWeapon = PlayerWeaponManager.instance.GetMainHand().gameObject;
             if (currentRightWeapon == null) {
                 rightWeaponQuickSlotIcon.enabled = false;
                 rightWeaponQuickSlotIcon.sprite = null;
@@ -75,7 +75,7 @@ public class PlayerUIHudManager : MonoBehaviour
     {
         if (PlayerWeaponManager.instance != null)
         {
-            GameObject currentLeftWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons[PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon];
+            GameObject currentLeftWeapon = PlayerWeaponManager.instance.GetOffHand().gameObject;
             if (currentLeftWeapon == null)
             {
                 leftWeaponQuickSlotIcon.enabled = false;
