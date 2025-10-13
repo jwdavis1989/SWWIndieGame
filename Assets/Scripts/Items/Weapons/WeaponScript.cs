@@ -489,6 +489,9 @@ public class WeaponScript : MonoBehaviour
         SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
         GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileFullChargeVFX);
 
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedSpellProjectileFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
         //3. Apply Damage to the projectiles damage collider
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
         fireBallManager.isFullyCharged = true;
@@ -499,6 +502,8 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
         instantiatedSpellProjectileFX.transform.parent = null;
+
+        instantiatedSpellProjectileFX.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 
         //5. Set the projectile's direction
         if (character.isLockedOn)

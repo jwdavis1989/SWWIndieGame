@@ -45,6 +45,9 @@ public class SpellElementalVFXManager : MonoBehaviour
             case ElementalDamageType.Tech:
                 techSpellVFX.SetActive(true);
                 break;
+            case ElementalDamageType.Unaspected:
+                fireSpellVFX.SetActive(true);
+                break;
         }
     }
 }

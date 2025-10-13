@@ -88841,6 +88841,7 @@ GameObject:
   - component: {fileID: 395898749388890974}
   - component: {fileID: 371324554726321723}
   - component: {fileID: 2664252089625998045}
+  - component: {fileID: 856045374317109959}
   m_Layer: 0
   m_Name: EarthSpellVFX
   m_TagString: Untagged
@@ -93732,7 +93733,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c1d992e5636a26a41b3bec0e6d1f8181, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.8
-  m_Pitch: 1.5
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -93815,6 +93816,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &856045374317109959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5154441993279362024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b67737eef845247b4d9c1ce5731dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TrimBeginningInSeconds: 2
 --- !u!1 &5253764443632594679
 GameObject:
   m_ObjectHideFlags: 0
