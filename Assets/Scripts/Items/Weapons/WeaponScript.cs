@@ -438,7 +438,7 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellProjectileFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
 
         //3. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
@@ -495,7 +495,7 @@ public class WeaponScript : MonoBehaviour
         //3. Apply Damage to the projectiles damage collider
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
         fireBallManager.isFullyCharged = true;
-        fireBallManager.InitializeFireBall(character);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
 
         //4. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
