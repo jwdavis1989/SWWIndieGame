@@ -391,6 +391,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DebugChangeMainHandElement"",
+                    ""type"": ""Button"",
+                    ""id"": ""06a1fad9-2385-4845-8520-e60b2852bc69"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugChangeOffHandElement"",
+                    ""type"": ""Button"",
+                    ""id"": ""9884f9fb-0861-495f-8cd3-ee13c9b06af5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""DebugTeleportToAlecDev"",
                     ""type"": ""Button"",
                     ""id"": ""be383daf-aa62-4dd2-96ba-5c8f03d173a9"",
@@ -1025,6 +1043,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""QueueJump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d8aa39f-90f7-4b97-b192-07c2c29eccbc"",
+                    ""path"": ""<Keyboard>/numpadMultiply"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugChangeMainHandElement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62ba4d26-621f-4fa1-89b6-31bdd3aed478"",
+                    ""path"": ""<Keyboard>/numpadDivide"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugChangeOffHandElement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2125,6 +2165,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_ChargeHeavyAttack = m_PlayerActions.FindAction("ChargeHeavyAttack", throwIfNotFound: true);
         m_PlayerActions_DebugTestAddWeapon = m_PlayerActions.FindAction("DebugTestAddWeapon", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJerryDev = m_PlayerActions.FindAction("DebugTeleportToJerryDev", throwIfNotFound: true);
+        m_PlayerActions_DebugChangeMainHandElement = m_PlayerActions.FindAction("DebugChangeMainHandElement", throwIfNotFound: true);
+        m_PlayerActions_DebugChangeOffHandElement = m_PlayerActions.FindAction("DebugChangeOffHandElement", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToAlecDev = m_PlayerActions.FindAction("DebugTeleportToAlecDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToJacobDev = m_PlayerActions.FindAction("DebugTeleportToJacobDev", throwIfNotFound: true);
         m_PlayerActions_DebugTeleportToSurfaceDemo = m_PlayerActions.FindAction("DebugTeleportToSurfaceDemo", throwIfNotFound: true);
@@ -2339,6 +2381,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_ChargeHeavyAttack;
     private readonly InputAction m_PlayerActions_DebugTestAddWeapon;
     private readonly InputAction m_PlayerActions_DebugTeleportToJerryDev;
+    private readonly InputAction m_PlayerActions_DebugChangeMainHandElement;
+    private readonly InputAction m_PlayerActions_DebugChangeOffHandElement;
     private readonly InputAction m_PlayerActions_DebugTeleportToAlecDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToJacobDev;
     private readonly InputAction m_PlayerActions_DebugTeleportToSurfaceDemo;
@@ -2372,6 +2416,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @ChargeHeavyAttack => m_Wrapper.m_PlayerActions_ChargeHeavyAttack;
         public InputAction @DebugTestAddWeapon => m_Wrapper.m_PlayerActions_DebugTestAddWeapon;
         public InputAction @DebugTeleportToJerryDev => m_Wrapper.m_PlayerActions_DebugTeleportToJerryDev;
+        public InputAction @DebugChangeMainHandElement => m_Wrapper.m_PlayerActions_DebugChangeMainHandElement;
+        public InputAction @DebugChangeOffHandElement => m_Wrapper.m_PlayerActions_DebugChangeOffHandElement;
         public InputAction @DebugTeleportToAlecDev => m_Wrapper.m_PlayerActions_DebugTeleportToAlecDev;
         public InputAction @DebugTeleportToJacobDev => m_Wrapper.m_PlayerActions_DebugTeleportToJacobDev;
         public InputAction @DebugTeleportToSurfaceDemo => m_Wrapper.m_PlayerActions_DebugTeleportToSurfaceDemo;
@@ -2444,6 +2490,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToJerryDev.started += instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToJerryDev.performed += instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToJerryDev.canceled += instance.OnDebugTeleportToJerryDev;
+            @DebugChangeMainHandElement.started += instance.OnDebugChangeMainHandElement;
+            @DebugChangeMainHandElement.performed += instance.OnDebugChangeMainHandElement;
+            @DebugChangeMainHandElement.canceled += instance.OnDebugChangeMainHandElement;
+            @DebugChangeOffHandElement.started += instance.OnDebugChangeOffHandElement;
+            @DebugChangeOffHandElement.performed += instance.OnDebugChangeOffHandElement;
+            @DebugChangeOffHandElement.canceled += instance.OnDebugChangeOffHandElement;
             @DebugTeleportToAlecDev.started += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed += instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled += instance.OnDebugTeleportToAlecDev;
@@ -2535,6 +2587,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @DebugTeleportToJerryDev.started -= instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToJerryDev.performed -= instance.OnDebugTeleportToJerryDev;
             @DebugTeleportToJerryDev.canceled -= instance.OnDebugTeleportToJerryDev;
+            @DebugChangeMainHandElement.started -= instance.OnDebugChangeMainHandElement;
+            @DebugChangeMainHandElement.performed -= instance.OnDebugChangeMainHandElement;
+            @DebugChangeMainHandElement.canceled -= instance.OnDebugChangeMainHandElement;
+            @DebugChangeOffHandElement.started -= instance.OnDebugChangeOffHandElement;
+            @DebugChangeOffHandElement.performed -= instance.OnDebugChangeOffHandElement;
+            @DebugChangeOffHandElement.canceled -= instance.OnDebugChangeOffHandElement;
             @DebugTeleportToAlecDev.started -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.performed -= instance.OnDebugTeleportToAlecDev;
             @DebugTeleportToAlecDev.canceled -= instance.OnDebugTeleportToAlecDev;
@@ -2955,6 +3013,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnChargeHeavyAttack(InputAction.CallbackContext context);
         void OnDebugTestAddWeapon(InputAction.CallbackContext context);
         void OnDebugTeleportToJerryDev(InputAction.CallbackContext context);
+        void OnDebugChangeMainHandElement(InputAction.CallbackContext context);
+        void OnDebugChangeOffHandElement(InputAction.CallbackContext context);
         void OnDebugTeleportToAlecDev(InputAction.CallbackContext context);
         void OnDebugTeleportToJacobDev(InputAction.CallbackContext context);
         void OnDebugTeleportToSurfaceDemo(InputAction.CallbackContext context);
