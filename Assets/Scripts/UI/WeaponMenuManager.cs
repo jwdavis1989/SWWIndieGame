@@ -20,7 +20,7 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Weapon Preview")]
     public Transform weaponPreviewHolder;
     public GameObject currentWeaponPreview;
-    //public GameObject wpnEvolveBtn1;
+    public GameObject wpnEvolveBtn1;
     //public GameObject wpnEvolveBtn2;
     //public GameObject specWpnEvolveBtn1;
     //public GameObject specWpnEvolveBtn2;
@@ -391,37 +391,41 @@ public class WeaponMenuManager : MonoBehaviour
             + "\nWind: " + el.windPower + "\t\tScale: " + el.scalesPower 
             + "\nTech: " + el.techPower;
             //weapon evolves
-            //WeaponsController weaponCntrller = WeaponsController.instance;
-            //List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
-            //List<WeaponType> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
-            //if (evolves.Count >= 1)
-            //{
-            //    wpnEvolveBtn1.SetActive(true);
-            //    WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[0]].GetComponent<WeaponScript>();
-            //    GridElementController myBtnScrpt = wpnEvolveBtn1.GetComponent<GridElementController>();
-            //    if (availEvolves.Contains(evolves[0]))
-            //    {
-            //        myBtnScrpt.topText.text = evolWpn.stats.weaponName;
-            //        myBtnScrpt.mainButton.interactable = true;
-            //        myBtnScrpt.bottomText.text = "Evolve!";
-            //        myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
-            //        myBtnScrpt.mainButton.onClick.RemoveAllListeners();
-            //        myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
-            //        {
-            //            weaponCntrller.EvolveWeapon(equippedWpn, evolves[0], PlayerWeaponManager.instance);
-            //            ReloadUpgradeMenu();
-            //        });
-            //    }
-            //    else
-            //    {
-            //        myBtnScrpt.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType)? evolWpn.stats.weaponName: "???";
-            //        myBtnScrpt.mainButton.interactable = false;
-            //        myBtnScrpt.bottomText.text = "";
-            //        myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
-            //    }
-            //}
-            //else if(wpnEvolveBtn1 != null) 
-            //    wpnEvolveBtn1.SetActive(false);
+            WeaponsController weaponCntrller = WeaponsController.instance;
+            List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
+            List<WeaponType> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
+            if (evolves.Count >= 1)
+            {
+                wpnEvolveBtn1.SetActive(true);
+                WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[0]].GetComponent<WeaponScript>();
+                GridElementController myBtnScrpt = wpnEvolveBtn1.GetComponent<GridElementController>();
+                if (availEvolves.Contains(evolves[0]))
+                {
+                    myBtnScrpt.topText.text = evolWpn.stats.weaponName;
+                    myBtnScrpt.mainButton.interactable = true;
+                    //myBtnScrpt.bottomText.text = "Evolve!";
+                    myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    //myBtnScrpt.mainButtonForeground.GetComponent<RawImage>().texture = evolWpn.spr.texture;//TODO 3D Preview?
+                    myBtnScrpt.mainButton.onClick.RemoveAllListeners();
+                    myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
+                    {
+                        weaponCntrller.EvolveWeapon(activeWeapon, evolves[0], PlayerWeaponManager.instance);
+                        ReloadUpgradeMenu();
+                    });
+                }
+                else
+                {
+                    myBtnScrpt.topText.text = //WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType)? evolWpn.stats.weaponName : 
+                        "???"; //TODO: I'm setting it to always show ??? instead of the name for debug,
+                               //      but the above should be uncommented if multiples copies of the same weapon can be aquired
+                    myBtnScrpt.mainButton.interactable = false;
+                    //myBtnScrpt.bottomText.text = "";
+                    myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
+                    //myBtnScrpt.mainButtonForeground.GetComponent<RawImage>().texture = defaultUnkownIcon.texture;
+                }
+            }
+            else if (wpnEvolveBtn1 != null)
+                wpnEvolveBtn1.SetActive(false);
             //if (evolves.Count >= 2)
             //{//2nd weapon evolve
             //    wpnEvolveBtn2.SetActive(true);
