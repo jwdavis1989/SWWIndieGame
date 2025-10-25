@@ -21,7 +21,7 @@ public class WeaponMenuManager : MonoBehaviour
     public Transform weaponPreviewHolder;
     public GameObject currentWeaponPreview;
     public GameObject wpnEvolveBtn1;
-    //public GameObject wpnEvolveBtn2;
+    public GameObject wpnEvolveBtn2;
     //public GameObject specWpnEvolveBtn1;
     //public GameObject specWpnEvolveBtn2;
     public Sprite defaultUnkownIcon;
@@ -57,9 +57,9 @@ public class WeaponMenuManager : MonoBehaviour
         //cmpntScroll.value = 0;
         curComponentPage = 0;
         activeWeapon = null;
-        LoadComponentsToScreen();
         LoadWeaponsToScreen();
         DisplayActiveWeapon();
+        LoadComponentsToScreen();
     }
     // Start is called before the first frame update
     void Start()
@@ -105,15 +105,14 @@ public class WeaponMenuManager : MonoBehaviour
     }
 
     //**************************** I N P U T ****************************
-    float rotationSpeed = 75f;
-    float zoomSpeed = 50f;
+    float rotationSpeed = 100;
+    float zoomSpeed = 75;
     float maxZoomDistance = 0.5f;
     float minZoomDistance = -0.5f;
     void HandleWeaponPreviewInput()
     {
         if (activeWeapon == null)
             return;
-        float rotationSpeed = 75f;
         //rotate
         if (previewCameraInput.x > 0.75f)
         {
@@ -426,34 +425,34 @@ public class WeaponMenuManager : MonoBehaviour
             }
             else if (wpnEvolveBtn1 != null)
                 wpnEvolveBtn1.SetActive(false);
-            //if (evolves.Count >= 2)
-            //{//2nd weapon evolve
-            //    wpnEvolveBtn2.SetActive(true);
-            //    WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
-            //    GridElementController myBtnScrpt2 = wpnEvolveBtn2.GetComponent<GridElementController>();
-            //    if (availEvolves.Contains(evolves[1]))
-            //    {
-            //        myBtnScrpt2.topText.text = evolWpn.stats.weaponName;
-            //        myBtnScrpt2.mainButton.interactable = true;
-            //        myBtnScrpt2.bottomText.text = "Evolve!";
-            //        myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
-            //        myBtnScrpt2.mainButton.onClick.RemoveAllListeners();
-            //        myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
-            //        {
-            //            weaponCntrller.EvolveWeapon(equippedWpn, evolves[1], PlayerWeaponManager.instance);
-            //            ReloadUpgradeMenu();
-            //        });
-            //    }
-            //    else
-            //    {
-            //        myBtnScrpt2.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType) ? evolWpn.stats.weaponName : "???";
-            //        myBtnScrpt2.mainButton.interactable = false;
-            //        myBtnScrpt2.bottomText.text = "";
-            //        myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
-            //    }
-            //}
-            //else if (wpnEvolveBtn2 != null)
-            //    wpnEvolveBtn2.SetActive(false);
+            if (evolves.Count >= 2)
+            {//2nd weapon evolve
+                wpnEvolveBtn2.SetActive(true);
+                WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
+                GridElementController myBtnScrpt2 = wpnEvolveBtn2.GetComponent<GridElementController>();
+                if (availEvolves.Contains(evolves[1]))
+                {
+                    myBtnScrpt2.topText.text = evolWpn.stats.weaponName;
+                    myBtnScrpt2.mainButton.interactable = true;
+                    //myBtnScrpt2.bottomText.text = "Evolve!";
+                    myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt2.mainButton.onClick.RemoveAllListeners();
+                    myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
+                    {
+                        weaponCntrller.EvolveWeapon(activeWeapon, evolves[1], PlayerWeaponManager.instance);
+                        ReloadUpgradeMenu();
+                    });
+                }
+                else
+                {
+                    myBtnScrpt2.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType) ? evolWpn.stats.weaponName : "???";
+                    myBtnScrpt2.mainButton.interactable = false;
+                    //myBtnScrpt2.bottomText.text = "";
+                    myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
+                }
+            }
+            else if (wpnEvolveBtn2 != null)
+                wpnEvolveBtn2.SetActive(false);
         }
         else
         {
