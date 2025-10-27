@@ -7,6 +7,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class WeaponMenuManager : MonoBehaviour
@@ -39,6 +40,10 @@ public class WeaponMenuManager : MonoBehaviour
     [SerializeField] bool switchWeaponUp = false;
     [SerializeField] bool switchWeaponDown = false;
     [SerializeField] bool equipWeaponInput = false;
+    [SerializeField] bool breakdownWeaponStarted = false;
+    [SerializeField] bool breakdownWeaponPerformed = false;
+    [SerializeField] bool breakdownWeaponCanceled = false;
+
     [Header("Camera Movement Input")]
     PlayerControls playerControls;
     [SerializeField] Vector2 previewCameraInput;
@@ -72,6 +77,9 @@ public class WeaponMenuManager : MonoBehaviour
             playerControls.PauseMenu.SwitchWeaponUp.performed += i => switchWeaponUp = true;
             playerControls.PauseMenu.SwitchWeaponDown.performed += i => switchWeaponDown = true;
             playerControls.PauseMenu.EquipWeapon.performed += i => equipWeaponInput = true;
+            playerControls.PauseMenu.BreakdownWeapon.started += i => breakdownWeaponStarted = true;
+            playerControls.PauseMenu.BreakdownWeapon.performed += i => breakdownWeaponPerformed = true;
+            playerControls.PauseMenu.BreakdownWeapon.canceled += i => breakdownWeaponCanceled = true;
             playerControls.Enable();
         }
     }
@@ -98,6 +106,7 @@ public class WeaponMenuManager : MonoBehaviour
         HandleWeaponPreviewInput();
         HandleSwitchWeaponInput();
         HandleEquipWeaponInput();
+        HandleBreakdownWeaponInput();
         if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf)
         {
             currentWeaponPreview.SetActive(true);
@@ -201,6 +210,25 @@ public class WeaponMenuManager : MonoBehaviour
                 PlayerWeaponManager.instance.EquipWeapon(activeWeapon);
                 LoadWeaponsToScreen();//to disable/enable buttons
             }
+        }
+    }
+    void HandleBreakdownWeaponInput()
+    {
+        if (breakdownWeaponStarted)
+        {
+            breakdownWeaponStarted = false;
+            Debug.Log("breakdownWeaponStarted");
+        }
+        if (breakdownWeaponPerformed)
+        {
+            breakdownWeaponPerformed = false;
+            Debug.Log("breakdownWeaponPerformed");
+            BreakDownActiveWeapon();
+        }
+        if (breakdownWeaponCanceled)
+        {
+            breakdownWeaponCanceled = false;
+            Debug.Log("breakdownWeaponCanceled");
         }
     }
             //************************** B U T T O N S **************************
@@ -777,7 +805,7 @@ public class WeaponMenuManager : MonoBehaviour
             //gridScript.bottomText.text = "Atk:" + componentScript.stats.attack;
             //gridScript.cornerButton.gameObject.SetActive(false);
             if (componentScript.spr)
-                gridScript.mainButton.GetComponent<Image>().sprite = componentScript.spr;
+                gridScript.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
             if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
             {
                 /**   ADD EVENT TO WEAPON COMPONENT CLICK   */
