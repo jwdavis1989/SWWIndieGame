@@ -369,6 +369,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "DebugChangeMainHandElement",
+                    "type": "Button",
+                    "id": "06a1fad9-2385-4845-8520-e60b2852bc69",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugChangeOffHandElement",
+                    "type": "Button",
+                    "id": "9884f9fb-0861-495f-8cd3-ee13c9b06af5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "DebugTeleportToAlecDev",
                     "type": "Button",
                     "id": "be383daf-aa62-4dd2-96ba-5c8f03d173a9",
@@ -1003,6 +1021,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "QueueJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d8aa39f-90f7-4b97-b192-07c2c29eccbc",
+                    "path": "<Keyboard>/numpadMultiply",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugChangeMainHandElement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62ba4d26-621f-4fa1-89b6-31bdd3aed478",
+                    "path": "<Keyboard>/numpadDivide",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugChangeOffHandElement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
