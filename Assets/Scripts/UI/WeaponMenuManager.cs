@@ -43,14 +43,20 @@ public class WeaponMenuManager : MonoBehaviour
     [SerializeField] bool breakdownWeaponStarted = false;
     [SerializeField] bool breakdownWeaponPerformed = false;
     [SerializeField] bool breakdownWeaponCanceled = false;
-
     [Header("Camera Movement Input")]
     PlayerControls playerControls;
     [SerializeField] Vector2 previewCameraInput;
+
     [Header("Buttons")]
     public Button breakdownBtn;
     //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
     public EventSystem eventSystem;
+
+    [Header("Input Tooltips")]
+    [SerializeField] public Image holdToBreakdownWpnImage;
+    [SerializeField] private float holdDuration = 1.5f;//should match value in PlayerControls
+    private bool isHolding;
+    private float holdTime;
 
 
     //called when arriving at this menu
@@ -214,10 +220,26 @@ public class WeaponMenuManager : MonoBehaviour
     }
     void HandleBreakdownWeaponInput()
     {
+        if (isHolding)
+        {
+            holdTime += Time.unscaledDeltaTime;
+            holdToBreakdownWpnImage.fillAmount = holdTime / holdDuration;
+            Debug.Log("SETTING FILL AMOUNT TO " + holdToBreakdownWpnImage.fillAmount);  
+            if (holdTime >= holdDuration)
+            {
+                isHolding = false;
+                holdTime = 0f;
+                holdToBreakdownWpnImage.fillAmount = 0f;
+            }
+        }
         if (breakdownWeaponStarted)
         {
             breakdownWeaponStarted = false;
             Debug.Log("breakdownWeaponStarted");
+
+            isHolding = true;
+            holdTime = 0f;
+            holdToBreakdownWpnImage.fillAmount = 0f;
         }
         if (breakdownWeaponPerformed)
         {
@@ -229,6 +251,10 @@ public class WeaponMenuManager : MonoBehaviour
         {
             breakdownWeaponCanceled = false;
             Debug.Log("breakdownWeaponCanceled");
+
+            isHolding = false;
+            holdTime = 0f;
+            holdToBreakdownWpnImage.fillAmount = 0f;
         }
     }
             //************************** B U T T O N S **************************
