@@ -1,4 +1,5 @@
 using Palmmedia.ReportGenerator.Core.Common;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,12 +14,12 @@ using UnityEngine.UI;
 public class WeaponMenuManager : MonoBehaviour
 {
     [Header("Weapon Menu\n")]
-    [Header("Equipped weapons")]
+    [Header("Active Weapon Preview")]
     public TextMeshProUGUI primaryStatsText;
     public TextMeshProUGUI elementalStatsText;
     public TextMeshProUGUI weaponPreviewHeaderText;
+    public TextMeshProUGUI activeWeaponTierLevelText;
     public TextMeshProUGUI tinkerPointsCountText;
-    [Header("Weapon Preview")]
     public Transform weaponPreviewHolder;
     public GameObject currentWeaponPreview;
     public GameObject wpnEvolveBtn1;
@@ -224,7 +225,10 @@ public class WeaponMenuManager : MonoBehaviour
         {
             holdTime += Time.unscaledDeltaTime;
             holdToBreakdownWpnImage.fillAmount = holdTime / holdDuration;
-            Debug.Log("SETTING FILL AMOUNT TO " + holdToBreakdownWpnImage.fillAmount);  
+            Color currentColor = holdToBreakdownWpnImage.color; // Get the current color
+            currentColor.a = holdTime / holdDuration;      // Modify the alpha component
+            holdToBreakdownWpnImage.color = currentColor;
+            //Debug.Log("SETTING FILL AMOUNT TO " + holdToBreakdownWpnImage.fillAmount);  
             if (holdTime >= holdDuration)
             {
                 isHolding = false;
@@ -235,7 +239,7 @@ public class WeaponMenuManager : MonoBehaviour
         if (breakdownWeaponStarted)
         {
             breakdownWeaponStarted = false;
-            Debug.Log("breakdownWeaponStarted");
+            //Debug.Log("breakdownWeaponStarted");
 
             isHolding = true;
             holdTime = 0f;
@@ -244,14 +248,13 @@ public class WeaponMenuManager : MonoBehaviour
         if (breakdownWeaponPerformed)
         {
             breakdownWeaponPerformed = false;
-            Debug.Log("breakdownWeaponPerformed");
+            //Debug.Log("breakdownWeaponPerformed");
             BreakDownActiveWeapon();
         }
         if (breakdownWeaponCanceled)
         {
             breakdownWeaponCanceled = false;
-            Debug.Log("breakdownWeaponCanceled");
-
+            //Debug.Log("breakdownWeaponCanceled");
             isHolding = false;
             holdTime = 0f;
             holdToBreakdownWpnImage.fillAmount = 0f;
@@ -431,6 +434,7 @@ public class WeaponMenuManager : MonoBehaviour
                 t.gameObject.layer = LayerMask.NameToLayer("WeaponPreview");
             //stats
             weaponPreviewHeaderText.text = wpn.stats.weaponName;
+            activeWeaponTierLevelText.text = wpn.GetWeaponFamilyFormatted() + "\nLevel " + wpn.stats.level;
             tinkerPointsCountText.text = ""+wpn.stats.currentTinkerPoints;
             WeaponStats stats = wpn.stats;
             ElementalStats el = stats.elemental;
@@ -468,8 +472,20 @@ public class WeaponMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt.topText.text = //WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType)? evolWpn.stats.weaponName : 
-                        "???"; //TODO: I'm setting it to always show ??? instead of the name for debug,
+                    myBtnScrpt.topText.text = evolWpn.stats.weaponName;
+                    //TODO: I'm setting it to always show ??? instead of the name for debug,
+                    //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
+                    //{
+                        String mysteryText = "";
+                        foreach (char c in myBtnScrpt.topText.text)
+                        {
+                            if (c != ' ')
+                                mysteryText += '?';
+                            else mysteryText += c;
+                        }
+                        myBtnScrpt.topText.text = mysteryText;
+
+                    //}
                                //      but the above should be uncommented if multiples copies of the same weapon can be aquired
                     myBtnScrpt.mainButton.interactable = false;
                     //myBtnScrpt.bottomText.text = "";
@@ -757,6 +773,7 @@ public class WeaponMenuManager : MonoBehaviour
     /**
      * Clear component list and reload it with current values
      */
+    int currentlySelectedComponentGamepad = 0;
     void LoadComponentsToScreen()
     {
         foreach (Transform child in componentsGrid.transform)
@@ -767,6 +784,7 @@ public class WeaponMenuManager : MonoBehaviour
         int maxDisplayed = 28;
         int componentsToSkip = curComponentPage * cmpntPerRow;
         //basic components
+        int index = 0;
         foreach (GameObject component in TinkerComponentManager.instance.baseComponents)
         {
             if (component == null) continue;
@@ -778,8 +796,9 @@ public class WeaponMenuManager : MonoBehaviour
                     componentsToSkip--;
                     continue;
                 }
+                index++;
                 if (++displayedCount > maxDisplayed) break;
-                Object gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
+                GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
                 TinkerComponentUI tinkerComponent = gridElement.GetComponent<TinkerComponentUI>();
                 //tinkerComponent.tooltip.text = componentScript.stats.itemName;
                 if (tinkerComponent.tooltip != null)
@@ -791,6 +810,8 @@ public class WeaponMenuManager : MonoBehaviour
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, component))
                 {
+                    if(index == currentlySelectedComponentGamepad) 
+                        tinkerComponent.mainButton.Select();
                     /**   ADD EVENT TO COMPONENT CLICK   */
                     tinkerComponent.mainButton.onClick.AddListener(() =>
                     {
@@ -804,6 +825,7 @@ public class WeaponMenuManager : MonoBehaviour
                             }
                             else Destroy(gridElement);
                             DisplayActiveWeapon();
+                            currentlySelectedComponentGamepad = Math.Max(0, index - 1);
                             LoadComponentsToScreen();
                         }
                         else
@@ -823,9 +845,10 @@ public class WeaponMenuManager : MonoBehaviour
                 componentsToSkip--;
                 continue;
             }
+            index++;
             if (++displayedCount > maxDisplayed) break;
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
-            Object gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
+            GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
             TinkerComponentUI gridScript = gridElement.GetComponent<TinkerComponentUI>();
             gridScript.countText.text = ""+componentScript.stats.count;
             //gridScript.bottomText.text = "Atk:" + componentScript.stats.attack;

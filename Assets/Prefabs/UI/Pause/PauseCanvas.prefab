@@ -131,10 +131,9 @@ MonoBehaviour:
   menuRightInput: 0
   mainPauseMenuEvents: {fileID: 2092301516824866642}
   mainMenuButton: {fileID: 2056046363117686755}
-  gamepadControlsUI:
-  - {fileID: 7219329089784423539}
-  - {fileID: 2325084207073997284}
-  - {fileID: 1415026049190762951}
+  bottomTooltip: {fileID: 6391094913459100380}
+  bottomTooltipPauseMenuGamepad: {fileID: 21300000, guid: 7020db7f1cf7b424f87f31891baa3a8e, type: 3}
+  bottomTooltipWeaponMenuGamepad: {fileID: 21300000, guid: 3b63527c86ca5c04abd7403f23f25fa2, type: 3}
   debugMode: 1
   DebugSaveGameButton: {fileID: 0}
   DebugAddItemButton: {fileID: 0}
@@ -1900,6 +1899,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 420793207265788443}
+  - {fileID: 9042689273370238155}
   m_Father: {fileID: 3864383800507428321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -11982,9 +11982,9 @@ RectTransform:
   - {fileID: 5483566439293079619}
   m_Father: {fileID: 6466607063083627081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 112.27893, y: -326.921}
   m_SizeDelta: {x: 160.3759, y: 160.3759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6186166213274378107
@@ -17565,8 +17565,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.6027, y: 0.000068724}
-  m_SizeDelta: {x: 529.3864, y: 50.954}
+  m_AnchoredPosition: {x: -88.05033, y: 0.000068724}
+  m_SizeDelta: {x: 342.0813, y: 50.954}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5647851201206732366
 CanvasRenderer:
@@ -17623,8 +17623,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -30523,9 +30523,9 @@ RectTransform:
   - {fileID: 8934386633579204274}
   m_Father: {fileID: 6466607063083627081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 112.27893, y: -497.2969}
   m_SizeDelta: {x: 160.3759, y: 160.3759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5576250665800422404
@@ -32522,6 +32522,142 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &7993339249481942752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9042689273370238155}
+  - component: {fileID: 9212931954393762257}
+  - component: {fileID: 7827337278722556179}
+  m_Layer: 5
+  m_Name: WeaponTierLevelText (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &9042689273370238155
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993339249481942752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5898067989552707388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 164.09518, y: 0.000068724}
+  m_SizeDelta: {x: 195.7031, y: 50.954}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9212931954393762257
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993339249481942752}
+  m_CullTransparentMesh: 1
+--- !u!114 &7827337278722556179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993339249481942752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Tier 1 Sword
+
+    Level 5'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: fa184dfcbb916584ab8689070819d79d, type: 2}
+  m_sharedMaterial: {fileID: -1487134874875091735, guid: fa184dfcbb916584ab8689070819d79d, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 16
+  m_fontSizeBase: 16
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 4
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8009766713308981208
 GameObject:
   m_ObjectHideFlags: 0
@@ -34229,6 +34365,7 @@ MonoBehaviour:
   primaryStatsText: {fileID: 5280982109425113049}
   elementalStatsText: {fileID: 5281831889202771159}
   weaponPreviewHeaderText: {fileID: 4791207700410298634}
+  activeWeaponTierLevelText: {fileID: 7827337278722556179}
   tinkerPointsCountText: {fileID: 3362927049353939387}
   weaponPreviewHolder: {fileID: 8345701805852907965}
   currentWeaponPreview: {fileID: 0}
@@ -34922,7 +35059,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4079320313507549894
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39302,7 +39439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1441320235500344868, guid: cb5384521b793ea42b005125bba32382, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1441320235500344868, guid: cb5384521b793ea42b005125bba32382, type: 3}
       propertyPath: m_AnchorMin.x
@@ -39310,7 +39447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1441320235500344868, guid: cb5384521b793ea42b005125bba32382, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1441320235500344868, guid: cb5384521b793ea42b005125bba32382, type: 3}
       propertyPath: m_SizeDelta.x
@@ -39350,11 +39487,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1441320235500344868, guid: cb5384521b793ea42b005125bba32382, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 112.27893
       objectReference: {fileID: 0}
     - target: {fileID: 1441320235500344868, guid: cb5384521b793ea42b005125bba32382, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -156.5451
       objectReference: {fileID: 0}
     - target: {fileID: 1441320235500344868, guid: cb5384521b793ea42b005125bba32382, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
