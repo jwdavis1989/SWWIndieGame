@@ -225,9 +225,9 @@ public class WeaponMenuManager : MonoBehaviour
         {
             holdTime += Time.unscaledDeltaTime;
             holdToBreakdownWpnImage.fillAmount = holdTime / holdDuration;
-            Color currentColor = holdToBreakdownWpnImage.color; // Get the current color
-            currentColor.a = holdTime / holdDuration;      // Modify the alpha component
-            holdToBreakdownWpnImage.color = currentColor;
+            //Color currentColor = holdToBreakdownWpnImage.color; // Get the current color
+            //currentColor.a = holdTime / holdDuration;      // Modify the alpha component
+            //holdToBreakdownWpnImage.color = currentColor;
             //Debug.Log("SETTING FILL AMOUNT TO " + holdToBreakdownWpnImage.fillAmount);  
             if (holdTime >= holdDuration)
             {

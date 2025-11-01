@@ -32,9 +32,9 @@ public class PauseScript : MonoBehaviour
     public GameObject mainMenuButton;
     [Header("Controls Help")]
     PlayerInput playerInput;
-    public Image bottomTooltip;
-    public Sprite bottomTooltipPauseMenuGamepad;
-    public Sprite bottomTooltipWeaponMenuGamepad;
+    //public Image bottomTooltip;
+    public GameObject bottomTooltipPauseMenuGamepad;
+    public GameObject bottomTooltipWeaponMenuGamepad;
     //public List<GameObject> gamepadControlsUI;
     GameObject keyboardControlsUI;
     [Header("Debug")]
@@ -164,7 +164,7 @@ public class PauseScript : MonoBehaviour
         if (weaponMenuSideBar != null)
             weaponMenuSideBar.SetActive(true);
         lastMenuTab = MenuTab.Weapons;
-        bottomTooltip.sprite = bottomTooltipWeaponMenuGamepad;
+        SetWeaponMenuTooltip();
     }
     //public void WeaponMenuBackClick()
     //{
@@ -182,7 +182,8 @@ public class PauseScript : MonoBehaviour
         if (inventoryMenu != null)
             inventoryMenu.SetActive(true);
         lastMenuTab = MenuTab.Inventory;
-        bottomTooltip.sprite = bottomTooltipPauseMenuGamepad;
+        SetMainPauseMenuTooltip();
+        bottomTooltipPauseMenuGamepad.SetActive(true);
     }
     public void InventMenuClick()
     {
@@ -193,7 +194,7 @@ public class PauseScript : MonoBehaviour
             InventionUIManager.instance.OpenInventionMenu();
         }
         lastMenuTab = MenuTab.Invent;
-        bottomTooltip.sprite = bottomTooltipPauseMenuGamepad;
+        SetMainPauseMenuTooltip();
     }
     void DisableAllMenus()
     {
@@ -210,7 +211,7 @@ public class PauseScript : MonoBehaviour
         DisableAllMenus();
         if (optionsMenu!= null) optionsMenu.SetActive(true);
         lastMenuTab = MenuTab.Options;
-        bottomTooltip.sprite = bottomTooltipPauseMenuGamepad;
+        SetMainPauseMenuTooltip();
     }
     public void ExitMenuClick()
     {
@@ -221,7 +222,17 @@ public class PauseScript : MonoBehaviour
             mainPauseMenuEvents.SetSelectedGameObject(mainMenuButton);
         mainMenuButton.GetComponent<Button>().Select();
         lastMenuTab = MenuTab.ExitGame;
-        bottomTooltip.sprite = bottomTooltipPauseMenuGamepad;
+        SetMainPauseMenuTooltip();
+    }
+    void SetWeaponMenuTooltip()
+    {
+        bottomTooltipWeaponMenuGamepad.SetActive(true);
+        bottomTooltipPauseMenuGamepad.SetActive(false);
+    }
+    void SetMainPauseMenuTooltip()
+    {
+        bottomTooltipWeaponMenuGamepad.SetActive(false);
+        bottomTooltipPauseMenuGamepad.SetActive(true);
     }
     public void MainMenuClick()
     {
@@ -303,21 +314,18 @@ public class PauseScript : MonoBehaviour
         switch (lastMenuTab)
         {//go to last menu the player had open
             case MenuTab.Weapons:
-                bottomTooltip.sprite = bottomTooltipWeaponMenuGamepad;
                 WeaponMenuClick();
                 break;
             case MenuTab.Inventory:
-                bottomTooltip.sprite = bottomTooltipPauseMenuGamepad;
+                InventoryMenuClick();
                 break;
             case MenuTab.Invent:
-                bottomTooltip.sprite = bottomTooltipPauseMenuGamepad;
                 InventMenuClick();
                 break;
             case MenuTab.Options:
-                bottomTooltip.sprite = bottomTooltipPauseMenuGamepad;
+                OptionsMenuClick();
                 break;
             default:
-                bottomTooltip.sprite = bottomTooltipWeaponMenuGamepad;
                 WeaponMenuClick();
                 break;
         } 
