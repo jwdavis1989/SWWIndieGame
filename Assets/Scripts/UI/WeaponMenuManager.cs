@@ -122,7 +122,7 @@ public class WeaponMenuManager : MonoBehaviour
 
     //**************************** I N P U T ****************************
     float rotationSpeed = 100;
-    float zoomSpeed = 75;
+    float zoomSpeed = 1;
     float maxZoomDistance = 0.5f;
     float minZoomDistance = -0.5f;
     void HandleWeaponPreviewInput()
@@ -132,26 +132,30 @@ public class WeaponMenuManager : MonoBehaviour
         //rotate
         if (previewCameraInput.x > 0.75f)
         {
-            currentWeaponPreview.transform.Rotate(Vector3.forward * rotationSpeed * Time.unscaledDeltaTime);
+            //currentWeaponPreview.transform.Rotate(Vector3.forward * rotationSpeed * Time.unscaledDeltaTime);
+            //weaponPreviewHolder.Rotate(Vector3.one * rotationSpeed * Time.unscaledDeltaTime);
+            weaponPreviewHolder.Rotate(0f,  rotationSpeed * Time.unscaledDeltaTime, 0, Space.World);
+
         }
         else if (previewCameraInput.x < -0.75f)
         {
-            currentWeaponPreview.transform.Rotate(Vector3.back * rotationSpeed * Time.unscaledDeltaTime);
+            //currentWeaponPreview.transform.Rotate(Vector3.back * rotationSpeed * Time.unscaledDeltaTime);
+            weaponPreviewHolder.transform.Rotate(0f, -rotationSpeed * Time.unscaledDeltaTime, 0f, Space.World);
         }
         //zoom
-        if (previewCameraInput.y > 0.75f && currentWeaponPreview.transform.position.z >= minZoomDistance)
+        if (previewCameraInput.y > 0.75f && weaponPreviewHolder.transform.position.z >= minZoomDistance)
         {
-            Vector3 newPosition = currentWeaponPreview.transform.position;
-            newPosition.z -= 0.1f * Time.unscaledDeltaTime;
+            Vector3 newPosition = weaponPreviewHolder.transform.position;
+            newPosition.z -= zoomSpeed * Time.unscaledDeltaTime;
             newPosition.z = Mathf.Max(newPosition.z, minZoomDistance);
-            currentWeaponPreview.transform.position = newPosition;
+            weaponPreviewHolder.transform.position = newPosition;
         }
-        else if (previewCameraInput.y < -0.75f && currentWeaponPreview.transform.position.z <= maxZoomDistance)
+        else if (previewCameraInput.y < -0.75f && weaponPreviewHolder.transform.position.z <= maxZoomDistance)
         {
-            Vector3 newPosition = currentWeaponPreview.transform.position;
-            newPosition.z += 0.1f * Time.unscaledDeltaTime;
+            Vector3 newPosition = weaponPreviewHolder.transform.position;
+            newPosition.z += zoomSpeed * Time.unscaledDeltaTime;
             newPosition.z = Mathf.Min(newPosition.z, maxZoomDistance);
-            currentWeaponPreview.transform.position = newPosition;
+            weaponPreviewHolder.transform.position = newPosition;
         }
     }
     //float wpnScrollVal = 0;
@@ -423,11 +427,15 @@ public class WeaponMenuManager : MonoBehaviour
             {
                 currentWeaponPreview.transform.localPosition = new Vector3(0.15f, -0.05f, -1f);
                 currentWeaponPreview.transform.localRotation = Quaternion.Euler(340f, 295f, 305f);
+                weaponPreviewHolder.localPosition = new Vector3(0, 0, 0);
+                weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
             }
             else
             {
                 currentWeaponPreview.transform.localPosition = new Vector3(0, -0.5f, 0);
                 currentWeaponPreview.transform.localRotation = Quaternion.Euler(90f, 90f, 0);
+                weaponPreviewHolder.localPosition = new Vector3(0, 0, 0);
+                weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
             }
             currentWeaponPreview.layer = LayerMask.NameToLayer("WeaponPreview");
             foreach (Transform t in currentWeaponPreview.GetComponentsInChildren<Transform>())
