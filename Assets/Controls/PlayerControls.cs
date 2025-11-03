@@ -1267,6 +1267,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""HelpButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""8b47ac0d-224c-4dd3-b59f-e0187490143c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""UIButtonX"",
                     ""type"": ""Button"",
                     ""id"": ""ef1df40b-cfa3-4983-8642-2e1fd5f294e5"",
@@ -1564,10 +1573,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""6b09e01a-8900-4c4c-9f77-b6baaf70bd9a"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": ""Hold(duration=1.25)"",
+                    ""interactions"": ""Hold(duration=1.5)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BreakdownWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d9401df-953c-4a98-968b-cb34fa761dd8"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HelpButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2170,6 +2190,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PauseMenu = asset.FindActionMap("Pause Menu", throwIfNotFound: true);
         m_PauseMenu_DialogueContinue = m_PauseMenu.FindAction("DialogueContinue", throwIfNotFound: true);
         m_PauseMenu_PauseButton = m_PauseMenu.FindAction("PauseButton", throwIfNotFound: true);
+        m_PauseMenu_HelpButton = m_PauseMenu.FindAction("HelpButton", throwIfNotFound: true);
         m_PauseMenu_UIButtonX = m_PauseMenu.FindAction("UIButtonX", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuLeft = m_PauseMenu.FindAction("SwitchMenuLeft", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuRight = m_PauseMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
@@ -2709,6 +2730,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPauseMenuActions> m_PauseMenuActionsCallbackInterfaces = new List<IPauseMenuActions>();
     private readonly InputAction m_PauseMenu_DialogueContinue;
     private readonly InputAction m_PauseMenu_PauseButton;
+    private readonly InputAction m_PauseMenu_HelpButton;
     private readonly InputAction m_PauseMenu_UIButtonX;
     private readonly InputAction m_PauseMenu_SwitchMenuLeft;
     private readonly InputAction m_PauseMenu_SwitchMenuRight;
@@ -2723,6 +2745,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public PauseMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @DialogueContinue => m_Wrapper.m_PauseMenu_DialogueContinue;
         public InputAction @PauseButton => m_Wrapper.m_PauseMenu_PauseButton;
+        public InputAction @HelpButton => m_Wrapper.m_PauseMenu_HelpButton;
         public InputAction @UIButtonX => m_Wrapper.m_PauseMenu_UIButtonX;
         public InputAction @SwitchMenuLeft => m_Wrapper.m_PauseMenu_SwitchMenuLeft;
         public InputAction @SwitchMenuRight => m_Wrapper.m_PauseMenu_SwitchMenuRight;
@@ -2746,6 +2769,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
+            @HelpButton.started += instance.OnHelpButton;
+            @HelpButton.performed += instance.OnHelpButton;
+            @HelpButton.canceled += instance.OnHelpButton;
             @UIButtonX.started += instance.OnUIButtonX;
             @UIButtonX.performed += instance.OnUIButtonX;
             @UIButtonX.canceled += instance.OnUIButtonX;
@@ -2780,6 +2806,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
+            @HelpButton.started -= instance.OnHelpButton;
+            @HelpButton.performed -= instance.OnHelpButton;
+            @HelpButton.canceled -= instance.OnHelpButton;
             @UIButtonX.started -= instance.OnUIButtonX;
             @UIButtonX.performed -= instance.OnUIButtonX;
             @UIButtonX.canceled -= instance.OnUIButtonX;
@@ -3011,6 +3040,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnDialogueContinue(InputAction.CallbackContext context);
         void OnPauseButton(InputAction.CallbackContext context);
+        void OnHelpButton(InputAction.CallbackContext context);
         void OnUIButtonX(InputAction.CallbackContext context);
         void OnSwitchMenuLeft(InputAction.CallbackContext context);
         void OnSwitchMenuRight(InputAction.CallbackContext context);

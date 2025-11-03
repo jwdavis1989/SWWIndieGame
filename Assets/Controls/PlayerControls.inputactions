@@ -1245,6 +1245,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "HelpButton",
+                    "type": "Button",
+                    "id": "8b47ac0d-224c-4dd3-b59f-e0187490143c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "UIButtonX",
                     "type": "Button",
                     "id": "ef1df40b-cfa3-4983-8642-2e1fd5f294e5",
@@ -1542,10 +1551,21 @@
                     "name": "",
                     "id": "6b09e01a-8900-4c4c-9f77-b6baaf70bd9a",
                     "path": "<Gamepad>/buttonNorth",
-                    "interactions": "Hold(duration=1.25)",
+                    "interactions": "Hold(duration=1.5)",
                     "processors": "",
                     "groups": "",
                     "action": "BreakdownWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d9401df-953c-4a98-968b-cb34fa761dd8",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HelpButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
