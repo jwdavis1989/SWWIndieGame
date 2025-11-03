@@ -155,7 +155,7 @@ public class PlayerInputManager : MonoBehaviour
 
             //Blocking
             //Holding the input sets Blocking to true
-            playerControls.PlayerActions.Block.performed += i => { blockInput = true; Debug.Log("blockInput Pressed"); };
+            playerControls.PlayerActions.Block.performed += i => blockInput = true;
             //Releasing sets the Blocking to false
             playerControls.PlayerActions.Block.canceled += i => HandleDisableBlock();
 
