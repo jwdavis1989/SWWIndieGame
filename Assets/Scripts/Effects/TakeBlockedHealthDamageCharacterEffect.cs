@@ -214,7 +214,9 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         finalStaminaDamage = finalStaminaDamage - staminaDamageAbsorbtion;
 
         character.characterStatsManager.currentStamina -= finalStaminaDamage;
-        character.characterStatsManager.ResetStaminaRegenTimer();
+
+        //11-3-25: Currently commenting out to allow the player to regen stamina by lowering their block, as you regen 0 stamina while blocking now.
+        //character.characterStatsManager.ResetStaminaRegenTimer();
     }
 
     private bool CheckForGuardBreak(CharacterManager character)
