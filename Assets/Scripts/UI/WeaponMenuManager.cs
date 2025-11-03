@@ -260,26 +260,38 @@ public class WeaponMenuManager : MonoBehaviour
         }
     }
     /* Show Tooltip */
+    bool tooltipActive = false;
     void HandleHelpInput()
     {
         if (helpInput)
         {
             helpInput = false;
+            tooltipActive = !tooltipActive;
             Debug.Log("HelpInput " + componentButtonSelected);
-            if (componentButtonSelected)
+            //if (componentButtonSelected)
+            //{
+            //    Debug.Log("ComponentButtonSelected " + currentlySelectedComponentIndex);
+            //    int index = 0;
+
+            foreach (Transform obj in componentsGrid.transform)
             {
-                Debug.Log("ComponentButtonSelected " + currentlySelectedComponentIndex);
-                int index = 0;
-                foreach (Transform obj in componentsGrid.transform)
+                if (obj.gameObject == eventSystem.currentSelectedGameObject.GetComponentInParent<TinkerComponentUI>().gameObject)
                 {
-                    if (currentlySelectedComponentIndex == index++)
-                    {
-                        obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
-                    }
-                    else
-                        obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
                 }
+                else
+                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
             }
+            //}
+            //if (eventSystem.currentSelectedGameObject != null)
+            //{
+            //    TinkerComponentUI component = eventSystem.currentSelectedGameObject.GetComponentInParent<TinkerComponentUI>();
+            //    if (component != null)
+            //    {
+            //        component.tooltipHolder.SetActive(true);
+            //    }
+            //}
+
         }
     }
     //************************** B U T T O N S **************************
@@ -803,6 +815,18 @@ public class WeaponMenuManager : MonoBehaviour
             cmpntScroll.numberOfSteps = numOfPage;
             cmpntScroll.size = 1.0f / numOfPage;
             cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
+        }
+        if (tooltipActive) // Handle Tooltip
+        {
+            foreach (Transform obj in componentsGrid.transform)
+            {
+                if (obj.gameObject == eventSystem.currentSelectedGameObject.GetComponentInParent<TinkerComponentUI>().gameObject)
+                {
+                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
+                }
+                else
+                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+            }
         }
     }
     private void ReloadUpgradeMenu()
