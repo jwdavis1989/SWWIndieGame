@@ -39,6 +39,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Dodge")]
     private Vector3 rollDirection;
+    [SerializeField] float dodgeBoostSpeed = 25f;
     [SerializeField] float airBoostSpeed = 150f;
     public float icarusBoosterDashSpeedMultiplier = 2f;
     public GameObject forceFieldGraphic;
@@ -334,6 +335,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
                 //Subtract Stamina for roll
                 player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
+
+                //Move Player
+                player.characterController.Move(rollDirection * Time.deltaTime * dodgeBoostSpeed);
             }
             else
             {
