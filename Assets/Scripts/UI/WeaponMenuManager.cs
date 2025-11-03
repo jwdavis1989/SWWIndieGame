@@ -98,11 +98,11 @@ public class WeaponMenuManager : MonoBehaviour
         if (eventSystem.currentSelectedGameObject == null)
         { //grid system become null when equipping weapon because the grid is reloaded
             //eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
-            //if (componentsGrid.transform.childCount > 0)
-            //{
-            //    eventSystem.SetSelectedGameObject(componentsGrid.transform.GetChild(0).gameObject);
-            //    componentsGrid.transform.GetChild(0).GetComponentInChildren<Button>().Select();
-            //}
+            if (componentsGrid.transform.childCount > 0)
+            {
+                //eventSystem.SetSelectedGameObject(componentsGrid.transform.GetChild(0).gameObject);
+                componentsGrid.transform.GetChild(0).GetComponentInChildren<Button>().Select();
+            }
         }
         HandleWeaponPreviewInput();
         HandleSwitchWeaponInput();
@@ -261,8 +261,10 @@ public class WeaponMenuManager : MonoBehaviour
     }
     /* Show Tooltip */
     bool tooltipActive = false;
+    GameObject currentCursorObj = null;
     void HandleHelpInput()
     {
+
         if (helpInput)
         {
             helpInput = false;
@@ -272,16 +274,9 @@ public class WeaponMenuManager : MonoBehaviour
             //{
             //    Debug.Log("ComponentButtonSelected " + currentlySelectedComponentIndex);
             //    int index = 0;
-
-            foreach (Transform obj in componentsGrid.transform)
-            {
-                if (obj.gameObject == eventSystem.currentSelectedGameObject.GetComponentInParent<TinkerComponentUI>().gameObject)
-                {
-                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
-                }
-                else
+            if(!tooltipActive)
+                foreach (Transform obj in componentsGrid.transform)
                     obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
-            }
             //}
             //if (eventSystem.currentSelectedGameObject != null)
             //{
@@ -291,7 +286,34 @@ public class WeaponMenuManager : MonoBehaviour
             //        component.tooltipHolder.SetActive(true);
             //    }
             //}
+        }
+        if (tooltipActive)
+        {
+            //Debug.Log("TooltipActive");
+            if (currentCursorObj != eventSystem.currentSelectedGameObject)
+            {
+                //Debug.Log("new cur obj");
+                currentCursorObj = eventSystem.currentSelectedGameObject;
+                if (currentCursorObj != null)
+                {
+                    //Debug.Log("currentCursorObj not null");
+                    TinkerComponentUI ui = currentCursorObj.GetComponentInParent<TinkerComponentUI>();
+                    if (ui != null)
+                    {
+                        //Debug.Log("cur ui " + ui.tooltip.text);
+                        foreach (Transform obj in componentsGrid.transform)//refresh tooltip
+                        {
+                            if (obj.gameObject == currentCursorObj.GetComponentInParent<TinkerComponentUI>().gameObject)
+                            {
+                                obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(tooltipActive);
+                            }
+                            else
+                                obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+                        }
+                    }
 
+                }
+            }
         }
     }
     //************************** B U T T O N S **************************
@@ -455,7 +477,7 @@ public class WeaponMenuManager : MonoBehaviour
             currentWeaponPreview.SetActive(true);
             if (wpn.isSpecialWeapon && wpn.stats.weaponType != WeaponType.Dagger && wpn.stats.weaponType != WeaponType.BowieKnife)
             {
-                currentWeaponPreview.transform.localPosition = new Vector3(0.15f, -0.05f, -1f);
+                currentWeaponPreview.transform.localPosition = new Vector3(0, -0.05f, 0);
                 currentWeaponPreview.transform.localRotation = Quaternion.Euler(340f, 295f, 305f);
                 weaponPreviewHolder.localPosition = new Vector3(0, 0, 0);
                 weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
@@ -752,7 +774,7 @@ public class WeaponMenuManager : MonoBehaviour
                         }
                     });
                 }// cant use component. disable the button
-                else tinkerComponentUI.mainButton.interactable = false;
+                //else tinkerComponentUI.mainButton.interactable = false;
             }
         }
         //weapon components
