@@ -239,7 +239,7 @@
                     "id": "292d0ea2-6b2e-4837-bbf9-d979558a2b57",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "Hold(duration=0.05)",
                     "initialStateCheck": false
                 },
                 {
@@ -363,6 +363,24 @@
                     "name": "DebugTeleportToJerryDev",
                     "type": "Button",
                     "id": "6dd9e535-836f-4964-bad6-cd3e298713d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugChangeMainHandElement",
+                    "type": "Button",
+                    "id": "06a1fad9-2385-4845-8520-e60b2852bc69",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugChangeOffHandElement",
+                    "type": "Button",
+                    "id": "9884f9fb-0861-495f-8cd3-ee13c9b06af5",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -1003,6 +1021,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "QueueJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d8aa39f-90f7-4b97-b192-07c2c29eccbc",
+                    "path": "<Keyboard>/numpadMultiply",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugChangeMainHandElement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62ba4d26-621f-4fa1-89b6-31bdd3aed478",
+                    "path": "<Keyboard>/numpadDivide",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugChangeOffHandElement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

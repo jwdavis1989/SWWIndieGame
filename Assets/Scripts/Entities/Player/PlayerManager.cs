@@ -256,6 +256,78 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
     }
 
+    public void DebugChangeWeaponElementByHand(bool isMainHand)
+    {
+        WeaponScript updatedWeapon;
+        ElementalDamageType newHighestElement;
+
+        if (isMainHand)
+        {
+            updatedWeapon = PlayerWeaponManager.instance.GetMainHand();
+        }
+        else
+        {
+            updatedWeapon = PlayerWeaponManager.instance.GetOffHand();
+        }
+
+        newHighestElement = updatedWeapon.stats.elemental.currentHighestElementalStat;
+
+        switch (newHighestElement)
+        {
+            case ElementalDamageType.Fire:
+                newHighestElement = ElementalDamageType.Ice;
+                //if (isInDebugMode) Debug.Log("Highest Element: Fire");
+                break;
+            case ElementalDamageType.Ice:
+                newHighestElement = ElementalDamageType.Lightning;
+                //if (isInDebugMode) Debug.Log("Highest Element: Ice");
+                break;
+            case ElementalDamageType.Lightning:
+                newHighestElement = ElementalDamageType.Wind;
+                //if (isInDebugMode) Debug.Log("Highest Element: Lightning");
+                break;
+            case ElementalDamageType.Wind:
+                newHighestElement = ElementalDamageType.Earth;
+                //if (isInDebugMode) Debug.Log("Highest Element: Wind");
+                break;
+            case ElementalDamageType.Earth:
+                newHighestElement = ElementalDamageType.Light;
+                //if (isInDebugMode) Debug.Log("Highest Element: Earth");
+                break;
+            case ElementalDamageType.Light:
+                newHighestElement = ElementalDamageType.Beast;
+                //if (isInDebugMode) Debug.Log("Highest Element: Light");
+                break;
+            case ElementalDamageType.Beast:
+                newHighestElement = ElementalDamageType.Scales;
+                //if (isInDebugMode) Debug.Log("Highest Element: Beast");
+                break;
+            case ElementalDamageType.Scales:
+                newHighestElement = ElementalDamageType.Tech;
+                //if (isInDebugMode) Debug.Log("Highest Element: Scales");
+                break;
+            case ElementalDamageType.Tech:
+                newHighestElement = ElementalDamageType.Fire;
+                //if (isInDebugMode) Debug.Log("Highest Element: Tech");
+                break;
+            default:
+                newHighestElement = ElementalDamageType.Fire;
+                //if (isInDebugMode) Debug.Log("Highest Element: Unaspected");
+                break;
+        }
+
+        updatedWeapon.stats.elemental.currentHighestElementalStat = newHighestElement;
+        if (isMainHand)
+        {
+            Debug.Log("Mainhand: Element changed to: " + newHighestElement);
+        }
+        else
+        {
+            Debug.Log("Offhand: Element changed to: " + newHighestElement);
+        }
+
+    }
+
     // public void AttachCurrentlyEquippedWeaponObjectsToHand() {
     //     //For each weapon in our currentlyOwnedWeapons
     //     // foreach (GameObject Weapon in WeaponsController.instance.currentlyOwnedWeapons) {

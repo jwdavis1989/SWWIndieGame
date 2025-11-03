@@ -212,6 +212,10 @@ public class PlayerInputManager : MonoBehaviour
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
+            playerControls.PlayerActions.DebugChangeMainHandElement.performed += i => player.DebugChangeWeaponElementByHand(true);
+            playerControls.PlayerActions.DebugChangeOffHandElement.performed += i => player.DebugChangeWeaponElementByHand(false);
+            
+
             //Player UI interactions
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
             //playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
