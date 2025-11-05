@@ -15,8 +15,9 @@ public class WeaponMenuManager : MonoBehaviour
 {
     [Header("Weapon Menu\n")]
     [Header("Active Weapon Preview")]
-    public TextMeshProUGUI primaryStatsText;
-    public TextMeshProUGUI elementalStatsText;
+    public GameObject statsTextPrefab;
+    public GameObject primaryStatsText;
+    public GameObject elementalStatsText;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI activeWeaponTierLevelText;
     public TextMeshProUGUI tinkerPointsCountText;
@@ -462,8 +463,8 @@ public class WeaponMenuManager : MonoBehaviour
         if (activeWeapon != null && activeWeapon.GetComponent<WeaponScript>() != null && activeWeapon.GetComponent<WeaponScript>().isSpecialWeapon)
             useSpecialWeapon = true;
 
-        string primaryStats = "";
-        string elementalStats = "";
+        //string primaryStats = "";
+        //string elementalStats = "";
         if (activeWeapon == null) 
             Debug.Log("Active weapon null");
             //PlayerWeaponManager.instance.GetMainHand();
@@ -498,15 +499,32 @@ public class WeaponMenuManager : MonoBehaviour
             tinkerPointsCountText.text = ""+wpn.stats.currentTinkerPoints;
             WeaponStats stats = wpn.stats;
             ElementalStats el = stats.elemental;
-            primaryStats = 
-              "\nAttack: " + stats.attack + "  \t\tBlock: " + stats.block 
-            + "\nDurability: " + stats.durability + "\tStability: " + stats.stability;
-            elementalStats = 
-              "\nFire: " + el.firePower + "\t\tEarth: " + el.earthPower 
-            + "\nIce: "  + el.icePower  + "\t\tLight: "  + el.lightPower
-            + "\nLightning: " + el.lightningPower + "\tBeast: " + el.beastPower
-            + "\nWind: " + el.windPower + "\t\tScale: " + el.scalesPower 
-            + "\nTech: " + el.techPower;
+            //primaryStats = 
+            //  "\nAttack: " + stats.attack + "  \t\tBlock: " + stats.block 
+            //+ "\nDurability: " + stats.durability + "\tStability: " + stats.stability;
+            foreach (Transform child in primaryStatsText.transform)
+                Destroy(child.gameObject);
+            Instantiate(statsTextPrefab, primaryStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Attack: " + stats.attack;
+            Instantiate(statsTextPrefab, primaryStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Block: " + stats.block;
+            Instantiate(statsTextPrefab, primaryStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Durability: " + stats.durability;
+            Instantiate(statsTextPrefab, primaryStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Stability: " + stats.stability;
+            foreach (Transform child in elementalStatsText.transform)
+                Destroy(child.gameObject);
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Fire: " + el.firePower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Earth: " + el.earthPower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Ice: " + el.icePower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Light: " + el.lightPower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Lightning: " + el.lightningPower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Beast: " + el.beastPower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Wind: " + el.windPower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Scale: " + el.scalesPower;
+            Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Tech: " + el.techPower;
+            //elementalStats = 
+            //  "\nFire: " + el.firePower + "\t\tEarth: " + el.earthPower 
+            //+ "\nIce: "  + el.icePower  + "\t\tLight: "  + el.lightPower
+            //+ "\nLightning: " + el.lightningPower + "\tBeast: " + el.beastPower
+            //+ "\nWind: " + el.windPower + "\t\tScale: " + el.scalesPower 
+            //+ "\nTech: " + el.techPower;
             //weapon evolves
             WeaponsController weaponCntrller = WeaponsController.instance;
             List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
@@ -584,12 +602,12 @@ public class WeaponMenuManager : MonoBehaviour
         }
         else
         {
-            primaryStats = "Equipped - None\n\n\n\n";
+            //primaryStats = "Equipped - None\n\n\n\n";
             wpnEvolveBtn1.SetActive(false);
             wpnEvolveBtn2.SetActive(false);
         }
-        primaryStatsText.text = primaryStats;
-        elementalStatsText.text = elementalStats;
+        //primaryStatsText.text = primaryStats;
+        //elementalStatsText.text = elementalStats;
     }
     /**
      * Clear weapons grid and reload it with current values
