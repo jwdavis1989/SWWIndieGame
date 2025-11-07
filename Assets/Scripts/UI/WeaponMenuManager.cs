@@ -807,10 +807,18 @@ public class WeaponMenuManager : MonoBehaviour
                 GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
                 TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
                 //tinkerComponent.tooltip.text = componentScript.stats.itemName;
-                if (tinkerComponentUI.tooltip != null)
-                    tinkerComponentUI.tooltip.text = componentScript.stats.itemName;
-                if(tinkerComponentUI.tooltipHolder != null)
-                    tinkerComponentUI.tooltipHolder.SetActive(false);
+                if(tinkerComponentUI.tooltipUI != null)
+                {
+                    TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
+                    tooltipUI.headerText.text = componentScript.stats.itemName;
+                    tooltipUI.bottomText.text = ""+componentScript.stats.count;//todo gold cost/other footer text
+                    tooltipUI.centerText.text = "TODO:STATS";
+                    tooltipUI.gameObject.SetActive(false);
+                }
+                //if (tinkerComponentUI.tooltip != null)
+                //    tinkerComponentUI.tooltip.text = componentScript.stats.itemName;
+                //if(tinkerComponentUI.tooltipHolder != null)
+                //    tinkerComponentUI.tooltipHolder.SetActive(false);
                 tinkerComponentUI.countText.text = "" + componentScript.stats.count;
                 //tinkerComponent.cornerButton.gameObject.SetActive(false);
                 if(componentScript.spr)//Icon

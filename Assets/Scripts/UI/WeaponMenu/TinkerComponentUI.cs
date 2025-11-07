@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class TinkerComponentUI : MonoBehaviour
 {
-    public TextMeshProUGUI tooltip;//Text on hover/help
-    public GameObject tooltipHolder;//tooltip obj
+    public TextMeshProUGUI tooltip;//OLD Text on hover/help
+    public GameObject tooltipHolder;//OLD tooltip obj
+    public TooltipUI tooltipUI;//new
     public TextMeshProUGUI countText;
     public Button mainButton;
     public GameObject foregroundIcon;
     public int index = 0;
-    // Start is called before the first frame update
 }
