@@ -55,7 +55,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Minimap Sprite")]
     public GameObject miniMapSprite;
-    
+
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
 
@@ -239,5 +239,15 @@ public class CharacterManager : MonoBehaviour
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
-    
+
+    public virtual void DisableBoosting()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableBoostingAndHovering()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
 }

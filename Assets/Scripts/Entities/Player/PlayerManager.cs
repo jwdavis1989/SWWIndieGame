@@ -380,5 +380,9 @@ public class PlayerManager : CharacterManager
         isRolling = false;
     }
 
+    public override void DisableBoosting()
+    {
+        isBoosting = false;
+    }
 
 }
