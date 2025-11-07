@@ -39,7 +39,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Dodge")]
     private Vector3 rollDirection;
-    [SerializeField] float dodgeBoostSpeed = 25f;
+    [SerializeField] float dodgeBoostSpeed = 1f;
     [SerializeField] float airBoostSpeed = 150f;
     public float icarusBoosterDashSpeedMultiplier = 2f;
     public GameObject forceFieldGraphic;
@@ -63,6 +63,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         HandleGroundedMovement();
         HandleRotation();
         HandleBackBoosterJets();
+        HandleRollingMovement();
 
         //Aerial Movement
         HandleJumpingMovement();
@@ -122,6 +123,15 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.isJumping)
         {
             player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
+        }
+    }
+
+    private void HandleRollingMovement()
+    {
+        if (player.isRolling)
+        {
+            //Move Player
+            player.characterController.Move(rollDirection * Time.deltaTime * dodgeBoostSpeed);
         }
     }
 
@@ -337,7 +347,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
 
                 //Move Player
-                player.characterController.Move(rollDirection * Time.deltaTime * dodgeBoostSpeed);
+                //player.characterController.Move(rollDirection * Time.deltaTime * dodgeBoostSpeed);
             }
             else
             {

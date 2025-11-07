@@ -234,5 +234,10 @@ public class CharacterManager : MonoBehaviour
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
+
+    public virtual void DisableIsRolling()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
     
 }

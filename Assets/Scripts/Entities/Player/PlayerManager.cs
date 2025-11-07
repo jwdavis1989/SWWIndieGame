@@ -375,5 +375,10 @@ public class PlayerManager : CharacterManager
         isInvulnerable = false;
     }
 
+    public override void DisableIsRolling()
+    {
+        isRolling = false;
+    }
+
 
 }
