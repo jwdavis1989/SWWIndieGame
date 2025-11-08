@@ -811,8 +811,12 @@ public class WeaponMenuManager : MonoBehaviour
                 {
                     TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
                     tooltipUI.headerText.text = componentScript.stats.itemName;
-                    tooltipUI.bottomText.text = ""+componentScript.stats.count;//todo gold cost/other footer text
-                    tooltipUI.centerText.text = "TODO:STATS";
+                    tooltipUI.bottomText.text = componentScript.stats.price + " gp";//gold points - placeholder name
+                    tooltipUI.centerText.text = "";
+                    foreach(KeyValuePair<string,float> stat in componentScript.GetStats())
+                    {
+                        tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + "\n";
+                    }
                     tooltipUI.gameObject.SetActive(false);
                 }
                 //if (tinkerComponentUI.tooltip != null)

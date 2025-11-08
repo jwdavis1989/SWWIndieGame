@@ -2,6 +2,8 @@ using Palmmedia.ReportGenerator.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 /**
@@ -71,6 +73,25 @@ public class TinkerComponent : MonoBehaviour
             }
         }
     }
+    public Dictionary<string, float> GetStats()
+    {
+        Dictionary<string, float> rv = new Dictionary<string, float>();
+        rv.Add("Fire", stats.elementalStats.firePower);
+        rv.Add("Earth", stats.elementalStats.earthPower);
+        rv.Add("Ice", stats.elementalStats.icePower);
+        rv.Add("Light", stats.elementalStats.lightPower);
+        rv.Add("Lightning", stats.elementalStats.lightningPower);
+        rv.Add("Beast", stats.elementalStats.beastPower);
+        rv.Add("Wind", stats.elementalStats.windPower);
+        rv.Add("Scales", stats.elementalStats.scalesPower);
+        rv.Add("Tech", stats.elementalStats.techPower);
+        rv.Add("Attack", stats.attack);
+        rv.Add("Block", stats.block);
+        rv.Add("Durability", stats.durability);
+        rv.Add("Stability", stats.stability);
+        //filter out zeroes and return
+        return rv.Where(kvp => kvp.Value != 0).ToDictionary(kvp => kvp.Key, kvp =>kvp.Value);
+    }
 }
 /**
  * Serializable object that can read/write as json
@@ -93,4 +114,5 @@ public class TinkerComponentStats
     [Header("Components made from recycled weapons behave differently")]
     public bool isWeapon = false;
     public bool isSpecialWpn = false;
+    public int price = 1;
 }
