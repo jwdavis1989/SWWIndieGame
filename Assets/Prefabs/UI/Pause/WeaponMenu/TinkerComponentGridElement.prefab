@@ -408,7 +408,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 0.57254905}
     m_PressedColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0.56078434}
-    m_SelectedColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0.5372549}
+    m_SelectedColor: {r: 0.21337666, g: 0.3301887, b: 0.3128102, a: 0.5372549}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -461,7 +461,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2195625836927371737, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2195625836927371737, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2195625836927371737, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2195625836927371737, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
@@ -514,7 +522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4984158335515698060, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4984158335515698060, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_AnchorMax.x
@@ -574,7 +582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4984158335515698060, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 175
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4984158335515698060, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -586,6 +594,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4984158335515698060, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226743941402620332, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_text
+      value: 'Durability: +5
+
+        Ice: +10
+
+        Wind: +10
+
+        Scales:
+        +5
+
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7237046009683887448, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7237046009683887448, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_ChildForceExpandHeight
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7911843898098709352, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
