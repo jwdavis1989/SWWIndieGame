@@ -66,7 +66,17 @@ public class TinkerComponentManager : MonoBehaviour
         GameObject wpnToBreak = weaponsList[index];
         WeaponScript weapon = wpnToBreak.GetComponent<WeaponScript>();
         if (weapon.stats.level < 5)
-            throw new ArgumentException("Weapon must be level 5");
+            throw new Exception("Must be Level 5 or over");
+        if (weapon.isSpecialWeapon)
+        {
+            if (PlayerWeaponManager.instance.ownedSpecialWeapons.Count <= 1)
+                throw new Exception("Last off hand weapon");
+        }
+        else
+        {
+            if (PlayerWeaponManager.instance.ownedWeapons.Count <= 1)
+                throw new Exception("Last main hand weapon");
+        }
         wpnToBreak.AddComponent<TinkerComponent>();
         TinkerComponent rv = wpnToBreak.GetComponent<TinkerComponent>();
         rv.stats.elementalStats = weapon.stats.elemental;
@@ -126,8 +136,12 @@ public class TinkerComponentManager : MonoBehaviour
         if (weaponToUpgrade == null) { return false; }
         TinkerComponent tinkerComponentToAdd = tinkerComponentPassed.GetComponent<TinkerComponent>();
         WeaponScript weapon = weaponToUpgrade.GetComponent<WeaponScript>();
-        // new tinker points
-        if (weapon.stats.currentTinkerPoints == 0) return false;
+        // check tinker points
+        if (weapon.stats.currentTinkerPoints == 0) 
+            return false;
+        // check weapon component hand
+        if (tinkerComponentToAdd.stats.isWeapon && weapon.isSpecialWeapon != tinkerComponentToAdd.stats.isSpecialWpn)
+            return false;
         //used passed component for weapons. Ensure using base components for regular components
         TinkerComponent tinkerComponent = tinkerComponentToAdd.stats.isWeapon ? tinkerComponentToAdd : baseComponents[(int)tinkerComponentToAdd.stats.componentType].GetComponent<TinkerComponent>();
         //can't add if out of that component

@@ -320,27 +320,47 @@ public class WeaponMenuManager : MonoBehaviour
     //************************** B U T T O N S **************************
     /**
      * Turn active weapon into a component
+     * @param checkOnly - will not breakdown but only check if possible if set to true
+     * return error string or "CanSalvage" if possible to salvage
      */
-    public void BreakDownActiveWeapon()
+    public string BreakDownActiveWeapon(bool checkOnly=false)
     {
         try
         {
-            if (activeWeapon.GetComponent<WeaponScript>().stats.level < 5)
-                throw new System.Exception("Must be Level 5 or over");
-            //break down weapon
-            PlayerWeaponManager pWpns = PlayerWeaponManager.instance;
-            bool isSpecial = activeWeapon.GetComponent<WeaponScript>().isSpecialWeapon;
-            int index = isSpecial ? pWpns.ownedSpecialWeapons.IndexOf(activeWeapon) : pWpns.ownedWeapons.IndexOf(activeWeapon);
-            TinkerComponent newComp = TinkerComponentManager.instance.BreakDownWeapon(index, isSpecial, pWpns);
-            Debug.Log("Broke down " + newComp.stats.itemName);
-            //add to screen
-            activeWeapon = null;
-            ReloadUpgradeMenu();
+            if(activeWeapon == null)
+                throw new Exception("No active weapon");
+            WeaponScript activeWpnScript = activeWeapon.GetComponent<WeaponScript>();
+            PlayerWeaponManager playerWpns = PlayerWeaponManager.instance;
+            bool isSpecial = activeWpnScript.isSpecialWeapon;
+            int index = isSpecial ? playerWpns.ownedSpecialWeapons.IndexOf(activeWeapon) : playerWpns.ownedWeapons.IndexOf(activeWeapon);
+            if (activeWpnScript.stats.level < 5)
+                throw new Exception("Must be Level 5 or over");
+            if (activeWpnScript.isSpecialWeapon)
+            {
+                if (playerWpns.ownedSpecialWeapons.Count <= 1)
+                    throw new Exception("Last off hand weapon");
+            }
+            else
+            {
+                if (playerWpns.ownedWeapons.Count <= 1)
+                    throw new Exception("Last main hand weapon");
+            }
+            if (!checkOnly)
+            {
+                //break down weapon
+                TinkerComponent newComp = TinkerComponentManager.instance.BreakDownWeapon(index, isSpecial, playerWpns);
+                //Debug.Log("Broke down " + newComp.stats.itemName);
+                //add to screen
+                activeWeapon = null;
+                ReloadUpgradeMenu();
+            }
         }
-        catch (System.Exception e) //Catches not lvl 5 or over error / no active weapon
+        catch (Exception e) //Catches not lvl 5 or over error / no active weapon
         {
             Debug.Log(e.Message);
+            return (e.Message);
         }
+        return ("CanSalvage");
     }
     /**
      * Levels up equipped weapon
@@ -828,13 +848,13 @@ public class WeaponMenuManager : MonoBehaviour
                 if(componentScript.spr)//Icon
                     tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
+                if (index == currentlySelectedComponentIndex)
+                {
+                    tinkerComponentUI.mainButton.Select();
+                    componentButtonSelected = true;
+                }
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, component))
                 {
-                    if(index == currentlySelectedComponentIndex)
-                    {
-                        tinkerComponentUI.mainButton.Select();
-                        componentButtonSelected = true;
-                    }
                     /**   ADD EVENT TO COMPONENT CLICK   */
                     tinkerComponentUI.mainButton.onClick.AddListener(() =>
                     {
@@ -856,8 +876,9 @@ public class WeaponMenuManager : MonoBehaviour
                             Debug.Log("Failed to use component " + componentScript.stats.itemName);
                         }
                     });
-                }// cant use component. disable the button
-                //else tinkerComponentUI.mainButton.interactable = false;
+                }
+                //else // cant use component. disable the button
+                //   tinkerComponentUI.mainButton.interactable = false;
             }
         }
         //weapon components
@@ -874,10 +895,23 @@ public class WeaponMenuManager : MonoBehaviour
             GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
             TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
             tinkerComponentUI.countText.text = ""+componentScript.stats.count;
-            if (tinkerComponentUI.tooltip != null)
-                tinkerComponentUI.tooltip.text = componentScript.stats.itemName;
-            if (tinkerComponentUI.tooltipHolder != null)
-                tinkerComponentUI.tooltipHolder.SetActive(false);
+            //if (tinkerComponentUI.tooltip != null)
+            //    tinkerComponentUI.tooltip.text = componentScript.stats.itemName;
+            //if (tinkerComponentUI.tooltipHolder != null)
+            //    tinkerComponentUI.tooltipHolder.SetActive(false);
+            if (tinkerComponentUI.tooltipUI != null)
+            {
+                TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
+                tooltipUI.headerText.text = componentScript.stats.itemName;
+                tooltipUI.bottomText.text = componentScript.stats.price + " gp";//gold points - placeholder name
+                tooltipUI.centerText.text = "";
+                foreach (KeyValuePair<string, float> stat in componentScript.GetStats())
+                {
+                    tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + "\n";
+                }
+                tooltipUI.centerText.text += "\nCan only combine weapons of the same hand\n";
+                tooltipUI.gameObject.SetActive(false);
+            }
             if (componentScript.spr)
                 tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
             if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
@@ -890,18 +924,29 @@ public class WeaponMenuManager : MonoBehaviour
                 /**   ADD EVENT TO WEAPON COMPONENT CLICK   */
                 tinkerComponentUI.mainButton.onClick.AddListener(() =>
                 {
-                    if (PlayerWeaponManager.instance.GetEquippedWeapon() != null && TinkerComponentManager.instance.UseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
+                    tinkerComponentUI.mainButton.onClick.AddListener(() =>
                     {
-                        DisplayActiveWeapon();
-                        Destroy(gridElement);
-                    }
-                    else
-                    {
-                        Debug.Log("Failed to use component " + componentScript.stats.itemName);
-                    }
+                        //if (PlayerWeaponManager.instance.GetEquippedWeapon() != null && TinkerComponentManager.instance.UseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
+                        if (activeWeapon != null && TinkerComponentManager.instance.UseComponent(activeWeapon, component))
+                        {
+                            int newCount = tinkerComponentUI.countText.text.Trim().ParseLargeInteger() - 1;
+                            if (newCount > 0)
+                            {
+                                tinkerComponentUI.countText.text = "" + newCount;
+                            }
+                            else Destroy(gridElement);
+                            DisplayActiveWeapon();
+                            currentlySelectedComponentIndex = Math.Max(0, index - 1);
+                            LoadComponentsToScreen();
+                        }
+                        else
+                        {
+                            Debug.Log("Failed to use component " + componentScript.stats.itemName);
+                        }
+                    });
                 });
             }// cant use component. disable the button
-            else tinkerComponentUI.mainButton.interactable = false;
+            //else tinkerComponentUI.mainButton.interactable = false;
         }
         int count = 0;//count total unique components owned
         foreach (var item in TinkerComponentManager.instance.baseComponents)
