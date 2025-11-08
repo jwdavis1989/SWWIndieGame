@@ -42,7 +42,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [Header("Dodge")]
     private Vector3 rollDirection;
     [SerializeField] float dodgeBoostSpeed = 1f;
-    [SerializeField] float airBoostSpeed = 0.5f;
+    [SerializeField] float airBoostSpeed = 2f;
     public float icarusBoosterDashSpeedMultiplier = 2f;
     public GameObject forceFieldGraphic;
 
@@ -147,11 +147,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             if (InventionManager.instance.CheckHasUpgrade(InventionType.IcarusBoosters))
             {
                 //Player has Icarus Boosters
-                player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
+                //player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
+                player.characterController.Move(PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
             }
             else
             {
-                player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
+                //player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
+                player.characterController.Move(PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed);
             }
         }
     }
