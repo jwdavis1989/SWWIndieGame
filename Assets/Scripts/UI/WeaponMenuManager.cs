@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -32,6 +33,8 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject weaponsGrid;
     public int curWeaponPage = 0;
     GameObject activeWeapon = null;
+    public Image salvageButtonIconGamepad;
+    public TextMeshProUGUI salvageControlText;
     [Header("Grid containing tinker components")]
     public GameObject componentsGrid;
     public int curComponentPage = 0;
@@ -240,8 +243,7 @@ public class WeaponMenuManager : MonoBehaviour
         {
             breakdownWeaponStarted = false;
             //Debug.Log("breakdownWeaponStarted");
-
-            isHolding = true;
+            isHolding = canBreakdownActiveWeapon;
             holdTime = 0f;
             holdToBreakdownWpnImage.fillAmount = 0f;
         }
@@ -357,7 +359,7 @@ public class WeaponMenuManager : MonoBehaviour
         }
         catch (Exception e) //Catches not lvl 5 or over error / no active weapon
         {
-            Debug.Log(e.Message);
+            //Debug.Log(e.Message);
             return (e.Message);
         }
         return ("CanSalvage");
@@ -487,7 +489,8 @@ public class WeaponMenuManager : MonoBehaviour
         //string elementalStats = "";
         if (activeWeapon == null) 
             Debug.Log("Active weapon null");
-            //PlayerWeaponManager.instance.GetMainHand();
+        LoadActiveWeaponStats();
+        LoadWeaponEvolveButtons();
         if (activeWeapon)
         {
             WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
@@ -513,54 +516,21 @@ public class WeaponMenuManager : MonoBehaviour
             currentWeaponPreview.layer = LayerMask.NameToLayer("WeaponPreview");
             foreach (Transform t in currentWeaponPreview.GetComponentsInChildren<Transform>())
                 t.gameObject.layer = LayerMask.NameToLayer("WeaponPreview");
-            //stats
-            LoadActiveWeaponStats();
-            //weaponPreviewHeaderText.text = wpn.stats.weaponName;
-            //activeWeaponTierLevelText.text = wpn.GetWeaponFamilyFormatted() + "\nLevel " + wpn.stats.level;
-            //tinkerPointsCountText.text = ""+wpn.stats.currentTinkerPoints;
-            //WeaponStats stats = wpn.stats;
-            //ElementalStats el = stats.elemental;
-            //foreach (Transform child in primaryStatsText.transform)
-            //    Destroy(child.gameObject);
-            //Dictionary<string,float> primaryStats = wpn.GetPrimaryStats();
-            //foreach(KeyValuePair<string, float> stat in primaryStats)
-            //{
-            //    GameObject obj = Instantiate(statsTextPrefab, primaryStatsText.transform);
-            //    obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value;
-            //    Button tooltip = obj.GetComponentInChildren<Button>();
-            //    if(tooltip != null)
-            //    {
-
-            //    }
-            //}
-            //foreach (Transform child in elementalStatsText.transform)
-            //    Destroy(child.gameObject);
-            //Dictionary<string, float> elementalStats = wpn.GetElementalStats();
-            //foreach (KeyValuePair<string, float> stat in primaryStats)
-            //{
-            //    GameObject obj = Instantiate(statsTextPrefab, primaryStatsText.transform);
-            //    obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value;
-            //}
-            //GameObject atk = Instantiate(statsTextPrefab, primaryStatsText.transform);
-            //atk.GetComponent<TextMeshProUGUI>().text = "Attack: " + stats.attack;
-            //Instantiate(statsTextPrefab, primaryStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Block: " + stats.block;
-            //Instantiate(statsTextPrefab, primaryStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Durability: " + stats.durability;
-            //Instantiate(statsTextPrefab, primaryStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Stability: " + stats.stability;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Fire: " + el.firePower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Earth: " + el.earthPower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Ice: " + el.icePower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Light: " + el.lightPower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Lightning: " + el.lightningPower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Beast: " + el.beastPower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Wind: " + el.windPower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Scale: " + el.scalesPower;
-            //Instantiate(statsTextPrefab, elementalStatsText.transform).GetComponent<TextMeshProUGUI>().text = "Tech: " + el.techPower;
-            //elementalStats = 
-            //  "\nFire: " + el.firePower + "\t\tEarth: " + el.earthPower 
-            //+ "\nIce: "  + el.icePower  + "\t\tLight: "  + el.lightPower
-            //+ "\nLightning: " + el.lightningPower + "\tBeast: " + el.beastPower
-            //+ "\nWind: " + el.windPower + "\t\tScale: " + el.scalesPower 
-            //+ "\nTech: " + el.techPower;
+        }
+        else
+        {
+            //primaryStats = "Equipped - None\n\n\n\n";
+            //wpnEvolveBtn1.SetActive(false);
+            //wpnEvolveBtn2.SetActive(false);
+        }
+        //primaryStatsText.text = primaryStats;
+        //elementalStatsText.text = elementalStats;
+    }
+    void LoadWeaponEvolveButtons()
+    {
+        if (activeWeapon)
+        {
+            WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
             //weapon evolves
             WeaponsController weaponCntrller = WeaponsController.instance;
             List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
@@ -588,10 +558,10 @@ public class WeaponMenuManager : MonoBehaviour
                     //TODO: I'm setting it to always show ??? instead of the name when already discovered
                     //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
                     //{
-                        String mysteryText = "";
-                        foreach (char c in myBtnScrpt.topText.text)
-                            mysteryText += c == ' ' ? ' ' : '?';
-                        myBtnScrpt.topText.text = mysteryText;
+                    String mysteryText = "";
+                    foreach (char c in myBtnScrpt.topText.text)
+                        mysteryText += c == ' ' ? ' ' : '?';
+                    myBtnScrpt.topText.text = mysteryText;
                     //}
                     myBtnScrpt.mainButton.interactable = false;
                     myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
@@ -611,10 +581,10 @@ public class WeaponMenuManager : MonoBehaviour
                     //TODO: I'm setting it to always show ??? instead of the name when already discovered
                     //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
                     //{
-                        String mysteryText = "";
-                        foreach (char c in myBtnScrpt2.topText.text)
-                            mysteryText += c==' '?' ':'?';
-                        myBtnScrpt2.topText.text = mysteryText;
+                    String mysteryText = "";
+                    foreach (char c in myBtnScrpt2.topText.text)
+                        mysteryText += c == ' ' ? ' ' : '?';
+                    myBtnScrpt2.topText.text = mysteryText;
                     //}
                     myBtnScrpt2.mainButton.interactable = true;
                     myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
@@ -642,8 +612,6 @@ public class WeaponMenuManager : MonoBehaviour
             wpnEvolveBtn1.SetActive(false);
             wpnEvolveBtn2.SetActive(false);
         }
-        //primaryStatsText.text = primaryStats;
-        //elementalStatsText.text = elementalStats;
     }
     void LoadActiveWeaponStats()
     {
@@ -682,6 +650,7 @@ public class WeaponMenuManager : MonoBehaviour
             obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value;
         }
     }
+    bool canBreakdownActiveWeapon = false;
     /**
      * Clear weapons grid and reload it with current values
      */
@@ -710,6 +679,22 @@ public class WeaponMenuManager : MonoBehaviour
             {//first
                 activeWeapon = wpnScrpt.gameObject;
                 //Debug.Log("Setting Active Weapon to " + wpnScrpt.stats.weaponName);
+                Color salvageButtonColor = salvageButtonIconGamepad.color;
+                Color salvageTextColor = salvageControlText.color;
+                if (BreakDownActiveWeapon(true) == "CanSalvage")
+                {
+                    canBreakdownActiveWeapon = true;
+                    salvageButtonColor.a = 1;
+                    salvageTextColor.a = 1;
+                }
+                else
+                {
+                    canBreakdownActiveWeapon = false;
+                    salvageButtonColor.a = 0.5f;
+                    salvageTextColor.a = 0.5f;
+                }
+                salvageButtonIconGamepad.color = salvageButtonColor;
+                salvageControlText.color = salvageTextColor;
             }
             GameObject gridElement = Instantiate(this.weaponButton, weaponsGrid.transform);
             WeaponButtonUI weaponButton = gridElement.GetComponent<WeaponButtonUI>();
@@ -755,6 +740,22 @@ public class WeaponMenuManager : MonoBehaviour
             {//first
                 activeWeapon = wpnScrpt.gameObject;
                 //Debug.Log("Setting Active Weapon to " + wpnScrpt.stats.weaponName);
+                Color salvageButtonColor = salvageButtonIconGamepad.color;
+                Color salvageTextColor = salvageControlText.color;
+                if (BreakDownActiveWeapon(true) == "CanSalvage")
+                {
+                    canBreakdownActiveWeapon = true;
+                    salvageButtonColor.a = 1;
+                    salvageTextColor.a = 1;
+                }
+                else
+                {
+                    canBreakdownActiveWeapon = false;
+                    salvageButtonColor.a = 0.5f;
+                    salvageTextColor.a = 0.5f;
+                }
+                salvageButtonIconGamepad.color = salvageButtonColor;
+                salvageControlText.color = salvageTextColor;
             }
             if (weaponButton.tooltip != null)
                 weaponButton.tooltip.text = wpnScrpt.stats.weaponName;
