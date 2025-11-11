@@ -54,7 +54,8 @@ public class WeaponMenuManager : MonoBehaviour
     [SerializeField] Vector2 previewCameraInput;
 
     [Header("Buttons")]
-    public Button breakdownBtn;
+    //public Button breakdownBtn;
+    public GameObject salvageConfirmWindow;
     //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
     public EventSystem eventSystem;
 
@@ -251,7 +252,8 @@ public class WeaponMenuManager : MonoBehaviour
         {
             breakdownWeaponPerformed = false;
             //Debug.Log("breakdownWeaponPerformed");
-            BreakDownActiveWeapon();
+            //BreakDownActiveWeapon();
+            OpenSalvageConfirmWindow();
         }
         if (breakdownWeaponCanceled)
         {
@@ -262,6 +264,9 @@ public class WeaponMenuManager : MonoBehaviour
             holdToBreakdownWpnImage.fillAmount = 0f;
         }
     }
+    public void SalvageConfirmOnClick() { BreakDownActiveWeapon(); CloseSalvageConfirmWindow(); }
+    private void OpenSalvageConfirmWindow() { if (salvageConfirmWindow != null) salvageConfirmWindow.SetActive(true); }
+    public void CloseSalvageConfirmWindow() { if (salvageConfirmWindow != null) salvageConfirmWindow.SetActive(false); }
     /* Show Tooltip */
     bool tooltipActive = false;
     GameObject currentCursorObj = null;
