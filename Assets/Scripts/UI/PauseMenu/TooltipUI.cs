@@ -10,6 +10,10 @@ public class TooltipUI : MonoBehaviour
     public TextMeshProUGUI centerText;
     public TextMeshProUGUI bottomText;
     // Start is called before the first frame update
+    public void ActivateFromButtonOnclick(GameObject tooltipObj)
+    {
+        tooltipObj.SetActive(true);
+    }
     void Start()
     {
         
