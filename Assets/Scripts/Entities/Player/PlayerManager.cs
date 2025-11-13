@@ -375,5 +375,29 @@ public class PlayerManager : CharacterManager
         isInvulnerable = false;
     }
 
+    public override void DisableIsRolling()
+    {
+        isRolling = false;
+    }
+
+    public override void DisableBoosting()
+    {
+        isBoosting = false;
+    }
+
+    public override void SetGunToFiringTransform()
+    {
+        PlayerWeaponManager.instance.GetOffHand().SetGunToFiringTransform();
+    }
+
+    public override void SetGunToHandTransform()
+    {
+        PlayerWeaponManager.instance.GetOffHand().SetGunToHandTransform();
+    }
+
+    public override void ResetGunTransformBools()
+    {
+        PlayerWeaponManager.instance.GetOffHand().ResetGunTransformBools();
+    }
 
 }

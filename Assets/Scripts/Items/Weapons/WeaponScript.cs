@@ -72,6 +72,7 @@ public class WeaponStats
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
     public float basePoiseDamage = 35f; //Base 35 in case it's caused by traps
+    private float traitShrapnelPoiseDamageModifier = 1.25f;
     public float durability = 1;
     public float maxDurability = 1;
     public float block = 1.0f;
@@ -119,6 +120,9 @@ public class WeaponStats
     //Spells
     public float areaSpellAttack01StaminaCostModifier = 1f;
 
+    //Guns
+    public float gunAttack01StaminaCostModifier = 1f;
+
     [Header("Motion Values")]
     //Light
     public float lightAttack01DamageMotionValue = 1f;
@@ -148,6 +152,9 @@ public class WeaponStats
 
     //Spells
     public float areaSpellAttack01DamageMotionValue = 1f;
+
+    //Guns
+    public float gunAttack01DamageMotionValue = 1f;
 
 
 }
@@ -226,17 +233,35 @@ public class WeaponScript : MonoBehaviour
     public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
     public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
     public WeaponItemAction offHandCastMagicAttackAction;   //Off hand Magic Special Attack
+    public WeaponItemAction offHandShootGunAttackAction;   //Off hand Gun Special Attack
 
-    [Header("Projectile")]
-    public GameObject projectile = null;
+
 
     [Header("Animations")]
     public AnimatorOverrideController weaponAnimatorOverride;
     [SerializeField] protected string offHandSpellAnimation;
+    [SerializeField] protected string offHandGunShootAnimation;
 
     [Header("Weapon Family Specific")]
     [Header("Magic Special Weapons")]
     public float fullChargingTraitModifier = 1.25f;
+
+    [Header("Gun Special Weapons")]
+    [Header("Gun Transforms")]
+    public GameObject gunModel;
+    public BulletOriginLocation bulletOriginLocation;
+    private Vector3 baseModelLocation;
+    private Quaternion baseModelRotation;
+    public Transform shootingTransform;
+    public bool isSettingGunToFiringTransform = false;
+    public bool isSetGunToHandTransform = false;
+
+    [Header("Gun Projectile")]
+    public GameObject projectile = null;
+    public float projectileForwardVelocity = 2200f;
+    public float projectileUpwardVelocity = 0f;
+    public float projectileMass = 0.01f;
+
 
     [Header("Projectile Velocity")]
     public float spellForwardVelocityMultiplier = 7f;
@@ -245,8 +270,12 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] public GameObject spellChargeVFX;
     [SerializeField] public GameObject spellProjectileVFX;
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
+
+    [Header("Ranged SFX")]
     public AudioClip spellReleaseSFX;
     public AudioClip spellProjectileSFX;
+    public AudioClip gunAimSFX;
+    public AudioClip gunFireSFX;
 
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
@@ -258,14 +287,15 @@ public class WeaponScript : MonoBehaviour
     {
         if (isSpecialWeapon)
         {
-            if (projectile != null)
-            {
-                weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
-            }
-            else
-            {
-                weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-            }
+            // if (projectile != null)
+            // {
+            //     weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
+            // }
+            // else
+            // {
+            //     weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+            // }
+            InitializeGunTransform();
         }
         else
         {
@@ -284,8 +314,18 @@ public class WeaponScript : MonoBehaviour
         characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
 
         //Activate Debug Mode if Weapon Manager is in Debug Mode
-        if(characterThatOwnsThisWeapon != null)
-        isInDebugMode = characterThatOwnsThisWeapon.isInDebugMode;
+        if (characterThatOwnsThisWeapon != null)
+            isInDebugMode = characterThatOwnsThisWeapon.isInDebugMode;
+    }
+
+    private void Update()
+    {
+        if (isSpecialWeapon)
+        {
+            HandleSettingGunToFiringTransform();
+            HandleSetGunToHandTransform();
+        }
+
     }
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage(MeleeWeaponDamageCollider weaponDamageCollider)
@@ -295,8 +335,8 @@ public class WeaponScript : MonoBehaviour
             return;
         }
 
-        if(GetComponentInParent<CharacterWeaponManager>() != null)
-        weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
+        if (GetComponentInParent<CharacterWeaponManager>() != null)
+            weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
         weaponDamageCollider.isMainHand = !isSpecialWeapon;
         weaponDamageCollider.enabled = true;
 
@@ -332,7 +372,7 @@ public class WeaponScript : MonoBehaviour
         //Backstepping
         weaponDamageCollider.lightBackstepAttack01DamageMotionValue = stats.lightBackstepAttack01DamageMotionValue;
 
-        
+
 
     }
     /**
@@ -549,7 +589,7 @@ public class WeaponScript : MonoBehaviour
         //Update the VFX to match the highest element of the magic weapon
         instantiatedSpellChargeVFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
-        instantiatedSpellChargeVFX.transform.localScale = new Vector3(0.7f, 0.7f/0.9f, 0.7f);
+        instantiatedSpellChargeVFX.transform.localScale = new Vector3(0.7f, 0.7f / 0.9f, 0.7f);
 
     }
 
@@ -578,6 +618,90 @@ public class WeaponScript : MonoBehaviour
         if (isInDebugMode) Debug.Log("Instantiate Release FX");
     }
 
+    public void InitializeGunTransform()
+    {
+        if (weaponFamily == WeaponFamily.SemiAutoGuns || weaponFamily == WeaponFamily.BurstFireGuns
+                || weaponFamily == WeaponFamily.LaserGuns || weaponFamily == WeaponFamily.Shotguns
+                || weaponFamily == WeaponFamily.GrenadeLaunchers)
+        {
+            // Debug.Log("baseTransform?" + baseTransform != null);
+            // Debug.Log("gunModel?" + gunModel != null);
+            // Debug.Log("gunModel.transform?" + gunModel.transform != null);
+            // Debug.Log("gunModel.transform.localPosition?" + gunModel.transform.localPosition != null);
+            // Debug.Log("gunModel.transform.localRotation?" + gunModel.transform.localRotation != null);
+            // baseTransform.position = gunModel.transform.localPosition;
+            // baseTransform.rotation = gunModel.transform.localRotation;
+            // Debug.Log("baseTransform.localPosition?" + baseTransform.localPosition != null);
+            // Debug.Log("baseTransform.localRotation?" + baseTransform.localRotation != null);
+            baseModelLocation = gunModel.transform.localPosition;
+            baseModelRotation = gunModel.transform.localRotation;
+            bulletOriginLocation = gunModel.GetComponentInChildren<BulletOriginLocation>();
+        }
+    }
+
+    public void SetGunToFiringTransform()
+    {
+        // Vector3 velocity = Vector3.zero;
+        // gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, shootingTransform.localPosition, ref velocity, 0.05f);
+        // gunModel.transform.localRotation = Quaternion.Slerp(shootingTransform.localRotation, Quaternion.Euler(0, 0, 0), 0.2f);
+
+        // gunModel.transform.localPosition = shootingTransform.localPosition;
+        // gunModel.transform.localRotation = shootingTransform.localRotation;
+
+        isSettingGunToFiringTransform = true;
+        isSetGunToHandTransform = false;
+    }
+
+
+    public void SetGunToHandTransform()
+    {
+        // gunModel.transform.localPosition = baseModelLocation;
+        // gunModel.transform.localRotation = baseModelRotation;
+
+        // Vector3 velocity = Vector3.zero;
+        // gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, baseModelLocation, ref velocity, 0.05f);
+        // gunModel.transform.localRotation = Quaternion.Slerp(gunModel.transform.localRotation, baseModelRotation, 0.8f);
+
+        isSettingGunToFiringTransform = false;
+        isSetGunToHandTransform = true;
+    }
+
+    public void ResetGunTransformBools()
+    {
+        isSettingGunToFiringTransform = false;
+        isSetGunToHandTransform = false;
+    }
+
+    private void HandleSetGunToHandTransform()
+    {
+        if (isSetGunToHandTransform)
+        {
+            Vector3 velocity = Vector3.zero;
+            gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, baseModelLocation, ref velocity, 0.05f);
+            gunModel.transform.localRotation = Quaternion.Slerp(gunModel.transform.localRotation, baseModelRotation, 1f);
+        }
+    }
+
+    private void HandleSettingGunToFiringTransform()
+    {
+        if (isSettingGunToFiringTransform)
+        {
+            Vector3 velocity = Vector3.zero;
+            gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, shootingTransform.localPosition, ref velocity, 0.05f);
+            gunModel.transform.localRotation = Quaternion.Slerp(shootingTransform.localRotation, Quaternion.Euler(0, 0, 0), 0f);
+        }
+    }
+
+    public virtual void AttemptToShootGun(CharacterManager character)
+    {
+        if (!CanIUseThisSpecialAttack(character))
+        {
+            return;
+        }
+
+        character.characterAnimatorManager.PlayTargetActionAnimation(offHandGunShootAnimation, true);
+    }
+
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
     {
         if (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0)
@@ -599,7 +723,7 @@ public class WeaponScript : MonoBehaviour
         {
             UpdateHighestElementalStat();
         }
-        
+
         newJumpAttackDamageCollider.enabled = true;
         newJumpAttackDamageCollider.EnableDamageCollider();
 

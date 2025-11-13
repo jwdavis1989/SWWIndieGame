@@ -55,7 +55,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Minimap Sprite")]
     public GameObject miniMapSprite;
-    
+
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
 
@@ -234,5 +234,38 @@ public class CharacterManager : MonoBehaviour
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
-    
+
+    public virtual void DisableIsRolling()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableBoosting()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableBoostingAndHovering()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void SetGunToFiringTransform()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //Update this if monsters use guns
+    }
+
+    public virtual void SetGunToHandTransform()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //Update this if monsters use guns
+    }
+
+    public virtual void ResetGunTransformBools()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //Update this if monsters use guns
+    }
+
 }
