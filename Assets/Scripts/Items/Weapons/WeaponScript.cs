@@ -6,6 +6,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 /** 
  * Enum of all weapon types.
+ * 
+ * Note: Since enums are sometimes stored as integers adding a new type anywhere but right above UNKOWN 
+ *       may cause previously set values to be offset. Could convert to HashTable keyed with constant 
+ *       Strings to prevent this. Could also add several PLACEHOLDER1,etc enums and rename them later.
  */
 public enum WeaponType
 {
@@ -849,6 +853,32 @@ public class WeaponScript : MonoBehaviour
     {
         //Update Highest Elemental Value
         stats.elemental.currentHighestElementalStat = GetHighestElementalStat();
+    }
+    /** Returns type as string with spaces added between captial letters. I.E. Great Sword
+     */
+    public String GetWeaponFamilyFormatted()
+    {
+        if (weaponFamily == WeaponFamily.HammersOrWrenches)
+            return WeaponType.Wrench == stats.weaponType || stats.weaponType == WeaponType.ReinforcedWrench ? "Wrench": "Hammer";
+        string name = "" + weaponFamily;
+        string formatted = "";
+        foreach (char letter in name)
+        {
+            if (char.IsUpper(letter))
+            {
+                formatted += " " + letter;
+            }
+            else
+            {
+                formatted += letter;
+            }
+        }
+        formatted = formatted.Trim();//remove extra space
+        if (formatted.Length > 0 && formatted[formatted.Length - 1] == 's')
+        {//remove plurality
+            formatted = formatted.Substring(0,formatted.Length - 1);
+        }
+        return formatted;
     }
 }
 /** Change Log  

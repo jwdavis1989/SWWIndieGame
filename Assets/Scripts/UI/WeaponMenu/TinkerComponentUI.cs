@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class TinkerComponentUI : MonoBehaviour
 {
-    public TextMeshProUGUI tooltip;//Text on hover/help?
+    public TextMeshProUGUI tooltip;//Text on hover/help
+    public GameObject tooltipHolder;//tooltip obj
     public TextMeshProUGUI countText;
     public Button mainButton;
     public GameObject foregroundIcon;
