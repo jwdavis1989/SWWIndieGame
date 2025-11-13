@@ -278,55 +278,84 @@ public class WeaponMenuManager : MonoBehaviour
             helpInput = false;
             tooltipActive = !tooltipActive;
             Debug.Log("HelpInput " + componentButtonSelected);
-            if(!tooltipActive)
+            if (!tooltipActive)
+            {
                 foreach (Transform obj in componentsGrid.transform)
                     obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
-            foreach (Transform obj in primaryStatsText.transform)
+                foreach (Transform obj in primaryStatsText.transform)
+                    obj.GetComponent<TogglingBehavior>().Toggle(false);
+                foreach (Transform obj in elementalStatsText.transform)
+                    obj.GetComponent<TogglingBehavior>().Toggle(false);
+            }
+            Func<Transform, Transform> handleTooltip = (obj) =>
             {
+                //make navigatiable
                 Button button = obj.GetComponent<Button>();
                 button.interactable = tooltipActive;
                 Navigation nav = button.navigation;
-                nav.mode = tooltipActive? Navigation.Mode.Automatic :Navigation.Mode.None;
+                nav.mode = tooltipActive ? Navigation.Mode.Automatic : Navigation.Mode.None;
                 obj.GetComponent<Button>().navigation = nav;
-                TooltipUI t = obj.GetComponentInChildren<TooltipUI>();
-                if(t != null && eventSystem.currentSelectedGameObject != null)
-                    t.gameObject.SetActive(eventSystem.currentSelectedGameObject == obj.gameObject);
+                return obj;
+            };
+            foreach (Transform obj in primaryStatsText.transform)
+            {
+                handleTooltip(obj);
+                //Button button = obj.GetComponent<Button>();
+                //button.interactable = tooltipActive;
+                //Navigation nav = button.navigation;
+                //nav.mode = tooltipActive? Navigation.Mode.Automatic :Navigation.Mode.None;
+                //obj.GetComponent<Button>().navigation = nav;
+                //TooltipUI t = obj.GetComponentInChildren<TooltipUI>();
+                //if(t != null && eventSystem.currentSelectedGameObject != null)
+                //    t.gameObject.SetActive(eventSystem.currentSelectedGameObject == obj.gameObject);
             }
+            foreach (Transform obj in elementalStatsText.transform)
+                handleTooltip(obj);
         }
         if (tooltipActive && currentCursorObj != eventSystem.currentSelectedGameObject)
-        {
+        { // Need to change active tooltip window
             //Debug.Log("TooltipActive & New cursor obj");
             currentCursorObj = eventSystem.currentSelectedGameObject;
-            if (currentCursorObj != null)
-            {
+            if (currentCursorObj != null){
                 //Debug.Log("currentCursorObj not null");
                 TinkerComponentUI ui = currentCursorObj.GetComponentInParent<TinkerComponentUI>();
                 if (ui != null)
-                {
+                {//currently on a tinker component
                     //Debug.Log("cur ui " + ui.tooltip.text);
                     foreach (Transform obj in componentsGrid.transform)  //refresh tooltip
                     {
                         if (obj.gameObject == currentCursorObj.GetComponentInParent<TinkerComponentUI>().gameObject)
-                            obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(tooltipActive);
+                            obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
                         else
                             obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
                     }
                 }
-                else
+                else{
                     foreach (Transform obj in componentsGrid.transform)
                         obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+                }
                 Debug.Log("check TOOLTIP ");
-                TooltipUI tooltip = currentCursorObj.GetComponent<TooltipUI>() != null
-                    ? currentCursorObj.GetComponent<TooltipUI>()
-                    : currentCursorObj.GetComponentInChildren<TooltipUI>();
-                if (tooltip != null)
+
+                //TooltipUI tooltip = currentCursorObj.GetComponent<TooltipUI>() != null
+                //    ? currentCursorObj.GetComponent<TooltipUI>()
+                //    : currentCursorObj.GetComponentInChildren<TooltipUI>();
+                //if (tooltip != null)
+                //{
+                //    Debug.Log("TOOLTIP NOT NULL");
+                //    //foreach (Transform obj in primaryStatsText.transform)
+                //    //    obj.GetComponentInChildren<TooltipUI>().gameObject.SetActive(false);
+                //    //foreach (Transform obj in elementalStatsText.transform)
+                //    //    obj.GetComponentInChildren<TooltipUI>().gameObject.SetActive(false);
+                //    tooltip.gameObject.SetActive(true);
+                //}
+                foreach (Transform obj in primaryStatsText.transform)
+                    obj.GetComponent<TogglingBehavior>().Toggle(false);
+                foreach (Transform obj in elementalStatsText.transform)
+                    obj.GetComponent<TogglingBehavior>().Toggle(false);
+                TogglingBehavior togglingBehavior = currentCursorObj.GetComponent<TogglingBehavior>();
+                if (togglingBehavior != null)
                 {
-                    Debug.Log("TOOLTIP NOT NULL");
-                    //foreach (Transform obj in primaryStatsText.transform)
-                    //    obj.GetComponentInChildren<TooltipUI>().gameObject.SetActive(false);
-                    //foreach (Transform obj in elementalStatsText.transform)
-                    //    obj.GetComponentInChildren<TooltipUI>().gameObject.SetActive(false);
-                    tooltip.gameObject.SetActive(true);
+                    togglingBehavior.Toggle(true);
                 }
             }
         }
@@ -645,36 +674,68 @@ public class WeaponMenuManager : MonoBehaviour
         WeaponStats stats = wpn.stats;
         ElementalStats el = stats.elemental;
         Dictionary<string, float> primaryStats = wpn.GetPrimaryStats();
-        foreach (KeyValuePair<string, float> stat in primaryStats)
+        Func<KeyValuePair<string, float>, Transform, KeyValuePair<string, float>> handleStatText = (stat,trans) =>
         {
-            GameObject obj = Instantiate(statsTextPrefab, primaryStatsText.transform);
+            GameObject obj = Instantiate(statsTextPrefab, trans);
             obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value;
-            Button tooltip = obj.GetComponentInChildren<Button>();
-            if (tooltip != null)
+            Button tooltipNavButton = obj.GetComponentInChildren<Button>();
+            if (tooltipNavButton != null)
             {
+                TogglingBehavior tooltipToggler = obj.GetComponent<TogglingBehavior>();
+                if (tooltipToggler != null)
+                {
+                    TooltipUI tooltip = tooltipToggler.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
+                    tooltip.headerText.text = stat.Key;
+                    tooltip.centerText.text = stat.Key + " handles " + stat.Key + " damage";
+                }
                 if (tooltipActive)
                 {
-                    Navigation nav = tooltip.navigation;
+                    Navigation nav = tooltipNavButton.navigation;
                     nav.mode = Navigation.Mode.Automatic;
-                    tooltip.navigation = nav;
+                    tooltipNavButton.navigation = nav;
                 }
             }
+            return stat;
+        };
+        foreach (KeyValuePair<string, float> stat in primaryStats)
+        {
+            handleStatText(stat, primaryStatsText.transform);
+            //GameObject obj = Instantiate(statsTextPrefab, primaryStatsText.transform);
+            //obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value;
+            //Button tooltipNavButton = obj.GetComponentInChildren<Button>();
+            //if (tooltipNavButton != null)
+            //{
+            //    TogglingBehavior tooltipToggler = obj.GetComponent<TogglingBehavior>();
+            //    if(tooltipToggler != null)
+            //    {
+            //        TooltipUI tooltip = tooltipToggler.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
+            //        tooltip.headerText.text = stat.Key;
+            //        tooltip.centerText.text = stat.Key + " handles " + stat.Key + " damage";
+            //    }
+            //    if (tooltipActive)
+            //    {
+            //        Navigation nav = tooltipNavButton.navigation;
+            //        nav.mode = Navigation.Mode.Automatic;
+            //        tooltipNavButton.navigation = nav;
+            //    }
+            //}
         }
         Dictionary<string, float> elementalStats = wpn.GetElementalStats();
         foreach (KeyValuePair<string, float> stat in elementalStats)
         {
-            GameObject obj = Instantiate(statsTextPrefab, elementalStatsText.transform);
-            obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value;
-                        Button tooltip = obj.GetComponentInChildren<Button>();
-            if (tooltip != null)
-            {
-                if (tooltipActive)
-                {
-                    Navigation nav = tooltip.navigation;
-                    nav.mode = Navigation.Mode.Automatic;
-                    tooltip.navigation = nav;
-                }
-            }
+            handleStatText(stat, elementalStatsText.transform);
+            //GameObject obj = Instantiate(statsTextPrefab, elementalStatsText.transform);
+            //obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value;
+            //            Button tooltip = obj.GetComponentInChildren<Button>();
+            //if (tooltip != null)
+            //{
+            //    if (tooltipActive)
+            //    {
+            //        Navigation nav = tooltip.navigation;
+            //        nav.mode = Navigation.Mode.Automatic;
+            //        tooltip.navigation = nav;
+            //    }
+            //}
         }
     }
     bool canBreakdownActiveWeapon = false;

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6381519009532296885}
   - component: {fileID: 7623941092123811352}
   - component: {fileID: -6891803877064538392}
+  - component: {fileID: 1347067107568446253}
   m_Layer: 5
   m_Name: StatText (TMP)
   m_TagString: Untagged
@@ -180,9 +181,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8215700711058550317}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TooltipUI, Assembly-CSharp
-        m_MethodName: ActivateFromButtonOnclick
+        m_MethodName: 
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 2956443824595050282}
@@ -191,7 +192,23 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
+--- !u!114 &1347067107568446253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307136060132164828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a20d574b28983194d9aa6a74b1922d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjects:
+  - {fileID: 2956443824595050282}
+  inactivateOnStart: 1
+  activateOnStart: 0
 --- !u!1001 &6291070032672801974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -421,14 +438,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9099869540937096092, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
   m_PrefabInstance: {fileID: 6291070032672801974}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8215700711058550317 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2687055340209498779, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
-  m_PrefabInstance: {fileID: 6291070032672801974}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2956443824595050282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aef65069447a954f9fdc718cfbae472, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
