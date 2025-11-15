@@ -13,4 +13,5 @@ public class TinkerComponentUI : MonoBehaviour
     public Button mainButton;
     public GameObject foregroundIcon;
     public int index = 0;
+    [HideInInspector]public TinkerComponent refComponent;//ref to component
 }
