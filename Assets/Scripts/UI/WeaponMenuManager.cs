@@ -690,15 +690,17 @@ public class WeaponMenuManager : MonoBehaviour
         Func<KeyValuePair<string, float>, Transform, KeyValuePair<string, float>> handleStatText = (stat,trans) =>
         {
             GameObject obj = Instantiate(statsTextPrefab, trans);
+            bool greenTextShowing = false;
             String greenText = "";
             if(tooltipActive && activeComponent != null)
             {
                 if (activeComponent.GetStats().ContainsKey(stat.Key))
                 {
-                    greenText += "<size=16><color=\"green\"> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
+                    greenTextShowing = true;
+                    greenText += "<size=16> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
                 }
             }
-            obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + stat.Value + greenText;
+            obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing? "<color=\"green\">" : "") + stat.Value + greenText;
             Button tooltipNavButton = obj.GetComponentInChildren<Button>();
             if (tooltipNavButton != null)
             {
