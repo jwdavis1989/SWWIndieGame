@@ -42,26 +42,26 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject tinkerComponentPrefab;
     public GameObject weaponButton;
     [Header("Input")]
+    //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
+    public EventSystem eventSystem;
     [SerializeField] bool switchWeaponUp = false;
     [SerializeField] bool switchWeaponDown = false;
     [SerializeField] bool equipWeaponInput = false;
-    [SerializeField] bool breakdownWeaponStarted = false;
+    //[SerializeField] bool breakdownWeaponStarted = false;
     [SerializeField] bool breakdownWeaponPerformed = false;
-    [SerializeField] bool breakdownWeaponCanceled = false;
+    //[SerializeField] bool breakdownWeaponCanceled = false;
     [SerializeField] bool helpInput = false;
     [Header("Camera Movement Input")]
     PlayerControls playerControls;
     [SerializeField] Vector2 previewCameraInput;
 
-    [Header("Buttons")]
-    //public Button breakdownBtn;
+    [Header("Submenus")]
+    public bool submenuActive = false;
     public GameObject salvageConfirmWindow;
-    //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
-    public EventSystem eventSystem;
-
+    public GameObject salvageErrorWindow;
     [Header("Input Tooltips")]
-    [SerializeField] public Image holdToBreakdownWpnImage;
-    [SerializeField] private float holdDuration = 1.5f;//should match value in PlayerControls
+    //[SerializeField] public Image holdToBreakdownWpnImage;
+    //[SerializeField] private float holdDuration = 1.5f;//should match value in PlayerControls
     private bool isHolding;
     private float holdTime;
 
@@ -91,9 +91,9 @@ public class WeaponMenuManager : MonoBehaviour
             playerControls.PauseMenu.SwitchWeaponDown.performed += i => switchWeaponDown = true;
             playerControls.PauseMenu.EquipWeapon.performed += i => equipWeaponInput = true;
             playerControls.PauseMenu.HelpButton.performed += i => helpInput = true;
-            playerControls.PauseMenu.BreakdownWeapon.started += i => breakdownWeaponStarted = true;
+            //playerControls.PauseMenu.BreakdownWeapon.started += i => breakdownWeaponStarted = true;
             playerControls.PauseMenu.BreakdownWeapon.performed += i => breakdownWeaponPerformed = true;
-            playerControls.PauseMenu.BreakdownWeapon.canceled += i => breakdownWeaponCanceled = true;
+            //playerControls.PauseMenu.BreakdownWeapon.canceled += i => breakdownWeaponCanceled = true;
             playerControls.Enable();
         }
     }
@@ -128,6 +128,8 @@ public class WeaponMenuManager : MonoBehaviour
     void HandleWeaponPreviewInput()
     {
         if (activeWeapon == null)
+            return;
+        if (submenuActive)
             return;
         //rotate
         if (previewCameraInput.x > 0.75f)
@@ -166,6 +168,8 @@ public class WeaponMenuManager : MonoBehaviour
             //Debug.Log("switchWeaponUp " + curWeaponPage);
             switchWeaponUp = false;
             if (PlayerWeaponManager.instance.TotalWeapons() <= 1)//only 1 weapon case
+                return;
+            if(submenuActive) //dont allow while on submenu
                 return;
             int DISPLAYED_PAGES = 3;
             if (curWeaponPage <= PlayerWeaponManager.instance.TotalWeapons() - DISPLAYED_PAGES + 1)
@@ -214,8 +218,10 @@ public class WeaponMenuManager : MonoBehaviour
     {
         if (equipWeaponInput)
         {
-            Debug.Log("HandleEquipWeaponInput");
+            //Debug.Log("HandleEquipWeaponInput");
             equipWeaponInput = false;
+            if (submenuActive)
+                return;
             if (activeWeapon)
             {
                 PlayerWeaponManager.instance.EquipWeapon(activeWeapon);
@@ -225,48 +231,68 @@ public class WeaponMenuManager : MonoBehaviour
     }
     void HandleBreakdownWeaponInput()
     {
-        if (isHolding)
-        {
-            holdTime += Time.unscaledDeltaTime;
-            holdToBreakdownWpnImage.fillAmount = holdTime / holdDuration;
-            //Color currentColor = holdToBreakdownWpnImage.color; // Get the current color
-            //currentColor.a = holdTime / holdDuration;      // Modify the alpha component
-            //holdToBreakdownWpnImage.color = currentColor;
-            //Debug.Log("SETTING FILL AMOUNT TO " + holdToBreakdownWpnImage.fillAmount);  
-            if (holdTime >= holdDuration)
-            {
-                isHolding = false;
-                holdTime = 0f;
-                holdToBreakdownWpnImage.fillAmount = 0f;
-            }
-        }
-        if (breakdownWeaponStarted)
-        {
-            breakdownWeaponStarted = false;
-            //Debug.Log("breakdownWeaponStarted");
-            isHolding = canBreakdownActiveWeapon;
-            holdTime = 0f;
-            holdToBreakdownWpnImage.fillAmount = 0f;
-        }
+        //if (isHolding)
+        //{
+        //    holdTime += Time.unscaledDeltaTime;
+        //    holdToBreakdownWpnImage.fillAmount = holdTime / holdDuration;
+        //    //Color currentColor = holdToBreakdownWpnImage.color; // Get the current color
+        //    //currentColor.a = holdTime / holdDuration;      // Modify the alpha component
+        //    //holdToBreakdownWpnImage.color = currentColor;
+        //    //Debug.Log("SETTING FILL AMOUNT TO " + holdToBreakdownWpnImage.fillAmount);  
+        //    if (holdTime >= holdDuration)
+        //    {
+        //        isHolding = false;
+        //        holdTime = 0f;
+        //        holdToBreakdownWpnImage.fillAmount = 0f;
+        //    }
+        //}
+        //if (breakdownWeaponStarted)
+        //{
+        //    breakdownWeaponStarted = false;
+        //    //Debug.Log("breakdownWeaponStarted");
+        //    isHolding = canBreakdownActiveWeapon;
+        //    holdTime = 0f;
+        //    holdToBreakdownWpnImage.fillAmount = 0f;
+        //}
         if (breakdownWeaponPerformed)
         {
             breakdownWeaponPerformed = false;
             //Debug.Log("breakdownWeaponPerformed");
             //BreakDownActiveWeapon();
-            OpenSalvageConfirmWindow();
+            if(!submenuActive)
+                OpenSalvageConfirmWindow();
         }
-        if (breakdownWeaponCanceled)
-        {
-            breakdownWeaponCanceled = false;
-            //Debug.Log("breakdownWeaponCanceled");
-            isHolding = false;
-            holdTime = 0f;
-            holdToBreakdownWpnImage.fillAmount = 0f;
-        }
+        //if (breakdownWeaponCanceled)
+        //{
+        //    breakdownWeaponCanceled = false;
+        //    //Debug.Log("breakdownWeaponCanceled");
+        //    isHolding = false;
+        //    holdTime = 0f;
+        //    holdToBreakdownWpnImage.fillAmount = 0f;
+        //}
     }
     public void SalvageConfirmOnClick() { BreakDownActiveWeapon(); CloseSalvageConfirmWindow(); }
-    private void OpenSalvageConfirmWindow() { if (salvageConfirmWindow != null) salvageConfirmWindow.SetActive(true); }
-    public void CloseSalvageConfirmWindow() { if (salvageConfirmWindow != null) salvageConfirmWindow.SetActive(false); }
+    private void OpenSalvageConfirmWindow() {
+        if (salvageConfirmWindow != null && !submenuActive)
+        {
+            if(canBreakdownActiveWeapon) 
+                salvageConfirmWindow.SetActive(true);
+            else if (salvageErrorWindow  != null) 
+                salvageErrorWindow.SetActive(true);
+            submenuActive = true;
+        }
+    }
+    public void CloseSalvageConfirmWindow() { 
+        if (salvageConfirmWindow != null) 
+            salvageConfirmWindow.SetActive(false);
+        submenuActive = false;
+    }
+    public void CloseErrorWindow()
+    {
+        if (salvageErrorWindow != null)
+            salvageErrorWindow.SetActive(false);
+        submenuActive = false;
+    }
     /* Show Tooltip */
     bool tooltipActive = false;
     GameObject currentCursorObj = null;
@@ -363,11 +389,15 @@ public class WeaponMenuManager : MonoBehaviour
                 throw new Exception("Must be Level 5 or over");
             if (activeWpnScript.isSpecialWeapon)
             {
+                if(playerWpns.GetOffHand().gameObject == activeWeapon)
+                    throw new Exception("Can't breakdown equipped weapon");
                 if (playerWpns.ownedSpecialWeapons.Count <= 1)
                     throw new Exception("Last off hand weapon");
             }
             else
             {
+                if (playerWpns.GetMainHand().gameObject == activeWeapon)
+                    throw new Exception("Can't breakdown equipped weapon");
                 if (playerWpns.ownedWeapons.Count <= 1)
                     throw new Exception("Last main hand weapon");
             }
@@ -383,7 +413,7 @@ public class WeaponMenuManager : MonoBehaviour
         }
         catch (Exception e) //Catches not lvl 5 or over error / no active weapon
         {
-            //Debug.Log(e.Message);
+            Debug.Log(e.Message);
             return (e.Message);
         }
         return ("CanSalvage");
@@ -730,7 +760,8 @@ public class WeaponMenuManager : MonoBehaviour
                 //Debug.Log("Setting Active Weapon to " + wpnScrpt.stats.weaponName);
                 Color salvageButtonColor = salvageButtonIconGamepad.color;
                 Color salvageTextColor = salvageControlText.color;
-                if (BreakDownActiveWeapon(true) == "CanSalvage")
+                string resultText = BreakDownActiveWeapon(true);
+                if (resultText == "CanSalvage")
                 {
                     canBreakdownActiveWeapon = true;
                     salvageButtonColor.a = 1;
@@ -741,6 +772,7 @@ public class WeaponMenuManager : MonoBehaviour
                     canBreakdownActiveWeapon = false;
                     salvageButtonColor.a = 0.5f;
                     salvageTextColor.a = 0.5f;
+                    salvageErrorWindow.GetComponent<TooltipUI>().centerText.text = resultText;
                 }
                 salvageButtonIconGamepad.color = salvageButtonColor;
                 salvageControlText.color = salvageTextColor;
