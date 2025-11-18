@@ -1573,7 +1573,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""6b09e01a-8900-4c4c-9f77-b6baaf70bd9a"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": ""Hold(duration=1.5)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BreakdownWeapon"",
