@@ -1,6 +1,7 @@
 using NUnit.Framework.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ public class PauseScript : MonoBehaviour
     //[SerializeField] GameObject mainPauseMenu;//old
     [Header("Menus")]
     [SerializeField] GameObject weaponMenu;
-    [SerializeField] GameObject weaponMenuSideBar;//separate for now
+    [SerializeField] GameObject weaponMenuSideBar;
     [SerializeField] GameObject inventoryMenu;
     [SerializeField] GameObject inventMenu;
     [SerializeField] GameObject optionsMenu;
@@ -49,6 +50,8 @@ public class PauseScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            PlayerSettingsManager.Load();
+            PlayerCamera.instance.isCameraInverted = PlayerSettingsManager.playerSettings.inverted;
         }
         else
         {
@@ -80,17 +83,6 @@ public class PauseScript : MonoBehaviour
     }
     void Update()
     {
-
-        //if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)
-        //    ) && gamePaused == false && SceneManager.GetActiveScene().buildIndex != 0)
-        //{
-        //    Pause();
-        //}
-        //else if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) && gamePaused == true)
-        //{
-        //    Unpause();
-
-        //}
         HandlePauseInput();
         HandleSwitchMenuInput();
         //CheckControlsChanged();
@@ -165,16 +157,6 @@ public class PauseScript : MonoBehaviour
             weaponMenuSideBar.SetActive(true);
         lastMenuTab = MenuTab.Weapons;
         SetWeaponMenuTooltip();
-    }
-    //public void WeaponMenuBackClick()
-    //{
-    //    if (weaponMenu != null)
-    //        weaponMenu.SetActive(false);
-    //}
-    public void InventMenuBackClick() //old
-    {
-        if (inventMenu != null)
-            inventMenu.SetActive(false);
     }
     public void InventoryMenuClick()
     {
