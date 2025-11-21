@@ -11,7 +11,7 @@ public class ItemDropManager : MonoBehaviour
     public GameObject DropGold(Transform loc, int amt)
     {
         GameObject g = Instantiate(goldPrefab, loc.position, loc.rotation);
-        g.GetComponent<GoldDropCollider>().gold = amt;
+        g.GetComponentInChildren<GoldDropCollider>().gold = amt;
         return g;
     }
     public GameObject DropExp(Transform loc, int amt, bool giveMainHandExp, bool giveOffHandExp)
@@ -22,7 +22,7 @@ public class ItemDropManager : MonoBehaviour
             giveMainHandExp = giveOffHandExp = true;
         }
         GameObject exp = Instantiate(expPrefab, loc.position, loc.rotation);
-        ExpDropCollider e = exp.GetComponent<ExpDropCollider>();
+        ExpDropCollider e = exp.GetComponentInChildren<ExpDropCollider>();
         e.exp = amt;
         e.isMainHandExp = giveMainHandExp;
         e.isOffHandExp = giveOffHandExp;

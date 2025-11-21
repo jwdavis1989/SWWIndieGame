@@ -13,7 +13,10 @@ public class ItemDropFloatCollider : MonoBehaviour
         {
             var step = speed * Time.deltaTime; // calculate distance to move
             speed *= 1.0f + (0.5f * Time.deltaTime);//accelerate
-            transform.parent.position = Vector3.MoveTowards(transform.parent.position, player.transform.position, step);
+            //speed *= (Time.deltaTime * (1.0f + (0.1f * speed)))/2;//accelerate
+            Vector3 target = player.transform.position;
+            target.y += 0.75f;//height
+            transform.parent.position = Vector3.MoveTowards(transform.parent.position, target, step);
         }
     }
     private void OnTriggerEnter(Collider other)
