@@ -8,13 +8,11 @@ public class ItemFlopBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (item != null)
-        {
-            Rigidbody rb = item.GetComponent<Rigidbody>();
-            float force = 5f;          // tune this
-            Vector2 dir = new Vector2(1f, 1f).normalized; // 45° direction (right + up)
-
-            rb.AddForce(dir * force, ForceMode.Impulse);
-        }
+        if (item == null)
+            item = gameObject;
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        float force = 5f;          // tune this
+        Vector2 dir = new Vector2(1f, 1f).normalized; // 45° direction (right + up)
+        rb.AddForce(dir * force, ForceMode.Impulse);
     }
 }
