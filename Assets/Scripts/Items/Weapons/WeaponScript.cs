@@ -154,7 +154,7 @@ public class WeaponStats
     public float areaSpellAttack01DamageMotionValue = 1f;
 
     //Guns
-    public float gunAttack01DamageMotionValue = 1f;
+    public float singleTargetBulletAttack01DamageMotionValue = 1f;
 
 
 }
@@ -257,13 +257,14 @@ public class WeaponScript : MonoBehaviour
     public bool isSetGunToHandTransform = false;
 
     [Header("Gun Projectile")]
-    public GameObject projectile = null;
-    public float projectileForwardVelocity = 2200f;
-    public float projectileUpwardVelocity = 0f;
+    [SerializeField] public GameObject gunProjectile = null;
+    [SerializeField] public GameObject gunShotWarmUpVFX;
+    public float projectileForwardVelocityMultiplier = 7f;
+    public float projectileUpwardVelocityMultiplier = 4f;
     public float projectileMass = 0.01f;
 
 
-    [Header("Projectile Velocity")]
+    [Header("Spell Projectile")]
     public float spellForwardVelocityMultiplier = 7f;
     public float spellUpwardVelocityMultiplier = 4f;
     [SerializeField] public GameObject spellCastWarmUpVFX;
@@ -700,6 +701,71 @@ public class WeaponScript : MonoBehaviour
         }
 
         character.characterAnimatorManager.PlayTargetActionAnimation(offHandGunShootAnimation, true);
+
+        //Change character model Rotation to counter animation's root motion rotation in the nation
+        character.SetShootingModelAlignment();
+    }
+
+    public virtual void InstantiateWarmUpGunFX(CharacterManager character)
+    {
+        //1. Instantiate Warm Up at the correct place
+        BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetOffHand().gameObject.GetComponentInChildren<BulletOriginLocation>();
+
+        //2. "Save" the warm up FX as a variable so it can be destroyed if the player is knocked out of the animation
+        GameObject instantiatedGunWarmUpFX = Instantiate(gunShotWarmUpVFX);
+        instantiatedGunWarmUpFX.transform.parent = bulletOriginLocation.transform;
+        instantiatedGunWarmUpFX.transform.localPosition = Vector3.zero;
+        instantiatedGunWarmUpFX.transform.localRotation = Quaternion.identity;
+
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedGunWarmUpFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+        character.characterEffectsManager.activeSpellWarmUpFX = instantiatedGunWarmUpFX;
+
+        //3. Drain Stamina
+        character.characterWeaponManager.currentAttackType = AttackType.SingleTargetBulletAttack01;
+        character.CallDrainStaminaBasedOnAttack();
+    }
+
+    public virtual void SuccessfullyShootGun(CharacterManager character)
+    {
+        //1. Destroy any Warm Up FX remaining from the gun shot
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //2. Instantiate the Projectile
+        BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<BulletOriginLocation>();
+        GameObject instantiatedGunProjectile = Instantiate(gunProjectile);
+
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
+        FireBallManager fireBallManager = instantiatedGunProjectile.GetComponent<FireBallManager>();
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+
+        //3. Zero out its location and unparent it
+        instantiatedGunProjectile.transform.parent = bulletOriginLocation.transform;
+        instantiatedGunProjectile.transform.localPosition = Vector3.zero;
+        instantiatedGunProjectile.transform.localRotation = Quaternion.identity;
+        instantiatedGunProjectile.transform.parent = null;
+        instantiatedGunProjectile.transform.localScale = Vector3.one;
+
+        //4. Set the projectile's direction
+        if (character.isLockedOn)
+        {
+            instantiatedGunProjectile.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);
+        }
+        else
+        {
+            //instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+            Vector3 newForward = character.transform.forward + new UnityEngine.Vector3(0, 0, 0);
+            instantiatedGunProjectile.transform.forward = newForward;
+        }
+
+        //6. Set the projectile's velocity
+        Rigidbody bulletRigidbody = instantiatedGunProjectile.GetComponent<Rigidbody>();
+        Vector3 upwardVelocity = instantiatedGunProjectile.transform.up * projectileUpwardVelocityMultiplier;
+        Vector3 forwardVelocity = instantiatedGunProjectile.transform.forward * projectileForwardVelocityMultiplier;
+        Vector3 totalVelocity = upwardVelocity + forwardVelocity;
+        bulletRigidbody.velocity = totalVelocity;
     }
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)

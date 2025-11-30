@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellProjectileDamageCollider : DamageCollider
+public class BulletProjectileDamageCollider : DamageCollider
 {
     private FireBallManager fireBallManager;
 
     [Header("Attacking Character")]
     public CharacterManager characterCausingDamage;
 
-    [Header("Spell Attack Modifiers")]
+    [Header("Bullet Attack Modifiers")]
     public float spellDamageMotionValue;
     
 
@@ -111,11 +109,6 @@ public class SpellProjectileDamageCollider : DamageCollider
                 //Spell Attacks
                 case AttackType.AreaSpellAttack01:
                     attackMotionValue = weaponThatOwnsThisCollider.stats.areaSpellAttack01DamageMotionValue;
-                    break;
-                
-                //Gun Attacks
-                case AttackType.SingleTargetBulletAttack01:
-                    attackMotionValue = weaponThatOwnsThisCollider.stats.singleTargetBulletAttack01DamageMotionValue;
                     break;
 
                 //Default
