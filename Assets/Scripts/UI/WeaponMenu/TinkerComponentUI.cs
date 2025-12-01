@@ -14,4 +14,14 @@ public class TinkerComponentUI : MonoBehaviour
     public GameObject foregroundIcon;
     public int index = 0;
     [HideInInspector]public TinkerComponent refComponent;//ref to component
+    public void ActivateTooltip()
+    {
+        if(tooltipHolder != null) 
+            tooltipHolder.SetActive(true);
+    }
+    public void DeactivateTooltip()
+    {
+        if (tooltipHolder != null)
+            tooltipHolder.SetActive(false);
+    }
 }

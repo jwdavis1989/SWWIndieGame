@@ -857,7 +857,7 @@ public class WeaponScript : MonoBehaviour
     }
     /** Returns type as string with spaces added between captial letters. I.E. Great Sword
      */
-    public String GetWeaponFamilyFormatted()
+    public string GetWeaponFamilyFormatted()
     {
         if (weaponFamily == WeaponFamily.HammersOrWrenches)
             return WeaponType.Wrench == stats.weaponType || stats.weaponType == WeaponType.ReinforcedWrench ? "Wrench": "Hammer";

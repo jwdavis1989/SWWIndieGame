@@ -114,6 +114,7 @@ public class WeaponMenuManager : MonoBehaviour
         HandleEquipWeaponInput();
         HandleBreakdownWeaponInput();
         HandleHelpInput();
+        HandleGamepadSelectedObject();
         if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf)
         {
             currentWeaponPreview.SetActive(true);
@@ -295,7 +296,7 @@ public class WeaponMenuManager : MonoBehaviour
     }
     /* Show Tooltip */
     bool tooltipActive = false;
-    GameObject currentCursorObj = null;
+    bool handlingHelpInput = false;
 
     void HandleHelpInput()
     {
@@ -303,20 +304,33 @@ public class WeaponMenuManager : MonoBehaviour
         if (helpInput)
         {
             helpInput = false;
+            if(handlingHelpInput)
+                return;
+            handlingHelpInput = true;
             tooltipActive = !tooltipActive;
             //Debug.Log("HelpInput " + componentButtonSelected);
-            if (!tooltipActive)
+            if (tooltipActive)
             {
-                foreach (Transform obj in componentsGrid.transform)
-                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+                foreach (Transform obj in primaryStatsText.transform)
+                {
+                    obj.GetComponent<Button>().Select();
+                    obj.GetComponent<TogglingBehavior>().Toggle(true);
+                    break;
+                }
+            }
+            else
+            {
+                //foreach (Transform obj in componentsGrid.transform)
+                //    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
                 foreach (Transform obj in primaryStatsText.transform)
                     obj.GetComponent<TogglingBehavior>().Toggle(false);
                 foreach (Transform obj in elementalStatsText.transform)
                     obj.GetComponent<TogglingBehavior>().Toggle(false);
             }
+            // Handle stats tooltips for active weapon
             Func<Transform, Transform> handleTooltip = (obj) =>
             {
-                //make navigatiable if tooltip active or turn off navigation if not
+                // Make navigatiable if tooltip active or turn off navigation if not
                 Button button = obj.GetComponent<Button>();
                 button.interactable = tooltipActive;
                 Navigation nav = button.navigation;
@@ -324,19 +338,23 @@ public class WeaponMenuManager : MonoBehaviour
                 obj.GetComponent<Button>().navigation = nav;
                 return obj;
             };
-            foreach (Transform obj in primaryStatsText.transform)
-            {
-                handleTooltip(obj);
-            }
-            foreach (Transform obj in elementalStatsText.transform)
-                handleTooltip(obj);
+            foreach (Transform obj in primaryStatsText.transform) handleTooltip(obj);
+            foreach (Transform obj in elementalStatsText.transform) handleTooltip(obj);
+            // Reload
             LoadActiveWeaponStats();
+            handlingHelpInput = false;
         }
-        if (tooltipActive && currentCursorObj != eventSystem.currentSelectedGameObject)
+    }
+    GameObject currentCursorObj = null;
+    public void HandleGamepadSelectedObject()
+    {
+
+        if (currentCursorObj != eventSystem.currentSelectedGameObject)
         { // Need to change active tooltip window
             //Debug.Log("TooltipActive & New cursor obj");
             currentCursorObj = eventSystem.currentSelectedGameObject;
-            if (currentCursorObj != null){
+            if (currentCursorObj != null)
+            {
                 //Debug.Log("currentCursorObj not null");
                 TinkerComponentUI ui = currentCursorObj.GetComponentInParent<TinkerComponentUI>();
                 if (ui != null)
@@ -352,7 +370,8 @@ public class WeaponMenuManager : MonoBehaviour
                             obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
                     }
                 }
-                else if (activeComponent != null){//last selected was a component
+                else if (activeComponent != null)
+                {//last selected was a component
                     activeComponent = null;
                     foreach (Transform obj in componentsGrid.transform)
                         obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
@@ -365,6 +384,27 @@ public class WeaponMenuManager : MonoBehaviour
                 if (togglingBehavior != null)
                 {
                     togglingBehavior.Toggle(true);
+                }
+            }
+            else // Nothing is selected. If on gamepad try to select something
+            {
+                //TODO: if (gamepad) 
+                if (tooltipActive)
+                {
+                    foreach (Transform obj in primaryStatsText.transform)
+                    {
+                        obj.GetComponent<Button>().Select();
+                        break;
+                    }
+                }
+                else
+                {
+                    foreach (Transform obj in componentsGrid.transform)
+                    {
+                        obj.GetComponent<TinkerComponentUI>().mainButton.Select(); ;
+                        obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
+                        break;
+                    }
                 }
             }
         }
@@ -667,7 +707,7 @@ public class WeaponMenuManager : MonoBehaviour
             wpnEvolveBtn2.SetActive(false);
         }
     }
-    private TinkerComponent activeComponent = null;
+    private TinkerComponent activeComponent = null;//selected with gamepad or on hover
     void LoadActiveWeaponStats()
     {
         foreach (Transform child in primaryStatsText.transform)
@@ -692,7 +732,7 @@ public class WeaponMenuManager : MonoBehaviour
             GameObject obj = Instantiate(statsTextPrefab, trans);
             bool greenTextShowing = false;
             String greenText = "";
-            if(tooltipActive && activeComponent != null)
+            if(activeComponent != null)
             {
                 if (activeComponent.GetStats().ContainsKey(stat.Key))
                 {
@@ -721,15 +761,9 @@ public class WeaponMenuManager : MonoBehaviour
             return stat;
         };
         Dictionary<string, float> primaryStats = wpn.GetPrimaryStats();
-        foreach (KeyValuePair<string, float> stat in primaryStats)
-        {
-            handleStatText(stat, primaryStatsText.transform);
-        }
+        foreach (KeyValuePair<string, float> stat in primaryStats) handleStatText(stat, primaryStatsText.transform);
         Dictionary<string, float> elementalStats = wpn.GetElementalStats();
-        foreach (KeyValuePair<string, float> stat in elementalStats)
-        {
-            handleStatText(stat, elementalStatsText.transform);
-        }
+        foreach (KeyValuePair<string, float> stat in elementalStats) handleStatText(stat, elementalStatsText.transform);
     }
     bool canBreakdownActiveWeapon = false;
     /**
@@ -911,7 +945,6 @@ public class WeaponMenuManager : MonoBehaviour
                 GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
                 TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
                 tinkerComponentUI.refComponent = componentScript;
-                //tinkerComponent.tooltip.text = componentScript.stats.itemName;
                 if (tinkerComponentUI.tooltipUI != null)
                 {
                     TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
@@ -924,10 +957,7 @@ public class WeaponMenuManager : MonoBehaviour
                     }
                     tooltipUI.gameObject.SetActive(false);
                 }
-                //if (tinkerComponentUI.tooltip != null)
-                //    tinkerComponentUI.tooltip.text = componentScript.stats.itemName;
-                //if(tinkerComponentUI.tooltipHolder != null)
-                //    tinkerComponentUI.tooltipHolder.SetActive(false);
+                tinkerComponentUI.tooltipHolder.SetActive(false);
                 tinkerComponentUI.countText.text = "" + componentScript.stats.count;
                 //tinkerComponent.cornerButton.gameObject.SetActive(false);
                 if(componentScript.spr)//Icon
@@ -1054,18 +1084,6 @@ public class WeaponMenuManager : MonoBehaviour
             cmpntScroll.numberOfSteps = numOfPage;
             cmpntScroll.size = 1.0f / numOfPage;
             cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
-        }
-        if (tooltipActive && eventSystem.currentSelectedGameObject != null) // Handle Tooltip
-        {
-            foreach (Transform obj in componentsGrid.transform)
-            {
-                if (obj.gameObject == eventSystem.currentSelectedGameObject.GetComponentInParent<TinkerComponentUI>().gameObject)
-                {
-                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
-                }
-                else
-                    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
-            }
         }
     }
     private void ReloadUpgradeMenu()
