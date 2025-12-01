@@ -709,17 +709,21 @@ public class WeaponScript : MonoBehaviour
     public virtual void InstantiateWarmUpGunFX(CharacterManager character)
     {
         //1. Instantiate Warm Up at the correct place
-        BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetOffHand().gameObject.GetComponentInChildren<BulletOriginLocation>();
+        // BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetOffHand().gameObject.GetComponentInChildren<BulletOriginLocation>();
 
         //2. "Save" the warm up FX as a variable so it can be destroyed if the player is knocked out of the animation
-        GameObject instantiatedGunWarmUpFX = Instantiate(gunShotWarmUpVFX);
-        instantiatedGunWarmUpFX.transform.parent = bulletOriginLocation.transform;
-        instantiatedGunWarmUpFX.transform.localPosition = Vector3.zero;
-        instantiatedGunWarmUpFX.transform.localRotation = Quaternion.identity;
+        // GameObject instantiatedGunWarmUpFX = Instantiate(gunShotWarmUpVFX);
+        // instantiatedGunWarmUpFX.transform.parent = bulletOriginLocation.transform;
+        // instantiatedGunWarmUpFX.transform.localPosition = Vector3.zero;
+        // instantiatedGunWarmUpFX.transform.localRotation = Quaternion.identity;
+
+        //Alt 1 & 2
+        gunShotWarmUpVFX.SetActive(true);
+        gunShotWarmUpVFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
         //Update the VFX to match the highest element of the magic weapon
-        instantiatedGunWarmUpFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
-        character.characterEffectsManager.activeSpellWarmUpFX = instantiatedGunWarmUpFX;
+        // instantiatedGunWarmUpFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+        // character.characterEffectsManager.activeSpellWarmUpFX = instantiatedGunWarmUpFX;
 
         //3. Drain Stamina
         character.characterWeaponManager.currentAttackType = AttackType.SingleTargetBulletAttack01;
@@ -730,6 +734,10 @@ public class WeaponScript : MonoBehaviour
     {
         //1. Destroy any Warm Up FX remaining from the gun shot
         character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //Alt 1
+        gunShotWarmUpVFX.GetComponent<SpellElementalVFXManager>().ResetActiveElementalVFX();
+        gunShotWarmUpVFX.SetActive(false);
 
         //2. Instantiate the Projectile
         BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<BulletOriginLocation>();

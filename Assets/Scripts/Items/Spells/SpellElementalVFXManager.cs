@@ -50,4 +50,18 @@ public class SpellElementalVFXManager : MonoBehaviour
                 break;
         }
     }
+
+    public void ResetActiveElementalVFX()
+    {
+        fireSpellVFX.SetActive(false);
+        iceSpellVFX.SetActive(false);
+        lightningSpellVFX.SetActive(false);
+        windSpellVFX.SetActive(false);
+        earthSpellVFX.SetActive(false);
+        lightSpellVFX.SetActive(false);
+        beastSpellVFX.SetActive(false);
+        scalesSpellVFX.SetActive(false);
+        techSpellVFX.SetActive(false);
+    }
+
 }
