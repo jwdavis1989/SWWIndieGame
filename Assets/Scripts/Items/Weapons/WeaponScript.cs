@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
+using static UnityEditor.Rendering.FilterWindow;
 /** 
  * Enum of all weapon types.
  * 
@@ -61,8 +63,7 @@ public enum WeaponFamily
 /*
  * Serializable WeaponStats used for JSON saving
  */
-[Serializable]
-public class WeaponStats
+[Serializable] public class WeaponStats
 {
     [Header("Weapon Type")]
     public WeaponType weaponType = 0;
@@ -930,7 +931,7 @@ public class WeaponScript : MonoBehaviour
     }
     /** Returns type as string with spaces added between captial letters. I.E. Great Sword
      */
-    public String GetWeaponFamilyFormatted()
+    public string GetWeaponFamilyFormatted()
     {
         if (weaponFamily == WeaponFamily.HammersOrWrenches)
             return WeaponType.Wrench == stats.weaponType || stats.weaponType == WeaponType.ReinforcedWrench ? "Wrench": "Hammer";
@@ -953,6 +954,29 @@ public class WeaponScript : MonoBehaviour
             formatted = formatted.Substring(0,formatted.Length - 1);
         }
         return formatted;
+    }
+    public Dictionary<string, float> GetPrimaryStats()
+    {
+        Dictionary<string, float> rv = new Dictionary<string, float>();
+        rv.Add("Attack", stats.attack);
+        rv.Add("Block", stats.block);
+        rv.Add("Durability", stats.durability);
+        rv.Add("Stability", stats.stability);
+        return rv;
+    }
+    public Dictionary<string, float> GetElementalStats()
+    {
+        Dictionary<string, float> rv = new Dictionary<string, float>();
+        rv.Add("Fire", stats.elemental.firePower);
+        rv.Add("Earth", stats.elemental.earthPower);
+        rv.Add("Ice", stats.elemental.icePower);
+        rv.Add("Light", stats.elemental.lightPower);
+        rv.Add("Lightning", stats.elemental.lightningPower);
+        rv.Add("Beast", stats.elemental.beastPower);
+        rv.Add("Wind", stats.elemental.windPower);
+        rv.Add("Scales", stats.elemental.scalesPower);
+        rv.Add("Tech", stats.elemental.techPower);
+        return rv;
     }
 }
 /** Change Log  

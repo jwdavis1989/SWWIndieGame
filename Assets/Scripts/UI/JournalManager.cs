@@ -40,8 +40,8 @@ public class JournalManager : MonoBehaviour
 
 
     //KEYS
-    public static string hasNotOpenedInventMenuKey = "hasNotOpenedInventMenuKey";
-    public static string hasOpenedInventMenuKey = "hasOpenedInventMenuKey";
-    public static string hasInventedSomethingKey = "hasInventedSomethingKey";
-    public static string hasHalfInventionIdea = "hasHalfInventionIdea";
+    public const string hasNotOpenedInventMenuKey = "hasNotOpenedInventMenuKey";
+    public const string hasOpenedInventMenuKey = "hasOpenedInventMenuKey";
+    public const string hasInventedSomethingKey = "hasInventedSomethingKey";
+    public const string hasHalfInventionIdea = "hasHalfInventionIdea";
 }
