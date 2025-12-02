@@ -7625,7 +7625,7 @@ GameObject:
   - component: {fileID: 8704123770539413060}
   - component: {fileID: 2777988040239019260}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: InvertedToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7697,7 +7697,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8291548226635312522}
+        m_TargetAssemblyTypeName: OptionsMenuManager, Assembly-CSharp
+        m_MethodName: OnInvertChange
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &2527090911367771536
 GameObject:
@@ -21181,6 +21193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2167423769897342449}
+  - component: {fileID: 8291548226635312522}
   m_Layer: 5
   m_Name: OptionsMenu
   m_TagString: Untagged
@@ -21213,6 +21226,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 6.110779}
   m_SizeDelta: {x: 2888, y: 893.56494}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8291548226635312522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8457848949354601820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11532602f1167d74b8a0e6d10466c524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSettings:
+    volume: 0
+    brightness: 0
+    inverted: 0
+    gamepad: 0
+  invertedToggle: {fileID: 2777988040239019260}
+  mainVolumeSlider: {fileID: 399448963194284082}
 --- !u!1 &8536873924641463714
 GameObject:
   m_ObjectHideFlags: 0
