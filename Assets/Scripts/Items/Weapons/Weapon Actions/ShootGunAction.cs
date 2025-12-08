@@ -22,7 +22,7 @@ public class ShootGunAction : WeaponItemAction
             return;
         }
 
-        //Magic Special Weapon Attack
+        //Gun Special Weapon Attack
         PerformGunShootAttack(characterPerformingAction);
     }
 

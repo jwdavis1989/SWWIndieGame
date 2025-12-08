@@ -81,6 +81,8 @@ public class CharacterCombatManager : MonoBehaviour
     }
 
     //Animation Event Calls
+    
+    //Spells
     public void InstantiateSpellWarmUpFX()
     {
         character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().InstantiateWarmUpSpellFX(character);
@@ -99,6 +101,17 @@ public class CharacterCombatManager : MonoBehaviour
     public void SuccessfullyCastSpellFullCharge()
     {
         character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyCastSpellFullCharge(character);
+    }
+
+    //Guns
+    public void InstantiateWarmUpGunFX()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().InstantiateWarmUpGunFX(character);
+    }
+
+    public void SuccessfullyShootGun()
+    {
+        character.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().SuccessfullyShootGun(character);
     }
 
     //Used to destroy things like a "Drawn Arrow" or "Spell Warm Up FX" when the character's poise is broken

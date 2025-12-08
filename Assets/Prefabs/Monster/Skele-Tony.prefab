@@ -922,6 +922,7 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterUIManager: {fileID: 0}
   characterWeaponManager: {fileID: 428722355192839785}
+  characterModel: {fileID: 2433319847842035510}
   isDead: 0
   faction: 3
   isPlayer: 0
@@ -947,6 +948,7 @@ MonoBehaviour:
   canBleed: 1
   isChargingAttack: 0
   isChargingSpellAttack: 0
+  isAiming: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 3383964005519773742}
   isInDebugMode: 0
@@ -1609,6 +1611,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 39957b52048169f4fbb5613b25039069, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6386480451222621022, guid: 39957b52048169f4fbb5613b25039069, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -1847,6 +1853,11 @@ CapsuleCollider:
   m_Height: 0.47
   m_Direction: 1
   m_Center: {x: 0, y: 0.13, z: 0}
+--- !u!1 &2433319847842035510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 39957b52048169f4fbb5613b25039069, type: 3}
+  m_PrefabInstance: {fileID: 3244151197950872167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2453587608504094924 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8139853090755257685, guid: 39957b52048169f4fbb5613b25039069, type: 3}

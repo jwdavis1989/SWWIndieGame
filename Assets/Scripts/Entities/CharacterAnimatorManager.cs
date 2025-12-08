@@ -188,4 +188,14 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.animator.runtimeAnimatorController = weaponScript.weaponAnimatorOverride;
     }
 
+    public void EnableRootMotion()
+    {
+        character.animator.applyRootMotion = true;
+    }
+
+    public void DisableRootMotion()
+    {
+        character.animator.applyRootMotion = false;
+    }
+
 }
