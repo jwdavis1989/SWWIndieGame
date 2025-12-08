@@ -124,6 +124,7 @@ public enum IdeaType
     Piston,
     Forge,
     //Add new ideas here
+    Barrel,
 
     // Total unique ideas.
     IDEAS_SIZE
