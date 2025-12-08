@@ -441,6 +441,7 @@ public class WeaponMenuManager : MonoBehaviour
                 if (playerWpns.ownedWeapons.Count <= 1)
                     throw new Exception("Last main hand weapon");
             }
+            //all updates should be below here
             if (!checkOnly)
             {
                 //break down weapon
@@ -453,7 +454,8 @@ public class WeaponMenuManager : MonoBehaviour
         }
         catch (Exception e) //Catches not lvl 5 or over error / no active weapon
         {
-            Debug.Log(e.Message);
+            if(!checkOnly)
+                Debug.Log(e.Message);
             return (e.Message);
         }
         return ("CanSalvage");
@@ -944,6 +946,7 @@ public class WeaponMenuManager : MonoBehaviour
                 if (++displayedCount > maxDisplayed) break;
                 GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
                 TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
+                tinkerComponentUI.index = index;
                 tinkerComponentUI.refComponent = componentScript;
                 if (tinkerComponentUI.tooltipUI != null)
                 {
@@ -963,9 +966,10 @@ public class WeaponMenuManager : MonoBehaviour
                 if(componentScript.spr)//Icon
                     tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
-                if (index == currentlySelectedComponentIndex)
+                if (displayedCount == currentlySelectedComponentIndex)
                 {
                     tinkerComponentUI.mainButton.Select();
+                    Debug.Log("currentlySelectedComponentIndex:" + currentlySelectedComponentIndex + " displayedCount=" + displayedCount);
                     //componentButtonSelected = true;
                 }
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, component))
@@ -981,11 +985,15 @@ public class WeaponMenuManager : MonoBehaviour
                             {
                                 tinkerComponentUI.countText.text = "" + newCount;
                             }
-                            else Destroy(gridElement);
+                            else
+                            {
+                                Destroy(gridElement);
+                            }
                             DisplayActiveWeapon();
-                            currentlySelectedComponentIndex = index-1;
-                            if(index < 0) 
-                                index = 0;
+                            currentlySelectedComponentIndex = tinkerComponentUI.index;
+                            if(currentlySelectedComponentIndex < 0)
+                                currentlySelectedComponentIndex = 0;
+                            //Debug.Log("onclick currentlySelectedComponentIndex:"+ currentlySelectedComponentIndex);
                             LoadComponentsToScreen();
                         }
                         else
