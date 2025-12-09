@@ -133,6 +133,9 @@ MonoBehaviour:
   mainMenuButton: {fileID: 2056046363117686755}
   bottomTooltipPauseMenuGamepad: {fileID: 7219329089784423539}
   bottomTooltipWeaponMenuGamepad: {fileID: 5915475812825522086}
+  gamepadControlsUI:
+  - {fileID: 5915475812825522086}
+  - {fileID: 7219329089784423539}
   debugMode: 1
   DebugSaveGameButton: {fileID: 0}
   DebugAddItemButton: {fileID: 0}
@@ -21239,9 +21242,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSettings:
+    inverted: 0
     volume: 0
     brightness: 0
-    inverted: 0
     gamepad: 0
   invertedToggle: {fileID: 2777988040239019260}
   mainVolumeSlider: {fileID: 399448963194284082}
