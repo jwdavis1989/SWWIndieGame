@@ -36,7 +36,7 @@ public class PauseScript : MonoBehaviour
     //public Image bottomTooltip;
     public GameObject bottomTooltipPauseMenuGamepad;
     public GameObject bottomTooltipWeaponMenuGamepad;
-    public List<GameObject> gamepadControlsUI;
+    //public List<GameObject> gamepadControlsUI;
     GameObject keyboardControlsUI;
     [Header("Debug")]
     public bool debugMode = false;
@@ -50,8 +50,6 @@ public class PauseScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            PlayerSettingsManager.Load();
-            PlayerCamera.instance.isCameraInverted = PlayerSettingsManager.playerSettings.inverted;
         }
         else
         {
@@ -85,90 +83,7 @@ public class PauseScript : MonoBehaviour
     {
         HandlePauseInput();
         HandleSwitchMenuInput();
-        CheckControlsChanged();
-        //if (gamePaused)
-        //{
-        //    if (mainPauseMenuEvents.currentSelectedGameObject == null)
-        //    {   // Handle for lost cursor
-        //        mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
-        //        Debug.Log("SETTING SELECTED GAME OBJECT PAUSE MANAGER");
-        //    }
-        //}
     }
-    //private void OnControlsChanged(PlayerInput obj)
-    //{
-    //    Debug.Log("Switched to: " + obj.currentControlScheme);
-
-    //    if (obj.currentControlScheme == "Gamepad")
-    //    {
-    //        // Show controller UI
-    //        foreach(GameObject gamepadeUI in gamepadControlsUI)
-    //            gamepadeUI.SetActive(true);
-    //    }
-    //    else if (obj.currentControlScheme == "KeyboardMouse")
-    //    {
-    //        // Show KB/M UI
-    //        foreach (GameObject gamepadeUI in gamepadControlsUI)
-    //            gamepadeUI.SetActive(false);
-    //    }
-    //}
-    string lastDevice = "Gamepad";
-    private void CheckControlsChanged()
-    {
-        string currentDevice = lastDevice;
-        if (lastDevice == "Gamepad")
-        {
-            // Mouse click
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                currentDevice = "Keyboard";
-                Debug.Log("Left mouse clicked");
-            }
-            // Any keyboard key
-            if (Keyboard.current.anyKey.wasPressedThisFrame)
-            {
-                currentDevice = "Keyboard";
-                Debug.Log("A keyboard key was pressed!");
-            }
-        }
-        else
-        {
-            if (Gamepad.current.buttonWest.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame
-                || Gamepad.current.buttonNorth.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame
-                || Gamepad.current.leftTrigger.wasPressedThisFrame || Gamepad.current.rightTrigger.wasPressedThisFrame
-                || Gamepad.current.leftShoulder.wasPressedThisFrame || Gamepad.current.rightShoulder.wasPressedThisFrame)
-            {
-                Debug.Log("Gamepad updated while keyboard");
-                currentDevice = "Gamepad";
-            }
-        }
-
-
-
-        if (lastDevice != currentDevice)
-        {
-            Debug.Log("Device changed to " + currentDevice);
-            lastDevice = currentDevice;
-            if (currentDevice == "Gamepad")
-            {
-                // Show controller UI
-                foreach (GameObject gamepadeUI in gamepadControlsUI)
-                    gamepadeUI.SetActive(true);
-            }
-            else
-            {
-                // Show KB/M UI
-                foreach (GameObject gamepadeUI in gamepadControlsUI)
-                    gamepadeUI.SetActive(false);
-            }
-        }
-    }
-
-    //public void ContinueClick()
-    //{
-    //    Unpause();
-    //    StartCoroutine(WaitToEndOfFrameThenContinue());
-    //}
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
@@ -235,13 +150,19 @@ public class PauseScript : MonoBehaviour
     }
     void SetWeaponMenuTooltip()
     {
-        bottomTooltipWeaponMenuGamepad.SetActive(true);
         bottomTooltipPauseMenuGamepad.SetActive(false);
+        if (InputSwitchDetector.instance.currentDevice == InputSwitchDetector.GAMEPAD)
+        {
+            bottomTooltipWeaponMenuGamepad.SetActive(true);
+        }
     }
     void SetMainPauseMenuTooltip()
     {
-        bottomTooltipWeaponMenuGamepad.SetActive(false);
-        bottomTooltipPauseMenuGamepad.SetActive(true);
+        bottomTooltipWeaponMenuGamepad.SetActive(false); 
+        if (InputSwitchDetector.instance.currentDevice == InputSwitchDetector.GAMEPAD)
+        {
+            bottomTooltipPauseMenuGamepad.SetActive(true);
+        }
     }
     public void MainMenuClick()
     {

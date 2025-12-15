@@ -60,6 +60,7 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject salvageConfirmWindow;
     public GameObject salvageErrorWindow;
     [Header("Input Tooltips")]
+    public List<GameObject> gamepadControlsUI;
     //[SerializeField] public Image holdToBreakdownWpnImage;
     //[SerializeField] private float holdDuration = 1.5f;//should match value in PlayerControls
     private bool isHolding;
@@ -115,6 +116,7 @@ public class WeaponMenuManager : MonoBehaviour
         HandleBreakdownWeaponInput();
         HandleHelpInput();
         HandleGamepadSelectedObject();
+        CheckControlsChanged();
         if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf)
         {
             currentWeaponPreview.SetActive(true);
@@ -1099,5 +1101,28 @@ public class WeaponMenuManager : MonoBehaviour
         LoadWeaponsToScreen();
         DisplayActiveWeapon();
         LoadComponentsToScreen();
+    }
+    private void CheckControlsChanged()
+    {
+        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
+        //Debug.Log("PauseScript.CheckControlsChanged");
+        inputSwitchDetector.CheckControlsChanged();
+        if (inputSwitchDetector.deviceChanged)
+        {
+            //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
+            inputSwitchDetector.deviceChanged = false;
+            if (inputSwitchDetector.currentDevice == InputSwitchDetector.GAMEPAD)
+            {
+                //Show controller UI
+                foreach (GameObject gamepadeUI in gamepadControlsUI)
+                    gamepadeUI.SetActive(true);
+            }
+            else //Keyboard
+            {
+                //Hide Controller UI
+                foreach (GameObject gamepadeUI in gamepadControlsUI)
+                    gamepadeUI.SetActive(false);
+            }
+        }
     }
 }

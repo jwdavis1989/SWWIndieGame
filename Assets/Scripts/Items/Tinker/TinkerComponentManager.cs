@@ -14,6 +14,7 @@ public class TinkerComponentManager : MonoBehaviour
     {
         return Instantiate(baseComponents[(int)type], location);
     }
+    //TEST: Drops random component 
     public void DropRandomItem(Transform transform, float distance = 0)
     {
         int i = UnityEngine.Random.Range(0, baseComponents.Length - 1);
