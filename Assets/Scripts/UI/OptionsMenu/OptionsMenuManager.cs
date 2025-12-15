@@ -23,7 +23,7 @@ public class OptionsMenuManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        invertedToggle.isOn = PlayerSettingsManager.playerSettings.inverted;
+        invertedToggle.isOn = PlayerSettingsManager.instance.playerSettings.inverted;
     }
     // Start is called before the first frame update
     void Start()
@@ -37,7 +37,7 @@ public class OptionsMenuManager : MonoBehaviour
     }
     public void LoadOptions()
     {
-        playerSettings = PlayerSettingsManager.playerSettings;
+        playerSettings = PlayerSettingsManager.instance.playerSettings;
         Debug.Log("Loaded inverted as " + playerSettings.inverted);
         invertedToggle.isOn = playerSettings.inverted;
     }
@@ -46,9 +46,9 @@ public class OptionsMenuManager : MonoBehaviour
     {
         playerSettings.inverted = newValue;
         PlayerCamera.instance.isCameraInverted = newValue;
-        PlayerSettingsManager.playerSettings = playerSettings;
+        PlayerSettingsManager.instance.playerSettings = playerSettings;
         Debug.Log("Saving inverted as " + playerSettings.inverted);
-        PlayerSettingsManager.Save();
+        PlayerSettingsManager.instance.Save();
     }
 
 }

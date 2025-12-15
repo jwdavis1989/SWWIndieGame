@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 865391722418457336}
   - component: {fileID: 7146271847913662825}
   - component: {fileID: -2560250786952294171}
+  - component: {fileID: -9118914495727458265}
   m_Layer: 0
   m_Name: Lightning Prism
   m_TagString: Untagged
@@ -80,7 +81,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212031702891662554}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 256a63b14b2adf14f9e80f74f437f877, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -116,7 +117,7 @@ Rigidbody:
   m_GameObject: {fileID: 1212031702891662554}
   serializedVersion: 4
   m_Mass: 5
-  m_Drag: 5
+  m_Drag: 0
   m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -134,6 +135,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-9118914495727458265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212031702891662554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d8773b555c1e944adf385336b841d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &1449638323653679796
 GameObject:
   m_ObjectHideFlags: 0

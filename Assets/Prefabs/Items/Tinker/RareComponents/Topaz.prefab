@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -693587007413296229}
   - component: {fileID: -6961681846282396045}
   - component: {fileID: -6390771376675341218}
+  - component: {fileID: 9115307979007144431}
   m_Layer: 0
   m_Name: Topaz
   m_TagString: Untagged
@@ -52,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     componentType: 23
-    count: 1
+    count: 0
     itemName: Topaz
     attack: 0
     durability: 0
@@ -80,7 +81,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2475961333021485550}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 256a63b14b2adf14f9e80f74f437f877, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -134,6 +135,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &9115307979007144431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475961333021485550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d8773b555c1e944adf385336b841d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &7007644520291106063
 GameObject:
   m_ObjectHideFlags: 0

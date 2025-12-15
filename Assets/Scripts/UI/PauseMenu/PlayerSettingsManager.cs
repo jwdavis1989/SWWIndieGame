@@ -4,23 +4,43 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class PlayerSettingsManager
+public class PlayerSettingsManager : MonoBehaviour
 {
+    [Header("Pause is a singleton")]
+    public static PlayerSettingsManager instance;
+    private string filename = "playerSettings.json";
+    public PlayerSettings playerSettings = new PlayerSettings();
+    private string filePath;
+    public void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void Start()
+    {
+        filePath = Path.Combine(Application.persistentDataPath, filename);
+        Load();
+    }
     // Player Settings Manager provides api for save & load of player settings and stores loaded player settings
-    public static PlayerSettings playerSettings = new PlayerSettings();
-
-    private static string filePath = Path.Combine(
-        Application.persistentDataPath,
-        "settings.json"
-    );
-    public static PlayerPrefs playerPrefs;
+    //    = Path.Combine(
+    //    Application.persistentDataPath,
+    //    "settings.json"
+    //);
+    public  PlayerPrefs playerPrefs;
     // Start is called before the first frame update
-    public static void Load()
+    public  void Load()
     {
         if (File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);
             playerSettings = JsonUtility.FromJson<PlayerSettings>(json);
+            PlayerCamera.instance.isCameraInverted = playerSettings.inverted;
         }
         else
         {
@@ -29,11 +49,11 @@ public class PlayerSettingsManager
             Save();
         }
     }
-    public static void Save()
+    public void Save()
     {
         string json = JsonUtility.ToJson(playerSettings, true);
         File.WriteAllText(filePath, json);
-        Debug.Log("Settings Saved to " + filePath);//astest
+        //Debug.Log("Settings Saved to " + filePath);//astest
     }
 }
 [Serializable] public class PlayerSettings
