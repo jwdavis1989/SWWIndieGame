@@ -155,7 +155,7 @@ MonoBehaviour:
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
-    gunAttack01DamageMotionValue: 1
+    singleTargetBulletAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 0}
   mainHandHeavyAttackAction: {fileID: 0}
   offHandCastMagicAttackAction: {fileID: 0}
@@ -169,9 +169,10 @@ MonoBehaviour:
   shootingTransform: {fileID: 4197760213768889058}
   isSettingGunToFiringTransform: 0
   isSetGunToHandTransform: 0
-  projectile: {fileID: 0}
-  projectileForwardVelocity: 2200
-  projectileUpwardVelocity: 0
+  gunProjectile: {fileID: 4845079000888395174, guid: ac3f58ce1b3c28b42a6c61a6dd06f303, type: 3}
+  gunShotWarmUpVFX: {fileID: 7017378161147204679, guid: 5e3b59b95ca3bd64e972f39d0e1e2e22, type: 3}
+  projectileForwardVelocityMultiplier: 7
+  projectileUpwardVelocityMultiplier: 4
   projectileMass: 0.01
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4

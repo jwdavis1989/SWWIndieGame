@@ -622,18 +622,19 @@ public class PlayerInputManager : MonoBehaviour
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0 && player.characterWeaponManager.isSpecialWeaponOffCooldown)
             {
                 WeaponScript currentOffHandWeapon = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>();
+                WeaponFamily currentOffHandWeaponFamily = currentOffHandWeapon.weaponFamily;
 
                 //If Magic
-                if (currentOffHandWeapon.weaponFamily == WeaponFamily.MagicRosary || currentOffHandWeapon.weaponFamily == WeaponFamily.MagicStaves
-                || currentOffHandWeapon.weaponFamily == WeaponFamily.MagicRings || currentOffHandWeapon.weaponFamily == WeaponFamily.MagicWands)
+                if (currentOffHandWeaponFamily == WeaponFamily.MagicRosary || currentOffHandWeaponFamily == WeaponFamily.MagicStaves
+                || currentOffHandWeaponFamily == WeaponFamily.MagicRings || currentOffHandWeaponFamily == WeaponFamily.MagicWands)
                 {
                     PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandCastMagicAttackAction,
                                                     currentOffHandWeapon);
                 }
                 //Else If Gun
-                else if (currentOffHandWeapon.weaponFamily == WeaponFamily.SemiAutoGuns || currentOffHandWeapon.weaponFamily == WeaponFamily.BurstFireGuns
-                || currentOffHandWeapon.weaponFamily == WeaponFamily.LaserGuns || currentOffHandWeapon.weaponFamily == WeaponFamily.Shotguns
-                || currentOffHandWeapon.weaponFamily == WeaponFamily.GrenadeLaunchers)
+                else if (currentOffHandWeaponFamily == WeaponFamily.SemiAutoGuns || currentOffHandWeaponFamily == WeaponFamily.BurstFireGuns
+                || currentOffHandWeaponFamily == WeaponFamily.LaserGuns || currentOffHandWeaponFamily == WeaponFamily.Shotguns
+                || currentOffHandWeaponFamily == WeaponFamily.GrenadeLaunchers)
                 {
                     PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandShootGunAttackAction,
                                                     currentOffHandWeapon);
@@ -657,16 +658,25 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (holdSpecialAttackInput /*&& !player.isBlocking*/)
             {
-                WeaponFamily currentSpecialWeapon = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().weaponFamily;
-                if (currentSpecialWeapon == WeaponFamily.MagicRosary || currentSpecialWeapon == WeaponFamily.MagicWands
-                    || currentSpecialWeapon == WeaponFamily.MagicStaves || currentSpecialWeapon == WeaponFamily.MagicRings)
+                WeaponFamily currentSpecialWeaponFamily = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().weaponFamily;
+                if (currentSpecialWeaponFamily == WeaponFamily.MagicRosary || currentSpecialWeaponFamily == WeaponFamily.MagicWands
+                    || currentSpecialWeaponFamily == WeaponFamily.MagicStaves || currentSpecialWeaponFamily == WeaponFamily.MagicRings)
                 {
                     player.isChargingSpellAttack = true;
+                    player.isAiming = false;
+                }
+                else if (currentSpecialWeaponFamily == WeaponFamily.SemiAutoGuns || currentSpecialWeaponFamily == WeaponFamily.BurstFireGuns
+                || currentSpecialWeaponFamily == WeaponFamily.LaserGuns || currentSpecialWeaponFamily == WeaponFamily.Shotguns
+                || currentSpecialWeaponFamily == WeaponFamily.GrenadeLaunchers)
+                {
+                    player.isAiming = true;
+                    player.isChargingSpellAttack = false;
                 }
             }
             else
             {
                 player.isChargingSpellAttack = false;
+                player.isAiming = false;
             }
         }
     }
