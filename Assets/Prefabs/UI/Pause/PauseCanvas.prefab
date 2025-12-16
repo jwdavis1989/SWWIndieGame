@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2330646087369312202}
   - component: {fileID: 4763295883319753333}
   - component: {fileID: 977320309670528715}
+  - component: {fileID: 1379451019684274379}
+  - component: {fileID: 4246020624799053150}
   m_Layer: 5
   m_Name: PauseCanvas
   m_TagString: Untagged
@@ -312,6 +314,37 @@ MonoBehaviour:
   - obtained: 0
     image: 
     name: DefaultName
+--- !u!114 &1379451019684274379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41927688007966186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e0eda67d2eb0d43a3b2993a00b9ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSettings:
+    inverted: 1
+    volume: 0
+    brightness: 0
+    gamepad: 0
+--- !u!114 &4246020624799053150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41927688007966186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ebd1320326a1a64fbfb7ef08d643af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDevice: Gamepad
+  deviceChanged: 0
 --- !u!1 &52571098198527179
 GameObject:
   m_ObjectHideFlags: 0
@@ -16848,7 +16881,7 @@ GameObject:
   - component: {fileID: 1484802306624772728}
   - component: {fileID: 7642934173042278843}
   m_Layer: 5
-  m_Name: CircleFill
+  m_Name: CircleFillYIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21239,9 +21272,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSettings:
+    inverted: 0
     volume: 0
     brightness: 0
-    inverted: 0
     gamepad: 0
   invertedToggle: {fileID: 2777988040239019260}
   mainVolumeSlider: {fileID: 399448963194284082}
@@ -23188,6 +23221,42 @@ PrefabInstance:
       propertyPath: salvageButtonIconGamepad
       value: 
       objectReference: {fileID: 460755280122701500}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[0]
+      value: 
+      objectReference: {fileID: 5915475812825522086}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[1]
+      value: 
+      objectReference: {fileID: 2325084207073997284}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[2]
+      value: 
+      objectReference: {fileID: 1415026049190762951}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[3]
+      value: 
+      objectReference: {fileID: 9037650133503954283}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[4]
+      value: 
+      objectReference: {fileID: 8437046613448110112}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[5]
+      value: 
+      objectReference: {fileID: 903210035441871112}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[6]
+      value: 
+      objectReference: {fileID: 225566962046331752}
+    - target: {fileID: 3037795922960972058, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+      propertyPath: gamepadControlsUI.Array.data[7]
+      value: 
+      objectReference: {fileID: 5714397805904352791}
     - target: {fileID: 3302548684905401623, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -23993,6 +24062,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+--- !u!1 &225566962046331752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 30480443201457358, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}
+  m_PrefabInstance: {fileID: 237870792615618470}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5367369357971232151 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5274189910419075633, guid: 3b6f25ff905994e42870fdbc3142cf73, type: 3}

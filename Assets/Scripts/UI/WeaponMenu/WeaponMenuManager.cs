@@ -60,6 +60,7 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject salvageConfirmWindow;
     public GameObject salvageErrorWindow;
     [Header("Input Tooltips")]
+    public List<GameObject> gamepadControlsUI;
     //[SerializeField] public Image holdToBreakdownWpnImage;
     //[SerializeField] private float holdDuration = 1.5f;//should match value in PlayerControls
     private bool isHolding;
@@ -115,6 +116,7 @@ public class WeaponMenuManager : MonoBehaviour
         HandleBreakdownWeaponInput();
         HandleHelpInput();
         HandleGamepadSelectedObject();
+        CheckControlsChanged();
         if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf)
         {
             currentWeaponPreview.SetActive(true);
@@ -441,6 +443,7 @@ public class WeaponMenuManager : MonoBehaviour
                 if (playerWpns.ownedWeapons.Count <= 1)
                     throw new Exception("Last main hand weapon");
             }
+            //all updates should be below here
             if (!checkOnly)
             {
                 //break down weapon
@@ -453,7 +456,8 @@ public class WeaponMenuManager : MonoBehaviour
         }
         catch (Exception e) //Catches not lvl 5 or over error / no active weapon
         {
-            Debug.Log(e.Message);
+            if(!checkOnly)
+                Debug.Log(e.Message);
             return (e.Message);
         }
         return ("CanSalvage");
@@ -944,6 +948,7 @@ public class WeaponMenuManager : MonoBehaviour
                 if (++displayedCount > maxDisplayed) break;
                 GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
                 TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
+                tinkerComponentUI.index = index;
                 tinkerComponentUI.refComponent = componentScript;
                 if (tinkerComponentUI.tooltipUI != null)
                 {
@@ -963,9 +968,10 @@ public class WeaponMenuManager : MonoBehaviour
                 if(componentScript.spr)//Icon
                     tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
-                if (index == currentlySelectedComponentIndex)
+                if (displayedCount == currentlySelectedComponentIndex)
                 {
                     tinkerComponentUI.mainButton.Select();
+                    Debug.Log("currentlySelectedComponentIndex:" + currentlySelectedComponentIndex + " displayedCount=" + displayedCount);
                     //componentButtonSelected = true;
                 }
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, component))
@@ -981,11 +987,15 @@ public class WeaponMenuManager : MonoBehaviour
                             {
                                 tinkerComponentUI.countText.text = "" + newCount;
                             }
-                            else Destroy(gridElement);
+                            else
+                            {
+                                Destroy(gridElement);
+                            }
                             DisplayActiveWeapon();
-                            currentlySelectedComponentIndex = index-1;
-                            if(index < 0) 
-                                index = 0;
+                            currentlySelectedComponentIndex = tinkerComponentUI.index;
+                            if(currentlySelectedComponentIndex < 0)
+                                currentlySelectedComponentIndex = 0;
+                            //Debug.Log("onclick currentlySelectedComponentIndex:"+ currentlySelectedComponentIndex);
                             LoadComponentsToScreen();
                         }
                         else
@@ -1091,5 +1101,28 @@ public class WeaponMenuManager : MonoBehaviour
         LoadWeaponsToScreen();
         DisplayActiveWeapon();
         LoadComponentsToScreen();
+    }
+    private void CheckControlsChanged()
+    {
+        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
+        //Debug.Log("PauseScript.CheckControlsChanged");
+        inputSwitchDetector.CheckControlsChanged();
+        if (inputSwitchDetector.deviceChanged)
+        {
+            //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
+            inputSwitchDetector.deviceChanged = false;
+            if (inputSwitchDetector.currentDevice == InputSwitchDetector.GAMEPAD)
+            {
+                //Show controller UI
+                foreach (GameObject gamepadeUI in gamepadControlsUI)
+                    gamepadeUI.SetActive(true);
+            }
+            else //Keyboard
+            {
+                //Hide Controller UI
+                foreach (GameObject gamepadeUI in gamepadControlsUI)
+                    gamepadeUI.SetActive(false);
+            }
+        }
     }
 }

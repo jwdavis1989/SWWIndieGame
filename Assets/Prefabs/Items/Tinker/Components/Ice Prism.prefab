@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: -593695969892126847}
   - component: {fileID: 7658533405369580369}
   - component: {fileID: -7983075223186377304}
+  - component: {fileID: 459543316662492207}
   m_Layer: 0
   m_Name: Ice Prism
   m_TagString: Untagged
@@ -216,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     componentType: 5
-    count: 3
+    count: 0
     itemName: Ice Prism
     attack: 0
     durability: 0
@@ -244,7 +245,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6788101276156867435}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 256a63b14b2adf14f9e80f74f437f877, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -280,7 +281,7 @@ Rigidbody:
   m_GameObject: {fileID: 6788101276156867435}
   serializedVersion: 4
   m_Mass: 5
-  m_Drag: 5
+  m_Drag: 0
   m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -298,6 +299,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &459543316662492207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6788101276156867435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d8773b555c1e944adf385336b841d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1001 &6376499672802009930
 PrefabInstance:
   m_ObjectHideFlags: 0

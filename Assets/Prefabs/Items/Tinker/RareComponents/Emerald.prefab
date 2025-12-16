@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: -44389277906499132}
   - component: {fileID: 1862930280932661664}
   - component: {fileID: 8071089415020225307}
+  - component: {fileID: 3898592401503295620}
   m_Layer: 0
   m_Name: Emerald
   m_TagString: Untagged
@@ -177,7 +178,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2475961333021485550}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 256a63b14b2adf14f9e80f74f437f877, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -231,6 +232,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3898592401503295620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475961333021485550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d8773b555c1e944adf385336b841d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!1 &6832423967902119419
 GameObject:
   m_ObjectHideFlags: 0
