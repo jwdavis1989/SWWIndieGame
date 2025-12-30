@@ -151,7 +151,7 @@ public class PlayerInputManager : MonoBehaviour
             //Input Queueing
             playerControls.PlayerActions.QueueLightAttack.performed += i => QueueInput(ref queueLightAttackInput);
             playerControls.PlayerActions.QueueHeavyAttack.performed += i => QueueInput(ref queueHeavyAttackInput);
-            playerControls.PlayerActions.QueueJump.performed        += i => QueueInput(ref queueJumpInput);
+            playerControls.PlayerActions.QueueJump.performed += i => QueueInput(ref queueJumpInput);
 
             //Blocking
             //Holding the input sets Blocking to true
@@ -211,6 +211,10 @@ public class PlayerInputManager : MonoBehaviour
                 SceneManager.LoadSceneAsync(6);// AlecDev - 7/19/25: this is a alec dev dungeon
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
+
+            playerControls.PlayerActions.DebugChangeMainHandElement.performed += i => player.DebugChangeWeaponElementByHand(true);
+            playerControls.PlayerActions.DebugChangeOffHandElement.performed += i => player.DebugChangeWeaponElementByHand(false);
+
 
             //Player UI interactions
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
@@ -392,7 +396,7 @@ public class PlayerInputManager : MonoBehaviour
             //}
             if (mouseWheelVerticalInput == 1)
             {
-                PlayerWeaponManager.instance.nextWeapon();
+                PlayerWeaponManager.instance.NextWeapon();
 
             }
             else if (mouseWheelVerticalInput == -1)
@@ -409,7 +413,7 @@ public class PlayerInputManager : MonoBehaviour
         {
             ChangeRightWeaponDPad = false;
 
-            PlayerWeaponManager.instance.nextWeapon();
+            PlayerWeaponManager.instance.NextWeapon();
         }
     }
 
@@ -577,8 +581,7 @@ public class PlayerInputManager : MonoBehaviour
 
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
             {
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandLightAttackAction,
-                                                PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.GetMainHand().mainHandLightAttackAction, PlayerWeaponManager.instance.GetMainHand());
             }
         }
     }
@@ -593,8 +596,8 @@ public class PlayerInputManager : MonoBehaviour
 
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0)
             {
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().mainHandHeavyAttackAction,
-                                                PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>());
+                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.GetMainHand().mainHandHeavyAttackAction,
+                                                PlayerWeaponManager.instance.GetMainHand().GetComponent<WeaponScript>());
             }
         }
     }
@@ -618,8 +621,24 @@ public class PlayerInputManager : MonoBehaviour
 
             if (PlayerWeaponManager.instance.ownedWeapons.Count > 0 && player.characterWeaponManager.isSpecialWeaponOffCooldown)
             {
-                PlayerWeaponManager.instance.PerformWeaponBasedAction(PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().offHandCastMagicAttackAction,
-                                                PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>());
+                WeaponScript currentOffHandWeapon = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>();
+                WeaponFamily currentOffHandWeaponFamily = currentOffHandWeapon.weaponFamily;
+
+                //If Magic
+                if (currentOffHandWeaponFamily == WeaponFamily.MagicRosary || currentOffHandWeaponFamily == WeaponFamily.MagicStaves
+                || currentOffHandWeaponFamily == WeaponFamily.MagicRings || currentOffHandWeaponFamily == WeaponFamily.MagicWands)
+                {
+                    PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandCastMagicAttackAction,
+                                                    currentOffHandWeapon);
+                }
+                //Else If Gun
+                else if (currentOffHandWeaponFamily == WeaponFamily.SemiAutoGuns || currentOffHandWeaponFamily == WeaponFamily.BurstFireGuns
+                || currentOffHandWeaponFamily == WeaponFamily.LaserGuns || currentOffHandWeaponFamily == WeaponFamily.Shotguns
+                || currentOffHandWeaponFamily == WeaponFamily.GrenadeLaunchers)
+                {
+                    PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandShootGunAttackAction,
+                                                    currentOffHandWeapon);
+                }
 
                 player.characterWeaponManager.ResetSpecialWeaponCooldownTimer();
             }
@@ -639,16 +658,25 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (holdSpecialAttackInput /*&& !player.isBlocking*/)
             {
-                WeaponFamily currentSpecialWeapon = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().weaponFamily;
-                if (currentSpecialWeapon == WeaponFamily.MagicRosary || currentSpecialWeapon == WeaponFamily.MagicWands
-                    || currentSpecialWeapon == WeaponFamily.MagicStaves || currentSpecialWeapon == WeaponFamily.MagicRings)
+                WeaponFamily currentSpecialWeaponFamily = PlayerWeaponManager.instance.GetEquippedWeapon(true).GetComponent<WeaponScript>().weaponFamily;
+                if (currentSpecialWeaponFamily == WeaponFamily.MagicRosary || currentSpecialWeaponFamily == WeaponFamily.MagicWands
+                    || currentSpecialWeaponFamily == WeaponFamily.MagicStaves || currentSpecialWeaponFamily == WeaponFamily.MagicRings)
                 {
                     player.isChargingSpellAttack = true;
+                    player.isAiming = false;
+                }
+                else if (currentSpecialWeaponFamily == WeaponFamily.SemiAutoGuns || currentSpecialWeaponFamily == WeaponFamily.BurstFireGuns
+                || currentSpecialWeaponFamily == WeaponFamily.LaserGuns || currentSpecialWeaponFamily == WeaponFamily.Shotguns
+                || currentSpecialWeaponFamily == WeaponFamily.GrenadeLaunchers)
+                {
+                    player.isAiming = true;
+                    player.isChargingSpellAttack = false;
                 }
             }
             else
             {
                 player.isChargingSpellAttack = false;
+                player.isAiming = false;
             }
         }
     }
@@ -770,7 +798,7 @@ public class PlayerInputManager : MonoBehaviour
                 {
                     player.playerCombatManager.SetTarget(PlayerCamera.instance.rightLockOnTarget);
                 }
-                else if(PlayerCamera.instance.leftLockOnTarget != null)
+                else if (PlayerCamera.instance.leftLockOnTarget != null)
                     player.playerCombatManager.SetTarget(PlayerCamera.instance.leftLockOnTarget);
             }
         }
@@ -784,7 +812,7 @@ public class PlayerInputManager : MonoBehaviour
 
         //Check for UI Window, Dialogue, or Title Screen Being Open
         if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
-                return; 
+            return;
 
         if (player.isPerformingAction || player.isJumping)
         {

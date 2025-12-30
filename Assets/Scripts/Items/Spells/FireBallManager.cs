@@ -14,6 +14,7 @@ public class FireBallManager : SpellManager
 
     [Header("Instantiated FX")]
     private GameObject instantiatedDestructionFX;
+    public ElementalDamageType highestElementalDamageType;
 
     private bool hasCollided = false;
     public bool isFullyCharged = false;
@@ -60,13 +61,15 @@ public class FireBallManager : SpellManager
         }
     }
 
-    public void InitializeFireBall(CharacterManager characterCausingDamage)
+    public void InitializeFireBall(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType)
     {
         damageCollider.characterCausingDamage = characterCausingDamage;
         damageCollider.InitializeStats();
-        if (isFullyCharged) {
+        if (isFullyCharged)
+        {
             damageCollider.fullChargeModifier = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().fullChargingTraitModifier;
         }
+        highestElementalDamageType = currentHighestElementalDamageType;
     }
 
     public void InstantiateSpellDestructionFX()
@@ -76,9 +79,13 @@ public class FireBallManager : SpellManager
             instantiatedDestructionFX = Instantiate(impactParticleFullChargeVFX, transform.position, Quaternion.identity);
         }
         else
-        {   
+        {
             instantiatedDestructionFX = Instantiate(impactParticleVFX, transform.position, Quaternion.identity);
         }
+
+        //Update Explosion VFX based on highest element of the magic weapon used to cast it
+        instantiatedDestructionFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
+
         Destroy(gameObject);
     }
 

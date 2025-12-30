@@ -25,7 +25,7 @@ public class ExpDropCollider : MonoBehaviour
             {
                 PlayerWeaponManager.instance.GetOffHand().GetComponent<WeaponScript>().AddExp(isSplit ? exp / 2 : exp);
             }
-            Destroy(gameObject);
+            Destroy(gameObject.GetComponentInParent<Rigidbody>().gameObject);
         }
     }
 }

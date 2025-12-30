@@ -841,6 +841,7 @@ MonoBehaviour:
   indexOfEquippedSpecialWeapon: 0
   mainHandWeaponAnchor: {fileID: 6192227546992571412}
   offHandWeaponAnchor: {fileID: 6524956729635165840}
+  wristOffHandWeaponAnchor: {fileID: 0}
   currentAttackType: 0
   specialtyCooldown: 5
   specialtyCooldownTimer: 0
@@ -921,6 +922,7 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterUIManager: {fileID: 0}
   characterWeaponManager: {fileID: 428722355192839785}
+  characterModel: {fileID: 2433319847842035510}
   isDead: 0
   faction: 3
   isPlayer: 0
@@ -946,8 +948,10 @@ MonoBehaviour:
   canBleed: 1
   isChargingAttack: 0
   isChargingSpellAttack: 0
+  isAiming: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 3383964005519773742}
+  isInDebugMode: 0
   characterName: Skele-Tony
   navMeshAgent: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
@@ -985,6 +989,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   totalPoiseDamage: 0
   offensivePoiseBonus: 0
   basePoiseDefense: 0
@@ -1003,8 +1008,8 @@ MonoBehaviour:
   jumpStaminaCost: 0
   staminaTickTimer: 0.1
   goldDrop: 100
-  goldDropChance: 0
-  expDropAmt: 0
+  goldDropChance: 0.5
+  expDropAmt: 100
   componentDropChances:
   - type: 2
     dropChance: 0.5
@@ -1606,6 +1611,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 39957b52048169f4fbb5613b25039069, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6386480451222621022, guid: 39957b52048169f4fbb5613b25039069, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -1844,6 +1853,11 @@ CapsuleCollider:
   m_Height: 0.47
   m_Direction: 1
   m_Center: {x: 0, y: 0.13, z: 0}
+--- !u!1 &2433319847842035510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 39957b52048169f4fbb5613b25039069, type: 3}
+  m_PrefabInstance: {fileID: 3244151197950872167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2453587608504094924 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8139853090755257685, guid: 39957b52048169f4fbb5613b25039069, type: 3}

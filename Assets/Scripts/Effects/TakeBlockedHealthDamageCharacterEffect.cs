@@ -111,10 +111,12 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             if (!targetCharacter.isPlayer)
             {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
+                if (characterCausingDamage.characterWeaponManager == null)
+                    Debug.LogError("ERROR: Weapon manager not set!");
                 WeaponScript weapon;
                 if (isMainHand)
                 {
-                    weapon = PlayerWeaponManager.instance.GetMainHand();
+                    weapon = characterCausingDamage.characterWeaponManager.GetMainHand();
                     
                     if (enemy != null)
                     {
@@ -123,7 +125,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
                 }
                 else
                 {
-                    weapon = PlayerWeaponManager.instance.GetOffHand();
+                    weapon = characterCausingDamage.characterWeaponManager.GetOffHand();
                     if (enemy != null)
                     {
                         enemy.isHitByOffHand = true;
@@ -212,7 +214,9 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         finalStaminaDamage = finalStaminaDamage - staminaDamageAbsorbtion;
 
         character.characterStatsManager.currentStamina -= finalStaminaDamage;
-        character.characterStatsManager.ResetStaminaRegenTimer();
+
+        //11-3-25: Currently commenting out to allow the player to regen stamina by lowering their block, as you regen 0 stamina while blocking now.
+        //character.characterStatsManager.ResetStaminaRegenTimer();
     }
 
     private bool CheckForGuardBreak(CharacterManager character)

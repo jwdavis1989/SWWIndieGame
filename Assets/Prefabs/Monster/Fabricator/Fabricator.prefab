@@ -7585,6 +7585,7 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -7
+  JumpAttackQuickFallSpeedModifier: 12
 --- !u!114 &7756440885609404483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7599,6 +7600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
   deathVFX: {fileID: 3807916271835915907, guid: 54dfacbd747c888419e320ffb35f071e, type: 3}
+  activeSpellWarmUpFX: {fileID: 0}
 --- !u!82 &1186929171741770601
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7708,6 +7710,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
+  walkFootStepPitch: 1
+  runFootStepPitch: 1.2
   takeDamageGrunts:
   - {fileID: 8300000, guid: 68f7fb07fe8eeac4fb98d7eba26fd824, type: 3}
   - {fileID: 8300000, guid: a775695000f506d44ab17df56e688370, type: 3}
@@ -7858,6 +7862,7 @@ MonoBehaviour:
   isFalling: 0
   isBoosting: 0
   isRolling: 0
+  isAttacking: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
@@ -7871,8 +7876,10 @@ MonoBehaviour:
   nonWeaponBlockingStrength: 30
   canBleed: 1
   isChargingAttack: 0
+  isChargingSpellAttack: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 8604882355081962580}
+  isInDebugMode: 0
   characterName: Masterwork Fabricator
   navMeshAgent: {fileID: 0}
   aiCharacterCombatManager: {fileID: 0}
@@ -7910,6 +7917,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   totalPoiseDamage: 0
   offensivePoiseBonus: 0
   basePoiseDefense: 0
@@ -7924,11 +7932,12 @@ MonoBehaviour:
   staminaRegenAmount: 2.5
   sprintingStaminaCost: 12
   dodgeStaminaCost: 25
+  airDashStaminaCost: 50
   jumpStaminaCost: 0
   staminaTickTimer: 0.1
-  goldDrop: 100
+  goldDrop: 10
   goldDropChance: 0
-  expDropAmt: 0
+  expDropAmt: 1
   componentDropChances:
   - type: 2
     dropChance: 0.5

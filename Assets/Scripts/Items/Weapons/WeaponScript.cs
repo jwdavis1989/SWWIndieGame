@@ -4,8 +4,14 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.Collections.AllocatorManager;
+using static UnityEditor.Rendering.FilterWindow;
 /** 
  * Enum of all weapon types.
+ * 
+ * Note: Since enums are sometimes stored as integers adding a new type anywhere but right above UNKOWN 
+ *       may cause previously set values to be offset. Could convert to HashTable keyed with constant 
+ *       Strings to prevent this. Could also add several PLACEHOLDER1,etc enums and rename them later.
  */
 public enum WeaponType
 {
@@ -57,8 +63,7 @@ public enum WeaponFamily
 /*
  * Serializable WeaponStats used for JSON saving
  */
-[Serializable]
-public class WeaponStats
+[Serializable] public class WeaponStats
 {
     [Header("Weapon Type")]
     public WeaponType weaponType = 0;
@@ -68,6 +73,7 @@ public class WeaponStats
     public float attack = 1.0f;
     public float maxAttack = 1.0f;
     public float basePoiseDamage = 35f; //Base 35 in case it's caused by traps
+    private float traitShrapnelPoiseDamageModifier = 1.25f;
     public float durability = 1;
     public float maxDurability = 1;
     public float block = 1.0f;
@@ -115,6 +121,9 @@ public class WeaponStats
     //Spells
     public float areaSpellAttack01StaminaCostModifier = 1f;
 
+    //Guns
+    public float gunAttack01StaminaCostModifier = 1f;
+
     [Header("Motion Values")]
     //Light
     public float lightAttack01DamageMotionValue = 1f;
@@ -144,6 +153,9 @@ public class WeaponStats
 
     //Spells
     public float areaSpellAttack01DamageMotionValue = 1f;
+
+    //Guns
+    public float singleTargetBulletAttack01DamageMotionValue = 1f;
 
 
 }
@@ -208,6 +220,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Currently set on prefab")]
     public bool isSpecialWeapon = false;
+    public bool isWristWeapon = false;
     public float specialWeaponDamageMultiplier = 1.25f;
 
     [Header("Image used for menu icon")]
@@ -221,27 +234,50 @@ public class WeaponScript : MonoBehaviour
     public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
     public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
     public WeaponItemAction offHandCastMagicAttackAction;   //Off hand Magic Special Attack
+    public WeaponItemAction offHandShootGunAttackAction;   //Off hand Gun Special Attack
 
-    [Header("Projectile")]
-    public GameObject projectile = null;
+
 
     [Header("Animations")]
     public AnimatorOverrideController weaponAnimatorOverride;
     [SerializeField] protected string offHandSpellAnimation;
+    [SerializeField] protected string offHandGunShootAnimation;
 
     [Header("Weapon Family Specific")]
     [Header("Magic Special Weapons")]
     public float fullChargingTraitModifier = 1.25f;
 
-    [Header("Projectile Velocity")]
+    [Header("Gun Special Weapons")]
+    [Header("Gun Transforms")]
+    public GameObject gunModel;
+    public BulletOriginLocation bulletOriginLocation;
+    private Vector3 baseModelLocation;
+    private Quaternion baseModelRotation;
+    public Transform shootingTransform;
+    public bool isSettingGunToFiringTransform = false;
+    public bool isSetGunToHandTransform = false;
+
+    [Header("Gun Projectile")]
+    [SerializeField] public GameObject gunProjectile = null;
+    [SerializeField] public GameObject gunShotWarmUpVFX;
+    public float projectileForwardVelocityMultiplier = 7f;
+    public float projectileUpwardVelocityMultiplier = 4f;
+    public float projectileMass = 0.01f;
+
+
+    [Header("Spell Projectile")]
     public float spellForwardVelocityMultiplier = 7f;
     public float spellUpwardVelocityMultiplier = 4f;
     [SerializeField] public GameObject spellCastWarmUpVFX;
     [SerializeField] public GameObject spellChargeVFX;
     [SerializeField] public GameObject spellProjectileVFX;
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
+
+    [Header("Ranged SFX")]
     public AudioClip spellReleaseSFX;
     public AudioClip spellProjectileSFX;
+    public AudioClip gunAimSFX;
+    public AudioClip gunFireSFX;
 
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
@@ -253,14 +289,15 @@ public class WeaponScript : MonoBehaviour
     {
         if (isSpecialWeapon)
         {
-            if (projectile != null)
-            {
-                weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
-            }
-            else
-            {
-                weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-            }
+            // if (projectile != null)
+            // {
+            //     weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
+            // }
+            // else
+            // {
+            //     weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+            // }
+            InitializeGunTransform();
         }
         else
         {
@@ -279,7 +316,18 @@ public class WeaponScript : MonoBehaviour
         characterThatOwnsThisWeapon = GetComponentInParent<CharacterManager>();
 
         //Activate Debug Mode if Weapon Manager is in Debug Mode
-        isInDebugMode = characterThatOwnsThisWeapon.isInDebugMode;
+        if (characterThatOwnsThisWeapon != null)
+            isInDebugMode = characterThatOwnsThisWeapon.isInDebugMode;
+    }
+
+    private void Update()
+    {
+        if (isSpecialWeapon)
+        {
+            HandleSettingGunToFiringTransform();
+            HandleSetGunToHandTransform();
+        }
+
     }
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage(MeleeWeaponDamageCollider weaponDamageCollider)
@@ -289,7 +337,8 @@ public class WeaponScript : MonoBehaviour
             return;
         }
 
-        weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
+        if (GetComponentInParent<CharacterWeaponManager>() != null)
+            weaponDamageCollider.characterCausingDamage = GetComponentInParent<CharacterWeaponManager>().characterThatOwnsThisArsenal;
         weaponDamageCollider.isMainHand = !isSpecialWeapon;
         weaponDamageCollider.enabled = true;
 
@@ -325,7 +374,7 @@ public class WeaponScript : MonoBehaviour
         //Backstepping
         weaponDamageCollider.lightBackstepAttack01DamageMotionValue = stats.lightBackstepAttack01DamageMotionValue;
 
-        
+
 
     }
     /**
@@ -396,7 +445,7 @@ public class WeaponScript : MonoBehaviour
             {
                 if (targetCharacter.characterWeaponManager != null && targetCharacter.characterWeaponManager.ownedWeapons.Count > 0)
                 {
-                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.ownedWeapons[targetCharacter.characterWeaponManager.indexOfEquippedWeapon].GetComponent<WeaponScript>().stats.block) / 100f);
+                    return result * attackMotionValue * fullChargeModifier * (1 - (blockingState * targetCharacter.characterWeaponManager.GetMainHand().stats.block) / 100f);
                 }
                 else
                 {
@@ -431,14 +480,18 @@ public class WeaponScript : MonoBehaviour
         SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
         GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileVFX);
 
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedSpellProjectileFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
 
         //3. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
         instantiatedSpellProjectileFX.transform.parent = null;
+        instantiatedSpellProjectileFX.transform.localScale = Vector3.one;
 
 
         // instantiatedSpellProjectileFX.transform.position = spellOriginLocation.transform.position;
@@ -482,16 +535,21 @@ public class WeaponScript : MonoBehaviour
         SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<SpellOriginLocation>();
         GameObject instantiatedSpellProjectileFX = Instantiate(spellProjectileFullChargeVFX);
 
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedSpellProjectileFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
         //3. Apply Damage to the projectiles damage collider
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
         fireBallManager.isFullyCharged = true;
-        fireBallManager.InitializeFireBall(character);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
 
         //4. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellProjectileFX.transform.localPosition = Vector3.zero;
         instantiatedSpellProjectileFX.transform.localRotation = Quaternion.identity;
         instantiatedSpellProjectileFX.transform.parent = null;
+
+        instantiatedSpellProjectileFX.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 
         //5. Set the projectile's direction
         if (character.isLockedOn)
@@ -530,18 +588,26 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellChargeVFX.transform.localPosition = Vector3.zero;
         instantiatedSpellChargeVFX.transform.localRotation = Quaternion.identity;
 
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedSpellChargeVFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
+        instantiatedSpellChargeVFX.transform.localScale = new Vector3(0.7f, 0.7f / 0.9f, 0.7f);
+
     }
 
     public virtual void InstantiateWarmUpSpellFX(CharacterManager character)
     {
         //1. Instantiate Warm Up at the correct place
-        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.ownedSpecialWeapons[character.characterWeaponManager.indexOfEquippedSpecialWeapon].GetComponentInChildren<SpellOriginLocation>();
+        SpellOriginLocation spellOriginLocation = character.characterWeaponManager.GetOffHand().gameObject.GetComponentInChildren<SpellOriginLocation>();
 
         //2. "Save" the warm up FX as a variable so it can be destroyed if the player is knocked out of the animation
         GameObject instantiatedSpellWarmUpFX = Instantiate(spellCastWarmUpVFX);
         instantiatedSpellWarmUpFX.transform.parent = spellOriginLocation.transform;
         instantiatedSpellWarmUpFX.transform.localPosition = Vector3.zero;
         instantiatedSpellWarmUpFX.transform.localRotation = Quaternion.identity;
+
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedSpellWarmUpFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
         character.characterEffectsManager.activeSpellWarmUpFX = instantiatedSpellWarmUpFX;
 
         //3. Drain Stamina
@@ -552,6 +618,163 @@ public class WeaponScript : MonoBehaviour
     public virtual void InstantiateReleaseFX(CharacterManager character)
     {
         if (isInDebugMode) Debug.Log("Instantiate Release FX");
+    }
+
+    public void InitializeGunTransform()
+    {
+        if (weaponFamily == WeaponFamily.SemiAutoGuns || weaponFamily == WeaponFamily.BurstFireGuns
+                || weaponFamily == WeaponFamily.LaserGuns || weaponFamily == WeaponFamily.Shotguns
+                || weaponFamily == WeaponFamily.GrenadeLaunchers)
+        {
+            // Debug.Log("baseTransform?" + baseTransform != null);
+            // Debug.Log("gunModel?" + gunModel != null);
+            // Debug.Log("gunModel.transform?" + gunModel.transform != null);
+            // Debug.Log("gunModel.transform.localPosition?" + gunModel.transform.localPosition != null);
+            // Debug.Log("gunModel.transform.localRotation?" + gunModel.transform.localRotation != null);
+            // baseTransform.position = gunModel.transform.localPosition;
+            // baseTransform.rotation = gunModel.transform.localRotation;
+            // Debug.Log("baseTransform.localPosition?" + baseTransform.localPosition != null);
+            // Debug.Log("baseTransform.localRotation?" + baseTransform.localRotation != null);
+            baseModelLocation = gunModel.transform.localPosition;
+            baseModelRotation = gunModel.transform.localRotation;
+            bulletOriginLocation = gunModel.GetComponentInChildren<BulletOriginLocation>();
+        }
+    }
+
+    public void SetGunToFiringTransform()
+    {
+        // Vector3 velocity = Vector3.zero;
+        // gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, shootingTransform.localPosition, ref velocity, 0.05f);
+        // gunModel.transform.localRotation = Quaternion.Slerp(shootingTransform.localRotation, Quaternion.Euler(0, 0, 0), 0.2f);
+
+        // gunModel.transform.localPosition = shootingTransform.localPosition;
+        // gunModel.transform.localRotation = shootingTransform.localRotation;
+
+        isSettingGunToFiringTransform = true;
+        isSetGunToHandTransform = false;
+    }
+
+
+    public void SetGunToHandTransform()
+    {
+        // gunModel.transform.localPosition = baseModelLocation;
+        // gunModel.transform.localRotation = baseModelRotation;
+
+        // Vector3 velocity = Vector3.zero;
+        // gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, baseModelLocation, ref velocity, 0.05f);
+        // gunModel.transform.localRotation = Quaternion.Slerp(gunModel.transform.localRotation, baseModelRotation, 0.8f);
+
+        isSettingGunToFiringTransform = false;
+        isSetGunToHandTransform = true;
+    }
+
+    public void ResetGunTransformBools()
+    {
+        isSettingGunToFiringTransform = false;
+        isSetGunToHandTransform = false;
+    }
+
+    private void HandleSetGunToHandTransform()
+    {
+        if (isSetGunToHandTransform)
+        {
+            Vector3 velocity = Vector3.zero;
+            gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, baseModelLocation, ref velocity, 0.05f);
+            gunModel.transform.localRotation = Quaternion.Slerp(gunModel.transform.localRotation, baseModelRotation, 1f);
+        }
+    }
+
+    private void HandleSettingGunToFiringTransform()
+    {
+        if (isSettingGunToFiringTransform)
+        {
+            Vector3 velocity = Vector3.zero;
+            gunModel.transform.localPosition = Vector3.SmoothDamp(gunModel.transform.localPosition, shootingTransform.localPosition, ref velocity, 0.05f);
+            gunModel.transform.localRotation = Quaternion.Slerp(shootingTransform.localRotation, Quaternion.Euler(0, 0, 0), 0f);
+        }
+    }
+
+    public virtual void AttemptToShootGun(CharacterManager character)
+    {
+        if (!CanIUseThisSpecialAttack(character))
+        {
+            return;
+        }
+
+        character.characterAnimatorManager.PlayTargetActionAnimation(offHandGunShootAnimation, true);
+
+        //Change character model Rotation to counter animation's root motion rotation in the nation
+        character.SetShootingModelAlignment();
+    }
+
+    public virtual void InstantiateWarmUpGunFX(CharacterManager character)
+    {
+        //1. Instantiate Warm Up at the correct place
+        // BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetOffHand().gameObject.GetComponentInChildren<BulletOriginLocation>();
+
+        //2. "Save" the warm up FX as a variable so it can be destroyed if the player is knocked out of the animation
+        // GameObject instantiatedGunWarmUpFX = Instantiate(gunShotWarmUpVFX);
+        // instantiatedGunWarmUpFX.transform.parent = bulletOriginLocation.transform;
+        // instantiatedGunWarmUpFX.transform.localPosition = Vector3.zero;
+        // instantiatedGunWarmUpFX.transform.localRotation = Quaternion.identity;
+
+        //Alt 1 & 2
+        gunShotWarmUpVFX.SetActive(true);
+        gunShotWarmUpVFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
+        //Update the VFX to match the highest element of the magic weapon
+        // instantiatedGunWarmUpFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+        // character.characterEffectsManager.activeSpellWarmUpFX = instantiatedGunWarmUpFX;
+
+        //3. Drain Stamina
+        character.characterWeaponManager.currentAttackType = AttackType.SingleTargetBulletAttack01;
+        character.CallDrainStaminaBasedOnAttack();
+    }
+
+    public virtual void SuccessfullyShootGun(CharacterManager character)
+    {
+        //1. Destroy any Warm Up FX remaining from the gun shot
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //Alt 1
+        gunShotWarmUpVFX.GetComponent<SpellElementalVFXManager>().ResetActiveElementalVFX();
+        gunShotWarmUpVFX.SetActive(false);
+
+        //2. Instantiate the Projectile
+        BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<BulletOriginLocation>();
+        GameObject instantiatedGunProjectile = Instantiate(gunProjectile);
+
+        //Update the VFX to match the highest element of the magic weapon
+        instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
+
+        FireBallManager fireBallManager = instantiatedGunProjectile.GetComponent<FireBallManager>();
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+
+        //3. Zero out its location and unparent it
+        instantiatedGunProjectile.transform.parent = bulletOriginLocation.transform;
+        instantiatedGunProjectile.transform.localPosition = Vector3.zero;
+        instantiatedGunProjectile.transform.localRotation = Quaternion.identity;
+        instantiatedGunProjectile.transform.parent = null;
+        instantiatedGunProjectile.transform.localScale = Vector3.one;
+
+        //4. Set the projectile's direction
+        if (character.isLockedOn)
+        {
+            instantiatedGunProjectile.transform.LookAt(character.characterCombatManager.currentTarget.transform.position);
+        }
+        else
+        {
+            //instantiatedSpellProjectileFX.transform.forward = character.transform.forward;
+            Vector3 newForward = character.transform.forward + new UnityEngine.Vector3(0, 0, 0);
+            instantiatedGunProjectile.transform.forward = newForward;
+        }
+
+        //6. Set the projectile's velocity
+        Rigidbody bulletRigidbody = instantiatedGunProjectile.GetComponent<Rigidbody>();
+        Vector3 upwardVelocity = instantiatedGunProjectile.transform.up * projectileUpwardVelocityMultiplier;
+        Vector3 forwardVelocity = instantiatedGunProjectile.transform.forward * projectileForwardVelocityMultiplier;
+        Vector3 totalVelocity = upwardVelocity + forwardVelocity;
+        bulletRigidbody.velocity = totalVelocity;
     }
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
@@ -575,7 +798,7 @@ public class WeaponScript : MonoBehaviour
         {
             UpdateHighestElementalStat();
         }
-        
+
         newJumpAttackDamageCollider.enabled = true;
         newJumpAttackDamageCollider.EnableDamageCollider();
 
@@ -705,6 +928,55 @@ public class WeaponScript : MonoBehaviour
     {
         //Update Highest Elemental Value
         stats.elemental.currentHighestElementalStat = GetHighestElementalStat();
+    }
+    /** Returns type as string with spaces added between captial letters. I.E. Great Sword
+     */
+    public string GetWeaponFamilyFormatted()
+    {
+        if (weaponFamily == WeaponFamily.HammersOrWrenches)
+            return WeaponType.Wrench == stats.weaponType || stats.weaponType == WeaponType.ReinforcedWrench ? "Wrench": "Hammer";
+        string name = "" + weaponFamily;
+        string formatted = "";
+        foreach (char letter in name)
+        {
+            if (char.IsUpper(letter))
+            {
+                formatted += " " + letter;
+            }
+            else
+            {
+                formatted += letter;
+            }
+        }
+        formatted = formatted.Trim();//remove extra space
+        if (formatted.Length > 0 && formatted[formatted.Length - 1] == 's')
+        {//remove plurality
+            formatted = formatted.Substring(0,formatted.Length - 1);
+        }
+        return formatted;
+    }
+    public Dictionary<string, float> GetPrimaryStats()
+    {
+        Dictionary<string, float> rv = new Dictionary<string, float>();
+        rv.Add("Attack", stats.attack);
+        rv.Add("Block", stats.block);
+        rv.Add("Durability", stats.durability);
+        rv.Add("Stability", stats.stability);
+        return rv;
+    }
+    public Dictionary<string, float> GetElementalStats()
+    {
+        Dictionary<string, float> rv = new Dictionary<string, float>();
+        rv.Add("Fire", stats.elemental.firePower);
+        rv.Add("Earth", stats.elemental.earthPower);
+        rv.Add("Ice", stats.elemental.icePower);
+        rv.Add("Light", stats.elemental.lightPower);
+        rv.Add("Lightning", stats.elemental.lightningPower);
+        rv.Add("Beast", stats.elemental.beastPower);
+        rv.Add("Wind", stats.elemental.windPower);
+        rv.Add("Scales", stats.elemental.scalesPower);
+        rv.Add("Tech", stats.elemental.techPower);
+        return rv;
     }
 }
 /** Change Log  

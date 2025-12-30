@@ -110,16 +110,23 @@ public class SpellProjectileDamageCollider : DamageCollider
 
                 //Spell Attacks
                 case AttackType.AreaSpellAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().stats.areaSpellAttack01DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.areaSpellAttack01DamageMotionValue;
+                    break;
+                
+                //Gun Attacks
+                case AttackType.SingleTargetBulletAttack01:
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.singleTargetBulletAttack01DamageMotionValue;
                     break;
 
                 //Default
                 default:
+                    attackMotionValue = 1;
+                    Debug.Log("ERROR: Spell Attack Type not set.");
                     break;
             }
 
             //Calculate Poise Damage
-            damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().stats.basePoiseDamage;
+            damageEffect.poiseDamage = attackMotionValue * weaponThatOwnsThisCollider.stats.basePoiseDamage;
         }
         else
         {

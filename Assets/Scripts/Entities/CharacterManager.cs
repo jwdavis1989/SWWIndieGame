@@ -20,6 +20,9 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterUIManager characterUIManager;
     public CharacterWeaponManager characterWeaponManager;
 
+    [Header("Critical Setup")]
+    [SerializeField] GameObject characterModel;
+
     [Header("Status")]
     public bool isDead = false;
 
@@ -51,11 +54,12 @@ public class CharacterManager : MonoBehaviour
     public bool canBleed = true;
     public bool isChargingAttack = false;
     public bool isChargingSpellAttack = false;
+    public bool isAiming = false;
     public bool isInvulnerable = false;
 
     [Header("Minimap Sprite")]
     public GameObject miniMapSprite;
-    
+
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
 
@@ -88,6 +92,7 @@ public class CharacterManager : MonoBehaviour
         animator?.SetBool("isGrounded", isGrounded);
         animator?.SetBool("isChargingAttack", isChargingAttack);
         animator?.SetBool("isChargingSpell", isChargingSpellAttack);
+        animator?.SetBool("isAiming", isAiming);
         animator?.SetBool("isMoving", isMoving);
         animator?.SetBool("isBlocking", isBlocking);
     }
@@ -230,9 +235,64 @@ public class CharacterManager : MonoBehaviour
         isInvulnerable = false;
     }
 
+    public void EnableRootMotion()
+    {
+        characterAnimatorManager.EnableRootMotion();
+    }
+
+    public void DisableRootMotion()
+    {
+        characterAnimatorManager.DisableRootMotion();
+    }
+
+    public void SetShootingModelAlignment()
+    {
+        characterModel.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
+        miniMapSprite.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
+    }
+
+    public void ResetModelAlignment()
+    {
+        characterModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        miniMapSprite.transform.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
     public virtual void DisableRollerJointInvulnerable()
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
-    
+
+    public virtual void DisableIsRolling()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableBoosting()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableBoostingAndHovering()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void SetGunToFiringTransform()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //Update this if monsters use guns
+    }
+
+    public virtual void SetGunToHandTransform()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //Update this if monsters use guns
+    }
+
+    public virtual void ResetGunTransformBools()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //Update this if monsters use guns
+    }
+
 }

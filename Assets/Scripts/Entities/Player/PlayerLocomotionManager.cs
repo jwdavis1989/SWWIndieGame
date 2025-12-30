@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 //using System.Numerics;
 using UnityEngine;
 
@@ -27,19 +28,21 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private Vector3 targetRotationDirection;
     [SerializeField] float walkingSpeed = 2f;
     [SerializeField] float runningSpeed = 5f;
-    [SerializeField] float sprintingSpeed = 6.5f;
+    [SerializeField] float sprintingSpeed = 7f;
     [SerializeField] float rotationSpeed = 15f;
 
     [Header("Jump")]
     [SerializeField] float jumpHeight = 2f;
     [SerializeField] float jumpForwardSpeed = 5f;
     [SerializeField] float freeFallSpeed = 2f;
+    [SerializeField] float hoverFallSpeed = 1f;
     private Vector3 jumpDirection;
 
 
     [Header("Dodge")]
     private Vector3 rollDirection;
-    [SerializeField] float airBoostSpeed = 150f;
+    [SerializeField] float dodgeBoostSpeed = 1f;
+    [SerializeField] float airBoostSpeed = 2f;
     public float icarusBoosterDashSpeedMultiplier = 2f;
     public GameObject forceFieldGraphic;
 
@@ -62,10 +65,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         HandleGroundedMovement();
         HandleRotation();
         HandleBackBoosterJets();
+        HandleRollingMovement();
 
         //Aerial Movement
         HandleJumpingMovement();
         HandleFreeFallMovement();
+        HandleAirDashMovement();
+        //HandleAirHoverMovement();
     }
 
     protected override void Awake()
@@ -124,6 +130,34 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         }
     }
 
+    private void HandleRollingMovement()
+    {
+        if (player.isRolling)
+        {
+            //Move Player
+            player.characterController.Move(rollDirection * Time.deltaTime * dodgeBoostSpeed);
+        }
+    }
+
+    private void HandleAirDashMovement()
+    {
+        if (player.isBoosting)
+        {
+            //Movement caused by boosting
+            if (InventionManager.instance.CheckHasUpgrade(InventionType.IcarusBoosters))
+            {
+                //Player has Icarus Boosters
+                //player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
+                player.characterController.Move(PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
+            }
+            else
+            {
+                //player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
+                player.characterController.Move(PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed);
+            }
+        }
+    }
+
     public void HandleFreeFallMovement()
     {
         if (!player.isGrounded)
@@ -134,7 +168,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
             freeFallDirection.y = 0;
             player.characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
-
 
             //HandleOmniJumpJets(horizontalMovement, verticalMovement);
             //HandleOmniJumpJets(freeFallDirection.x, freeFallDirection.z);
@@ -349,17 +382,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
                 jumpDirection.y = 0;
                 jumpDirection.Normalize();
-
-                //Movement caused by boosting
-                if (InventionManager.instance.CheckHasUpgrade(InventionType.IcarusBoosters))
-                {
-                    //Player has Icarus Boosters
-                    player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
-                }
-                else
-                {
-                    player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
-                }
 
                 //Set player facing
                 playerRotation = Quaternion.LookRotation(jumpDirection);

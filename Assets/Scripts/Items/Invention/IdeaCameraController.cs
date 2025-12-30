@@ -1,6 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -11,7 +12,7 @@ public class IdeaCameraController : MonoBehaviour
 {
     public static IdeaCameraController instance;
     public Camera ideaCamera;
-    
+
     [Header("Preview UI shown with Save/Discard options")]
     public GameObject photoPreviewFrame;
     public TextMeshProUGUI ideaPhotoText;
@@ -44,13 +45,19 @@ public class IdeaCameraController : MonoBehaviour
     float leftAndRightRotationSpeed = 220f;
     float upAndDownLookAngle = 0;
     float upAndDownRotationSpeed = 220f;
-    float minimumPivot = -30f;
+    float minimumPivot = -60f;
     float maximumPivot = 60f;
 
     [Header("Steve Audio")]
     public AudioClip[] steveAudioClipAffirmative;
-    public AudioClip[] steveAudioClipNegative; 
-    public AudioClip[] steveAudioClipScan; 
+    public AudioClip[] steveAudioClipNegative;
+    public AudioClip[] steveAudioClipScan;
+
+    [Header("Camera Attributes")]
+    float ideaCaptureRange = 12f;
+    float ideaCaptureRadius = 0.5f;
+    float cameraPositionHeightModifier = 1.6f;
+    float cameraPositionDepthModifier = 0.5f;
 
     public void Awake()
     {
@@ -125,10 +132,10 @@ public class IdeaCameraController : MonoBehaviour
         //ScreenCapture.CaptureScreenshot("SomeLevel.png");
 
         int height = Screen.height * 75 / 100;
-        int width = (int)(height * (4.0/3.0));
+        int width = (int)(height * (4.0 / 3.0));
         //Debug.Log("Width:"+width+" \nHeight:"+height);
         Texture2D screenshot = new Texture2D(width, height, TextureFormat.RGB24, false);
-        int x = Screen.width / 2 - (width/2);
+        int x = Screen.width / 2 - (width / 2);
         int y = Screen.height / 2 - (height / 2);
         Rect rect = new Rect(x, y, width, height);
         screenshot.ReadPixels(rect, 0, 0);
@@ -151,7 +158,7 @@ public class IdeaCameraController : MonoBehaviour
         {
             ideaPhotoText.text = "No idea here!";
             oldPhotoFrame.SetActive(false);
-            
+
             //Play Steve audio - Negative
             WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipNegative));
         }
@@ -234,7 +241,7 @@ public class IdeaCameraController : MonoBehaviour
             //TODO - Only save locally on object then do this code as part of save/load system...
             //System.IO.File.WriteAllBytes( saveFileName, bytes);
         }
-        
+
     }
     void AttachCameraToPlayer()
     {
@@ -244,7 +251,7 @@ public class IdeaCameraController : MonoBehaviour
         }
         ideaCamera.transform.parent = player.transform;
         Vector3 playerPosition = player.transform.position;
-        ideaCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y + 1.6f, playerPosition.z) + (player.transform.forward * 1.5f);
+        ideaCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y + cameraPositionHeightModifier, playerPosition.z) + (player.transform.forward * cameraPositionDepthModifier);
         //leftAndRightLookAngle = player.transform.rotation.y;
         //upAndDownLookAngle = 0;
     }
@@ -271,7 +278,7 @@ public class IdeaCameraController : MonoBehaviour
         player.isMoving = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
         //deactivate player camera
-        
+
         PlayerCamera.instance.cameraObject.enabled = false;
         //activate camera ui
         canvas.gameObject.SetActive(true);
@@ -280,7 +287,11 @@ public class IdeaCameraController : MonoBehaviour
         photoPreviewFrame.SetActive(false);
         //activate camera
         ideaCamera.gameObject.SetActive(true);
-        
+
+        //Disable Weapon Graphics
+        PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(false);
+        PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(false);
+
     }
     public void DeactivateIdeaCameraView()
     {
@@ -298,6 +309,11 @@ public class IdeaCameraController : MonoBehaviour
         PlayerUIManager.instance.gameObject.SetActive(true);
         player.canMove = true;
         takingPhoto = false;
+
+        //Re-enable Weapon Graphics
+        PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(true);
+        PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(true);
+
     }
     public void HandleRotations()
     {
@@ -333,66 +349,16 @@ public class IdeaCameraController : MonoBehaviour
     }
     public IdeaScript LocateIdeaTarget()
     {
-        //declarations
-        List<IdeaScript> availableTargets = new List<IdeaScript>();
         IdeaScript nearestTarget = null;
-        float lockOnRadius = 12f;
-        float minimumViewableAngle = -50f;
-        float maximumViewableAngle = 50f;
+        RaycastHit hit;
+        Vector3 origin = ideaCamera.transform.position;
+        Vector3 direction = ideaCamera.transform.forward;
 
-        //Will be used to determine the target closest to us
-        float shortestDistance = Mathf.Infinity;
-
-        //Uses a Character Layermask to improve efficiency
-        Collider[] colliders = Physics.OverlapSphere(player.transform.position, lockOnRadius, ideaLayers);
-
-        for (int i = 0; i < colliders.Length; i++)
+        if (Physics.SphereCast(origin, ideaCaptureRadius, direction, out hit, ideaCaptureRange, ideaLayers))
         {
-            IdeaScript lockOnTarget = colliders[i].GetComponent<IdeaScript>();
-
-            if (lockOnTarget != null)
-            {
-                //Check if they are within our Field of View
-                Vector3 lockOnTargetsDirection = lockOnTarget.transform.position - player.transform.position;
-                float distanceFromTarget = Vector3.Distance(player.transform.position, lockOnTarget.transform.position);
-                float viewableAngle = Vector3.Angle(lockOnTargetsDirection, ideaCamera.transform.forward);
-
-
-                //If the target is outside of the field of view or blocked by environment, check the next potential target
-                if (viewableAngle > minimumViewableAngle && viewableAngle < maximumViewableAngle)
-                {
-                    RaycastHit hit;
-
-                    //Check Line of sight by environment layers
-                    //if (Physics.Linecast(player.playerCombatManager.LockOnTransform.position, lockOnTarget.transform.position, out hit, WorldUtilityManager.instance.GetEnvironmentLayers()))
-                    //{
-                    //    //We hit something in the environment, blocking line of sight
-                    //    continue;
-                    //}
-                    //else
-                    //{
-                        //Add the target to the available targets list since it's within Line of Sight
-                        availableTargets.Add(lockOnTarget);
-                    //}
-                }
-
-            }
+            nearestTarget = hit.collider.GetComponent<IdeaScript>();
         }
 
-        //Sort through potential targets to see which one we lock onto first
-        for (int i = 0; i < availableTargets.Count; i++)
-        {
-            if (availableTargets[i] != null)
-            {
-                float distanceFromTarget = Vector3.Distance(player.transform.position, availableTargets[i].transform.position);
-
-                if (distanceFromTarget < shortestDistance)
-                {
-                    shortestDistance = distanceFromTarget;
-                    nearestTarget = availableTargets[i];
-                }
-            }
-        }
         return nearestTarget;
     }
     //Idea Capture button

@@ -15,6 +15,7 @@ public class AICharacterStatsManager : CharacterStatsManager
     [Serializable] public class TinkerComponentDropChance { public TinkerComponentType type; public float dropChance; } //Allows for simply setting drop chances in editor
     public void DoAllDrops(bool isHitByMainHand, bool isHitByOffHand)
     {
+        //Debug.Log("DoAllDrops:" + isHitByMainHand + " exp:" + expDropAmt + " g:" + goldDropChance);
         if (expDropAmt > 0)
             DropExp(isHitByMainHand, isHitByOffHand);
         if (goldDropChance > UnityEngine.Random.value)

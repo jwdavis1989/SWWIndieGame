@@ -10,8 +10,8 @@ public class ItemDropManager : MonoBehaviour
     public GameObject expPrefab;
     public GameObject DropGold(Transform loc, int amt)
     {
-        GameObject g = Instantiate(goldPrefab, loc);
-        g.GetComponent<GoldDropCollider>().gold = amt;
+        GameObject g = Instantiate(goldPrefab, loc.position, loc.rotation);
+        g.GetComponentInChildren<GoldDropCollider>().gold = amt;
         return g;
     }
     public GameObject DropExp(Transform loc, int amt, bool giveMainHandExp, bool giveOffHandExp)
@@ -21,8 +21,8 @@ public class ItemDropManager : MonoBehaviour
             Debug.Log("Warning: Main/Off Hand Not Set! Giving to both.");
             giveMainHandExp = giveOffHandExp = true;
         }
-        GameObject exp = Instantiate(expPrefab, loc);
-        ExpDropCollider e = exp.GetComponent<ExpDropCollider>();
+        GameObject exp = Instantiate(expPrefab, loc.position, loc.rotation);
+        ExpDropCollider e = exp.GetComponentInChildren<ExpDropCollider>();
         e.exp = amt;
         e.isMainHandExp = giveMainHandExp;
         e.isOffHandExp = giveOffHandExp;
@@ -34,6 +34,7 @@ public class ItemDropManager : MonoBehaviour
     }
     public static GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
     {
+        //Warning: CreateWeapon creates object under the Transform loc which would cause the weapon to dissapear when loc (possibly a dead enemy) dissapears
         return Instantiate(WeaponsController.instance.CreateWeapon(type, loc));
     }
     public static ItemDropManager instance;

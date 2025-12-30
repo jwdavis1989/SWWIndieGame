@@ -14,6 +14,7 @@ public class CharacterWeaponManager : MonoBehaviour
     [Header("Weapon Attachment to Character")]
     public GameObject mainHandWeaponAnchor;
     public GameObject offHandWeaponAnchor;
+    public GameObject wristOffHandWeaponAnchor;
 
     [Header("Weapon Combo System")]
     public AttackType currentAttackType;
@@ -66,7 +67,16 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         HandleSpecialWeaponCooldown();
     }
-
+    //Helper
+    public int TotalWeapons()
+    {
+        int total = 0;
+        if(ownedWeapons != null)
+            total += ownedWeapons.Count;
+        if(ownedSpecialWeapons != null)
+            total += ownedSpecialWeapons.Count;
+        return total;
+    }
     /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
@@ -74,11 +84,19 @@ public class CharacterWeaponManager : MonoBehaviour
     public WeaponScript AddWeaponToCurrentWeapons(WeaponType weaponType)
     {
         int i = (int)weaponType;
-        bool isSpecial = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>().isSpecialWeapon;
+        WeaponScript newWeapon = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
         GameObject weaponToAdd;
-        if (isSpecial)
+        if (newWeapon.isSpecialWeapon)
         {
-            weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
+            if (!newWeapon.isWristWeapon)
+            {
+                weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
+            }
+            else
+            {
+                weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, wristOffHandWeaponAnchor.transform);
+            }
+            
             ownedSpecialWeapons.Add(weaponToAdd);
 
             //Update Equipped Weapon Icon if this is your first special weapon
@@ -105,9 +123,25 @@ public class CharacterWeaponManager : MonoBehaviour
         currentWeaponScript.hasObtained = true;
         return weaponToAdd.GetComponent<WeaponScript>();
     }
-    /**
-     * Change equipped weapon
-     */
+    public void EquipWeapon(GameObject weapon)
+    {
+        Debug.Log("Active weapon is " + weapon.name);//astest
+        int index = -1;
+        index = ownedWeapons.FindIndex(wpn => wpn == weapon);
+        if (index == -1)
+        {
+            index = ownedSpecialWeapons.FindIndex(wpn => wpn == weapon);
+            if (index != -1)
+                ChangeSpecialWeapon(index);
+            else
+                Debug.LogWarning("EquipWeapon called and not found");
+        }
+        else
+            ChangeWeapon(index);
+    }
+        /**
+         * Change equipped weapon
+         */
     public void ChangeWeapon(int index)
     {
         if (index < ownedWeapons.Count && ownedWeapons[index] != null)
@@ -129,7 +163,7 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     //find next weapon and call ChangeWeapon
-    public void nextWeapon()
+    public void NextWeapon()
     {
         int totalWeapons = ownedWeapons.Count;
         int newWeaponIndex = indexOfEquippedWeapon;
@@ -140,7 +174,7 @@ public class CharacterWeaponManager : MonoBehaviour
         }
     }
     //find prev weapon and call ChangeWeapon
-    public void prevWeapon()
+    public void PrevWeapon()
     {
         int totalWeapons = ownedWeapons.Count;
         int newWeaponIndex = indexOfEquippedWeapon;

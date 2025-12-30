@@ -38,6 +38,7 @@ public enum AttackType
     BackstepLightAttack01,
     BackstepHeavyAttack01,
     AreaSpellAttack01,
+    SingleTargetBulletAttack01,
     HeavyJumpAttack01,
     LightJumpAttack01,
     Attack1
@@ -76,4 +77,55 @@ public enum CharacterFaction
     TeamHostile01, //Hostile to player, TeamHostile02, and TeamHostile03
     TeamHostile02, //Hostile to yellow, player, TeamHostile01, and TeamHostile02
     TeamHostile03, //Hostile to yellow, player, TeamHostile01, and TeamHostile02
+}
+
+public enum IdeaType
+{//add new idea to bottom (else prefabs will be off), Could use list of strings+Hashtable instead of enum -\('_')/-
+    Battery,
+    Wires,
+    MetalPlating,
+    Glasses,
+    ToyBrain,
+    LightBulb,
+    Fuel,
+    Pipe,
+    Tank,
+    Umbrella,
+    GoldIngot,
+    MusicBox,
+    Diamond,
+    Stone,
+    Wheel,
+    PLACEHOLDER,
+    Skates,
+    Tumbleweed,
+    MasterworkEye,
+    Spring,
+    SharpeningStone,
+    Anvil,
+    Rock,
+    Brick,
+    Bolt,
+    Screw,
+    Window,
+    Hat,
+    Boots,
+    AirShip,
+    Screen,
+    Motor,
+    Wiring,
+    TreasureChest,
+    Flashlight,
+    Golem,
+    Dummy,
+    Skeletony,
+    Tree,
+    Coal,
+    Piston,
+    Forge,
+    //Add new ideas here
+    Barrel,
+
+    // Total unique ideas.
+    IDEAS_SIZE
 }

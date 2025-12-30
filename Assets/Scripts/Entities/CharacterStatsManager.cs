@@ -31,7 +31,7 @@ public class CharacterStatsManager : MonoBehaviour
     public float currentStamina = 0;
     public float maxStamina = 100;
     public float staminaRegenerationTimer = 0f;
-    public float staminaRegenerationDelay = 1.75f;
+    public float staminaRegenerationDelay = 1f;
     public float staminaRegenAmount = 2.5f;
     public float sprintingStaminaCost = 12f;
     public float dodgeStaminaCost = 25f;
@@ -104,6 +104,11 @@ public class CharacterStatsManager : MonoBehaviour
         }
 
         if (character.isPerformingAction)
+        {
+            return;
+        }
+
+        if (character.isBlocking)
         {
             return;
         }

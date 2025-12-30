@@ -11,7 +11,7 @@ public class GoldDropCollider : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerStatsManager>().gold += gold;
-            Destroy(gameObject);
+            Destroy(gameObject.GetComponentInParent<Rigidbody>().gameObject);
         }
     }
 }

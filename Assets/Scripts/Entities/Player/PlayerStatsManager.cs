@@ -35,5 +35,8 @@ public class PlayerStatsManager : CharacterStatsManager
             player.ReviveCharacter();
         }
         totalPoiseDamage = 0f;
+
+        //Reset Special Weapon Cooldown
+        player.characterWeaponManager.isSpecialWeaponOffCooldown = true;
     }
 }
