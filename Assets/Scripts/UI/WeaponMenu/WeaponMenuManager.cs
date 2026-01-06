@@ -377,6 +377,7 @@ public class WeaponMenuManager : MonoBehaviour
                             {
                                 tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + ", ";
                             }
+                            tooltipUI.centerText.text = tooltipUI.centerText.text.Substring(0, tooltipUI.centerText.text.Length - 2);
 
                         }
                         //    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
@@ -387,8 +388,8 @@ public class WeaponMenuManager : MonoBehaviour
                 else if (activeComponent != null)
                 {//last selected was a component
                     activeComponent = null;
-                    foreach (Transform obj in componentsGrid.transform)
-                        obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+                    //foreach (Transform obj in componentsGrid.transform)
+                    //    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
                 }
                 foreach (Transform obj in primaryStatsText.transform)
                     obj.GetComponent<TogglingBehavior>().Toggle(false);
@@ -416,7 +417,7 @@ public class WeaponMenuManager : MonoBehaviour
                     foreach (Transform obj in componentsGrid.transform)
                     {
                         obj.GetComponent<TinkerComponentUI>().mainButton.Select(); ;
-                        obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
+                        //obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
                         break;
                     }
                 }
@@ -976,7 +977,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //    tooltipUI.gameObject.SetActive(false);
                 //}
                 //tinkerComponentUI.tooltipHolder.SetActive(false);
-                //tinkerComponentUI.countText.text = "" + componentScript.stats.count;
+                tinkerComponentUI.countText.text = "" + componentScript.stats.count;
                 //tinkerComponent.cornerButton.gameObject.SetActive(false);
                 if(componentScript.spr)//Icon
                     tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
