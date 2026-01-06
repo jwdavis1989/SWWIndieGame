@@ -26,9 +26,10 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject currentWeaponPreview;
     public GameObject wpnEvolveBtn1;
     public GameObject wpnEvolveBtn2;
+    [Header("Tooltip Window")]
+    public TooltipUI tooltipUI;
     //public GameObject specWpnEvolveBtn1;
     //public GameObject specWpnEvolveBtn2;
-    public Sprite defaultUnkownIcon;
     [Header("Grid containing owned weapons")]
     public GameObject weaponsGrid;
     public int curWeaponPage = 0;
@@ -41,6 +42,7 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Prefab for item UI object")]
     public GameObject tinkerComponentPrefab;
     public GameObject weaponButton;
+    public Sprite defaultUnkownIcon;
     [Header("Input")]
     //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
     public EventSystem eventSystem;
@@ -360,23 +362,34 @@ public class WeaponMenuManager : MonoBehaviour
                 //Debug.Log("currentCursorObj not null");
                 TinkerComponentUI ui = currentCursorObj.GetComponentInParent<TinkerComponentUI>();
                 if (ui != null)
-                {//currently on a tinker component
+                { // currently on a tinker component
                     activeComponent = ui.refComponent;
                     LoadActiveWeaponStats();
                     //Debug.Log("cur ui " + ui.tooltip.text);
-                    foreach (Transform obj in componentsGrid.transform)  //refresh tooltip
+                    foreach (Transform obj in componentsGrid.transform)  // refresh tooltip
                     {
                         if (obj.gameObject == currentCursorObj.GetComponentInParent<TinkerComponentUI>().gameObject)
-                            obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
-                        else
-                            obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+                        {
+                            TinkerComponent refComponent = obj.GetComponent<TinkerComponentUI>().refComponent;
+                            tooltipUI.headerText.text = refComponent.stats.itemName;
+                            tooltipUI.centerText.text = "";
+                            foreach (KeyValuePair<string, float> stat in refComponent.GetStats())
+                            {
+                                tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + ", ";
+                            }
+                            tooltipUI.centerText.text = tooltipUI.centerText.text.Substring(0, tooltipUI.centerText.text.Length - 2);
+
+                        }
+                        //    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
+                        //else
+                        //    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
                     }
                 }
                 else if (activeComponent != null)
                 {//last selected was a component
                     activeComponent = null;
-                    foreach (Transform obj in componentsGrid.transform)
-                        obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
+                    //foreach (Transform obj in componentsGrid.transform)
+                    //    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
                 }
                 foreach (Transform obj in primaryStatsText.transform)
                     obj.GetComponent<TogglingBehavior>().Toggle(false);
@@ -404,7 +417,7 @@ public class WeaponMenuManager : MonoBehaviour
                     foreach (Transform obj in componentsGrid.transform)
                     {
                         obj.GetComponent<TinkerComponentUI>().mainButton.Select(); ;
-                        obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
+                        //obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(true);
                         break;
                     }
                 }
@@ -747,7 +760,7 @@ public class WeaponMenuManager : MonoBehaviour
             obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing? "<color=\"green\">" : "") + stat.Value + greenText;
             Button tooltipNavButton = obj.GetComponentInChildren<Button>();
             if (tooltipNavButton != null)
-            {
+            { // This handles the helper tooltips for the stats. It is not currently functioning
                 TogglingBehavior tooltipToggler = obj.GetComponent<TogglingBehavior>();
                 if (tooltipToggler != null)
                 {
@@ -950,19 +963,20 @@ public class WeaponMenuManager : MonoBehaviour
                 TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
                 tinkerComponentUI.index = index;
                 tinkerComponentUI.refComponent = componentScript;
-                if (tinkerComponentUI.tooltipUI != null)
-                {
-                    TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
-                    tooltipUI.headerText.text = componentScript.stats.itemName;
-                    tooltipUI.bottomText.text = componentScript.stats.price + " gp";//gold points - placeholder name
-                    tooltipUI.centerText.text = "";
-                    foreach(KeyValuePair<string,float> stat in componentScript.GetStats())
-                    {
-                        tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + "\n";
-                    }
-                    tooltipUI.gameObject.SetActive(false);
-                }
-                tinkerComponentUI.tooltipHolder.SetActive(false);
+                //if (tinkerComponentUI.tooltipUI != null)
+                //if (tooltipUI != null)
+                //{
+                //    //TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
+                //    tooltipUI.headerText.text = componentScript.stats.itemName;
+                //    tooltipUI.bottomText.text = componentScript.stats.price + " gp";//gold points - placeholder name
+                //    tooltipUI.centerText.text = "";
+                //    foreach(KeyValuePair<string,float> stat in componentScript.GetStats())
+                //    {
+                //        tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + "\n";
+                //    }
+                //    tooltipUI.gameObject.SetActive(false);
+                //}
+                //tinkerComponentUI.tooltipHolder.SetActive(false);
                 tinkerComponentUI.countText.text = "" + componentScript.stats.count;
                 //tinkerComponent.cornerButton.gameObject.SetActive(false);
                 if(componentScript.spr)//Icon
@@ -1026,19 +1040,19 @@ public class WeaponMenuManager : MonoBehaviour
             //    tinkerComponentUI.tooltip.text = componentScript.stats.itemName;
             //if (tinkerComponentUI.tooltipHolder != null)
             //    tinkerComponentUI.tooltipHolder.SetActive(false);
-            if (tinkerComponentUI.tooltipUI != null)
-            {
-                TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
-                tooltipUI.headerText.text = componentScript.stats.itemName;
-                tooltipUI.bottomText.text = componentScript.stats.price + " gp";//gold points - placeholder name
-                tooltipUI.centerText.text = "";
-                foreach (KeyValuePair<string, float> stat in componentScript.GetStats())
-                {
-                    tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + "\n";
-                }
-                tooltipUI.centerText.text += "\nCan only combine weapons of the same hand\n";
-                tooltipUI.gameObject.SetActive(false);
-            }
+            //if (tinkerComponentUI.tooltipUI != null)
+            //{
+            //    TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
+            //    tooltipUI.headerText.text = componentScript.stats.itemName;
+            //    tooltipUI.bottomText.text = componentScript.stats.price + " gp";//gold points - placeholder name
+            //    tooltipUI.centerText.text = "";
+            //    foreach (KeyValuePair<string, float> stat in componentScript.GetStats())
+            //    {
+            //        tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + "\n";
+            //    }
+            //    tooltipUI.centerText.text += "\nCan only combine weapons of the same hand\n";
+            //    tooltipUI.gameObject.SetActive(false);
+            //}
             if (componentScript.spr)
                 tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
             if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
