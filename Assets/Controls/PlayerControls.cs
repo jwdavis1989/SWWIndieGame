@@ -1609,6 +1609,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""40f323a1-5a48-458f-882f-7eb2d68de96e"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BreakdownWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4d9401df-953c-4a98-968b-cb34fa761dd8"",
                     ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
