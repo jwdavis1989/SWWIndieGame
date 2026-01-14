@@ -53,6 +53,8 @@ public class WeaponMenuManager : MonoBehaviour
     [SerializeField] bool breakdownWeaponPerformed = false;
     //[SerializeField] bool breakdownWeaponCanceled = false;
     [SerializeField] bool helpInput = false;
+    [SerializeField] bool focusEvolutionsInput = false;
+    [SerializeField] bool focusComponentsInput = false;
     [Header("Camera Movement Input")]
     PlayerControls playerControls;
     [SerializeField] Vector2 previewCameraInput;
@@ -63,6 +65,7 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject salvageErrorWindow;
     [Header("Input Tooltips")]
     public List<GameObject> gamepadControlsUI;
+    public List<GameObject> keyboardControlsUI;
     //[SerializeField] public Image holdToBreakdownWpnImage;
     //[SerializeField] private float holdDuration = 1.5f;//should match value in PlayerControls
     private bool isHolding;
@@ -94,6 +97,8 @@ public class WeaponMenuManager : MonoBehaviour
             playerControls.PauseMenu.SwitchWeaponDown.performed += i => switchWeaponDown = true;
             playerControls.PauseMenu.EquipWeapon.performed += i => equipWeaponInput = true;
             playerControls.PauseMenu.HelpButton.performed += i => helpInput = true;
+            playerControls.PauseMenu.FocusComponentsWindow.performed += i => focusComponentsInput = true;
+            playerControls.PauseMenu.FocusEvolutionsWindow.performed += i => focusEvolutionsInput = true;
             //playerControls.PauseMenu.BreakdownWeapon.started += i => breakdownWeaponStarted = true;
             playerControls.PauseMenu.BreakdownWeapon.performed += i => breakdownWeaponPerformed = true;
             //playerControls.PauseMenu.BreakdownWeapon.canceled += i => breakdownWeaponCanceled = true;
@@ -118,6 +123,8 @@ public class WeaponMenuManager : MonoBehaviour
         HandleBreakdownWeaponInput();
         HandleHelpInput();
         HandleGamepadSelectedObject();
+        HandleFocusComponentsInput();
+        HandleFocusEvolutionsInput();
         CheckControlsChanged();
         if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf)
         {
@@ -163,6 +170,92 @@ public class WeaponMenuManager : MonoBehaviour
             newPosition.z += zoomSpeed * Time.unscaledDeltaTime;
             newPosition.z = Mathf.Min(newPosition.z, maxZoomDistance);
             weaponPreviewHolder.transform.position = newPosition;
+        }
+    }
+    void HandleFocusComponentsInput()
+    {
+        if (focusComponentsInput)
+        {
+            focusComponentsInput = false;
+            bool selected = false;
+            foreach (Transform t in componentsGrid.transform)
+            {
+                // Make navigatiable
+                Button button = t.gameObject.GetComponent<TinkerComponentUI>().mainButton;
+                button.interactable = true;
+                Navigation nav = button.navigation;
+                nav.mode = Navigation.Mode.Automatic;// : Navigation.Mode.None;
+                button.navigation = nav;
+                if (!selected)
+                {
+                    selected = true;
+                    button.Select();
+                }
+            }
+            if (wpnEvolveBtn1 != null && wpnEvolveBtn1.gameObject.activeSelf)
+            {// turn off navigation
+                Button button = wpnEvolveBtn1.GetComponentInChildren<Button>();
+                button.interactable = false;
+                Navigation nav = button.navigation;
+                nav.mode = Navigation.Mode.None;
+                button.navigation = nav;
+            }
+            if (wpnEvolveBtn2 != null && wpnEvolveBtn2.gameObject.activeSelf)
+            {// turn off navigation
+                Button button = wpnEvolveBtn2.GetComponentInChildren<Button>();
+                button.interactable = false;
+                Navigation nav = button.navigation;
+                nav.mode = Navigation.Mode.None;
+                button.navigation = nav;
+            }
+        }
+    }
+    void HandleFocusEvolutionsInput()
+    {
+        if (focusEvolutionsInput)
+        {
+            focusEvolutionsInput = false;
+            WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
+            List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
+            List<WeaponType> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
+            if (availEvolves.Count == 0)
+                return; // Do nothing
+            foreach (Transform t in componentsGrid.transform)
+            {
+                // turn off navigation
+                Button button = t.gameObject.GetComponent<TinkerComponentUI>().mainButton;
+                button.interactable = false;
+                Navigation nav = button.navigation;
+                nav.mode = Navigation.Mode.None;
+                button.navigation = nav;
+            }
+            bool selected = false;
+            if (evolves.Count > 0 && wpnEvolveBtn1 != null && wpnEvolveBtn1.gameObject.activeSelf)
+            {  // Make navigatiable
+                Button button = wpnEvolveBtn1.GetComponentInChildren<Button>();
+                button.interactable = true;
+                Navigation nav = button.navigation;
+                nav.mode = Navigation.Mode.Automatic;// : Navigation.Mode.None;
+                button.navigation = nav;
+                if (availEvolves.Contains(evolves[0]))
+                {
+                    button.Select();
+                    selected = true;
+                }
+            }
+            if (evolves.Count > 1 && wpnEvolveBtn2 != null && wpnEvolveBtn2.gameObject.activeSelf)
+            {  // Make navigatiable
+                Button button = wpnEvolveBtn2.GetComponentInChildren<Button>();
+                button.interactable = true;
+                Navigation nav = button.navigation;
+                nav.mode = Navigation.Mode.Automatic;// : Navigation.Mode.None;
+                button.navigation = nav;
+                if (!selected && availEvolves.Contains(evolves[1]))
+                {
+                    button.Select();
+                    selected = true;
+                }
+            }
         }
     }
     //float wpnScrollVal = 0;
@@ -1130,12 +1223,16 @@ public class WeaponMenuManager : MonoBehaviour
                 //Show controller UI
                 foreach (GameObject gamepadeUI in gamepadControlsUI)
                     gamepadeUI.SetActive(true);
+                foreach (GameObject gamepadeUI in keyboardControlsUI)
+                    gamepadeUI.SetActive(false);
             }
             else //Keyboard
             {
                 //Hide Controller UI
                 foreach (GameObject gamepadeUI in gamepadControlsUI)
                     gamepadeUI.SetActive(false);
+                foreach (GameObject gamepadeUI in keyboardControlsUI)
+                    gamepadeUI.SetActive(true);
             }
         }
     }

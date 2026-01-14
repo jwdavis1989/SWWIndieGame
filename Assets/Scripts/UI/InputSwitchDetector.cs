@@ -10,6 +10,8 @@ public class InputSwitchDetector : MonoBehaviour
     public string currentDevice = GAMEPAD;
     public bool deviceChanged = false;
     public static InputSwitchDetector instance;
+    [SerializeField] bool anyGamepadInput = false;
+    PlayerControls playerControls;
     //constants
     public const string GAMEPAD = "GAMEPAD";
     public const string KEYBOARD = "KEYBOARD";
@@ -23,6 +25,15 @@ public class InputSwitchDetector : MonoBehaviour
         {
             Debug.LogError("Extra InputSwitchDetector created");
             Destroy(gameObject);
+        }
+    }
+    public void Start()
+    {
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+            playerControls.PauseMenu.AnyGamepad.performed += i => anyGamepadInput = true;
+            playerControls.Enable();
         }
     }
     public void CheckControlsChanged()
@@ -47,11 +58,13 @@ public class InputSwitchDetector : MonoBehaviour
         }
         else
         {
-            if (Gamepad.current.buttonWest.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame
-                || Gamepad.current.buttonNorth.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame
-                || Gamepad.current.leftTrigger.wasPressedThisFrame || Gamepad.current.rightTrigger.wasPressedThisFrame
-                || Gamepad.current.leftShoulder.wasPressedThisFrame || Gamepad.current.rightShoulder.wasPressedThisFrame)
-            {//TODO: just bind something in PlayerControls
+            //if (Gamepad.current.buttonWest.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame
+            //    || Gamepad.current.buttonNorth.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame
+            //    || Gamepad.current.leftTrigger.wasPressedThisFrame || Gamepad.current.rightTrigger.wasPressedThisFrame
+            //    || Gamepad.current.leftShoulder.wasPressedThisFrame || Gamepad.current.rightShoulder.wasPressedThisFrame)
+            if(anyGamepadInput)
+            { //TODO: just bind something in PlayerControls
+                anyGamepadInput = false;
                 //Debug.Log("Gamepad updated while keyboard");
                 newDevice = GAMEPAD;
             }
