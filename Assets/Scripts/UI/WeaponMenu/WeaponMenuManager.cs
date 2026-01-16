@@ -805,7 +805,7 @@ public class WeaponMenuManager : MonoBehaviour
                 {
                     TooltipUI tooltip = tooltipToggler.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
                     tooltip.headerText.text = stat.Key;
-                    tooltip.centerText.text = stat.Key + " handles " + stat.Key + " damage";
+                    tooltip.centerText.text = WeaponScript.GetStatTooltip(stat.Key);
                 }
                 if (helpActive)
                 {
