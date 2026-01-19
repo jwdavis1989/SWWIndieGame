@@ -108,7 +108,7 @@ public class WeaponMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.instance.currentDevice == InputSwitchDetector.GAMEPAD)
+        if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad())
         { //Handle Lost gamepad Cursor
             if (helpActive){
                 primaryStatsText.transform.GetChild(0).GetComponent<Button>().Select();
@@ -361,7 +361,6 @@ public class WeaponMenuManager : MonoBehaviour
             helpInput = false;
             if(handlingHelpInput)
                 return;
-            Debug.Log("HELP INPUT");
             handlingHelpInput = true;
             helpActive = !helpActive;
             if (helpActive)
@@ -382,9 +381,6 @@ public class WeaponMenuManager : MonoBehaviour
                 ToggleComponentNavigation(true);// will select first component if available
                 ToggleEvolutionNavigation(false);// prolly not necessary but just in case
             }
-
-            // Reload
-            //LoadActiveWeaponStats();
             handlingHelpInput = false;
         }
     }
@@ -785,7 +781,7 @@ public class WeaponMenuManager : MonoBehaviour
         ElementalStats el = stats.elemental;
         Func<KeyValuePair<string, float>, Transform, KeyValuePair<string, float>> handleStatText = (stat,trans) =>
         {
-            GameObject obj = Instantiate(statsTextPrefab, trans);
+            GameObject statTextObj = Instantiate(statsTextPrefab, trans);
             bool greenTextShowing = false;
             String greenText = "";
             if(activeComponent != null)
@@ -796,11 +792,11 @@ public class WeaponMenuManager : MonoBehaviour
                     greenText += "<size=16> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
                 }
             }
-            obj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing? "<color=\"green\">" : "") + stat.Value + greenText;
-            Button tooltipNavButton = obj.GetComponentInChildren<Button>();
+            statTextObj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing? "<color=\"green\">" : "") + stat.Value + greenText;
+            Button tooltipNavButton = statTextObj.GetComponentInChildren<Button>();
             if (tooltipNavButton != null)
             { // This handles the helper tooltips for the stats. It is not currently functioning
-                TogglingBehavior tooltipToggler = obj.GetComponent<TogglingBehavior>();
+                TogglingBehavior tooltipToggler = statTextObj.GetComponent<TogglingBehavior>();
                 if (tooltipToggler != null)
                 {
                     TooltipUI tooltip = tooltipToggler.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
@@ -1157,14 +1153,14 @@ public class WeaponMenuManager : MonoBehaviour
     }
     private void CheckControlsChanged()
     {
-        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
         //Debug.Log("PauseScript.CheckControlsChanged");
+        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
         inputSwitchDetector.CheckControlsChanged();
         if (inputSwitchDetector.deviceChanged)
         {
             //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
-            if (inputSwitchDetector.currentDevice == InputSwitchDetector.GAMEPAD)
+            if (InputSwitchDetector.IsCurrentlyGamepad())
             {
                 //Show controller UI
                 foreach (GameObject gamepadeUI in gamepadControlsUI)
@@ -1179,8 +1175,16 @@ public class WeaponMenuManager : MonoBehaviour
                     gamepadeUI.SetActive(false);
                 foreach (GameObject gamepadeUI in keyboardControlsUI)
                     gamepadeUI.SetActive(true);
+                //enable buttons
+                EnableAllNavigation();
             }
         }
+    }
+    private void EnableAllNavigation()
+    {
+        ToggleComponentNavigation(true);
+        ToggleEvolutionNavigation(true);
+        ToggleStatTooltipNavigation(true);
     }
     private void ToggleComponentNavigation(bool enable)
     {
@@ -1193,7 +1197,7 @@ public class WeaponMenuManager : MonoBehaviour
             Navigation nav = button.navigation;
             nav.mode = enable?Navigation.Mode.Automatic :Navigation.Mode.None;
             button.navigation = nav;
-            if (enable && !selected)
+            if (enable && !selected && InputSwitchDetector.IsCurrentlyGamepad())
             { // Select first
                 selected = true;
                 button.Select();

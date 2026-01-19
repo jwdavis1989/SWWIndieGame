@@ -151,7 +151,7 @@ public class PauseScript : MonoBehaviour
     void SetWeaponMenuTooltip()
     {
         bottomTooltipPauseMenuGamepad.SetActive(false);
-        if (InputSwitchDetector.instance.currentDevice == InputSwitchDetector.GAMEPAD)
+        if (InputSwitchDetector.IsCurrentlyGamepad())
         {
             bottomTooltipWeaponMenuGamepad.SetActive(true);
         }
@@ -159,7 +159,7 @@ public class PauseScript : MonoBehaviour
     void SetMainPauseMenuTooltip()
     {
         bottomTooltipWeaponMenuGamepad.SetActive(false); 
-        if (InputSwitchDetector.instance.currentDevice == InputSwitchDetector.GAMEPAD)
+        if (InputSwitchDetector.IsCurrentlyGamepad())
         {
             bottomTooltipPauseMenuGamepad.SetActive(true);
         }

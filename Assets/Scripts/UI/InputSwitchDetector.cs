@@ -7,8 +7,8 @@ using UnityEngine.InputSystem.Users;
 
 public class InputSwitchDetector : MonoBehaviour
 {
-    public string currentDevice = GAMEPAD;
-    public bool deviceChanged = false;
+    public static string currentDevice = GAMEPAD;
+    public bool deviceChanged = false; // set to true when device is changed. Reset to false within context. E.g. WeaponMenu
     public static InputSwitchDetector instance;
     [SerializeField] bool anyGamepadInput = false;
     PlayerControls playerControls;
@@ -76,5 +76,9 @@ public class InputSwitchDetector : MonoBehaviour
             currentDevice = newDevice;
             //Debug.Log("Device changed to " + currentDevice);
         }
+    }
+    public static bool IsCurrentlyGamepad()
+    {
+        return currentDevice == GAMEPAD;
     }
 }
