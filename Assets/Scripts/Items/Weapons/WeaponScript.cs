@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static Unity.Collections.AllocatorManager;
 using static UnityEditor.Rendering.FilterWindow;
+using static UnityEngine.InputManagerEntry;
 /** 
  * Enum of all weapon types.
  * 
@@ -978,11 +979,45 @@ public class WeaponScript : MonoBehaviour
         rv.Add("Tech", stats.elemental.techPower);
         return rv;
     }
+    public static string GetStatTooltip(string stat)
+    {
+        switch (stat)
+        {
+            case "Attack":
+                return "Attack improves all damage";
+            case "Block":
+                return "Block lowers damage";
+            case "Durability":
+                return "Weapon is broken when durability is zero";
+            case "Stability":
+                return "Stability reduces stagger";
+            case "Fire":
+                return "Fire is strong against grass types";
+            case "Earth":
+                return "Earth is strong against newbs";
+            case "Ice":
+                return "Ices is strong against fire types";
+            case "Light":
+                return "Light is good against undead";
+            case "Lightning":
+                return "Lightning is good against water types";
+            case "Beast":
+                return "Beast improves damage against natural animals";
+            case "Wind":
+                return "Wind improves damage against flying enemies";
+            case "Scales":
+                return "Scales improves damage against fish and reptiles";
+            case "Tech":
+                return "Tech improves damage to robots";
+            default:
+                return stat + " is good";
+        }
+    }
 }
 /** Change Log  
  *  Date         Developer  Description
  *  09/16/2024   Alec       New.
  *  06/23/2025   Jerry      Added Block/Perfect Block Mechanics.
  *  08/04/2025   Jerry      Added Spell Casting Weapon Mechanics.
- *  
+ *  01/15/2026   Alec       Added helper script for tooltip, Stats can be iterated as a dictionary
  * */
