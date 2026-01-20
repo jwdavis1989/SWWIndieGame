@@ -6390,6 +6390,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86e0eda67d2eb0d43a3b2993a00b9ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSettings:
+    inverted: 1
+    volume: 0
+    brightness: 0
+    gamepad: 0
 --- !u!1001 &1353102581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9252,7 +9257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 920009547507432738, guid: 1d426f461f61c604283e094d02451d75, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.67559016
+      value: 0.99848914
       objectReference: {fileID: 0}
     - target: {fileID: 920009547507432738, guid: 1d426f461f61c604283e094d02451d75, type: 3}
       propertyPath: m_LocalRotation.x
@@ -9260,11 +9265,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 920009547507432738, guid: 1d426f461f61c604283e094d02451d75, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7372774
+      value: -0.05495013
       objectReference: {fileID: 0}
     - target: {fileID: 920009547507432738, guid: 1d426f461f61c604283e094d02451d75, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 920009547507432738, guid: 1d426f461f61c604283e094d02451d75, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9272,7 +9277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 920009547507432738, guid: 1d426f461f61c604283e094d02451d75, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 265
+      value: -6.3
       objectReference: {fileID: 0}
     - target: {fileID: 920009547507432738, guid: 1d426f461f61c604283e094d02451d75, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

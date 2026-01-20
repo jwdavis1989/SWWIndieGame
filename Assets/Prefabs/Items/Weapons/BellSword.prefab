@@ -125,6 +125,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2282369118333398337}
+  - {fileID: 2097871484606010436}
   - {fileID: 8974767496508288075}
   - {fileID: 3759063050884388223}
   - {fileID: 2607144318938850285}
@@ -146,6 +147,7 @@ MonoBehaviour:
   weaponDamageCollider: {fileID: 0}
   jumpAttackWeaponDamageCollider: {fileID: 4862988502895012156, guid: 4790800cb316f2f479ac2620ab078ac7, type: 3}
   isSpecialWeapon: 0
+  isWristWeapon: 0
   specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: 198bd997837aae149bbb47d8adf83b36, type: 3}
   hasObtained: 1
@@ -171,6 +173,7 @@ MonoBehaviour:
       beastPower: 15
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 45
       icePower: 45
@@ -181,6 +184,7 @@ MonoBehaviour:
       beastPower: 45
       scalesPower: 45
       techPower: 45
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
     xpToLevel: 100
@@ -203,6 +207,7 @@ MonoBehaviour:
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
+    gunAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -216,13 +221,25 @@ MonoBehaviour:
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
+    singleTargetBulletAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
   offHandCastMagicAttackAction: {fileID: 0}
-  projectile: {fileID: 0}
+  offHandShootGunAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 1d7f32233af26c44899feb699f25e05b, type: 2}
   offHandSpellAnimation: 
+  offHandGunShootAnimation: 
   fullChargingTraitModifier: 1.25
+  gunModel: {fileID: 0}
+  bulletOriginLocation: {fileID: 0}
+  shootingTransform: {fileID: 0}
+  isSettingGunToFiringTransform: 0
+  isSetGunToHandTransform: 0
+  gunProjectile: {fileID: 0}
+  gunShotWarmUpVFX: {fileID: 0}
+  projectileForwardVelocityMultiplier: 7
+  projectileUpwardVelocityMultiplier: 4
+  projectileMass: 0.01
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
@@ -231,6 +248,9 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  gunAimSFX: {fileID: 0}
+  gunFireSFX: {fileID: 0}
+  isInDebugMode: 0
 --- !u!1 &6025395491456448538
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +328,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   isMainHand: 0
   attackMotionValue: 1
   fullChargeModifier: 1
@@ -422,6 +443,112 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &860386535179043746
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8130850429207198863}
+    m_Modifications:
+    - target: {fileID: 1652143759095011289, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_Name
+      value: CFXR2 Shiny Item (Loop)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011301, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: animatedLights.Array.data[0].intensityEnd
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011301, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: animatedLights.Array.data[0].intensityStart
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1652143759095011303, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3827264115780404086, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4999201474641457541, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7831740662026284754, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8797081065329041583, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+--- !u!4 &2097871484606010436 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1652143759095011302, guid: e2c1ac940434a5242b54d72b66654687, type: 3}
+  m_PrefabInstance: {fileID: 860386535179043746}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1740117766543248042
 PrefabInstance:
   m_ObjectHideFlags: 0
