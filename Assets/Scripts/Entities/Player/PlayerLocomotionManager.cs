@@ -48,7 +48,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public GameObject forceFieldGraphic;
 
 
-
     // Update is called once per frame
     protected override void Update()
     {
@@ -562,4 +561,5 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             boosterIgnitionVFX.SetActive(false);
         }
     }
+
 }
