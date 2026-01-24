@@ -44,33 +44,31 @@ public enum TinkerComponentType
  * MonoBehaviour TinkerComponent that one can be added to a game object
  */
 
-public class TinkerComponent : MonoBehaviour
+public class TinkerComponent : InventoryItem
 {
     [Header("The TinkerComponent is used for upgrading weapons\n")]
     [Header("These values are saved when saving game")]
     public TinkerComponentStats stats = new();
     [Header("Image used for menu icon")]
-    public Sprite spr = null;
+    public Sprite spr = null;//TODO replace usage with InventoryItem icon
 
-    void OnTriggerEnter(Collider other)
+    public override void HandlePickup(GameObject player)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log("TinkerComponent HandlePickup");
+        //TODO: Play Pick Up Sound here
+        if (stats.isWeapon)
         {
-            //TODO: Play Pick Up Sound here
-            if (stats.isWeapon)
-            {
-                //Broken down Weapon Components probably shouldn't be on the ground but handle for them anyways
-                TinkerComponentManager.instance.weaponComponents.Add(gameObject);
-                Destroy(gameObject);
-            }
-            else
-            {
-                
-                //regular component
-                if (stats.count <= 0) stats.count = 1; // Allow use of positive count for multiple drop in 1 item, otherwise act as a single drop
-                TinkerComponentManager.instance.AddBaseComponentToPlayer(stats.componentType, stats.count);
-                Destroy(gameObject);
-            }
+            //Broken down Weapon Components probably shouldn't be on the ground but handle for them anyways
+            TinkerComponentManager.instance.weaponComponents.Add(gameObject);
+            Destroy(gameObject);
+        }
+        else
+        {
+
+            //regular component
+            if (stats.count <= 0) stats.count = 1; // Allow use of positive count for multiple drop in 1 item, otherwise act as a single drop
+            TinkerComponentManager.instance.AddBaseComponentToPlayer(stats.componentType, stats.count);
+            Destroy(gameObject);
         }
     }
     public Dictionary<string, float> GetStats()

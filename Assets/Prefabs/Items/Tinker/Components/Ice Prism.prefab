@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4872115472519299612}
   - component: {fileID: 3359587186502472363}
-  - component: {fileID: 2378397998479278142}
+  - component: {fileID: 3884381903585834018}
   m_Layer: 11
   m_Name: PickupCollider
   m_TagString: Untagged
@@ -48,13 +48,13 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2378397998479278142
+--- !u!114 &3884381903585834018
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,10 +63,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 295230844919905443}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e490636cc0eb3445a61c16eb447f4a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ceedceeea845364086e6ab669326274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tinkerComponent: {fileID: 0}
 --- !u!1 &4451428577552451485
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,9 +214,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1913f343802a8fd4e82df7dcb8a87a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemName: 
+  description: 
+  quantity: 0
+  icon: {fileID: 0}
+  dropableItem: {fileID: 0}
   stats:
     componentType: 5
-    count: 0
+    count: 3
     itemName: Ice Prism
     attack: 0
     durability: 0
