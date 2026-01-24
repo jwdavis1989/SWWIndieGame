@@ -1267,15 +1267,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""HelpButton"",
-                    ""type"": ""Button"",
-                    ""id"": ""8b47ac0d-224c-4dd3-b59f-e0187490143c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""UIButtonX"",
                     ""type"": ""Button"",
                     ""id"": ""ef1df40b-cfa3-4983-8642-2e1fd5f294e5"",
@@ -1303,51 +1294,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchWeaponUp"",
-                    ""type"": ""Button"",
-                    ""id"": ""d005ffcc-6ebd-4fdb-a54b-c03f327d363c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SwitchWeaponDown"",
-                    ""type"": ""Button"",
-                    ""id"": ""acbecb85-9c3d-4966-9aae-0cc303e7f8b6"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EquipWeapon"",
-                    ""type"": ""Button"",
-                    ""id"": ""f2b9cdec-cda4-44bf-8ec4-b8d39534aa4c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""BreakdownWeapon"",
-                    ""type"": ""Button"",
-                    ""id"": ""fbacb6fa-8ab6-456b-a5c3-65aeb8f7983e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""WeaponPreviewMovement"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""c702f62c-868c-4245-869c-a89422c01a47"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""AnyGamepad"",
                     ""type"": ""Button"",
                     ""id"": ""451acf87-bf4b-4347-b3f5-43a33aa063ce"",
@@ -1357,21 +1303,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""FocusComponentsWindow"",
+                    ""name"": ""ExitMenu"",
                     ""type"": ""Button"",
-                    ""id"": ""ad67ca5d-a403-4228-ba97-2257f10757d5"",
+                    ""id"": ""535df51a-2e35-44a1-b572-f36ff3c44677"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""FocusEvolutionsWindow"",
-                    ""type"": ""Button"",
-                    ""id"": ""210e931e-fd33-4220-9605-7aa77da29678"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -1472,160 +1409,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchMenuRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Right Stick"",
-                    ""id"": ""494b6d08-cac0-48de-8197-bca1a94301a1"",
-                    ""path"": ""2DVector(mode=2)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""34d05249-b20d-4399-98d2-a44fb97d4d13"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""27e5da86-f289-4886-bebf-d97bb2665c20"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""99e40560-0e05-448f-8c29-09ee72e30246"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""d9eb2413-e18f-4788-879c-ced23663ac19"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""bac08f41-fd26-4df9-8770-d591e1d0990c"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""6748e684-78ff-445b-8a9d-e837d7c06703"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""88834975-b076-4190-b1cd-f4cc9304913a"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""WeaponPreviewMovement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""96e8155a-60f1-4d50-80b7-1d90b31390c3"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchWeaponUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""aa01c548-f828-49f9-96cb-5668734cfcbd"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchWeaponDown"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4facf8a7-75a5-4171-b8cd-e1da64287743"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""EquipWeapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6b09e01a-8900-4c4c-9f77-b6baaf70bd9a"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BreakdownWeapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""40f323a1-5a48-458f-882f-7eb2d68de96e"",
-                    ""path"": ""<Keyboard>/b"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BreakdownWeapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4d9401df-953c-4a98-968b-cb34fa761dd8"",
-                    ""path"": ""<Gamepad>/select"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""HelpButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1807,23 +1590,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6f60fbac-0c96-4fd8-84d9-6b8c6de61438"",
-                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""id"": ""c28fddb2-c451-44ff-bd35-7602b6c7349b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""FocusComponentsWindow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""779313b2-2ef6-45c3-aa67-90b538355940"",
-                    ""path"": ""<Gamepad>/rightStickPress"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""FocusEvolutionsWindow"",
+                    ""action"": ""ExitMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2938,18 +2710,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PauseMenu = asset.FindActionMap("Pause Menu", throwIfNotFound: true);
         m_PauseMenu_DialogueContinue = m_PauseMenu.FindAction("DialogueContinue", throwIfNotFound: true);
         m_PauseMenu_PauseButton = m_PauseMenu.FindAction("PauseButton", throwIfNotFound: true);
-        m_PauseMenu_HelpButton = m_PauseMenu.FindAction("HelpButton", throwIfNotFound: true);
         m_PauseMenu_UIButtonX = m_PauseMenu.FindAction("UIButtonX", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuLeft = m_PauseMenu.FindAction("SwitchMenuLeft", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuRight = m_PauseMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
-        m_PauseMenu_SwitchWeaponUp = m_PauseMenu.FindAction("SwitchWeaponUp", throwIfNotFound: true);
-        m_PauseMenu_SwitchWeaponDown = m_PauseMenu.FindAction("SwitchWeaponDown", throwIfNotFound: true);
-        m_PauseMenu_EquipWeapon = m_PauseMenu.FindAction("EquipWeapon", throwIfNotFound: true);
-        m_PauseMenu_BreakdownWeapon = m_PauseMenu.FindAction("BreakdownWeapon", throwIfNotFound: true);
-        m_PauseMenu_WeaponPreviewMovement = m_PauseMenu.FindAction("WeaponPreviewMovement", throwIfNotFound: true);
         m_PauseMenu_AnyGamepad = m_PauseMenu.FindAction("AnyGamepad", throwIfNotFound: true);
-        m_PauseMenu_FocusComponentsWindow = m_PauseMenu.FindAction("FocusComponentsWindow", throwIfNotFound: true);
-        m_PauseMenu_FocusEvolutionsWindow = m_PauseMenu.FindAction("FocusEvolutionsWindow", throwIfNotFound: true);
+        m_PauseMenu_ExitMenu = m_PauseMenu.FindAction("ExitMenu", throwIfNotFound: true);
         // Weapon Menu
         m_WeaponMenu = asset.FindActionMap("Weapon Menu", throwIfNotFound: true);
         m_WeaponMenu_PauseButton = m_WeaponMenu.FindAction("PauseButton", throwIfNotFound: true);
@@ -3495,36 +3260,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IPauseMenuActions> m_PauseMenuActionsCallbackInterfaces = new List<IPauseMenuActions>();
     private readonly InputAction m_PauseMenu_DialogueContinue;
     private readonly InputAction m_PauseMenu_PauseButton;
-    private readonly InputAction m_PauseMenu_HelpButton;
     private readonly InputAction m_PauseMenu_UIButtonX;
     private readonly InputAction m_PauseMenu_SwitchMenuLeft;
     private readonly InputAction m_PauseMenu_SwitchMenuRight;
-    private readonly InputAction m_PauseMenu_SwitchWeaponUp;
-    private readonly InputAction m_PauseMenu_SwitchWeaponDown;
-    private readonly InputAction m_PauseMenu_EquipWeapon;
-    private readonly InputAction m_PauseMenu_BreakdownWeapon;
-    private readonly InputAction m_PauseMenu_WeaponPreviewMovement;
     private readonly InputAction m_PauseMenu_AnyGamepad;
-    private readonly InputAction m_PauseMenu_FocusComponentsWindow;
-    private readonly InputAction m_PauseMenu_FocusEvolutionsWindow;
+    private readonly InputAction m_PauseMenu_ExitMenu;
     public struct PauseMenuActions
     {
         private @PlayerControls m_Wrapper;
         public PauseMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @DialogueContinue => m_Wrapper.m_PauseMenu_DialogueContinue;
         public InputAction @PauseButton => m_Wrapper.m_PauseMenu_PauseButton;
-        public InputAction @HelpButton => m_Wrapper.m_PauseMenu_HelpButton;
         public InputAction @UIButtonX => m_Wrapper.m_PauseMenu_UIButtonX;
         public InputAction @SwitchMenuLeft => m_Wrapper.m_PauseMenu_SwitchMenuLeft;
         public InputAction @SwitchMenuRight => m_Wrapper.m_PauseMenu_SwitchMenuRight;
-        public InputAction @SwitchWeaponUp => m_Wrapper.m_PauseMenu_SwitchWeaponUp;
-        public InputAction @SwitchWeaponDown => m_Wrapper.m_PauseMenu_SwitchWeaponDown;
-        public InputAction @EquipWeapon => m_Wrapper.m_PauseMenu_EquipWeapon;
-        public InputAction @BreakdownWeapon => m_Wrapper.m_PauseMenu_BreakdownWeapon;
-        public InputAction @WeaponPreviewMovement => m_Wrapper.m_PauseMenu_WeaponPreviewMovement;
         public InputAction @AnyGamepad => m_Wrapper.m_PauseMenu_AnyGamepad;
-        public InputAction @FocusComponentsWindow => m_Wrapper.m_PauseMenu_FocusComponentsWindow;
-        public InputAction @FocusEvolutionsWindow => m_Wrapper.m_PauseMenu_FocusEvolutionsWindow;
+        public InputAction @ExitMenu => m_Wrapper.m_PauseMenu_ExitMenu;
         public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3540,9 +3291,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
-            @HelpButton.started += instance.OnHelpButton;
-            @HelpButton.performed += instance.OnHelpButton;
-            @HelpButton.canceled += instance.OnHelpButton;
             @UIButtonX.started += instance.OnUIButtonX;
             @UIButtonX.performed += instance.OnUIButtonX;
             @UIButtonX.canceled += instance.OnUIButtonX;
@@ -3552,30 +3300,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchMenuRight.started += instance.OnSwitchMenuRight;
             @SwitchMenuRight.performed += instance.OnSwitchMenuRight;
             @SwitchMenuRight.canceled += instance.OnSwitchMenuRight;
-            @SwitchWeaponUp.started += instance.OnSwitchWeaponUp;
-            @SwitchWeaponUp.performed += instance.OnSwitchWeaponUp;
-            @SwitchWeaponUp.canceled += instance.OnSwitchWeaponUp;
-            @SwitchWeaponDown.started += instance.OnSwitchWeaponDown;
-            @SwitchWeaponDown.performed += instance.OnSwitchWeaponDown;
-            @SwitchWeaponDown.canceled += instance.OnSwitchWeaponDown;
-            @EquipWeapon.started += instance.OnEquipWeapon;
-            @EquipWeapon.performed += instance.OnEquipWeapon;
-            @EquipWeapon.canceled += instance.OnEquipWeapon;
-            @BreakdownWeapon.started += instance.OnBreakdownWeapon;
-            @BreakdownWeapon.performed += instance.OnBreakdownWeapon;
-            @BreakdownWeapon.canceled += instance.OnBreakdownWeapon;
-            @WeaponPreviewMovement.started += instance.OnWeaponPreviewMovement;
-            @WeaponPreviewMovement.performed += instance.OnWeaponPreviewMovement;
-            @WeaponPreviewMovement.canceled += instance.OnWeaponPreviewMovement;
             @AnyGamepad.started += instance.OnAnyGamepad;
             @AnyGamepad.performed += instance.OnAnyGamepad;
             @AnyGamepad.canceled += instance.OnAnyGamepad;
-            @FocusComponentsWindow.started += instance.OnFocusComponentsWindow;
-            @FocusComponentsWindow.performed += instance.OnFocusComponentsWindow;
-            @FocusComponentsWindow.canceled += instance.OnFocusComponentsWindow;
-            @FocusEvolutionsWindow.started += instance.OnFocusEvolutionsWindow;
-            @FocusEvolutionsWindow.performed += instance.OnFocusEvolutionsWindow;
-            @FocusEvolutionsWindow.canceled += instance.OnFocusEvolutionsWindow;
+            @ExitMenu.started += instance.OnExitMenu;
+            @ExitMenu.performed += instance.OnExitMenu;
+            @ExitMenu.canceled += instance.OnExitMenu;
         }
 
         private void UnregisterCallbacks(IPauseMenuActions instance)
@@ -3586,9 +3316,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
-            @HelpButton.started -= instance.OnHelpButton;
-            @HelpButton.performed -= instance.OnHelpButton;
-            @HelpButton.canceled -= instance.OnHelpButton;
             @UIButtonX.started -= instance.OnUIButtonX;
             @UIButtonX.performed -= instance.OnUIButtonX;
             @UIButtonX.canceled -= instance.OnUIButtonX;
@@ -3598,30 +3325,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchMenuRight.started -= instance.OnSwitchMenuRight;
             @SwitchMenuRight.performed -= instance.OnSwitchMenuRight;
             @SwitchMenuRight.canceled -= instance.OnSwitchMenuRight;
-            @SwitchWeaponUp.started -= instance.OnSwitchWeaponUp;
-            @SwitchWeaponUp.performed -= instance.OnSwitchWeaponUp;
-            @SwitchWeaponUp.canceled -= instance.OnSwitchWeaponUp;
-            @SwitchWeaponDown.started -= instance.OnSwitchWeaponDown;
-            @SwitchWeaponDown.performed -= instance.OnSwitchWeaponDown;
-            @SwitchWeaponDown.canceled -= instance.OnSwitchWeaponDown;
-            @EquipWeapon.started -= instance.OnEquipWeapon;
-            @EquipWeapon.performed -= instance.OnEquipWeapon;
-            @EquipWeapon.canceled -= instance.OnEquipWeapon;
-            @BreakdownWeapon.started -= instance.OnBreakdownWeapon;
-            @BreakdownWeapon.performed -= instance.OnBreakdownWeapon;
-            @BreakdownWeapon.canceled -= instance.OnBreakdownWeapon;
-            @WeaponPreviewMovement.started -= instance.OnWeaponPreviewMovement;
-            @WeaponPreviewMovement.performed -= instance.OnWeaponPreviewMovement;
-            @WeaponPreviewMovement.canceled -= instance.OnWeaponPreviewMovement;
             @AnyGamepad.started -= instance.OnAnyGamepad;
             @AnyGamepad.performed -= instance.OnAnyGamepad;
             @AnyGamepad.canceled -= instance.OnAnyGamepad;
-            @FocusComponentsWindow.started -= instance.OnFocusComponentsWindow;
-            @FocusComponentsWindow.performed -= instance.OnFocusComponentsWindow;
-            @FocusComponentsWindow.canceled -= instance.OnFocusComponentsWindow;
-            @FocusEvolutionsWindow.started -= instance.OnFocusEvolutionsWindow;
-            @FocusEvolutionsWindow.performed -= instance.OnFocusEvolutionsWindow;
-            @FocusEvolutionsWindow.canceled -= instance.OnFocusEvolutionsWindow;
+            @ExitMenu.started -= instance.OnExitMenu;
+            @ExitMenu.performed -= instance.OnExitMenu;
+            @ExitMenu.canceled -= instance.OnExitMenu;
         }
 
         public void RemoveCallbacks(IPauseMenuActions instance)
@@ -3963,18 +3672,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnDialogueContinue(InputAction.CallbackContext context);
         void OnPauseButton(InputAction.CallbackContext context);
-        void OnHelpButton(InputAction.CallbackContext context);
         void OnUIButtonX(InputAction.CallbackContext context);
         void OnSwitchMenuLeft(InputAction.CallbackContext context);
         void OnSwitchMenuRight(InputAction.CallbackContext context);
-        void OnSwitchWeaponUp(InputAction.CallbackContext context);
-        void OnSwitchWeaponDown(InputAction.CallbackContext context);
-        void OnEquipWeapon(InputAction.CallbackContext context);
-        void OnBreakdownWeapon(InputAction.CallbackContext context);
-        void OnWeaponPreviewMovement(InputAction.CallbackContext context);
         void OnAnyGamepad(InputAction.CallbackContext context);
-        void OnFocusComponentsWindow(InputAction.CallbackContext context);
-        void OnFocusEvolutionsWindow(InputAction.CallbackContext context);
+        void OnExitMenu(InputAction.CallbackContext context);
     }
     public interface IWeaponMenuActions
     {

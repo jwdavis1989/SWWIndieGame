@@ -28,6 +28,7 @@ public class PauseScript : MonoBehaviour
     [SerializeField] bool pauseInput = false;
     [SerializeField] bool menuLeftInput = false;
     [SerializeField] bool menuRightInput = false;
+    [SerializeField] bool exitPauseMenuInput = false;
     PlayerControls playerControls;
     public EventSystem mainPauseMenuEvents;
     public GameObject mainMenuButton;
@@ -76,6 +77,7 @@ public class PauseScript : MonoBehaviour
             playerControls.PauseMenu.PauseButton.performed += i => pauseInput = true;
             playerControls.PauseMenu.SwitchMenuLeft.performed += i => menuLeftInput = true;
             playerControls.PauseMenu.SwitchMenuRight.performed += i => menuRightInput = true;
+            playerControls.PauseMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
             playerControls.Enable();
         }
     }
@@ -83,11 +85,12 @@ public class PauseScript : MonoBehaviour
     {
         HandlePauseInput();
         HandleSwitchMenuInput();
+        HandleExitPauseMenuInput();
     }
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
-        yield return frameEnd; //wait for end of frame
+        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
         Unpause();
     }
     public void WeaponMenuClick()
@@ -288,6 +291,16 @@ public class PauseScript : MonoBehaviour
             //Debug.Log("PAUSE INPUT");
             pauseInput = false;
             PauseUnpause();
+        }
+    }
+    public void HandleExitPauseMenuInput()
+    {
+        if (exitPauseMenuInput) // [Esc], (Start/Menu)
+        {
+            //Debug.Log("exitPauseMenuInput INPUT");
+            exitPauseMenuInput = false;
+            if (gamePaused)
+                StartCoroutine(WaitToEndOfFrameThenContinue());
         }
     }
     void HandleSwitchMenuInput()
