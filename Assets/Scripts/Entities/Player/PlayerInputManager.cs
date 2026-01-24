@@ -394,14 +394,17 @@ public class PlayerInputManager : MonoBehaviour
             //{
             //    PlayerWeaponManager.instance.nextWeapon();
             //}
-            if (mouseWheelVerticalInput == 1)
+            if (!PauseScript.instance.gamePaused)
             {
-                PlayerWeaponManager.instance.NextWeapon();
+                if (mouseWheelVerticalInput == 1)
+                {
+                    PlayerWeaponManager.instance.NextWeapon();
 
-            }
-            else if (mouseWheelVerticalInput == -1)
-            {
-                PlayerWeaponManager.instance.nextSpecialWeapon();
+                }
+                else if (mouseWheelVerticalInput == -1)
+                {
+                    PlayerWeaponManager.instance.nextSpecialWeapon();
+                }
             }
             prevMouseWheelVerticalInput = mouseWheelVerticalInput;
         }

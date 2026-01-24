@@ -92,15 +92,15 @@ public class WeaponMenuManager : MonoBehaviour
         {
             //Debug.Log("setting weapon menu controls...");
             playerControls = new PlayerControls();
-            playerControls.PauseMenu.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
-            playerControls.PauseMenu.SwitchWeaponUp.performed += i => switchWeaponUp = true;
-            playerControls.PauseMenu.SwitchWeaponDown.performed += i => switchWeaponDown = true;
-            playerControls.PauseMenu.EquipWeapon.performed += i => equipWeaponInput = true;
-            playerControls.PauseMenu.HelpButton.performed += i => helpInput = true;
-            playerControls.PauseMenu.FocusComponentsWindow.performed += i => focusComponentsInput = true;
-            playerControls.PauseMenu.FocusEvolutionsWindow.performed += i => focusEvolutionsInput = true;
+            playerControls.WeaponMenu.WeaponPreviewMovement.performed += i => previewCameraInput = i.ReadValue<Vector2>();
+            playerControls.WeaponMenu.SwitchWeaponUp.performed += i => switchWeaponUp = true;
+            playerControls.WeaponMenu.SwitchWeaponDown.performed += i => switchWeaponDown = true;
+            playerControls.WeaponMenu.EquipWeapon.performed += i => equipWeaponInput = true;
+            playerControls.WeaponMenu.HelpButton.performed += i => helpInput = true;
+            playerControls.WeaponMenu.FocusComponentsWindow.performed += i => focusComponentsInput = true;
+            playerControls.WeaponMenu.FocusEvolutionsWindow.performed += i => focusEvolutionsInput = true;
             //playerControls.PauseMenu.BreakdownWeapon.started += i => breakdownWeaponStarted = true;
-            playerControls.PauseMenu.BreakdownWeapon.performed += i => breakdownWeaponPerformed = true;
+            playerControls.WeaponMenu.BreakdownWeapon.performed += i => breakdownWeaponPerformed = true;
             //playerControls.PauseMenu.BreakdownWeapon.canceled += i => breakdownWeaponCanceled = true;
             playerControls.Enable();
         }
