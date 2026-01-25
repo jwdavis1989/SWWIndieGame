@@ -54,7 +54,7 @@ public class TinkerComponent : InventoryItem
 
     public override void HandlePickup(GameObject player)
     {
-        Debug.Log("TinkerComponent HandlePickup");
+        //Debug.Log("TinkerComponent HandlePickup");
         //TODO: Play Pick Up Sound here
         if (stats.isWeapon)
         {

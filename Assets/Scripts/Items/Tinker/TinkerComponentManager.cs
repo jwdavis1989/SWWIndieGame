@@ -15,11 +15,11 @@ public class TinkerComponentManager : MonoBehaviour
         return Instantiate(baseComponents[(int)type], location);
     }
     //TEST: Drops random component 
-    public void DropRandomItem(Transform transform, float distance = 0)
+    public GameObject DropRandomItem(Transform transform, float distance = 0)
     {
         int i = UnityEngine.Random.Range(0, baseComponents.Length - 1);
-        if (baseComponents[i] == null) return;
-        Instantiate(baseComponents[i], transform.position + (transform.forward * distance), transform.rotation);
+        if (baseComponents[i] == null) return null ;
+        return Instantiate(baseComponents[i], transform.position + (transform.forward * distance), transform.rotation);
     }
     //****END DEBUG AREA
     public static TinkerComponentManager instance;
