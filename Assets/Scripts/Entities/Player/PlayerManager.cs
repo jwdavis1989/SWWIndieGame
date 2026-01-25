@@ -173,8 +173,8 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
         //Load TinkerComponents
-        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
-        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
+        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
+        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
         //Ideas

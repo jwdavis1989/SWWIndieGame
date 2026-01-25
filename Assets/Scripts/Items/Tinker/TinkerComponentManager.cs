@@ -255,7 +255,7 @@ public class TinkerComponentManager : MonoBehaviour
         }
         return saveData;
     }
-    public void LoadSaveData(ComponentsArray saveData, bool weapon = false)
+    public void LoadComponentSaveData(ComponentsArray saveData, bool weapon = false)
     {
         foreach (TinkerComponentStats stats in saveData.components)
         {
