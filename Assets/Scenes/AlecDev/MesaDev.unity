@@ -39698,7 +39698,7 @@ GameObject:
   - component: {fileID: 1082916907}
   - component: {fileID: 1082916906}
   m_Layer: 0
-  m_Name: Aura Box Volume
+  m_Name: Aura Global Volume 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39717,7 +39717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeShape:
-    shape: 3
+    shape: 0
     fading:
       falloffExponent: 3
       xPositiveCubeFade: 0.25
@@ -39759,10 +39759,10 @@ MonoBehaviour:
       space: 0
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
-      scale: {x: 20, y: 10, z: 10}
+      scale: {x: 40, y: 20, z: 20}
   densityInjection:
     enable: 1
-    strength: 0.1
+    strength: 0.025
     useNoiseMask: 1
     useNoiseMaskLevels: 1
     noiseMaskLevelParameters:
@@ -39854,7 +39854,7 @@ MonoBehaviour:
     color: {r: 1, g: 1, b: 1, a: 1}
   tintInjection:
     injectionParameters:
-      enable: 1
+      enable: 0
       strength: 0.336
       useNoiseMask: 1
       useNoiseMaskLevels: 1
