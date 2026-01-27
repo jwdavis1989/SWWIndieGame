@@ -10,6 +10,7 @@ public class RandomLoot : MonoBehaviour
         InteractableChestSimple chest = GetComponent<InteractableChestSimple>();
         if(chest != null)
         {
+            //add random component
             GameObject randomComponent = TinkerComponentManager.instance.DropRandomItem(transform);
             chest.contents.Add(randomComponent);
             randomComponent.SetActive(false);

@@ -6,10 +6,11 @@ public class LostAdventurerJournal : InventoryItem
 {
     public override void HandlePickup(GameObject player)
     {
+        base.HandlePickup(player);
         RevealObjects();
         if(player.GetComponent<Inventory>() != null)
             player.GetComponent<Inventory>().items.Add(this);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
     public void RevealObjects()
     {
