@@ -78,7 +78,7 @@ public class WorldMusicController : MonoBehaviour
                 PlayAdvancedMusic(overworldTheme01, 1f); 
                 return;  
             case "MesaDev":
-                PlayAdvancedMusic(mesaCityTheme01, 0.6f, 0.9f); 
+                PlayAdvancedMusic(mesaCityTheme01); 
                 return;  
             default: 
                 return;

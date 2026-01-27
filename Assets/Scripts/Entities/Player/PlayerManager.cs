@@ -19,6 +19,7 @@ public class PlayerManager : CharacterManager
 
     public GameObject flashlight;
     public GameObject cameraflashlight;
+    public GameObject capeSystem;
     [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
 
     [Header("Debug Menu")]
@@ -398,6 +399,24 @@ public class PlayerManager : CharacterManager
     public override void ResetGunTransformBools()
     {
         PlayerWeaponManager.instance.GetOffHand().ResetGunTransformBools();
+    }
+
+    public void EnableCapeSystem()
+    {
+        capeSystem.SetActive(true);
+    }
+
+    public void DisableCapeSystem()
+    {
+        capeSystem.SetActive(false);
+    }
+
+    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f)
+    {
+        DisableCapeSystem();
+        transform.position = new Vector3(destinationX, destinationY, destinationZ);
+        SceneManager.LoadSceneAsync(sceneID);
+        EnableCapeSystem();
     }
 
 }

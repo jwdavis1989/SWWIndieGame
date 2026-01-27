@@ -15,6 +15,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     // public GameObject leftBackwardBoosters;
     public GameObject backBoosters;
     public GameObject airDashBoosters;
+    public GameObject boosterIgnitionVFX;
 
 
     [HideInInspector] public CharacterManager characterManager;
@@ -47,7 +48,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public GameObject forceFieldGraphic;
 
 
-
     // Update is called once per frame
     protected override void Update()
     {
@@ -72,6 +72,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         HandleFreeFallMovement();
         HandleAirDashMovement();
         //HandleAirHoverMovement();
+
+        HandleBoosterIgnitionVFX();
     }
 
     protected override void Awake()
@@ -545,6 +547,18 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         else if (!characterManager.isSprinting && backBoosters.activeSelf == true)
         {
             backBoosters.SetActive(false);
+        }
+    }
+
+    public void HandleBoosterIgnitionVFX()
+    {
+        if (player.isSprinting || player.isBoosting)
+        {
+            boosterIgnitionVFX.SetActive(true);
+        }
+        else
+        {
+            boosterIgnitionVFX.SetActive(false);
         }
     }
 

@@ -120,6 +120,9 @@ Shader "Ultimate 10+ Shaders/Outline (No Culling)"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             pixel = tex2D (_MainTex, IN.uv_MainTex) * _Color;
+            if (pixel.a < .1f)
+                clip(-1);
+
             o.Albedo = pixel.rgb;
         }
         ENDCG
