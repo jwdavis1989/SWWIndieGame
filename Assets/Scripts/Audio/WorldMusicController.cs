@@ -51,7 +51,8 @@ public class WorldMusicController : MonoBehaviour
             //Modify AudioSource by Parameters
             audioSource.clip = soundFX;
             audioSource.loop = loop;
-            audioSource.volume = volume;
+            //audioSource.volume = volume;
+            audioSource.volume = PlayerSettingsManager.instance.playerSettings.musicVolume;
             audioSource.pitch = pitch;
             audioSource.time = TrimBeginningInSeconds;
 

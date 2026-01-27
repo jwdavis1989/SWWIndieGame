@@ -80,6 +80,7 @@ public class PauseScript : MonoBehaviour
             playerControls.PauseMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
             playerControls.Enable();
         }
+        WorldMusicController.instance.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.musicVolume;
     }
     void Update()
     {
