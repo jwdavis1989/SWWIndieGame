@@ -270,6 +270,14 @@ public class WeaponMenuManager : MonoBehaviour
             }
         }
     }
+    public void WeaponUpOnclick()
+    {
+        switchWeaponUp = true;
+    }
+    public void WeaponUpDownclick()
+    {
+        switchWeaponDown = true;
+    }
     void HandleEquipWeaponInput()
     {
         if (equipWeaponInput)

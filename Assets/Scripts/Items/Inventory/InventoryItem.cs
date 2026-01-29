@@ -40,7 +40,7 @@ public class InventoryItem : MonoBehaviour
         }
     }
     public const float DESTROY_DELAY = 2.0f;
-    IEnumerator DestroyAfterDelay()
+    protected IEnumerator DestroyAfterDelay()
     {
         yield return new WaitForSeconds(DESTROY_DELAY);
         Destroy(gameObject);
