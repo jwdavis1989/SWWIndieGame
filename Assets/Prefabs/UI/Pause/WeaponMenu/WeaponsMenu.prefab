@@ -14251,11 +14251,14 @@ MonoBehaviour:
   equipWeaponInput: 0
   breakdownWeaponPerformed: 0
   helpInput: 0
+  focusEvolutionsInput: 0
+  focusComponentsInput: 0
   previewCameraInput: {x: 0, y: 0}
   submenuActive: 0
   salvageConfirmWindow: {fileID: 6859628003527869353}
   salvageErrorWindow: {fileID: 9143541662728930597}
   gamepadControlsUI: []
+  keyboardControlsUI: []
   wpnScroll: {fileID: 0}
   currentStep: 0
   lastStep: 0
@@ -15867,7 +15870,7 @@ GameObject:
   - component: {fileID: 559761568817862236}
   - component: {fileID: 9213173556890050733}
   m_Layer: 5
-  m_Name: WeaponPreviewWindowBG (1)
+  m_Name: WeaponEvolveWindowBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15913,7 +15916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7830189, g: 0.7793254, b: 0.7793254, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
