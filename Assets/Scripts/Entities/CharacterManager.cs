@@ -248,13 +248,13 @@ public class CharacterManager : MonoBehaviour
     public void SetShootingModelAlignment()
     {
         characterModel.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
+        miniMapSprite.transform.localRotation = Quaternion.Euler(90, -31.784f, 0);
     }
 
     public void ResetModelAlignment()
     {
         characterModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        miniMapSprite.transform.localRotation = Quaternion.Euler(90, 0, 0);
     }
 
     public virtual void DisableRollerJointInvulnerable()
