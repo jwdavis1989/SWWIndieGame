@@ -73745,6 +73745,7 @@ GameObject:
   - component: {fileID: 5439506539697260178}
   - component: {fileID: 5784524199590819292}
   - component: {fileID: 4327829873166446099}
+  - component: {fileID: 5390106923784033823}
   m_Layer: 0
   m_Name: IgnitionVFX_TopLeft
   m_TagString: Untagged
@@ -78656,3 +78657,18 @@ MonoBehaviour:
     perlinColor: 0
     perlinColorSpeed: 1
   fadeOutReference: {fileID: 0}
+--- !u!114 &5390106923784033823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8796054289389383211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 793ebba6c301436468d1ad29b64c46d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftMotorSpeedLowFrequency: 0.5
+  rightMotorSpeedHighFrequency: 0.5
+  rumbleDurationInSeconds: 0.25
