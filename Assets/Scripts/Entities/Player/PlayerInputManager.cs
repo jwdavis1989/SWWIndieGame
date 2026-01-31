@@ -871,4 +871,18 @@ public class PlayerInputManager : MonoBehaviour
         }
     }
 
+    //seems to avoid certain input error compared to PlayerControls.Disable
+    public void SafeDisable()
+    {
+        playerControls.PlayerActions.Disable();
+        playerControls.PlayerCamera.Disable();
+        playerControls.PlayerMovement.Disable(); 
+    }
+    public void SafeEnable()
+    {
+        playerControls.PlayerActions.Enable();
+        playerControls.PlayerCamera.Enable();
+        playerControls.PlayerMovement.Enable();
+    }
+
 }
