@@ -84,6 +84,12 @@ public class WeaponMenuManager : MonoBehaviour
         LoadWeaponsToScreen();
         DisplayActiveWeapon();
         LoadComponentsToScreen();
+        if(playerControls != null)
+            playerControls.WeaponMenu.Enable();
+    }
+    private void OnDisable()
+    {
+        playerControls.WeaponMenu.Disable();
     }
     // Start is called before the first frame update
     void Start()
@@ -269,6 +275,14 @@ public class WeaponMenuManager : MonoBehaviour
                 DisplayActiveWeapon();
             }
         }
+    }
+    public void WeaponUpOnclick()
+    {
+        switchWeaponUp = true;
+    }
+    public void WeaponUpDownclick()
+    {
+        switchWeaponDown = true;
     }
     void HandleEquipWeaponInput()
     {
