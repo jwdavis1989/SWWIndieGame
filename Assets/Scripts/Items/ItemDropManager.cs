@@ -22,8 +22,8 @@ public class ItemDropManager : MonoBehaviour
             giveMainHandExp = giveOffHandExp = true;
         }
         GameObject exp = Instantiate(expPrefab, loc.position, loc.rotation);
-        ExpDropCollider e = exp.GetComponent<ExpDropCollider>();
-        //ExpDropCollider e = exp.GetComponentInChildren<ExpDropCollider>();
+        //ExpDropCollider e = exp.GetComponent<ExpDropCollider>();
+        ExpDropCollider e = exp.GetComponentInChildren<ExpDropCollider>();
         e.exp = amt;
         e.isMainHandExp = giveMainHandExp;
         e.isOffHandExp = giveOffHandExp;
