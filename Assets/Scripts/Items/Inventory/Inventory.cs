@@ -6,7 +6,8 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     //list of items
-    public List<InventoryItem> items;
+    //public List<InventoryItem> items;
+    public Dictionary<string, InventoryItem> items = new Dictionary<string, InventoryItem>();
     public InventionManager inventionManager; //Reference to tinker components
     public CharacterWeaponManager weapons;//Reference to weapons list
 }

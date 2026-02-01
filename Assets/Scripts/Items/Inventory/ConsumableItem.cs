@@ -8,24 +8,17 @@ public class ConsumableItem : InventoryItem
     public InstantCharacterEffect effect;
     public override void HandlePickup(GameObject player)
     { 
-        //base.HandlePickup(player);
-        player.GetComponent<Inventory>().items.Add(this);
-        HoverOverHead(player);
-        StartCoroutine(HideAfterDelay());
-    }
-    IEnumerator HideAfterDelay()
-    {
-        yield return new WaitForSeconds(DESTROY_DELAY);
-        gameObject.SetActive(false);
-        //if(dropableItem != null)
-        //{
-        //    Destroy(dropableItem);
-        //}
+        base.HandlePickup(player);
     }
     public void Consume(GameObject player)
     {
         player.GetComponent<PlayerEffectsManager>().ProcessInstantEffect(effect);
-        Destroy(gameObject);
+        quantity--;
+        if(quantity <= 0)
+        {
+            player.GetComponent<Inventory>().items.Remove(itemName);
+            Destroy(gameObject);
+        }
     }
 
 }
