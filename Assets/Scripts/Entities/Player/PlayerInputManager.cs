@@ -283,19 +283,6 @@ public class PlayerInputManager : MonoBehaviour
 
         }
     }
-    ////Interact Button during dialogue box
-    //void HandleDialogueContineuButton()
-    //{
-    //    //if they press the button during a dialogue
-    //    if (dialogueContinueInput)// [LMB], [E], (X)
-    //    {
-    //        dialogueContinueInput = false;
-    //        if (DialogueManager.IsInDialogue())
-    //        {
-    //            DialogueManager.instance.DialogueBoxContinue();
-    //        }
-    //    }
-    //}
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
@@ -305,30 +292,24 @@ public class PlayerInputManager : MonoBehaviour
             if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
                 return; //dont use on title screen
 
-            //currently have camera here. Not sure if it gets it's own button or is an item
-            IdeaCameraController.instance.ActivateDeactiveCameraView();
+            //WIP TODO switch quickslot
+            Inventory playerInventory = GetComponent<Inventory>();
+            if(playerInventory != null && playerInventory.quickSlotItems[1] != null)
+            {
+                string itemKey = playerInventory.quickSlotItems[1];
+                UsableItem usableItem = playerInventory.items[itemKey].GetComponent<UsableItem>();
+                if (usableItem != null)
+                {
+                    usableItem.Use(player.gameObject);
+                }
+            }
+            else
+            {
+                //currently have camera here. TODO make into an item
+                IdeaCameraController.instance.ActivateDeactiveCameraView();
+            }
         }
     }
-    //Pause button
-    //void HandlePauseInput()
-    //{
-    //    if (pauseInput) // [Esc], (Start/Menu)
-    //    {
-    //        pauseInput = false;
-    //        PauseScript.instance.PauseUnpause();
-    //    }
-    //}
-
-    //Idea Capture button
-    //void HandleCapturePhotoInput()
-    //{
-    //    if (capturePhotoInput) // [Space], (X)
-    //    {
-    //        capturePhotoInput = false;
-    //        IdeaCameraController.instance.TakeScreenshotInput();
-    //    }
-    //}
-
 
     //Movement
     private void HandleMovementInput()

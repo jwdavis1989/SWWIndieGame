@@ -10,4 +10,8 @@ public class Inventory : MonoBehaviour
     public Dictionary<string, InventoryItem> items = new Dictionary<string, InventoryItem>();
     public InventionManager inventionManager; //Reference to tinker components
     public CharacterWeaponManager weapons;//Reference to weapons list
+
+    //quickslots, simply storing the item name
+    public const int TOTAL_QUICKSLOTS = 4;
+    public string[] quickSlotItems = new string[TOTAL_QUICKSLOTS];
 }
