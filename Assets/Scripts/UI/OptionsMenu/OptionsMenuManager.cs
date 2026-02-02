@@ -12,6 +12,7 @@ public class OptionsMenuManager : MonoBehaviour
     [HideInInspector] public PlayerSettings playerSettings;
     [Header("Buttons, knobs, and switches")]
     public Toggle invertedToggle;
+    public Slider effectsVolumeSlider;
     public Slider musicVolumeSlider;
 
     [Header("Save window")]
@@ -26,6 +27,9 @@ public class OptionsMenuManager : MonoBehaviour
     [SerializeField] bool menuRightInput = false;
     [SerializeField] bool exitPauseMenuInput = false;
     [SerializeField] bool saveSettingInput = false;
+    //tooltips
+    public List<GameObject> keyboardMouseTooltips;
+    public List<GameObject> gamepadTooltips;
 
     private void Awake()
     {
@@ -46,8 +50,9 @@ public class OptionsMenuManager : MonoBehaviour
         invertChanged = false;
         musicVolumeChanged = false;
         saveWindow.SetActive(false);
+        ToggleNavigation(true);
         //activate correct inputs
-        if(playerControls != null)
+        if (playerControls != null)
         {
             playerControls.OptionsMenu.Enable();
             PauseScript.instance.playerControls.PauseMenu.Disable();
@@ -58,7 +63,7 @@ public class OptionsMenuManager : MonoBehaviour
     private void OnDisable()
     {
         isChanged = false;
-        SwitchOffOptionMenuControls();
+        SwapFromOptionMenuControls();
     }
     // Start is called before the first frame update
     void Start()
@@ -67,6 +72,10 @@ public class OptionsMenuManager : MonoBehaviour
         {
             WorldMusicController.instance.GetComponent<AudioSource>().volume = musicVolumeSlider.value;
             musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChange);
+        }
+        if (effectsVolumeSlider != null)
+        {
+            effectsVolumeSlider.onValueChanged.AddListener(OnEffectsVolumeChange);
         }
         if (playerControls == null)
         {
@@ -90,6 +99,8 @@ public class OptionsMenuManager : MonoBehaviour
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************
      ***********************************************************************************************/
+
+    // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()
     {
         //Debug.Log("PauseScript.CheckControlsChanged");
@@ -102,23 +113,24 @@ public class OptionsMenuManager : MonoBehaviour
             if (InputSwitchDetector.IsCurrentlyGamepad())
             {
                 //Show controller UI
-                //foreach (GameObject gamepadeUI in gamepadTooltips)
-                //    gamepadeUI.SetActive(true);
-                //foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                //    gamepadeUI.SetActive(false);
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(true);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(false);
             }
             else //Keyboard
             {
                 //Hide Controller UI
-                //foreach (GameObject gamepadeUI in gamepadTooltips)
-                //    gamepadeUI.SetActive(false);
-                //foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                //    gamepadeUI.SetActive(true);
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(false);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(true);
                 //enable buttons
                 //EnableAllNavigation();
             }
         }
     }
+    // handles navigation updates
     void HandleGamePadSelected()
     {
         //TODO
@@ -134,13 +146,11 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (exitPauseMenuInput)
         {
-            Debug.Log("HandleExitPauseMenuInput");
             exitPauseMenuInput = false;
             saveWindowAction = "UNPAUSE";
             if (isChanged)
             {
-                Debug.Log("HandleExitPauseMenuInput save window");
-                saveWindow.SetActive(true);
+                ActivateSaveWindow();
             }
             else
             {
@@ -152,13 +162,11 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (saveSettingInput)
         {
-            Debug.Log("saveSettingInput");
             saveSettingInput = false;
             saveWindowAction = "UNPAUSE";
             if (isChanged)
             {
-                Debug.Log("HandleSaveSettingsInput isChanged");
-                saveWindow.SetActive(true);
+                ActivateSaveWindow();
             }
         }
     }
@@ -181,7 +189,7 @@ public class OptionsMenuManager : MonoBehaviour
         {
             if (isChanged)
             {
-                saveWindow.SetActive(true);
+                ActivateSaveWindow();
             }
             else
             {
@@ -193,7 +201,7 @@ public class OptionsMenuManager : MonoBehaviour
     public void CompleteSaveWindowAction()
     {
         saveWindow.SetActive(false);
-        SwitchOffOptionMenuControls();
+        SwapFromOptionMenuControls();
         switch (saveWindowAction)
         {
             case "UNPAUSE":
@@ -265,19 +273,57 @@ public class OptionsMenuManager : MonoBehaviour
             musicVolumeChanged = true;
         } 
     }
+    float effectsVolume = 0;
+    bool effectsVolumeChanged = false;
+    public void OnEffectsVolumeChange(float newValue)
+    {
+        if (effectsVolume != newValue)
+        {
+            effectsVolume = newValue;
+            isChanged = true;
+            effectsVolumeChanged = true;
+        }
+    }
     void SaveMusicVolume(float newValue)
     {
         WorldMusicController.instance.GetComponent<AudioSource>().volume = newValue;
         playerSettings.musicVolume = newValue;
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
-    void SwitchOffOptionMenuControls()
+    void SwapFromOptionMenuControls()
     {
+        DisableOptionsControls();
+        PauseScript.instance.playerControls.PauseMenu.Enable();
+        PauseScript.instance.playerControls.UI.Enable();
+    }
+    public void ActivateSaveWindow()
+    {
+        saveWindow.SetActive(true);
+        ToggleNavigation(false);
+    }
+    void ToggleNavigation(bool enable)
+    {
+        Navigation nav = invertedToggle.navigation;
+        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+        invertedToggle.navigation = nav;
+
+        nav = effectsVolumeSlider.navigation;
+        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+        effectsVolumeSlider.navigation = nav;
+
+        nav = musicVolumeSlider.navigation;
+        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+        musicVolumeSlider.navigation = nav;
+    }
+    void DisableOptionsControls()
+    {
+        menuLeftInput = false;
+        menuRightInput = false;
+        exitPauseMenuInput = false;
+        menuRightInput = false;
         if (playerControls != null)
         {
             playerControls.OptionsMenu.Disable();
-            PauseScript.instance.playerControls.PauseMenu.Enable();
-            PauseScript.instance.playerControls.UI.Enable();
         }
     }
     //public bool recentlySave = false;
