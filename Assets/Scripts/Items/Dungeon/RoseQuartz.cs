@@ -7,9 +7,10 @@ public class RoseQuartz : InventoryItem
 {
     public override void HandlePickup(GameObject player)
     {
+        base.HandlePickup(player);
         RevealEnemies();
         //player.GetComponent<Inventory>().items.Add(this);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
     public void RevealEnemies()
     {

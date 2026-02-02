@@ -74,7 +74,7 @@ public class PauseScript : MonoBehaviour
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.PauseMenu.PauseButton.performed += i => pauseInput = true;
+            playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PauseMenu.SwitchMenuLeft.performed += i => menuLeftInput = true;
             playerControls.PauseMenu.SwitchMenuRight.performed += i => menuRightInput = true;
             playerControls.PauseMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
@@ -169,6 +169,10 @@ public class PauseScript : MonoBehaviour
     }
     public void MainMenuClick()
     {
+        /* DontDestroyOnLoad prevents simply loading the title screen from properly resetting. 
+           This is dealt with here by destroying objects individually.
+           DontDestoryOnLoad cannot be looped through */ 
+
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
         Unpause();
         //Destroy(GameObject.Find("DontDestroyOnLoad")); //Not a real object
@@ -222,6 +226,8 @@ public class PauseScript : MonoBehaviour
     {
         //PlayerInputManager.instance.enabled = false;
         playerControls.PlayerActions.Disable();
+        playerControls.PauseMenu.Enable();
+        playerControls.WeaponMenu.Enable();
         playerControls.UI.Enable();
         Time.timeScale = 0;
         gamePaused = true;
@@ -239,7 +245,7 @@ public class PauseScript : MonoBehaviour
         //}
 
         //Disable Controls
-        PlayerInputManager.instance.playerControls.Disable();
+        PlayerInputManager.instance.SafeDisable();
 
         //Set bool so the Interactable system understands a Menu window has opened
         PlayerUIManager.instance.menuWindowIsOpen = true;
@@ -265,7 +271,9 @@ public class PauseScript : MonoBehaviour
     }
     void Unpause()
     {
-        playerControls.PlayerActions.Enable();
+        //playerControls.PlayerActions.Enable();
+        playerControls.PauseMenu.Disable();
+        playerControls.WeaponMenu.Disable();
         //playerControls.UI.Disable();//Currently causes game to be unpauseable
         //PlayerInputManager.instance.enabled = true;
         Time.timeScale = 1;
@@ -278,7 +286,8 @@ public class PauseScript : MonoBehaviour
         mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
 
         //Re-enable Controls
-        PlayerInputManager.instance.playerControls.Enable();
+        //PlayerInputManager.instance.playerControls.Enable();
+        PlayerInputManager.instance.SafeEnable();
 
         //Set bool so the Interactable system understands a Menu window has closed
         PlayerUIManager.instance.menuWindowIsOpen = false;

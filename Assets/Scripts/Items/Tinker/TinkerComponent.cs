@@ -54,13 +54,14 @@ public class TinkerComponent : InventoryItem
 
     public override void HandlePickup(GameObject player)
     {
+        base.HandlePickup(player);
         //Debug.Log("TinkerComponent HandlePickup");
         //TODO: Play Pick Up Sound here
         if (stats.isWeapon)
         {
             //Broken down Weapon Components probably shouldn't be on the ground but handle for them anyways
             TinkerComponentManager.instance.weaponComponents.Add(gameObject);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         else
         {
@@ -68,7 +69,7 @@ public class TinkerComponent : InventoryItem
             //regular component
             if (stats.count <= 0) stats.count = 1; // Allow use of positive count for multiple drop in 1 item, otherwise act as a single drop
             TinkerComponentManager.instance.AddBaseComponentToPlayer(stats.componentType, stats.count);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
     public Dictionary<string, float> GetStats()
