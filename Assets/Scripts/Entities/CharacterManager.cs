@@ -25,6 +25,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Status")]
     public bool isDead = false;
+    public float deathExplosionVFXDelay = 2f;
 
     [Header("Character Faction")]
     public CharacterFaction faction;
@@ -137,7 +138,7 @@ public class CharacterManager : MonoBehaviour
         //Play Death SFX
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(deathExplosionVFXDelay);
     }
 
     public IEnumerator ProcessPerfectBlockTimer()

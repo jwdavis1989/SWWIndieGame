@@ -183,7 +183,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
             playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i =>
             {
-                player.TeleportPlayerToSceneAndCoordinates(1);              //JerryDev test dungeon
+                player.TeleportPlayerToSceneAndCoordinates(1, 0, 0, 112);              //JerryDev test dungeon
             });
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i =>
             {
