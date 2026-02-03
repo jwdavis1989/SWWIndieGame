@@ -9,17 +9,22 @@ public class InteractableChestSimple : Interactable
     [Header("Swings to negative angle")]
     public GameObject door;
     private float currentDoorOpenTimer = 0f;
-    private float maximumDoorOpenTimer = 1.1f;
+    private float maximumDoorOpenTimer = 0.5f;
     public float doorOpenAngle = 90f;
+    [Header("Items. Either set manually or let a separate script set")]
+    public List<GameObject> contents = new List<GameObject>();
+
+    [Header("Sound")]
+    public AudioClip chestSound;//TODO use array?
+
     [Header("TODO")]
     public bool needsKey = false;
-    public List<GameObject> contents = new List<GameObject>();
     protected override void Start()
     {
         base.Start();
         if (isClosed)
             interactableText = "Open";
-        else interactableText = "Close";
+        //else interactableText = "Close";
         SetColliderEnabled(true);
     }
     public override void Interact(PlayerManager player)
@@ -32,6 +37,10 @@ public class InteractableChestSimple : Interactable
         }
         else
         {
+            if (chestSound != null)
+            {
+                player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
+            }
             SetColliderEnabled(false);
             StartCoroutine(OpenDoorOverTime());
         }

@@ -7,16 +7,13 @@ using UnityEngine;
 public class InventoryItem : MonoBehaviour
 {
     public string itemName;
-    public string description;
     public int quantity = 0;
-    public Sprite icon;
-    public GameObject dropableItem;
+    public DateTime aquireTime;
 
     public virtual void HandlePickup(GameObject player)
     {
-        player.GetComponent<Inventory>().items.Add(this);
         HoverOverHead(player);
-        StartCoroutine(DestroyAfterDelay());
+        AddToInventory(player.GetComponent<Inventory>());
     }
     public const float HOVER_HEIGHT = 2.25f;
     public void HoverOverHead(GameObject player)
@@ -31,7 +28,6 @@ public class InventoryItem : MonoBehaviour
             gameObject.GetComponentInChildren<ItemDropFloatCollider>().enabled = false;
         if(gameObject.GetComponent<BoxCollider>() != null)
             gameObject.GetComponent<BoxCollider>().enabled = false;
-        //gameObject.GetComponent<Rigidbody>().enabled = false;
         Rigidbody rb = GetComponent<Rigidbody>();
         if(rb != null)
         {
@@ -39,10 +35,42 @@ public class InventoryItem : MonoBehaviour
             rb.useGravity = false;
         }
     }
+    public void AddToInventory(Inventory inventory)
+    {
+        // make sure quantity is at least 1 when picking up
+        quantity = (quantity > 0) ? quantity : 1;
+
+        if (inventory.items.ContainsKey(itemName))
+        {   // update inventory quantity
+            inventory.items[itemName].quantity += quantity;
+            StartCoroutine(DestroyAfterDelay());
+        }
+        else
+        {   // add item to inventory
+            aquireTime = DateTime.UtcNow;
+            inventory.items.Add(itemName, this);
+            StartCoroutine(HideAfterDelay());
+        }
+    }
     public const float DESTROY_DELAY = 2.0f;
-    protected IEnumerator DestroyAfterDelay()
+    IEnumerator DestroyAfterDelay()
     {
         yield return new WaitForSeconds(DESTROY_DELAY);
         Destroy(gameObject);
     }
+    IEnumerator HideAfterDelay()
+    {
+        yield return new WaitForSeconds(DESTROY_DELAY);
+        foreach(Transform obj in transform)
+        {
+            obj.gameObject.SetActive(false);
+        }
+    }
+
+    // Possibly useful when added to save/load
+    //public string itemType;
+    //public void LoadItem(InventoryItem item, Inventory inventory)
+    //{
+    //    inventory.items.Add
+    //}
 }
