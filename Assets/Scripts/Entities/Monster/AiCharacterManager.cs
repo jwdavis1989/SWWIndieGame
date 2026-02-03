@@ -87,7 +87,7 @@ public class AICharacterManager : CharacterManager
             characterUIManager.characterHPBar.enabled = false;
         }
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(deathExplosionVFXDelay);
 
         //Play Death SFX
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
