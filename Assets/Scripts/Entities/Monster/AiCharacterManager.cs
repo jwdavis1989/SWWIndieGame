@@ -38,11 +38,7 @@ public class AICharacterManager : CharacterManager
         statsManager = GetComponent<AICharacterStatsManager>();
         aiCharacterCombatManager = GetComponent<AiCharacterCombatManager>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
-        if (navMeshAgent) {
-            navMeshAgent.enabled = false;
-            bool successfulWarp = navMeshAgent.Warp(transform.position);
-            navMeshAgent.enabled = true;
-        }
+        ResetNavMeshAgentPosition();
 
         //Use a copy of the scriptable objects so the originals are not modified
         idleState = Instantiate(idleState);
@@ -70,6 +66,15 @@ public class AICharacterManager : CharacterManager
     {
         base.OnEnable();
 
+    }
+
+    public void ResetNavMeshAgentPosition()
+    {
+        if (navMeshAgent) {
+            navMeshAgent.enabled = false;
+            navMeshAgent.Warp(transform.position);
+            navMeshAgent.enabled = true;
+        }
     }
 
     public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
