@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,11 +12,14 @@ public class InventoryMenuManager : MonoBehaviour
     [Header("Tooltip")]
     public TooltipUI tooltip;
     [Header("Grid window where items appear")]
-    public GameObject inventoryWindow;
+    public GridLayoutGroup inventoryWindow;
+    public InventoryItemUI[] quickslotItems = new InventoryItemUI[4];
+    public TextMeshProUGUI[] quickslotText = new TextMeshProUGUI[4];
     [Header("Prefab for inventory item UI Element")]
     public GameObject itemUIPrefab;
-    [Header("ScriptableObjects containing statistical item information and sprites")]
-    public List<InventoryItemDetails> inventoryItemDetails;
+    [Header("ScriptableObjects - Contain static item data")]
+    public ItemDatabase itemDatabase;
+    //public List<ItemDetails> inventoryItemDetails;
 
     [Header("Reference to inventory stored on player")]
     public Inventory playerInventory;
@@ -59,7 +63,8 @@ public class InventoryMenuManager : MonoBehaviour
 
     public void OnDisable()
     {
-        playerControls.InventoryMenu.Disable();
+        if (playerControls != null)
+            playerControls.InventoryMenu.Disable();
     }
 
     // Start is called before the first frame update
@@ -195,6 +200,21 @@ public class InventoryMenuManager : MonoBehaviour
             }
         }
     }
+    public void HandleGamepadSelectedObject()
+    {
+        if (currentCursorObj != eventSystem.currentSelectedGameObject)
+        {
+            currentCursorObj = eventSystem.currentSelectedGameObject;
+            if (currentCursorObj != null)
+            {
+                InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
+                if (ui != null)
+                { // currently on a tinker component
+                    SetTooltipToItem(ui.itemName);
+                }
+            }
+        }
+    }
     /***********************************************************************************************
      ******************************  O U T P U T   T O   S C R E E N  ******************************
      ***********************************************************************************************/
@@ -218,7 +238,7 @@ public class InventoryMenuManager : MonoBehaviour
         foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.items)
         {
             InventoryItem item = itemKVP.Value;
-            InventoryItemDetails itemDetails = GetItemDetails(itemKVP.Key);
+            ItemDetails itemDetails = GetItemDetails(itemKVP.Key);
             if (item == null || itemDetails == null) continue;
             if (item.quantity > 0)
             {
@@ -245,19 +265,15 @@ public class InventoryMenuManager : MonoBehaviour
             }
         }
     }
-    public void HandleGamepadSelectedObject()
+    void LoadQuickslots()
     {
-        if (currentCursorObj != eventSystem.currentSelectedGameObject)
+        int TOTOL_QUICKSLOTS = 4;
+        for (int i = 0; i < TOTOL_QUICKSLOTS; i++)
         {
-            currentCursorObj = eventSystem.currentSelectedGameObject;
-            if (currentCursorObj != null)
-            {
-                InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
-                if (ui != null)
-                { // currently on a tinker component
-                    SetTooltipToItem(ui.itemName);
-                }
-            }
+            if (playerInventory == null) break;
+            if (playerInventory.quickSlotItems[i] == null) continue;
+            string item = playerInventory.quickSlotItems[i];
+            //InventoryItemDetails itemDetails = inventoryItemDetails.Find
         }
     }
     void SetTooltipToItem(string itemName)
@@ -266,12 +282,13 @@ public class InventoryMenuManager : MonoBehaviour
         tooltip.centerText.text = GetItemDetails(itemName).description;
     }
 
-    InventoryItemDetails GetItemDetails(string itemName)
+    ItemDetails GetItemDetails(string itemName)
     {
-        foreach (InventoryItemDetails details in inventoryItemDetails)
-            if (details.itemName == itemName)
-                return details;
-        return null;
+        //foreach (ItemDetails details in inventoryItemDetails)
+        //    if (details.itemName == itemName)
+        //        return details;
+        return itemDatabase.GetItem(itemName);
+        //return null;
     }
 
     //private void ToggleItemNavigation(bool enable)
