@@ -38,6 +38,11 @@ public class AICharacterManager : CharacterManager
         statsManager = GetComponent<AICharacterStatsManager>();
         aiCharacterCombatManager = GetComponent<AiCharacterCombatManager>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+        if (navMeshAgent) {
+            navMeshAgent.enabled = false;
+            bool successfulWarp = navMeshAgent.Warp(transform.position);
+            navMeshAgent.enabled = true;
+        }
 
         //Use a copy of the scriptable objects so the originals are not modified
         idleState = Instantiate(idleState);
@@ -112,8 +117,11 @@ public class AICharacterManager : CharacterManager
         }
 
         //The position/rotation should be reset only after the state machine has processed its tick
-        navMeshAgent.transform.localPosition = Vector3.zero;
-        navMeshAgent.transform.localRotation = Quaternion.identity;
+        if (navMeshAgent)
+        {
+            navMeshAgent.transform.localPosition = Vector3.zero;
+            navMeshAgent.transform.localRotation = Quaternion.identity;
+        }
 
         if (aiCharacterCombatManager.currentTarget != null) {
             aiCharacterCombatManager.targetsDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
@@ -121,7 +129,7 @@ public class AICharacterManager : CharacterManager
             aiCharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
         }
 
-        if (navMeshAgent.enabled) {
+        if (navMeshAgent && navMeshAgent.enabled) {
             Vector3 agentDestination = navMeshAgent.destination;
             float remainingDistance = Vector3.Distance(agentDestination, transform.position);
 
