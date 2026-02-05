@@ -52,7 +52,15 @@ public class CharacterEffectsManager : MonoBehaviour
     {
         if (deathVFX != null)
         {
-            Instantiate(deathVFX, transform.position, Quaternion.identity);
+            if (character.characterModel)
+            {    
+                Instantiate(deathVFX, character.characterModel.transform.position, Quaternion.identity);
+            }
+            //This is done for enemies whose model doesn't align with their coordinates, such as the Masterwork Fabricator/Parent Unit
+            else
+            {
+                Instantiate(deathVFX, transform.position, Quaternion.identity);
+            }
         }
         else
         {
