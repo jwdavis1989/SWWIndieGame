@@ -10,6 +10,7 @@ public class ItemDetails : ScriptableObject
         "\nThis is so that it can be kept as a single copy and looked up by name. ")]
     public string itemId;
     public string itemName;
+    public int cost = 1;
     public Sprite icon;
     [TextArea] public string description;
 }

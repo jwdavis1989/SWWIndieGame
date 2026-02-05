@@ -9,5 +9,5 @@ public class InventoryItemUI : MonoBehaviour
     public Button mainButton;
     public GameObject mainButtonForeground;
     public int index = 0;
-    public string itemName;
+    public string itemId;
 }

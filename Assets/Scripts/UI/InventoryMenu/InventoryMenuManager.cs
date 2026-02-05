@@ -27,12 +27,12 @@ public class InventoryMenuManager : MonoBehaviour
     [Header("Input")]
     public EventSystem eventSystem;
     PlayerControls playerControls;
-    [SerializeField] bool useButtonPerformed = false;
-    [SerializeField] bool quickSlotGamepad = false;
-    [SerializeField] bool quickSlot1 = false;
-    [SerializeField] bool quickSlot2 = false;
-    [SerializeField] bool quickSlot3 = false;
-    [SerializeField] bool quickSlot4 = false;
+    [HideInInspector][SerializeField] bool useButtonPerformed = false;
+    [HideInInspector][SerializeField] bool quickSlotGamepad = false;
+    [HideInInspector][SerializeField] bool quickSlot1 = false;
+    [HideInInspector][SerializeField] bool quickSlot2 = false;
+    [HideInInspector][SerializeField] bool quickSlot3 = false;
+    [HideInInspector][SerializeField] bool quickSlot4 = false;
     GameObject currentCursorObj = null; // mostly used for gamepad
     [Header("Tooltips and any elements that are activated/deactivated when switching inputs")]
     public List<GameObject> gamepadTooltips = new List<GameObject>();
@@ -58,13 +58,27 @@ public class InventoryMenuManager : MonoBehaviour
         }
         if (playerControls != null)
             playerControls.InventoryMenu.Enable();
-        LoadItemsToWindow(null);
+        LoadItemsToWindow();
+        LoadQuickslots();
     }
 
     public void OnDisable()
     {
         if (playerControls != null)
+        {
+            useButtonPerformed = false;
+            quickSlotGamepad = false;
+            quickSlot1 = false;
+            quickSlot2 = false;
+            quickSlot3 = false;
+            quickSlot4 = false;
             playerControls.InventoryMenu.Disable();
+            //hide bottom tooltips
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                gamepadeUI.SetActive(false);
+        }
     }
 
     // Start is called before the first frame update
@@ -80,6 +94,7 @@ public class InventoryMenuManager : MonoBehaviour
             playerControls.InventoryMenu.QuickslotButton2.performed += i => quickSlot2 = true;
             playerControls.InventoryMenu.QuickslotButton3.performed += i => quickSlot3 = true;
             playerControls.InventoryMenu.QuickslotButton4.performed += i => quickSlot4 = true;
+            playerControls.Enable();
         }
     }
 
@@ -96,6 +111,7 @@ public class InventoryMenuManager : MonoBehaviour
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************
      ***********************************************************************************************/
+    GameObject currentlySelectedObj;
     void HandleGamePadSelected()
     {
         //TODO
@@ -104,6 +120,14 @@ public class InventoryMenuManager : MonoBehaviour
             if (inventoryWindow.transform.childCount > 0)
             {
                 inventoryWindow.transform.GetChild(0).GetComponentInChildren<Button>().Select();
+            }
+        }
+        if (eventSystem.currentSelectedGameObject != null && eventSystem.currentSelectedGameObject != currentlySelectedObj)
+        {
+            InventoryItemUI itemUi = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
+            if (itemUi != null)
+            {
+                SetTooltipToItem(itemUi.itemId);
             }
         }
     }
@@ -116,11 +140,13 @@ public class InventoryMenuManager : MonoBehaviour
             {
                 if (inventoryWindow.transform.childCount > 0)
                 {
-                    string itemname = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>().itemName;
-                    UsableItem usableItem = playerInventory.items[itemname].GetComponent<UsableItem>();
+                    string itemId = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>().itemId;
+                    UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
                     if (usableItem != null)
                     {
                         usableItem.Use(playerInventory.gameObject);
+                        LoadItemsToWindow();
+                        LoadQuickslots();
                     }
                 }
             }
@@ -132,7 +158,8 @@ public class InventoryMenuManager : MonoBehaviour
         {
             quickSlotGamepad = false;
             //TODO need to let dpad or something let you toggle active quickslot
-            SetQuickslotItem(1);
+            int quickslot = 1;
+            SetQuickslotItem(quickslot);
         }
     }
     public void HandlequickSlotKeyboardInput()
@@ -140,34 +167,34 @@ public class InventoryMenuManager : MonoBehaviour
         if (quickSlot1)
         {
             quickSlot1 = false;
-            SetQuickslotItem(1);
+            SetQuickslotItem(0);
         }
         if (quickSlot2) 
         { 
             quickSlot2 = false;
-            SetQuickslotItem(2);
+            SetQuickslotItem(1);
         }
         if (quickSlot3)
         {
             quickSlot3 = false;
-            SetQuickslotItem(3);
+            SetQuickslotItem(2);
         }
         if (quickSlot4)
         {
             quickSlot4 = false;
-            SetQuickslotItem(4);
+            SetQuickslotItem(3);
         }
     }
     void SetQuickslotItem(int quickslotIndex)
     {
-        InventoryItemUI itemUI = eventSystem.currentSelectedGameObject.GetComponent<InventoryItemUI>();
+        InventoryItemUI itemUI = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
         if (itemUI != null)
         {
-            UsableItem usableItem = playerInventory.items[itemUI.itemName].GetComponent<UsableItem>();
+            UsableItem usableItem = playerInventory.GetItem(itemUI.itemId).GetComponent<UsableItem>();
             if (usableItem != null)
             {
-                Debug.Log("Set QuickSlot " + quickslotIndex + " to " + usableItem.itemName);//astest
                 playerInventory.quickSlotItems[quickslotIndex] = usableItem.itemName;
+                LoadQuickslots();
             }
         }
     }
@@ -210,7 +237,7 @@ public class InventoryMenuManager : MonoBehaviour
                 InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
                 if (ui != null)
                 { // currently on a tinker component
-                    SetTooltipToItem(ui.itemName);
+                    SetTooltipToItem(ui.itemId);
                 }
             }
         }
@@ -221,7 +248,7 @@ public class InventoryMenuManager : MonoBehaviour
     // Load Items to screen
     int itemsPerRow = 11;
     int curItemRow = 0;
-    void LoadItemsToWindow(List<string> filters)
+    void LoadItemsToWindow()
     {
         foreach (Transform child in inventoryWindow.transform)
         {
@@ -231,10 +258,10 @@ public class InventoryMenuManager : MonoBehaviour
         int maxDisplayed = 32;
         int itemsToSkip = curItemRow * itemsPerRow;
         int index = 0;
-        if(filters != null)
-        {
-            //TODO
-        }
+        //if(filters != null)
+        //{
+        //    //TODO
+        //}
         foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.items)
         {
             InventoryItem item = itemKVP.Value;
@@ -252,13 +279,13 @@ public class InventoryMenuManager : MonoBehaviour
                 GameObject itemGridElement = Instantiate(itemUIPrefab, inventoryWindow.transform);
                 InventoryItemUI itemUI = itemGridElement.GetComponent<InventoryItemUI>();
                 itemUI.mainButtonForeground.GetComponent<Image>().sprite = itemDetails.icon;
-                itemUI.itemName = itemDetails.itemName;
+                itemUI.itemId = itemDetails.itemId;
                 //Add tooltip on hover event
                 EventTrigger.Entry entry = new EventTrigger.Entry();
                 entry.eventID = EventTriggerType.PointerEnter;
                 entry.callback.AddListener((eventData) =>
                 {
-                    SetTooltipToItem(itemUI.itemName);
+                    SetTooltipToItem(itemUI.itemId);
                     itemUI.mainButton.Select();
                 });
                 itemUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
@@ -272,22 +299,34 @@ public class InventoryMenuManager : MonoBehaviour
         {
             if (playerInventory == null) break;
             if (playerInventory.quickSlotItems[i] == null) continue;
-            string item = playerInventory.quickSlotItems[i];
-            //InventoryItemDetails itemDetails = inventoryItemDetails.Find
+            string itemId = playerInventory.GetQuickSlotItemId(i);
+            if (itemId != null)
+            {
+                ItemDetails itemDetails = GetItemDetails(itemId);
+                quickslotItems[i].mainButtonForeground.GetComponent<Image>().sprite = itemDetails.icon;
+                quickslotText[i].text = itemDetails.itemName;
+            }
+            else
+            {
+                quickslotText[i].text = "None";
+            }
+            
         }
     }
-    void SetTooltipToItem(string itemName)
+    void SetTooltipToItem(string itemId)
     {
-        tooltip.headerText.text = itemName;
-        tooltip.centerText.text = GetItemDetails(itemName).description;
+        ItemDetails itemDetails = GetItemDetails(itemId);
+        tooltip.headerText.text = itemDetails.itemName;
+        tooltip.centerText.text = itemDetails.description;
+        tooltip.bottomText.text = itemDetails.cost + " gp";
     }
 
-    ItemDetails GetItemDetails(string itemName)
+    ItemDetails GetItemDetails(string itemId)
     {
         //foreach (ItemDetails details in inventoryItemDetails)
         //    if (details.itemName == itemName)
         //        return details;
-        return itemDatabase.GetItem(itemName);
+        return itemDatabase.GetItem(itemId);
         //return null;
     }
 

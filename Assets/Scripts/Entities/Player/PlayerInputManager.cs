@@ -293,7 +293,7 @@ public class PlayerInputManager : MonoBehaviour
                 return; //dont use on title screen
 
             //WIP TODO switch quickslot
-            Inventory playerInventory = GetComponent<Inventory>();
+            Inventory playerInventory = player.GetComponent<Inventory>();
             if(playerInventory != null && playerInventory.quickSlotItems[1] != null)
             {
                 string itemKey = playerInventory.quickSlotItems[1];

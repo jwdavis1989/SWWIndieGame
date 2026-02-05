@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9158703440023760711}
-  - component: {fileID: 2316852571514615777}
   m_Layer: 5
   m_Name: Quickslots
   m_TagString: Untagged
@@ -49,45 +48,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 2006, y: 893.56494}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2316852571514615777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 485246147864383361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc21c437aece1ef4b91edd0fc6b1cc53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltip: {fileID: 0}
-  inventoryWindow: {fileID: 0}
-  quickslotItems:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  quickslotText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  itemUIPrefab: {fileID: 6566753777988130877, guid: a3ddc6cbe67f1c642929ffbbd3926b48, type: 3}
-  itemDatabase: {fileID: 0}
-  inventoryItemDetails:
-  - {fileID: 11400000, guid: be29dc066a0cc5547b3893e39132358f, type: 2}
-  - {fileID: 11400000, guid: fce12fe03e93e554a98a35dfd9eb37e6, type: 2}
-  playerInventory: {fileID: 0}
-  eventSystem: {fileID: 0}
-  useButtonPerformed: 0
-  quickSlotGamepad: 0
-  quickSlot1: 0
-  quickSlot2: 0
-  quickSlot3: 0
-  quickSlot4: 0
-  gamepadTooltips: []
-  keyboardMouseTooltips: []
 --- !u!1 &598728608385955591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,9 +1716,6 @@ MonoBehaviour:
   - {fileID: 5345878740436743158}
   itemUIPrefab: {fileID: 6566753777988130877, guid: a3ddc6cbe67f1c642929ffbbd3926b48, type: 3}
   itemDatabase: {fileID: 11400000, guid: eb403de05bc7f4f4ebe23d78c92d00c0, type: 2}
-  inventoryItemDetails:
-  - {fileID: 11400000, guid: be29dc066a0cc5547b3893e39132358f, type: 2}
-  - {fileID: 11400000, guid: fce12fe03e93e554a98a35dfd9eb37e6, type: 2}
   playerInventory: {fileID: 0}
   eventSystem: {fileID: 0}
   useButtonPerformed: 0

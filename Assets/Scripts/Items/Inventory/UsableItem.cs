@@ -11,7 +11,7 @@ public class UsableItem : InventoryItem
     { 
         base.HandlePickup(player);
     }
-    public void Use(GameObject player)
+    public override void Use(GameObject player)
     {
         player.GetComponent<PlayerEffectsManager>().ProcessInstantEffect(effect);
         if (consumable)

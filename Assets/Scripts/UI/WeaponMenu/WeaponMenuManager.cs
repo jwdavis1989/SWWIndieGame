@@ -64,8 +64,8 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject salvageConfirmWindow;
     public GameObject salvageErrorWindow;
     [Header("Input Tooltips")]
-    public List<GameObject> gamepadControlsUI;
-    public List<GameObject> keyboardControlsUI;
+    public List<GameObject> gamepadTooltips;
+    public List<GameObject> keyboardMouseTooltips;
     //[SerializeField] public Image holdToBreakdownWpnImage;
     //[SerializeField] private float holdDuration = 1.5f;//should match value in PlayerControls
     private bool isHolding;
@@ -90,6 +90,11 @@ public class WeaponMenuManager : MonoBehaviour
     private void OnDisable()
     {
         playerControls.WeaponMenu.Disable();
+        //hide bottom tooltips
+        foreach (GameObject gamepadeUI in gamepadTooltips)
+            gamepadeUI.SetActive(false);
+        foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+            gamepadeUI.SetActive(false);
     }
     // Start is called before the first frame update
     void Start()
@@ -1176,17 +1181,17 @@ public class WeaponMenuManager : MonoBehaviour
             if (InputSwitchDetector.IsCurrentlyGamepad())
             {
                 //Show controller UI
-                foreach (GameObject gamepadeUI in gamepadControlsUI)
+                foreach (GameObject gamepadeUI in gamepadTooltips)
                     gamepadeUI.SetActive(true);
-                foreach (GameObject gamepadeUI in keyboardControlsUI)
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
                     gamepadeUI.SetActive(false);
             }
             else //Keyboard
             {
                 //Hide Controller UI
-                foreach (GameObject gamepadeUI in gamepadControlsUI)
+                foreach (GameObject gamepadeUI in gamepadTooltips)
                     gamepadeUI.SetActive(false);
-                foreach (GameObject gamepadeUI in keyboardControlsUI)
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
                     gamepadeUI.SetActive(true);
                 //enable buttons
                 EnableAllNavigation();

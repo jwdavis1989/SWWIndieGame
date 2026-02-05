@@ -66,6 +66,7 @@ public class InventoryItem : MonoBehaviour
             obj.gameObject.SetActive(false);
         }
     }
+    public virtual void Use(GameObject player) { }
 
     // Possibly useful when added to save/load
     //public string itemType;
