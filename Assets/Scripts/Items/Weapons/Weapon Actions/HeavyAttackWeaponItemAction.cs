@@ -9,6 +9,9 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
     [SerializeField] string heavy_attack_01 = "Main_Hand_Heavy_Attack_01";
     [SerializeField] string heavy_attack_02 = "Main_Hand_Heavy_Attack_02";
 
+    [Header("Light Attacks (For Combo Mixing)")]
+    [SerializeField] string light_attack_01 = "Main_Hand_Light_Attack_01";
+
     [Header("Jump Attacks")]
     [SerializeField] string heavy_jump_attack_01 = "Main_Heavy_Jump_Attack_01";
 
@@ -50,7 +53,8 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
             characterPerformingAction.characterCombatManager.canComboWithMainHandWeapon = false;
 
             //Perform an attack based on the previous attack we just played
-            if (characterPerformingAction.characterCombatManager.lastAttackAnimationPerformed == heavy_attack_01)
+            if (characterPerformingAction.characterCombatManager.lastAttackAnimationPerformed == heavy_attack_01 || 
+                characterPerformingAction.characterCombatManager.lastAttackAnimationPerformed == light_attack_01)
             {
                 characterPerformingAction.characterAnimatorManager.PlayTargetAttackActionAnimation(AttackType.HeavyAttack02, heavy_attack_02, true);
             }
