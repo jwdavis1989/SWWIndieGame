@@ -208,7 +208,7 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.OpenJumpAttackDamageCollider();
     }
 
-    public void CallPlayJumpAttackImpactVFX()
+    public virtual void CallPlayJumpAttackImpactVFX()
     {
         characterWeaponManager.PlayJumpAttackImpactVFX();
     }
@@ -294,6 +294,21 @@ public class CharacterManager : MonoBehaviour
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
         //Update this if monsters use guns
+    }
+
+    public virtual void EnableMeteorBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableMeteorBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableMeteorDescentBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
 
 }
