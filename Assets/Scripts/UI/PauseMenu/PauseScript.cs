@@ -25,11 +25,11 @@ public class PauseScript : MonoBehaviour
     public GameObject playerHud;
     MenuTab lastMenuTab = MenuTab.Weapons;
     [Header("Controls")]
-    [SerializeField] bool pauseInput = false;
-    [SerializeField] bool menuLeftInput = false;
-    [SerializeField] bool menuRightInput = false;
-    [SerializeField] bool exitPauseMenuInput = false;
-    PlayerControls playerControls;
+    [SerializeField] public bool pauseInput = false;
+    [SerializeField] public bool menuLeftInput = false;
+    [SerializeField] public bool menuRightInput = false;
+    [SerializeField] public bool exitPauseMenuInput = false;
+    public PlayerControls playerControls;
     public EventSystem mainPauseMenuEvents;
     public GameObject mainMenuButton;
     [Header("Controls Help")]
@@ -93,34 +93,48 @@ public class PauseScript : MonoBehaviour
         yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
         Unpause();
     }
-    public void WeaponMenuClick()
+    public void WeaponMenuClick(bool settingsChanged=false)
     {
+        lastMenuTab = MenuTab.Weapons;
+        if (settingsChanged) {
+            OptionsMenuManager.instance.saveWindowAction = "MENUCLICK";
+            return;
+        }
         DisableAllMenus();
         if (weaponMenu != null)
             weaponMenu.SetActive(true);
         if (weaponMenuSideBar != null)
             weaponMenuSideBar.SetActive(true);
-        lastMenuTab = MenuTab.Weapons;
         SetWeaponMenuTooltip();
     }
-    public void InventoryMenuClick()
+    public void InventoryMenuClick(bool settingsChanged = false)
     {
+        lastMenuTab = MenuTab.Inventory;
+        if (settingsChanged)
+        {
+            OptionsMenuManager.instance.saveWindowAction = "MENUCLICK";
+            return;
+        }
         DisableAllMenus();
         if (inventoryMenu != null)
             inventoryMenu.SetActive(true);
-        lastMenuTab = MenuTab.Inventory;
         SetMainPauseMenuTooltip();
         bottomTooltipPauseMenuGamepad.SetActive(true);
     }
-    public void InventMenuClick()
+    public void InventMenuClick(bool settingsChanged = false)
     {
+        lastMenuTab = MenuTab.Invent;
+        if (settingsChanged)
+        {
+            OptionsMenuManager.instance.saveWindowAction = "MENUCLICK";
+            return;
+        }
         DisableAllMenus();
         if (inventMenu != null)
         {
             inventMenu.SetActive(true);
             InventionUIManager.instance.OpenInventionMenu();
         }
-        lastMenuTab = MenuTab.Invent;
         SetMainPauseMenuTooltip();
     }
     void DisableAllMenus()
@@ -135,20 +149,25 @@ public class PauseScript : MonoBehaviour
     }
     public void OptionsMenuClick()
     {
+        lastMenuTab = MenuTab.Options;
         DisableAllMenus();
         if (optionsMenu!= null) optionsMenu.SetActive(true);
-        lastMenuTab = MenuTab.Options;
         SetMainPauseMenuTooltip();
     }
-    public void ExitMenuClick()
+    public void ExitMenuClick(bool settingsChanged = false)
     {
+        lastMenuTab = MenuTab.ExitGame;
+        if (settingsChanged)
+        {
+            OptionsMenuManager.instance.saveWindowAction = "MENUCLICK";
+            return;
+        }
         DisableAllMenus();
         if (exitMenu != null)
             exitMenu.SetActive(true);
         if(mainMenuButton != null)
             mainPauseMenuEvents.SetSelectedGameObject(mainMenuButton);
         mainMenuButton.GetComponent<Button>().Select();
-        lastMenuTab = MenuTab.ExitGame;
         SetMainPauseMenuTooltip();
     }
     void SetWeaponMenuTooltip()
@@ -250,6 +269,10 @@ public class PauseScript : MonoBehaviour
         //Set bool so the Interactable system understands a Menu window has opened
         PlayerUIManager.instance.menuWindowIsOpen = true;
         playerHud.SetActive(false);
+        GoToLastMenu();
+    }
+    public void GoToLastMenu()
+    {
         switch (lastMenuTab)
         {//go to last menu the player had open
             case MenuTab.Weapons:
@@ -267,7 +290,7 @@ public class PauseScript : MonoBehaviour
             default:
                 WeaponMenuClick();
                 break;
-        } 
+        }
     }
     void Unpause()
     {
@@ -312,7 +335,7 @@ public class PauseScript : MonoBehaviour
                 StartCoroutine(WaitToEndOfFrameThenContinue());
         }
     }
-    void HandleSwitchMenuInput()
+    public void HandleSwitchMenuInput()
     {
         //GameObject newBtnSelected;
         if (menuLeftInput)

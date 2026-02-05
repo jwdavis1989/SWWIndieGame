@@ -8,8 +8,6 @@ public class LostAdventurerJournal : InventoryItem
     {
         base.HandlePickup(player);
         RevealObjects();
-        if(player.GetComponent<Inventory>() != null)
-            player.GetComponent<Inventory>().items.Add(this);
         //Destroy(gameObject);
     }
     public void RevealObjects()
