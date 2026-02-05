@@ -20,8 +20,8 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterUIManager characterUIManager;
     public CharacterWeaponManager characterWeaponManager;
 
-    [Header("Critical Setup")]
-    [SerializeField] GameObject characterModel;
+    [Header("Critical Setup for Player or enemies that fly offset\nfrom their character object.\n(e.g. Fabricant Units)")]
+    public GameObject characterModel;
 
     [Header("Status")]
     public bool isDead = false;
