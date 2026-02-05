@@ -9,6 +9,7 @@ public class PickupCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            //Debug.Log("PickUpCollider");
             gameObject.GetComponentInParent<InventoryItem>().HandlePickup(other.gameObject);
         }
     }

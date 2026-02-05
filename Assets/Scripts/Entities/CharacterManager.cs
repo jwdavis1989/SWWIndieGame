@@ -20,11 +20,12 @@ public class CharacterManager : MonoBehaviour
     [HideInInspector] public CharacterUIManager characterUIManager;
     public CharacterWeaponManager characterWeaponManager;
 
-    [Header("Critical Setup")]
-    [SerializeField] GameObject characterModel;
+    [Header("Critical Setup for Player or enemies that fly offset\nfrom their character object.\n(e.g. Fabricant Units)")]
+    public GameObject characterModel;
 
     [Header("Status")]
     public bool isDead = false;
+    public float deathExplosionVFXDelay = 2f;
 
     [Header("Character Faction")]
     public CharacterFaction faction;
@@ -137,7 +138,7 @@ public class CharacterManager : MonoBehaviour
         //Play Death SFX
         //characterSoundFXManager.audioSource.PlayOneShot(WorldSoundFXManager.instance.deathSFX);
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(deathExplosionVFXDelay);
     }
 
     public IEnumerator ProcessPerfectBlockTimer()
@@ -248,13 +249,13 @@ public class CharacterManager : MonoBehaviour
     public void SetShootingModelAlignment()
     {
         characterModel.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
+        miniMapSprite.transform.localRotation = Quaternion.Euler(90, -31.784f, 0);
     }
 
     public void ResetModelAlignment()
     {
         characterModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        miniMapSprite.transform.localRotation = Quaternion.Euler(90, 0, 0);
     }
 
     public virtual void DisableRollerJointInvulnerable()

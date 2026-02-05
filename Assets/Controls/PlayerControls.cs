@@ -1249,27 +1249,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""id"": ""4132d473-ea48-459c-847d-cc045e59ce10"",
             ""actions"": [
                 {
-                    ""name"": ""DialogueContinue"",
-                    ""type"": ""Button"",
-                    ""id"": ""e54cc86a-582d-4584-b99c-e1e01e9cdd0c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""PauseButton"",
                     ""type"": ""Button"",
                     ""id"": ""5d65391c-f452-4278-85aa-679822192127"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""HelpButton"",
-                    ""type"": ""Button"",
-                    ""id"": ""8b47ac0d-224c-4dd3-b59f-e0187490143c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1303,96 +1285,25 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwitchWeaponUp"",
+                    ""name"": ""AnyGamepad"",
                     ""type"": ""Button"",
-                    ""id"": ""d005ffcc-6ebd-4fdb-a54b-c03f327d363c"",
+                    ""id"": ""451acf87-bf4b-4347-b3f5-43a33aa063ce"",
                     ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SwitchWeaponDown"",
-                    ""type"": ""Button"",
-                    ""id"": ""acbecb85-9c3d-4966-9aae-0cc303e7f8b6"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""EquipWeapon"",
-                    ""type"": ""Button"",
-                    ""id"": ""f2b9cdec-cda4-44bf-8ec4-b8d39534aa4c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""BreakdownWeapon"",
-                    ""type"": ""Button"",
-                    ""id"": ""fbacb6fa-8ab6-456b-a5c3-65aeb8f7983e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""WeaponPreviewMovement"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""c702f62c-868c-4245-869c-a89422c01a47"",
-                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""535df51a-2e35-44a1-b572-f36ff3c44677"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""d58001a8-67ec-4c4a-9e5f-4f278d01a44e"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DialogueContinue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7f0f086e-d83e-4c3a-a803-aebd796f6796"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DialogueContinue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""da34ef5c-a5b1-4256-9c50-93836de320a3"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DialogueContinue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8c3d1b87-cdaa-4442-8ba8-e47db3c043db"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DialogueContinue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""7bf1a480-5596-4d04-8ec7-b0c2af4c0980"",
@@ -1449,8 +1360,355 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""aa32ac84-450b-44e3-a758-4f8b1117af34"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb706381-9fe9-407e-89a4-6f4bf844c55f"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a053874d-7d3e-4723-964f-8bd9e0cb9bb3"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""061cae73-28f4-4f49-ad1f-c4c7a10c033a"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed04eaac-1c54-4ecb-838d-fa0258656478"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc5d4cb4-a396-4e16-b839-61d2c54792b5"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eab3fc1b-a35f-4450-b39b-1199165e6da5"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a9587334-03e5-4e52-bc50-22f2b74cb60e"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa69740a-65fe-4a11-8742-4321d519eb09"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d05099f-d06a-4086-b83b-86e73ea8142a"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""16447521-5895-4af4-8a99-f2218d6ad836"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6582a37-05d8-4e1a-81d4-706d8f2cf6e6"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be3bb914-c5d4-4897-862d-73a5763852e6"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ab0e47f-29a8-44a0-a981-a44631cf9a71"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ec8d886-8b7b-4452-96b0-157ab0c559d4"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2c417fb-52ee-4823-8b45-0c04d35541c6"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c28fddb2-c451-44ff-bd35-7602b6c7349b"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Weapon Menu"",
+            ""id"": ""bc04a9df-1186-45cc-9baa-c443dab2addb"",
+            ""actions"": [
+                {
+                    ""name"": ""PauseButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""3609a37f-ed55-45eb-b6ca-7f943e4108bc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HelpButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""dacc72f4-0049-4288-af63-27356770be2d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMenuLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""6396655f-b346-4afb-b7f3-ea957632addf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMenuRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""e3f258ab-222f-4d44-bbed-b8a4ac4df1b0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""f56644e6-21cb-46c5-b901-2979860c6006"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""a76f709f-fcca-4495-98c8-be288b07636b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EquipWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""61950e8c-ff57-4d6a-a80b-2143ec6c3106"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BreakdownWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""47ac9c4a-3310-421f-8791-3d463dd6ac29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeaponPreviewMovement"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""c9ab2c90-0d79-456e-8a5b-84a18566be48"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""24318f3a-5e9c-4a5a-a2c0-4d9417a1ed05"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FocusComponentsWindow"",
+                    ""type"": ""Button"",
+                    ""id"": ""32872322-a885-4991-9e01-45e14600e23e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FocusEvolutionsWindow"",
+                    ""type"": ""Button"",
+                    ""id"": ""82361368-8782-4dfb-9c6b-27010b6dc7f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""dbbc2ab2-ac59-4bf6-9ea5-a248842f97f2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72782b03-bea7-4f00-a620-a696fc04f6ca"",
+                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6039686-b62e-4fbe-932a-a57a516d0cf3"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d5dc3e6-c7a7-4005-bd49-79cb2a9569c8"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""Right Stick"",
-                    ""id"": ""494b6d08-cac0-48de-8197-bca1a94301a1"",
+                    ""id"": ""7f25cb6d-6314-4dd0-b9a4-1997f5e509dd"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1461,7 +1719,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""34d05249-b20d-4399-98d2-a44fb97d4d13"",
+                    ""id"": ""9ca7cf50-072e-4721-901e-48eabba0585d"",
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1472,7 +1730,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""27e5da86-f289-4886-bebf-d97bb2665c20"",
+                    ""id"": ""bb0e4f88-b8d5-46e0-b9a4-7b43fc6c6fda"",
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1483,7 +1741,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""99e40560-0e05-448f-8c29-09ee72e30246"",
+                    ""id"": ""6a03e9ed-2a91-494d-84e3-5bfca6444932"",
                     ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1494,7 +1752,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""d9eb2413-e18f-4788-879c-ced23663ac19"",
+                    ""id"": ""a562565c-3479-4233-b894-985a387ef878"",
                     ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1505,7 +1763,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""One Modifier"",
-                    ""id"": ""bac08f41-fd26-4df9-8770-d591e1d0990c"",
+                    ""id"": ""d0d8e68f-761d-426d-a035-3238b91fc68e"",
                     ""path"": ""OneModifier"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1516,7 +1774,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""modifier"",
-                    ""id"": ""6748e684-78ff-445b-8a9d-e837d7c06703"",
+                    ""id"": ""34eec816-3354-41db-87a4-e9648db240c0"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1527,7 +1785,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""binding"",
-                    ""id"": ""88834975-b076-4190-b1cd-f4cc9304913a"",
+                    ""id"": ""bef8ca4b-fe6e-4fca-ac15-52e828889518"",
                     ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1538,7 +1796,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""96e8155a-60f1-4d50-80b7-1d90b31390c3"",
+                    ""id"": ""059b7208-e6e9-488b-859a-d8b195a443e6"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1549,7 +1807,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""aa01c548-f828-49f9-96cb-5668734cfcbd"",
+                    ""id"": ""659f62b7-d855-4dfe-b1a5-c7af0c192394"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1559,8 +1817,30 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
+                    ""name"": ""MouseWheel"",
+                    ""id"": ""d710aac7-19e5-4cba-9118-45fc4df7983f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponDown"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""50ab6a28-e442-49ab-a773-6232ffb4617c"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
-                    ""id"": ""4facf8a7-75a5-4171-b8cd-e1da64287743"",
+                    ""id"": ""d8e388a8-5dfd-4431-896d-94321f5a69ae"",
                     ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1571,7 +1851,18 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""6b09e01a-8900-4c4c-9f77-b6baaf70bd9a"",
+                    ""id"": ""70dd7d08-c482-45d0-be71-f98149882007"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EquipWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66da1349-38ca-4add-abd5-c005abd48d10"",
                     ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1582,12 +1873,924 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4d9401df-953c-4a98-968b-cb34fa761dd8"",
+                    ""id"": ""478e088f-8586-4d79-bfb4-9726c4d1eb6b"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BreakdownWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12b05b43-ad42-47c8-819b-a3cffd8641bf"",
                     ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""HelpButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b18a022b-d778-4ca1-b9e6-224023703034"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aa527018-1f13-4bb6-9cf9-b2a0a5a710e7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""210b160a-bf04-4672-8cdd-9f8bc074382f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67232042-5a97-42a3-b43e-af9ddb582f5f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a1b9e068-abd7-4843-8a56-3e4472ccbd24"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""37fc1678-d062-4292-a963-2320206fe604"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2b85cc51-4dfa-4fcb-b932-80b80e815a32"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0a779643-4caf-49ff-8f07-955b9a9196af"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8fbaee90-8469-4bb0-9124-080e212403e0"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b46086e-1341-480c-ad6f-3f457d8b661d"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""412ce5ce-1c83-44ca-a5bf-89e79248ee68"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd0c25e5-3ba8-48d7-b95d-f21e8c27420e"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a756cd9-4f79-44f2-bedd-3c623df2d38f"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4b70f40-539a-4276-ae23-25c530bf25fa"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dd5e18f-100d-4578-9fa1-82a1b641e676"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6c2e744-9e18-4bf6-8df9-03a50142094d"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2c83101a-300f-4f0e-aaf4-1ca08ab7929e"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FocusComponentsWindow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5e31138-0160-46be-a6f3-817c11a69551"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FocusEvolutionsWindow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""MouseWheel"",
+                    ""id"": ""32c23815-d4cf-4256-ba68-af1c76a3328e"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponUp"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""496cc65a-ec4c-4caa-b1df-14793a1efa2d"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
+        },
+        {
+            ""name"": ""InventoryMenu"",
+            ""id"": ""3d230c9e-f2d9-43ea-8a16-13f223f8dea2"",
+            ""actions"": [
+                {
+                    ""name"": ""PauseButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ab0b513-4364-486c-91ff-fe6428c774d1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HelpButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""28634f3f-0b86-41b2-a333-c8f4db5b5563"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButtonGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac81a98b-25ff-4d76-9e1a-fcb48dce7898"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButton1"",
+                    ""type"": ""Button"",
+                    ""id"": ""c5e794b7-f3ee-4222-a370-c3cdc46b10a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButton2"",
+                    ""type"": ""Button"",
+                    ""id"": ""6cb8f090-1985-4ca7-8837-43c3bc3a604b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButton3"",
+                    ""type"": ""Button"",
+                    ""id"": ""4273e43f-de14-4a60-b595-3f1bfdb187ec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButton4"",
+                    ""type"": ""Button"",
+                    ""id"": ""2391801c-04e0-4ed1-81ff-992a347c65cc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UseButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""fb548e66-816f-4dff-94ae-b9edbdfcf79a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""d1989383-d117-4589-ad3b-f6ce53a003fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""917ca8d8-1a36-435d-96b8-81e86150a7a6"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""673e7226-3cfb-4481-8714-9e3aa69083b2"",
+                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fd4c221-8dc9-470d-ade6-61982ec65356"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HelpButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1fb5a972-d66f-489f-a51c-607b44e8ec79"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4fd22e70-ba08-401d-b9be-6a92dbfae4b2"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e33db49f-168d-4184-98f5-e10d8051f526"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c56ee43c-2cf4-43e6-b93a-f01325b38006"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd5b9be2-316a-4a52-a0e3-321cb5b9888e"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a1185ba-88a7-40a6-a37c-11eec6cdeaa0"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e17ae2b-364c-438c-a595-8deaef3df897"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38739e4c-9cb8-4629-9d64-d89a3ea7e11a"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""837d5163-eccd-436c-b018-f4b7afd59269"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8b2287bf-9eaf-44e9-9efa-64206b0c267d"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""659b3dfe-37ab-446a-adde-589bf37ce561"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56bea7b1-ba91-4ae0-9355-743a488f0cbf"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da81be7d-12e9-424c-913e-b05f021ec638"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edeab3b6-3c92-4520-9606-35aa3ad9a76a"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3fcc1cd-bfa1-46a1-bdec-24195a538752"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""21fdd68e-1214-406f-9bf8-e66524feea5f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ced7eb2-eb49-4d49-8c26-7da6d4aa6f9f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButtonGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8706d78-cb2a-4f5b-9ecb-80021ad16564"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""878872d0-4800-4bb0-8c58-9e71a42ceb67"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84ad0ac7-05b3-4753-a370-9a3e41fd1ee1"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17ed653f-bdea-491c-820d-bc7bb8b3abbc"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7d0a0ad-9b74-48bf-8a1f-a2ef6c4f6e68"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a5f4e70-db58-40a5-bdc5-2ef2ac7d93d0"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""OptionsMenu"",
+            ""id"": ""385b559c-6c0d-443b-8e7e-656f7bd0eb1e"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchMenuLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab5d20d8-ab3f-42a3-bd54-696b1aec597a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchMenuRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""da285123-4bc8-4ae1-a6d4-e699fe8382e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""157aea42-001a-4104-9010-73ecfe35f1c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""37e36086-2cd3-42c6-9b43-9bcc45e9b87b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SaveSettings"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0b0d862-513a-48b1-8fa9-18c64baf158f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""131940e4-f131-4995-b782-05023a2799c7"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c24acef-e5ef-4efa-8fe7-23afa4498f3c"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchMenuRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4dfd5d06-23c2-47fb-9d89-bf3aeec86052"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c3c816d-b570-4960-a7c8-4bbafd844a36"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3d84f5b-cd8b-4d31-9c57-8b9c8163711a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c7a6b96-337d-464d-9441-19fa63cc17c8"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d7bf061-90ff-4ad6-92ae-5b613d2d51e1"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ac08d70-56e4-4655-9646-1a4f81597548"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6f33a9a-286f-4636-a34c-4c53af80db32"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f8707afa-c35a-47d0-b913-3bdf246a8a40"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fed21de3-219a-4e41-9873-ad128b4cf03f"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bbb33b05-0d84-462b-b6ca-223fef68cea8"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c41a3eb1-f88e-4615-ae7b-0ba1f4d43890"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a88c15a6-22b7-4cec-b63c-2c2672cbf727"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a91a007-e797-43b6-8b7a-ffbda175f8fa"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""790ab464-b05a-4cc8-8beb-e7349475d570"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77a661ea-8f17-4a58-80d7-f0648f4d15fe"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5511a10d-10de-4707-90bc-95e811e3ce10"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10b1f635-3d5e-4f3d-93f7-8626c72538e3"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca65fa64-a687-48dd-bdb5-22e721d56bbd"",
+                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cff3ed66-007f-453a-b834-a4d08849cbaf"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe22877e-2ba4-4819-ac22-cfc963975321"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SaveSettings"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f87bf5ad-cc0f-4d92-b0d8-e48b15a7d197"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SaveSettings"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1712,31 +2915,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""d2fcc649-a866-48aa-95d7-f85a9e9dc757"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""down"",
                     ""id"": ""ef5083eb-9c51-454a-b51b-faa28eedbd50"",
                     ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""468ffbad-6884-4971-99ca-55de3414abe1"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -1756,31 +2937,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""fcb31388-0fe9-428e-ab64-abf671e5a6d7"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""right"",
                     ""id"": ""94586244-6dd1-4e34-b949-163f0a3e0976"",
                     ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""5da8a741-3f06-4fcb-8811-499b69144a4f"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
@@ -2188,17 +3347,44 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
         // Pause Menu
         m_PauseMenu = asset.FindActionMap("Pause Menu", throwIfNotFound: true);
-        m_PauseMenu_DialogueContinue = m_PauseMenu.FindAction("DialogueContinue", throwIfNotFound: true);
         m_PauseMenu_PauseButton = m_PauseMenu.FindAction("PauseButton", throwIfNotFound: true);
-        m_PauseMenu_HelpButton = m_PauseMenu.FindAction("HelpButton", throwIfNotFound: true);
         m_PauseMenu_UIButtonX = m_PauseMenu.FindAction("UIButtonX", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuLeft = m_PauseMenu.FindAction("SwitchMenuLeft", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuRight = m_PauseMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
-        m_PauseMenu_SwitchWeaponUp = m_PauseMenu.FindAction("SwitchWeaponUp", throwIfNotFound: true);
-        m_PauseMenu_SwitchWeaponDown = m_PauseMenu.FindAction("SwitchWeaponDown", throwIfNotFound: true);
-        m_PauseMenu_EquipWeapon = m_PauseMenu.FindAction("EquipWeapon", throwIfNotFound: true);
-        m_PauseMenu_BreakdownWeapon = m_PauseMenu.FindAction("BreakdownWeapon", throwIfNotFound: true);
-        m_PauseMenu_WeaponPreviewMovement = m_PauseMenu.FindAction("WeaponPreviewMovement", throwIfNotFound: true);
+        m_PauseMenu_AnyGamepad = m_PauseMenu.FindAction("AnyGamepad", throwIfNotFound: true);
+        m_PauseMenu_ExitMenu = m_PauseMenu.FindAction("ExitMenu", throwIfNotFound: true);
+        // Weapon Menu
+        m_WeaponMenu = asset.FindActionMap("Weapon Menu", throwIfNotFound: true);
+        m_WeaponMenu_PauseButton = m_WeaponMenu.FindAction("PauseButton", throwIfNotFound: true);
+        m_WeaponMenu_HelpButton = m_WeaponMenu.FindAction("HelpButton", throwIfNotFound: true);
+        m_WeaponMenu_SwitchMenuLeft = m_WeaponMenu.FindAction("SwitchMenuLeft", throwIfNotFound: true);
+        m_WeaponMenu_SwitchMenuRight = m_WeaponMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
+        m_WeaponMenu_SwitchWeaponUp = m_WeaponMenu.FindAction("SwitchWeaponUp", throwIfNotFound: true);
+        m_WeaponMenu_SwitchWeaponDown = m_WeaponMenu.FindAction("SwitchWeaponDown", throwIfNotFound: true);
+        m_WeaponMenu_EquipWeapon = m_WeaponMenu.FindAction("EquipWeapon", throwIfNotFound: true);
+        m_WeaponMenu_BreakdownWeapon = m_WeaponMenu.FindAction("BreakdownWeapon", throwIfNotFound: true);
+        m_WeaponMenu_WeaponPreviewMovement = m_WeaponMenu.FindAction("WeaponPreviewMovement", throwIfNotFound: true);
+        m_WeaponMenu_AnyGamepad = m_WeaponMenu.FindAction("AnyGamepad", throwIfNotFound: true);
+        m_WeaponMenu_FocusComponentsWindow = m_WeaponMenu.FindAction("FocusComponentsWindow", throwIfNotFound: true);
+        m_WeaponMenu_FocusEvolutionsWindow = m_WeaponMenu.FindAction("FocusEvolutionsWindow", throwIfNotFound: true);
+        // InventoryMenu
+        m_InventoryMenu = asset.FindActionMap("InventoryMenu", throwIfNotFound: true);
+        m_InventoryMenu_PauseButton = m_InventoryMenu.FindAction("PauseButton", throwIfNotFound: true);
+        m_InventoryMenu_HelpButton = m_InventoryMenu.FindAction("HelpButton", throwIfNotFound: true);
+        m_InventoryMenu_QuickslotButtonGamepad = m_InventoryMenu.FindAction("QuickslotButtonGamepad", throwIfNotFound: true);
+        m_InventoryMenu_QuickslotButton1 = m_InventoryMenu.FindAction("QuickslotButton1", throwIfNotFound: true);
+        m_InventoryMenu_QuickslotButton2 = m_InventoryMenu.FindAction("QuickslotButton2", throwIfNotFound: true);
+        m_InventoryMenu_QuickslotButton3 = m_InventoryMenu.FindAction("QuickslotButton3", throwIfNotFound: true);
+        m_InventoryMenu_QuickslotButton4 = m_InventoryMenu.FindAction("QuickslotButton4", throwIfNotFound: true);
+        m_InventoryMenu_UseButton = m_InventoryMenu.FindAction("UseButton", throwIfNotFound: true);
+        m_InventoryMenu_AnyGamepad = m_InventoryMenu.FindAction("AnyGamepad", throwIfNotFound: true);
+        // OptionsMenu
+        m_OptionsMenu = asset.FindActionMap("OptionsMenu", throwIfNotFound: true);
+        m_OptionsMenu_SwitchMenuLeft = m_OptionsMenu.FindAction("SwitchMenuLeft", throwIfNotFound: true);
+        m_OptionsMenu_SwitchMenuRight = m_OptionsMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
+        m_OptionsMenu_AnyGamepad = m_OptionsMenu.FindAction("AnyGamepad", throwIfNotFound: true);
+        m_OptionsMenu_ExitMenu = m_OptionsMenu.FindAction("ExitMenu", throwIfNotFound: true);
+        m_OptionsMenu_SaveSettings = m_OptionsMenu.FindAction("SaveSettings", throwIfNotFound: true);
         // UINavigation
         m_UINavigation = asset.FindActionMap("UINavigation", throwIfNotFound: true);
         m_UINavigation_Navigate = m_UINavigation.FindAction("Navigate", throwIfNotFound: true);
@@ -2728,32 +3914,22 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Pause Menu
     private readonly InputActionMap m_PauseMenu;
     private List<IPauseMenuActions> m_PauseMenuActionsCallbackInterfaces = new List<IPauseMenuActions>();
-    private readonly InputAction m_PauseMenu_DialogueContinue;
     private readonly InputAction m_PauseMenu_PauseButton;
-    private readonly InputAction m_PauseMenu_HelpButton;
     private readonly InputAction m_PauseMenu_UIButtonX;
     private readonly InputAction m_PauseMenu_SwitchMenuLeft;
     private readonly InputAction m_PauseMenu_SwitchMenuRight;
-    private readonly InputAction m_PauseMenu_SwitchWeaponUp;
-    private readonly InputAction m_PauseMenu_SwitchWeaponDown;
-    private readonly InputAction m_PauseMenu_EquipWeapon;
-    private readonly InputAction m_PauseMenu_BreakdownWeapon;
-    private readonly InputAction m_PauseMenu_WeaponPreviewMovement;
+    private readonly InputAction m_PauseMenu_AnyGamepad;
+    private readonly InputAction m_PauseMenu_ExitMenu;
     public struct PauseMenuActions
     {
         private @PlayerControls m_Wrapper;
         public PauseMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @DialogueContinue => m_Wrapper.m_PauseMenu_DialogueContinue;
         public InputAction @PauseButton => m_Wrapper.m_PauseMenu_PauseButton;
-        public InputAction @HelpButton => m_Wrapper.m_PauseMenu_HelpButton;
         public InputAction @UIButtonX => m_Wrapper.m_PauseMenu_UIButtonX;
         public InputAction @SwitchMenuLeft => m_Wrapper.m_PauseMenu_SwitchMenuLeft;
         public InputAction @SwitchMenuRight => m_Wrapper.m_PauseMenu_SwitchMenuRight;
-        public InputAction @SwitchWeaponUp => m_Wrapper.m_PauseMenu_SwitchWeaponUp;
-        public InputAction @SwitchWeaponDown => m_Wrapper.m_PauseMenu_SwitchWeaponDown;
-        public InputAction @EquipWeapon => m_Wrapper.m_PauseMenu_EquipWeapon;
-        public InputAction @BreakdownWeapon => m_Wrapper.m_PauseMenu_BreakdownWeapon;
-        public InputAction @WeaponPreviewMovement => m_Wrapper.m_PauseMenu_WeaponPreviewMovement;
+        public InputAction @AnyGamepad => m_Wrapper.m_PauseMenu_AnyGamepad;
+        public InputAction @ExitMenu => m_Wrapper.m_PauseMenu_ExitMenu;
         public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2763,18 +3939,110 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Add(instance);
-            @DialogueContinue.started += instance.OnDialogueContinue;
-            @DialogueContinue.performed += instance.OnDialogueContinue;
-            @DialogueContinue.canceled += instance.OnDialogueContinue;
+            @PauseButton.started += instance.OnPauseButton;
+            @PauseButton.performed += instance.OnPauseButton;
+            @PauseButton.canceled += instance.OnPauseButton;
+            @UIButtonX.started += instance.OnUIButtonX;
+            @UIButtonX.performed += instance.OnUIButtonX;
+            @UIButtonX.canceled += instance.OnUIButtonX;
+            @SwitchMenuLeft.started += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled += instance.OnSwitchMenuLeft;
+            @SwitchMenuRight.started += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled += instance.OnSwitchMenuRight;
+            @AnyGamepad.started += instance.OnAnyGamepad;
+            @AnyGamepad.performed += instance.OnAnyGamepad;
+            @AnyGamepad.canceled += instance.OnAnyGamepad;
+            @ExitMenu.started += instance.OnExitMenu;
+            @ExitMenu.performed += instance.OnExitMenu;
+            @ExitMenu.canceled += instance.OnExitMenu;
+        }
+
+        private void UnregisterCallbacks(IPauseMenuActions instance)
+        {
+            @PauseButton.started -= instance.OnPauseButton;
+            @PauseButton.performed -= instance.OnPauseButton;
+            @PauseButton.canceled -= instance.OnPauseButton;
+            @UIButtonX.started -= instance.OnUIButtonX;
+            @UIButtonX.performed -= instance.OnUIButtonX;
+            @UIButtonX.canceled -= instance.OnUIButtonX;
+            @SwitchMenuLeft.started -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled -= instance.OnSwitchMenuLeft;
+            @SwitchMenuRight.started -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled -= instance.OnSwitchMenuRight;
+            @AnyGamepad.started -= instance.OnAnyGamepad;
+            @AnyGamepad.performed -= instance.OnAnyGamepad;
+            @AnyGamepad.canceled -= instance.OnAnyGamepad;
+            @ExitMenu.started -= instance.OnExitMenu;
+            @ExitMenu.performed -= instance.OnExitMenu;
+            @ExitMenu.canceled -= instance.OnExitMenu;
+        }
+
+        public void RemoveCallbacks(IPauseMenuActions instance)
+        {
+            if (m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPauseMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PauseMenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
+
+    // Weapon Menu
+    private readonly InputActionMap m_WeaponMenu;
+    private List<IWeaponMenuActions> m_WeaponMenuActionsCallbackInterfaces = new List<IWeaponMenuActions>();
+    private readonly InputAction m_WeaponMenu_PauseButton;
+    private readonly InputAction m_WeaponMenu_HelpButton;
+    private readonly InputAction m_WeaponMenu_SwitchMenuLeft;
+    private readonly InputAction m_WeaponMenu_SwitchMenuRight;
+    private readonly InputAction m_WeaponMenu_SwitchWeaponUp;
+    private readonly InputAction m_WeaponMenu_SwitchWeaponDown;
+    private readonly InputAction m_WeaponMenu_EquipWeapon;
+    private readonly InputAction m_WeaponMenu_BreakdownWeapon;
+    private readonly InputAction m_WeaponMenu_WeaponPreviewMovement;
+    private readonly InputAction m_WeaponMenu_AnyGamepad;
+    private readonly InputAction m_WeaponMenu_FocusComponentsWindow;
+    private readonly InputAction m_WeaponMenu_FocusEvolutionsWindow;
+    public struct WeaponMenuActions
+    {
+        private @PlayerControls m_Wrapper;
+        public WeaponMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PauseButton => m_Wrapper.m_WeaponMenu_PauseButton;
+        public InputAction @HelpButton => m_Wrapper.m_WeaponMenu_HelpButton;
+        public InputAction @SwitchMenuLeft => m_Wrapper.m_WeaponMenu_SwitchMenuLeft;
+        public InputAction @SwitchMenuRight => m_Wrapper.m_WeaponMenu_SwitchMenuRight;
+        public InputAction @SwitchWeaponUp => m_Wrapper.m_WeaponMenu_SwitchWeaponUp;
+        public InputAction @SwitchWeaponDown => m_Wrapper.m_WeaponMenu_SwitchWeaponDown;
+        public InputAction @EquipWeapon => m_Wrapper.m_WeaponMenu_EquipWeapon;
+        public InputAction @BreakdownWeapon => m_Wrapper.m_WeaponMenu_BreakdownWeapon;
+        public InputAction @WeaponPreviewMovement => m_Wrapper.m_WeaponMenu_WeaponPreviewMovement;
+        public InputAction @AnyGamepad => m_Wrapper.m_WeaponMenu_AnyGamepad;
+        public InputAction @FocusComponentsWindow => m_Wrapper.m_WeaponMenu_FocusComponentsWindow;
+        public InputAction @FocusEvolutionsWindow => m_Wrapper.m_WeaponMenu_FocusEvolutionsWindow;
+        public InputActionMap Get() { return m_Wrapper.m_WeaponMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WeaponMenuActions set) { return set.Get(); }
+        public void AddCallbacks(IWeaponMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_WeaponMenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_WeaponMenuActionsCallbackInterfaces.Add(instance);
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
             @HelpButton.started += instance.OnHelpButton;
             @HelpButton.performed += instance.OnHelpButton;
             @HelpButton.canceled += instance.OnHelpButton;
-            @UIButtonX.started += instance.OnUIButtonX;
-            @UIButtonX.performed += instance.OnUIButtonX;
-            @UIButtonX.canceled += instance.OnUIButtonX;
             @SwitchMenuLeft.started += instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.performed += instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.canceled += instance.OnSwitchMenuLeft;
@@ -2796,22 +4064,25 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @WeaponPreviewMovement.started += instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.performed += instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.canceled += instance.OnWeaponPreviewMovement;
+            @AnyGamepad.started += instance.OnAnyGamepad;
+            @AnyGamepad.performed += instance.OnAnyGamepad;
+            @AnyGamepad.canceled += instance.OnAnyGamepad;
+            @FocusComponentsWindow.started += instance.OnFocusComponentsWindow;
+            @FocusComponentsWindow.performed += instance.OnFocusComponentsWindow;
+            @FocusComponentsWindow.canceled += instance.OnFocusComponentsWindow;
+            @FocusEvolutionsWindow.started += instance.OnFocusEvolutionsWindow;
+            @FocusEvolutionsWindow.performed += instance.OnFocusEvolutionsWindow;
+            @FocusEvolutionsWindow.canceled += instance.OnFocusEvolutionsWindow;
         }
 
-        private void UnregisterCallbacks(IPauseMenuActions instance)
+        private void UnregisterCallbacks(IWeaponMenuActions instance)
         {
-            @DialogueContinue.started -= instance.OnDialogueContinue;
-            @DialogueContinue.performed -= instance.OnDialogueContinue;
-            @DialogueContinue.canceled -= instance.OnDialogueContinue;
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
             @HelpButton.started -= instance.OnHelpButton;
             @HelpButton.performed -= instance.OnHelpButton;
             @HelpButton.canceled -= instance.OnHelpButton;
-            @UIButtonX.started -= instance.OnUIButtonX;
-            @UIButtonX.performed -= instance.OnUIButtonX;
-            @UIButtonX.canceled -= instance.OnUIButtonX;
             @SwitchMenuLeft.started -= instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.performed -= instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.canceled -= instance.OnSwitchMenuLeft;
@@ -2833,23 +4104,220 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @WeaponPreviewMovement.started -= instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.performed -= instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.canceled -= instance.OnWeaponPreviewMovement;
+            @AnyGamepad.started -= instance.OnAnyGamepad;
+            @AnyGamepad.performed -= instance.OnAnyGamepad;
+            @AnyGamepad.canceled -= instance.OnAnyGamepad;
+            @FocusComponentsWindow.started -= instance.OnFocusComponentsWindow;
+            @FocusComponentsWindow.performed -= instance.OnFocusComponentsWindow;
+            @FocusComponentsWindow.canceled -= instance.OnFocusComponentsWindow;
+            @FocusEvolutionsWindow.started -= instance.OnFocusEvolutionsWindow;
+            @FocusEvolutionsWindow.performed -= instance.OnFocusEvolutionsWindow;
+            @FocusEvolutionsWindow.canceled -= instance.OnFocusEvolutionsWindow;
         }
 
-        public void RemoveCallbacks(IPauseMenuActions instance)
+        public void RemoveCallbacks(IWeaponMenuActions instance)
         {
-            if (m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_WeaponMenuActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPauseMenuActions instance)
+        public void SetCallbacks(IWeaponMenuActions instance)
         {
-            foreach (var item in m_Wrapper.m_PauseMenuActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_WeaponMenuActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_WeaponMenuActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
+    public WeaponMenuActions @WeaponMenu => new WeaponMenuActions(this);
+
+    // InventoryMenu
+    private readonly InputActionMap m_InventoryMenu;
+    private List<IInventoryMenuActions> m_InventoryMenuActionsCallbackInterfaces = new List<IInventoryMenuActions>();
+    private readonly InputAction m_InventoryMenu_PauseButton;
+    private readonly InputAction m_InventoryMenu_HelpButton;
+    private readonly InputAction m_InventoryMenu_QuickslotButtonGamepad;
+    private readonly InputAction m_InventoryMenu_QuickslotButton1;
+    private readonly InputAction m_InventoryMenu_QuickslotButton2;
+    private readonly InputAction m_InventoryMenu_QuickslotButton3;
+    private readonly InputAction m_InventoryMenu_QuickslotButton4;
+    private readonly InputAction m_InventoryMenu_UseButton;
+    private readonly InputAction m_InventoryMenu_AnyGamepad;
+    public struct InventoryMenuActions
+    {
+        private @PlayerControls m_Wrapper;
+        public InventoryMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PauseButton => m_Wrapper.m_InventoryMenu_PauseButton;
+        public InputAction @HelpButton => m_Wrapper.m_InventoryMenu_HelpButton;
+        public InputAction @QuickslotButtonGamepad => m_Wrapper.m_InventoryMenu_QuickslotButtonGamepad;
+        public InputAction @QuickslotButton1 => m_Wrapper.m_InventoryMenu_QuickslotButton1;
+        public InputAction @QuickslotButton2 => m_Wrapper.m_InventoryMenu_QuickslotButton2;
+        public InputAction @QuickslotButton3 => m_Wrapper.m_InventoryMenu_QuickslotButton3;
+        public InputAction @QuickslotButton4 => m_Wrapper.m_InventoryMenu_QuickslotButton4;
+        public InputAction @UseButton => m_Wrapper.m_InventoryMenu_UseButton;
+        public InputAction @AnyGamepad => m_Wrapper.m_InventoryMenu_AnyGamepad;
+        public InputActionMap Get() { return m_Wrapper.m_InventoryMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InventoryMenuActions set) { return set.Get(); }
+        public void AddCallbacks(IInventoryMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_InventoryMenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_InventoryMenuActionsCallbackInterfaces.Add(instance);
+            @PauseButton.started += instance.OnPauseButton;
+            @PauseButton.performed += instance.OnPauseButton;
+            @PauseButton.canceled += instance.OnPauseButton;
+            @HelpButton.started += instance.OnHelpButton;
+            @HelpButton.performed += instance.OnHelpButton;
+            @HelpButton.canceled += instance.OnHelpButton;
+            @QuickslotButtonGamepad.started += instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.performed += instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.canceled += instance.OnQuickslotButtonGamepad;
+            @QuickslotButton1.started += instance.OnQuickslotButton1;
+            @QuickslotButton1.performed += instance.OnQuickslotButton1;
+            @QuickslotButton1.canceled += instance.OnQuickslotButton1;
+            @QuickslotButton2.started += instance.OnQuickslotButton2;
+            @QuickslotButton2.performed += instance.OnQuickslotButton2;
+            @QuickslotButton2.canceled += instance.OnQuickslotButton2;
+            @QuickslotButton3.started += instance.OnQuickslotButton3;
+            @QuickslotButton3.performed += instance.OnQuickslotButton3;
+            @QuickslotButton3.canceled += instance.OnQuickslotButton3;
+            @QuickslotButton4.started += instance.OnQuickslotButton4;
+            @QuickslotButton4.performed += instance.OnQuickslotButton4;
+            @QuickslotButton4.canceled += instance.OnQuickslotButton4;
+            @UseButton.started += instance.OnUseButton;
+            @UseButton.performed += instance.OnUseButton;
+            @UseButton.canceled += instance.OnUseButton;
+            @AnyGamepad.started += instance.OnAnyGamepad;
+            @AnyGamepad.performed += instance.OnAnyGamepad;
+            @AnyGamepad.canceled += instance.OnAnyGamepad;
+        }
+
+        private void UnregisterCallbacks(IInventoryMenuActions instance)
+        {
+            @PauseButton.started -= instance.OnPauseButton;
+            @PauseButton.performed -= instance.OnPauseButton;
+            @PauseButton.canceled -= instance.OnPauseButton;
+            @HelpButton.started -= instance.OnHelpButton;
+            @HelpButton.performed -= instance.OnHelpButton;
+            @HelpButton.canceled -= instance.OnHelpButton;
+            @QuickslotButtonGamepad.started -= instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.performed -= instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.canceled -= instance.OnQuickslotButtonGamepad;
+            @QuickslotButton1.started -= instance.OnQuickslotButton1;
+            @QuickslotButton1.performed -= instance.OnQuickslotButton1;
+            @QuickslotButton1.canceled -= instance.OnQuickslotButton1;
+            @QuickslotButton2.started -= instance.OnQuickslotButton2;
+            @QuickslotButton2.performed -= instance.OnQuickslotButton2;
+            @QuickslotButton2.canceled -= instance.OnQuickslotButton2;
+            @QuickslotButton3.started -= instance.OnQuickslotButton3;
+            @QuickslotButton3.performed -= instance.OnQuickslotButton3;
+            @QuickslotButton3.canceled -= instance.OnQuickslotButton3;
+            @QuickslotButton4.started -= instance.OnQuickslotButton4;
+            @QuickslotButton4.performed -= instance.OnQuickslotButton4;
+            @QuickslotButton4.canceled -= instance.OnQuickslotButton4;
+            @UseButton.started -= instance.OnUseButton;
+            @UseButton.performed -= instance.OnUseButton;
+            @UseButton.canceled -= instance.OnUseButton;
+            @AnyGamepad.started -= instance.OnAnyGamepad;
+            @AnyGamepad.performed -= instance.OnAnyGamepad;
+            @AnyGamepad.canceled -= instance.OnAnyGamepad;
+        }
+
+        public void RemoveCallbacks(IInventoryMenuActions instance)
+        {
+            if (m_Wrapper.m_InventoryMenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IInventoryMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_InventoryMenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_InventoryMenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public InventoryMenuActions @InventoryMenu => new InventoryMenuActions(this);
+
+    // OptionsMenu
+    private readonly InputActionMap m_OptionsMenu;
+    private List<IOptionsMenuActions> m_OptionsMenuActionsCallbackInterfaces = new List<IOptionsMenuActions>();
+    private readonly InputAction m_OptionsMenu_SwitchMenuLeft;
+    private readonly InputAction m_OptionsMenu_SwitchMenuRight;
+    private readonly InputAction m_OptionsMenu_AnyGamepad;
+    private readonly InputAction m_OptionsMenu_ExitMenu;
+    private readonly InputAction m_OptionsMenu_SaveSettings;
+    public struct OptionsMenuActions
+    {
+        private @PlayerControls m_Wrapper;
+        public OptionsMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SwitchMenuLeft => m_Wrapper.m_OptionsMenu_SwitchMenuLeft;
+        public InputAction @SwitchMenuRight => m_Wrapper.m_OptionsMenu_SwitchMenuRight;
+        public InputAction @AnyGamepad => m_Wrapper.m_OptionsMenu_AnyGamepad;
+        public InputAction @ExitMenu => m_Wrapper.m_OptionsMenu_ExitMenu;
+        public InputAction @SaveSettings => m_Wrapper.m_OptionsMenu_SaveSettings;
+        public InputActionMap Get() { return m_Wrapper.m_OptionsMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(OptionsMenuActions set) { return set.Get(); }
+        public void AddCallbacks(IOptionsMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_OptionsMenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_OptionsMenuActionsCallbackInterfaces.Add(instance);
+            @SwitchMenuLeft.started += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed += instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled += instance.OnSwitchMenuLeft;
+            @SwitchMenuRight.started += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed += instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled += instance.OnSwitchMenuRight;
+            @AnyGamepad.started += instance.OnAnyGamepad;
+            @AnyGamepad.performed += instance.OnAnyGamepad;
+            @AnyGamepad.canceled += instance.OnAnyGamepad;
+            @ExitMenu.started += instance.OnExitMenu;
+            @ExitMenu.performed += instance.OnExitMenu;
+            @ExitMenu.canceled += instance.OnExitMenu;
+            @SaveSettings.started += instance.OnSaveSettings;
+            @SaveSettings.performed += instance.OnSaveSettings;
+            @SaveSettings.canceled += instance.OnSaveSettings;
+        }
+
+        private void UnregisterCallbacks(IOptionsMenuActions instance)
+        {
+            @SwitchMenuLeft.started -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.performed -= instance.OnSwitchMenuLeft;
+            @SwitchMenuLeft.canceled -= instance.OnSwitchMenuLeft;
+            @SwitchMenuRight.started -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.performed -= instance.OnSwitchMenuRight;
+            @SwitchMenuRight.canceled -= instance.OnSwitchMenuRight;
+            @AnyGamepad.started -= instance.OnAnyGamepad;
+            @AnyGamepad.performed -= instance.OnAnyGamepad;
+            @AnyGamepad.canceled -= instance.OnAnyGamepad;
+            @ExitMenu.started -= instance.OnExitMenu;
+            @ExitMenu.performed -= instance.OnExitMenu;
+            @ExitMenu.canceled -= instance.OnExitMenu;
+            @SaveSettings.started -= instance.OnSaveSettings;
+            @SaveSettings.performed -= instance.OnSaveSettings;
+            @SaveSettings.canceled -= instance.OnSaveSettings;
+        }
+
+        public void RemoveCallbacks(IOptionsMenuActions instance)
+        {
+            if (m_Wrapper.m_OptionsMenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IOptionsMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_OptionsMenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_OptionsMenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public OptionsMenuActions @OptionsMenu => new OptionsMenuActions(this);
 
     // UINavigation
     private readonly InputActionMap m_UINavigation;
@@ -3038,10 +4506,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     }
     public interface IPauseMenuActions
     {
-        void OnDialogueContinue(InputAction.CallbackContext context);
+        void OnPauseButton(InputAction.CallbackContext context);
+        void OnUIButtonX(InputAction.CallbackContext context);
+        void OnSwitchMenuLeft(InputAction.CallbackContext context);
+        void OnSwitchMenuRight(InputAction.CallbackContext context);
+        void OnAnyGamepad(InputAction.CallbackContext context);
+        void OnExitMenu(InputAction.CallbackContext context);
+    }
+    public interface IWeaponMenuActions
+    {
         void OnPauseButton(InputAction.CallbackContext context);
         void OnHelpButton(InputAction.CallbackContext context);
-        void OnUIButtonX(InputAction.CallbackContext context);
         void OnSwitchMenuLeft(InputAction.CallbackContext context);
         void OnSwitchMenuRight(InputAction.CallbackContext context);
         void OnSwitchWeaponUp(InputAction.CallbackContext context);
@@ -3049,6 +4524,29 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnEquipWeapon(InputAction.CallbackContext context);
         void OnBreakdownWeapon(InputAction.CallbackContext context);
         void OnWeaponPreviewMovement(InputAction.CallbackContext context);
+        void OnAnyGamepad(InputAction.CallbackContext context);
+        void OnFocusComponentsWindow(InputAction.CallbackContext context);
+        void OnFocusEvolutionsWindow(InputAction.CallbackContext context);
+    }
+    public interface IInventoryMenuActions
+    {
+        void OnPauseButton(InputAction.CallbackContext context);
+        void OnHelpButton(InputAction.CallbackContext context);
+        void OnQuickslotButtonGamepad(InputAction.CallbackContext context);
+        void OnQuickslotButton1(InputAction.CallbackContext context);
+        void OnQuickslotButton2(InputAction.CallbackContext context);
+        void OnQuickslotButton3(InputAction.CallbackContext context);
+        void OnQuickslotButton4(InputAction.CallbackContext context);
+        void OnUseButton(InputAction.CallbackContext context);
+        void OnAnyGamepad(InputAction.CallbackContext context);
+    }
+    public interface IOptionsMenuActions
+    {
+        void OnSwitchMenuLeft(InputAction.CallbackContext context);
+        void OnSwitchMenuRight(InputAction.CallbackContext context);
+        void OnAnyGamepad(InputAction.CallbackContext context);
+        void OnExitMenu(InputAction.CallbackContext context);
+        void OnSaveSettings(InputAction.CallbackContext context);
     }
     public interface IUINavigationActions
     {

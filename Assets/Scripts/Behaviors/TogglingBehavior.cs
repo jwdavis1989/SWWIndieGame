@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class TogglingBehavior : MonoBehaviour
 {
@@ -25,5 +26,15 @@ public class TogglingBehavior : MonoBehaviour
         foreach(GameObject go in gameObjects)
             go.SetActive(value);
         return gameObjects;
+    }
+    public void ToggleOn()
+    {
+        foreach (GameObject go in gameObjects)
+            go.SetActive(true);
+    }
+    public void ToggleOff()
+    {
+        foreach (GameObject go in gameObjects)
+            go.SetActive(false);
     }
 }

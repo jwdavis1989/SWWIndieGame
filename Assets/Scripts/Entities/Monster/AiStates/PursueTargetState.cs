@@ -20,7 +20,7 @@ public class PursueTargetState : AIState
         }
 
         //Make sure our navmesh is active. if not, then enable it
-        if(!aiCharacter.navMeshAgent.enabled) {
+        if(aiCharacter.navMeshAgent && !aiCharacter.navMeshAgent.enabled) {
             aiCharacter.navMeshAgent.enabled = true;
         }
 
@@ -32,27 +32,30 @@ public class PursueTargetState : AIState
 
         aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
 
-        //If we are in combat range of the target, switch to Combat Stance State
-        //Option 01
-        // if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.combatStanceState.maximumEngagementDistance) {
-        //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
-        // }
+    if (aiCharacter.navMeshAgent)
+        {
+            //If we are in combat range of the target, switch to Combat Stance State
+            //Option 01
+            // if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.combatStanceState.maximumEngagementDistance) {
+            //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+            // }
 
-        //Option 02 - Only use for melee enemies, will use a different approach for ranged enemies
-        if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
-            return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+            //Option 02 - Only use for melee enemies, will use a different approach for ranged enemies
+            if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
+                return SwitchState(aiCharacter, aiCharacter.combatStanceState);
+            }
+
+            //if target is not reachable/far return home
+
+            //Pursue the Target
+            //Option 1: Better performance, Asynchronous, might not always work
+            //aiCharacter.navMeshAgent.SetDestination(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position);
+
+            //Option 2: Worse Performance, guaranteed to work, tutorial cites ~60 characters using it simultaneously with no noticible performance drop
+            NavMeshPath path = new NavMeshPath();
+            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+            aiCharacter.navMeshAgent.SetPath(path);
         }
-
-        //if target is not reachable/far return home
-
-        //Pursue the Target
-        //Option 1: Better performance, Asynchronous, might not always work
-        //aiCharacter.navMeshAgent.SetDestination(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position);
-
-        //Option 2: Worse Performance, guaranteed to work, tutorial cites ~60 characters using it simultaneously with no noticible performance drop
-        NavMeshPath path = new NavMeshPath();
-        aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
-        aiCharacter.navMeshAgent.SetPath(path);
 
         return this;
     }

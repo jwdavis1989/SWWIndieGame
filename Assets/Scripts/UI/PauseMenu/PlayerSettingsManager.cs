@@ -41,6 +41,7 @@ public class PlayerSettingsManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             playerSettings = JsonUtility.FromJson<PlayerSettings>(json);
             PlayerCamera.instance.isCameraInverted = playerSettings.inverted;
+            WorldMusicController.instance.GetComponent<AudioSource>().volume = playerSettings.musicVolume;
         }
         else
         {
@@ -59,7 +60,7 @@ public class PlayerSettingsManager : MonoBehaviour
 [Serializable] public class PlayerSettings
 {
     public bool inverted = true;//default to wrong
-    public float volume;
+    public float musicVolume;
     public float brightness;
     public bool gamepad;//otherwise KB&M
 }

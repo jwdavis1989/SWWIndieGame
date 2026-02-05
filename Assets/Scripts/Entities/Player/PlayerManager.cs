@@ -19,6 +19,7 @@ public class PlayerManager : CharacterManager
 
     public GameObject flashlight;
     public GameObject cameraflashlight;
+    public GameObject capeSystem;
     [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
 
     [Header("Debug Menu")]
@@ -173,8 +174,8 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
         //Load TinkerComponents
-        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedComponents);
-        TinkerComponentManager.instance.LoadSaveData(currentCharacterData.ownedWpnComponents, true);
+        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
+        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
         //Ideas
@@ -398,6 +399,24 @@ public class PlayerManager : CharacterManager
     public override void ResetGunTransformBools()
     {
         PlayerWeaponManager.instance.GetOffHand().ResetGunTransformBools();
+    }
+
+    public void EnableCapeSystem()
+    {
+        capeSystem.SetActive(true);
+    }
+
+    public void DisableCapeSystem()
+    {
+        capeSystem.SetActive(false);
+    }
+
+    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f)
+    {
+        DisableCapeSystem();
+        transform.position = new Vector3(destinationX, destinationY, destinationZ);
+        SceneManager.LoadSceneAsync(sceneID);
+        EnableCapeSystem();
     }
 
 }

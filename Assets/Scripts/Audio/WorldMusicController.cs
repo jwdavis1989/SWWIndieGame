@@ -12,12 +12,13 @@ public class WorldMusicController : MonoBehaviour
     public AudioClip titleScreenTheme01;
     public AudioClip dungeonTheme01;
     public AudioClip overworldTheme01;
+    public AudioClip mesaCityTheme01;
 
     // Start is called before the first frame update
     void Start() {
         audioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
-        PlayAdvancedMusic(titleScreenTheme01, 0.25f); 
+        PlayTitleScreenMusic();
     }
 
     private void OnEnable() {
@@ -32,20 +33,28 @@ public class WorldMusicController : MonoBehaviour
         }
     }
 
+    private void PlayTitleScreenMusic()
+    {
+        PlayAdvancedMusic(titleScreenTheme01, 0.8f, 1f, true, false, 0.1f, false, 5f); 
+    }
+
     private void OnDestroy() {
         //If we destroy this object, we unsubcribe from this event
         //This is to do with subscribing and might require research
         SceneManager.activeSceneChanged -= OnSceneChange;
     }
 
-    public void PlayAdvancedMusic(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool loop = true, bool randomizePitch = false, float pitchRandomRange = 0.1f, bool canOverlap = false) {
+    public void PlayAdvancedMusic(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool loop = true, bool randomizePitch = false, 
+    float pitchRandomRange = 0.1f, bool canOverlap = false, float TrimBeginningInSeconds = 0f) {
         //Avoids duplicate sounds playing over each other, unless canOverlap is true
         if (audioSource != null && (canOverlap || audioSource.clip != soundFX)) {
             //Modify AudioSource by Parameters
             audioSource.clip = soundFX;
             audioSource.loop = loop;
-            audioSource.volume = volume;
+            //audioSource.volume = volume;
+            audioSource.volume = PlayerSettingsManager.instance.playerSettings.musicVolume;
             audioSource.pitch = pitch;
+            audioSource.time = TrimBeginningInSeconds;
 
             //Set Randomized Pitch if setting enabled
             if (randomizePitch) {
@@ -61,13 +70,16 @@ public class WorldMusicController : MonoBehaviour
         switch (newScene.name)
         {
             case "TitleScreen":
-                PlayAdvancedMusic(titleScreenTheme01, 0.15f); 
+                PlayTitleScreenMusic();
                 return;
             case "JerryDev":
                 PlayAdvancedMusic(dungeonTheme01, 0.05f); 
                 return;
             case "AlecDev":
-                PlayAdvancedMusic(overworldTheme01); 
+                PlayAdvancedMusic(overworldTheme01, 1f); 
+                return;  
+            case "MesaDev":
+                PlayAdvancedMusic(mesaCityTheme01); 
                 return;  
             default: 
                 return;

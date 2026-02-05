@@ -10,6 +10,9 @@ public class LightAttackWeaponItemAction : WeaponItemAction
     [SerializeField] string light_attack_02 = "Main_Hand_Light_Attack_02";
     [SerializeField] string light_attack_03 = "Main_Hand_Light_Attack_03";
 
+    [Header("Heavy Attacks (For Combo Mixing)")]
+    [SerializeField] string heavy_attack_01 = "Main_Hand_Heavy_Attack_01";
+
     [Header("Running Attacks")]
     [SerializeField] string running_light_attack_01 = "Main_Light_Run_Attack_01";
 
@@ -83,7 +86,8 @@ public class LightAttackWeaponItemAction : WeaponItemAction
             {
                 characterPerformingAction.characterAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack02, light_attack_02, true);
             }
-            else if (characterPerformingAction.characterCombatManager.lastAttackAnimationPerformed == light_attack_02)
+            else if (characterPerformingAction.characterCombatManager.lastAttackAnimationPerformed == light_attack_02 ||
+                characterPerformingAction.characterCombatManager.lastAttackAnimationPerformed == heavy_attack_01)
             {
                 characterPerformingAction.characterAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack03, light_attack_03, true);
             }

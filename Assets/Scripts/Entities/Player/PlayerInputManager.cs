@@ -183,32 +183,27 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
             playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i =>
             {
-                SceneManager.LoadSceneAsync(1);
+                player.TeleportPlayerToSceneAndCoordinates(1, 0, 0, 112);              //JerryDev test dungeon
             });
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i =>
             {
-                player.transform.position = new Vector3(0, 140, 0);
-                SceneManager.LoadSceneAsync(2);// AlecDev - 7/19/25: this is tower in ocean
+                player.TeleportPlayerToSceneAndCoordinates(2, 0, 140, 0);
             });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i =>
             {
-                player.transform.position = new Vector3(0, 20, 0);
-                SceneManager.LoadSceneAsync(3); // MesaDev - 7/19/25: Western Town Mesa Ocean
+                player.TeleportPlayerToSceneAndCoordinates(3, 0, 10, 0);    // MesaDev - 7/19/25: Western Town Mesa Ocean
             });
             playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i =>
             {
-                player.transform.position = new Vector3(0, 9, 0);
-                SceneManager.LoadSceneAsync(4);
+                player.TeleportPlayerToSceneAndCoordinates(4, 0, 9, 0);
             });
             playerControls.PlayerActions.DebugTeleportToAlecDev2.performed += (i =>
             {
-                player.transform.position = new Vector3(-50, 21, -80);
-                SceneManager.LoadSceneAsync(5);// AlecDev - 7/19/25: this is a grassy pirate island
+                player.TeleportPlayerToSceneAndCoordinates(5, -50, 21, -80);  // AlecDev - 7/19/25: this is a grassy pirate island
             });
             playerControls.PlayerActions.DebugTeleportToAlecDevDungeon.performed += (i =>
             {
-                player.transform.position = new Vector3(0, 0, 0);
-                SceneManager.LoadSceneAsync(6);// AlecDev - 7/19/25: this is a alec dev dungeon
+                player.TeleportPlayerToSceneAndCoordinates(6);  // AlecDev - 7/19/25: this is a alec dev dungeon
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
@@ -288,19 +283,6 @@ public class PlayerInputManager : MonoBehaviour
 
         }
     }
-    ////Interact Button during dialogue box
-    //void HandleDialogueContineuButton()
-    //{
-    //    //if they press the button during a dialogue
-    //    if (dialogueContinueInput)// [LMB], [E], (X)
-    //    {
-    //        dialogueContinueInput = false;
-    //        if (DialogueManager.IsInDialogue())
-    //        {
-    //            DialogueManager.instance.DialogueBoxContinue();
-    //        }
-    //    }
-    //}
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
@@ -310,30 +292,24 @@ public class PlayerInputManager : MonoBehaviour
             if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
                 return; //dont use on title screen
 
-            //currently have camera here. Not sure if it gets it's own button or is an item
-            IdeaCameraController.instance.ActivateDeactiveCameraView();
+            //WIP TODO switch quickslot
+            Inventory playerInventory = GetComponent<Inventory>();
+            if(playerInventory != null && playerInventory.quickSlotItems[1] != null)
+            {
+                string itemKey = playerInventory.quickSlotItems[1];
+                UsableItem usableItem = playerInventory.items[itemKey].GetComponent<UsableItem>();
+                if (usableItem != null)
+                {
+                    usableItem.Use(player.gameObject);
+                }
+            }
+            else
+            {
+                //currently have camera here. TODO make into an item
+                IdeaCameraController.instance.ActivateDeactiveCameraView();
+            }
         }
     }
-    //Pause button
-    //void HandlePauseInput()
-    //{
-    //    if (pauseInput) // [Esc], (Start/Menu)
-    //    {
-    //        pauseInput = false;
-    //        PauseScript.instance.PauseUnpause();
-    //    }
-    //}
-
-    //Idea Capture button
-    //void HandleCapturePhotoInput()
-    //{
-    //    if (capturePhotoInput) // [Space], (X)
-    //    {
-    //        capturePhotoInput = false;
-    //        IdeaCameraController.instance.TakeScreenshotInput();
-    //    }
-    //}
-
 
     //Movement
     private void HandleMovementInput()
@@ -394,14 +370,17 @@ public class PlayerInputManager : MonoBehaviour
             //{
             //    PlayerWeaponManager.instance.nextWeapon();
             //}
-            if (mouseWheelVerticalInput == 1)
+            if (!PauseScript.instance.gamePaused)
             {
-                PlayerWeaponManager.instance.NextWeapon();
+                if (mouseWheelVerticalInput == 1)
+                {
+                    PlayerWeaponManager.instance.NextWeapon();
 
-            }
-            else if (mouseWheelVerticalInput == -1)
-            {
-                PlayerWeaponManager.instance.nextSpecialWeapon();
+                }
+                else if (mouseWheelVerticalInput == -1)
+                {
+                    PlayerWeaponManager.instance.nextSpecialWeapon();
+                }
             }
             prevMouseWheelVerticalInput = mouseWheelVerticalInput;
         }
@@ -871,6 +850,20 @@ public class PlayerInputManager : MonoBehaviour
                 queueInputTimer = 0f;
             }
         }
+    }
+
+    //seems to avoid certain input error compared to PlayerControls.Disable
+    public void SafeDisable()
+    {
+        playerControls.PlayerActions.Disable();
+        playerControls.PlayerCamera.Disable();
+        playerControls.PlayerMovement.Disable(); 
+    }
+    public void SafeEnable()
+    {
+        playerControls.PlayerActions.Enable();
+        playerControls.PlayerCamera.Enable();
+        playerControls.PlayerMovement.Enable();
     }
 
 }
