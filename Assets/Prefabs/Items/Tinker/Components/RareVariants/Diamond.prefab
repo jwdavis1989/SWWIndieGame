@@ -9,6 +9,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3498906361258301351, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
+      propertyPath: m_Size.x
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498906361258301351, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
+      propertyPath: m_Size.y
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 3498906361258301351, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: e3cb0f3bde67ef94588502af690342ba, type: 3}
@@ -73,6 +81,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: e3cb0f3bde67ef94588502af690342ba, type: 3}
     - target: {fileID: 6109603862540192664, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
+      propertyPath: itemId
+      value: diamond
+      objectReference: {fileID: 0}
+    - target: {fileID: 6109603862540192664, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: itemName
       value: Diamond
       objectReference: {fileID: 0}
@@ -86,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6109603862540192664, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: stats.count
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6109603862540192664, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: stats.attack

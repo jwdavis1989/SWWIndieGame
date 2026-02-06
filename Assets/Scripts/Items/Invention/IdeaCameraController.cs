@@ -162,13 +162,13 @@ public class IdeaCameraController : MonoBehaviour
             //Play Steve audio - Negative
             WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipNegative));
         }
-        else if (InventionManager.instance.CheckHasIdea(idea.type))
-        {
+        else if (InventionManager.instance.CheckHasIdea(idea.ideaId))
+        { 
             ideaPhotoText.text = "Idea " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
             previewControlsText.text += "\n<s> Replace Photo - [Enter] / (A)</s>";
             oldPhotoFrame.SetActive(true);
-            byte[] bytes = InventionManager.instance.GetIdeaPicture(idea.type);
+            byte[] bytes = InventionManager.instance.GetIdeaPicture(idea.ideaId);
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             oldPhoto.GetComponent<RawImage>().texture = texture;
@@ -176,12 +176,12 @@ public class IdeaCameraController : MonoBehaviour
             //Play Steve audio - Scan
             WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipScan));
         }
-        else
+        else 
         {
-            InventionManager.instance.SetHasIdea(idea.type);
+            InventionManager.instance.SetHasIdea(idea);
             ideaPhotoText.text = "New idea! - " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
-            ReplacePhoto(idea.type);
+            ReplacePhoto(idea.ideaId);
             oldPhotoFrame.SetActive(false);
 
             //Play Steve audio - Affirmative
@@ -228,14 +228,14 @@ public class IdeaCameraController : MonoBehaviour
         yield return null;
     }
 
-    public void ReplacePhoto(IdeaType idea)
+    public void ReplacePhoto(string ideaID)
     {
         //if (System.IO.File.Exists(lastCaptureFilepath))
         if (lastCapturePng != null)
         {
             //load last picture
             //byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
-            InventionManager.instance.SetIdeaPicture(lastCapturePng, idea);
+            InventionManager.instance.SetIdeaPicture(lastCapturePng, ideaID);
             //save
             //string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
             //TODO - Only save locally on object then do this code as part of save/load system...

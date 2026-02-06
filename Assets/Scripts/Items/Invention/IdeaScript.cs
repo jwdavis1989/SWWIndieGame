@@ -7,6 +7,7 @@ public class IdeaScript : MonoBehaviour
     [Header("IdeaScript is used to mark an object as an Idea")]
     public IdeaType type;
     public bool hasObtained;
+    public string ideaId;
     /** Returns type as string with spaces added between captial letters. I.E. */
     public override string ToString()
     {

@@ -13,8 +13,7 @@ public class DialogueConditions : MonoBehaviour
     }
     public void CheckFirstInvention()
     {
-        foreach(InventionScript invention in InventionManager.instance.allInventions)
-        {
+        foreach(InventionData invention in InventionManager.instance.inventionDatabase.inventions) { 
             if (invention.hasObtained)
             {
                 canSeeDialogue=true;
@@ -24,7 +23,7 @@ public class DialogueConditions : MonoBehaviour
     }
     public void CheckFirstIdea()
     {
-        canSeeDialogue = InventionManager.instance.CheckHasIdea(IdeaType.MetalPlating);
+        canSeeDialogue = InventionManager.instance.CheckHasIdea(IdeaID.METAL_PLATING);
     }
     public void CheckHasNotOpenedInventMenu()
     {
