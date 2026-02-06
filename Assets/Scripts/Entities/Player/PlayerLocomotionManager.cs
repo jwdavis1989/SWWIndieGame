@@ -16,6 +16,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public GameObject backBoosters;
     public GameObject airDashBoosters;
     public GameObject boosterIgnitionVFX;
+    public GameObject shoulderMeteorBoosters;
+    public GameObject descentMeteorBoosters;
 
 
     [HideInInspector] public CharacterManager characterManager;
@@ -560,6 +562,22 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             boosterIgnitionVFX.SetActive(false);
         }
+    }
+
+    public void EnableMeteorBoosters()
+    {
+        shoulderMeteorBoosters.SetActive(true);
+        descentMeteorBoosters.SetActive(true);
+    }
+
+    public void DisableMeteorBoosters()
+    {
+        shoulderMeteorBoosters.SetActive(false);
+    }
+
+    public void DisableMeteorDescentBoosters()
+    {
+        descentMeteorBoosters.SetActive(false);
     }
 
 }

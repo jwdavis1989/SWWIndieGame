@@ -208,7 +208,7 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.OpenJumpAttackDamageCollider();
     }
 
-    public void CallPlayJumpAttackImpactVFX()
+    public virtual void CallPlayJumpAttackImpactVFX()
     {
         characterWeaponManager.PlayJumpAttackImpactVFX();
     }
@@ -248,14 +248,14 @@ public class CharacterManager : MonoBehaviour
 
     public void SetShootingModelAlignment()
     {
-        characterModel.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(90, -31.784f, 0);
+        // characterModel.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
+        // miniMapSprite.transform.localRotation = Quaternion.Euler(90, -31.784f, 0);
     }
 
     public void ResetModelAlignment()
     {
-        characterModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(90, 0, 0);
+        // characterModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        // miniMapSprite.transform.localRotation = Quaternion.Euler(90, 0, 0);
     }
 
     public virtual void DisableRollerJointInvulnerable()
@@ -294,6 +294,21 @@ public class CharacterManager : MonoBehaviour
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
         //Update this if monsters use guns
+    }
+
+    public virtual void EnableMeteorBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableMeteorBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableMeteorDescentBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
 
 }
