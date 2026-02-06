@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class InventoryItem : MonoBehaviour
 {
-    public string itemName;
+    public string itemId;
     public int quantity = 0;
     public DateTime aquireTime;
 
@@ -40,15 +40,15 @@ public class InventoryItem : MonoBehaviour
         // make sure quantity is at least 1 when picking up
         quantity = (quantity > 0) ? quantity : 1;
 
-        if (inventory.items.ContainsKey(itemName))
+        if (inventory.items.ContainsKey(itemId))
         {   // update inventory quantity
-            inventory.items[itemName].quantity += quantity;
+            inventory.items[itemId].quantity += quantity;
             StartCoroutine(DestroyAfterDelay());
         }
         else
         {   // add item to inventory
             aquireTime = DateTime.UtcNow;
-            inventory.items.Add(itemName, this);
+            inventory.items.Add(itemId, this);
             StartCoroutine(HideAfterDelay());
         }
     }

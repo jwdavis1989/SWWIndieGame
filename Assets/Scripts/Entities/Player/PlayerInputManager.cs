@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -296,11 +293,19 @@ public class PlayerInputManager : MonoBehaviour
             Inventory playerInventory = player.GetComponent<Inventory>();
             if(playerInventory != null && playerInventory.quickSlotItems[1] != null)
             {
-                string itemKey = playerInventory.quickSlotItems[1];
-                UsableItem usableItem = playerInventory.items[itemKey].GetComponent<UsableItem>();
-                if (usableItem != null)
+                string itemId = playerInventory.GetQuickSlotItemId(1);
+                if(itemId != "" && playerInventory.items.ContainsKey(itemId))
                 {
-                    usableItem.Use(player.gameObject);
+                    UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
+                    if (usableItem != null)
+                    {
+                        usableItem.Use(player.gameObject);
+                    }
+                }
+                else
+                {
+                    //currently have camera here. TODO make into an item
+                    IdeaCameraController.instance.ActivateDeactiveCameraView();
                 }
             }
             else

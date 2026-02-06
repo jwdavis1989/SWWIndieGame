@@ -535,7 +535,7 @@ public class WeaponMenuManager : MonoBehaviour
     }
     //************************** W E A P O N   S C R O L L **************************
     /**
-     * This section controls the weapon scroll bar
+     * This section controls the weapon scroll bar TODO - Pretty sure this is not used anymore, Attempt removal
      */
     [Header("Weapon Box Scroll")]
     public Scrollbar wpnScroll;

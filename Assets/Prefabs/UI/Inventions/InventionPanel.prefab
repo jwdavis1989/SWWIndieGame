@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 12.2}
-  m_SizeDelta: {x: 48, y: 15}
+  m_AnchoredPosition: {x: 0, y: 25.7}
+  m_SizeDelta: {x: 50, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2613565089035610152
 CanvasRenderer:
@@ -65,10 +65,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: First Idea
+  m_text: 'Some Invention
+
+'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ac87f41251942154abc2290093fbe2b7, type: 2}
-  m_sharedMaterial: {fileID: -8934823125870259680, guid: ac87f41251942154abc2290093fbe2b7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8494a8ecd05e41245a6eefc0306c507c, type: 2}
+  m_sharedMaterial: {fileID: 3082326760865064208, guid: 8494a8ecd05e41245a6eefc0306c507c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -265,9 +267,8 @@ GameObject:
   - component: {fileID: 9179655027298694634}
   - component: {fileID: 7973385168782860366}
   - component: {fileID: 363476946722352474}
-  - component: {fileID: 750845288819707402}
   m_Layer: 5
-  m_Name: IdeaPanel
+  m_Name: InventionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,33 +323,6 @@ MonoBehaviour:
   mainButtonForeground: {fileID: 8097905993086355672}
   cornerButton: {fileID: 0}
   index: 0
---- !u!114 &750845288819707402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4250506066951269713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9622642, g: 0.8989357, b: 0.66723037, a: 0}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!1 &7569097312028847262
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,9 +334,9 @@ GameObject:
   - component: {fileID: 6216095524619656937}
   - component: {fileID: 4414608147852197522}
   - component: {fileID: 9042020346476843529}
-  - component: {fileID: 1175075378239433377}
+  - component: {fileID: 8231658462131203267}
   m_Layer: 5
-  m_Name: IdeaPanelBackground
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -385,7 +359,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 40}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4414608147852197522
 CanvasRenderer:
@@ -413,7 +387,7 @@ MonoBehaviour:
   mainButtonForeground: {fileID: 0}
   cornerButton: {fileID: 0}
   index: 0
---- !u!114 &1175075378239433377
+--- !u!114 &8231658462131203267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -422,24 +396,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 7569097312028847262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9622642, g: 0.8989357, b: 0.66723037, a: 1}
-  m_RaycastTarget: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+  m_Sprite: {fileID: 21300000, guid: ca33003b315366f4b9f45196379d6fa4, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8097905993086355672
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,7 +429,7 @@ GameObject:
   - component: {fileID: 4771658306721753307}
   - component: {fileID: 9130981189704922097}
   m_Layer: 5
-  m_Name: BtnForeground
+  m_Name: RawImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -474,8 +451,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2.7999866}
-  m_SizeDelta: {x: 75, y: 50}
+  m_AnchoredPosition: {x: 0, y: 0.1}
+  m_SizeDelta: {x: 64, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4771658306721753307
 CanvasRenderer:

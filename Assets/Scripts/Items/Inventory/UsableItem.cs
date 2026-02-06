@@ -16,11 +16,11 @@ public class UsableItem : InventoryItem
         player.GetComponent<PlayerEffectsManager>().ProcessInstantEffect(effect);
         if (consumable)
         {
-            Debug.Log("Using " + itemName);//astest
+            Debug.Log("Using " + itemId);//astest
             quantity--;
             if (quantity <= 0)
             {
-                player.GetComponent<Inventory>().items.Remove(itemName);
+                player.GetComponent<Inventory>().items.Remove(itemId);
                 Destroy(gameObject);
             }
         }

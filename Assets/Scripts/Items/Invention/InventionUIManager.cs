@@ -28,7 +28,8 @@ public class InventionUIManager : MonoBehaviour
     public GameObject outputText;
     [Header("Other assets")]
     public Texture questionMarkTexture;
-    public GameObject gridElementPrefab;
+    public GameObject ideaUIPrefab;
+    public GameObject inventionUIPrefab;
     //helpful references
     private PlayerManager player;
 
@@ -105,7 +106,7 @@ public class InventionUIManager : MonoBehaviour
             if (++displayedCount > maxDisplayed) break;
 
             //display an idea
-            Object gridElement = Instantiate(gridElementPrefab, ownedIdeasGrid.transform);
+            Object gridElement = Instantiate(ideaUIPrefab, ownedIdeasGrid.transform);
             GridElementController gridScript = gridElement.GetComponent<GridElementController>();
             IdeaType ideaType = (IdeaType)ideaIndex;
             string ideaName = GetIdeaString(ideaType);
@@ -199,22 +200,22 @@ public class InventionUIManager : MonoBehaviour
     {
         int activeIdea;
         GridElementController usedIdeaPanel;
-        if (thirdIdea.isActiveAndEnabled)
-            return;
+        if (thirdIdea.isActiveAndEnabled) 
+            return; // Can only use 3 ideas
         else if (secondIdea.isActiveAndEnabled)
-        {
+        { // place in 3rd spot
             activeIdea = 3;
             usedIdeaTypes[2] = ideaType;
             usedIdeaPanel = thirdIdea;
         }
         else if (firstIdea.isActiveAndEnabled)
-        {
+        { // place in 2nd spot
             activeIdea = 2;
             usedIdeaTypes[1] = ideaType;
             usedIdeaPanel = secondIdea;
         }
         else
-        {
+        { // place in 1st spot
             activeIdea = 1;
             usedIdeaTypes[0] = ideaType;
             usedIdeaPanel = firstIdea;
@@ -263,7 +264,7 @@ public class InventionUIManager : MonoBehaviour
             if (inventionScript.hasObtained)
             {
                 if (++displayedCount > maxDisplayed) break;
-                Object gridElement = Instantiate(gridElementPrefab, allInventionsGrid.transform);
+                Object gridElement = Instantiate(inventionUIPrefab, allInventionsGrid.transform);
                 GridElementController gridScript = gridElement.GetComponent<GridElementController>();
                 gridScript.topText.text = inventionScript.ToString();
                 if (inventionScript.icon != null)

@@ -15,7 +15,7 @@ public class InventionManager : MonoBehaviour
     public static InventionManager instance;
 
     [Header("All possible inventions")]
-    public InventionScript[] allInventions;
+    public InventionScript[] allInventions; // TODO REPLACE WITH SCRIPTABLE OBJECTS
     [Header("All current idea info")]
     public IdeaStats[] ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
 

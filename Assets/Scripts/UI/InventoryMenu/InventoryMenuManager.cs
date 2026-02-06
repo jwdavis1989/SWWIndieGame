@@ -193,7 +193,7 @@ public class InventoryMenuManager : MonoBehaviour
             UsableItem usableItem = playerInventory.GetItem(itemUI.itemId).GetComponent<UsableItem>();
             if (usableItem != null)
             {
-                playerInventory.quickSlotItems[quickslotIndex] = usableItem.itemName;
+                playerInventory.quickSlotItems[quickslotIndex] = usableItem.itemId;
                 LoadQuickslots();
             }
         }
