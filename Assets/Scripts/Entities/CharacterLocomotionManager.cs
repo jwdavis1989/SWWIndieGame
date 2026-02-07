@@ -132,22 +132,12 @@ public class CharacterLocomotionManager : MonoBehaviour
             }
             else
             {
-                //yVelocity.y = JumpAttackQuickFallSpeedModifier * fallStartYVelocity;
                 newFallDirection = PlayerCamera.instance.transform.forward * meteorStrikeHorizontalSpeedModifier;
                 newFallDirection.y = meteorStrikeVerticalSpeedModifier * fallStartYVelocity;
             }
 
             yVelocity = newFallDirection;
         }
-
-        //yVelocity.y = JumpAttackQuickFallSpeedModifier * fallStartYVelocity;
-
-        // if (!character.isGrounded)
-        // {
-        //     Vector3 newFallDirection = PlayerCamera.instance.transform.forward * meteorStrikeHorizontalSpeedModifier;
-        //     newFallDirection.y = meteorStrikeVerticalSpeedModifier * fallStartYVelocity;
-        //     yVelocity = newFallDirection;
-        // }
         
     }
     

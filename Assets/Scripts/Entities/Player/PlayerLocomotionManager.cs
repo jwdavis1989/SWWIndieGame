@@ -568,6 +568,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         shoulderMeteorBoosters.SetActive(true);
         descentMeteorBoosters.SetActive(true);
+        player.PauseClothPhysics();
     }
 
     public void DisableMeteorBoosters()
@@ -578,6 +579,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void DisableMeteorDescentBoosters()
     {
         descentMeteorBoosters.SetActive(false);
+        player.ResumeClothPhysics();
     }
 
 }
