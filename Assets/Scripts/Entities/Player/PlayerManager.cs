@@ -431,6 +431,7 @@ public class PlayerManager : CharacterManager
     public override void EnableMeteorBoosterVFX()
     {
         playerLocomotionManager.EnableMeteorBoosters();
+        playerLocomotionManager.JumpAttackQuickFall();
     }
 
     public override void DisableMeteorBoosterVFX()

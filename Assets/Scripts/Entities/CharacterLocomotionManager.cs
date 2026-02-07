@@ -123,7 +123,7 @@ public class CharacterLocomotionManager : MonoBehaviour
     {
         if (!character.isGrounded)
         {   
-            yVelocity *= JumpAttackQuickFallSpeedModifier;
+            yVelocity.y = JumpAttackQuickFallSpeedModifier * fallStartYVelocity;
         }
     }
     
