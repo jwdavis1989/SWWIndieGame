@@ -15,6 +15,7 @@ public class InventionManager : MonoBehaviour
     public static InventionManager instance;
     [Header("All possible inventions")]
     public InventionDatabase inventionDatabase;
+    public List<string> obtainedInventions;
     //public InventionScript[] allInventions; // TODO REPLACE WITH SCRIPTABLE OBJECTS
     [Header("current idea info")]
     public List<IdeaStats> ideas = new List<IdeaStats>();
@@ -50,40 +51,35 @@ public class InventionManager : MonoBehaviour
     //INVENTION
     public List<string> SaveInventions()
     {
-        //List<string> rv = new List<string>();
-        //foreach (var invention in inventionDatabase.inventions)
-        //{
-        //    if(invention.hasObtained)
-        //        rv.Add(invention.inventionId);
-        //}
-        return inventionDatabase.GetSaveData();
-        //bool[] rv = new bool[inventionDatabase.inventions.Count];
-        //for (int i = 0; i < inventionDatabase.inventions.Count; i++)
-        //{
-        //    rv[i] = inventionDatabase.inventions[i] != null && inventionDatabase.inventions[i].hasObtained;
-        //}
-        //return rv;
+        List<string> rv = new List<string>();
+        foreach (string inventionID in obtainedInventions)
+        {
+            rv.Add(inventionID);
+        }
+        return rv;
     }
     public void LoadInventions(List<string> inventions)
     {
         foreach (string invention in inventions)
         {
-            inventionDatabase.SetHasObtained(invention);
+            SetHasObtained(invention);
         }
     }
     /** returns true if the player has aquired the upgrade */
     public bool CheckHasUpgrade(string inventId)
     {
-        return inventionDatabase.GetInvention(inventId).hasObtained;
+        return obtainedInventions.Contains(inventId);
             //allInventions[(int)inventType].hasObtained;
     }
     /** flag that this invention type has been aquired */
-    public void SetHasUpgrade(string inventType)
-    {
-        inventionDatabase.SetHasObtained(inventType);
-        //allInventions[(int)inventType].hasObtained = true;
-    }
 
+    public void SetHasObtained(string inventionId)
+    {
+        if(obtainedInventions.Contains(inventionId))
+            Debug.Log("Aleady have " + inventionId);
+        else
+            obtainedInventions.Add(inventionId);
+    }
     /** returns image for idea type */
     public byte[] GetIdeaPicture(string ideaID)
     {
@@ -130,6 +126,7 @@ public class InventionManager : MonoBehaviour
         }
         IdeaStats ideaStats = new IdeaStats();
         ideaStats.ideaID = ideaScript.ideaId;
+        ideaStats.ideaName = ideaScript.ToString();//TODO replace with database?
         ideaStats.obtained = true;
         ideas.Add(ideaStats);
         //ideas[(int)type] = new IdeaStats();
@@ -180,7 +177,7 @@ public class InventionManager : MonoBehaviour
             if (invention.inventionId == newInvention.inventionId)
             {
                 Debug.Log("Invented " + invention.inventionId);//astest
-                invention.hasObtained = true;
+                //invention.hasObtained = true;
                 invention.createTime = DateTime.UtcNow;
                 HandleNewInventionType(newInvention.inventionId);
                 return;

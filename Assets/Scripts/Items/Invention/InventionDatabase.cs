@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Invention Database")]
 public class InventionDatabase : ScriptableObject
@@ -34,25 +35,24 @@ public class InventionDatabase : ScriptableObject
         inventionLookup.TryGetValue(inventionId, out var invention);
         return invention;
     }
-    public void SetHasObtained(string inventionId)
-    {
-        foreach (var invention in inventions)
-        {
-            if (invention.inventionId == inventionId)
-            {
-                invention.hasObtained = true;
-                GetInvention(inventionId).hasObtained = true;
-            }
-        }
-    }
-    public List<string> GetSaveData()
-    {
-        List<string> rv = new List<string>();
-        foreach (var invention in inventions)
-        {
-            if (invention.hasObtained)
-                rv.Add(invention.inventionId);
-        }
-        return rv;
-    }
+    private bool isRuntimeInstance;
+//    private void OnEnable()
+//    {
+//#if UNITY_EDITOR
+//        isRuntimeInstance = EditorApplication.isPlaying;
+//#endif
+//    }
+
+//    private void OnValidate()
+//    {
+//#if UNITY_EDITOR
+//        if (EditorApplication.isPlaying)
+//        {
+//            Debug.LogError(
+//                $"{name} was modified during Play Mode!",
+//                this
+//            );
+//        }
+//#endif
+//    }
 }

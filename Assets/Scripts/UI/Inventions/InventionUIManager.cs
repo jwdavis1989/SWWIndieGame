@@ -26,6 +26,10 @@ public class InventionUIManager : MonoBehaviour
     [Header("Input")]
     public GameObject inventButton;
     public EventSystem eventSystem;
+    GameObject currentCursorObj = null; // mostly used for gamepad
+    [Header("Tooltips and any elements that are activated/deactivated when switching inputs")]
+    public List<GameObject> gamepadTooltips = new List<GameObject>();
+    public List<GameObject> keyboardMouseTooltips = new List<GameObject>();
     [Header("Output")]
     public GameObject outputText;
     [Header("Other assets")]
@@ -63,6 +67,37 @@ public class InventionUIManager : MonoBehaviour
                 }
             }
         }
+        CheckControlsChanged();
+    }
+    public void OnEnable()
+    {
+        // load tooltips
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(true);
+        }
+    }
+    public void OnDisable()
+    {
+        //if (playerControls != null)
+        //{
+        //    playerControls.InventMenu.Disable();
+            //hide bottom tooltips
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                gamepadeUI.SetActive(false);
+        //}
     }
     public void OpenInventionMenu()
     {
@@ -110,7 +145,7 @@ public class InventionUIManager : MonoBehaviour
             //display an idea
             Object gridElement = Instantiate(ideaUIPrefab, ownedIdeasGrid.transform);
             IdeaPanel ideaPanel = gridElement.GetComponent<IdeaPanel>();
-            //IdeaType ideaType = (IdeaType)ideaIndex;
+            ideaPanel.index = ideaIndex;
             ideaPanel.topText.text = idea.ideaName;
 
             //load image
@@ -137,6 +172,35 @@ public class InventionUIManager : MonoBehaviour
         //    cmpntScroll.size = 1.0f / numOfPage;
         //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
         //}
+    }
+    private void CheckControlsChanged()
+    {
+        //Debug.Log("PauseScript.CheckControlsChanged");
+        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
+        inputSwitchDetector.CheckControlsChanged();
+        if (inputSwitchDetector.deviceChanged)
+        {
+            //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
+            inputSwitchDetector.deviceChanged = false;
+            if (InputSwitchDetector.IsCurrentlyGamepad())
+            {
+                //Show controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(true);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(false);
+            }
+            else //Keyboard
+            {
+                //Hide Controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(false);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(true);
+                //enable buttons
+                //EnableAllNavigation();
+            }
+        }
     }
     //************************** I D E A   S C R O L L **************************
     /**
@@ -245,84 +309,37 @@ public class InventionUIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         int displayedCount = 0;
-        int maxDisplayed = 12;
+        int maxDisplayed = 16;
         int inventionsToSkip = currentInventionPage * inventionsPerRow;
         //basic components
         int totalInventionCount = 0;
         //loop through all possible ideas
-        foreach(InventionData invention in inventionDatabase.inventions)
+        foreach (InventionData inventionData in inventionDatabase.inventions)
         {
-            //used for scrolling
+            // used for scrolling
             totalInventionCount++;
             if (inventionsToSkip > 0)
             {
                 inventionsToSkip--;
                 continue;
             }
-            //display an invention
-            if (invention.hasObtained)
-            {
+            if (++displayedCount > maxDisplayed) break;
+
+            
+            if (InventionManager.instance.obtainedInventions.Contains(inventionData.inventionId))
+            { // display an invention
                 if (++displayedCount > maxDisplayed) break;
                 Object gridElement = Instantiate(inventionUIPrefab, allInventionsGrid.transform);
                 InventionPanel gridScript = gridElement.GetComponent<InventionPanel>();
-                gridScript.topText.text = invention.inventionName;
-                if (invention.icon != null)
-                    gridScript.image.sprite = invention.icon;
+                gridScript.topText.text = inventionData.inventionName;
+                if (inventionData.icon != null)
+                    gridScript.image.sprite = inventionData.icon;
                 else
                     gridScript.image.sprite = questionMarkSpr;
             }
-        }
-        foreach (InventionData inventionScript in InventionManager.instance.inventionDatabase.inventions)
-        {
-            //used for scrolling
-            totalInventionCount++;
-            if (inventionsToSkip > 0)
-            {
-                inventionsToSkip--;
-                continue;
-            }
-            //if (++displayedCount > maxDisplayed) break;
-
-            //display an invention
-            if (inventionScript.hasObtained)
-            {
-                if (++displayedCount > maxDisplayed) break;
-                Object gridElement = Instantiate(inventionUIPrefab, allInventionsGrid.transform);
-                InventionPanel gridScript = gridElement.GetComponent<InventionPanel>();
-                gridScript.topText.text = inventionScript.ToString();
-                if (inventionScript.icon != null)
-                    gridScript.image.sprite = inventionScript.icon;
-                else
-                    gridScript.image.sprite = questionMarkSpr;
-                //gridScript.bottomText.text = "";
-                //gridScript.cornerButton.gameObject.SetActive(false);
-            }
-            else
-            {
-                //gridScript.topText.text = inventionScript.GetMysteryString();
-                //gridScript.mainButtonForeground.GetComponent<RawImage>().texture = questionMarkTexture;
-            }
-            //gridScript.cornerButton.OnPointerEnter(() =>
-            //{
-
-            //});
-            //add button event
-            //gridScript.mainButton.onClick.AddListener(() => OwnedIdeaOnclick(ideaType, gridScript));
+            //else // Display hint?
         }
         int numOfPage = totalInventionCount / ideasPerRow;
-
-        //TODO scrolling
-        //if (numOfPage < 2)
-        //{
-        //    cmpntScroll.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    cmpntScroll.gameObject.SetActive(true);
-        //    cmpntScroll.numberOfSteps = numOfPage;
-        //    cmpntScroll.size = 1.0f / numOfPage;
-        //    cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
-        //}
     }
     bool proccessingUsedIdeaClick = false;
     void UsedIdeaClick(int firstSecondOrThird, IdeaPanel usedIdeaBtn, IdeaPanel ownedIdeaBtn)

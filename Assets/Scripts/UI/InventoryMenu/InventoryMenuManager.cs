@@ -60,6 +60,21 @@ public class InventoryMenuManager : MonoBehaviour
             playerControls.InventoryMenu.Enable();
         LoadItemsToWindow();
         LoadQuickslots();
+        // load tooltips
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(true);
+        }
     }
 
     public void OnDisable()

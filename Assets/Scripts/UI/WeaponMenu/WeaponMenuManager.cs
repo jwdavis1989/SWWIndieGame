@@ -86,6 +86,21 @@ public class WeaponMenuManager : MonoBehaviour
         LoadComponentsToScreen();
         if(playerControls != null)
             playerControls.WeaponMenu.Enable();
+        // load tooltips
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(true);
+        }
     }
     private void OnDisable()
     {

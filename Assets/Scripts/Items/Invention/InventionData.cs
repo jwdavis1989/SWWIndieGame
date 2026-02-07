@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Invention Data")]
 public class InventionData : ScriptableObject
@@ -14,6 +15,26 @@ public class InventionData : ScriptableObject
     public Sprite icon;
     [TextArea] public string description;
     [Header("Used by InventionManager - CAN I DO THIS IN A S.O.? Guess Ill find out")]
-    public bool hasObtained = false;
     public DateTime createTime;
+
+    private bool isRuntimeInstance;
+//    private void OnEnable()
+//    {
+//#if UNITY_EDITOR
+//        isRuntimeInstance = EditorApplication.isPlaying;
+//#endif
+//    }
+
+//    private void OnValidate()
+//    {
+//#if UNITY_EDITOR
+//        if (EditorApplication.isPlaying)
+//        {
+//            Debug.LogError(
+//                $"{name} was modified during Play Mode!",
+//                this
+//            );
+//        }
+//#endif
+//    }
 }

@@ -59,10 +59,29 @@ public class OptionsMenuManager : MonoBehaviour
             PauseScript.instance.playerControls.UI.Disable();
             PlayerInputManager.instance.SafeDisable();//Shouldnt be necessary?
         }
+        // load tooltips
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(true);
+        }
     }
     private void OnDisable()
     {
         isChanged = false;
+        foreach (GameObject gamepadeUI in gamepadTooltips)
+            gamepadeUI.SetActive(false);
+        foreach (GameObject kbmUI in keyboardMouseTooltips)
+            kbmUI.SetActive(false);
         SwapFromOptionMenuControls();
     }
     // Start is called before the first frame update
@@ -115,16 +134,16 @@ public class OptionsMenuManager : MonoBehaviour
                 //Show controller UI
                 foreach (GameObject gamepadeUI in gamepadTooltips)
                     gamepadeUI.SetActive(true);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(false);
+                foreach (GameObject kbmUI in keyboardMouseTooltips)
+                    kbmUI.SetActive(false);
             }
             else //Keyboard
             {
                 //Hide Controller UI
                 foreach (GameObject gamepadeUI in gamepadTooltips)
                     gamepadeUI.SetActive(false);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(true);
+                foreach (GameObject kbmUI in keyboardMouseTooltips)
+                    kbmUI.SetActive(true);
                 //enable buttons
                 //EnableAllNavigation();
             }

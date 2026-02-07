@@ -431,11 +431,13 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (focus)
             {
-                playerControls.Enable();
+                //playerControls.Enable();
+                SafeEnable();
             }
             else
             {
-                playerControls.Disable();
+                SafeDisable();
+                //playerControls.Disable();
             }
         }
     }
