@@ -16,7 +16,6 @@ public class FadeElementalMeteorSmashDecalOverTime : MonoBehaviour
     public bool useStartColorAsEndColor = true;
     public float colorChangeDuration = 2.0f; //Duration of color change in seconds
 
-    // Start is called before the first frame update
     public void InitializeColorFading()
     {
         objectRenderer = GetComponent<Renderer>();
@@ -26,14 +25,14 @@ public class FadeElementalMeteorSmashDecalOverTime : MonoBehaviour
             objectRenderer.material.SetColor("_CoreColor", startCoreColorArray[currentColorIndex]);
 
             //Set the Inner Color to the weapon's highest element's color
-            objectRenderer.material.SetColor("_CoreColor", startInnerColorArray[currentColorIndex]);
+            objectRenderer.material.SetColor("_Color", startInnerColorArray[currentColorIndex]);
 
             //Set the emission color to the same as the Core Color
             objectRenderer.material.SetColor("_EmissionColor", startCoreColorArray[currentColorIndex]);
 
             if (useStartColorAsEndColor)
             {
-                endColor = startCoreColorArray[currentColorIndex];
+                endColor = startInnerColorArray[currentColorIndex];
                 endColor.a = 0;
             }
             StartCoroutine(ChangeOpacityOverTimeCoroutine());
@@ -55,12 +54,12 @@ public class FadeElementalMeteorSmashDecalOverTime : MonoBehaviour
             float time = Mathf.Clamp01(elapsedTime / colorChangeDuration);
 
             //Lower the opacity of the Core Color, which applies to the entire Decal.
-            objectRenderer.material.color = Color.Lerp(startCoreColorArray[currentColorIndex], endColor, time);
+            objectRenderer.material.color = Color.Lerp(startInnerColorArray[currentColorIndex], endColor, time);
 
             yield return null;
         }
 
-        // Ensure the color is exactly the endColor at the end of the duration
+        //Avoids color being 99.99% the way towards transparency at the end
         objectRenderer.material.color = endColor;
         Destroy(gameObject);
     }
