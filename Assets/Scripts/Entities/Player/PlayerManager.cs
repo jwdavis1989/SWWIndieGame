@@ -181,10 +181,7 @@ public class PlayerManager : CharacterManager
         //Ideas
         InventionManager.instance.obtainedIdeas = currentCharacterData.ideas;
         //Inventions
-        if (!isNewGame)
-        {
-            InventionManager.instance.LoadInventions(currentCharacterData.inventions);
-        }
+        InventionManager.instance.LoadInventions(currentCharacterData.inventions);
     }
 
     public void ToggleFlashlight()

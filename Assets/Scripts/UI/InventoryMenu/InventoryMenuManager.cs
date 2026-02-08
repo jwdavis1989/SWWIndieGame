@@ -15,6 +15,7 @@ public class InventoryMenuManager : MonoBehaviour
     public GridLayoutGroup inventoryWindow;
     public InventoryItemUI[] quickslotItems = new InventoryItemUI[4];
     public TextMeshProUGUI[] quickslotText = new TextMeshProUGUI[4];
+    public TextMeshProUGUI goldText;
     [Header("Prefab for inventory item UI Element")]
     public GameObject itemUIPrefab;
     [Header("ScriptableObjects - Contain static item data")]
@@ -23,6 +24,7 @@ public class InventoryMenuManager : MonoBehaviour
 
     [Header("Reference to inventory stored on player")]
     public Inventory playerInventory;
+    public PlayerStatsManager playerStatsManager;
 
     [Header("Input")]
     public EventSystem eventSystem;
@@ -55,26 +57,14 @@ public class InventoryMenuManager : MonoBehaviour
         if(playerInventory == null)
         {
             playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+            playerStatsManager = playerInventory.GetComponent<PlayerStatsManager>();
         }
         if (playerControls != null)
             playerControls.InventoryMenu.Enable();
         LoadItemsToWindow();
         LoadQuickslots();
         // load tooltips
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(true);
-            foreach (GameObject kbmUI in keyboardMouseTooltips)
-                kbmUI.SetActive(false);
-        }
-        else
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(false);
-            foreach (GameObject kbmUI in keyboardMouseTooltips)
-                kbmUI.SetActive(true);
-        }
+        LoadControlTooltips();
     }
 
     public void OnDisable()
@@ -222,24 +212,26 @@ public class InventoryMenuManager : MonoBehaviour
         {
             //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
-            if (InputSwitchDetector.IsCurrentlyGamepad())
-            {
-                //Show controller UI
-                foreach (GameObject gamepadeUI in gamepadTooltips)
-                    gamepadeUI.SetActive(true);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(false);
-            }
-            else //Keyboard
-            {
-                //Hide Controller UI
-                foreach (GameObject gamepadeUI in gamepadTooltips)
-                    gamepadeUI.SetActive(false);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(true);
-                //enable buttons
-                //EnableAllNavigation();
-            }
+            LoadControlTooltips();
+        }
+    }
+    public void LoadControlTooltips()
+    {
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                gamepadeUI.SetActive(false);
+        }
+        else //Keyboard
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                gamepadeUI.SetActive(true);
+            //enable correct navigation scheme
+            //HandleNavigation();
         }
     }
     public void HandleGamepadSelectedObject()
@@ -265,6 +257,9 @@ public class InventoryMenuManager : MonoBehaviour
     int curItemRow = 0;
     void LoadItemsToWindow()
     {
+        //load gold
+        goldText.text = playerStatsManager.gold + " gp";
+        //reload items
         foreach (Transform child in inventoryWindow.transform)
         {
             Destroy(child.gameObject);

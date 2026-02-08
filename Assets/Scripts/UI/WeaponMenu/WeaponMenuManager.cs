@@ -18,6 +18,7 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Active Weapon Preview")]
     public GameObject statsTextPrefab;
     public GameObject primaryStatsText;
+    public GameObject expStatsText;
     public GameObject elementalStatsText;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI activeWeaponTierLevelText;
@@ -87,20 +88,7 @@ public class WeaponMenuManager : MonoBehaviour
         if(playerControls != null)
             playerControls.WeaponMenu.Enable();
         // load tooltips
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(true);
-            foreach (GameObject kbmUI in keyboardMouseTooltips)
-                kbmUI.SetActive(false);
-        }
-        else
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(false);
-            foreach (GameObject kbmUI in keyboardMouseTooltips)
-                kbmUI.SetActive(true);
-        }
+        LoadControlTooltips();
     }
     private void OnDisable()
     {
@@ -790,6 +778,8 @@ public class WeaponMenuManager : MonoBehaviour
             Destroy(child.gameObject);
         foreach (Transform child in elementalStatsText.transform)
             Destroy(child.gameObject);
+        foreach (Transform child in expStatsText.transform)
+            Destroy(child.gameObject);
         if (activeWeapon == null || activeWeapon.GetComponent<WeaponScript>() == null)
         {// no active weapon
             weaponPreviewHeaderText.text = "";
@@ -819,7 +809,7 @@ public class WeaponMenuManager : MonoBehaviour
             statTextObj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing? "<color=\"green\">" : "") + stat.Value + greenText;
             Button tooltipNavButton = statTextObj.GetComponentInChildren<Button>();
             if (tooltipNavButton != null)
-            { // This handles the helper tooltips for the stats. It is not currently functioning
+            { // This handles the helper tooltips for the stats.
                 TogglingBehavior tooltipToggler = statTextObj.GetComponent<TogglingBehavior>();
                 if (tooltipToggler != null)
                 {
@@ -840,6 +830,19 @@ public class WeaponMenuManager : MonoBehaviour
         foreach (KeyValuePair<string, float> stat in primaryStats) handleStatText(stat, primaryStatsText.transform);
         Dictionary<string, float> elementalStats = wpn.GetElementalStats();
         foreach (KeyValuePair<string, float> stat in elementalStats) handleStatText(stat, elementalStatsText.transform);
+        //Exp
+        GameObject curExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject curExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject neededExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject neededExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
+        curExpText1.GetComponent<EventTrigger>().enabled = false; // disable hover events
+        curExpText2.GetComponent<EventTrigger>().enabled = false;
+        neededExpText1.GetComponent<EventTrigger>().enabled = false;
+        neededExpText2.GetComponent<EventTrigger>().enabled = false;
+        curExpText1.GetComponent<TextMeshProUGUI>().text = "Current Exp:";
+        curExpText2.GetComponent<TextMeshProUGUI>().text = ""+ stats.currentExperiencePoints;
+        neededExpText1.GetComponent<TextMeshProUGUI>().text = "To Next Level:";
+        neededExpText2.GetComponent<TextMeshProUGUI>().text = ""+ stats.experiencePointsToNextLevel;
     }
     bool canBreakdownActiveWeapon = false;
     /**
@@ -1193,24 +1196,28 @@ public class WeaponMenuManager : MonoBehaviour
         {
             //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
-            if (InputSwitchDetector.IsCurrentlyGamepad())
-            {
-                //Show controller UI
-                foreach (GameObject gamepadeUI in gamepadTooltips)
-                    gamepadeUI.SetActive(true);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(false);
-            }
-            else //Keyboard
-            {
-                //Hide Controller UI
-                foreach (GameObject gamepadeUI in gamepadTooltips)
-                    gamepadeUI.SetActive(false);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(true);
-                //enable buttons
-                EnableAllNavigation();
-            }
+            LoadControlTooltips();
+        }
+    }
+    void LoadControlTooltips()
+    {
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            //Show controller UI
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                gamepadeUI.SetActive(false);
+        }
+        else //Keyboard
+        {
+            //Hide Controller UI
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                gamepadeUI.SetActive(true);
+            //enable buttons
+            EnableAllNavigation();
         }
     }
     private void EnableAllNavigation()
@@ -1226,7 +1233,9 @@ public class WeaponMenuManager : MonoBehaviour
         foreach (Transform t in componentsGrid.transform)
         {
             // toggle navigation
-            Button button = t.gameObject.GetComponent<TinkerComponentUI>().mainButton;
+            TinkerComponentUI componentUI = t.GetComponent<TinkerComponentUI>();
+            if (componentUI == null) continue;
+            Button button = componentUI.mainButton;
             button.interactable = enable;
             Navigation nav = button.navigation;
             nav.mode = enable?Navigation.Mode.Automatic :Navigation.Mode.None;
@@ -1281,6 +1290,7 @@ public class WeaponMenuManager : MonoBehaviour
             //obj.GetComponent<TogglingBehavior>().Toggle(helpActive);
             // Make navigatiable if tooltip active or turn off navigation if not
             Button button = obj.GetComponent<Button>();
+            if (button == null) return obj;
             button.interactable = true;
             Navigation nav = button.navigation;
             nav.mode = Navigation.Mode.None;

@@ -86,17 +86,13 @@ public class PauseScript : MonoBehaviour
         HandleExitPauseMenuInput();
         CheckControlsChanged();
     }
-    bool exitingMenu = false;
-    private void LateUpdate()
-    {
-        if (exitingMenu)
-        {
-
-        }
-    }
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
+        pauseInput = false;
+        menuLeftInput = false;
+        menuRightInput = false;
+        exitPauseMenuInput = false;
         yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
         Unpause();
     }
@@ -243,7 +239,7 @@ public class PauseScript : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
             return;
         if (gamePaused)
-            Unpause();
+            StartCoroutine(WaitToEndOfFrameThenContinue());//Unpause();
         else
             Pause();
         
@@ -302,12 +298,6 @@ public class PauseScript : MonoBehaviour
     void Unpause()
     {
         //playerControls.PlayerActions.Enable();
-        pauseInput = false;
-        menuLeftInput = false;
-        menuRightInput = false;
-        exitPauseMenuInput = false;
-
-        exitingMenu = true;
         playerControls.PauseMenu.Disable();
         playerControls.WeaponMenu.Disable();
         Time.timeScale = 1;

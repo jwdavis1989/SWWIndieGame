@@ -58,10 +58,14 @@ public class InventionManager : MonoBehaviour
     }
     public void LoadInventions(List<string> inventions)
     {
+        Debug.Log("LoadInventions " + inventions.Count);
         foreach (string invention in inventions)
         {
             SetHasObtained(invention);
         }
+        SetHasObtained("sprint_boosters");
+        SetHasObtained("meteor_boosters");
+        SetHasObtained("air_boosters");
     }
     /** returns true if the player has aquired the upgrade */
     public bool CheckHasUpgrade(string inventId)

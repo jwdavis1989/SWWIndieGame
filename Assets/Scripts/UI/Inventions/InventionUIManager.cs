@@ -324,12 +324,14 @@ public class InventionUIManager : MonoBehaviour
             { // display an invention
                 if (++displayedCount > maxDisplayed) break;
                 Object gridElement = Instantiate(inventionUIPrefab, allInventionsGrid.transform);
-                InventionPanel gridScript = gridElement.GetComponent<InventionPanel>();
-                gridScript.topText.text = inventionData.inventionName;
+                InventionPanel inventionPanel = gridElement.GetComponent<InventionPanel>();
+                inventionPanel.topText.text = inventionData.inventionName;
+                inventionPanel.tooltip.headerText.text = inventionData.inventionName;
+                inventionPanel.tooltip.centerText.text = inventionData.description;
                 if (inventionData.icon != null)
-                    gridScript.image.sprite = inventionData.icon;
+                    inventionPanel.image.sprite = inventionData.icon;
                 else
-                    gridScript.image.sprite = questionMarkSpr;
+                    inventionPanel.image.sprite = questionMarkSpr;
             }
             //else // Display hint?
         }

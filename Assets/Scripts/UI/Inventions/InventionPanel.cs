@@ -10,4 +10,5 @@ public class InventionPanel : MonoBehaviour
     public Button mainButton;
     public Image image;
     public int index = 0;
+    public TooltipUI tooltip;
 }
