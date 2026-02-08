@@ -808,46 +808,60 @@ public class WeaponScript : MonoBehaviour
         {
             case ElementalDamageType.Fire:
                 newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 0;
                 if (isInDebugMode) Debug.Log("Highest Element: Fire");
                 break;
             case ElementalDamageType.Ice:
                 newJumpAttackDamageCollider.iceJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 1;
                 if (isInDebugMode) Debug.Log("Highest Element: Ice");
                 break;
             case ElementalDamageType.Lightning:
                 newJumpAttackDamageCollider.lightningJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 2;
                 if (isInDebugMode) Debug.Log("Highest Element: Lightning");
                 break;
             case ElementalDamageType.Wind:
                 newJumpAttackDamageCollider.windJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 3;
                 if (isInDebugMode) Debug.Log("Highest Element: Wind");
                 break;
             case ElementalDamageType.Earth:
                 newJumpAttackDamageCollider.earthJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 4;
                 if (isInDebugMode) Debug.Log("Highest Element: Earth");
                 break;
             case ElementalDamageType.Light:
                 newJumpAttackDamageCollider.lightJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 5;
                 if (isInDebugMode) Debug.Log("Highest Element: Light");
                 break;
             case ElementalDamageType.Beast:
                 newJumpAttackDamageCollider.beastJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 6;
                 if (isInDebugMode) Debug.Log("Highest Element: Beast");
                 break;
             case ElementalDamageType.Scales:
                 newJumpAttackDamageCollider.scalesJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 7;
                 if (isInDebugMode) Debug.Log("Highest Element: Scales");
                 break;
             case ElementalDamageType.Tech:
                 newJumpAttackDamageCollider.techJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 8;
                 if (isInDebugMode) Debug.Log("Highest Element: Tech");
                 break;
             default:
                 newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 0;
                 if (isInDebugMode) Debug.Log("Highest Element: Default Case");
                 break;
         }
+
+        //Initialize MeteorSmashDecal's color to match highest element of weapon
+        newJumpAttackDamageCollider.MeteorImpactDecal.InitializeColorFading();
     }
+    
 
     // Minimum Threshold determines a cut off before we start allowing an element to be high enough to count for elemental graphics and effects
     public ElementalDamageType GetHighestElementalStat(float minimumThreshold = 0)
