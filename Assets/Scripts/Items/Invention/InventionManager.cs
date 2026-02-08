@@ -58,7 +58,7 @@ public class InventionManager : MonoBehaviour
     }
     public void LoadInventions(List<string> inventions)
     {
-        Debug.Log("LoadInventions " + inventions.Count);
+        //Debug.Log("LoadInventions " + inventions.Count);
         foreach (string invention in inventions)
         {
             SetHasObtained(invention);

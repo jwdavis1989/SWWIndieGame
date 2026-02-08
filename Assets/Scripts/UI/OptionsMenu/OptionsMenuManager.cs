@@ -56,7 +56,7 @@ public class OptionsMenuManager : MonoBehaviour
         {
             playerControls.OptionsMenu.Enable();
             PauseScript.instance.playerControls.PauseMenu.Disable();
-            PauseScript.instance.playerControls.UI.Disable();
+            PauseScript.instance.playerControls.UI.PauseButton.Disable();
             PlayerInputManager.instance.SafeDisable();//Shouldnt be necessary?
         }
         // load tooltips
@@ -313,7 +313,8 @@ public class OptionsMenuManager : MonoBehaviour
     {
         DisableOptionsControls();
         PauseScript.instance.playerControls.PauseMenu.Enable();
-        PauseScript.instance.playerControls.UI.Enable();
+        //PauseScript.instance.playerControls.UI.Enable();
+        PauseScript.instance.playerControls.UI.PauseButton.Enable();
     }
     public void ActivateSaveWindow()
     {

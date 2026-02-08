@@ -394,7 +394,7 @@ MonoBehaviour:
   secondIdea: {fileID: 3174449048956227078}
   thirdIdea: {fileID: 1770171077962731566}
   ownedIdeasGrid: {fileID: 7897620588224588999}
-  allInventionsGrid: {fileID: 449440050223201581}
+  displayedInventionsGrid: {fileID: 449440050223201581}
   inventionDatabase: {fileID: 11400000, guid: 84e8b00ecc9a6b44187556a0f3885f3b, type: 2}
   inventButton: {fileID: 669914017685568378}
   eventSystem: {fileID: 6774206285241249344}
@@ -638,7 +638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5591123024868165302
 RectTransform:
   m_ObjectHideFlags: 0
@@ -958,8 +958,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8146598428660163745}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1036,7 +1036,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -229, y: -111}
+  m_AnchoredPosition: {x: -226, y: -111}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7490088959748564446

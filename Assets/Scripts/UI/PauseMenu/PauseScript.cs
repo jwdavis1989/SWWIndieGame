@@ -136,7 +136,7 @@ public class PauseScript : MonoBehaviour
         if (inventMenu != null)
         {
             inventMenu.SetActive(true);
-            InventionUIManager.instance.OpenInventionMenu();
+            InventionMenuManager.instance.OpenInventionMenu();
         }
         //SetMainPauseMenuTooltip();
     }
@@ -297,6 +297,10 @@ public class PauseScript : MonoBehaviour
     }
     void Unpause()
     {
+        pauseInput = false;
+        menuLeftInput = false;
+        menuRightInput = false;
+        exitPauseMenuInput = false;
         //playerControls.PlayerActions.Enable();
         playerControls.PauseMenu.Disable();
         playerControls.WeaponMenu.Disable();
