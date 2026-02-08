@@ -225,6 +225,60 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "QuickslotButton4",
+                    "type": "Button",
+                    "id": "93fa6da2-bea5-4a50-b65a-96f4a27ca34a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuickslotButton3",
+                    "type": "Button",
+                    "id": "6817e835-614a-4bdf-9144-f7141ea17715",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuickslotButton2",
+                    "type": "Button",
+                    "id": "c81262f5-f135-41ff-96e4-5c162090bdf0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuickslotButton1",
+                    "type": "Button",
+                    "id": "e053406a-9b41-4cd4-8d89-98e7a5432a56",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuickslotButtonGamepad",
+                    "type": "Button",
+                    "id": "d2719768-6982-4ea8-9f14-b2f960956793",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CycleQuickslot",
+                    "type": "Value",
+                    "id": "5eb301fc-d420-461d-b476-d79b6476f1df",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Sprint",
                     "type": "PassThrough",
                     "id": "8bd75a9b-dd8c-4133-966f-db57c9c1a6ce",
@@ -480,15 +534,6 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "b53bab46-37ad-415e-a517-60eafd2ef95d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "UseItemQuickSlot",
-                    "type": "Button",
-                    "id": "527cd677-7010-4984-bc53-8c5c616b0bbc",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -894,28 +939,6 @@
                 },
                 {
                     "name": "",
-                    "id": "8d3a906e-f7ce-4222-8e42-5ab8c4aa8a64",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UseItemQuickSlot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1393861d-3be4-498e-920d-a0e3067add41",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "UseItemQuickSlot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4789d9f7-ab2b-4484-bf82-714173360931",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
@@ -1045,6 +1068,94 @@
                     "action": "DebugChangeOffHandElement",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "023c19a0-a58d-4860-914a-68e0b01411d2",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuickslotButtonGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa03aa0a-a9df-4ef7-9629-11b1b0f40be2",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuickslotButton1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f7261e4-4302-4b08-aa58-9b2e70f0c51b",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuickslotButton2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23b27ee1-58f0-4723-84f9-56ba23575377",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuickslotButton3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97d549b0-04b8-453c-a760-85b92f6e9643",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuickslotButton4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "dfd9da5e-ac7d-433b-8d6d-0b0baaa3d1e6",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleQuickslot",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "01ed5d34-85d6-433c-812c-4dbaa5a9a3f5",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleQuickslot",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "45ac5a6c-ba5d-4699-a870-451b99d05604",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleQuickslot",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

@@ -247,6 +247,60 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""QuickslotButton4"",
+                    ""type"": ""Button"",
+                    ""id"": ""93fa6da2-bea5-4a50-b65a-96f4a27ca34a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButton3"",
+                    ""type"": ""Button"",
+                    ""id"": ""6817e835-614a-4bdf-9144-f7141ea17715"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButton2"",
+                    ""type"": ""Button"",
+                    ""id"": ""c81262f5-f135-41ff-96e4-5c162090bdf0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButton1"",
+                    ""type"": ""Button"",
+                    ""id"": ""e053406a-9b41-4cd4-8d89-98e7a5432a56"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickslotButtonGamepad"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2719768-6982-4ea8-9f14-b2f960956793"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CycleQuickslot"",
+                    ""type"": ""Value"",
+                    ""id"": ""5eb301fc-d420-461d-b476-d79b6476f1df"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Sprint"",
                     ""type"": ""PassThrough"",
                     ""id"": ""8bd75a9b-dd8c-4133-966f-db57c9c1a6ce"",
@@ -502,15 +556,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""b53bab46-37ad-415e-a517-60eafd2ef95d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""UseItemQuickSlot"",
-                    ""type"": ""Button"",
-                    ""id"": ""527cd677-7010-4984-bc53-8c5c616b0bbc"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -916,28 +961,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8d3a906e-f7ce-4222-8e42-5ab8c4aa8a64"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UseItemQuickSlot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1393861d-3be4-498e-920d-a0e3067add41"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UseItemQuickSlot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4789d9f7-ab2b-4484-bf82-714173360931"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
@@ -1067,6 +1090,94 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""DebugChangeOffHandElement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""023c19a0-a58d-4860-914a-68e0b01411d2"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButtonGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa03aa0a-a9df-4ef7-9629-11b1b0f40be2"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f7261e4-4302-4b08-aa58-9b2e70f0c51b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23b27ee1-58f0-4723-84f9-56ba23575377"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97d549b0-04b8-453c-a760-85b92f6e9643"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickslotButton4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""dfd9da5e-ac7d-433b-8d6d-0b0baaa3d1e6"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleQuickslot"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""01ed5d34-85d6-433c-812c-4dbaa5a9a3f5"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleQuickslot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""45ac5a6c-ba5d-4699-a870-451b99d05604"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleQuickslot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -2772,6 +2883,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Player Actions
         m_PlayerActions = asset.FindActionMap("Player Actions", throwIfNotFound: true);
         m_PlayerActions_Dodge = m_PlayerActions.FindAction("Dodge", throwIfNotFound: true);
+        m_PlayerActions_QuickslotButton4 = m_PlayerActions.FindAction("QuickslotButton4", throwIfNotFound: true);
+        m_PlayerActions_QuickslotButton3 = m_PlayerActions.FindAction("QuickslotButton3", throwIfNotFound: true);
+        m_PlayerActions_QuickslotButton2 = m_PlayerActions.FindAction("QuickslotButton2", throwIfNotFound: true);
+        m_PlayerActions_QuickslotButton1 = m_PlayerActions.FindAction("QuickslotButton1", throwIfNotFound: true);
+        m_PlayerActions_QuickslotButtonGamepad = m_PlayerActions.FindAction("QuickslotButtonGamepad", throwIfNotFound: true);
+        m_PlayerActions_CycleQuickslot = m_PlayerActions.FindAction("CycleQuickslot", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Block = m_PlayerActions.FindAction("Block", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
@@ -2801,7 +2918,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_SeekLeftLockOnTarget = m_PlayerActions.FindAction("SeekLeftLockOnTarget", throwIfNotFound: true);
         m_PlayerActions_SeekRightLockOnTarget = m_PlayerActions.FindAction("SeekRightLockOnTarget", throwIfNotFound: true);
         m_PlayerActions_Interact = m_PlayerActions.FindAction("Interact", throwIfNotFound: true);
-        m_PlayerActions_UseItemQuickSlot = m_PlayerActions.FindAction("UseItemQuickSlot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_DialogueContinue = m_UI.FindAction("DialogueContinue", throwIfNotFound: true);
@@ -3014,6 +3130,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerActions;
     private List<IPlayerActionsActions> m_PlayerActionsActionsCallbackInterfaces = new List<IPlayerActionsActions>();
     private readonly InputAction m_PlayerActions_Dodge;
+    private readonly InputAction m_PlayerActions_QuickslotButton4;
+    private readonly InputAction m_PlayerActions_QuickslotButton3;
+    private readonly InputAction m_PlayerActions_QuickslotButton2;
+    private readonly InputAction m_PlayerActions_QuickslotButton1;
+    private readonly InputAction m_PlayerActions_QuickslotButtonGamepad;
+    private readonly InputAction m_PlayerActions_CycleQuickslot;
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Block;
     private readonly InputAction m_PlayerActions_Jump;
@@ -3043,12 +3165,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_SeekLeftLockOnTarget;
     private readonly InputAction m_PlayerActions_SeekRightLockOnTarget;
     private readonly InputAction m_PlayerActions_Interact;
-    private readonly InputAction m_PlayerActions_UseItemQuickSlot;
     public struct PlayerActionsActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActionsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Dodge => m_Wrapper.m_PlayerActions_Dodge;
+        public InputAction @QuickslotButton4 => m_Wrapper.m_PlayerActions_QuickslotButton4;
+        public InputAction @QuickslotButton3 => m_Wrapper.m_PlayerActions_QuickslotButton3;
+        public InputAction @QuickslotButton2 => m_Wrapper.m_PlayerActions_QuickslotButton2;
+        public InputAction @QuickslotButton1 => m_Wrapper.m_PlayerActions_QuickslotButton1;
+        public InputAction @QuickslotButtonGamepad => m_Wrapper.m_PlayerActions_QuickslotButtonGamepad;
+        public InputAction @CycleQuickslot => m_Wrapper.m_PlayerActions_CycleQuickslot;
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @Block => m_Wrapper.m_PlayerActions_Block;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
@@ -3078,7 +3205,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SeekLeftLockOnTarget => m_Wrapper.m_PlayerActions_SeekLeftLockOnTarget;
         public InputAction @SeekRightLockOnTarget => m_Wrapper.m_PlayerActions_SeekRightLockOnTarget;
         public InputAction @Interact => m_Wrapper.m_PlayerActions_Interact;
-        public InputAction @UseItemQuickSlot => m_Wrapper.m_PlayerActions_UseItemQuickSlot;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3091,6 +3217,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @QuickslotButton4.started += instance.OnQuickslotButton4;
+            @QuickslotButton4.performed += instance.OnQuickslotButton4;
+            @QuickslotButton4.canceled += instance.OnQuickslotButton4;
+            @QuickslotButton3.started += instance.OnQuickslotButton3;
+            @QuickslotButton3.performed += instance.OnQuickslotButton3;
+            @QuickslotButton3.canceled += instance.OnQuickslotButton3;
+            @QuickslotButton2.started += instance.OnQuickslotButton2;
+            @QuickslotButton2.performed += instance.OnQuickslotButton2;
+            @QuickslotButton2.canceled += instance.OnQuickslotButton2;
+            @QuickslotButton1.started += instance.OnQuickslotButton1;
+            @QuickslotButton1.performed += instance.OnQuickslotButton1;
+            @QuickslotButton1.canceled += instance.OnQuickslotButton1;
+            @QuickslotButtonGamepad.started += instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.performed += instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.canceled += instance.OnQuickslotButtonGamepad;
+            @CycleQuickslot.started += instance.OnCycleQuickslot;
+            @CycleQuickslot.performed += instance.OnCycleQuickslot;
+            @CycleQuickslot.canceled += instance.OnCycleQuickslot;
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
@@ -3178,9 +3322,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @UseItemQuickSlot.started += instance.OnUseItemQuickSlot;
-            @UseItemQuickSlot.performed += instance.OnUseItemQuickSlot;
-            @UseItemQuickSlot.canceled += instance.OnUseItemQuickSlot;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -3188,6 +3329,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @QuickslotButton4.started -= instance.OnQuickslotButton4;
+            @QuickslotButton4.performed -= instance.OnQuickslotButton4;
+            @QuickslotButton4.canceled -= instance.OnQuickslotButton4;
+            @QuickslotButton3.started -= instance.OnQuickslotButton3;
+            @QuickslotButton3.performed -= instance.OnQuickslotButton3;
+            @QuickslotButton3.canceled -= instance.OnQuickslotButton3;
+            @QuickslotButton2.started -= instance.OnQuickslotButton2;
+            @QuickslotButton2.performed -= instance.OnQuickslotButton2;
+            @QuickslotButton2.canceled -= instance.OnQuickslotButton2;
+            @QuickslotButton1.started -= instance.OnQuickslotButton1;
+            @QuickslotButton1.performed -= instance.OnQuickslotButton1;
+            @QuickslotButton1.canceled -= instance.OnQuickslotButton1;
+            @QuickslotButtonGamepad.started -= instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.performed -= instance.OnQuickslotButtonGamepad;
+            @QuickslotButtonGamepad.canceled -= instance.OnQuickslotButtonGamepad;
+            @CycleQuickslot.started -= instance.OnCycleQuickslot;
+            @CycleQuickslot.performed -= instance.OnCycleQuickslot;
+            @CycleQuickslot.canceled -= instance.OnCycleQuickslot;
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
@@ -3275,9 +3434,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @UseItemQuickSlot.started -= instance.OnUseItemQuickSlot;
-            @UseItemQuickSlot.performed -= instance.OnUseItemQuickSlot;
-            @UseItemQuickSlot.canceled -= instance.OnUseItemQuickSlot;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -3942,6 +4098,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerActionsActions
     {
         void OnDodge(InputAction.CallbackContext context);
+        void OnQuickslotButton4(InputAction.CallbackContext context);
+        void OnQuickslotButton3(InputAction.CallbackContext context);
+        void OnQuickslotButton2(InputAction.CallbackContext context);
+        void OnQuickslotButton1(InputAction.CallbackContext context);
+        void OnQuickslotButtonGamepad(InputAction.CallbackContext context);
+        void OnCycleQuickslot(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -3971,7 +4133,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSeekLeftLockOnTarget(InputAction.CallbackContext context);
         void OnSeekRightLockOnTarget(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnUseItemQuickSlot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

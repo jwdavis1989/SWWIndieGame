@@ -27,7 +27,13 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Player UI Inputs")]
     [SerializeField] bool interactInput = false;
-    [SerializeField] bool useItemQuickslotInput = false;//using for idea camera. This will be an item?
+    [SerializeField] bool useQuickslot1 = false;
+    [SerializeField] bool useQuickslot2 = false;
+    [SerializeField] bool useQuickslot3 = false;
+    [SerializeField] bool useQuickslot4 = false;
+    [SerializeField] bool useQuickslotGamepad = false;
+    [SerializeField] float cycleQuickSlotGamepad = 0;
+    private int currentSelectedQuickslot = 0;
     //[SerializeField] bool dialogueContinueInput = false;//(A),[LMB]
     //[SerializeField] bool pauseInput = false;
     //[SerializeField] bool capturePhotoInput = false;
@@ -212,7 +218,13 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
             //playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
             //playerControls.UI.PauseButton.performed += i => pauseInput = true;
-            playerControls.PlayerActions.UseItemQuickSlot.performed += i => useItemQuickslotInput = true;
+            playerControls.PlayerActions.QuickslotButtonGamepad.performed += i => useQuickslotGamepad = true;
+            playerControls.PlayerActions.QuickslotButton1.performed += i => useQuickslot1 = true;
+            playerControls.PlayerActions.QuickslotButton2.performed += i => useQuickslot2 = true;
+            playerControls.PlayerActions.QuickslotButton3.performed += i => useQuickslot3 = true;
+            playerControls.PlayerActions.QuickslotButton4.performed += i => useQuickslot4 = true;
+            playerControls.PlayerActions.CycleQuickslot.performed += i => cycleQuickSlotGamepad = playerControls.PlayerActions.CycleQuickslot.ReadValue<float>();
+            //cycleQuickSlotGamepad
             //playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
             playerControls.UI.MiniMapResize.performed += i => miniMapZoomToggleInput = true;
         }
@@ -283,35 +295,75 @@ public class PlayerInputManager : MonoBehaviour
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
-        if (useItemQuickslotInput && !player.isBlocking) // [1], (Y)
+        if(cycleQuickSlotGamepad != 0)
         {
-            useItemQuickslotInput = false;
-            if (DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
-                return; //dont use on title screen
-
-            //WIP TODO switch quickslot
-            Inventory playerInventory = player.GetComponent<Inventory>();
-            if(playerInventory != null && playerInventory.quickSlotItems[1] != null)
+            if(cycleQuickSlotGamepad > 0)
             {
-                string itemId = playerInventory.GetQuickSlotItemId(1);
-                if(itemId != "" && playerInventory.items.ContainsKey(itemId))
-                {
-                    UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
-                    if (usableItem != null)
-                    {
-                        usableItem.Use(player.gameObject);
-                    }
-                }
-                else
-                {
-                    //currently have camera here. TODO make into an item
-                    IdeaCameraController.instance.ActivateDeactiveCameraView();
-                }
+                Debug.Log("cycle gamepad 1");
+                if (currentSelectedQuickslot < 3)
+                    currentSelectedQuickslot++;
+                else currentSelectedQuickslot = 0;
             }
             else
             {
-                //currently have camera here. TODO make into an item
-                IdeaCameraController.instance.ActivateDeactiveCameraView();
+                Debug.Log("cycle gamepad 2");
+                if (currentSelectedQuickslot > 0)
+                    currentSelectedQuickslot--;
+                else currentSelectedQuickslot = 3;
+            }
+            cycleQuickSlotGamepad = 0;
+        }
+        bool anyInput = false;
+        if (useQuickslotGamepad) // [1], (Y)
+        {
+            useQuickslotGamepad = false;
+            anyInput = true;
+        }
+        if (useQuickslot1)
+        {
+            Debug.Log("useQuickslot1");
+            useQuickslot1 = false;
+            anyInput = true;
+            currentSelectedQuickslot = 0;
+        }
+        if (useQuickslot2)
+        {
+            useQuickslot2 = false;
+            anyInput = true;
+            currentSelectedQuickslot = 1;
+        }
+        if (useQuickslot3)
+        {
+            useQuickslot3 = false;
+            anyInput = true;
+            currentSelectedQuickslot = 2;
+        }
+        if (useQuickslot4)
+        {
+            useQuickslot4 = false;
+            anyInput = true;
+            currentSelectedQuickslot = 3;
+        }
+        if (anyInput)
+        {
+            if (player.isBlocking || DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
+                return; //dont use on title screen
+            Debug.Log("using quickslot " + currentSelectedQuickslot);
+            Inventory playerInventory = player.GetComponent<Inventory>();
+            if (playerInventory != null && playerInventory.quickSlotItems[currentSelectedQuickslot] != null)
+            {
+                string itemId = playerInventory.GetQuickSlotItemId(currentSelectedQuickslot);
+                Debug.Log("using quickslot id:"+itemId+".");
+                if (itemId != "" && playerInventory.items.ContainsKey(itemId))
+                {
+                    Debug.Log("getting usable id:" + itemId + ".");
+                    UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
+                    if (usableItem != null)
+                    {
+                        Debug.Log("using " + itemId + ".");
+                        usableItem.Use(player.gameObject);
+                    }
+                }
             }
         }
     }
