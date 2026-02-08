@@ -136,7 +136,7 @@ public class PlayerManager : CharacterManager
         //Journal flags
         currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
         //Ideas
-        currentCharacterData.ideas = InventionManager.instance.ideas;
+        currentCharacterData.ideas = InventionManager.instance.obtainedIdeas;
         //Inventions
         currentCharacterData.inventions = InventionManager.instance.SaveInventions();
     }
@@ -179,7 +179,7 @@ public class PlayerManager : CharacterManager
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
         //Ideas
-        InventionManager.instance.ideas = currentCharacterData.ideas;
+        InventionManager.instance.obtainedIdeas = currentCharacterData.ideas;
         //Inventions
         if (!isNewGame)
         {

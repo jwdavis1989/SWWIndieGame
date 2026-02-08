@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Items/Idea Database")]
 public class IdeaDatabase : ScriptableObject
 {
-    List<string> ideas = new List<string>(); 
-    private Dictionary<string, bool> ideaLookup;
+    public List<IdeaData> ideas = new List<IdeaData>(); 
+    private static Dictionary<string, IdeaData> ideaLookup = null;
 
     public void Initialize()
     {
-        ideaLookup = new Dictionary<string, bool>();
+        ideaLookup = new Dictionary<string, IdeaData>();
 
-        foreach (var idea in ideas)
+        foreach (IdeaData idea in ideas)
         {
-            if (!ideaLookup.ContainsKey(idea))
+            if (!ideaLookup.ContainsKey(idea.ideaId))
             {
-                ideaLookup.Add(idea, false);
+                ideaLookup.Add(idea.ideaId, idea);
             }
             else
             {
@@ -23,25 +24,19 @@ public class IdeaDatabase : ScriptableObject
             }
         }
     }
-
-    public bool CheckHasIdea(string ideaId)
+    public IdeaData GetIdea(string ideaId)
     {
         if (ideaLookup == null)
             Initialize();
-
-        ideaLookup.TryGetValue(ideaId, out var idea);
-        return idea;
-    }
-    public void SetHasObtained(string ideaID)
-    {
-        if (ideaLookup.ContainsKey(ideaID))
-        {
-            ideaLookup[ideaID] = true;
-        }
+        if (ideaLookup.ContainsKey(ideaId))
+            return ideaLookup[ideaId];
         else
         {
-            ideas.Add(ideaID);
-            ideaLookup.Add(ideaID, true);
+            Debug.LogError("idea not found:" + ideaId + ". Creating idea");
+            IdeaData idea = new IdeaData();
+            idea.ideaId = ideaId;
+            idea.ideaName = ideaId;
+            return idea;
         }
     }
 }

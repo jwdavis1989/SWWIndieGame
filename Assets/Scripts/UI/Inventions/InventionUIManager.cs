@@ -126,12 +126,9 @@ public class InventionUIManager : MonoBehaviour
         int totalIdeaCount = 0;
         //loop through all possible ideas
         int ideaIndex = -1;
-        foreach (IdeaStats idea in InventionManager.instance.ideas)
+        foreach (IdeaSaveData savedIdea in InventionManager.instance.obtainedIdeas)
         {
             ideaIndex++;
-
-            if (idea == null || !idea.obtained) 
-                continue;//Skip ideas not obtained for now - could show Question Mark or hint
 
             //used for scrolling
             totalIdeaCount++;
@@ -143,20 +140,21 @@ public class InventionUIManager : MonoBehaviour
             if (++displayedCount > maxDisplayed) break;
 
             //display an idea
+            IdeaData ideaData = InventionManager.instance.ideaDatabase.GetIdea(savedIdea.ideaID);
             Object gridElement = Instantiate(ideaUIPrefab, ownedIdeasGrid.transform);
             IdeaPanel ideaPanel = gridElement.GetComponent<IdeaPanel>();
             ideaPanel.index = ideaIndex;
-            ideaPanel.topText.text = idea.ideaName;
+            ideaPanel.topText.text = ideaData.ideaName;
 
             //load image
-            byte[] bytes = InventionManager.instance.ideas[ideaIndex].image;
+            byte[] bytes = InventionManager.instance.obtainedIdeas[ideaIndex].image;
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             Debug.Log("Setting idea pic");
             ideaPanel.image.texture = texture;
 
             //add owned IDEA BUTTON BEHAVIOUR  
-            ideaPanel.mainButton.onClick.AddListener(()=>OwnedIdeaOnclick(idea.ideaID, ideaPanel));//TODO FIX THIS
+            ideaPanel.mainButton.onClick.AddListener(()=>OwnedIdeaOnclick(savedIdea.ideaID, ideaPanel));//TODO FIX THIS
         }
         int numOfPage = totalIdeaCount / ideasPerRow;
 
@@ -219,11 +217,7 @@ public class InventionUIManager : MonoBehaviour
     private int currentIdeasPage = 0; //current row scrolled to
     public void IdeaScroll(float value)
     {
-        int count = 0;//count total unique ideas owned
-        foreach (IdeaStats idea in InventionManager.instance.ideas)
-        {
-            if (idea != null && idea.obtained) count++;
-        }
+        int count = InventionManager.instance.obtainedIdeas.Count;//count total unique ideas owned
         int numOfPage = count / ideasPerRow;
         if (numOfPage < 2)
         {
@@ -419,7 +413,7 @@ public class InventionUIManager : MonoBehaviour
                 JournalManager.instance.journalFlags[JournalManager.hasHalfInventionIdea] = false;//set to false so that dialogue doesn't play
                 JournalManager.instance.journalFlags[JournalManager.hasInventedSomethingKey] = true;
                 InventionManager.instance.HandleNewInvention(possibleInvention);
-                outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.ToString() + "!";
+                outputText.GetComponent<TextMeshProUGUI>().text = "Invented " + possibleInvention.inventionName + "!";
                 firstIdea.gameObject.SetActive(false);
                 secondIdea.gameObject.SetActive(false);
                 thirdIdea.gameObject.SetActive(false);
@@ -460,7 +454,7 @@ public class InventionUIManager : MonoBehaviour
                     }
                 }
                 //Show the partial name for the half invented idea
-                string needIdeaName = GetIdeaString(possibleInvention.neededIdeas[neededIdeaUnmatched]);
+                string needIdeaName = InventionManager.instance.ideaDatabase.GetIdea(possibleInvention.ideas[neededIdeaUnmatched]).ideaName;
                 string displayName = "";
                 int displayedLetters = InventionManager.instance.CheckHasUpgrade(InventionID.PREDICTIVE_NEURALINK)
                     ? needIdeaName.Length/4 : 1;
@@ -489,22 +483,22 @@ public class InventionUIManager : MonoBehaviour
             }
         }
     }
-    public string GetIdeaString(IdeaType type)
-    {
-        string name = "" + type;
-        string formatted = "";
-        foreach (char letter in name)
-        {
-            if (char.IsUpper(letter))
-            {
-                formatted += " " + letter;
-            }
-            else
-            {
-                formatted += letter;
-            }
-        }
-        formatted = formatted.Substring(1);
-        return formatted;
-    }
+    //public string GetIdeaString(IdeaType type)
+    //{
+    //    string name = "" + IdeaDatabase.GetIdea(ideaId);
+    //    string formatted = "";
+    //    foreach (char letter in name)
+    //    {
+    //        if (char.IsUpper(letter))
+    //        {
+    //            formatted += " " + letter;
+    //        }
+    //        else
+    //        {
+    //            formatted += letter;
+    //        }
+    //    }
+    //    formatted = formatted.Substring(1);
+    //    return formatted;
+    //}
 }

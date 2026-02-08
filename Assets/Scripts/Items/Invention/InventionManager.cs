@@ -18,14 +18,12 @@ public class InventionManager : MonoBehaviour
     public List<string> obtainedInventions;
     //public InventionScript[] allInventions; // TODO REPLACE WITH SCRIPTABLE OBJECTS
     [Header("current idea info")]
-    public List<IdeaStats> ideas = new List<IdeaStats>();
-    //public IdeaDatabase ideaDatabase;
+    public List<IdeaSaveData> obtainedIdeas = new List<IdeaSaveData>();
+    public IdeaDatabase ideaDatabase;
 
     //helpful references
     private PlayerManager player;
 
-
-    //TODO - Handle saving and loading of inventions
     public void Awake()
     {
         if (instance == null)
@@ -42,7 +40,7 @@ public class InventionManager : MonoBehaviour
     {
         //ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
         //ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
-        ideas = new List<IdeaStats>();
+        obtainedIdeas = new List<IdeaSaveData>();
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
         //StartCoroutine(CheckForSavedIdeas());
         DontDestroyOnLoad(gameObject);
@@ -83,7 +81,7 @@ public class InventionManager : MonoBehaviour
     /** returns image for idea type */
     public byte[] GetIdeaPicture(string ideaID)
     {
-        foreach (var idea in ideas)
+        foreach (var idea in obtainedIdeas)
         {
             if (idea.ideaID == ideaID)
             {
@@ -94,7 +92,7 @@ public class InventionManager : MonoBehaviour
     }
     public void SetIdeaPicture(byte[] ideaPicture, string ideaID)
     {
-        foreach(var idea in ideas)
+        foreach(var idea in obtainedIdeas)
         {
             if(idea.ideaID == ideaID)
             {
@@ -106,7 +104,7 @@ public class InventionManager : MonoBehaviour
     /** returns true if the player has photograped the idea */
     public bool CheckHasIdea(string ideaId)
     {
-        foreach (IdeaStats idea in ideas)
+        foreach (IdeaSaveData idea in obtainedIdeas)
         {
             if(idea.ideaID == ideaId)
                 return true; 
@@ -116,38 +114,33 @@ public class InventionManager : MonoBehaviour
     }
     public void SetHasIdea(IdeaScript ideaScript)
     {
-        foreach(IdeaStats idea in ideas)
+        foreach(var idea in obtainedIdeas)
         {
-            if(idea.ideaID == ideaScript.ideaId)
-            {
-                idea.obtained = true;
+            if (idea.ideaID.Equals(ideaScript.ideaId))
+            { // already found
                 return;
             }
         }
-        IdeaStats ideaStats = new IdeaStats();
+        IdeaSaveData ideaStats = new IdeaSaveData();
         ideaStats.ideaID = ideaScript.ideaId;
-        ideaStats.ideaName = ideaScript.ToString();//TODO replace with database?
-        ideaStats.obtained = true;
-        ideas.Add(ideaStats);
-        //ideas[(int)type] = new IdeaStats();
-        //ideas[(int)type].obtained = true;
+        obtainedIdeas.Add(ideaStats);
     }
     /**
-     * Clear component list and reload it with current values
+     * Check if ideas return an invention or partial invention
      */
     public InventionData CheckForInvention(string idea1, string idea2, string idea3)
     {
         //used for returning an invention with only 2 matches
         bool halfFound = false;
         InventionData halfAnswer = null;
-        foreach (InventionData inventionScript in inventionDatabase.inventions)
+        foreach (InventionData inventionData in inventionDatabase.inventions)
         {
-            if (CheckHasUpgrade(inventionScript.inventionId))
+            if (CheckHasUpgrade(inventionData.inventionId))
             {
                 continue; // skip already invented
             }
             int ideaMatches = 0;
-            foreach (string neededIdea in inventionScript.ideas)
+            foreach (string neededIdea in inventionData.ideas)
             {
                 if (idea1 == neededIdea) ideaMatches++;
                 else if (idea2 == neededIdea) ideaMatches++;
@@ -157,12 +150,12 @@ public class InventionManager : MonoBehaviour
             {
                 //half invention found
                 halfFound = true;
-                halfAnswer = inventionScript;
+                halfAnswer = inventionData;
             }
             else if (ideaMatches == 3)
             {
                 //new invention found
-                return inventionScript;
+                return inventionData;
             }
         }
         if (halfFound)
@@ -178,7 +171,7 @@ public class InventionManager : MonoBehaviour
             {
                 Debug.Log("Invented " + invention.inventionId);//astest
                 //invention.hasObtained = true;
-                invention.createTime = DateTime.UtcNow;
+                //invention.createTime = DateTime.UtcNow; // TODO
                 HandleNewInventionType(newInvention.inventionId);
                 return;
             }
@@ -225,12 +218,10 @@ public class InventionManager : MonoBehaviour
     }
 }
 [Serializable]
-public class IdeaStats
+public class IdeaSaveData
 {
-    public bool obtained = false;
     public byte[] image = null;
     public string ideaID = "defaultID";
-    public string ideaName = "DefaultName";
 }
 
 public static class InventionID

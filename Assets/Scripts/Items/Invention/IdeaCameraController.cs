@@ -179,7 +179,7 @@ public class IdeaCameraController : MonoBehaviour
         else 
         {
             InventionManager.instance.SetHasIdea(idea);
-            ideaPhotoText.text = "New idea! - " + idea.ToString();
+            ideaPhotoText.text = "New idea! - " + InventionManager.instance.ideaDatabase.GetIdea(idea.ideaId).ideaName; 
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
             ReplacePhoto(idea.ideaId);
             oldPhotoFrame.SetActive(false);
