@@ -13,5 +13,5 @@ public class MeleeJumpAttackDamageCollider : MeleeWeaponDamageCollider
     public GameObject beastJumpAttackVFX;
     public GameObject scalesJumpAttackVFX;
     public GameObject techJumpAttackVFX;
-    public FadeOpacityOverTime MeteorImpactDecal;
+    public FadeElementalMeteorSmashDecalOverTime MeteorImpactDecal;
 }

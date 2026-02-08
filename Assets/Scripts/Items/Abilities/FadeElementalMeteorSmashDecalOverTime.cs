@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FadeOpacityOverTime : MonoBehaviour
+public class FadeElementalMeteorSmashDecalOverTime : MonoBehaviour
 {
     private Renderer objectRenderer;
     [Header("WARNING: Array lengths must match!")]
