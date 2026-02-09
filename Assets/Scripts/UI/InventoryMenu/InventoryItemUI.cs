@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class InventoryItemUI : MonoBehaviour
 {
     public Button mainButton;
-    public GameObject mainButtonForeground;
+    public Image mainButtonForeground;
     public int index = 0;
     public string itemId;
 }

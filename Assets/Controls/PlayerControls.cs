@@ -2035,6 +2035,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""CycleQuickslot"",
+                    ""type"": ""Value"",
+                    ""id"": ""23bab9d5-0b1a-4c36-8113-1c36e2a9dabe"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""HelpButton"",
                     ""type"": ""Button"",
                     ""id"": ""28634f3f-0b86-41b2-a333-c8f4db5b5563"",
@@ -2208,6 +2217,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""QuickslotButton4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""a1e3adcf-b5e2-4a72-8eb9-5b5423f47ac8"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleQuickslot"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""2e23e2ac-420a-4397-ab53-b20ce292383f"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleQuickslot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""332bfed3-0c2b-4797-be53-e33aef02c505"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleQuickslot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -2948,6 +2990,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // InventoryMenu
         m_InventoryMenu = asset.FindActionMap("InventoryMenu", throwIfNotFound: true);
         m_InventoryMenu_PauseButton = m_InventoryMenu.FindAction("PauseButton", throwIfNotFound: true);
+        m_InventoryMenu_CycleQuickslot = m_InventoryMenu.FindAction("CycleQuickslot", throwIfNotFound: true);
         m_InventoryMenu_HelpButton = m_InventoryMenu.FindAction("HelpButton", throwIfNotFound: true);
         m_InventoryMenu_QuickslotButtonGamepad = m_InventoryMenu.FindAction("QuickslotButtonGamepad", throwIfNotFound: true);
         m_InventoryMenu_QuickslotButton1 = m_InventoryMenu.FindAction("QuickslotButton1", throwIfNotFound: true);
@@ -3738,6 +3781,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_InventoryMenu;
     private List<IInventoryMenuActions> m_InventoryMenuActionsCallbackInterfaces = new List<IInventoryMenuActions>();
     private readonly InputAction m_InventoryMenu_PauseButton;
+    private readonly InputAction m_InventoryMenu_CycleQuickslot;
     private readonly InputAction m_InventoryMenu_HelpButton;
     private readonly InputAction m_InventoryMenu_QuickslotButtonGamepad;
     private readonly InputAction m_InventoryMenu_QuickslotButton1;
@@ -3750,6 +3794,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         private @PlayerControls m_Wrapper;
         public InventoryMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @PauseButton => m_Wrapper.m_InventoryMenu_PauseButton;
+        public InputAction @CycleQuickslot => m_Wrapper.m_InventoryMenu_CycleQuickslot;
         public InputAction @HelpButton => m_Wrapper.m_InventoryMenu_HelpButton;
         public InputAction @QuickslotButtonGamepad => m_Wrapper.m_InventoryMenu_QuickslotButtonGamepad;
         public InputAction @QuickslotButton1 => m_Wrapper.m_InventoryMenu_QuickslotButton1;
@@ -3769,6 +3814,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
+            @CycleQuickslot.started += instance.OnCycleQuickslot;
+            @CycleQuickslot.performed += instance.OnCycleQuickslot;
+            @CycleQuickslot.canceled += instance.OnCycleQuickslot;
             @HelpButton.started += instance.OnHelpButton;
             @HelpButton.performed += instance.OnHelpButton;
             @HelpButton.canceled += instance.OnHelpButton;
@@ -3797,6 +3845,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
+            @CycleQuickslot.started -= instance.OnCycleQuickslot;
+            @CycleQuickslot.performed -= instance.OnCycleQuickslot;
+            @CycleQuickslot.canceled -= instance.OnCycleQuickslot;
             @HelpButton.started -= instance.OnHelpButton;
             @HelpButton.performed -= instance.OnHelpButton;
             @HelpButton.canceled -= instance.OnHelpButton;
@@ -4167,6 +4218,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IInventoryMenuActions
     {
         void OnPauseButton(InputAction.CallbackContext context);
+        void OnCycleQuickslot(InputAction.CallbackContext context);
         void OnHelpButton(InputAction.CallbackContext context);
         void OnQuickslotButtonGamepad(InputAction.CallbackContext context);
         void OnQuickslotButton1(InputAction.CallbackContext context);
