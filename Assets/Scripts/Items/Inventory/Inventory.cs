@@ -23,4 +23,11 @@ public class Inventory : MonoBehaviour
     {
         return quickSlotItems[quickslot];
     }
+    /** @returns owned quantiy of an item */
+    public int CheckOwnedQty(string itemId)
+    {
+        if (items.ContainsKey(itemId))
+            return items[itemId].quantity;
+        return 0;
+    }
 }

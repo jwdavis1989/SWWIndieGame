@@ -166,14 +166,14 @@ public class InventoryMenuManager : MonoBehaviour
         {
             if (cycleQuickSlotGamepad < 0)
             {
-                Debug.Log("cycle gamepad 1");
+                //Debug.Log("cycle gamepad 1");
                 if (currentSelectedQuickslot < 3)
                     currentSelectedQuickslot++;
                 else currentSelectedQuickslot = 0;
             }
             else
             {
-                Debug.Log("cycle gamepad 2");
+                //Debug.Log("cycle gamepad 2");
                 if (currentSelectedQuickslot > 0)
                     currentSelectedQuickslot--;
                 else currentSelectedQuickslot = 3;
@@ -333,12 +333,16 @@ public class InventoryMenuManager : MonoBehaviour
             if (playerInventory == null) break;
             if (playerInventory.quickSlotItems[i] == null) continue;
             string itemId = playerInventory.GetQuickSlotItemId(i);
-            if (itemId != null)
+            if (itemId != null && itemId != "")
             {
                 ItemDetails itemDetails = GetItemDetails(itemId);
-                quickslotUIs[i].itemUI.mainButtonForeground.sprite = itemDetails.icon;
-                quickslotUIs[i].itemText.text = itemDetails.itemName;
-                if(InputSwitchDetector.IsCurrentlyGamepad())
+                if (itemDetails != null)
+                {
+                    quickslotUIs[i].itemUI.mainButtonForeground.sprite = itemDetails.icon;
+                    quickslotUIs[i].itemText.text = itemDetails.itemName;
+                }
+                else Debug.Log("Item Details Not Found:"+itemId);
+                if (InputSwitchDetector.IsCurrentlyGamepad())
                     quickslotUIs[i].gamepadSelectedIcon.SetActive(i == currentSelectedQuickslot);
             }
             else

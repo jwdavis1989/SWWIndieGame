@@ -32,19 +32,29 @@ public class InteractableChestSimple : Interactable
         base.Interact(player);
 
         if (needsKey)
-        {
-            //TODO: In the future, add a version that handles needing a key!
+        { // needing a key
+            if (player.GetComponent<Inventory>().CheckOwnedQty("brass_key") > 0)
+            {
+                player.GetComponent<Inventory>().GetItem("brass_key").quantity--;
+                SuccessfullyOpen(player);
+            }
+            else
+                SetColliderEnabled(true);
         }
         else
         {
-            if (chestSound != null)
-            {
-                player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
-            }
-            SetColliderEnabled(false);
-            StartCoroutine(OpenDoorOverTime());
+            SuccessfullyOpen(player);
         }
 
+    }
+    void SuccessfullyOpen(PlayerManager player)
+    {
+        if (chestSound != null)
+        {
+            player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
+        }
+        SetColliderEnabled(false);
+        StartCoroutine(OpenDoorOverTime());
     }
 
     IEnumerator OpenDoorOverTime()
