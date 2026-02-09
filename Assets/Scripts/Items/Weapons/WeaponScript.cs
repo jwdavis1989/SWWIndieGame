@@ -410,7 +410,7 @@ public class WeaponScript : MonoBehaviour
     {
         if (stats.durability > 0)
         {
-            if (!InventionManager.instance.CheckHasUpgrade(InventionType.DaedalusNanoMaterials)) //no upgrade
+            if (!InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS)) //no upgrade
                 stats.durability--; // Reduce durability
             else if (UnityEngine.Random.Range(0, 10) != 1) // 90% chance to reduce durability
                 stats.durability--; // Reduce durability

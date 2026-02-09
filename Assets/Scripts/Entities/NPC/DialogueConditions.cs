@@ -13,18 +13,11 @@ public class DialogueConditions : MonoBehaviour
     }
     public void CheckFirstInvention()
     {
-        foreach(InventionScript invention in InventionManager.instance.allInventions)
-        {
-            if (invention.hasObtained)
-            {
-                canSeeDialogue=true;
-                return;
-            }
-        }
+        canSeeDialogue = InventionManager.instance.obtainedInventions.Count > 0;
     }
     public void CheckFirstIdea()
     {
-        canSeeDialogue = InventionManager.instance.CheckHasIdea(IdeaType.MetalPlating);
+        canSeeDialogue = InventionManager.instance.CheckHasIdea(IdeaID.METAL_PLATING);
     }
     public void CheckHasNotOpenedInventMenu()
     {

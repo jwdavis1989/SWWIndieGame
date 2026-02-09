@@ -136,7 +136,7 @@ public class PlayerManager : CharacterManager
         //Journal flags
         currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
         //Ideas
-        currentCharacterData.ideas = InventionManager.instance.ideas;
+        currentCharacterData.ideas = InventionManager.instance.obtainedIdeas;
         //Inventions
         currentCharacterData.inventions = InventionManager.instance.SaveInventions();
     }
@@ -179,12 +179,9 @@ public class PlayerManager : CharacterManager
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
         //Ideas
-        InventionManager.instance.ideas = currentCharacterData.ideas;
+        InventionManager.instance.obtainedIdeas = currentCharacterData.ideas;
         //Inventions
-        if (!isNewGame)
-        {
-            InventionManager.instance.LoadInventions(currentCharacterData.inventions);
-        }
+        InventionManager.instance.LoadInventions(currentCharacterData.inventions);
     }
 
     public void ToggleFlashlight()
@@ -356,7 +353,7 @@ public class PlayerManager : CharacterManager
 
     public override void DisableInvulnerable()
     {
-        if (!InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        if (!InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = false;
         }
@@ -365,7 +362,7 @@ public class PlayerManager : CharacterManager
     //Not currently being used because the dodge roll already begins invulnerability immediately, but is needed if that changes.
     public void EnableRollerJointInvulnerable()
     {
-        if (InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        if (InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = true;
         }
