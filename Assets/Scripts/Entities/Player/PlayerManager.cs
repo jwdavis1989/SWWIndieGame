@@ -416,4 +416,28 @@ public class PlayerManager : CharacterManager
         EnableCapeSystem();
     }
 
+    public override void CallPlayJumpAttackImpactVFX()
+    {
+        base.CallPlayJumpAttackImpactVFX();
+
+        //Turn off Meteor Boosters just in case effect is interrupted
+        DisableMeteorBoosterVFX();
+        DisableMeteorDescentBoosterVFX();
+    }
+
+    public override void EnableMeteorBoosterVFX()
+    {
+        playerLocomotionManager.EnableMeteorBoosters();
+    }
+
+    public override void DisableMeteorBoosterVFX()
+    {
+        playerLocomotionManager.DisableMeteorBoosters();
+    }
+
+    public override void DisableMeteorDescentBoosterVFX()
+    {
+        playerLocomotionManager.DisableMeteorDescentBoosters();
+    }
+
 }

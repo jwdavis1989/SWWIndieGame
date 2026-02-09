@@ -22,6 +22,9 @@ public class IdleState : AIState
         }
         //Case: Target still being searched for
         else {
+            //Reset NavMeshAgent to ensure accurate positioning
+            aiCharacter.ResetNavMeshAgentPosition();
+
             //Continue searching for a new target
             aiCharacter.aiCharacterCombatManager.FindATargetWithInLineOSight(aiCharacter);
             
