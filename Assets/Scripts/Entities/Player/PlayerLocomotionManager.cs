@@ -148,7 +148,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.isBoosting)
         {
             //Movement caused by boosting
-            if (InventionManager.instance.CheckHasUpgrade(InventionType.IcarusBoosters))
+            if (InventionManager.instance.CheckHasUpgrade(InventionID.ICARUS_BOOSTERS))
             {
                 //Player has Icarus Boosters
                 //player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);

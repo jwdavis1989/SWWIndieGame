@@ -13,17 +13,17 @@ public class InventionManager : MonoBehaviour
 {
     //singleton
     public static InventionManager instance;
-
     [Header("All possible inventions")]
-    public InventionScript[] allInventions;
-    [Header("All current idea info")]
-    public IdeaStats[] ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
+    public InventionDatabase inventionDatabase;
+    public List<string> obtainedInventions;
+    //public InventionScript[] allInventions; // TODO REPLACE WITH SCRIPTABLE OBJECTS
+    [Header("current idea info")]
+    public List<IdeaSaveData> obtainedIdeas = new List<IdeaSaveData>();
+    public IdeaDatabase ideaDatabase;
 
     //helpful references
     private PlayerManager player;
 
-
-    //TODO - Handle saving and loading of inventions
     public void Awake()
     {
         if (instance == null)
@@ -40,75 +40,111 @@ public class InventionManager : MonoBehaviour
     {
         //ideaObtainedFlags = new bool[(int)IdeaType.IDEAS_SIZE];
         //ideaImages = new byte[(int)IdeaType.IDEAS_SIZE][];
-        ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
+        obtainedIdeas = new List<IdeaSaveData>();
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
         //StartCoroutine(CheckForSavedIdeas());
         DontDestroyOnLoad(gameObject);
     }
 
     //INVENTION
-    public bool[] SaveInventions()
+    public List<string> SaveInventions()
     {
-        bool[] rv = new bool[allInventions.Length];
-        for (int i = 0; i < allInventions.Length; i++)
+        List<string> rv = new List<string>();
+        foreach (string inventionID in obtainedInventions)
         {
-            rv[i] = allInventions[i] != null && allInventions[i].hasObtained;
+            rv.Add(inventionID);
         }
         return rv;
     }
-    public void LoadInventions(bool[] inventions)
+    public void LoadInventions(List<string> inventions)
     {
-        for (int i = 0;i < allInventions.Length; i++)
+        //Debug.Log("LoadInventions " + inventions.Count);
+        foreach (string invention in inventions)
         {
-            allInventions[i].hasObtained = inventions[i];
+            SetHasObtained(invention);
         }
+        SetHasObtained("sprint_boosters");
+        SetHasObtained("meteor_boosters");
+        SetHasObtained("air_boosters");
     }
     /** returns true if the player has aquired the upgrade */
-    public bool CheckHasUpgrade(InventionType inventType)
+    public bool CheckHasUpgrade(string inventId)
     {
-        return allInventions[(int)inventType].hasObtained;
+        return obtainedInventions.Contains(inventId);
+            //allInventions[(int)inventType].hasObtained;
     }
     /** flag that this invention type has been aquired */
-    public void SetHasUpgrade(InventionType inventType)
-    {
-        allInventions[(int)inventType].hasObtained = true;
-    }
 
-    /** returns image for idea type */
-    public byte[] GetIdeaPicture(IdeaType ideaType)
+    public void SetHasObtained(string inventionId)
     {
-        return ideas[(int)ideaType].image;
+        if(obtainedInventions.Contains(inventionId))
+            Debug.Log("Aleady have " + inventionId);
+        else
+            obtainedInventions.Add(inventionId);
     }
-    public void SetIdeaPicture(byte[] ideaPicture, IdeaType idea)
+    /** returns image for idea type */
+    public byte[] GetIdeaPicture(string ideaID)
     {
-        ideas[(int)idea].image = ideaPicture;
+        foreach (var idea in obtainedIdeas)
+        {
+            if (idea.ideaID == ideaID)
+            {
+                return idea.image;
+            }
+        }
+        return null;// ideas[(int)ideaType].image;
+    }
+    public void SetIdeaPicture(byte[] ideaPicture, string ideaID)
+    {
+        foreach(var idea in obtainedIdeas)
+        {
+            if(idea.ideaID == ideaID)
+            {
+                idea.image = ideaPicture;
+            }
+        }
+        //ideas[(int)idea].image = ideaPicture;
     }
     /** returns true if the player has photograped the idea */
-    public bool CheckHasIdea(IdeaType ideaType)
+    public bool CheckHasIdea(string ideaId)
     {
-        return ideas.Length > (int)ideaType && ideas[(int)ideaType] != null && ideas[(int)ideaType].obtained;
+        foreach (IdeaSaveData idea in obtainedIdeas)
+        {
+            if(idea.ideaID == ideaId)
+                return true; 
+        }
+        return false;
+        //return ideas.Length > (int)ideaType && ideas[(int)ideaType] != null && ideas[(int)ideaType].obtained;
     }
-    public void SetHasIdea(IdeaType type)
+    public void SetHasIdea(IdeaScript ideaScript)
     {
-        ideas[(int)type] = new IdeaStats();
-        ideas[(int)type].obtained = true;
+        foreach(var idea in obtainedIdeas)
+        {
+            if (idea.ideaID.Equals(ideaScript.ideaId))
+            { // already found
+                return;
+            }
+        }
+        IdeaSaveData ideaStats = new IdeaSaveData();
+        ideaStats.ideaID = ideaScript.ideaId;
+        obtainedIdeas.Add(ideaStats);
     }
     /**
-     * Clear component list and reload it with current values
+     * Check if ideas return an invention or partial invention
      */
-    public InventionScript CheckForInvention(IdeaType idea1, IdeaType idea2, IdeaType idea3)
+    public InventionData CheckForInvention(string idea1, string idea2, string idea3)
     {
         //used for returning an invention with only 2 matches
         bool halfFound = false;
-        InventionScript halfAnswer = null;
-        foreach (InventionScript inventionScript in allInventions)
+        InventionData halfAnswer = null;
+        foreach (InventionData inventionData in inventionDatabase.inventions)
         {
-            if (CheckHasUpgrade(inventionScript.type))
+            if (CheckHasUpgrade(inventionData.inventionId))
             {
                 continue; // skip already invented
             }
             int ideaMatches = 0;
-            foreach (IdeaType neededIdea in inventionScript.neededIdeas)
+            foreach (string neededIdea in inventionData.ideas)
             {
                 if (idea1 == neededIdea) ideaMatches++;
                 else if (idea2 == neededIdea) ideaMatches++;
@@ -118,12 +154,12 @@ public class InventionManager : MonoBehaviour
             {
                 //half invention found
                 halfFound = true;
-                halfAnswer = inventionScript;
+                halfAnswer = inventionData;
             }
             else if (ideaMatches == 3)
             {
                 //new invention found
-                return inventionScript;
+                return inventionData;
             }
         }
         if (halfFound)
@@ -131,54 +167,52 @@ public class InventionManager : MonoBehaviour
         return null;
     }
 
-    public void HandleNewInvention(InventionScript newInvention)
+    public void HandleNewInvention(InventionData newInvention)
     {
-        foreach (InventionScript invention in allInventions)
+        foreach (InventionData invention in inventionDatabase.inventions)
         {
-            if (invention.type == newInvention.type)
+            if (invention.inventionId == newInvention.inventionId)
             {
-                Debug.Log("Invented " + invention.type);//astest
-                invention.hasObtained = true;
-                invention.createTime = DateTime.UtcNow;
-                HandleNewInventionType(newInvention.type);
+                Debug.Log("Invented " + invention.inventionId);//astest
+                //invention.hasObtained = true;
+                //invention.createTime = DateTime.UtcNow; // TODO
+                HandleNewInventionType(newInvention.inventionId);
                 return;
             }
         }
         Debug.Log("Unhandled Invention");
     }
     /** Handles immediate effects of new invention types */
-    public void HandleNewInventionType(InventionType newInventionType)
+    public void HandleNewInventionType(string newInventionId)
     {
-        switch (newInventionType)
+        switch (newInventionId.ToLower())
         {
-            case InventionType.QuickChargeCapacitory:
+            case "quick_charge_capacitor":// InventionType.QuickChargeCapacitory:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.QuickChargeCapacitory);
                 break;
-            case InventionType.PredictiveNeuralLink:
-                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.PredictiveNeuralLink);
+            case "predictive_neural_link":
+                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.PredictiveNeuralLink);
                 break;
-            case InventionType.IcarusBoosters:
-                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.IcarusBoosters);
+            case "icarus_boosters": // Icarus Boosters: No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.IcarusBoosters);
                 break;
-            case InventionType.TreasureScanner:
-                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.TreasureScanner);
+            case "treasure_scanner"://.TreasureScanner:: No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.TreasureScanner);
                 break;
-            case InventionType.GolemEndoplating:
+            case "golem_endoplating"://.GolemEndoplating:
                 player.characterStatsManager.fortitude += 1;
                 player.characterStatsManager.SetNewMaxHealthValue();
                 break;
-            case InventionType.Alternator:
+            case "alternator"://.Alternator:
                 player.characterStatsManager.endurance += 1;
                 player.characterStatsManager.SetNewMaxStaminaValue();
                 break;
-            case InventionType.RollerJoints:
+            case "roller_joints"://.RollerJoints:
                 //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints);
                 break;
-            case InventionType.EnemyRadar:
+            case "enemy_radar"://.EnemyRadar:
                 break;
-            case InventionType.DaedalusNanoMaterials:
+            case "daedalus_nano_materials":// Daedalus Nano Materials: No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS);
                 break;
-            case InventionType.SyntheticDiamond:
+            case "synthetic_diamond"://.SyntheticDiamond:
                 ItemDropManager.DropComponent(TinkerComponentType.Diamond, player.transform);
                 break;
             default:
@@ -188,9 +222,27 @@ public class InventionManager : MonoBehaviour
     }
 }
 [Serializable]
-public class IdeaStats
+public class IdeaSaveData
 {
-    public bool obtained = false;
     public byte[] image = null;
-    public string name = "DefaultName";
+    public string ideaID = "defaultID";
+}
+
+public static class InventionID
+{
+    public const string ROLLER_JOINT = "roller_joints";
+    public const string PREDICTIVE_NEURALINK = "predictive_neural_link";
+    public const string DAEDALUS_NANO_MATERIALS = "daedalus_nano_materials";
+    public const string ICARUS_BOOSTERS = "icarus_boosters";
+    public const string QUICKCHARGE_CAPACITORY = "quickcharge_capacitory";
+    //public const string DAEDALUS_NANO_MATERIALS = "daedalus_nano_materials";
+}
+public static class IdeaID
+{
+    public const string METAL_PLATING = "metal_plating";
+    //public const string PREDICTIVE_NEURALINK = "predictive_neural_link";
+    //public const string DAEDALUS_NANO_MATERIALS = "daedalus_nano_materials";
+    //public const string ICARUS_BOOSTERS = "icarus_boosters";
+    //public const string QUICKCHARGE_CAPACITORY = "quickcharge_capacitory";
+    //public const string DAEDALUS_NANO_MATERIALS = "daedalus_nano_materials";
 }

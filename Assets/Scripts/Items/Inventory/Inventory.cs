@@ -14,4 +14,20 @@ public class Inventory : MonoBehaviour
     //quickslots, simply storing the item name
     public const int TOTAL_QUICKSLOTS = 4;
     public string[] quickSlotItems = new string[TOTAL_QUICKSLOTS];
+
+    public InventoryItem GetItem(string itemId)
+    {
+        return items[itemId];
+    }
+    public string GetQuickSlotItemId(int quickslot)
+    {
+        return quickSlotItems[quickslot];
+    }
+    /** @returns owned quantiy of an item */
+    public int CheckOwnedQty(string itemId)
+    {
+        if (items.ContainsKey(itemId))
+            return items[itemId].quantity;
+        return 0;
+    }
 }

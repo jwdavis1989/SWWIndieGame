@@ -32,7 +32,7 @@ public class InputSwitchDetector : MonoBehaviour
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.PauseMenu.AnyGamepad.performed += i => anyGamepadInput = true;
+            playerControls.UI.AnyGamepad.performed += i => anyGamepadInput = true;
             playerControls.Enable();
         }
     }

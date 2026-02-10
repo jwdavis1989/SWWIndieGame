@@ -34,11 +34,9 @@ public class PauseScript : MonoBehaviour
     public GameObject mainMenuButton;
     [Header("Controls Help")]
     PlayerInput playerInput;
-    //public Image bottomTooltip;
-    public GameObject bottomTooltipPauseMenuGamepad;
-    public GameObject bottomTooltipWeaponMenuGamepad;
-    //public List<GameObject> gamepadControlsUI;
-    GameObject keyboardControlsUI;
+    [Header("Tooltips and any elements that are activated/deactivated when switching inputs")]
+    public List<GameObject> gamepadTooltips = new List<GameObject>();
+    public List<GameObject> keyboardMouseTooltips = new List<GameObject>();
     [Header("Debug")]
     public bool debugMode = false;
     [SerializeField] GameObject DebugSaveGameButton;
@@ -86,10 +84,15 @@ public class PauseScript : MonoBehaviour
         HandlePauseInput();
         HandleSwitchMenuInput();
         HandleExitPauseMenuInput();
+        CheckControlsChanged();
     }
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
+        pauseInput = false;
+        menuLeftInput = false;
+        menuRightInput = false;
+        exitPauseMenuInput = false;
         yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
         Unpause();
     }
@@ -105,7 +108,7 @@ public class PauseScript : MonoBehaviour
             weaponMenu.SetActive(true);
         if (weaponMenuSideBar != null)
             weaponMenuSideBar.SetActive(true);
-        SetWeaponMenuTooltip();
+        //SetWeaponMenuTooltip();
     }
     public void InventoryMenuClick(bool settingsChanged = false)
     {
@@ -118,8 +121,8 @@ public class PauseScript : MonoBehaviour
         DisableAllMenus();
         if (inventoryMenu != null)
             inventoryMenu.SetActive(true);
-        SetMainPauseMenuTooltip();
-        bottomTooltipPauseMenuGamepad.SetActive(true);
+        //SetMainPauseMenuTooltip();
+        //bottomTooltipPauseMenuGamepad.SetActive(true);
     }
     public void InventMenuClick(bool settingsChanged = false)
     {
@@ -133,9 +136,9 @@ public class PauseScript : MonoBehaviour
         if (inventMenu != null)
         {
             inventMenu.SetActive(true);
-            InventionUIManager.instance.OpenInventionMenu();
+            InventionMenuManager.instance.OpenInventionMenu();
         }
-        SetMainPauseMenuTooltip();
+        //SetMainPauseMenuTooltip();
     }
     void DisableAllMenus()
     {
@@ -152,7 +155,7 @@ public class PauseScript : MonoBehaviour
         lastMenuTab = MenuTab.Options;
         DisableAllMenus();
         if (optionsMenu!= null) optionsMenu.SetActive(true);
-        SetMainPauseMenuTooltip();
+        //SetMainPauseMenuTooltip();
     }
     public void ExitMenuClick(bool settingsChanged = false)
     {
@@ -168,24 +171,24 @@ public class PauseScript : MonoBehaviour
         if(mainMenuButton != null)
             mainPauseMenuEvents.SetSelectedGameObject(mainMenuButton);
         mainMenuButton.GetComponent<Button>().Select();
-        SetMainPauseMenuTooltip();
+        //SetMainPauseMenuTooltip();
     }
-    void SetWeaponMenuTooltip()
-    {
-        bottomTooltipPauseMenuGamepad.SetActive(false);
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            bottomTooltipWeaponMenuGamepad.SetActive(true);
-        }
-    }
-    void SetMainPauseMenuTooltip()
-    {
-        bottomTooltipWeaponMenuGamepad.SetActive(false); 
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            bottomTooltipPauseMenuGamepad.SetActive(true);
-        }
-    }
+    //void SetWeaponMenuTooltip()
+    //{
+    //    bottomTooltipPauseMenuGamepad.SetActive(false);
+    //    if (InputSwitchDetector.IsCurrentlyGamepad())
+    //    {
+    //        bottomTooltipWeaponMenuGamepad.SetActive(true);
+    //    }
+    //}
+    //void SetMainPauseMenuTooltip()
+    //{
+    //    bottomTooltipWeaponMenuGamepad.SetActive(false); 
+    //    if (InputSwitchDetector.IsCurrentlyGamepad())
+    //    {
+    //        bottomTooltipPauseMenuGamepad.SetActive(true);
+    //    }
+    //}
     public void MainMenuClick()
     {
         /* DontDestroyOnLoad prevents simply loading the title screen from properly resetting. 
@@ -236,7 +239,7 @@ public class PauseScript : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
             return;
         if (gamePaused)
-            Unpause();
+            StartCoroutine(WaitToEndOfFrameThenContinue());//Unpause();
         else
             Pause();
         
@@ -294,16 +297,17 @@ public class PauseScript : MonoBehaviour
     }
     void Unpause()
     {
+        pauseInput = false;
+        menuLeftInput = false;
+        menuRightInput = false;
+        exitPauseMenuInput = false;
         //playerControls.PlayerActions.Enable();
         playerControls.PauseMenu.Disable();
         playerControls.WeaponMenu.Disable();
-        //playerControls.UI.Disable();//Currently causes game to be unpauseable
-        //PlayerInputManager.instance.enabled = true;
         Time.timeScale = 1;
         gamePaused = false;
         weaponMenu.SetActive(false);
         weaponMenuSideBar.SetActive(false);
-        //mainPauseMenu.SetActive(true);
         pauseMenu.SetActive(false);
         inventMenu.SetActive(false);
         mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
@@ -391,6 +395,31 @@ public class PauseScript : MonoBehaviour
         //    newBtnSelected = topPanelButtons.transform.GetChild(1 + (int)lastMenuTab).gameObject;
         //    newBtnSelected.GetComponent<Button>().Select();
         //}
+    }
+    private void CheckControlsChanged()
+    {
+        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
+        inputSwitchDetector.CheckControlsChanged();
+        if (inputSwitchDetector.deviceChanged)
+        {
+            inputSwitchDetector.deviceChanged = false;
+            if (InputSwitchDetector.IsCurrentlyGamepad())
+            {
+                //Show controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(true);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(false);
+            }
+            else //Keyboard
+            {
+                //Hide Controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(false);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(true);
+            }
+        }
     }
     public enum MenuTab
     {

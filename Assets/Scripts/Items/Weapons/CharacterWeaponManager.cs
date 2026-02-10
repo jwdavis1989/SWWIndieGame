@@ -317,7 +317,7 @@ public class CharacterWeaponManager : MonoBehaviour
     public virtual void ResetSpecialWeaponCooldownTimer()
     {
         specialtyCooldownTimer = specialtyCooldown;
-        if (characterThatOwnsThisArsenal.isPlayer && InventionManager.instance.CheckHasUpgrade(InventionType.QuickChargeCapacitory))
+        if (characterThatOwnsThisArsenal.isPlayer && InventionManager.instance.CheckHasUpgrade(InventionID.QUICKCHARGE_CAPACITORY))
         {
             specialtyCooldownTimer *= quickChargeCapacitorCooldownMultiplier;
         }
