@@ -20,7 +20,8 @@ public class CharacterLocomotionManager : MonoBehaviour
     [SerializeField] protected float groundedYVelocity = -20f;
     //The force at which our character begins to fall when ungrounded. This value increases over time when in the air. 
     [SerializeField] protected float fallStartYVelocity = -7f;
-    public float JumpAttackQuickFallSpeedModifier = 12f;
+    public float meteorStrikeVerticalSpeedModifier = 10f;
+    public float meteorStrikeHorizontalSpeedModifier = 60f;
 
     protected bool fallingVelocityHasBeenSet = false;
     protected float inAirTimer = 0f;
@@ -45,6 +46,7 @@ public class CharacterLocomotionManager : MonoBehaviour
             {
                 inAirTimer = 0;
                 fallingVelocityHasBeenSet = false;
+                yVelocity = Vector3.zero;
                 yVelocity.y = groundedYVelocity;
             }
 
@@ -123,8 +125,20 @@ public class CharacterLocomotionManager : MonoBehaviour
     {
         if (!character.isGrounded)
         {   
-            yVelocity *= JumpAttackQuickFallSpeedModifier;
+            Vector3 newFallDirection;
+            if (character.isLockedOn)
+            {
+                newFallDirection = (character.characterCombatManager.currentTarget.transform.position - character.transform.position).normalized * meteorStrikeHorizontalSpeedModifier;
+            }
+            else
+            {
+                newFallDirection = PlayerCamera.instance.transform.forward * meteorStrikeHorizontalSpeedModifier;
+                newFallDirection.y = meteorStrikeVerticalSpeedModifier * fallStartYVelocity;
+            }
+
+            yVelocity = newFallDirection;
         }
+        
     }
     
 }
