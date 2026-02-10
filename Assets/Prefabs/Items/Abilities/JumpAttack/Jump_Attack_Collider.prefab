@@ -42,6 +42,7 @@ Transform:
   - {fileID: 2448067608027223651}
   - {fileID: 5582579866700328795}
   - {fileID: 3068019145510513534}
+  - {fileID: 3008172799463193477}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4108489779816469498
@@ -110,6 +111,7 @@ MonoBehaviour:
   beastJumpAttackVFX: {fileID: 3759159952308884322}
   scalesJumpAttackVFX: {fileID: 6166923774370728829}
   techJumpAttackVFX: {fileID: 4113288619202359877}
+  MeteorImpactDecal: {fileID: 2301256294494675223}
 --- !u!135 &837617725228449830
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -239,6 +241,79 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8953264713256607884, guid: 87ee7299dd44ed747af24dbb91bcd33b, type: 3}
   m_PrefabInstance: {fileID: 1296658135131920712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2330541292940094069
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4283938941443224219}
+    m_Modifications:
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811101522110557237, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_Name
+      value: MeteorImpactDecal
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+--- !u!114 &2301256294494675223 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4591431489772473186, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+  m_PrefabInstance: {fileID: 2330541292940094069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fc83e41ccab824aba5023cb924684c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &3008172799463193477 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+  m_PrefabInstance: {fileID: 2330541292940094069}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2426078599437286114
 PrefabInstance:

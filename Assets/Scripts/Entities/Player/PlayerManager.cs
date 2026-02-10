@@ -20,6 +20,8 @@ public class PlayerManager : CharacterManager
     public GameObject flashlight;
     public GameObject cameraflashlight;
     public GameObject capeSystem;
+    private Cloth capeClothComponent;
+    private float capeClothWorldAccelerationModifier;
     [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
 
     [Header("Debug Menu")]
@@ -36,6 +38,8 @@ public class PlayerManager : CharacterManager
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
         playerInteractionManager = GetComponent<PlayerInteractionManager>();
+        capeClothComponent = capeSystem.GetComponentInChildren<Cloth>();
+        capeClothWorldAccelerationModifier = capeClothComponent.worldAccelerationScale;
 
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
@@ -428,6 +432,7 @@ public class PlayerManager : CharacterManager
     public override void EnableMeteorBoosterVFX()
     {
         playerLocomotionManager.EnableMeteorBoosters();
+        playerLocomotionManager.JumpAttackQuickFall();
     }
 
     public override void DisableMeteorBoosterVFX()
@@ -438,6 +443,18 @@ public class PlayerManager : CharacterManager
     public override void DisableMeteorDescentBoosterVFX()
     {
         playerLocomotionManager.DisableMeteorDescentBoosters();
+    }
+
+    public void PauseClothPhysics()
+    {
+        //capeClothComponent.worldAccelerationScale = 0f;
+        capeClothComponent.enabled = false;
+    }
+
+    public void ResumeClothPhysics()
+    {
+        //capeClothComponent.worldAccelerationScale = capeClothWorldAccelerationModifier;
+        capeClothComponent.enabled = true;
     }
 
 }
