@@ -6,19 +6,22 @@ public class InteractableChestSimple : Interactable
 {
     public bool isClosed = true;
     //private bool hasUnlocked = false;
-    [Header("Swings to negative angle")]
+    [Header("Door object to rotate")]
     public GameObject door;
     private float currentDoorOpenTimer = 0f;
     private float maximumDoorOpenTimer = 0.5f;
     public float doorOpenAngle = 90f;
-    [Header("Items. Either set manually or let a separate script set")]
+    [Header("Minimap Icon")]
+    public GameObject minimapIcon;
+    [Header("Item's dropped")]
     public List<GameObject> contents = new List<GameObject>();
 
     [Header("Sound")]
     public AudioClip chestSound;//TODO use array?
 
-    [Header("TODO")]
+    [Header("Lock & Key")]
     public bool needsKey = false;
+    public string key_id = "brass_key";
     protected override void Start()
     {
         base.Start();
@@ -33,9 +36,9 @@ public class InteractableChestSimple : Interactable
 
         if (needsKey)
         { // needing a key
-            if (player.GetComponent<Inventory>().CheckOwnedQty("brass_key") > 0)
+            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
             {
-                player.GetComponent<Inventory>().GetItem("brass_key").quantity--;
+                player.GetComponent<Inventory>().GetItem(key_id).quantity--;
                 SuccessfullyOpen(player);
             }
             else
@@ -50,9 +53,9 @@ public class InteractableChestSimple : Interactable
     void SuccessfullyOpen(PlayerManager player)
     {
         if (chestSound != null)
-        {
             player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
-        }
+        if(minimapIcon != null)
+            Destroy(minimapIcon);
         SetColliderEnabled(false);
         StartCoroutine(OpenDoorOverTime());
     }
