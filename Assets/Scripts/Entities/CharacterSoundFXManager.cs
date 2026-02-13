@@ -129,6 +129,10 @@ public class CharacterSoundFXManager : MonoBehaviour
         if ((lastFootStep > 0 && footStep < 0) || (lastFootStep < 0 && footStep > 0))
         {
             PlayFootStepSFX();
+
+            //Determines which foot to play dust particle VFX
+            bool isLeftFoot = footStep < 0;
+            characterManager.characterEffectsManager.ActivateFootstepVFX(isLeftFoot);
         }
 
         lastFootStep = footStep;
