@@ -52,11 +52,15 @@ public class InteractableChestSimple : Interactable
     }
     void SuccessfullyOpen(PlayerManager player)
     {
+        //play sound
         if (chestSound != null)
             player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
+        //remove minimap icon
         if(minimapIcon != null)
             Destroy(minimapIcon);
+        //disable interactable
         SetColliderEnabled(false);
+        //open animation
         StartCoroutine(OpenDoorOverTime());
     }
 
@@ -68,23 +72,25 @@ public class InteractableChestSimple : Interactable
             var doorXOffset = (doorOpenAngle / maximumDoorOpenTimer) * Time.deltaTime;
             if (!isClosed)
                 doorXOffset = -doorXOffset;
-            //TODO Allow closing of door by negating 
-            //Move Left Door
+            //Move Door
             if (door != null)
             {
                 door.transform.Rotate(new Vector3(-doorXOffset, 0f, 0f));
             }
             yield return null;
         }
+        //activate items
         foreach (GameObject item in contents)
         {
             item.SetActive(true);
         }
-        isClosed = !isClosed;
-        if (isClosed)
-            interactableText = "Open";
-        else interactableText = "Close";
-        currentDoorOpenTimer = 0;
+
+        //reset values - Unecessary?
+        //isClosed = !isClosed;
+        //if (isClosed)
+        //    interactableText = "Open";
+        //else interactableText = "Close";
+        //currentDoorOpenTimer = 0;
     }
     public void SetColliderEnabled(bool enabled)
     {

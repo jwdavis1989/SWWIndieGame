@@ -37,7 +37,7 @@ public class ItemDropManager : MonoBehaviour
     {
         //Warning: CreateWeapon creates object under the Transform loc which would cause the weapon to dissapear when loc (possibly a dead enemy) dissapears
         GameObject weaponDrop = WeaponsController.instance.CreateWeapon(type, loc);
-        return Instantiate(weaponDrop);
+        return weaponDrop;
     }
     //singleton pattern
     public static ItemDropManager instance;
