@@ -36,8 +36,10 @@ public class ItemDropManager : MonoBehaviour
     public static GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
     {
         //Warning: CreateWeapon creates object under the Transform loc which would cause the weapon to dissapear when loc (possibly a dead enemy) dissapears
-        return Instantiate(WeaponsController.instance.CreateWeapon(type, loc));
+        GameObject weaponDrop = WeaponsController.instance.CreateWeapon(type, loc);
+        return Instantiate(weaponDrop);
     }
+    //singleton pattern
     public static ItemDropManager instance;
     public void Awake()
     {

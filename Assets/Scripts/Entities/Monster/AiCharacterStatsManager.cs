@@ -13,6 +13,8 @@ public class AICharacterStatsManager : CharacterStatsManager
     [Header("Tinker component drop chance as 0-1")]
     public List<TinkerComponentDropChance> componentDropChances = new List<TinkerComponentDropChance>();
     [Serializable] public class TinkerComponentDropChance { public TinkerComponentType type; public float dropChance; } //Allows for simply setting drop chances in editor
+    List<string> fruits = new List<string> { "Apple", "Banana", "Cherry" };
+    List<TinkerComponentDropChance> componentDropChances2 = new List<TinkerComponentDropChance> { new TinkerComponentDropChance() };
     public void DoAllDrops(bool isHitByMainHand, bool isHitByOffHand)
     {
         //Debug.Log("DoAllDrops:" + isHitByMainHand + " exp:" + expDropAmt + " g:" + goldDropChance);

@@ -14,10 +14,9 @@ public class JournalManager : MonoBehaviour
         journalFlags[hasNotOpenedInventMenuKey] = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool CheckJournalFlag(string key)
     {
-        
+        return journalFlags[key];
     }
     public void Awake()
     {
@@ -44,4 +43,5 @@ public class JournalManager : MonoBehaviour
     public const string hasOpenedInventMenuKey = "hasOpenedInventMenuKey";
     public const string hasInventedSomethingKey = "hasInventedSomethingKey";
     public const string hasHalfInventionIdea = "hasHalfInventionIdea";
+    public const string hasObtainedTier2RareWeapon = "hasObtainedTier2RareWeapon";
 }

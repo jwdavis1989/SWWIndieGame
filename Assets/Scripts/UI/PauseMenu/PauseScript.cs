@@ -85,6 +85,7 @@ public class PauseScript : MonoBehaviour
         HandleSwitchMenuInput();
         HandleExitPauseMenuInput();
         CheckControlsChanged();
+        HandleCheatMenu();
     }
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
@@ -418,6 +419,21 @@ public class PauseScript : MonoBehaviour
                     gamepadeUI.SetActive(false);
                 foreach (GameObject gamepadeUI in keyboardMouseTooltips)
                     gamepadeUI.SetActive(true);
+            }
+        }
+    }
+    public GameObject cheatMenu;
+    private void HandleCheatMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            Debug.Log("BackQuote key pressed!");
+            // Add your action here
+            if (cheatMenu != null)
+            {
+                if(cheatMenu.activeSelf)
+                    cheatMenu.SetActive(false);
+                else cheatMenu.SetActive(true);
             }
         }
     }
