@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc924692a03cae44babe07c8c12bab8, type: 3}
+  m_Name: bellBlade
+  m_EditorClassIdentifier: 
+  itemId: bellBlade
+  weaponFamiliy: swords
+  baseAttack: 22
+  maxAttack: 45
+  basePoiseDamage: 1
+  baseDurability: 100
+  maxDurability: 144
+  baseBlock: 40
+  maxBlock: 44
+  baseStability: 0
+  maxStability: 6
+  baseElemental:
+    firePower: 0
+    icePower: 0
+    lightningPower: 20
+    windPower: 0
+    earthPower: 0
+    lightPower: 22
+    beastPower: 15
+    scalesPower: 0
+    techPower: 0
+    currentHighestElementalStat: 0
+  maxElemental:
+    firePower: 45
+    icePower: 45
+    lightningPower: 45
+    windPower: 45
+    earthPower: 45
+    lightPower: 45
+    beastPower: 45
+    scalesPower: 45
+    techPower: 45
+    currentHighestElementalStat: 0
+  maxSpeed: 1
+  xpToLevel: 100
+  tinkerPointsPerLvl: 1
+  experiencePointsToNextLevel: 100
+  baseStaminaCost: 20
+  lightAttack01StaminaCostModifier: 1
+  lightAttack02StaminaCostModifier: 1
+  lightAttack03StaminaCostModifier: 1
+  heavyAttack01StaminaCostModifier: 1.2
+  heavyAttack02StaminaCostModifier: 1.2
+  lightJumpAttack01StaminaCostModifier: 1
+  heavyJumpAttack01StaminaCostModifier: 4
+  lightRunningAttack01StaminaCostModifier: 1
+  lightRollingAttack01StaminaCostModifier: 1
+  lightBackstepAttack01StaminaCostModifier: 1
+  lightAttack01DamageMotionValue: 1
+  lightAttack02DamageMotionValue: 1.1
+  lightAttack03DamageMotionValue: 1.2
+  heavyAttack01DamageMotionValue: 1.4
+  heavyAttack02DamageMotionValue: 1.6
+  heavyChargedAttack01DamageMotionValue: 2
+  heavyChargedAttack02DamageMotionValue: 2.2
+  lightJumpAttack01DamageMotionValue: 1
+  heavyJumpAttack01DamageMotionValue: 1.8
+  lightRunningAttack01DamageMotionValue: 1
+  lightRollingAttack01DamageMotionValue: 1
+  lightBackstepAttack01DamageMotionValue: 1
+  areaSpellAttack01DamageMotionValue: 1
+  singleTargetBulletAttack01DamageMotionValue: 1

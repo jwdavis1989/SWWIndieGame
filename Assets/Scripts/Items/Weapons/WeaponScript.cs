@@ -998,33 +998,33 @@ public class WeaponScript : MonoBehaviour
         switch (stat)
         {
             case "Attack":
-                return "Attack improves all damage";
+                return "Attack improves all damage.";
             case "Block":
-                return "Block lowers damage";
+                return "Block lowers damage.";
             case "Durability":
-                return "Weapon is broken when durability is zero";
+                return "Weapon is broken when durability is zero.";
             case "Stability":
-                return "Stability reduces stagger";
+                return "Stability reduces stagger.";
             case "Fire":
-                return "Fire is strong against grass types";
+                return "Fire is strong against grass types.";
             case "Earth":
-                return "Earth is strong against newbs";
+                return "Earth is strong against armoured enemies.";
             case "Ice":
-                return "Ices is strong against fire types";
+                return "Ices is strong against fire types.";
             case "Light":
-                return "Light is good against undead";
+                return "Light is good against undead.";
             case "Lightning":
-                return "Lightning is good against water types";
+                return "Lightning is good against water types.";
             case "Beast":
-                return "Beast improves damage against natural animals";
+                return "Beast improves damage against natural animals.";
             case "Wind":
-                return "Wind improves damage against flying enemies";
+                return "Wind improves damage against flying enemies.";
             case "Scales":
-                return "Scales improves damage against fish and reptiles";
+                return "Scales improves damage against fish and reptiles.";
             case "Tech":
-                return "Tech improves damage to robots";
+                return "Tech improves damage to robots.";
             default:
-                return stat + " is good";
+                return stat + " is like totally good or something.";
         }
     }
 }

@@ -14,6 +14,7 @@ public class InventoryMenuManager : MonoBehaviour
     [Header("Grid window where items appear")]
     public GridLayoutGroup inventoryWindow;
     public QuickslotUI[] quickslotUIs = new QuickslotUI[4];
+    public Sprite emptyQuickslotSpr = null;
     public TextMeshProUGUI goldText;
     [Header("Prefab for inventory item UI Element")]
     public GameObject itemUIPrefab;
@@ -108,7 +109,7 @@ public class InventoryMenuManager : MonoBehaviour
     void Update()
     {
         CheckControlsChanged();
-        HandleGamePadSelected();
+        HandleGamepadSelectedObject();
         HandleUseButtonInput();
         HandlequickSlotGamepadInput();
         HandlequickSlotKeyboardInput();
@@ -118,25 +119,6 @@ public class InventoryMenuManager : MonoBehaviour
      ********************************  I N P U T   H A N D L E R S  ********************************
      ***********************************************************************************************/
     GameObject currentlySelectedObj;
-    void HandleGamePadSelected()
-    {
-        //TODO
-        if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad())
-        { //Handle Lost gamepad Cursor
-            if (inventoryWindow.transform.childCount > 0)
-            {
-                inventoryWindow.transform.GetChild(0).GetComponentInChildren<Button>().Select();
-            }
-        }
-        //if (eventSystem.currentSelectedGameObject != null && eventSystem.currentSelectedGameObject != currentlySelectedObj)
-        //{
-        //    InventoryItemUI itemUi = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
-        //    if (itemUi != null)
-        //    {
-        //        SetTooltipToItem(itemUi.itemId);
-        //    }
-        //}
-    }
     public void HandleUseButtonInput()
     {
         if (useButtonPerformed)
@@ -259,6 +241,13 @@ public class InventoryMenuManager : MonoBehaviour
     }
     public void HandleGamepadSelectedObject()
     {
+        if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad())
+        { //Handle Lost gamepad Cursor
+            if (inventoryWindow.transform.childCount > 0)
+            {
+                inventoryWindow.transform.GetChild(0).GetComponentInChildren<Button>().Select();
+            }
+        }
         if (currentCursorObj != eventSystem.currentSelectedGameObject)
         {
             currentCursorObj = eventSystem.currentSelectedGameObject;
@@ -330,6 +319,8 @@ public class InventoryMenuManager : MonoBehaviour
         int TOTOL_QUICKSLOTS = 4;
         for (int i = 0; i < TOTOL_QUICKSLOTS; i++)
         {
+            if (InputSwitchDetector.IsCurrentlyGamepad())
+                quickslotUIs[i].gamepadSelectedIcon.SetActive(i == currentSelectedQuickslot);
             if (playerInventory == null) break;
             if (playerInventory.quickSlotItems[i] == null) continue;
             string itemId = playerInventory.GetQuickSlotItemId(i);
@@ -342,22 +333,21 @@ public class InventoryMenuManager : MonoBehaviour
                     quickslotUIs[i].itemText.text = itemDetails.itemName;
                 }
                 else Debug.Log("Item Details Not Found:"+itemId);
-                if (InputSwitchDetector.IsCurrentlyGamepad())
-                    quickslotUIs[i].gamepadSelectedIcon.SetActive(i == currentSelectedQuickslot);
             }
             else
             {
                 quickslotUIs[i].itemText.text = "None";
+                quickslotUIs[i].itemUI.mainButtonForeground.sprite = emptyQuickslotSpr;
             }
-            
         }
     }
     void SetTooltipToItem(string itemId)
     {
+        int qty = playerInventory.GetItem(itemId).quantity;
         ItemDetails itemDetails = GetItemDetails(itemId);
         tooltip.headerText.text = itemDetails.itemName;
         tooltip.centerText.text = itemDetails.description;
-        tooltip.bottomText.text = itemDetails.cost + " gp";
+        tooltip.bottomText.text = qty + "  -  " + itemDetails.cost + " gp";
     }
 
     ItemDetails GetItemDetails(string itemId)

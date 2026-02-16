@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "Character Effects/Instant Effects/Heal Character")]
 
-public class HealCharacterEffect : InstantCharacterEffect
+public class HealCharacterEffect : ItemEffect
 {
     public float damageHealed = 0f;
 
