@@ -19,6 +19,7 @@ public class ChildCombatStanceState : CombatStanceState
     {
         SpawningBehavior explosionSpawner = aiCharacter.gameObject.GetComponent<SpawningBehavior>();
         FlashingBehavior flashingLight = aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>();
+        aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
         explosionSpawner.auto = true; // spawn explosion after interval
         flashingLight.ActivateFlashing(); //flashing light effect
         aiCharacter.animator.speed = 3; // speed up
