@@ -128,6 +128,37 @@ MonoBehaviour:
   customCookieDistanceFalloffPower: 2
   customAngularFalloffThreshold: 0.8
   customAngularFalloffPower: 2
+--- !u!1 &2639904795538270151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1238209445303259849}
+  m_Layer: 6
+  m_Name: SpawnAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1238209445303259849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2639904795538270151}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8177066549235337438}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2924404807806131836
 GameObject:
   m_ObjectHideFlags: 0
@@ -6055,9 +6086,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5419909538384227502, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+      propertyPath: distance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5419909538384227502, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       propertyPath: spawnPrefab
       value: 
       objectReference: {fileID: 6809378544639214776, guid: e709a7055e0585346836a513b60e4c51, type: 3}
+    - target: {fileID: 5419909538384227502, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+      propertyPath: spawnAnchorTransform
+      value: 
+      objectReference: {fileID: 1238209445303259849}
     - target: {fileID: 5632615561119973379, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       propertyPath: m_Name
       value: MasterworkFabricator
@@ -6243,6 +6282,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9078414862354134971, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1525095689369032002}
+    - targetCorrespondingSourceObject: {fileID: 9078414862354134971, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1238209445303259849}
     - targetCorrespondingSourceObject: {fileID: 5249100162518356341, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8957439753248249026}

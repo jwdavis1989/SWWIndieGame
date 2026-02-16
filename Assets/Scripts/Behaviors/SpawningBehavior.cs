@@ -18,6 +18,10 @@ public class SpawningBehavior : MonoBehaviour
     [Header("Time to wait between spawns")]
     public float spawnInterval = 1;
     private float spawnTime = 0;
+
+    [Header("Optional Spawn Point")]
+    public Transform spawnAnchorTransform;
+
     public void Update()
     {
         if (!auto) 
@@ -32,6 +36,13 @@ public class SpawningBehavior : MonoBehaviour
             if (spawnList.Count < max)
             {
                 Vector3 spawnPos = transform.position;
+
+                //If we want to spawn around a specific point besides ourselves
+                if (spawnAnchorTransform)
+                {
+                    spawnPos = spawnAnchorTransform.position;
+                }
+
                 if (distance > 0)
                 {
                     //calculate randomized positon
