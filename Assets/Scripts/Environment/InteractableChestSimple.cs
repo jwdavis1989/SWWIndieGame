@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,12 +57,13 @@ public class InteractableChestSimple : Interactable
         if (chestSound != null)
             player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
         //remove minimap icon
-        if(minimapIcon != null)
+        if (minimapIcon != null)
             Destroy(minimapIcon);
         //disable interactable
         SetColliderEnabled(false);
         //open animation
         StartCoroutine(OpenDoorOverTime());
+        HandleLootTable();
     }
 
     IEnumerator OpenDoorOverTime()
@@ -95,5 +97,11 @@ public class InteractableChestSimple : Interactable
     public void SetColliderEnabled(bool enabled)
     {
         interactableCollider.enabled = enabled;
+    }
+    [SerializeField] LootTable lootTable;
+    public void HandleLootTable()
+    {
+        if (lootTable == null) return;
+        Debug.Log("HandleLootTable:GetRandomItem:" + lootTable.GetRandomItem().itemId);
     }
 }

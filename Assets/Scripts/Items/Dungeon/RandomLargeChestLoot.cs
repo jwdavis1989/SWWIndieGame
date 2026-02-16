@@ -32,12 +32,12 @@ public class RandomLargeChestLoot : MonoBehaviour
                 gemDropChance = -1f;
                 if (randomNumber > 50f)
                 { // drop Bone Scimitar
-                    Debug.Log("Dropping Bone Scimitar");
+                    Debug.Log("Stocking Bone Scimitar");
                     itemToAdd = ItemDropManager.DropWeapon(WeaponType.BoneBlade, transform);
                 }
                 else
                 { // drop Frost Wand
-                    Debug.Log("Dropping Frost Wand");
+                    Debug.Log("Stocking Frost Wand");
                     itemToAdd = ItemDropManager.DropWeapon(WeaponType.FreezeCaster, transform);
                 }
                 itemToAdd.AddComponent<RareLootDisplay>();
@@ -50,7 +50,7 @@ public class RandomLargeChestLoot : MonoBehaviour
             else
             {
                 //drop weapon
-                Debug.Log("Dropping Weapon " + (randomNumber>50f?"BoneBlade": "Frost Wand"));
+                Debug.Log("Stocking Weapon " + (randomNumber>50f?"BoneBlade": "Frost Wand"));
                 if (randomNumber > 50f) // drop Bone Scimitar
                     itemToAdd = ItemDropManager.DropWeapon(WeaponType.BoneBlade, transform);
                 else // drop Frost Wand
