@@ -35,6 +35,14 @@ public class WeaponsController : MonoBehaviour
     {
         return Instantiate(baseWeapons[(int)type], location);
     }
+    public GameObject CreateWeaponById(string itemId, Transform location) // TODO
+    {
+        foreach (var weapon in baseWeapons)
+            if (weapon.GetComponent<WeaponScript>() != null)
+                if(weapon.GetComponent<WeaponScript>().stats.weaponName == itemId)
+                    return Instantiate(weapon,location);
+        return null;
+    }
     void Start()
     {
         // Avoids destroying this object when changing scenes

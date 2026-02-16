@@ -15,6 +15,14 @@ public class TinkerComponentManager : MonoBehaviour
     {
         return Instantiate(baseComponents[(int)type], location);
     }
+    public GameObject DropComponentById(string itemId, Transform location)
+    {
+        foreach (var component in baseComponents)
+            if (component.GetComponent<TinkerComponent>() != null)
+                if(component.GetComponent<TinkerComponent>().itemId == itemId)
+                    return Instantiate(component, location);
+        return null;
+    }
     //TEST: Drops random component 
     public GameObject DropRandomItem(Transform transform, float distance = 0)
     {

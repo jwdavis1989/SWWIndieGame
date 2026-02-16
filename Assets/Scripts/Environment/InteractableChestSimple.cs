@@ -102,6 +102,11 @@ public class InteractableChestSimple : Interactable
     public void HandleLootTable()
     {
         if (lootTable == null) return;
-        Debug.Log("HandleLootTable:GetRandomItem:" + lootTable.GetRandomItem().itemId);
+        ItemDetails itemDetails = lootTable.GetRandomItem();
+        //contents.Add(
+        ItemDropManager.instance.DropItemById(itemDetails.itemId, transform);
+        //);
+        Debug.Log("HandleLootTable:GetRandomItem:" + itemDetails.itemId);
+
     }
 }
