@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4382924068946428981, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6117896388447906204, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -87,5 +91,105 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4382924068946428981, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 5596144966549134467}
+    - targetCorrespondingSourceObject: {fileID: 5304453510327988318, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 6088735523858326196}
   m_SourcePrefab: {fileID: 100100000, guid: 9c1433dfd672206449719597bc857927, type: 3}
+--- !u!1 &1187704946680836990 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4382924068946428981, guid: 9c1433dfd672206449719597bc857927, type: 3}
+  m_PrefabInstance: {fileID: 3218056555940116299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5596144966549134467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187704946680836990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fbc31a99322bea48ab41f5f9aa72c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 4
+  bobSpeed: 1
+  heightMultiplier: -0.0625
+  isBobbingDelayed: 1
+  delayBeforeBobbingInSeconds: 0
+  isBobbingDelayRandom: 1
+  bobbingDelayRandomRange: 0.5
+--- !u!1 &7292982828826953493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5304453510327988318, guid: 9c1433dfd672206449719597bc857927, type: 3}
+  m_PrefabInstance: {fileID: 3218056555940116299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6088735523858326196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7292982828826953493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fbc31a99322bea48ab41f5f9aa72c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bobCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 4
+  bobSpeed: 1
+  heightMultiplier: -0.0625
+  isBobbingDelayed: 1
+  delayBeforeBobbingInSeconds: 0
+  isBobbingDelayRandom: 1
+  bobbingDelayRandomRange: 0.5
