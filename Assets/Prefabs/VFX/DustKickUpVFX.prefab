@@ -30,7 +30,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -170,8 +170,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 20
-      minScalar: 10
+      scalar: 0.25
+      minScalar: 0.125
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -288,8 +288,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3
-      minScalar: 1
+      scalar: 0.3
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -612,7 +612,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.2
+      scalar: -0.01
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -752,7 +752,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.75
+      value: 0.075
       mode: 0
       spread: 0
       speed:
@@ -1368,10 +1368,10 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0}
-        key1: {r: 0.5471698, g: 0.51373756, b: 0.29165182, a: 0.1254902}
-        key2: {r: 0.6320754, g: 0.49854738, b: 0.20572266, a: 0.0627451}
-        key3: {r: 0.54901963, g: 0.307013, b: 0.054901943, a: 0}
-        key4: {r: 0.4509804, g: 0.23003292, b: 0.011764692, a: 0}
+        key1: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 0.1254902}
+        key2: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0.0627451}
+        key3: {r: 0.5566038, g: 0.55531186, b: 0.5539783, a: 0}
+        key4: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
@@ -1384,7 +1384,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 5590
+        atime1: 2120
         atime2: 57632
         atime3: 65535
         atime4: 0
