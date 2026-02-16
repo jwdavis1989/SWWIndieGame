@@ -77,11 +77,11 @@ public class CharacterEffectsManager : MonoBehaviour
         {
             if (isLeftInsteadOfRight)
             {
-                Instantiate(WorldCharacterEffectsManager.instance.defaultfootstepDustVFX, leftFootstepDustVFXAnchor.transform.position, Quaternion.identity);
+                Instantiate(WorldCharacterEffectsManager.instance.defaultfootstepDustVFX, leftFootstepDustVFXAnchor.transform.position, leftFootstepDustVFXAnchor.transform.rotation);
             }
             else
             {
-                Instantiate(WorldCharacterEffectsManager.instance.defaultfootstepDustVFX, rightFootstepDustVFXAnchor.transform.position, Quaternion.identity);
+                Instantiate(WorldCharacterEffectsManager.instance.defaultfootstepDustVFX, rightFootstepDustVFXAnchor.transform.position, rightFootstepDustVFXAnchor.transform.rotation);
             }
         }
     }
