@@ -572,7 +572,7 @@ GameObject:
   - component: {fileID: 4491410042446983653}
   - component: {fileID: 6097093070088277279}
   - component: {fileID: 3972350763790113092}
-  - component: {fileID: 1988567711283333845}
+  - component: {fileID: 7876247494426969734}
   - component: {fileID: 1852746499727577451}
   - component: {fileID: 5919728733087329560}
   - component: {fileID: 428722355192839785}
@@ -744,7 +744,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1988567711283333845
+--- !u!114 &7876247494426969734
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3868504530908872297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 276feff4436e44f4aa0f3dab4766be96, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e481f59b4901ef4c82b897ae718b4d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
@@ -766,6 +766,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c013371484d187849935e7da6b6ce999, type: 3}
   - {fileID: 8300000, guid: bb68f82716561c94383c49538528cb26, type: 3}
   - {fileID: 8300000, guid: 22e980b3bbb679248aee3c61fae2a722, type: 3}
+  aggroSFX: {fileID: 0}
 --- !u!95 &1852746499727577451
 Animator:
   serializedVersion: 5
@@ -961,6 +962,7 @@ MonoBehaviour:
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
   statsManager: {fileID: 0}
+  aiCharacterSoundFXManager: {fileID: 0}
   currentState: {fileID: 11400000, guid: 1cb59e6b735667441a633306849cb7ad, type: 2}
   idleState: {fileID: 11400000, guid: 1cb59e6b735667441a633306849cb7ad, type: 2}
   pursueTargetState: {fileID: 11400000, guid: 7c78ba5159372974c846f31dbf1271c4, type: 2}
