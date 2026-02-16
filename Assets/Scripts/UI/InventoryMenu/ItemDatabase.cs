@@ -8,9 +8,13 @@ public class ItemDatabase : ScriptableObject
     [Header("Lookup table for static item data (sprite, desc, etc.)")]
     public List<ItemDetails> items;
     public List<ItemEffect> itemEffects;
+    public List<WeaponData> weaponDetails;
+    public List<TinkerComponentData> componentDetails;
 
     private Dictionary<string, ItemDetails> itemLookup;
     public Dictionary<string, ItemEffect> itemEffectsLookup;
+    private Dictionary<string, WeaponData> weaponDetailsLookup;
+    public Dictionary<string, TinkerComponentData> componentDetailsLookup;
 
     public void Initialize()
     {
@@ -38,6 +42,28 @@ public class ItemDatabase : ScriptableObject
                 Debug.LogWarning($"Duplicate itemEffect.itemId: {itemEffect.itemId}");
             }
         }
+        foreach (WeaponData weaponData in weaponDetails)
+        {
+            if (!weaponDetailsLookup.ContainsKey(weaponData.itemId))
+            {
+                weaponDetailsLookup.Add(weaponData.itemId, weaponData);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate weaponData.itemId: {weaponData.itemId}");
+            }
+        }
+        foreach (TinkerComponentData componentData in componentDetails)
+        {
+            if (!componentDetailsLookup.ContainsKey(componentData.itemId))
+            {
+                componentDetailsLookup.Add(componentData.itemId, componentData);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate componentData.itemId: {componentData.itemId}");
+            }
+        }
     }
 
     public ItemDetails GetItem(string itemId)
@@ -55,5 +81,21 @@ public class ItemDatabase : ScriptableObject
 
         itemEffectsLookup.TryGetValue(itemId, out var item);
         return item;
+    }
+    public WeaponData GetWeaponData(string itemId)
+    {
+        if (itemEffectsLookup == null)
+            Initialize();
+
+        weaponDetailsLookup.TryGetValue(itemId, out var data);
+        return data;
+    }
+    public TinkerComponentData GetTinkerComponentData(string itemId)
+    {
+        if (itemEffectsLookup == null)
+            Initialize();
+
+        componentDetailsLookup.TryGetValue(itemId, out var data);
+        return data;
     }
 }
