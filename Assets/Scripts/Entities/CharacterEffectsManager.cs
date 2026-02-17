@@ -15,6 +15,9 @@ public class CharacterEffectsManager : MonoBehaviour
     [Header("VFX")]
     [SerializeField] GameObject bloodSplatterVFX;
     [SerializeField] GameObject deathVFX;
+    [SerializeField] GameObject leftFootstepDustVFXAnchor;
+    
+    [SerializeField] GameObject rightFootstepDustVFXAnchor;
 
     [Header("Current Active VFX")]
     public GameObject activeSpellWarmUpFX;
@@ -65,6 +68,21 @@ public class CharacterEffectsManager : MonoBehaviour
         else
         {
             Instantiate(WorldCharacterEffectsManager.instance.defaultDeathExplosionVFX, transform.position, Quaternion.identity);
+        }
+    }
+
+    public void ActivateFootstepVFX(bool isLeftInsteadOfRight)
+    {
+        if (character.isGrounded && leftFootstepDustVFXAnchor && rightFootstepDustVFXAnchor)
+        {
+            if (isLeftInsteadOfRight)
+            {
+                Instantiate(WorldCharacterEffectsManager.instance.defaultfootstepDustVFX, leftFootstepDustVFXAnchor.transform.position, leftFootstepDustVFXAnchor.transform.rotation);
+            }
+            else
+            {
+                Instantiate(WorldCharacterEffectsManager.instance.defaultfootstepDustVFX, rightFootstepDustVFXAnchor.transform.position, rightFootstepDustVFXAnchor.transform.rotation);
+            }
         }
     }
 
