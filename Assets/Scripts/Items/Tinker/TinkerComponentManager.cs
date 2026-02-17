@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,12 +15,35 @@ public class TinkerComponentManager : MonoBehaviour
     {
         return Instantiate(baseComponents[(int)type], location);
     }
+    public GameObject DropComponentById(string itemId, Transform location)
+    {
+        foreach (var component in baseComponents)
+            if (component.GetComponent<TinkerComponent>() != null)
+                if(component.GetComponent<TinkerComponent>().itemId == itemId)
+                    return Instantiate(component, location);
+        return null;
+    }
     //TEST: Drops random component 
     public GameObject DropRandomItem(Transform transform, float distance = 0)
     {
         int i = UnityEngine.Random.Range(0, baseComponents.Length - 1);
         if (baseComponents[i] == null) return null ;
         return Instantiate(baseComponents[i], transform.position + (transform.forward * distance), transform.rotation);
+    }
+    public GameObject DropRandomGem(Transform transform, float distance = 0)
+    {
+        GameObject[] gems = GetGems();
+        int i = UnityEngine.Random.Range(0, gems.Length - 1);
+        if (gems[i] == null) return null;
+        return Instantiate(gems[i], transform.position + (transform.forward * distance), transform.rotation);
+    }
+    public GameObject[] GetCommonComponents()
+    {
+        return baseComponents.Where(obj => "razor,bolt,plating,micro_generator,hook,drillbit".Contains(obj.GetComponent<TinkerComponent>().itemId)).ToArray();
+    }
+    public GameObject[] GetGems()
+    {
+        return baseComponents.Where(obj=>"ruby,pearl,diamond,turquouse,peridot,emerald,sapphire,garnet".Contains(obj.GetComponent<TinkerComponent>().itemId)).ToArray();
     }
     //****END DEBUG AREA
     public static TinkerComponentManager instance;
@@ -52,9 +76,6 @@ public class TinkerComponentManager : MonoBehaviour
     //List of weapons turned in to tinker components
     [Header("List of weapons turned in to tinker components")]
     public List<GameObject> weaponComponents = new List<GameObject>();
-    //JSON file contaning base stats. Will overwrite prefab!
-    [Header("JSON file contaning base stats")]
-    public TextAsset baseComponentJsonFile;
     /**
     * break down weapon into a tinker component and add to owned components
     * @Returns a reference to the component that was added

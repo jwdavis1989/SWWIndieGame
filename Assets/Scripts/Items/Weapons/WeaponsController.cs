@@ -26,8 +26,6 @@ public class WeaponsController : MonoBehaviour
     "   Use CharacterWeaponManager to add to another character")]
     [Header("List of all weapons. Will use prefab added in Editor.")]
     public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
-    [Header("JSON containing base stats")]
-    public TextAsset baseWeaponJsonFile; // json file with intilizing stats that will overwrite prefab
     public bool debugMode = false; // Debug Text, adds to current weapons on Start
 
     /**
@@ -36,6 +34,14 @@ public class WeaponsController : MonoBehaviour
     public GameObject CreateWeapon(WeaponType type, Transform location)
     {
         return Instantiate(baseWeapons[(int)type], location);
+    }
+    public GameObject CreateWeaponById(string itemId, Transform location) // TODO
+    {
+        foreach (var weapon in baseWeapons)
+            if (weapon.GetComponent<WeaponScript>() != null)
+                if(weapon.GetComponent<WeaponScript>().stats.weaponName == itemId)
+                    return Instantiate(weapon,location);
+        return null;
     }
     void Start()
     {

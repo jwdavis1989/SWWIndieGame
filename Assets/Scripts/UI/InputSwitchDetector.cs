@@ -49,7 +49,7 @@ public class InputSwitchDetector : MonoBehaviour
                 newDevice = KEYBOARD;
                 //Debug.Log("Left mouse clicked");
             }
-            // Any keyboard key
+            // Any keyboard key - TODO: see if binding any key in playerControls is more responsive
             if (Keyboard.current.anyKey.wasPressedThisFrame)
             {
                 newDevice = KEYBOARD;
@@ -58,23 +58,18 @@ public class InputSwitchDetector : MonoBehaviour
         }
         else
         {
-            //if (Gamepad.current.buttonWest.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame
-            //    || Gamepad.current.buttonNorth.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame
-            //    || Gamepad.current.leftTrigger.wasPressedThisFrame || Gamepad.current.rightTrigger.wasPressedThisFrame
-            //    || Gamepad.current.leftShoulder.wasPressedThisFrame || Gamepad.current.rightShoulder.wasPressedThisFrame)
             if(anyGamepadInput)
-            { //TODO: just bind something in PlayerControls
-                anyGamepadInput = false;
+            {
                 //Debug.Log("Gamepad updated while keyboard");
+                anyGamepadInput = false;
                 newDevice = GAMEPAD;
             }
         }
         if (currentDevice != newDevice)
         {
-            //device was changed
+            //Debug.Log("Device changed to " + currentDevice);
             deviceChanged = true;
             currentDevice = newDevice;
-            //Debug.Log("Device changed to " + currentDevice);
         }
     }
     public static bool IsCurrentlyGamepad()
