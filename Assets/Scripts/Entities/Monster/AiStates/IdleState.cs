@@ -17,6 +17,8 @@ public class IdleState : AIState
             //Activate monster health bar
             aiCharacter.characterUIManager.ActivateHealthBar();
 
+            aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
+
             //Changes state to the pursue target state
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }

@@ -16,6 +16,7 @@ public class AICharacterManager : CharacterManager
     [HideInInspector] public AiCharacterCombatManager aiCharacterCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
     [HideInInspector] public AICharacterStatsManager statsManager;
+    [HideInInspector] public AiCharacterSoundFXManager aiCharacterSoundFXManager;
 
     [Header("Current State")]
     [SerializeField] AIState currentState;
@@ -37,6 +38,7 @@ public class AICharacterManager : CharacterManager
         aiCharacterLocomotionManager = GetComponent<AICharacterLocomotionManager>();
         statsManager = GetComponent<AICharacterStatsManager>();
         aiCharacterCombatManager = GetComponent<AiCharacterCombatManager>();
+        aiCharacterSoundFXManager = GetComponent<AiCharacterSoundFXManager>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         ResetNavMeshAgentPosition();
 
