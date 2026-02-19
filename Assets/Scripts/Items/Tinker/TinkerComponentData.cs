@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TinkerComponentData : ScriptableObject
 {
+    [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
     public string componentTier = "tier_1"; //tier_1,tier_2
 

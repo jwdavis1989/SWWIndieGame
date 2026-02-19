@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     //list of items
     //public List<InventoryItem> items;
-    public Dictionary<string, InventoryItem> items = new Dictionary<string, InventoryItem>();
+    public Dictionary<string, PickupableItem> items = new Dictionary<string, PickupableItem>();
     public InventionManager inventionManager; //Reference to tinker components
     public CharacterWeaponManager weapons;//Reference to weapons list
 
@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
     public const int TOTAL_QUICKSLOTS = 4;
     public string[] quickSlotItems = new string[TOTAL_QUICKSLOTS];
 
-    public InventoryItem GetItem(string itemId)
+    public PickupableItem GetItem(string itemId)
     {
         return items[itemId];
     }

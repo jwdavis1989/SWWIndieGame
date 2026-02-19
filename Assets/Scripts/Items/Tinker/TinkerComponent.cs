@@ -44,7 +44,7 @@ public enum TinkerComponentType
  * MonoBehaviour TinkerComponent that one can be added to a game object
  */
 
-public class TinkerComponent : InventoryItem
+public class TinkerComponent : PickupableItem
 {
     [Header("The TinkerComponent is used for upgrading weapons\n")]
     [Header("These values are saved when saving game")]

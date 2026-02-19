@@ -7,6 +7,8 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     [Header("Static weapon information")]
+
+    [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
     public string weaponFamiliy;
 
@@ -24,7 +26,7 @@ public class WeaponData : ScriptableObject
     public ElementalStats maxElemental;
 
 
-    [Header("I'm uncertain about all data below here and if it will be used")]
+    [Header("NOTE: I'm uncertain about all data below here and if it will be used.")]
 
     public float maxSpeed = 1.0f;
     public float xpToLevel = 100.0f;

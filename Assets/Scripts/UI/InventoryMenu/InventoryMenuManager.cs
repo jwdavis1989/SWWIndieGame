@@ -284,9 +284,9 @@ public class InventoryMenuManager : MonoBehaviour
         //{
         //    //TODO
         //}
-        foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.items)
+        foreach (KeyValuePair<string, PickupableItem> itemKVP in playerInventory.items)
         {
-            InventoryItem item = itemKVP.Value;
+            PickupableItem item = itemKVP.Value;
             ItemDetails itemDetails = GetItemDetails(itemKVP.Key);
             if (item == null || itemDetails == null) continue;
             if (item.quantity > 0)

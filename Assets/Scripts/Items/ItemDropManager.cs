@@ -69,7 +69,7 @@ public class ItemDropManager : MonoBehaviour
         {
             Debug.Log("Creating genericItemDropPrefab:" + itemDetails.itemId);
             obj = Instantiate(genericItemDropPrefab, loc);
-            obj.GetComponent<InventoryItem>().itemId = itemId;
+            obj.GetComponent<PickupableItem>().itemId = itemId;
         }
         return obj;
     }
