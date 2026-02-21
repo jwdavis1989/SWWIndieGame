@@ -80,7 +80,7 @@ public class TinkerComponentManager : MonoBehaviour
     * break down weapon into a tinker component and add to owned components
     * @Returns a reference to the component that was added
     */
-    public TinkerComponent BreakDownWeapon(int index, bool specialWeapon, CharacterWeaponManager characterWeapons)
+    public TinkerComponentStats BreakDownWeapon(int index, bool specialWeapon, CharacterWeaponManager characterWeapons)
     {
         List<GameObject> weaponsList = specialWeapon ? characterWeapons.ownedSpecialWeapons : characterWeapons.ownedWeapons;
         if (weaponsList.Count < index)
@@ -100,17 +100,19 @@ public class TinkerComponentManager : MonoBehaviour
                 throw new Exception("Last main hand weapon");
         }
         wpnToBreak.AddComponent<TinkerComponent>();
-        TinkerComponent rv = wpnToBreak.GetComponent<TinkerComponent>();
-        rv.stats.elementalStats = weapon.stats.elemental;
-        rv.stats.attack = weapon.stats.attack;
-        rv.stats.durability = weapon.stats.durability;
-        rv.stats.stability = weapon.stats.stability;
-        rv.stats.block = weapon.stats.block;
-        rv.stats.isWeapon = true;
-        rv.stats.isSpecialWpn = specialWeapon;
-        rv.stats.count = 1;
-        rv.stats.itemName = weapon.stats.weaponName;
-        rv.spr = weapon.spr;
+        TinkerComponentStats rv = new TinkerComponentStats();
+
+            //wpnToBreak.GetComponent<TinkerComponent>().stats;
+        rv.elementalStats = weapon.stats.elemental;
+        rv.attack = weapon.stats.attack;
+        rv.durability = weapon.stats.durability;
+        rv.stability = weapon.stats.stability;
+        rv.block = weapon.stats.block;
+        rv.isWeapon = true;
+        rv.isSpecialWpn = specialWeapon;
+        rv.count = 1;
+        rv.itemName = weapon.stats.weaponName;
+        rv.itemId = weapon.stats.weaponId;
         weaponComponents.Add(wpnToBreak); //add component
         GameObject eqWpn = characterWeapons.GetEquippedWeapon(specialWeapon);
         weaponsList.Remove(wpnToBreak);

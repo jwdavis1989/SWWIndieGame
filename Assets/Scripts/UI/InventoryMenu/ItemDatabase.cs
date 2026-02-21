@@ -20,6 +20,9 @@ public class ItemDatabase : ScriptableObject
     public void Initialize()
     {
         itemLookup = new Dictionary<string, ItemDetails>();
+        itemEffectsLookup = new Dictionary<string, ItemEffect>();
+        weaponDetailsLookup = new Dictionary<string, WeaponData>();
+        componentDetailsLookup = new Dictionary<string, TinkerComponentData>();
 
         foreach (ItemDetails item in items)
         {

@@ -68,6 +68,8 @@ public enum WeaponFamily
 {
     [Header("Weapon Type")]
     public WeaponType weaponType = 0;
+    [Header("Case insensitive id for data lookup")]
+    public string weaponId = "";
     public bool isMonsterWeapon = false;
 
     [Header("Weapon Attributes")]
