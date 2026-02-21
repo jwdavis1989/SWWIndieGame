@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Tinker Component Data")]
+[CreateAssetMenu(menuName = "Items/Item Data/Tinker Component Data")]
 
 public class TinkerComponentData : ScriptableObject
 {

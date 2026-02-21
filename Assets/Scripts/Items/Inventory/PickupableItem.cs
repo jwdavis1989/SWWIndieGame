@@ -49,7 +49,10 @@ public class PickupableItem : MonoBehaviour
         }
         else
         {   // add item to inventory
-            inventory.items.Add(itemId, this);
+            InventoryItem newItem = new InventoryItem();
+            newItem.itemId = itemId;
+            newItem.quantity = quantity;
+            inventory.items.Add(itemId, newItem);
             StartCoroutine(HideAfterDelay());
         }
     }

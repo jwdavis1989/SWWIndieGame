@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,7 +8,7 @@ public class Inventory : MonoBehaviour
 {
     //list of items
     //public List<InventoryItem> items;
-    public Dictionary<string, PickupableItem> items = new Dictionary<string, PickupableItem>();
+    public Dictionary<string, InventoryItem> items = new Dictionary<string, InventoryItem>();
     public InventionManager inventionManager; //Reference to tinker components
     public CharacterWeaponManager weapons;//Reference to weapons list
 
@@ -15,7 +16,7 @@ public class Inventory : MonoBehaviour
     public const int TOTAL_QUICKSLOTS = 4;
     public string[] quickSlotItems = new string[TOTAL_QUICKSLOTS];
 
-    public PickupableItem GetItem(string itemId)
+    public InventoryItem GetItem(string itemId)
     {
         return items[itemId];
     }
@@ -30,4 +31,18 @@ public class Inventory : MonoBehaviour
             return items[itemId].quantity;
         return 0;
     }
+    public void UseItem(string itemId)
+    {
+        ItemEffect itemEffect = ItemDropManager.instance.itemDatabase.GetItemEffect(itemId);
+        if (itemEffect != null)
+        {
+            GetComponent<PlayerEffectsManager>().ProcessInstantEffect(itemEffect);
+        }
+    }
+}
+[Serializable]
+public class InventoryItem
+{
+    public string itemId;
+    public int quantity;
 }

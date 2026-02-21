@@ -248,7 +248,7 @@ public class PauseScript : MonoBehaviour
     void Pause()
     {
         //PlayerInputManager.instance.enabled = false;
-        playerControls.PlayerActions.Disable();
+        //playerControls.PlayerActions.Disable();
         playerControls.PauseMenu.Enable();
         playerControls.WeaponMenu.Enable();
         playerControls.UI.Enable();
