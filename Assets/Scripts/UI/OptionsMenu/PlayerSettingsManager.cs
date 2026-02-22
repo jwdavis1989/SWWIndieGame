@@ -61,6 +61,7 @@ public class PlayerSettingsManager : MonoBehaviour
 {
     public bool inverted = true;//default to wrong
     public float musicVolume;
+    public float effectsVolume;
     public float brightness;
     public bool gamepad;//otherwise KB&M
 }
