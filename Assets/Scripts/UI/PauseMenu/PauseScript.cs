@@ -325,7 +325,7 @@ public class PauseScript : MonoBehaviour
     {
         if (pauseInput) // [Esc], (Start/Menu)
         {
-            //Debug.Log("PAUSE INPUT");
+            Debug.Log("PAUSE INPUT");
             pauseInput = false;
             PauseUnpause();
         }
@@ -334,7 +334,7 @@ public class PauseScript : MonoBehaviour
     {
         if (exitPauseMenuInput) // [Esc], (Start/Menu)
         {
-            //Debug.Log("exitPauseMenuInput INPUT");
+            Debug.Log("HandleExitPauseMenuInput PauseScript");
             exitPauseMenuInput = false;
             if (gamePaused)
                 StartCoroutine(WaitToEndOfFrameThenContinue());

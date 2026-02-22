@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ public class Inventory : MonoBehaviour
             return items[itemId].quantity;
         return 0;
     }
+    /** Attempts to use an item */
     public void UseItem(string itemId)
     {
         ItemEffect itemEffect = ItemDropManager.instance.itemDatabase.GetItemEffect(itemId);
@@ -41,6 +43,17 @@ public class Inventory : MonoBehaviour
             if (itemDetails.itemType.ToLower().Equals("consumable"))
                 items[itemId].quantity--;
         }
+    }
+    /** Returns owned tinker component items */
+    public Dictionary<string,InventoryItem> GetTinkerComponents()
+    {
+        //filter items
+        return items.Where((kvp) =>
+        {
+            ItemDetails itemDetails = ItemDropManager.instance.itemDatabase.GetItem(kvp.Key);
+            return itemDetails.itemType.ToLower().Equals("component");
+        })
+        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
 }
 [Serializable]
