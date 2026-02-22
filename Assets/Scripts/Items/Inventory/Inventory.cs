@@ -34,9 +34,12 @@ public class Inventory : MonoBehaviour
     public void UseItem(string itemId)
     {
         ItemEffect itemEffect = ItemDropManager.instance.itemDatabase.GetItemEffect(itemId);
+        ItemDetails itemDetails = ItemDropManager.instance.itemDatabase.GetItem(itemId);
         if (itemEffect != null)
         {
             GetComponent<PlayerEffectsManager>().ProcessInstantEffect(itemEffect);
+            if (itemDetails.itemType.ToLower().Equals("consumable"))
+                items[itemId].quantity--;
         }
     }
 }
