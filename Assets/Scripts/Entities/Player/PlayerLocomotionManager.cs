@@ -123,6 +123,21 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
             }
         }
+        if (rightBoosters != null && rightBoosters.GetComponent<AudioSource>())
+            rightBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+        if (leftBoosters != null && leftBoosters.GetComponent<AudioSource>())
+            leftBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+        if (backBoosters != null && backBoosters.GetComponent<AudioSource>())
+            backBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+        if (airDashBoosters != null && airDashBoosters.GetComponentInChildren<AudioSource>())
+            foreach (AudioSource audioSource in airDashBoosters.GetComponentsInChildren<AudioSource>())
+            {
+                audioSource.volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+            }
+        if (shoulderMeteorBoosters != null && shoulderMeteorBoosters.GetComponent<AudioSource>())
+            shoulderMeteorBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+        if (descentMeteorBoosters != null && descentMeteorBoosters.GetComponent<AudioSource>())
+            descentMeteorBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
 
     }
 
@@ -511,12 +526,20 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         switch (side)
         {
             case "Left":
+                if (leftBoosters.GetComponent<AudioSource>())
+                    leftBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
                 leftBoosters.SetActive(true);
                 break;
             case "Right":
+                if (rightBoosters.GetComponent<AudioSource>())
+                    rightBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
                 rightBoosters.SetActive(true);
                 break;
             case "Both":
+                if (leftBoosters.GetComponent<AudioSource>())
+                    leftBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+                if (rightBoosters.GetComponent<AudioSource>())
+                    rightBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
                 rightBoosters.SetActive(true);
                 leftBoosters.SetActive(true);
                 break;
@@ -544,6 +567,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (characterManager.isSprinting && !backBoosters.activeSelf)
         {
+            if (backBoosters.GetComponent<AudioSource>())
+                backBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
             backBoosters.SetActive(true);
         }
         else if (!characterManager.isSprinting && backBoosters.activeSelf == true)
@@ -556,6 +581,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (player.isSprinting || player.isBoosting)
         {
+            if (boosterIgnitionVFX.GetComponent<AudioSource>())
+                boosterIgnitionVFX.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
             boosterIgnitionVFX.SetActive(true);
         }
         else
@@ -567,7 +594,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void EnableMeteorBoosters()
     {
         shoulderMeteorBoosters.SetActive(true);
+        if(shoulderMeteorBoosters.GetComponent<AudioSource>())
+            shoulderMeteorBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
         descentMeteorBoosters.SetActive(true);
+        if (descentMeteorBoosters.GetComponent<AudioSource>())
+            descentMeteorBoosters.GetComponent<AudioSource>().volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
         player.PauseClothPhysics();
     }
 

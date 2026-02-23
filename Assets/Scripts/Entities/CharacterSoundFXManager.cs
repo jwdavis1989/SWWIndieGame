@@ -25,6 +25,8 @@ public class CharacterSoundFXManager : MonoBehaviour
         footStepSFXCount = WorldSoundFXManager.instance.walkFootStepSFX.Length;
         runFootStepSFXCount = WorldSoundFXManager.instance.runFootStepSFX.Length;
         currentFootStepPitch = walkFootStepPitch;
+        if(audioSource != null)
+            audioSource.volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
     }
 
     private void Update()
@@ -36,11 +38,10 @@ public class CharacterSoundFXManager : MonoBehaviour
     {
         if (canOverlap || audioSource.clip != soundFX)
         {
+            audioSource.volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
             audioSource.PlayOneShot(soundFX, volume);
-
             //Reset pitch from last time called
             audioSource.pitch = pitch;
-
             if (randomizePitch)
             {
                 audioSource.pitch += Random.Range(-pitchRandomRange, pitchRandomRange);

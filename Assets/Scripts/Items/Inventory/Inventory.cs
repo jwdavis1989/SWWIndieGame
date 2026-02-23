@@ -55,6 +55,14 @@ public class Inventory : MonoBehaviour
         })
         .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
+    public void LoadInventory(Dictionary<string, InventoryItem> savedItems)
+    {
+        items = savedItems;
+    }
+    public Dictionary<string, InventoryItem> SaveItems()
+    {
+        return items;
+    }
 }
 [Serializable]
 public class InventoryItem
