@@ -356,13 +356,14 @@ public class PlayerInputManager : MonoBehaviour
                 Debug.Log("using quickslot id:"+itemId+".");
                 if (itemId != "" && playerInventory.items.ContainsKey(itemId))
                 {
-                    Debug.Log("getting usable id:" + itemId + ".");
-                    UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
-                    if (usableItem != null)
-                    {
-                        Debug.Log("using " + itemId + ".");
-                        usableItem.Use(player.gameObject);
-                    }
+                    Debug.Log("using item. id:" + itemId + ".");
+                    playerInventory.UseItem(itemId);    
+                    //UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
+                    //if (usableItem != null)
+                    //{
+                    //    Debug.Log("using " + itemId + ".");
+                    //    usableItem.Use(player.gameObject);
+                    //}
                 }
             }
         }
@@ -912,11 +913,12 @@ public class PlayerInputManager : MonoBehaviour
     }
 
     //seems to avoid certain input error compared to PlayerControls.Disable
-    public void SafeDisable()
+    public void SafeDisable(bool disableCamera = true)
     {
         playerControls.PlayerActions.Disable();
-        playerControls.PlayerCamera.Disable();
-        playerControls.PlayerMovement.Disable(); 
+        playerControls.PlayerMovement.Disable();
+        if(disableCamera)
+            playerControls.PlayerCamera.Disable();
     }
     public void SafeEnable()
     {

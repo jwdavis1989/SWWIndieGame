@@ -40,6 +40,7 @@ public class IdeaCameraController : MonoBehaviour
     [Header("Controls")]
     PlayerControls playerControls;
     [SerializeField] bool capturePhotoInput = false;
+    [SerializeField] bool deactivateCameraViewInput = false;
     [Header("Rotation")]
     float leftAndRightLookAngle = 0;
     float leftAndRightRotationSpeed = 220f;
@@ -83,13 +84,15 @@ public class IdeaCameraController : MonoBehaviour
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.IdeaCameraView.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.IdeaCameraView.DeactivateCameraView.performed += i => deactivateCameraViewInput = true;
             playerControls.Enable();
         }
     }
     public void Update()
     {
         HandleCapturePhotoInput();
+        HandleDeactivateCameraViewInput();
     }
     /** returns true if the player is in idea camera mode */
     static public bool isBusy()
@@ -277,6 +280,8 @@ public class IdeaCameraController : MonoBehaviour
         player.canMove = false;
         player.isMoving = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
+        //Disable Controls
+        PlayerInputManager.instance.SafeDisable(false);
         //deactivate player camera
 
         PlayerCamera.instance.cameraObject.enabled = false;
@@ -309,6 +314,8 @@ public class IdeaCameraController : MonoBehaviour
         PlayerUIManager.instance.gameObject.SetActive(true);
         player.canMove = true;
         takingPhoto = false;
+        //Enable Controls
+        PlayerInputManager.instance.SafeEnable();
 
         //Re-enable Weapon Graphics
         PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(true);
@@ -368,6 +375,14 @@ public class IdeaCameraController : MonoBehaviour
         {
             capturePhotoInput = false;
             TakeScreenshotInput();
+        }
+    }
+    void HandleDeactivateCameraViewInput()
+    {
+        if (deactivateCameraViewInput) // [Space], (X)
+        {
+            deactivateCameraViewInput = false;
+            DeactivateIdeaCameraView();
         }
     }
 }

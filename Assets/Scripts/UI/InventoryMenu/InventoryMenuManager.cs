@@ -129,13 +129,18 @@ public class InventoryMenuManager : MonoBehaviour
                 if (inventoryWindow.transform.childCount > 0)
                 {
                     string itemId = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>().itemId;
-                    UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
-                    if (usableItem != null)
+                    ItemEffect itemEffect = itemDatabase.GetItemEffect(itemId);
+                    if (itemEffect != null)
                     {
-                        usableItem.Use(playerInventory.gameObject);
+                        playerInventory.UseItem(itemId);
                         LoadItemsToWindow();
                         LoadQuickslots();
                     }
+                    //UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
+                    //if (usableItem != null)
+                    //{
+                    //    usableItem.Use(playerInventory.gameObject);
+                    //}
                 }
             }
         }
@@ -200,10 +205,12 @@ public class InventoryMenuManager : MonoBehaviour
         InventoryItemUI itemUI = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
         if (itemUI != null)
         {
-            UsableItem usableItem = playerInventory.GetItem(itemUI.itemId).GetComponent<UsableItem>();
-            if (usableItem != null)
+            //UsableItem usableItem = playerInventory.GetItem(itemUI.itemId).GetComponent<UsableItem>();
+            ItemEffect itemEffect = itemDatabase.GetItemEffect(itemUI.itemId);
+            ItemDetails itemDetails = itemDatabase.GetItem(itemUI.itemId);
+            if (itemEffect != null && "usable,consumable".Contains(itemDetails.itemType))
             {
-                playerInventory.quickSlotItems[quickslotIndex] = usableItem.itemId;
+                playerInventory.quickSlotItems[quickslotIndex] = itemUI.itemId;
                 LoadQuickslots();
             }
         }

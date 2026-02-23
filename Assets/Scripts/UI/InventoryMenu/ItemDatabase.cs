@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(menuName = "Items/Item Database")]
+[CreateAssetMenu(menuName = "Items/Item Data/Item Database")]
 
 public class ItemDatabase : ScriptableObject
 {
-    [Header("Lookup table for static item data (sprite, desc, etc.)")]
+    [Header("Lookup table for static item data (sprite, desc, etc.)\n" +
+        "Case insensitive.")]
     public List<ItemDetails> items;
     public List<ItemEffect> itemEffects;
     public List<WeaponData> weaponDetails;
@@ -19,12 +20,15 @@ public class ItemDatabase : ScriptableObject
     public void Initialize()
     {
         itemLookup = new Dictionary<string, ItemDetails>();
+        itemEffectsLookup = new Dictionary<string, ItemEffect>();
+        weaponDetailsLookup = new Dictionary<string, WeaponData>();
+        componentDetailsLookup = new Dictionary<string, TinkerComponentData>();
 
         foreach (ItemDetails item in items)
         {
-            if (!itemLookup.ContainsKey(item.itemId))
+            if (!itemLookup.ContainsKey(item.itemId.ToLower()))
             {
-                itemLookup.Add(item.itemId, item);
+                itemLookup.Add(item.itemId.ToLower(), item);
             }
             else
             {
@@ -33,9 +37,9 @@ public class ItemDatabase : ScriptableObject
         }
         foreach (ItemEffect itemEffect in itemEffects)
         {
-            if (!itemEffectsLookup.ContainsKey(itemEffect.itemId))
+            if (!itemEffectsLookup.ContainsKey(itemEffect.itemId.ToLower()))
             {
-                itemEffectsLookup.Add(itemEffect.itemId, itemEffect);
+                itemEffectsLookup.Add(itemEffect.itemId.ToLower(), itemEffect);
             }
             else
             {
@@ -44,9 +48,9 @@ public class ItemDatabase : ScriptableObject
         }
         foreach (WeaponData weaponData in weaponDetails)
         {
-            if (!weaponDetailsLookup.ContainsKey(weaponData.itemId))
+            if (!weaponDetailsLookup.ContainsKey(weaponData.itemId.ToLower()))
             {
-                weaponDetailsLookup.Add(weaponData.itemId, weaponData);
+                weaponDetailsLookup.Add(weaponData.itemId.ToLower(), weaponData);
             }
             else
             {
@@ -55,9 +59,9 @@ public class ItemDatabase : ScriptableObject
         }
         foreach (TinkerComponentData componentData in componentDetails)
         {
-            if (!componentDetailsLookup.ContainsKey(componentData.itemId))
+            if (!componentDetailsLookup.ContainsKey(componentData.itemId.ToLower()))
             {
-                componentDetailsLookup.Add(componentData.itemId, componentData);
+                componentDetailsLookup.Add(componentData.itemId.ToLower(), componentData);
             }
             else
             {
@@ -70,7 +74,7 @@ public class ItemDatabase : ScriptableObject
     {
         if (itemLookup == null)
             Initialize();
-
+        itemId = itemId.ToLower();//case insensitivity
         itemLookup.TryGetValue(itemId, out var item);
         return item;
     }
@@ -78,7 +82,7 @@ public class ItemDatabase : ScriptableObject
     {
         if (itemEffectsLookup == null)
             Initialize();
-
+        itemId = itemId.ToLower();//case insensitivity
         itemEffectsLookup.TryGetValue(itemId, out var item);
         return item;
     }
@@ -86,7 +90,7 @@ public class ItemDatabase : ScriptableObject
     {
         if (itemEffectsLookup == null)
             Initialize();
-
+        itemId = itemId.ToLower();//case insensitivity
         weaponDetailsLookup.TryGetValue(itemId, out var data);
         return data;
     }
@@ -94,7 +98,7 @@ public class ItemDatabase : ScriptableObject
     {
         if (itemEffectsLookup == null)
             Initialize();
-
+        itemId = itemId.ToLower();//case insensitivity
         componentDetailsLookup.TryGetValue(itemId, out var data);
         return data;
     }

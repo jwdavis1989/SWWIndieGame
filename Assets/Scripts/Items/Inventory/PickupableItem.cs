@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class InventoryItem : MonoBehaviour
+public class PickupableItem : MonoBehaviour
 {
+    [Header("Lookup I.D.\nCase insensitive")]
     public string itemId;
+    [Header("Used for stacks. \n" +
+        "Always treated as 1 if less than 1")]
     public int quantity = 0;
-    public DateTime aquireTime;
 
     public virtual void HandlePickup(GameObject player)
     {
@@ -47,8 +49,10 @@ public class InventoryItem : MonoBehaviour
         }
         else
         {   // add item to inventory
-            aquireTime = DateTime.UtcNow;
-            inventory.items.Add(itemId, this);
+            InventoryItem newItem = new InventoryItem();
+            newItem.itemId = itemId;
+            newItem.quantity = quantity;
+            inventory.items.Add(itemId, newItem);
             StartCoroutine(HideAfterDelay());
         }
     }

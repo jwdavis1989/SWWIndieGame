@@ -43,12 +43,22 @@ public class OptionsMenuManager : MonoBehaviour
     }
     private void OnEnable()
     {
+        if (playerControls == null)
+        {
+            playerControls = new PlayerControls();
+            playerControls.OptionsMenu.SwitchMenuLeft.performed += i => menuLeftInput = true;
+            playerControls.OptionsMenu.SwitchMenuRight.performed += i => menuRightInput = true;
+            playerControls.OptionsMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
+            playerControls.OptionsMenu.SaveSettings.performed += i => saveSettingInput = true;
+            playerControls.Enable();
+        }
         //todo: shouldnt be necessary? 
         invertedToggle.isOn = PlayerSettingsManager.instance.playerSettings.inverted;
         //make sure changed is reset
         isChanged = false;
         invertChanged = false;
         musicVolumeChanged = false;
+        effectsVolumeChanged = false;
         saveWindow.SetActive(false);
         ToggleNavigation(true);
         //activate correct inputs
@@ -94,16 +104,8 @@ public class OptionsMenuManager : MonoBehaviour
         }
         if (effectsVolumeSlider != null)
         {
+            PlayerWeaponManager.instance.GetComponent<AudioSource>().volume = effectsVolumeSlider.value;
             effectsVolumeSlider.onValueChanged.AddListener(OnEffectsVolumeChange);
-        }
-        if (playerControls == null)
-        {
-            playerControls = new PlayerControls();
-            playerControls.OptionsMenu.SwitchMenuLeft.performed += i => menuLeftInput = true;
-            playerControls.OptionsMenu.SwitchMenuRight.performed += i => menuRightInput = true;
-            playerControls.OptionsMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
-            playerControls.OptionsMenu.SaveSettings.performed += i => saveSettingInput = true;
-            playerControls.Enable();
         }
     }
     // Update is called once per frame
@@ -112,8 +114,11 @@ public class OptionsMenuManager : MonoBehaviour
         CheckControlsChanged();
         HandleGamePadSelected();
         HandleSwitchMenuInput();
-        HandleExitPauseMenuInput();
         HandleSaveSettingsInput();
+    }
+    private void LateUpdate()
+    {
+        HandleExitPauseMenuInput();
     }
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************
@@ -165,6 +170,7 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (exitPauseMenuInput)
         {
+            //Debug.Log("exitPauseMenuInput - options menu isChanged=" + isChanged);
             exitPauseMenuInput = false;
             saveWindowAction = "UNPAUSE";
             if (isChanged)
@@ -216,9 +222,10 @@ public class OptionsMenuManager : MonoBehaviour
             }
         }
     }
-    // Save Window: No
+    // Save Window Exit
     public void CompleteSaveWindowAction()
     {
+        //Debug.Log("CompleteSaveWindowAction - saveWindowAction=" + saveWindowAction);
         saveWindow.SetActive(false);
         SwapFromOptionMenuControls();
         switch (saveWindowAction)
@@ -255,16 +262,22 @@ public class OptionsMenuManager : MonoBehaviour
         {
             SaveInvert(inverted);
         }
+        if (effectsVolumeChanged)
+        {
+            SaveEffectsVolume(effectsVolume);
+        }
         PlayerSettingsManager.instance.Save();
         CompleteSaveWindowAction();
     }
     public void LoadOptions()
     {
         playerSettings = PlayerSettingsManager.instance.playerSettings;
-        Debug.Log("Loaded inverted as " + playerSettings.inverted);
+        //Debug.Log("Loaded inverted as " + playerSettings.inverted);
         invertedToggle.isOn = playerSettings.inverted;
         musicVolumeSlider.value = playerSettings.musicVolume;
+        effectsVolumeSlider.value = playerSettings.effectsVolume;
         WorldMusicController.instance.GetComponent<AudioSource>().volume = playerSettings.musicVolume;
+        PlayerWeaponManager.instance.GetComponent<AudioSource>().volume = playerSettings.effectsVolume;
     }
 
     bool invertChanged = false;
@@ -280,7 +293,7 @@ public class OptionsMenuManager : MonoBehaviour
         playerSettings.inverted = newValue;
         PlayerCamera.instance.isCameraInverted = newValue;
         PlayerSettingsManager.instance.playerSettings = playerSettings;
-        Debug.Log("Saving inverted as " + playerSettings.inverted);
+        //Debug.Log("Saving inverted as " + playerSettings.inverted);
     }
     float musicVolume = 0;
     bool musicVolumeChanged = false;
@@ -307,6 +320,13 @@ public class OptionsMenuManager : MonoBehaviour
     {
         WorldMusicController.instance.GetComponent<AudioSource>().volume = newValue;
         playerSettings.musicVolume = newValue;
+        PlayerSettingsManager.instance.playerSettings = playerSettings;
+    }
+    //.GetComponent<PlayerManager>().characterSoundFXManager.
+    void SaveEffectsVolume(float newValue)
+    {
+        PlayerWeaponManager.instance.GetComponent<AudioSource>().volume = newValue;
+        playerSettings.effectsVolume = newValue;
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     void SwapFromOptionMenuControls()

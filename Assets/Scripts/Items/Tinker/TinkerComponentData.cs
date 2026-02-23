@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Tinker Component Data")]
+[CreateAssetMenu(menuName = "Items/Item Data/Tinker Component Data")]
 
 public class TinkerComponentData : ScriptableObject
 {
+    [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
     public string componentTier = "tier_1"; //tier_1,tier_2
 

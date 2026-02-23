@@ -1213,15 +1213,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""CaptureIdeaPhotoBtn"",
-                    ""type"": ""Button"",
-                    ""id"": ""28878abf-a4e8-4a58-97ce-36e8fba73f88"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""MiniMapResize"",
                     ""type"": ""Button"",
                     ""id"": ""dc345c32-cc8b-4cbd-b017-f2d05c9c2c13"",
@@ -1304,28 +1295,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""PauseButton"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3aa104eb-21ce-433e-9385-2e3a976bf878"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CaptureIdeaPhotoBtn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1e84c4a8-44f5-4b4b-bd40-1f9ac3391c92"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""CaptureIdeaPhotoBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -2884,6 +2853,87 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""IdeaCameraView"",
+            ""id"": ""cb1b3bc6-8928-428e-8b9e-ab2d89056987"",
+            ""actions"": [
+                {
+                    ""name"": ""DeactivateCameraView"",
+                    ""type"": ""Button"",
+                    ""id"": ""65f0c365-6d34-4ef0-b1dd-cd440bee0b84"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CaptureIdeaPhotoBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""1ab07e65-0e75-404a-a351-3a32dd4dcd39"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""cf83b35a-0192-47f7-b71f-3e37f71e6c27"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeactivateCameraView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a87e100c-2529-4479-8b75-8c2305eede16"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeactivateCameraView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6b7f6e5-4259-43ca-a8e1-af7d1c602725"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeactivateCameraView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c6f58f1-d28f-414d-a2d0-8f8da07dd777"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CaptureIdeaPhotoBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98e4e07c-91c5-4c2c-a22f-cc1807d57b44"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CaptureIdeaPhotoBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -2965,7 +3015,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_DialogueContinue = m_UI.FindAction("DialogueContinue", throwIfNotFound: true);
         m_UI_AnyGamepad = m_UI.FindAction("AnyGamepad", throwIfNotFound: true);
         m_UI_PauseButton = m_UI.FindAction("PauseButton", throwIfNotFound: true);
-        m_UI_CaptureIdeaPhotoBtn = m_UI.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
         m_UI_MiniMapResize = m_UI.FindAction("MiniMapResize", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
         // Pause Menu
@@ -3019,6 +3068,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UINavigation_RightClick = m_UINavigation.FindAction("RightClick", throwIfNotFound: true);
         m_UINavigation_TrackedDevicePosition = m_UINavigation.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UINavigation_TrackedDeviceOrientation = m_UINavigation.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // IdeaCameraView
+        m_IdeaCameraView = asset.FindActionMap("IdeaCameraView", throwIfNotFound: true);
+        m_IdeaCameraView_DeactivateCameraView = m_IdeaCameraView.FindAction("DeactivateCameraView", throwIfNotFound: true);
+        m_IdeaCameraView_CaptureIdeaPhotoBtn = m_IdeaCameraView.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -3501,7 +3554,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_DialogueContinue;
     private readonly InputAction m_UI_AnyGamepad;
     private readonly InputAction m_UI_PauseButton;
-    private readonly InputAction m_UI_CaptureIdeaPhotoBtn;
     private readonly InputAction m_UI_MiniMapResize;
     private readonly InputAction m_UI_UIButtonX;
     public struct UIActions
@@ -3511,7 +3563,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @DialogueContinue => m_Wrapper.m_UI_DialogueContinue;
         public InputAction @AnyGamepad => m_Wrapper.m_UI_AnyGamepad;
         public InputAction @PauseButton => m_Wrapper.m_UI_PauseButton;
-        public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_UI_CaptureIdeaPhotoBtn;
         public InputAction @MiniMapResize => m_Wrapper.m_UI_MiniMapResize;
         public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
@@ -3532,9 +3583,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started += instance.OnPauseButton;
             @PauseButton.performed += instance.OnPauseButton;
             @PauseButton.canceled += instance.OnPauseButton;
-            @CaptureIdeaPhotoBtn.started += instance.OnCaptureIdeaPhotoBtn;
-            @CaptureIdeaPhotoBtn.performed += instance.OnCaptureIdeaPhotoBtn;
-            @CaptureIdeaPhotoBtn.canceled += instance.OnCaptureIdeaPhotoBtn;
             @MiniMapResize.started += instance.OnMiniMapResize;
             @MiniMapResize.performed += instance.OnMiniMapResize;
             @MiniMapResize.canceled += instance.OnMiniMapResize;
@@ -3554,9 +3602,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @PauseButton.started -= instance.OnPauseButton;
             @PauseButton.performed -= instance.OnPauseButton;
             @PauseButton.canceled -= instance.OnPauseButton;
-            @CaptureIdeaPhotoBtn.started -= instance.OnCaptureIdeaPhotoBtn;
-            @CaptureIdeaPhotoBtn.performed -= instance.OnCaptureIdeaPhotoBtn;
-            @CaptureIdeaPhotoBtn.canceled -= instance.OnCaptureIdeaPhotoBtn;
             @MiniMapResize.started -= instance.OnMiniMapResize;
             @MiniMapResize.performed -= instance.OnMiniMapResize;
             @MiniMapResize.canceled -= instance.OnMiniMapResize;
@@ -4120,6 +4165,60 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public UINavigationActions @UINavigation => new UINavigationActions(this);
+
+    // IdeaCameraView
+    private readonly InputActionMap m_IdeaCameraView;
+    private List<IIdeaCameraViewActions> m_IdeaCameraViewActionsCallbackInterfaces = new List<IIdeaCameraViewActions>();
+    private readonly InputAction m_IdeaCameraView_DeactivateCameraView;
+    private readonly InputAction m_IdeaCameraView_CaptureIdeaPhotoBtn;
+    public struct IdeaCameraViewActions
+    {
+        private @PlayerControls m_Wrapper;
+        public IdeaCameraViewActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DeactivateCameraView => m_Wrapper.m_IdeaCameraView_DeactivateCameraView;
+        public InputAction @CaptureIdeaPhotoBtn => m_Wrapper.m_IdeaCameraView_CaptureIdeaPhotoBtn;
+        public InputActionMap Get() { return m_Wrapper.m_IdeaCameraView; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(IdeaCameraViewActions set) { return set.Get(); }
+        public void AddCallbacks(IIdeaCameraViewActions instance)
+        {
+            if (instance == null || m_Wrapper.m_IdeaCameraViewActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_IdeaCameraViewActionsCallbackInterfaces.Add(instance);
+            @DeactivateCameraView.started += instance.OnDeactivateCameraView;
+            @DeactivateCameraView.performed += instance.OnDeactivateCameraView;
+            @DeactivateCameraView.canceled += instance.OnDeactivateCameraView;
+            @CaptureIdeaPhotoBtn.started += instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.performed += instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.canceled += instance.OnCaptureIdeaPhotoBtn;
+        }
+
+        private void UnregisterCallbacks(IIdeaCameraViewActions instance)
+        {
+            @DeactivateCameraView.started -= instance.OnDeactivateCameraView;
+            @DeactivateCameraView.performed -= instance.OnDeactivateCameraView;
+            @DeactivateCameraView.canceled -= instance.OnDeactivateCameraView;
+            @CaptureIdeaPhotoBtn.started -= instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.performed -= instance.OnCaptureIdeaPhotoBtn;
+            @CaptureIdeaPhotoBtn.canceled -= instance.OnCaptureIdeaPhotoBtn;
+        }
+
+        public void RemoveCallbacks(IIdeaCameraViewActions instance)
+        {
+            if (m_Wrapper.m_IdeaCameraViewActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IIdeaCameraViewActions instance)
+        {
+            foreach (var item in m_Wrapper.m_IdeaCameraViewActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_IdeaCameraViewActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public IdeaCameraViewActions @IdeaCameraView => new IdeaCameraViewActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -4190,7 +4289,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDialogueContinue(InputAction.CallbackContext context);
         void OnAnyGamepad(InputAction.CallbackContext context);
         void OnPauseButton(InputAction.CallbackContext context);
-        void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
         void OnMiniMapResize(InputAction.CallbackContext context);
         void OnUIButtonX(InputAction.CallbackContext context);
     }
@@ -4250,5 +4348,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface IIdeaCameraViewActions
+    {
+        void OnDeactivateCameraView(InputAction.CallbackContext context);
+        void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
     }
 }
