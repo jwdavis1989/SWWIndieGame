@@ -55,13 +55,25 @@ public class Inventory : MonoBehaviour
         })
         .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
-    public void LoadInventory(Dictionary<string, InventoryItem> savedItems)
+    public void LoadInventory(List<InventoryItem> savedItems)
     {
-        items = savedItems;
+        items = new Dictionary<string, InventoryItem> ();
+        foreach (InventoryItem item in savedItems)
+        {
+            if (!items.ContainsKey(item.itemId.ToLower()))
+            {
+                items.Add(item.itemId.ToLower(), item);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate itemId: {item.itemId}");
+            }
+        }
     }
-    public Dictionary<string, InventoryItem> SaveItems()
+    public List<InventoryItem> SaveItems()
     {
-        return items;
+
+        return items.Values.ToList();
     }
 }
 [Serializable]

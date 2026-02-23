@@ -43,7 +43,7 @@ public class CharacterSaveData
     public Dictionary<string, bool> journalFlags = new Dictionary<string, bool>();
     public List<IdeaSaveData> ideas = new List<IdeaSaveData>();
     public List<string> inventions = new List<string>();
-    public Dictionary<string, InventoryItem> inventoryItems = new Dictionary<string, InventoryItem>();
+    public List<InventoryItem> inventoryItems = new List<InventoryItem>();
 
     public CharacterSaveData()
     {
