@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class OptionsMenuManager : MonoBehaviour
 {
     public static OptionsMenuManager instance;
-    [HideInInspector] public PlayerSettings playerSettings;
+    [HideInInspector] public PlayerSettings playerSettings; 
+    public AudioMixer mixer;
+    
     [Header("Buttons, knobs, and switches")]
     public Toggle invertedToggle;
     public Slider effectsVolumeSlider;
@@ -99,12 +103,10 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if(musicVolumeSlider != null)
         {
-            WorldMusicController.instance.GetComponent<AudioSource>().volume = musicVolumeSlider.value;
             musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChange);
         }
         if (effectsVolumeSlider != null)
         {
-            PlayerWeaponManager.instance.GetComponent<AudioSource>().volume = effectsVolumeSlider.value;
             effectsVolumeSlider.onValueChanged.AddListener(OnEffectsVolumeChange);
         }
     }
@@ -276,8 +278,8 @@ public class OptionsMenuManager : MonoBehaviour
         invertedToggle.isOn = playerSettings.inverted;
         musicVolumeSlider.value = playerSettings.musicVolume;
         effectsVolumeSlider.value = playerSettings.effectsVolume;
-        WorldMusicController.instance.GetComponent<AudioSource>().volume = playerSettings.musicVolume;
-        PlayerWeaponManager.instance.GetComponent<AudioSource>().volume = playerSettings.effectsVolume;
+        mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
+        mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
     }
 
     bool invertChanged = false;
@@ -318,15 +320,13 @@ public class OptionsMenuManager : MonoBehaviour
     }
     void SaveMusicVolume(float newValue)
     {
-        WorldMusicController.instance.GetComponent<AudioSource>().volume = newValue;
-        playerSettings.musicVolume = newValue;
+        playerSettings.musicVolume = SetMusicVolumeLogarithmic(newValue); ;
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     //.GetComponent<PlayerManager>().characterSoundFXManager.
     void SaveEffectsVolume(float newValue)
     {
-        PlayerWeaponManager.instance.GetComponent<AudioSource>().volume = newValue;
-        playerSettings.effectsVolume = newValue;
+        playerSettings.effectsVolume = SetSFXVolumeLogarithmic(newValue);
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     void SwapFromOptionMenuControls()
@@ -366,12 +366,18 @@ public class OptionsMenuManager : MonoBehaviour
             playerControls.OptionsMenu.Disable();
         }
     }
-    //public bool recentlySave = false;
-    //public IEnumerator SaveTimer()
-    //{
-    //    recentlySave = true;
-    //    yield return new WaitForSeconds(1.5f);
-    //    recentlySave = false;
-    //}
-
+    public float SetSFXVolumeLogarithmic(float sliderValue)
+    {
+        // Convert linear slider (0–1) to logarithmic dB scale
+        float volume = Mathf.Log10(sliderValue) * 20;
+        mixer.SetFloat("SFXVolume", volume);
+        return volume;
+    }
+    public float SetMusicVolumeLogarithmic(float sliderValue)
+    {
+        // Convert linear slider (0–1) to logarithmic dB scale
+        float volume = Mathf.Log10(sliderValue) * 20;
+        mixer.SetFloat("MusicVolume", volume);
+        return volume;
+    }
 }

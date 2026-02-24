@@ -12,8 +12,6 @@ public class UndergroundAmbienceController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = WorldSoundFXManager.instance.caveAmbience;
         audioSource.volume = audioVolume;
-        //TODO IDK ABOUT THIS
-        audioSource.volume = audioVolume * PlayerSettingsManager.instance.playerSettings.effectsVolume;
         audioSource.loop = true;
         audioSource.Play();
     }

@@ -255,8 +255,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 8817891758746247719}
   m_HandleRect: {fileID: 3957448295943545905}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 2
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -1277,8 +1277,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 129143289882288623}
   m_HandleRect: {fileID: 7387173007455218174}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 2
+  m_MinValue: 0.0001
+  m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
@@ -1625,8 +1625,10 @@ MonoBehaviour:
   playerSettings:
     inverted: 0
     musicVolume: 0
+    effectsVolume: 0
     brightness: 0
     gamepad: 0
+  mixer: {fileID: 24100000, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   invertedToggle: {fileID: 1441940307686356410}
   effectsVolumeSlider: {fileID: 8517365655615981219}
   musicVolumeSlider: {fileID: 3964443937713383796}

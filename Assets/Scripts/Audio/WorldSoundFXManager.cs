@@ -73,7 +73,7 @@ public class WorldSoundFXManager : MonoBehaviour
         if (canOverlap || audioSource.clip != soundFX)
         {
             audioSource.clip = soundFX;
-            audioSource.volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+            audioSource.volume = volume;
             audioSource.PlayOneShot(soundFX, volume);
             //Reset pitch from last time called
             audioSource.pitch = pitch;
@@ -91,7 +91,7 @@ public class WorldSoundFXManager : MonoBehaviour
     {
         audioSource.enabled = true;
         audioSource.clip = soundFX;
-        audioSource.volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
+        audioSource.volume = volume;
 
         //Reset pitch from last time called
         audioSource.pitch = pitch;
