@@ -1207,6 +1207,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AnyKeyboardOrMouse",
+                    "type": "Button",
+                    "id": "d03a9040-6db2-46b3-bcd0-c0cc408877cd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1484,6 +1493,50 @@
                     "action": "AnyGamepad",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8434c781-5645-49ae-ba1a-07814c988759",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKeyboardOrMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4d00ab8c-193d-4342-bbff-7a932a30b3b4",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKeyboardOrMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0919ccd6-0feb-4cd3-a9a0-edf900884ff0",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKeyboardOrMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5892d4e-5b83-4d08-b30a-2a6b0d5414b8",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKeyboardOrMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -1491,15 +1544,6 @@
             "name": "Pause Menu",
             "id": "4132d473-ea48-459c-847d-cc045e59ce10",
             "actions": [
-                {
-                    "name": "PauseButton",
-                    "type": "Button",
-                    "id": "5d65391c-f452-4278-85aa-679822192127",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
                 {
                     "name": "SwitchMenuLeft",
                     "type": "Button",
@@ -1531,28 +1575,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "7bf1a480-5596-4d04-8ec7-b0c2af4c0980",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PauseButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "515416e1-afc6-4e8c-a223-05c3012b4d37",
-                    "path": "<Gamepad>/{Menu}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PauseButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4458a9d5-2428-464a-bd33-51118853808b",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
@@ -1577,6 +1599,28 @@
                     "name": "",
                     "id": "c28fddb2-c451-44ff-bd35-7602b6c7349b",
                     "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4af48ed3-5d95-474f-8539-125bf8063d46",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d821ac96-4987-458d-add0-7d2a6e2770ac",
+                    "path": "<Gamepad>/{Menu}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

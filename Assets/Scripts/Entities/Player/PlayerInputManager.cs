@@ -35,7 +35,7 @@ public class PlayerInputManager : MonoBehaviour
     [SerializeField] float cycleQuickSlotGamepad = 0;
     private int currentSelectedQuickslot = 0;
     //[SerializeField] bool dialogueContinueInput = false;//(A),[LMB]
-    //[SerializeField] bool pauseInput = false;
+    [SerializeField] bool pauseInput = false;
     //[SerializeField] bool capturePhotoInput = false;
     [SerializeField] bool miniMapZoomToggleInput = false;
 
@@ -100,7 +100,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         HandleInteractInput();
         //HandleDialogueContineuButton();
-        //HandlePauseInput();
+        HandlePauseInput();
         HandleUseItemQuickSlotInput();
         //HandleCapturePhotoInput();
 
@@ -217,7 +217,7 @@ public class PlayerInputManager : MonoBehaviour
             //Player UI interactions
             playerControls.PlayerActions.Interact.performed += i => interactInput = true;
             //playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
-            //playerControls.UI.PauseButton.performed += i => pauseInput = true;
+            playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PlayerActions.QuickslotButtonGamepad.performed += i => useQuickslotGamepad = true;
             playerControls.PlayerActions.QuickslotButton1.performed += i => useQuickslot1 = true;
             playerControls.PlayerActions.QuickslotButton2.performed += i => useQuickslot2 = true;
@@ -290,6 +290,18 @@ public class PlayerInputManager : MonoBehaviour
             //Interactable System Interact() call
             player.playerInteractionManager.Interact();
 
+        }
+    }
+    public void HandlePauseInput()
+    {
+        if (pauseInput) // [Esc], (Start/Menu)
+        {
+            //Debug.Log("PAUSE INPUT");
+            pauseInput = false;
+            if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
+                return;
+            else 
+                PauseScript.instance.HandlePauseInput();
         }
     }
     //Use item button

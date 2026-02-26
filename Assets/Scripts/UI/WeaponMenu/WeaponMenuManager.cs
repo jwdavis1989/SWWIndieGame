@@ -72,7 +72,19 @@ public class WeaponMenuManager : MonoBehaviour
     private bool isHolding;
     private float holdTime;
 
-
+    private void Awake()
+    {
+        foreach (Transform child in weaponsGrid.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in primaryStatsText.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in elementalStatsText.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in expStatsText.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in componentsGrid.transform)
+            Destroy(child.gameObject);
+    }
     //called when arriving at this menu
     private void OnEnable()
     {
@@ -428,7 +440,8 @@ public class WeaponMenuManager : MonoBehaviour
                         if (componentObj.gameObject == currentCursorObj.GetComponentInParent<TinkerComponentUI>().gameObject)
                         {
                             TinkerComponent refComponent = componentObj.GetComponent<TinkerComponentUI>().refComponent;
-                            SetTooltipToComponent(refComponent);
+                            if(refComponent != null)
+                                SetTooltipToComponent(refComponent);
                         }
                     }
                 }
