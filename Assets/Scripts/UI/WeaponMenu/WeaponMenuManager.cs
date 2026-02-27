@@ -132,7 +132,7 @@ public class WeaponMenuManager : MonoBehaviour
         }
     }
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad())
         { //Handle Lost gamepad Cursor
