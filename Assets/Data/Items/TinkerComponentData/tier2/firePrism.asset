@@ -12,20 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9695784ad8f4ee4ca15ec6c0844a4c4, type: 3}
   m_Name: firePrism
   m_EditorClassIdentifier: 
-  itemId: firePrism
+  itemId: fire_prism
   componentTier: tier_2
-  attack: 0
-  durability: 0
-  block: 0
-  stability: 0
-  elementalStats:
-    firePower: 3
-    icePower: 0
-    lightningPower: 0
-    windPower: 0
-    earthPower: 0
-    lightPower: 0
-    beastPower: 0
-    scalesPower: 0
-    techPower: 0
-    currentHighestElementalStat: 0
+  stats:
+    attack: 0
+    durability: 0
+    block: 0
+    stability: 0
+    elementalStats:
+      firePower: 3
+      icePower: 0
+      lightningPower: 0
+      windPower: 0
+      earthPower: 0
+      lightPower: 0
+      beastPower: 0
+      scalesPower: 0
+      techPower: 0
+      currentHighestElementalStat: 0
+    isWeapon: 0
+    isSpecialWpn: 0

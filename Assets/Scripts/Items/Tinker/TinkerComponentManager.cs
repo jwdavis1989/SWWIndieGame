@@ -62,7 +62,7 @@ public class TinkerComponentManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         //Load base stats from json
-        LoadAllComponentTypes();
+        //LoadAllComponentTypes();
     }
     //Array of Tinker Component Pre-Fabs. Use to instantiate components ingame and track players count of each component
     [Header("TinkerComponentManager is a singleton containing:\n " +
@@ -80,7 +80,7 @@ public class TinkerComponentManager : MonoBehaviour
     * break down weapon into a tinker component and add to owned components
     * @Returns a reference to the component that was added
     */
-    public TinkerComponentStats BreakDownWeapon(int index, bool specialWeapon, CharacterWeaponManager characterWeapons)
+    public WeaponSalvageComponent BreakDownWeapon(int index, bool specialWeapon, CharacterWeaponManager characterWeapons)
     {
         List<GameObject> weaponsList = specialWeapon ? characterWeapons.ownedSpecialWeapons : characterWeapons.ownedWeapons;
         if (weaponsList.Count < index)
@@ -100,17 +100,16 @@ public class TinkerComponentManager : MonoBehaviour
                 throw new Exception("Last main hand weapon");
         }
         wpnToBreak.AddComponent<TinkerComponent>();
-        TinkerComponentStats rv = new TinkerComponentStats();
+        WeaponSalvageComponent rv = new WeaponSalvageComponent();
 
             //wpnToBreak.GetComponent<TinkerComponent>().stats;
-        rv.elementalStats = weapon.stats.elemental;
-        rv.attack = weapon.stats.attack;
-        rv.durability = weapon.stats.durability;
-        rv.stability = weapon.stats.stability;
-        rv.block = weapon.stats.block;
-        rv.isWeapon = true;
-        rv.isSpecialWpn = specialWeapon;
-        rv.count = 1;
+        rv.stats.elementalStats = weapon.stats.elemental;
+        rv.stats.attack = weapon.stats.attack;
+        rv.stats.durability = weapon.stats.durability;
+        rv.stats.stability = weapon.stats.stability;
+        rv.stats.block = weapon.stats.block;
+        rv.stats.isWeapon = true;
+        rv.stats.isSpecialWpn = specialWeapon;
         rv.itemName = weapon.stats.weaponName;
         rv.itemId = weapon.stats.weaponId;
         weaponComponents.Add(wpnToBreak); //add component
@@ -137,68 +136,64 @@ public class TinkerComponentManager : MonoBehaviour
     /**
     * add or subtract a tinker component from the player
     */
-    public void AddBaseComponentToPlayer(TinkerComponentType type, int count)
-    {
-        TinkerComponentManager.instance.baseComponents[(int)type].GetComponent<TinkerComponent>().stats.count += count;
-    }
+    //public void AddBaseComponentToPlayer(TinkerComponentType type, int count)
+    //{
+    //    TinkerComponentManager.instance.baseComponents[(int)type].GetComponent<TinkerComponent>().stats.count += count;
+    //}
     /**
      * CanUseComponent will return true if any stat will be upgraded. I.e. if any matching stat is not currently maxed
      */
-    public bool CanUseComponent(GameObject weapon, GameObject tinkerComponent)
+    public bool CanUseComponent(GameObject weapon, string itemId, TinkerComponentStats tinkerComponent)
     {
-        return AddTinkerComponentToWeapon(weapon, tinkerComponent, false);
+        return AddTinkerComponentToWeapon(weapon, tinkerComponent, itemId, false);
     }
     /**
      * Adds a component to a weapon. returns true if succesfully updated
      */
-    public bool UseComponent(GameObject weapon, GameObject tinkerComponent)
+    public bool UseComponent(GameObject weapon, string itemId, TinkerComponentStats tinkerComponent)
     {
-        return AddTinkerComponentToWeapon(weapon, tinkerComponent, true);
+        return AddTinkerComponentToWeapon(weapon, tinkerComponent, itemId, true);
     }
-    private bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, GameObject tinkerComponentPassed, bool doUpdate)
+    private bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, TinkerComponentStats tinkerComponentToAdd, string itemId, bool doUpdate)
     {
         if (weaponToUpgrade == null) { return false; }
-        TinkerComponent tinkerComponentToAdd = tinkerComponentPassed.GetComponent<TinkerComponent>();
         WeaponScript weapon = weaponToUpgrade.GetComponent<WeaponScript>();
-        // check tinker points
+        // check tinker pointstinkerComponent
         if (weapon.stats.currentTinkerPoints == 0) 
             return false;
         // check weapon component hand
-        if (tinkerComponentToAdd.stats.isWeapon && weapon.isSpecialWeapon != tinkerComponentToAdd.stats.isSpecialWpn)
+        if (tinkerComponentToAdd.isWeapon && weapon.isSpecialWeapon != tinkerComponentToAdd.isSpecialWpn)
             return false;
-        //used passed component for weapons. Ensure using base components for regular components
-        TinkerComponent tinkerComponent = tinkerComponentToAdd.stats.isWeapon ? tinkerComponentToAdd : baseComponents[(int)tinkerComponentToAdd.stats.componentType].GetComponent<TinkerComponent>();
         //can't add if out of that component
-        if (tinkerComponent.stats.count <= 0) return false;
         bool canUpgrade = false;
         float newAttack = weapon.stats.attack;
         //calulate new attack
-        if (tinkerComponent.stats.isWeapon)// broken down weapon component
+        if (tinkerComponentToAdd.isWeapon)// broken down weapon component
         {
-            if (weapon.isSpecialWeapon && !tinkerComponent.stats.isSpecialWpn)
+            if (weapon.isSpecialWeapon && !tinkerComponentToAdd.isSpecialWpn)
                 return false;//can only add main hand to main hand / off hand to off hand
-            if (!weapon.isSpecialWeapon && tinkerComponent.stats.isSpecialWpn)
+            if (!weapon.isSpecialWeapon && tinkerComponentToAdd.isSpecialWpn)
                 return false;
-            if (weapon.stats.attack < tinkerComponent.stats.attack)
+            if (weapon.stats.attack < tinkerComponentToAdd.attack)
             {
-                newAttack += tinkerComponent.stats.attack * 0.25f;
+                newAttack += tinkerComponentToAdd.attack * 0.25f;
             }
             else
             {
-                newAttack += tinkerComponent.stats.attack * 0.60f;
+                newAttack += tinkerComponentToAdd.attack * 0.60f;
             }
         }
         else
         {
-            newAttack += tinkerComponent.stats.attack;
+            newAttack += tinkerComponentToAdd.attack;
         }
         newAttack = Mathf.Min(newAttack, weapon.stats.maxAttack);
         //calc other stats
-        float newStab = Mathf.Min(weapon.stats.stability + tinkerComponent.stats.stability, weapon.stats.maxStability);
-        float newBlock = Mathf.Min(weapon.stats.block + tinkerComponent.stats.block, weapon.stats.maxBlock);
-        float newDur = Mathf.Min(weapon.stats.durability + tinkerComponent.stats.durability, weapon.stats.maxDurability);
+        float newStab = Mathf.Min(tinkerComponentToAdd.stability + tinkerComponentToAdd.stability, weapon.stats.maxStability);
+        float newBlock = Mathf.Min(tinkerComponentToAdd.block + tinkerComponentToAdd.block, weapon.stats.maxBlock);
+        float newDur = Mathf.Min(tinkerComponentToAdd.durability + tinkerComponentToAdd.durability, weapon.stats.maxDurability);
         //calculate new elemental
-        ElementalStats newStats = weapon.stats.elemental.Add(tinkerComponent.stats.elementalStats);
+        ElementalStats newStats = weapon.stats.elemental.Add(tinkerComponentToAdd.elementalStats);
         newStats.firePower = Mathf.Min(newStats.firePower, weapon.stats.maxElemental.firePower);
         newStats.icePower = Mathf.Min(newStats.icePower, weapon.stats.maxElemental.icePower);
         newStats.lightningPower = Mathf.Min(newStats.lightningPower, weapon.stats.maxElemental.lightningPower);
@@ -232,69 +227,71 @@ public class TinkerComponentManager : MonoBehaviour
                 weapon.stats.stability = newStab;
                 weapon.stats.block = newBlock;
                 weapon.stats.durability = newDur;
-                tinkerComponent.stats.count--;
+                Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
+                inventory.GetItem(itemId).quantity--;
                 weapon.stats.currentTinkerPoints--;
-                if (tinkerComponent.stats.isWeapon)
+                if (tinkerComponentToAdd.isWeapon)
                 {
-                    weaponComponents.Remove(tinkerComponentPassed);
+                    //weaponComponents.Remove(tinkerComponentPassed);
+                    //TODO
                 }
                 weapon.SetWeaponDamage(weapon.weaponDamageCollider);
             }
         }
         return canUpgrade;
     }
-    /** After removing json part this is just sorting the components by type which is still important */
-    public void LoadAllComponentTypes()
-    {
-        //add prefabs to initilizer array
-        GameObject[] componentInitilizer = new GameObject[(int)TinkerComponentType.Weapon];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
-        foreach (var component in baseComponents)
-        {
-            componentInitilizer[(int)component.GetComponent<TinkerComponent>().stats.componentType] = component;
-        }
-        //Set baseComponents here
-        baseComponents = componentInitilizer;
-    }
-    public ComponentsArray CreateSaveData(bool weapon = false)
-    {
-        ComponentsArray saveData = new ComponentsArray();
-        if (weapon)
-        {
-            saveData.components = new TinkerComponentStats[weaponComponents.Count];
-            foreach (GameObject component in weaponComponents)
-            {
-                TinkerComponentStats stats = component.GetComponent<TinkerComponent>().stats;
-                saveData.components[(int)stats.componentType] = stats;
-            }
-        }
-        else
-        {
-            saveData.components = new TinkerComponentStats[baseComponents.Length];
-            foreach (GameObject component in baseComponents)
-            {
-                TinkerComponentStats stats = component.GetComponent<TinkerComponent>().stats;
-                saveData.components[(int)stats.componentType] = stats;
-            }
-        }
-        return saveData;
-    }
-    public void LoadComponentSaveData(ComponentsArray saveData, bool weapon = false)
-    {
-        foreach (TinkerComponentStats stats in saveData.components)
-        {
-            if (weapon)
-            {//TODO unfinished for weapons
-                GameObject newComponent = new GameObject();
-                newComponent.AddComponent<TinkerComponent>();
-                newComponent.GetComponent<TinkerComponent>().stats = stats;
-                weaponComponents.Add(newComponent);
-            }
-            else
-            {
-                baseComponents[(int)stats.componentType].GetComponent<TinkerComponent>().stats = stats;
-            }
-        }
-    }
+    ///** After removing json part this is just sorting the components by type which is still important */
+    //public void LoadAllComponentTypes()
+    //{
+    //    //add prefabs to initilizer array
+    //    GameObject[] componentInitilizer = new GameObject[(int)TinkerComponentType.Weapon];//Enum.GetValues(typeof(WeaponType)).Cast<int>().Max()];
+    //    foreach (var component in baseComponents)
+    //    {
+    //        componentInitilizer[(int)component.GetComponent<TinkerComponent>().stats.componentType] = component;
+    //    }
+    //    //Set baseComponents here
+    //    baseComponents = componentInitilizer;
+    //}
+    //public ComponentsArray CreateSaveData(bool weapon = false)
+    //{
+    //    ComponentsArray saveData = new ComponentsArray();
+    //    if (weapon)
+    //    {
+    //        saveData.components = new TinkerComponentStats[weaponComponents.Count];
+    //        foreach (GameObject component in weaponComponents)
+    //        {
+    //            TinkerComponentStats stats = component.GetComponent<TinkerComponent>().stats;
+    //            saveData.components[(int)stats.componentType] = stats;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        saveData.components = new TinkerComponentStats[baseComponents.Length];
+    //        foreach (GameObject component in baseComponents)
+    //        {
+    //            TinkerComponentStats stats = component.GetComponent<TinkerComponent>().stats;
+    //            saveData.components[(int)stats.componentType] = stats;
+    //        }
+    //    }
+    //    return saveData;
+    //}
+    //public void LoadComponentSaveData(ComponentsArray saveData, bool weapon = false)
+    //{
+    //    foreach (TinkerComponentStats stats in saveData.components)
+    //    {
+    //        if (weapon)
+    //        {//TODO unfinished for weapons
+    //            GameObject newComponent = new GameObject();
+    //            newComponent.AddComponent<TinkerComponent>();
+    //            newComponent.GetComponent<TinkerComponent>().stats = stats;
+    //            weaponComponents.Add(newComponent);
+    //        }
+    //        else
+    //        {
+    //            baseComponents[(int)stats.componentType].GetComponent<TinkerComponent>().stats = stats;
+    //        }
+    //    }
+    //}
 }
 [Serializable] //used for JSON. Loading all types and for loading players components
 public class ComponentsArray
