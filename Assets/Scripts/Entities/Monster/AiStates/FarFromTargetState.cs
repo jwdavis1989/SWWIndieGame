@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[CreateAssetMenu(menuName ="A.I./States/Pursue Target")]
+[CreateAssetMenu(menuName ="A.I./States/Far From Target")]
 
-public class PursueTargetState : AIState
+public class FarFromTargetState : AIState
 {
     public override AIState Tick(AICharacterManager aiCharacter)
     {
@@ -37,15 +37,13 @@ public class PursueTargetState : AIState
 
     if (aiCharacter.navMeshAgent)
         {
-            //If we are in combat range of the target, switch to Combat Stance State
-            //Option 01
-            // if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.combatStanceState.maximumEngagementDistance) {
-            //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
-            // }
-
-            if (aiCharacter.aiCharacterCombatManager.CheckTargetFarRangeThreshold() && aiCharacter.farFromTargetState != null)
+            //Dynamically begin sprinting if the target gets out of your range or not
+            if (aiCharacter.aiCharacterCombatManager.canRun)
             {
-                return SwitchState(aiCharacter, aiCharacter.farFromTargetState);
+                //Set Animation Speed to AI's Running Speed
+                aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIRunningSpeedModifier;
+
+                aiCharacter.BeginRunningAtTarget();
             }
 
             //Option 02 - Only use for melee enemies, will use a different approach for ranged enemies
@@ -57,13 +55,6 @@ public class PursueTargetState : AIState
                 return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             }
 
-            //if target is not reachable/far return home
-
-            //Pursue the Target
-            //Option 1: Better performance, Asynchronous, might not always work
-            //aiCharacter.navMeshAgent.SetDestination(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position);
-
-            //Option 2: Worse Performance, guaranteed to work, tutorial cites ~60 characters using it simultaneously with no noticible performance drop
             NavMeshPath path = new NavMeshPath();
             aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
             aiCharacter.navMeshAgent.SetPath(path);

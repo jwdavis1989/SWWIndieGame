@@ -968,6 +968,7 @@ MonoBehaviour:
   pursueTargetState: {fileID: 11400000, guid: 7c78ba5159372974c846f31dbf1271c4, type: 2}
   combatStanceState: {fileID: 11400000, guid: 3254f081909db2046bce0ead74a85845, type: 2}
   attackState: {fileID: 11400000, guid: 58320f92b4d654445b1bab5df42f31cf, type: 2}
+  farFromTargetState: {fileID: 11400000, guid: aae376abc32517842b10d94afd247e3a, type: 2}
   isHitByMainHand: 0
   isHitByOffHand: 0
 --- !u!114 &6892618644458253901
@@ -1053,6 +1054,10 @@ MonoBehaviour:
   attackRotationSpeed: 25
   AIMovementSpeedModifier: 1.25
   AIAttackSpeedModifier: 0.9
+  AIIdleAnimationSpeedModifier: 1
+  canRun: 1
+  AIRunningSpeedModifier: 1.5
+  farRangeDistanceThreshold: 10
 --- !u!114 &8241584581288490192
 MonoBehaviour:
   m_ObjectHideFlags: 0
