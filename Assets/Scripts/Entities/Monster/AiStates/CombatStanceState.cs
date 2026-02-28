@@ -71,6 +71,10 @@ public class CombatStanceState : AIState
 
         //If outside combat engagement range, switch to pursue target state
         if (aiCharacter.aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance) {
+
+            //Set Animation Speed to AI's Movement Speed
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIMovementSpeedModifier;
+
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }
 

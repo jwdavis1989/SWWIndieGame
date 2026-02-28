@@ -40,8 +40,13 @@ public class PursueTargetState : AIState
             //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             // }
 
+
             //Option 02 - Only use for melee enemies, will use a different approach for ranged enemies
             if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
+
+                //Reset AI's animation speed to their attack speed modifier
+                aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIAttackSpeedModifier;
+
                 return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             }
 

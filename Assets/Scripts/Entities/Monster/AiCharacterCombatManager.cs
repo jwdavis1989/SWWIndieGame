@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AiCharacterCombatManager : CharacterCombatManager
@@ -18,6 +19,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
 
     [Header("Attack Rotation Speed")]
     public float attackRotationSpeed = 25f;
+
+    [Header("Combat Mobility Animation Speeds")]
+    public float AIMovementSpeedModifier = 1f;
+    public float AIAttackSpeedModifier = 1f;
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {
         if(currentTarget != null) {
