@@ -23,6 +23,7 @@ public class AiCharacterCombatManager : CharacterCombatManager
     [Header("Combat Mobility Animation Speeds")]
     public float AIMovementSpeedModifier = 1f;
     public float AIAttackSpeedModifier = 1f;
+    public float AIIdleAnimationSpeedModifier = 1f;
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {
         if(currentTarget != null) {
