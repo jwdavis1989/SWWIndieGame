@@ -301,6 +301,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""OpenIdeaCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""04c09dce-967e-4b46-a718-5167f1cad5cd"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Sprint"",
                     ""type"": ""PassThrough"",
                     ""id"": ""8bd75a9b-dd8c-4133-966f-db57c9c1a6ce"",
@@ -1178,6 +1187,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CycleQuickslot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ecc34b9-1992-40d3-bb5c-937e50547499"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenIdeaCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -2935,6 +2955,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""1e6cde45-04de-4a2f-8d15-abcd8e4d60f5"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeactivateCameraView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a87e100c-2529-4479-8b75-8c2305eede16"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
@@ -3025,6 +3056,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_QuickslotButton1 = m_PlayerActions.FindAction("QuickslotButton1", throwIfNotFound: true);
         m_PlayerActions_QuickslotButtonGamepad = m_PlayerActions.FindAction("QuickslotButtonGamepad", throwIfNotFound: true);
         m_PlayerActions_CycleQuickslot = m_PlayerActions.FindAction("CycleQuickslot", throwIfNotFound: true);
+        m_PlayerActions_OpenIdeaCamera = m_PlayerActions.FindAction("OpenIdeaCamera", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Block = m_PlayerActions.FindAction("Block", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
@@ -3276,6 +3308,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_QuickslotButton1;
     private readonly InputAction m_PlayerActions_QuickslotButtonGamepad;
     private readonly InputAction m_PlayerActions_CycleQuickslot;
+    private readonly InputAction m_PlayerActions_OpenIdeaCamera;
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Block;
     private readonly InputAction m_PlayerActions_Jump;
@@ -3316,6 +3349,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @QuickslotButton1 => m_Wrapper.m_PlayerActions_QuickslotButton1;
         public InputAction @QuickslotButtonGamepad => m_Wrapper.m_PlayerActions_QuickslotButtonGamepad;
         public InputAction @CycleQuickslot => m_Wrapper.m_PlayerActions_CycleQuickslot;
+        public InputAction @OpenIdeaCamera => m_Wrapper.m_PlayerActions_OpenIdeaCamera;
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @Block => m_Wrapper.m_PlayerActions_Block;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
@@ -3375,6 +3409,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CycleQuickslot.started += instance.OnCycleQuickslot;
             @CycleQuickslot.performed += instance.OnCycleQuickslot;
             @CycleQuickslot.canceled += instance.OnCycleQuickslot;
+            @OpenIdeaCamera.started += instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.performed += instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.canceled += instance.OnOpenIdeaCamera;
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
@@ -3487,6 +3524,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CycleQuickslot.started -= instance.OnCycleQuickslot;
             @CycleQuickslot.performed -= instance.OnCycleQuickslot;
             @CycleQuickslot.canceled -= instance.OnCycleQuickslot;
+            @OpenIdeaCamera.started -= instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.performed -= instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.canceled -= instance.OnOpenIdeaCamera;
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
@@ -4298,6 +4338,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnQuickslotButton1(InputAction.CallbackContext context);
         void OnQuickslotButtonGamepad(InputAction.CallbackContext context);
         void OnCycleQuickslot(InputAction.CallbackContext context);
+        void OnOpenIdeaCamera(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);

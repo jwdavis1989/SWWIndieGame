@@ -36,7 +36,7 @@ public class PlayerInputManager : MonoBehaviour
     private int currentSelectedQuickslot = 0;
     //[SerializeField] bool dialogueContinueInput = false;//(A),[LMB]
     [SerializeField] bool pauseInput = false;
-    //[SerializeField] bool capturePhotoInput = false;
+    [SerializeField] bool openIdeaCameraInput = false;
     [SerializeField] bool miniMapZoomToggleInput = false;
 
 
@@ -102,7 +102,7 @@ public class PlayerInputManager : MonoBehaviour
         //HandleDialogueContineuButton();
         HandlePauseInput();
         HandleUseItemQuickSlotInput();
-        //HandleCapturePhotoInput();
+        HandleOpenIdeaCameraInput();
 
         HandleMovementInput();
         HandleCameraMovementInput();
@@ -224,6 +224,7 @@ public class PlayerInputManager : MonoBehaviour
             playerControls.PlayerActions.QuickslotButton3.performed += i => useQuickslot3 = true;
             playerControls.PlayerActions.QuickslotButton4.performed += i => useQuickslot4 = true;
             playerControls.PlayerActions.CycleQuickslot.performed += i => cycleQuickSlotGamepad = playerControls.PlayerActions.CycleQuickslot.ReadValue<float>();
+            playerControls.PlayerActions.OpenIdeaCamera.performed += i => openIdeaCameraInput = true;
             //cycleQuickSlotGamepad
             //playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
             playerControls.UI.MiniMapResize.performed += i => miniMapZoomToggleInput = true;
@@ -311,14 +312,15 @@ public class PlayerInputManager : MonoBehaviour
         {
             if(cycleQuickSlotGamepad > 0)
             {
-                Debug.Log("cycle gamepad 1");
-                if (currentSelectedQuickslot < 3)
-                    currentSelectedQuickslot++;
-                else currentSelectedQuickslot = 0;
+                //USED FOR IDEA CAM NOW
+                //Debug.Log("cycle gamepad 1");
+                //if (currentSelectedQuickslot < 3)
+                //    currentSelectedQuickslot++;
+                //else currentSelectedQuickslot = 0;
             }
             else
             {
-                Debug.Log("cycle gamepad 2");
+                //Debug.Log("cycle gamepad 2");
                 if (currentSelectedQuickslot > 0)
                     currentSelectedQuickslot--;
                 else currentSelectedQuickslot = 3;
@@ -333,7 +335,7 @@ public class PlayerInputManager : MonoBehaviour
         }
         if (useQuickslot1)
         {
-            Debug.Log("useQuickslot1");
+            //Debug.Log("useQuickslot1");
             useQuickslot1 = false;
             anyInput = true;
             currentSelectedQuickslot = 0;
@@ -360,24 +362,29 @@ public class PlayerInputManager : MonoBehaviour
         {
             if (player.isBlocking || DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
                 return; //dont use on title screen
-            Debug.Log("using quickslot " + currentSelectedQuickslot);
+            //Debug.Log("using quickslot " + currentSelectedQuickslot);
             Inventory playerInventory = player.GetComponent<Inventory>();
             if (playerInventory != null && playerInventory.quickSlotItems[currentSelectedQuickslot] != null)
             {
                 string itemId = playerInventory.GetQuickSlotItemId(currentSelectedQuickslot);
-                Debug.Log("using quickslot id:"+itemId+".");
+                //Debug.Log("using quickslot id:"+itemId+".");
                 if (itemId != "" && playerInventory.items.ContainsKey(itemId))
                 {
-                    Debug.Log("using item. id:" + itemId + ".");
-                    playerInventory.UseItem(itemId);    
-                    //UsableItem usableItem = playerInventory.GetItem(itemId).GetComponent<UsableItem>();
-                    //if (usableItem != null)
-                    //{
-                    //    Debug.Log("using " + itemId + ".");
-                    //    usableItem.Use(player.gameObject);
-                    //}
+                    //Debug.Log("using item. id:" + itemId + ".");
+                    playerInventory.UseItem(itemId);
                 }
             }
+        }
+    }
+
+    void HandleOpenIdeaCameraInput()
+    {
+        if (openIdeaCameraInput)
+        {
+            openIdeaCameraInput = false;
+            if (player.isBlocking || DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
+                return; //dont use on title screen or when busy
+            IdeaCameraController.instance.ActivateIdeaCameraView();
         }
     }
 

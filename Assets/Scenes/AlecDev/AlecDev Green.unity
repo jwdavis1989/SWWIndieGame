@@ -6372,6 +6372,7 @@ MonoBehaviour:
   playerSettings:
     inverted: 1
     musicVolume: 0
+    effectsVolume: 0
     brightness: 0
     gamepad: 0
 --- !u!1001 &1353102581
@@ -7733,63 +7734,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756006455}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1785600482
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -45.25544
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 20.000914
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -68.845566
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6666511530771334677, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8451483549712208552, guid: 586e154972acb494189c9af6ad655856, type: 3}
-      propertyPath: m_Name
-      value: IdeaCamera
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 586e154972acb494189c9af6ad655856, type: 3}
 --- !u!1 &1790226720
 GameObject:
   m_ObjectHideFlags: 0
@@ -10441,5 +10385,4 @@ SceneRoots:
   - {fileID: 418801353214530847}
   - {fileID: 548157453}
   - {fileID: 86828131}
-  - {fileID: 1785600482}
   - {fileID: 737391485}

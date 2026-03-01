@@ -87,9 +87,10 @@ public class IdeaCameraController : MonoBehaviour
             playerControls.IdeaCameraView.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
             playerControls.IdeaCameraView.DeactivateCameraView.performed += i => deactivateCameraViewInput = true;
             playerControls.Enable();
+            playerControls.IdeaCameraView.Disable();
         }
     }
-    public void Update()
+    public void LateUpdate()
     {
         HandleCapturePhotoInput();
         HandleDeactivateCameraViewInput();
@@ -258,17 +259,17 @@ public class IdeaCameraController : MonoBehaviour
         //leftAndRightLookAngle = player.transform.rotation.y;
         //upAndDownLookAngle = 0;
     }
-    public void ActivateDeactiveCameraView()
-    {
-        if (canvas.gameObject.activeSelf)
-        {
-            DeactivateIdeaCameraView();
-        }
-        else
-        {
-            ActivateIdeaCameraView();
-        }
-    }
+    //public void ActivateDeactiveCameraView()
+    //{
+    //    if (canvas.gameObject.activeSelf)
+    //    {
+    //        DeactivateIdeaCameraView();
+    //    }
+    //    else
+    //    {
+    //        ActivateIdeaCameraView();
+    //    }
+    //}
     public void ActivateIdeaCameraView()
     {
         //Set bool so the Interactable system understands a Menu window has opened
@@ -286,6 +287,7 @@ public class IdeaCameraController : MonoBehaviour
 
         PlayerCamera.instance.cameraObject.enabled = false;
         //activate camera ui
+        playerControls.IdeaCameraView.Enable();
         canvas.gameObject.SetActive(true);
         cameraLensCrosshair.SetActive(true);
         border.SetActive(true);
@@ -304,6 +306,7 @@ public class IdeaCameraController : MonoBehaviour
         PlayerUIManager.instance.menuWindowIsOpen = false;
 
         //deactivate camera ui
+        playerControls.IdeaCameraView.Disable();
         canvas.gameObject.SetActive(false);
         cameraLensCrosshair.SetActive(false);
         border.SetActive(false);

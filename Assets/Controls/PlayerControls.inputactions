@@ -279,6 +279,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "OpenIdeaCamera",
+                    "type": "Value",
+                    "id": "04c09dce-967e-4b46-a718-5167f1cad5cd",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Sprint",
                     "type": "PassThrough",
                     "id": "8bd75a9b-dd8c-4133-966f-db57c9c1a6ce",
@@ -1156,6 +1165,17 @@
                     "action": "CycleQuickslot",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "0ecc34b9-1992-40d3-bb5c-937e50547499",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenIdeaCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -2904,6 +2924,17 @@
                     "name": "",
                     "id": "cf83b35a-0192-47f7-b71f-3e37f71e6c27",
                     "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeactivateCameraView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e6cde45-04de-4a2f-8d15-abcd8e4d60f5",
+                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
