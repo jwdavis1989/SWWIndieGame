@@ -1,49 +1,49 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class TinkerComponentManager : MonoBehaviour
 {
+    Inventory playerInventory;
+    ItemDatabase itemDatabase;
     /**
     * Drops a Tinker Component of any type other than weapon at the specified location
     * Returns a reference to the dropped component
     */
-    public GameObject DropComponent(TinkerComponentType type, Transform location)
-    {
-        return Instantiate(baseComponents[(int)type], location);
-    }
     public GameObject DropComponentById(string itemId, Transform location)
     {
-        foreach (var component in baseComponents)
-            if (component.GetComponent<TinkerComponent>() != null)
-                if(component.GetComponent<TinkerComponent>().itemId == itemId)
-                    return Instantiate(component, location);
+        ItemDetails itemDetails = itemDatabase.GetItem(itemId);
+        if(itemDetails != null && itemDetails.worldPrefab != null)
+            return Instantiate(itemDetails.worldPrefab, location);
         return null;
     }
     //TEST: Drops random component 
     public GameObject DropRandomItem(Transform transform, float distance = 0)
     {
-        int i = UnityEngine.Random.Range(0, baseComponents.Length - 1);
-        if (baseComponents[i] == null) return null ;
-        return Instantiate(baseComponents[i], transform.position + (transform.forward * distance), transform.rotation);
+        int i = UnityEngine.Random.Range(0, itemDatabase.componentDetails.Count - 1);
+        ItemDetails itemDetails = itemDatabase.GetItem(itemDatabase.componentDetails[i].itemId);
+        if (itemDetails == null || itemDetails.worldPrefab == null) 
+            return null;
+        return Instantiate(itemDetails.worldPrefab, transform.position + (transform.forward * distance), transform.rotation);
     }
     public GameObject DropRandomGem(Transform transform, float distance = 0)
     {
-        GameObject[] gems = GetGems();
+        ItemDetails[] gems = GetGems();
         int i = UnityEngine.Random.Range(0, gems.Length - 1);
         if (gems[i] == null) return null;
-        return Instantiate(gems[i], transform.position + (transform.forward * distance), transform.rotation);
+        return Instantiate(gems[i].worldPrefab, transform.position + (transform.forward * distance), transform.rotation);
     }
-    public GameObject[] GetCommonComponents()
+    public ItemDetails[] GetCommonComponents()
     {
-        return baseComponents.Where(obj => "razor,bolt,plating,micro_generator,hook,drillbit".Contains(obj.GetComponent<TinkerComponent>().itemId)).ToArray();
+        return itemDatabase.items.Where(obj => "razor,bolt,plating,micro_generator,hook,drillbit".Contains(obj.itemId)).ToArray();
     }
-    public GameObject[] GetGems()
+    public ItemDetails[] GetGems()
     {
-        return baseComponents.Where(obj=>"ruby,pearl,diamond,turquouse,peridot,emerald,sapphire,garnet".Contains(obj.GetComponent<TinkerComponent>().itemId)).ToArray();
+        return itemDatabase.items.Where(obj=>"ruby,pearl,diamond,turquouse,peridot,emerald,sapphire,garnet".Contains(obj.itemId)).ToArray();
     }
     //****END DEBUG AREA
     public static TinkerComponentManager instance;
@@ -61,19 +61,20 @@ public class TinkerComponentManager : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
+        playerInventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
+        itemDatabase = GetComponent<ItemDropManager>().itemDatabase;
         //Load base stats from json
         //LoadAllComponentTypes();
     }
     //Array of Tinker Component Pre-Fabs. Use to instantiate components ingame and track players count of each component
     [Header("TinkerComponentManager is a singleton containing:\n " +
-    "\tPrefabs for each tinker component\n" +
     "\tMethod for dropping components to the Game world\n" +
     "\tMethods for upgrading/breaking down weapons\n" +
     "\tA record of the players current tinker components\n")]
-    [Header("Array of Tinker Component Pre-Fabs. \n" +
-        "Use to instantiate components ingame and\n track players count of each component")]
-    public GameObject[] baseComponents;
-    //List of weapons turned in to tinker components
+    //[Header("Array of Tinker Component Pre-Fabs. \n" +
+    //    "Use to instantiate components ingame and\n track players count of each component")]
+    //public GameObject[] baseComponents;
+    ////List of weapons turned in to tinker components
     [Header("List of weapons turned in to tinker components")]
     public List<GameObject> weaponComponents = new List<GameObject>();
     /**
