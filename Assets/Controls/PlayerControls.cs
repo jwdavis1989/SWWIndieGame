@@ -1192,7 +1192,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""0ecc34b9-1992-40d3-bb5c-937e50547499"",
                     ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenIdeaCamera"",

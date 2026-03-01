@@ -384,7 +384,7 @@ public class PlayerInputManager : MonoBehaviour
             openIdeaCameraInput = false;
             if (player.isBlocking || DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
                 return; //dont use on title screen or when busy
-            IdeaCameraController.instance.ActivateIdeaCameraView();
+            IdeaCameraController.instance.ActivateCameraViewInput();
         }
     }
 
@@ -497,9 +497,10 @@ public class PlayerInputManager : MonoBehaviour
             MiniMapManager.instance.UpdateMiniMapState();
         }
     }
+    public bool isPlayerEnabled = true;
     private void OnApplicationFocus(bool focus)
     {
-        if (enabled)
+        if (enabled && isPlayerEnabled)
         {
             if (focus)
             {
@@ -934,6 +935,7 @@ public class PlayerInputManager : MonoBehaviour
     //seems to avoid certain input error compared to PlayerControls.Disable
     public void SafeDisable(bool disableCamera = true)
     {
+        isPlayerEnabled = false;
         playerControls.PlayerActions.Disable();
         playerControls.PlayerMovement.Disable();
         if(disableCamera)
@@ -941,6 +943,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void SafeEnable()
     {
+        isPlayerEnabled = true;
         playerControls.PlayerActions.Enable();
         playerControls.PlayerCamera.Enable();
         playerControls.PlayerMovement.Enable();
