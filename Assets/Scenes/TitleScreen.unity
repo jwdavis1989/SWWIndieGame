@@ -2042,6 +2042,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724137156}
   m_CullTransparentMesh: 1
+--- !u!84 &724536692
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &725978093
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,7 +2089,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 725978094}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DustKickUpVFXAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6653,6 +6691,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1236784599}
   m_CullTransparentMesh: 1
+--- !u!84 &1239707062
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &1242241141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8907,44 +8983,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7078722787440015773, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
   m_PrefabInstance: {fileID: 1141389998}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &1765353652
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1802751127 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5632362510253330984, guid: 0e7d517516c299746a154cd33648d6ee, type: 3}
@@ -9247,44 +9285,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1447053619}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!84 &1987829330
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1991056547
 GameObject:
   m_ObjectHideFlags: 0
@@ -10087,6 +10087,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6275634056304421343, guid: 0dc396b68045652498a09c30a9a3e150, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7161413532615111509, guid: 0dc396b68045652498a09c30a9a3e150, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10173,7 +10177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4296533413394450653}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RightFootstepDustVFXAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12365,6 +12369,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1141390022}
     m_Modifications:
+    - target: {fileID: 90387119648763491, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 179911268956331080, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 377166464517987722, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 396666609722441170, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 462604116289997869, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -12381,6 +12401,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 736661971022149306, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1411108402493505806, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.5
@@ -12394,12 +12418,32 @@ PrefabInstance:
       value: 13.4
       objectReference: {fileID: 0}
     - target: {fileID: 1790328051427213106, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790328051427213106, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1828495654674955296, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828495654674955296, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2670332913818361659, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3212333362514844947, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3433744351709294571, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3789074270649116403, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_Name
@@ -12408,6 +12452,10 @@ PrefabInstance:
     - target: {fileID: 3789074270649116403, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4028201773488968826, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4327829873166446099, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: cameraShake.enabled
@@ -12428,6 +12476,10 @@ PrefabInstance:
     - target: {fileID: 4348088420431688013, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435120160507317313, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4622955340629846681, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_Range
@@ -12497,6 +12549,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 5869152015614387466, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7165432804941279108, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_LocalPosition.x
       value: 26.3
@@ -12508,6 +12564,10 @@ PrefabInstance:
     - target: {fileID: 7165432804941279108, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_LocalPosition.z
       value: 7.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310087766374703764, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7382807977210591031, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_LocalScale.x
@@ -12561,9 +12621,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7466433280881544541, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8126785635250931384, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8126785635250931384, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8796054289389383211, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12612,7 +12684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6814738293770073808}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeftFootstepDustVFXAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

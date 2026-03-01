@@ -77,6 +77,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   isMainHand: 0
   attackMotionValue: 1
   fullChargeModifier: 1
@@ -147,6 +148,7 @@ MonoBehaviour:
   weaponDamageCollider: {fileID: 0}
   jumpAttackWeaponDamageCollider: {fileID: 4862988502895012156, guid: 4790800cb316f2f479ac2620ab078ac7, type: 3}
   isSpecialWeapon: 0
+  isWristWeapon: 0
   specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: b57cc1999d98f0549a0ba9080d5a0119, type: 3}
   hasObtained: 1
@@ -172,6 +174,7 @@ MonoBehaviour:
       beastPower: 0
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 100
       icePower: 100
@@ -182,6 +185,7 @@ MonoBehaviour:
       beastPower: 100
       scalesPower: 100
       techPower: 100
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
     xpToLevel: 100
@@ -204,6 +208,7 @@ MonoBehaviour:
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
+    gunAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -217,13 +222,25 @@ MonoBehaviour:
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
+    singleTargetBulletAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
   offHandCastMagicAttackAction: {fileID: 0}
-  projectile: {fileID: 0}
+  offHandShootGunAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 5a9db5bc8b0e2c74fade19682799950e, type: 2}
   offHandSpellAnimation: 
+  offHandGunShootAnimation: 
   fullChargingTraitModifier: 1.25
+  gunModel: {fileID: 0}
+  bulletOriginLocation: {fileID: 0}
+  shootingTransform: {fileID: 0}
+  isSettingGunToFiringTransform: 0
+  isSetGunToHandTransform: 0
+  gunProjectile: {fileID: 0}
+  gunShotWarmUpVFX: {fileID: 0}
+  projectileForwardVelocityMultiplier: 7
+  projectileUpwardVelocityMultiplier: 4
+  projectileMass: 0.01
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
@@ -232,6 +249,9 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  gunAimSFX: {fileID: 0}
+  gunFireSFX: {fileID: 0}
+  isInDebugMode: 0
 --- !u!1 &6196311575992089123
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,6 +367,10 @@ PrefabInstance:
     - target: {fileID: 729692725998703238, guid: a979439e920da484e8080c691521647c, type: 3}
       propertyPath: m_Name
       value: Style9JetEngine1
+      objectReference: {fileID: 0}
+    - target: {fileID: 729692725998703238, guid: a979439e920da484e8080c691521647c, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 729692725998703239, guid: a979439e920da484e8080c691521647c, type: 3}
       propertyPath: m_LocalScale.x
