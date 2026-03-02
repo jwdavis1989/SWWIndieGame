@@ -49,9 +49,13 @@ public class Inventory : MonoBehaviour
     public Dictionary<string,InventoryItem> GetTinkerComponents()
     {
         //filter items
+        int i = 0;
         return items.Where((kvp) =>
         {
             ItemDetails itemDetails = ItemDropManager.instance.itemDatabase.GetItem(kvp.Key);
+            Debug.Log("i=" + i++);
+            if(itemDetails == null) 
+                return false; // No details for this item. Skip it
             return itemDetails.itemType.ToLower().Equals("component");
         })
         .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
