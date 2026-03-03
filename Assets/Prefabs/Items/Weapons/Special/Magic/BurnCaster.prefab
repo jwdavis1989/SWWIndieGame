@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6633539134048135499}
   - component: {fileID: 5484878649888288949}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpellOriginLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,6 +155,7 @@ MonoBehaviour:
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
+    gunAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -168,13 +169,25 @@ MonoBehaviour:
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
+    singleTargetBulletAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 0}
   mainHandHeavyAttackAction: {fileID: 0}
   offHandCastMagicAttackAction: {fileID: 11400000, guid: 8e9365bba282ba0448de4018a8f7ce12, type: 2}
-  projectile: {fileID: 0}
+  offHandShootGunAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 0}
   offHandSpellAnimation: Spell_Off_Fire_Ball_Start_01
+  offHandGunShootAnimation: 
   fullChargingTraitModifier: 1.25
+  gunModel: {fileID: 0}
+  bulletOriginLocation: {fileID: 0}
+  shootingTransform: {fileID: 0}
+  isSettingGunToFiringTransform: 0
+  isSetGunToHandTransform: 0
+  gunProjectile: {fileID: 0}
+  gunShotWarmUpVFX: {fileID: 0}
+  projectileForwardVelocityMultiplier: 7
+  projectileUpwardVelocityMultiplier: 4
+  projectileMass: 0.01
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 7017378161147204679, guid: 5e3b59b95ca3bd64e972f39d0e1e2e22, type: 3}
@@ -183,6 +196,8 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 4845079000888395174, guid: f993e9c24bbe0294da03a524ae80b168, type: 3}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  gunAimSFX: {fileID: 0}
+  gunFireSFX: {fileID: 0}
   isInDebugMode: 0
 --- !u!1 &6113844736066265108
 GameObject:
@@ -358,6 +373,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b8d191ddb6920e048a64244e322f7949, type: 3}
       propertyPath: m_Name
       value: BurnBracerNOTEXTURE_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b8d191ddb6920e048a64244e322f7949, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

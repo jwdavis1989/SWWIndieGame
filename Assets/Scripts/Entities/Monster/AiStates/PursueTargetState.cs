@@ -16,6 +16,9 @@ public class PursueTargetState : AIState
 
         //If we have no target, then return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null) {
+            //Reset Animation Speed to Idle Speed
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
@@ -40,8 +43,17 @@ public class PursueTargetState : AIState
             //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             // }
 
+            if (aiCharacter.aiCharacterCombatManager.CheckTargetFarRangeThreshold() && aiCharacter.farFromTargetState != null)
+            {
+                return SwitchState(aiCharacter, aiCharacter.farFromTargetState);
+            }
+
             //Option 02 - Only use for melee enemies, will use a different approach for ranged enemies
-            if(aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
+            if (aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
+
+                //Reset AI's animation speed to their attack speed modifier
+                aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIAttackSpeedModifier;
+
                 return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             }
 

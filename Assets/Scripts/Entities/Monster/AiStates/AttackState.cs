@@ -19,6 +19,9 @@ public class AttackState : AIState {
 
     public override AIState Tick(AICharacterManager aiCharacter) {
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null || aiCharacter.aiCharacterCombatManager.currentTarget.isDead) {
+            //Reset Animation Speed to Idle Speed
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
