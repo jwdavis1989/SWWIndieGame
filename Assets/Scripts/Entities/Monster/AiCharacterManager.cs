@@ -26,6 +26,7 @@ public class AICharacterManager : CharacterManager
     public PursueTargetState pursueTargetState;
     public CombatStanceState combatStanceState;
     public AttackState attackState;
+    public FarFromTargetState farFromTargetState;
 
     [Header("Determines which type of exp to drop on death")]
     public bool isHitByMainHand = false;
@@ -150,6 +151,11 @@ public class AICharacterManager : CharacterManager
         else {
             isMoving = false;
         }
+    }
+
+    public void BeginRunningAtTarget()
+    {
+        characterAnimatorManager.UpdateAnimatorMovementParameters(0, 1, false);
     }
 
 

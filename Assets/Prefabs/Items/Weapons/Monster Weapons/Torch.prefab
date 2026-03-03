@@ -77,6 +77,7 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
   isMainHand: 1
   attackMotionValue: 1
   fullChargeModifier: 1
@@ -149,7 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponFamily: 0
   weaponDamageCollider: {fileID: 0}
+  jumpAttackWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 0
+  isWristWeapon: 0
+  specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: d511495ea09ac9e49b881bcf17f09b19, type: 3}
   hasObtained: 1
   stats:
@@ -174,6 +178,7 @@ MonoBehaviour:
       beastPower: 10
       scalesPower: 0
       techPower: 0
+      currentHighestElementalStat: 0
     maxElemental:
       firePower: 34
       icePower: 34
@@ -184,10 +189,9 @@ MonoBehaviour:
       beastPower: 34
       scalesPower: 34
       techPower: 34
+      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
-    specialtyCooldown: 0
-    maxSpecialtyCooldown: 0
     xpToLevel: 100
     tinkerPointsPerLvl: 1
     currentDurability: 1
@@ -202,9 +206,13 @@ MonoBehaviour:
     lightAttack03StaminaCostModifier: 1
     heavyAttack01StaminaCostModifier: 1
     heavyAttack02StaminaCostModifier: 1
+    lightJumpAttack01StaminaCostModifier: 1
+    heavyJumpAttack01StaminaCostModifier: 4
     lightRunningAttack01StaminaCostModifier: 1
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
+    areaSpellAttack01StaminaCostModifier: 1
+    gunAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -212,13 +220,42 @@ MonoBehaviour:
     heavyAttack02DamageMotionValue: 1.6
     heavyChargedAttack01DamageMotionValue: 2
     heavyChargedAttack02DamageMotionValue: 2.2
+    lightJumpAttack01DamageMotionValue: 1
+    heavyJumpAttack01DamageMotionValue: 1.8
     lightRunningAttack01DamageMotionValue: 1
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
+    areaSpellAttack01DamageMotionValue: 1
+    singleTargetBulletAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
-  projectile: {fileID: 0}
+  offHandCastMagicAttackAction: {fileID: 0}
+  offHandShootGunAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 1d7f32233af26c44899feb699f25e05b, type: 2}
+  offHandSpellAnimation: 
+  offHandGunShootAnimation: 
+  fullChargingTraitModifier: 1.25
+  gunModel: {fileID: 0}
+  bulletOriginLocation: {fileID: 0}
+  shootingTransform: {fileID: 0}
+  isSettingGunToFiringTransform: 0
+  isSetGunToHandTransform: 0
+  gunProjectile: {fileID: 0}
+  gunShotWarmUpVFX: {fileID: 0}
+  projectileForwardVelocityMultiplier: 7
+  projectileUpwardVelocityMultiplier: 4
+  projectileMass: 0.01
+  spellForwardVelocityMultiplier: 7
+  spellUpwardVelocityMultiplier: 4
+  spellCastWarmUpVFX: {fileID: 0}
+  spellChargeVFX: {fileID: 0}
+  spellProjectileVFX: {fileID: 0}
+  spellProjectileFullChargeVFX: {fileID: 0}
+  spellReleaseSFX: {fileID: 0}
+  spellProjectileSFX: {fileID: 0}
+  gunAimSFX: {fileID: 0}
+  gunFireSFX: {fileID: 0}
+  isInDebugMode: 0
 --- !u!1 &1908542492005092216
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,7 +268,7 @@ GameObject:
   - component: {fileID: 8702530940249404835}
   - component: {fileID: 7178032143116510641}
   - component: {fileID: 6382856559867188453}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +370,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 788550424285521680}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: 'switchbladecomb (Missing Prefab with guid: f8e4ecf331f00e542b17b222b3cb648f)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +404,7 @@ GameObject:
   - component: {fileID: 3261813131625009828}
   - component: {fileID: 2483164100966458238}
   - component: {fileID: 7106378147953897475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,6 +565,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire
       objectReference: {fileID: 0}
+    - target: {fileID: 56852242586695119, guid: 4d7e19c9fcb52be4bb9a8ba855ffe12d, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -605,6 +646,10 @@ PrefabInstance:
     - target: {fileID: 6716933543107358056, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}
       propertyPath: m_Name
       value: Smoke
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716933543107358056, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

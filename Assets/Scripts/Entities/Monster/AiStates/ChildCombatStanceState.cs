@@ -44,6 +44,9 @@ public class ChildCombatStanceState : CombatStanceState
         //If Target is no longer present, return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
         {
+            //Reset Animation Speed to Idle Speed
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
         //If outside combat engagement range, switch to pursue target state

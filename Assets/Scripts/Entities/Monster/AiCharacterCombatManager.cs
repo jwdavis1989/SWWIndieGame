@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AiCharacterCombatManager : CharacterCombatManager
@@ -18,6 +19,14 @@ public class AiCharacterCombatManager : CharacterCombatManager
 
     [Header("Attack Rotation Speed")]
     public float attackRotationSpeed = 25f;
+
+    [Header("Combat Mobility Options")]
+    public float AIMovementSpeedModifier = 1f;
+    public float AIAttackSpeedModifier = 1f;
+    public float AIIdleAnimationSpeedModifier = 1f;
+    public bool canRun = false;
+    public float AIRunningSpeedModifier = 1f;
+    public float farRangeDistanceThreshold = 10f;
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {
         if(currentTarget != null) {
@@ -122,6 +131,11 @@ public class AiCharacterCombatManager : CharacterCombatManager
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
 
         aiCharacter.transform.rotation = Quaternion.Slerp(aiCharacter.transform.rotation, targetRotation, attackRotationSpeed * Time.deltaTime);
+    }
+
+    public bool CheckTargetFarRangeThreshold()
+    {
+        return distanceFromTarget >= farRangeDistanceThreshold;
     }
 
 }
