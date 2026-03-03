@@ -135,8 +135,8 @@ public class PlayerManager : CharacterManager
         currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
         currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
         //Tinker Components owned
-        currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
-        currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
+        //currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
+        //currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
         //Journal flags
         currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
         //Ideas
@@ -180,8 +180,8 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
         //Load TinkerComponents
-        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
-        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);
+        //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
+        //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
         //Ideas

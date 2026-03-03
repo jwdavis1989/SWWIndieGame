@@ -25,7 +25,6 @@ public class PauseScript : MonoBehaviour
     public GameObject playerHud;
     MenuTab lastMenuTab = MenuTab.Weapons;
     [Header("Controls")]
-    [SerializeField] public bool pauseInput = false;
     [SerializeField] public bool menuLeftInput = false;
     [SerializeField] public bool menuRightInput = false;
     [SerializeField] public bool exitPauseMenuInput = false;
@@ -72,16 +71,16 @@ public class PauseScript : MonoBehaviour
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PauseMenu.SwitchMenuLeft.performed += i => menuLeftInput = true;
             playerControls.PauseMenu.SwitchMenuRight.performed += i => menuRightInput = true;
             playerControls.PauseMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
             playerControls.Enable();
+            playerControls.PauseMenu.Disable();
         }
     }
     void Update()
     {
-        HandlePauseInput();
+        //HandlePauseInput();
         HandleSwitchMenuInput();
         HandleExitPauseMenuInput();
         CheckControlsChanged();
@@ -90,7 +89,6 @@ public class PauseScript : MonoBehaviour
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
-        pauseInput = false;
         menuLeftInput = false;
         menuRightInput = false;
         exitPauseMenuInput = false;
@@ -174,22 +172,6 @@ public class PauseScript : MonoBehaviour
         mainMenuButton.GetComponent<Button>().Select();
         //SetMainPauseMenuTooltip();
     }
-    //void SetWeaponMenuTooltip()
-    //{
-    //    bottomTooltipPauseMenuGamepad.SetActive(false);
-    //    if (InputSwitchDetector.IsCurrentlyGamepad())
-    //    {
-    //        bottomTooltipWeaponMenuGamepad.SetActive(true);
-    //    }
-    //}
-    //void SetMainPauseMenuTooltip()
-    //{
-    //    bottomTooltipWeaponMenuGamepad.SetActive(false); 
-    //    if (InputSwitchDetector.IsCurrentlyGamepad())
-    //    {
-    //        bottomTooltipPauseMenuGamepad.SetActive(true);
-    //    }
-    //}
     public void MainMenuClick()
     {
         /* DontDestroyOnLoad prevents simply loading the title screen from properly resetting. 
@@ -235,19 +217,17 @@ public class PauseScript : MonoBehaviour
             TinkerComponentManager.instance.DropRandomItem(playerObj.transform, 5.0f);
         }
     }
-    public void PauseUnpause()
+    public void HandlePauseInput()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
-            return;
-        if (gamePaused)
-            StartCoroutine(WaitToEndOfFrameThenContinue());//Unpause();
-        else
-            Pause();
-        
+        StartCoroutine(WaitToEndOfFrameThenPause());
     }
-    void Pause()
+    IEnumerator WaitToEndOfFrameThenPause()
     {
-        //PlayerInputManager.instance.enabled = false;
+        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        Pause();
+    }
+    public void Pause()
+    {
         //playerControls.PlayerActions.Disable();
         playerControls.PauseMenu.Enable();
         playerControls.WeaponMenu.Enable();
@@ -255,17 +235,6 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 0;
         gamePaused = true;
         pauseMenu.SetActive(true);
-        //mainPauseMenu.SetActive(true);
-        //if (debugMode)
-        //{
-        //    DebugSaveGameButton.SetActive(true);
-        //    DebugAddItemButton.SetActive(true);
-        //}
-        //else
-        //{
-        //    DebugSaveGameButton.SetActive(false);
-        //    DebugAddItemButton.SetActive(false);
-        //}
 
         //Disable Controls
         PlayerInputManager.instance.SafeDisable();
@@ -298,13 +267,12 @@ public class PauseScript : MonoBehaviour
     }
     void Unpause()
     {
-        pauseInput = false;
         menuLeftInput = false;
         menuRightInput = false;
         exitPauseMenuInput = false;
         //playerControls.PlayerActions.Enable();
         playerControls.PauseMenu.Disable();
-        playerControls.WeaponMenu.Disable();
+        //playerControls.WeaponMenu.Disable();
         Time.timeScale = 1;
         gamePaused = false;
         weaponMenu.SetActive(false);
@@ -321,15 +289,15 @@ public class PauseScript : MonoBehaviour
         PlayerUIManager.instance.menuWindowIsOpen = false;
         playerHud.SetActive(true);
     }
-    public void HandlePauseInput()
-    {
-        if (pauseInput) // [Esc], (Start/Menu)
-        {
-            //Debug.Log("PAUSE INPUT");
-            pauseInput = false;
-            PauseUnpause();
-        }
-    }
+    //public void HandlePauseInput()
+    //{
+    //    if (pauseInput) // [Esc], (Start/Menu)
+    //    {
+    //        //Debug.Log("PAUSE INPUT");
+    //        pauseInput = false;
+    //        PauseUnpause();
+    //    }
+    //}
     public void HandleExitPauseMenuInput()
     {
         if (exitPauseMenuInput) // [Esc], (Start/Menu)
