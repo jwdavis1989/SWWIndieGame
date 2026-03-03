@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerSettingsManager : MonoBehaviour
 {
     [Header("Pause is a singleton")]
+    public AudioMixer mixer;
     public static PlayerSettingsManager instance;
     private string filename = "playerSettings.json";
     public PlayerSettings playerSettings = new PlayerSettings();
@@ -41,7 +43,8 @@ public class PlayerSettingsManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             playerSettings = JsonUtility.FromJson<PlayerSettings>(json);
             PlayerCamera.instance.isCameraInverted = playerSettings.inverted;
-            WorldMusicController.instance.GetComponent<AudioSource>().volume = playerSettings.musicVolume;
+            mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
+            mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
         }
         else
         {

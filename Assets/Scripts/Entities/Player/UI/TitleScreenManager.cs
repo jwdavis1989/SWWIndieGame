@@ -151,11 +151,6 @@ public class TitleScreenManager : MonoBehaviour
     public void PlayAdvancedSoundFX(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool randomizePitch = true, float pitchRandomRange = 0.1f, bool canOverlap = false) {
         if (canOverlap || audioSource.clip != soundFX)
         {
-            if(PlayerSettingsManager.instance.playerSettings != null)
-            {
-                audioSource.volume = PlayerSettingsManager.instance.playerSettings.effectsVolume;
-                Debug.Log("TitleScreenManager volume:"+ audioSource.volume);
-            }
             audioSource.PlayOneShot(soundFX, volume);
 
             //Reset pitch from last time called
