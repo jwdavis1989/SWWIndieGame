@@ -69,7 +69,7 @@ public class InventionMenuManager : MonoBehaviour
     {
         if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad())
         { //Handle Lost gamepad Cursor
-            Debug.Log("inent menu thningy null setting select");
+            //Debug.Log("inent menu thningy null setting select");
             if (ownedIdeasGrid.transform.childCount > 0)
             {
                 ownedIdeasGrid.transform.GetChild(0).GetComponent<IdeaPanel>().mainButton.Select();
@@ -134,7 +134,7 @@ public class InventionMenuManager : MonoBehaviour
      */
     void LoadIdeasToScreen()
     {
-        Debug.Log("LoadIdeasToScreen");
+        //Debug.Log("LoadIdeasToScreen");
         foreach (Transform child in ownedIdeasGrid.transform)
         {
             Destroy(child.gameObject);

@@ -1191,15 +1191,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CaptureIdeaPhotoBtn",
-                    "type": "Button",
-                    "id": "28878abf-a4e8-4a58-97ce-36e8fba73f88",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "MiniMapResize",
                     "type": "Button",
                     "id": "dc345c32-cc8b-4cbd-b017-f2d05c9c2c13",
@@ -1282,28 +1273,6 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "PauseButton",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3aa104eb-21ce-433e-9385-2e3a976bf878",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CaptureIdeaPhotoBtn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1e84c4a8-44f5-4b4b-bd40-1f9ac3391c92",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "CaptureIdeaPhotoBtn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -2858,6 +2827,87 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "IdeaCameraView",
+            "id": "cb1b3bc6-8928-428e-8b9e-ab2d89056987",
+            "actions": [
+                {
+                    "name": "DeactivateCameraView",
+                    "type": "Button",
+                    "id": "65f0c365-6d34-4ef0-b1dd-cd440bee0b84",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CaptureIdeaPhotoBtn",
+                    "type": "Button",
+                    "id": "1ab07e65-0e75-404a-a351-3a32dd4dcd39",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cf83b35a-0192-47f7-b71f-3e37f71e6c27",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeactivateCameraView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a87e100c-2529-4479-8b75-8c2305eede16",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeactivateCameraView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a6b7f6e5-4259-43ca-a8e1-af7d1c602725",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeactivateCameraView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c6f58f1-d28f-414d-a2d0-8f8da07dd777",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CaptureIdeaPhotoBtn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98e4e07c-91c5-4c2c-a22f-cc1807d57b44",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CaptureIdeaPhotoBtn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

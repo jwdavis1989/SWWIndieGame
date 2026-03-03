@@ -44,13 +44,13 @@ public enum TinkerComponentType
  * MonoBehaviour TinkerComponent that one can be added to a game object
  */
 
-public class TinkerComponent : InventoryItem
+public class TinkerComponent : PickupableItem
 {
     [Header("The TinkerComponent is used for upgrading weapons\n")]
     [Header("These values are saved when saving game")]
     public TinkerComponentStats stats = new();
-    [Header("Image used for menu icon")]
-    public Sprite spr = null;//TODO replace usage with InventoryItem icon
+    //[Header("Image used for menu icon")]
+    //public Sprite spr = null;//TODO replace usage with InventoryItem icon
 
     public override void HandlePickup(GameObject player)
     {
@@ -101,6 +101,8 @@ public class TinkerComponentStats
 {
     [Header("Type")]
     public TinkerComponentType componentType = 0;
+    [Header("Unique ID. Case insensitive")]
+    public string itemId;
     [Header("UI Fields")]
     public int count = 0;
     public string itemName = "Default TinkerComponent Name";

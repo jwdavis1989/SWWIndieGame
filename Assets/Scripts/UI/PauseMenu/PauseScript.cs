@@ -248,7 +248,7 @@ public class PauseScript : MonoBehaviour
     void Pause()
     {
         //PlayerInputManager.instance.enabled = false;
-        playerControls.PlayerActions.Disable();
+        //playerControls.PlayerActions.Disable();
         playerControls.PauseMenu.Enable();
         playerControls.WeaponMenu.Enable();
         playerControls.UI.Enable();
@@ -334,7 +334,7 @@ public class PauseScript : MonoBehaviour
     {
         if (exitPauseMenuInput) // [Esc], (Start/Menu)
         {
-            //Debug.Log("exitPauseMenuInput INPUT");
+            //Debug.Log("HandleExitPauseMenuInput PauseScript");
             exitPauseMenuInput = false;
             if (gamePaused)
                 StartCoroutine(WaitToEndOfFrameThenContinue());

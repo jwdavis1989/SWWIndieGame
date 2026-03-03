@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-[CreateAssetMenu(menuName = "Items/Invention Database")]
+[CreateAssetMenu(menuName = "Items/Inventions/Invention Database")]
 public class InventionDatabase : ScriptableObject
 {
     [Header("Lookup table for static invention data (sprite, desc, etc.)")]

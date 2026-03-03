@@ -36,11 +36,10 @@ public class CharacterSoundFXManager : MonoBehaviour
     {
         if (canOverlap || audioSource.clip != soundFX)
         {
+            audioSource.volume = volume;
             audioSource.PlayOneShot(soundFX, volume);
-
             //Reset pitch from last time called
             audioSource.pitch = pitch;
-
             if (randomizePitch)
             {
                 audioSource.pitch += Random.Range(-pitchRandomRange, pitchRandomRange);

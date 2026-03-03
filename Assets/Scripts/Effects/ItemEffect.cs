@@ -5,5 +5,6 @@ using UnityEngine;
 
 public class ItemEffect : InstantCharacterEffect
 {
+    [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
 }

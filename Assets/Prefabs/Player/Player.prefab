@@ -92497,25 +92497,53 @@ MonoBehaviour:
   characterController: {fileID: 0}
   animator: {fileID: 0}
   characterStatsManager: {fileID: 0}
+  characterCombatManager: {fileID: 0}
   characterEffectsManager: {fileID: 0}
   characterAnimatorManager: {fileID: 0}
   characterSoundFXManager: {fileID: 0}
+  characterLocomotionManager: {fileID: 0}
+  characterUIManager: {fileID: 0}
   characterWeaponManager: {fileID: 0}
+  characterModel: {fileID: 0}
   isDead: 0
+  deathExplosionVFXDelay: 2
+  faction: 0
   isPlayer: 0
+  isRotatingAttacker: 0
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
+  isFalling: 0
   isBoosting: 0
+  isRolling: 0
+  isAttacking: 0
   applyRootMotion: 0
   canRotate: 1
   canMove: 1
+  isMoving: 0
   isSprinting: 0
+  isLockedOn: 0
+  isBlocking: 0
+  isPerfectBlocking: 0
+  perfectBlockModifier: 2
+  perfectBlockWindowDuration: 0.5
+  nonWeaponBlockingStrength: 30
   canBleed: 1
+  isChargingAttack: 0
+  isChargingSpellAttack: 0
+  isAiming: 0
+  isInvulnerable: 0
+  miniMapSprite: {fileID: 0}
+  isInDebugMode: 0
   playerLocomotionManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
   playerAnimationManager: {fileID: 0}
+  playerCombatManager: {fileID: 0}
+  playerInteractionManager: {fileID: 0}
   flashlight: {fileID: 0}
+  cameraflashlight: {fileID: 0}
+  capeSystem: {fileID: 0}
+  playerSoundFXManager: {fileID: 0}
   respawnCharacter: 0
 --- !u!114 &1965232953715711117
 MonoBehaviour:
@@ -92538,10 +92566,15 @@ MonoBehaviour:
   yVelocity: {x: 0, y: -20, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -7
+  meteorStrikeVerticalSpeedModifier: 10
+  meteorStrikeHorizontalSpeedModifier: 60
   rightBoosters: {fileID: 53008419102615700}
   leftBoosters: {fileID: 6024397389374433851}
   backBoosters: {fileID: 0}
   airDashBoosters: {fileID: 0}
+  boosterIgnitionVFX: {fileID: 0}
+  shoulderMeteorBoosters: {fileID: 0}
+  descentMeteorBoosters: {fileID: 0}
   characterManager: {fileID: 816585948188296129}
   verticalMovement: 0
   horizontalMovement: 0
@@ -92552,7 +92585,10 @@ MonoBehaviour:
   jumpHeight: 2
   jumpForwardSpeed: 5
   freeFallSpeed: 2
+  hoverFallSpeed: 1
+  dodgeBoostSpeed: 1
   airBoostSpeed: 15
+  icarusBoosterDashSpeedMultiplier: 2
   forceFieldGraphic: {fileID: 0}
 --- !u!114 &2421360271577463055
 MonoBehaviour:
@@ -92567,6 +92603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
+  deathVFX: {fileID: 0}
+  leftFootstepDustVFXAnchor: {fileID: 0}
+  rightFootstepDustVFXAnchor: {fileID: 0}
+  activeSpellWarmUpFX: {fileID: 0}
   effectToTest: {fileID: 0}
   ProcessEffect: 0
 --- !u!143 &2895811096310676182
@@ -92604,7 +92644,7 @@ AudioSource:
   m_GameObject: {fileID: 7748067122375590922}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -92704,6 +92744,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
+  walkFootStepPitch: 1
+  runFootStepPitch: 1.2
+  takeDamageGrunts: []
+  sprintBoosterAudioSource: {fileID: 0}
 --- !u!95 &5286892211168698038
 Animator:
   serializedVersion: 5
@@ -92750,6 +92794,12 @@ MonoBehaviour:
     beastPower: 0
     scalesPower: 0
     techPower: 0
+    currentHighestElementalStat: 0
+  totalPoiseDamage: 0
+  offensivePoiseBonus: 0
+  basePoiseDefense: 0
+  defaultPoiseResetTimer: 8
+  currentPoiseResetTimer: 0
   currentHealth: 1
   maxHealth: 100
   currentStamina: 0
@@ -92759,6 +92809,7 @@ MonoBehaviour:
   staminaRegenAmount: 2.5
   sprintingStaminaCost: 12
   dodgeStaminaCost: 25
+  airDashStaminaCost: 50
   jumpStaminaCost: 0
   staminaTickTimer: 0.1
   characterName: Character Name
@@ -92775,6 +92826,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastDamageAnimationPlayed: 
+  hit_Forward_Ping_01: Hit_Forward_Ping_01
+  hit_Forward_Ping_02: Hit_Forward_Ping_02
+  hit_Backward_Ping_01: Hit_Backward_Ping_01
+  hit_Backward_Ping_02: Hit_Backward_Ping_02
+  hit_Right_Ping_01: Hit_Right_Ping_01
+  hit_Right_Ping_02: Hit_Right_Ping_02
+  hit_Left_Ping_01: Hit_Left_Ping_01
+  hit_Left_Ping_02: Hit_Left_Ping_02
+  forward_Ping_Damage: []
+  backward_Ping_Damage: []
+  right_Ping_Damage: []
+  left_Ping_Damage: []
   hit_Forward_Medium_01: Hit_Forward_Medium_01
   hit_Forward_Medium_02: Hit_Forward_Medium_02
   hit_Backward_Medium_01: Hit_Backward_Medium_01

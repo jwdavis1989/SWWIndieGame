@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UsableItem : InventoryItem
+public class UsableItem : PickupableItem
 {
     public InstantCharacterEffect effect;
     public bool consumable = false;

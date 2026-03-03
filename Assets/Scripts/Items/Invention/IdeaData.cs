@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Items/Idea Data")]
+[CreateAssetMenu(menuName = "Items/Inventions/Idea Data")]
 public class IdeaData : ScriptableObject
 {
     [Header("Statistical idea data")]

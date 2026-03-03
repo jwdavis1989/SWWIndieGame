@@ -507,7 +507,7 @@ public class WeaponMenuManager : MonoBehaviour
             if (!checkOnly)
             {
                 //break down weapon
-                TinkerComponent newComp = TinkerComponentManager.instance.BreakDownWeapon(index, isSpecial, playerWpns);
+                TinkerComponentStats newComp = TinkerComponentManager.instance.BreakDownWeapon(index, isSpecial, playerWpns);
                 //Debug.Log("Broke down " + newComp.stats.itemName);
                 //add to screen
                 activeWeapon = null;
@@ -1012,6 +1012,9 @@ public class WeaponMenuManager : MonoBehaviour
         {
             if (component == null) continue;
             TinkerComponent componentScript = component.GetComponent<TinkerComponent>();
+            ItemDatabase itemDatabase = ItemDropManager.instance.itemDatabase;
+            TinkerComponentData tinkerComponentData = itemDatabase.GetTinkerComponentData(componentScript.itemId);
+            ItemDetails itemDetails = itemDatabase.GetItem(componentScript.itemId);
             if (componentScript.stats.count > 0)
             {
                 if(componentsToSkip > 0)
@@ -1050,8 +1053,8 @@ public class WeaponMenuManager : MonoBehaviour
                 //tinkerComponentUI.tooltipHolder.SetActive(false);
                 tinkerComponentUI.countText.text = "" + componentScript.stats.count;
                 //tinkerComponent.cornerButton.gameObject.SetActive(false);
-                if(componentScript.spr)//Icon
-                    tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
+                if(itemDetails.icon)//Icon
+                    tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = itemDetails.icon;
                 //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
                 if (displayedCount == currentlySelectedComponentIndex)
                 {
@@ -1107,6 +1110,9 @@ public class WeaponMenuManager : MonoBehaviour
             GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
             TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
             tinkerComponentUI.countText.text = ""+componentScript.stats.count;
+            ItemDatabase itemDatabase = ItemDropManager.instance.itemDatabase;
+            WeaponData weaponData = itemDatabase.GetWeaponData(componentScript.itemId);
+            ItemDetails itemDetails = itemDatabase.GetItem(componentScript.itemId);
             //if (tinkerComponentUI.tooltip != null)
             //    tinkerComponentUI.tooltip.text = componentScript.stats.itemName;
             //if (tinkerComponentUI.tooltipHolder != null)
@@ -1124,8 +1130,8 @@ public class WeaponMenuManager : MonoBehaviour
             //    tooltipUI.centerText.text += "\nCan only combine weapons of the same hand\n";
             //    tooltipUI.gameObject.SetActive(false);
             //}
-            if (componentScript.spr)
-                tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = componentScript.spr;
+            if (itemDetails.icon)
+                tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = itemDetails.icon;
             if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
             {
                 if (index == currentlySelectedComponentIndex)

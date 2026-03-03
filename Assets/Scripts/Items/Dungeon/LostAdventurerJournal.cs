@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LostAdventurerJournal : InventoryItem
+public class LostAdventurerJournal : PickupableItem
 {
     public override void HandlePickup(GameObject player)
     {

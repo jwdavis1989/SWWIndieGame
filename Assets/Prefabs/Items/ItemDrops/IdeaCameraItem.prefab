@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: m_Name
-      value: Camera
+      value: IdeaCameraItem
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6109603862540192664, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
@@ -63,14 +63,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -379482394103668214}
+      addedObject: {fileID: -3739911621604934941}
   m_SourcePrefab: {fileID: 100100000, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
 --- !u!1 &8451483549712208552 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
   m_PrefabInstance: {fileID: 1864547948002784164}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-379482394103668214
+--- !u!114 &-3739911621604934941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,10 +79,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8451483549712208552}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b66e8357a73eee847bd444076e26cb46, type: 3}
+  m_Script: {fileID: 11500000, guid: 609d680c28e79a54397c4fdad18d3eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemId: idea_camera
   quantity: 0
-  effect: {fileID: 0}
-  consumable: 0
