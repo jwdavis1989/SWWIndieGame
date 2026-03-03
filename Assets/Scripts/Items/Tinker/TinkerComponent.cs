@@ -46,9 +46,6 @@ public enum TinkerComponentType
 
 public class TinkerComponent : PickupableItem
 {
-    [Header("The TinkerComponent is used for upgrading weapons\n")]
-    [Header("These values are saved when saving game")]
-    public TinkerComponentStats stats = new();
     //[Header("Image used for menu icon")]
     //public Sprite spr = null;//TODO replace usage with InventoryItem icon
 
@@ -57,39 +54,6 @@ public class TinkerComponent : PickupableItem
         base.HandlePickup(player);
         //Debug.Log("TinkerComponent HandlePickup");
         //TODO: Play Pick Up Sound here
-        if (stats.isWeapon)
-        {
-            //Broken down Weapon Components probably shouldn't be on the ground but handle for them anyways
-            TinkerComponentManager.instance.weaponComponents.Add(gameObject);
-            //Destroy(gameObject);
-        }
-        else
-        {
-
-            //regular component
-            if (stats.count <= 0) stats.count = 1; // Allow use of positive count for multiple drop in 1 item, otherwise act as a single drop
-            TinkerComponentManager.instance.AddBaseComponentToPlayer(stats.componentType, stats.count);
-            //Destroy(gameObject);
-        }
-    }
-    public Dictionary<string, float> GetStats()
-    {
-        Dictionary<string, float> rv = new Dictionary<string, float>();
-        rv.Add("Fire", stats.elementalStats.firePower);
-        rv.Add("Earth", stats.elementalStats.earthPower);
-        rv.Add("Ice", stats.elementalStats.icePower);
-        rv.Add("Light", stats.elementalStats.lightPower);
-        rv.Add("Lightning", stats.elementalStats.lightningPower);
-        rv.Add("Beast", stats.elementalStats.beastPower);
-        rv.Add("Wind", stats.elementalStats.windPower);
-        rv.Add("Scales", stats.elementalStats.scalesPower);
-        rv.Add("Tech", stats.elementalStats.techPower);
-        rv.Add("Attack", stats.attack);
-        rv.Add("Block", stats.block);
-        rv.Add("Durability", stats.durability);
-        rv.Add("Stability", stats.stability);
-        //filter out zeroes and return
-        return rv.Where(kvp => kvp.Value != 0).ToDictionary(kvp => kvp.Key, kvp =>kvp.Value);
     }
 }
 /**
@@ -99,13 +63,6 @@ public class TinkerComponent : PickupableItem
 [Serializable]
 public class TinkerComponentStats
 {
-    [Header("Type")]
-    public TinkerComponentType componentType = 0;
-    [Header("Unique ID. Case insensitive")]
-    public string itemId;
-    [Header("UI Fields")]
-    public int count = 0;
-    public string itemName = "Default TinkerComponent Name";
     [Header("Stats")]
     public float attack = 0;
     public float durability = 0;
@@ -115,5 +72,32 @@ public class TinkerComponentStats
     [Header("Components made from recycled weapons behave differently")]
     public bool isWeapon = false;
     public bool isSpecialWpn = false;
-    public int price = 1;
+    public Dictionary<string, float> GetStats()
+    {
+        Dictionary<string, float> rv = new Dictionary<string, float>();
+        rv.Add("Fire", elementalStats.firePower);
+        rv.Add("Earth", elementalStats.earthPower);
+        rv.Add("Ice", elementalStats.icePower);
+        rv.Add("Light", elementalStats.lightPower);
+        rv.Add("Lightning", elementalStats.lightningPower);
+        rv.Add("Beast", elementalStats.beastPower);
+        rv.Add("Wind", elementalStats.windPower);
+        rv.Add("Scales", elementalStats.scalesPower);
+        rv.Add("Tech", elementalStats.techPower);
+        rv.Add("Attack", attack);
+        rv.Add("Block", block);
+        rv.Add("Durability", durability);
+        rv.Add("Stability", stability);
+        //filter out zeroes and return
+        return rv.Where(kvp => kvp.Value != 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+    }
 }
+
+[Serializable]
+public class WeaponSalvageComponent
+{
+    public string itemId;
+    public string itemName = "Default";
+    public TinkerComponentStats stats = new TinkerComponentStats();
+}
+

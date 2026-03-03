@@ -213,7 +213,8 @@ public class InventionManager : MonoBehaviour
             case "daedalus_nano_materials":// Daedalus Nano Materials: No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS);
                 break;
             case "synthetic_diamond"://.SyntheticDiamond:
-                ItemDropManager.DropComponent(TinkerComponentType.Diamond, player.transform);
+                ItemDropManager.instance.DropItemById("diamond", player.transform);
+                    //.DropComponent(TinkerComponentType.Diamond, player.transform);
                 break;
             default:
                 Debug.Log("Unhandled Invent Type");

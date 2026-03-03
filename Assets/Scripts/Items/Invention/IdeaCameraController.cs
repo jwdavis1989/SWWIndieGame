@@ -87,9 +87,10 @@ public class IdeaCameraController : MonoBehaviour
             playerControls.IdeaCameraView.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
             playerControls.IdeaCameraView.DeactivateCameraView.performed += i => deactivateCameraViewInput = true;
             playerControls.Enable();
+            playerControls.IdeaCameraView.Disable();
         }
     }
-    public void Update()
+    public void LateUpdate()
     {
         HandleCapturePhotoInput();
         HandleDeactivateCameraViewInput();
@@ -258,16 +259,25 @@ public class IdeaCameraController : MonoBehaviour
         //leftAndRightLookAngle = player.transform.rotation.y;
         //upAndDownLookAngle = 0;
     }
-    public void ActivateDeactiveCameraView()
+    //public void ActivateDeactiveCameraView()
+    //{
+    //    if (canvas.gameObject.activeSelf)
+    //    {
+    //        DeactivateIdeaCameraView();
+    //    }
+    //    else
+    //    {
+    //        ActivateIdeaCameraView();
+    //    }
+    //}
+    public void ActivateCameraViewInput()
     {
-        if (canvas.gameObject.activeSelf)
-        {
-            DeactivateIdeaCameraView();
-        }
-        else
-        {
-            ActivateIdeaCameraView();
-        }
+        StartCoroutine(WaitThenActivateCameraView());
+    }
+    public IEnumerator WaitThenActivateCameraView()
+    {
+        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        ActivateIdeaCameraView();
     }
     public void ActivateIdeaCameraView()
     {
@@ -286,6 +296,7 @@ public class IdeaCameraController : MonoBehaviour
 
         PlayerCamera.instance.cameraObject.enabled = false;
         //activate camera ui
+        playerControls.IdeaCameraView.Enable();
         canvas.gameObject.SetActive(true);
         cameraLensCrosshair.SetActive(true);
         border.SetActive(true);
@@ -294,8 +305,10 @@ public class IdeaCameraController : MonoBehaviour
         ideaCamera.gameObject.SetActive(true);
 
         //Disable Weapon Graphics
-        PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(false);
-        PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(false);
+        if(PlayerWeaponManager.instance.GetMainHand() != null)
+            PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(false);
+        if (PlayerWeaponManager.instance.GetOffHand() != null)
+            PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(false);
 
     }
     public void DeactivateIdeaCameraView()
@@ -303,7 +316,9 @@ public class IdeaCameraController : MonoBehaviour
         //Set bool so the Interactable system understands a Menu window has closed
         PlayerUIManager.instance.menuWindowIsOpen = false;
 
-        //deactivate camera ui
+        //deactivate camera controls
+        playerControls.IdeaCameraView.Disable();
+        //deactivate camera ui - TODO pretty sure this should be simpler
         canvas.gameObject.SetActive(false);
         cameraLensCrosshair.SetActive(false);
         border.SetActive(false);
@@ -320,7 +335,13 @@ public class IdeaCameraController : MonoBehaviour
         //Re-enable Weapon Graphics
         PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(true);
         PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(true);
-
+    }
+    IEnumerator WaitToEndOfFrameThenExit()
+    {
+        capturePhotoInput = false;
+        deactivateCameraViewInput = false;
+        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        DeactivateIdeaCameraView();
     }
     public void HandleRotations()
     {
@@ -379,10 +400,10 @@ public class IdeaCameraController : MonoBehaviour
     }
     void HandleDeactivateCameraViewInput()
     {
-        if (deactivateCameraViewInput) // [Space], (X)
+        if (deactivateCameraViewInput) // [Esc], (Y), D-Pad Up
         {
             deactivateCameraViewInput = false;
-            DeactivateIdeaCameraView();
+            StartCoroutine(WaitToEndOfFrameThenExit());
         }
     }
 }

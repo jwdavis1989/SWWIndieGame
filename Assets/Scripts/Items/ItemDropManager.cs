@@ -33,10 +33,6 @@ public class ItemDropManager : MonoBehaviour
         e.isOffHandExp = giveOffHandExp;
         return exp;
     }
-    public static GameObject DropComponent(TinkerComponentType type, Transform loc)
-    {
-        return TinkerComponentManager.instance.DropComponent(type, loc);
-    }
     public static GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
     {
         //Warning: CreateWeapon creates object under the Transform loc which would cause the weapon to dissapear when loc (possibly a dead enemy) dissapears
@@ -55,7 +51,15 @@ public class ItemDropManager : MonoBehaviour
 
         GameObject obj;
         ItemDetails itemDetails = itemDatabase.GetItem(itemId);
-        if (itemDetails.itemType == "component")
+
+        //new
+        obj = itemDatabase.GetItem(itemId).worldPrefab;
+        if(obj != null)
+        {
+            obj = Instantiate(obj, loc);
+        }
+        //old
+        else if (itemDetails.itemType == "component")
         {
             Debug.Log("Creating component:" + itemDetails.itemId);
             obj = TinkerComponentManager.instance.DropComponentById(itemDetails.itemId, transform);
@@ -70,6 +74,7 @@ public class ItemDropManager : MonoBehaviour
             Debug.Log("Creating genericItemDropPrefab:" + itemDetails.itemId);
             obj = Instantiate(genericItemDropPrefab, loc);
             obj.GetComponent<PickupableItem>().itemId = itemId;
+            //TODO set world sprite
         }
         return obj;
     }

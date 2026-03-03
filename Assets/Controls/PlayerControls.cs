@@ -301,6 +301,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""OpenIdeaCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""04c09dce-967e-4b46-a718-5167f1cad5cd"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Sprint"",
                     ""type"": ""PassThrough"",
                     ""id"": ""8bd75a9b-dd8c-4133-966f-db57c9c1a6ce"",
@@ -1178,6 +1187,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""CycleQuickslot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ecc34b9-1992-40d3-bb5c-937e50547499"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenIdeaCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1225,6 +1245,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""UIButtonX"",
                     ""type"": ""Button"",
                     ""id"": ""76039eff-44b8-4d4c-b31c-fb14f851c692"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnyKeyboardOrMouse"",
+                    ""type"": ""Button"",
+                    ""id"": ""d03a9040-6db2-46b3-bcd0-c0cc408877cd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1506,6 +1535,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""AnyGamepad"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8434c781-5645-49ae-ba1a-07814c988759"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKeyboardOrMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4d00ab8c-193d-4342-bbff-7a932a30b3b4"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKeyboardOrMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0919ccd6-0feb-4cd3-a9a0-edf900884ff0"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKeyboardOrMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5892d4e-5b83-4d08-b30a-2a6b0d5414b8"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyKeyboardOrMouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1513,15 +1586,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""name"": ""Pause Menu"",
             ""id"": ""4132d473-ea48-459c-847d-cc045e59ce10"",
             ""actions"": [
-                {
-                    ""name"": ""PauseButton"",
-                    ""type"": ""Button"",
-                    ""id"": ""5d65391c-f452-4278-85aa-679822192127"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
                 {
                     ""name"": ""SwitchMenuLeft"",
                     ""type"": ""Button"",
@@ -1553,28 +1617,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""7bf1a480-5596-4d04-8ec7-b0c2af4c0980"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PauseButton"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""515416e1-afc6-4e8c-a223-05c3012b4d37"",
-                    ""path"": ""<Gamepad>/{Menu}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PauseButton"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4458a9d5-2428-464a-bd33-51118853808b"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
@@ -1599,6 +1641,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c28fddb2-c451-44ff-bd35-7602b6c7349b"",
                     ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4af48ed3-5d95-474f-8539-125bf8063d46"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d821ac96-4987-458d-add0-7d2a6e2770ac"",
+                    ""path"": ""<Gamepad>/{Menu}"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -2891,6 +2955,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""1e6cde45-04de-4a2f-8d15-abcd8e4d60f5"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DeactivateCameraView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a87e100c-2529-4479-8b75-8c2305eede16"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
@@ -2981,6 +3056,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerActions_QuickslotButton1 = m_PlayerActions.FindAction("QuickslotButton1", throwIfNotFound: true);
         m_PlayerActions_QuickslotButtonGamepad = m_PlayerActions.FindAction("QuickslotButtonGamepad", throwIfNotFound: true);
         m_PlayerActions_CycleQuickslot = m_PlayerActions.FindAction("CycleQuickslot", throwIfNotFound: true);
+        m_PlayerActions_OpenIdeaCamera = m_PlayerActions.FindAction("OpenIdeaCamera", throwIfNotFound: true);
         m_PlayerActions_Sprint = m_PlayerActions.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerActions_Block = m_PlayerActions.FindAction("Block", throwIfNotFound: true);
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
@@ -3017,9 +3093,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_UI_PauseButton = m_UI.FindAction("PauseButton", throwIfNotFound: true);
         m_UI_MiniMapResize = m_UI.FindAction("MiniMapResize", throwIfNotFound: true);
         m_UI_UIButtonX = m_UI.FindAction("UIButtonX", throwIfNotFound: true);
+        m_UI_AnyKeyboardOrMouse = m_UI.FindAction("AnyKeyboardOrMouse", throwIfNotFound: true);
         // Pause Menu
         m_PauseMenu = asset.FindActionMap("Pause Menu", throwIfNotFound: true);
-        m_PauseMenu_PauseButton = m_PauseMenu.FindAction("PauseButton", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuLeft = m_PauseMenu.FindAction("SwitchMenuLeft", throwIfNotFound: true);
         m_PauseMenu_SwitchMenuRight = m_PauseMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
         m_PauseMenu_ExitMenu = m_PauseMenu.FindAction("ExitMenu", throwIfNotFound: true);
@@ -3232,6 +3308,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_QuickslotButton1;
     private readonly InputAction m_PlayerActions_QuickslotButtonGamepad;
     private readonly InputAction m_PlayerActions_CycleQuickslot;
+    private readonly InputAction m_PlayerActions_OpenIdeaCamera;
     private readonly InputAction m_PlayerActions_Sprint;
     private readonly InputAction m_PlayerActions_Block;
     private readonly InputAction m_PlayerActions_Jump;
@@ -3272,6 +3349,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @QuickslotButton1 => m_Wrapper.m_PlayerActions_QuickslotButton1;
         public InputAction @QuickslotButtonGamepad => m_Wrapper.m_PlayerActions_QuickslotButtonGamepad;
         public InputAction @CycleQuickslot => m_Wrapper.m_PlayerActions_CycleQuickslot;
+        public InputAction @OpenIdeaCamera => m_Wrapper.m_PlayerActions_OpenIdeaCamera;
         public InputAction @Sprint => m_Wrapper.m_PlayerActions_Sprint;
         public InputAction @Block => m_Wrapper.m_PlayerActions_Block;
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
@@ -3331,6 +3409,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CycleQuickslot.started += instance.OnCycleQuickslot;
             @CycleQuickslot.performed += instance.OnCycleQuickslot;
             @CycleQuickslot.canceled += instance.OnCycleQuickslot;
+            @OpenIdeaCamera.started += instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.performed += instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.canceled += instance.OnOpenIdeaCamera;
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
@@ -3443,6 +3524,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CycleQuickslot.started -= instance.OnCycleQuickslot;
             @CycleQuickslot.performed -= instance.OnCycleQuickslot;
             @CycleQuickslot.canceled -= instance.OnCycleQuickslot;
+            @OpenIdeaCamera.started -= instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.performed -= instance.OnOpenIdeaCamera;
+            @OpenIdeaCamera.canceled -= instance.OnOpenIdeaCamera;
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
@@ -3556,6 +3640,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_PauseButton;
     private readonly InputAction m_UI_MiniMapResize;
     private readonly InputAction m_UI_UIButtonX;
+    private readonly InputAction m_UI_AnyKeyboardOrMouse;
     public struct UIActions
     {
         private @PlayerControls m_Wrapper;
@@ -3565,6 +3650,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @PauseButton => m_Wrapper.m_UI_PauseButton;
         public InputAction @MiniMapResize => m_Wrapper.m_UI_MiniMapResize;
         public InputAction @UIButtonX => m_Wrapper.m_UI_UIButtonX;
+        public InputAction @AnyKeyboardOrMouse => m_Wrapper.m_UI_AnyKeyboardOrMouse;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -3589,6 +3675,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started += instance.OnUIButtonX;
             @UIButtonX.performed += instance.OnUIButtonX;
             @UIButtonX.canceled += instance.OnUIButtonX;
+            @AnyKeyboardOrMouse.started += instance.OnAnyKeyboardOrMouse;
+            @AnyKeyboardOrMouse.performed += instance.OnAnyKeyboardOrMouse;
+            @AnyKeyboardOrMouse.canceled += instance.OnAnyKeyboardOrMouse;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -3608,6 +3697,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UIButtonX.started -= instance.OnUIButtonX;
             @UIButtonX.performed -= instance.OnUIButtonX;
             @UIButtonX.canceled -= instance.OnUIButtonX;
+            @AnyKeyboardOrMouse.started -= instance.OnAnyKeyboardOrMouse;
+            @AnyKeyboardOrMouse.performed -= instance.OnAnyKeyboardOrMouse;
+            @AnyKeyboardOrMouse.canceled -= instance.OnAnyKeyboardOrMouse;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -3629,7 +3721,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     // Pause Menu
     private readonly InputActionMap m_PauseMenu;
     private List<IPauseMenuActions> m_PauseMenuActionsCallbackInterfaces = new List<IPauseMenuActions>();
-    private readonly InputAction m_PauseMenu_PauseButton;
     private readonly InputAction m_PauseMenu_SwitchMenuLeft;
     private readonly InputAction m_PauseMenu_SwitchMenuRight;
     private readonly InputAction m_PauseMenu_ExitMenu;
@@ -3637,7 +3728,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         private @PlayerControls m_Wrapper;
         public PauseMenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @PauseButton => m_Wrapper.m_PauseMenu_PauseButton;
         public InputAction @SwitchMenuLeft => m_Wrapper.m_PauseMenu_SwitchMenuLeft;
         public InputAction @SwitchMenuRight => m_Wrapper.m_PauseMenu_SwitchMenuRight;
         public InputAction @ExitMenu => m_Wrapper.m_PauseMenu_ExitMenu;
@@ -3650,9 +3740,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PauseMenuActionsCallbackInterfaces.Add(instance);
-            @PauseButton.started += instance.OnPauseButton;
-            @PauseButton.performed += instance.OnPauseButton;
-            @PauseButton.canceled += instance.OnPauseButton;
             @SwitchMenuLeft.started += instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.performed += instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.canceled += instance.OnSwitchMenuLeft;
@@ -3666,9 +3753,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IPauseMenuActions instance)
         {
-            @PauseButton.started -= instance.OnPauseButton;
-            @PauseButton.performed -= instance.OnPauseButton;
-            @PauseButton.canceled -= instance.OnPauseButton;
             @SwitchMenuLeft.started -= instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.performed -= instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.canceled -= instance.OnSwitchMenuLeft;
@@ -4254,6 +4338,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnQuickslotButton1(InputAction.CallbackContext context);
         void OnQuickslotButtonGamepad(InputAction.CallbackContext context);
         void OnCycleQuickslot(InputAction.CallbackContext context);
+        void OnOpenIdeaCamera(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -4291,10 +4376,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnPauseButton(InputAction.CallbackContext context);
         void OnMiniMapResize(InputAction.CallbackContext context);
         void OnUIButtonX(InputAction.CallbackContext context);
+        void OnAnyKeyboardOrMouse(InputAction.CallbackContext context);
     }
     public interface IPauseMenuActions
     {
-        void OnPauseButton(InputAction.CallbackContext context);
         void OnSwitchMenuLeft(InputAction.CallbackContext context);
         void OnSwitchMenuRight(InputAction.CallbackContext context);
         void OnExitMenu(InputAction.CallbackContext context);
