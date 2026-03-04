@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemDropManager : MonoBehaviour
@@ -78,6 +79,7 @@ public class ItemDropManager : MonoBehaviour
         }
         return obj;
     }
+    public static ItemDatabase GetDB() { return instance.itemDatabase; }
     //singleton pattern
     public static ItemDropManager instance;
     public void Awake()

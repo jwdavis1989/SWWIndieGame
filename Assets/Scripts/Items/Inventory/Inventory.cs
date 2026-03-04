@@ -36,8 +36,8 @@ public class Inventory : MonoBehaviour
     /** Attempts to use an item */
     public void UseItem(string itemId)
     {
-        ItemEffect itemEffect = ItemDropManager.instance.itemDatabase.GetItemEffect(itemId);
-        ItemDetails itemDetails = ItemDropManager.instance.itemDatabase.GetItem(itemId);
+        ItemEffect itemEffect = ItemDropManager.GetDB().GetItemEffect(itemId);
+        ItemDetails itemDetails = ItemDropManager.GetDB().GetItem(itemId);
         if (itemEffect != null)
         {
             GetComponent<PlayerEffectsManager>().ProcessInstantEffect(itemEffect);
@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour
         int i = 0;
         return items.Where((kvp) =>
         {
-            ItemDetails itemDetails = ItemDropManager.instance.itemDatabase.GetItem(kvp.Key);
+            ItemDetails itemDetails = ItemDropManager.GetDB().GetItem(kvp.Key);
             Debug.Log("i=" + i++);
             if(itemDetails == null) 
                 return false; // No details for this item. Skip it
