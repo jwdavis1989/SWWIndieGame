@@ -9,11 +9,14 @@ public class DungeonEntranceInteractable : Interactable
     protected override void Awake()
     {
         base.Awake();
-        interactableText = "";
-        //dungeonDatabase = DungeonManager.instance.dungeonDatabase;
+        interactableText = "Enter " + dungeon_id;
+        dungeonDatabase = DungeonManager.GetDB();
+        DungeonData dungeonData = dungeonDatabase.GetDungeon(dungeon_id);
+        interactableText = "Enter " + dungeonData.dungeonName;
     }
     public override void Interact(PlayerManager player)
     {
         base.Interact(player);
+        TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(8);
     }
 }

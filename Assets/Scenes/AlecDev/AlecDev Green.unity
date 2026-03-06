@@ -194,6 +194,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 19528397}
+  - component: {fileID: 19528399}
+  - component: {fileID: 19528398}
   m_Layer: 0
   m_Name: DungeonEntrance01
   m_TagString: Untagged
@@ -217,6 +219,42 @@ Transform:
   - {fileID: 1326657470}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &19528398
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19528396}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.747282, y: 4.238447, z: 4.549446}
+  m_Center: {x: -1.3467894, y: 1.139554, z: 1.774723}
+--- !u!114 &19528399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19528396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27389ddcb2121ad44a38e10073a3ab52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableText: Enter Example Dungeon
+  interactableCollider: {fileID: 19528398}
+  dungeon_id: dungeon_01
 --- !u!1 &70455648
 GameObject:
   m_ObjectHideFlags: 0
