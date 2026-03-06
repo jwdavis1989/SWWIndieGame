@@ -418,10 +418,16 @@ public class PlayerManager : CharacterManager
 
     public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f)
     {
-        DisableCapeSystem();
-        transform.position = new Vector3(destinationX, destinationY, destinationZ);
-        SceneManager.LoadSceneAsync(sceneID);
-        EnableCapeSystem();
+        TeleportData.SceneID = sceneID;
+        TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
+        TeleportData.playerManager = this;
+        SceneManager.LoadScene("LoadingScene");
+
+
+        //DisableCapeSystem();
+        //transform.position = new Vector3(destinationX, destinationY, destinationZ);
+        //SceneManager.LoadSceneAsync(sceneID);
+        //EnableCapeSystem();
     }
 
     public override void CallPlayJumpAttackImpactVFX()
