@@ -11,10 +11,14 @@ public class SceneLoadManager : MonoBehaviour
     {
         StartCoroutine(LoadScene());
     }
-
+    /** Will use string name of scene if not null else uses index */
     IEnumerator LoadScene()
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(TeleportData.SceneID);
+        AsyncOperation operation;
+        if(TeleportData.SceneIdString != null)
+            operation = SceneManager.LoadSceneAsync(TeleportData.SceneIdString);
+        else
+            operation  = SceneManager.LoadSceneAsync(TeleportData.SceneID);
         operation.allowSceneActivation = false;
 
         while (operation.progress < 0.9f)
@@ -31,6 +35,7 @@ public class SceneLoadManager : MonoBehaviour
 public static class TeleportData
 {
     public static int SceneID;
+    public static string SceneIdString;
     public static Vector3 Destination;
     public static PlayerManager playerManager;
 }

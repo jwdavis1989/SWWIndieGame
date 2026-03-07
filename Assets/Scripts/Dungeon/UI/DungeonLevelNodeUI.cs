@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Composites;
 using UnityEngine.UI;
 
 public class DungeonLevelNodeUI : MonoBehaviour
@@ -11,7 +12,8 @@ public class DungeonLevelNodeUI : MonoBehaviour
     public Sprite dungeonLevelSprite;
 
     public bool showHiddenSprite = true;
-    public bool locked = false;
+    public bool entrance = false;
+    public bool completed = false;
 
     public DungeonLevelManager dungeonLevelManager;
 
@@ -22,10 +24,13 @@ public class DungeonLevelNodeUI : MonoBehaviour
             dungeonLevelManager = GetComponentInParent<DungeonLevelManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Show()
     {
-        
+        button.interactable = true;
+    }
+    public void Hide()
+    {
+        button.interactable = false;
     }
     public void DungeonLevelOnClick()
     {

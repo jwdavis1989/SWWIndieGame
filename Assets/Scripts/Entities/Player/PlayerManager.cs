@@ -423,6 +423,9 @@ public class PlayerManager : CharacterManager
         TeleportData.SceneID = sceneID;
         TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
         TeleportData.playerManager = this;
+        /** Will use string name of scene if not null else uses index */
+        TeleportData.SceneIdString = sceneIdString;
+
         SceneManager.LoadScene("LoadingScene");
 
 

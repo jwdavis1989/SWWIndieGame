@@ -109,4 +109,16 @@ public class InteractableChestSimple : Interactable
         Debug.Log("HandleLootTable:GetRandomItem:" + itemDetails.itemId);
 
     }
+    public override void OnTriggerEnter(Collider other)
+    {
+        PlayerManager player = other.GetComponent<PlayerManager>();
+
+        if (player != null)
+        {
+            //Pass the interaction to the player
+            player.playerInteractionManager.AddInteractionToList(this);
+            if (needsKey)
+                interactableText = "Locked";
+        }
+    }
 }

@@ -6,9 +6,10 @@ public class DungeonManager : MonoBehaviour
 {
     [Header("DungeonManager allows access to the dungeon database in game\n" +
         "It also handles saving and loading of player dungeon progress.")]
-    public List<DungeonSaveData> savedDungeons = new List<DungeonSaveData>();
-
     public DungeonDatabase dungeonDatabase;
+    [HideInInspector] public List<DungeonSaveData> savedDungeons = new List<DungeonSaveData>();
+    [HideInInspector] public string currentDungeonId = null;
+    [HideInInspector] public string currentLevelId = null;
 
     //singleton behavior
     public static DungeonDatabase GetDB()
@@ -24,19 +25,21 @@ public class DungeonManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public DungeonNodeSaveData CheckDungeonNodeProgress(string dungeonId, string nodeId)
+    public static DungeonNodeSaveData GetDungeonNodeProgress(string dungeonId, string nodeId)
     {
-        foreach (DungeonSaveData savedDungeon in savedDungeons){
+        foreach (DungeonSaveData savedDungeon in instance.savedDungeons){
             if (savedDungeon.dungeonId.ToLower().Equals(dungeonId.ToLower())){
+                if(savedDungeon.savedNodes == null)
+                    return null;
                 foreach (DungeonNodeSaveData savedNode in savedDungeon.savedNodes){
                     if (savedNode.nodeID.ToLower().Equals(nodeId.ToLower()))
                         return savedNode;
                 }
-                Debug.Log("No saved node for d:" + dungeonId + " n:" + nodeId +".");
+                //Debug.Log("No saved node for d:" + dungeonId + " n:" + nodeId +".");
                 return null;
             }
         }
-        Debug.Log("No saved dungeon for d:" + dungeonId + ".");
+        //Debug.Log("No saved dungeon for d:" + dungeonId + ".");
         return null;
     }
     public List<DungeonSaveData> SaveDungeons()
@@ -55,9 +58,31 @@ public class DungeonManager : MonoBehaviour
         DungeonNode dungeonNode = dungeonData.GetDungeonLevelNodeByID(dungeonLevelId);
         if(dungeonNode != null)
         {
-            TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(dungeonNode.sceneId, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonLevelId);
+            instance.currentDungeonId = dungeonData.dungeonId;
+            instance.currentLevelId = dungeonLevelId;
+            TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(dungeonNode.sceneId, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonNode.levelSceneId);
         }
         else
             Debug.Log("EnterDungeonLevel dungeonNode null");
+    }
+    public static void CompleteCurrentDungeonLevel()
+    {
+        if(instance.savedDungeons == null)
+            instance.savedDungeons = new List<DungeonSaveData> ();
+        DungeonSaveData dungeonSaveData = instance.savedDungeons.Find((savedDungeon) => savedDungeon.dungeonId.Equals(instance.currentDungeonId));
+        if (dungeonSaveData == null)
+        { // No dungeon data yet saved
+            dungeonSaveData = new DungeonSaveData ();
+            dungeonSaveData.dungeonId = instance.currentDungeonId;
+            instance.savedDungeons.Add(dungeonSaveData);
+        }
+        DungeonNodeSaveData nodeSaveData = GetDungeonNodeProgress(instance.currentDungeonId, instance.currentLevelId);
+        if (nodeSaveData == null)
+        { // current level not yet saved
+            nodeSaveData = new DungeonNodeSaveData();
+            nodeSaveData.nodeID = instance.currentLevelId;
+            dungeonSaveData.savedNodes.Add(nodeSaveData);
+        }
+        nodeSaveData.completed = true;
     }
 }

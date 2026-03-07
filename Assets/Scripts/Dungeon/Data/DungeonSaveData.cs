@@ -7,5 +7,5 @@ using UnityEngine;
 public class DungeonSaveData
 {
     public string dungeonId;
-    public List<DungeonNodeSaveData> savedNodes;
+    public List<DungeonNodeSaveData> savedNodes = new List<DungeonNodeSaveData>();
 }
