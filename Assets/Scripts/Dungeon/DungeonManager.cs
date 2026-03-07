@@ -49,9 +49,15 @@ public class DungeonManager : MonoBehaviour
     }
     public static void EnterDungeonLevel(string dungeonId, string dungeonLevelId)
     {
+        Debug.Log("EnterDungeonLevel,"+dungeonId+","+dungeonLevelId+".");
         DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(dungeonId);
+        Debug.Log("EnterDungeonLevel," + dungeonData.dungeonName + ".");
         DungeonNode dungeonNode = dungeonData.GetDungeonLevelNodeByID(dungeonLevelId);
         if(dungeonNode != null)
-        TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(dungeonNode.sceneId, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonLevelId);
+        {
+            TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(dungeonNode.sceneId, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonLevelId);
+        }
+        else
+            Debug.Log("EnterDungeonLevel dungeonNode null");
     }
 }

@@ -49,18 +49,16 @@ public class Inventory : MonoBehaviour
     public Dictionary<string,InventoryItem> GetTinkerComponents()
     {
         //filter items
-        int i = 0;
         return items.Where((kvp) =>
         {
             ItemDetails itemDetails = ItemDropManager.GetDB().GetItem(kvp.Key);
-            Debug.Log("i=" + i++);
             if(itemDetails == null) 
                 return false; // No details for this item. Skip it
             return itemDetails.itemType.ToLower().Equals("component");
         })
         .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
-    public void LoadInventory(List<InventoryItem> savedItems)
+    public void LoadInventory(List<InventoryItem> savedItems, List<WeaponSalvageComponent> savedWpnComponents)
     {
         items = new Dictionary<string, InventoryItem> ();
         foreach (InventoryItem item in savedItems)
@@ -74,11 +72,19 @@ public class Inventory : MonoBehaviour
                 Debug.LogWarning($"Duplicate itemId: {item.itemId}");
             }
         }
+        weaponSalvageComponents = new List<WeaponSalvageComponent>();
+        foreach (WeaponSalvageComponent wpnCpmnt in savedWpnComponents)
+        {
+            weaponSalvageComponents.Add(wpnCpmnt);
+        }
     }
     public List<InventoryItem> SaveItems()
     {
-
         return items.Values.ToList();
+    }
+    public List<WeaponSalvageComponent> SaveWeaponComponents()
+    {
+        return weaponSalvageComponents;
     }
 }
 [Serializable]
