@@ -55,12 +55,12 @@ public class DungeonManager : MonoBehaviour
         Debug.Log("EnterDungeonLevel,"+dungeonId+","+dungeonLevelId+".");
         DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(dungeonId);
         Debug.Log("EnterDungeonLevel," + dungeonData.dungeonName + ".");
-        DungeonNode dungeonNode = dungeonData.GetDungeonLevelNodeByID(dungeonLevelId);
+        DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID(dungeonLevelId);
         if(dungeonNode != null)
         {
             instance.currentDungeonId = dungeonData.dungeonId;
             instance.currentLevelId = dungeonLevelId;
-            TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(dungeonNode.sceneId, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonNode.levelSceneId);
+            TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(0, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonNode.levelSceneId);
         }
         else
             Debug.Log("EnterDungeonLevel dungeonNode null");
@@ -69,6 +69,8 @@ public class DungeonManager : MonoBehaviour
     {
         if(instance.savedDungeons == null)
             instance.savedDungeons = new List<DungeonSaveData> ();
+        DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(instance.currentDungeonId);
+        DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID (instance.currentLevelId);
         DungeonSaveData dungeonSaveData = instance.savedDungeons.Find((savedDungeon) => savedDungeon.dungeonId.Equals(instance.currentDungeonId));
         if (dungeonSaveData == null)
         { // No dungeon data yet saved
@@ -84,5 +86,12 @@ public class DungeonManager : MonoBehaviour
             dungeonSaveData.savedNodes.Add(nodeSaveData);
         }
         nodeSaveData.completed = true;
+        foreach (DungeonLevelData connectedNode in dungeonNode.connections)
+        {
+            nodeSaveData = new DungeonNodeSaveData();
+            nodeSaveData.nodeID = connectedNode.nodeID;
+            nodeSaveData.unlocked = true;
+            dungeonSaveData.savedNodes.Add(nodeSaveData);
+        }
     }
 }

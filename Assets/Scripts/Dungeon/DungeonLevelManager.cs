@@ -19,15 +19,17 @@ public class DungeonLevelManager : MonoBehaviour
             if (node.entrance)
                 node.Show();
             else node.Hide();
-            //DungeonNode dungeonNode = dungeonData.GetDungeonLevelNodeByID(node.dungeonLevelId);
+            DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID(node.dungeonLevelId);
             DungeonNodeSaveData dungeonNodeSaveData = DungeonManager.GetDungeonNodeProgress(dungeonId, node.dungeonLevelId);
             if (dungeonNodeSaveData != null)
             {
                 if (dungeonNodeSaveData.completed)
                 {
-                    node.completed = true;
+                    //node.completed = true;
                     node.Show();
                 }
+                else if (dungeonNodeSaveData.unlocked)
+                    node.Show();
             }
         }
     }

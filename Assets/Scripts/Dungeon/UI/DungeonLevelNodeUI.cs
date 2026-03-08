@@ -13,7 +13,7 @@ public class DungeonLevelNodeUI : MonoBehaviour
 
     public bool showHiddenSprite = true;
     public bool entrance = false;
-    public bool completed = false;
+    //public bool completed = false;
 
     public DungeonLevelManager dungeonLevelManager;
 

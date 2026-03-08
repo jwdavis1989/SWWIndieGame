@@ -9,4 +9,6 @@ public class DungeonNodeSaveData
     public string nodeID;
     public bool completed;
     public float bestTime;
+    public bool unlocked;
+    public bool challengeCompleted;
 }
