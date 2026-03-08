@@ -29,6 +29,10 @@ public class SceneLoadManager : MonoBehaviour
         }
         operation.allowSceneActivation = true;
 
+        // Enable Controls
+        PlayerInputManager.instance.SafeEnable();
+        Time.timeScale = 1;
+        // Teleport
         TeleportData.playerManager.transform.position = TeleportData.Destination;
     }
 }

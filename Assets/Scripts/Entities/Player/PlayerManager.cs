@@ -420,14 +420,16 @@ public class PlayerManager : CharacterManager
 
     public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString=null)
     {
-        TeleportData.SceneID = sceneID;
         TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
         TeleportData.playerManager = this;
         /** Will use string name of scene if not null else uses index */
         TeleportData.SceneIdString = sceneIdString;
+        TeleportData.SceneID = sceneID;
+        //Disable Controls
+        PlayerInputManager.instance.SafeDisable();
+        Time.timeScale = 0;
 
         SceneManager.LoadScene("LoadingScene");
-
 
         //DisableCapeSystem();
         //transform.position = new Vector3(destinationX, destinationY, destinationZ);
