@@ -1040,7 +1040,7 @@ public class WeaponMenuManager : MonoBehaviour
         {
             string itemId = kvp.Key;
             int quantity = kvp.Value.quantity;
-            ItemDatabase itemDatabase = ItemDropManager.instance.itemDatabase;
+            ItemDatabase itemDatabase = ItemDropManager.GetDB();
             TinkerComponentData tinkerComponentData = itemDatabase.GetTinkerComponentData(itemId);
             ItemDetails itemDetails = itemDatabase.GetItem(itemId);
             if (quantity > 0)
@@ -1342,7 +1342,7 @@ public class WeaponMenuManager : MonoBehaviour
     private void SetTooltipToComponent(TinkerComponentStats component, string itemId)
     {
 
-        ItemDatabase itemDatabase = ItemDropManager.instance.itemDatabase;
+        ItemDatabase itemDatabase = ItemDropManager.GetDB();
         string itemName = itemDatabase.GetItem(itemId).itemName;
         tooltipUI.headerText.text = itemName;
         tooltipUI.centerText.text = "";
