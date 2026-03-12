@@ -31,10 +31,14 @@ public class DungeonLevelNodeUI : MonoBehaviour
     public void Show()
     {
         button.interactable = true;
+        if (dungeonLevelSprite != null && dungeonLevelImage != null)
+            dungeonLevelImage.sprite = dungeonLevelSprite;
     }
-    public void Hide()
+    public void Hide(Sprite hiddenSprite=null)
     {
         button.interactable = false;
+        if(hiddenSprite != null && dungeonLevelImage != null)
+            dungeonLevelImage.sprite = hiddenSprite;
     }
     public void DungeonLevelOnClick()
     {

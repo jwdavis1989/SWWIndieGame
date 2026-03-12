@@ -3009,6 +3009,76 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DungeonLevelSelect"",
+            ""id"": ""ed346333-c737-4027-a088-058271169820"",
+            ""actions"": [
+                {
+                    ""name"": ""SaveGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""193bee81-7c06-4df1-8054-2d00f56c1b6e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Back"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bcf8df7-45ee-4994-951a-fb931c5335af"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e45e6226-4142-431f-ada8-612bfe44b131"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SaveGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7387a75-a204-4f3b-8c64-6a77ed3d0e42"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SaveGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""747bf50f-502f-4313-bcfd-07f9a872a1c1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55aecf6b-89ff-4e55-a8e2-e37caa425680"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -3148,6 +3218,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_IdeaCameraView = asset.FindActionMap("IdeaCameraView", throwIfNotFound: true);
         m_IdeaCameraView_DeactivateCameraView = m_IdeaCameraView.FindAction("DeactivateCameraView", throwIfNotFound: true);
         m_IdeaCameraView_CaptureIdeaPhotoBtn = m_IdeaCameraView.FindAction("CaptureIdeaPhotoBtn", throwIfNotFound: true);
+        // DungeonLevelSelect
+        m_DungeonLevelSelect = asset.FindActionMap("DungeonLevelSelect", throwIfNotFound: true);
+        m_DungeonLevelSelect_SaveGame = m_DungeonLevelSelect.FindAction("SaveGame", throwIfNotFound: true);
+        m_DungeonLevelSelect_Back = m_DungeonLevelSelect.FindAction("Back", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -4303,6 +4377,60 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public IdeaCameraViewActions @IdeaCameraView => new IdeaCameraViewActions(this);
+
+    // DungeonLevelSelect
+    private readonly InputActionMap m_DungeonLevelSelect;
+    private List<IDungeonLevelSelectActions> m_DungeonLevelSelectActionsCallbackInterfaces = new List<IDungeonLevelSelectActions>();
+    private readonly InputAction m_DungeonLevelSelect_SaveGame;
+    private readonly InputAction m_DungeonLevelSelect_Back;
+    public struct DungeonLevelSelectActions
+    {
+        private @PlayerControls m_Wrapper;
+        public DungeonLevelSelectActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SaveGame => m_Wrapper.m_DungeonLevelSelect_SaveGame;
+        public InputAction @Back => m_Wrapper.m_DungeonLevelSelect_Back;
+        public InputActionMap Get() { return m_Wrapper.m_DungeonLevelSelect; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DungeonLevelSelectActions set) { return set.Get(); }
+        public void AddCallbacks(IDungeonLevelSelectActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DungeonLevelSelectActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DungeonLevelSelectActionsCallbackInterfaces.Add(instance);
+            @SaveGame.started += instance.OnSaveGame;
+            @SaveGame.performed += instance.OnSaveGame;
+            @SaveGame.canceled += instance.OnSaveGame;
+            @Back.started += instance.OnBack;
+            @Back.performed += instance.OnBack;
+            @Back.canceled += instance.OnBack;
+        }
+
+        private void UnregisterCallbacks(IDungeonLevelSelectActions instance)
+        {
+            @SaveGame.started -= instance.OnSaveGame;
+            @SaveGame.performed -= instance.OnSaveGame;
+            @SaveGame.canceled -= instance.OnSaveGame;
+            @Back.started -= instance.OnBack;
+            @Back.performed -= instance.OnBack;
+            @Back.canceled -= instance.OnBack;
+        }
+
+        public void RemoveCallbacks(IDungeonLevelSelectActions instance)
+        {
+            if (m_Wrapper.m_DungeonLevelSelectActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDungeonLevelSelectActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DungeonLevelSelectActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DungeonLevelSelectActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DungeonLevelSelectActions @DungeonLevelSelect => new DungeonLevelSelectActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -4438,5 +4566,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnDeactivateCameraView(InputAction.CallbackContext context);
         void OnCaptureIdeaPhotoBtn(InputAction.CallbackContext context);
+    }
+    public interface IDungeonLevelSelectActions
+    {
+        void OnSaveGame(InputAction.CallbackContext context);
+        void OnBack(InputAction.CallbackContext context);
     }
 }
