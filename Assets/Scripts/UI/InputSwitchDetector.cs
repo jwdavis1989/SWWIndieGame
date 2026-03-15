@@ -11,6 +11,7 @@ public class InputSwitchDetector : MonoBehaviour
     public bool deviceChanged = false; // set to true when device is changed. Reset to false within context. E.g. WeaponMenu
     public static InputSwitchDetector instance;
     [SerializeField] bool anyGamepadInput = false;
+    [SerializeField] bool anyKeyboardOrMouse = false;
     PlayerControls playerControls;
     //constants
     public const string GAMEPAD = "GAMEPAD";
@@ -33,6 +34,7 @@ public class InputSwitchDetector : MonoBehaviour
         {
             playerControls = new PlayerControls();
             playerControls.UI.AnyGamepad.performed += i => anyGamepadInput = true;
+            playerControls.UI.AnyKeyboardOrMouse.performed += i => anyKeyboardOrMouse = true;
             playerControls.Enable();
         }
     }
@@ -50,7 +52,7 @@ public class InputSwitchDetector : MonoBehaviour
                 //Debug.Log("Left mouse clicked");
             }
             // Any keyboard key - TODO: see if binding any key in playerControls is more responsive
-            if (Keyboard.current.anyKey.wasPressedThisFrame)
+            if (Keyboard.current.anyKey.wasPressedThisFrame || anyKeyboardOrMouse)
             {
                 newDevice = KEYBOARD;
                 //Debug.Log("A keyboard key was pressed!");
@@ -67,7 +69,7 @@ public class InputSwitchDetector : MonoBehaviour
         }
         if (currentDevice != newDevice)
         {
-            //Debug.Log("Device changed to " + currentDevice);
+            Debug.Log("Device changed to " + currentDevice);
             deviceChanged = true;
             currentDevice = newDevice;
         }

@@ -42,13 +42,13 @@ public class DungeonManager : MonoBehaviour
         //Debug.Log("No saved dungeon for d:" + dungeonId + ".");
         return null;
     }
-    public List<DungeonSaveData> SaveDungeons()
+    public static List<DungeonSaveData> SaveDungeons()
     {
-        return savedDungeons;
+        return instance.savedDungeons;
     }
-    public void LoadDungeons(List<DungeonSaveData> dungeons)
+    public static void LoadDungeons(List<DungeonSaveData> dungeons)
     {
-        savedDungeons = dungeons;
+        instance.savedDungeons = dungeons;
     }
     public static void EnterDungeonLevel(string dungeonId, string dungeonLevelId)
     {

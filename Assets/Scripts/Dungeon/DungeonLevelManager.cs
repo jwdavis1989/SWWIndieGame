@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DungeonLevelManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class DungeonLevelManager : MonoBehaviour
     public List<DungeonLevelNodeUI> nodes;
     public GameObject saveWindow;
     public GameObject backWindow;
+    public List<GameObject> keyboardMouseTooltips;
+    public List<GameObject> gamepadTooltips;
     private DungeonData dungeonData;
     private DungeonDatabase dungeonDatabase;
 
@@ -55,6 +58,20 @@ public class DungeonLevelManager : MonoBehaviour
             playerControls.DungeonLevelSelect.Back.performed += i => backInput = true;
             playerControls.Enable();
         }
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -62,13 +79,14 @@ public class DungeonLevelManager : MonoBehaviour
     {
         HandleBackInput();
         HandleSaveGameInput();
+        CheckControlsChanged();
     }
     void HandleSaveGameInput()
     {
         if (saveInput)
         {
             saveInput = false;
-            if(saveWindow != null)
+            if(saveWindow != null && !backWindow.activeInHierarchy)
                 saveWindow.SetActive(true);
         }
     }
@@ -76,28 +94,77 @@ public class DungeonLevelManager : MonoBehaviour
     {
         if (saveWindow != null)
             saveWindow.SetActive(false);
+        EnableLevelNavigation();
     }
     public void CloseBackWindow()
     {
         if (backWindow != null)
             backWindow.SetActive(false);
+        EnableLevelNavigation();
     }
     void HandleBackInput()
     {
         if (backInput)
         {
             backInput = false;
-            if(backWindow != null) 
+            if(backWindow != null && !saveWindow.activeInHierarchy) 
                 backWindow.SetActive(true);
         }
     }
     public void OnSaveGameClick()
     {
+        DisableLevelNavigation();
         WorldSaveGameManager.instance.SaveGame();
     }
     public void OnExitClick()
     {
-        //DungeonManager
+        DisableLevelNavigation();
         TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(-1, dungeonData.exitX, dungeonData.exitY, dungeonData.exitZ, dungeonData.exitSceneID);
+    }
+    void DisableLevelNavigation()
+    {
+        foreach(DungeonLevelNodeUI lvlUI in nodes)
+        {
+            Navigation nav = lvlUI.button.navigation;
+            nav.mode = Navigation.Mode.None;
+            lvlUI.button.navigation = nav;
+        }
+    }
+    void EnableLevelNavigation()
+    {
+        string currentLevel = DungeonManager.instance.currentLevelId;
+        foreach (DungeonLevelNodeUI lvlUI in nodes)
+        {
+            Navigation nav = lvlUI.button.navigation;
+            nav.mode = Navigation.Mode.Automatic;
+            lvlUI.button.navigation = nav;
+            if (lvlUI.dungeonLevelId == currentLevel)
+                lvlUI.button.Select();
+        }
+    }
+    private void CheckControlsChanged()
+    {
+        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
+        inputSwitchDetector.CheckControlsChanged();
+        if (inputSwitchDetector.deviceChanged)
+        {
+            inputSwitchDetector.deviceChanged = false;
+            if (InputSwitchDetector.IsCurrentlyGamepad())
+            {
+                //Show controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(true);
+                foreach (GameObject kbmUI in keyboardMouseTooltips)
+                    kbmUI.SetActive(false);
+            }
+            else //Keyboard
+            {
+                //Hide Controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(false);
+                foreach (GameObject kbmUI in keyboardMouseTooltips)
+                    kbmUI.SetActive(true);
+            }
+        }
     }
 }

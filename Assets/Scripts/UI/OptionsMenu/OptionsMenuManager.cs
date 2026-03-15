@@ -129,12 +129,10 @@ public class OptionsMenuManager : MonoBehaviour
     // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()
     {
-        //Debug.Log("PauseScript.CheckControlsChanged");
         InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
         inputSwitchDetector.CheckControlsChanged();
         if (inputSwitchDetector.deviceChanged)
         {
-            //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
             if (InputSwitchDetector.IsCurrentlyGamepad())
             {
@@ -151,8 +149,6 @@ public class OptionsMenuManager : MonoBehaviour
                     gamepadeUI.SetActive(false);
                 foreach (GameObject kbmUI in keyboardMouseTooltips)
                     kbmUI.SetActive(true);
-                //enable buttons
-                //EnableAllNavigation();
             }
         }
     }

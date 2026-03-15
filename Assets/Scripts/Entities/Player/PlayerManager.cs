@@ -147,6 +147,8 @@ public class PlayerManager : CharacterManager
         Inventory inventory = GetComponent<Inventory>();
         currentCharacterData.inventoryItems = inventory.SaveItems();
         currentCharacterData.weaponSalvage = inventory.SaveWeaponComponents();
+        //Dungeon
+        currentCharacterData.savedDungeons = DungeonManager.SaveDungeons();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
@@ -192,6 +194,8 @@ public class PlayerManager : CharacterManager
         InventionManager.instance.LoadInventions(currentCharacterData.inventions);
         //Inventory
         GetComponent<Inventory>().LoadInventory(currentCharacterData.inventoryItems, currentCharacterData.weaponSalvage);
+        //Dungeon
+        DungeonManager.LoadDungeons(currentCharacterData.savedDungeons);
     }
 
     public void ToggleFlashlight()

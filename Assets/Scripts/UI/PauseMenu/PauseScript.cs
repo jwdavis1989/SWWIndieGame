@@ -59,15 +59,6 @@ public class PauseScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         if (debugMode) return;//ASTEST
         DisableAllMenus();
-        //if (playerInput == null)
-        //{
-        //    playerInput = PlayerInputManager.instance.gameObject.GetComponent<PlayerInput>();
-        //    playerInput.onControlsChanged += OnControlsChanged;
-        //    //playerInput.actions["PauseButton"].performed += i => pauseInput = true;
-        //    //playerInput.actions["SwitchMenuLeft"].performed += i => menuLeftInput = true;
-        //    //playerInput.actions["SwitchMenuRight"].performed += i => menuRightInput = true;
-        //    playerInput.enabled = true;
-        //}
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
