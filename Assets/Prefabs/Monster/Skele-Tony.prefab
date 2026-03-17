@@ -582,6 +582,7 @@ GameObject:
   - component: {fileID: 6892618644458253901}
   - component: {fileID: 4867863368037995243}
   - component: {fileID: 8241584581288490192}
+  - component: {fileID: 1476620923108150786}
   m_Layer: 6
   m_Name: Skele-Tony
   m_TagString: Untagged
@@ -669,7 +670,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1017,11 +1018,6 @@ MonoBehaviour:
   goldDrop: 100
   goldDropChance: 0.5
   expDropAmt: 100
-  componentDropChances:
-  - type: 2
-    dropChance: 0.5
-  - type: 3
-    dropChance: 0.1
 --- !u!114 &4867863368037995243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1073,6 +1069,20 @@ MonoBehaviour:
   hasFloatingHPBar: 1
   characterHPBarObject: {fileID: 0}
   characterHPBar: {fileID: 2696317960427767882}
+--- !u!114 &1476620923108150786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868504530908872297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422c8e0b81fd31940b9bc9f311c4451e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cullDistance: 20
+  checkIntervalInSeconds: 1
 --- !u!1 &6192227546992571412
 GameObject:
   m_ObjectHideFlags: 0
