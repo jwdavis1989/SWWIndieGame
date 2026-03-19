@@ -63,6 +63,7 @@ public class PlayerSettingsManager : MonoBehaviour
 [Serializable] public class PlayerSettings
 {
     public bool inverted = true;//default to wrong
+    public float mainVolume;
     public float musicVolume;
     public float effectsVolume;
     public float brightness;
