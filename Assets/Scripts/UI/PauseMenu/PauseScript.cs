@@ -38,8 +38,6 @@ public class PauseScript : MonoBehaviour
     public List<GameObject> keyboardMouseTooltips = new List<GameObject>();
     [Header("Debug")]
     public bool debugMode = false;
-    [SerializeField] GameObject DebugSaveGameButton;
-    [SerializeField] GameObject DebugAddItemButton;
 
     [Header("Pause is a singleton")]
     public static PauseScript instance;
@@ -221,8 +219,6 @@ public class PauseScript : MonoBehaviour
     {
         //playerControls.PlayerActions.Disable();
         playerControls.PauseMenu.Enable();
-        playerControls.WeaponMenu.Enable();
-        playerControls.UI.Enable();
         Time.timeScale = 0;
         gamePaused = true;
         pauseMenu.SetActive(true);
@@ -382,17 +378,29 @@ public class PauseScript : MonoBehaviour
         }
     }
     public GameObject cheatMenu;
+    CheatConsole cheatConsole;
     private void HandleCheatMenu()
     {
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
+            if(cheatConsole == null)
+                cheatConsole = GetComponent<CheatConsole>();
             Debug.Log("BackQuote key pressed!");
             // Add your action here
             if (cheatMenu != null)
             {
-                if(cheatMenu.activeSelf)
+                if (cheatMenu.activeSelf)
+                {
+                    cheatConsole.Toggle(false);
                     cheatMenu.SetActive(false);
-                else cheatMenu.SetActive(true);
+                    PlayerInputManager.instance.SafeEnable();
+                }
+                else if (!gamePaused) // No cheat console on pause
+                {
+                    PlayerInputManager.instance.SafeDisable();
+                    cheatMenu.SetActive(true);
+                    cheatConsole.Toggle(true);
+                }
             }
         }
     }

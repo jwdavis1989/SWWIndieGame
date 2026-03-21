@@ -48,6 +48,7 @@ public class InventionMenuManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            eventSystem = PauseScript.instance.mainPauseMenuEvents;
         }
         else
         {
@@ -67,16 +68,19 @@ public class InventionMenuManager : MonoBehaviour
     }
     public void Update()
     {
-        if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad())
+        if (eventSystem.currentSelectedGameObject == null)
         { //Handle Lost gamepad Cursor
-            //Debug.Log("inent menu thningy null setting select");
-            if (ownedIdeasGrid.transform.childCount > 0)
+            if (InputSwitchDetector.IsCurrentlyGamepad())
             {
-                ownedIdeasGrid.transform.GetChild(0).GetComponent<IdeaPanel>().mainButton.Select();
-            }
-            else
-            {
-                displayedInventionsGrid.transform.GetChild(0).GetComponent<InventionPanel>().mainButton.Select();
+                if (ownedIdeasGrid.transform.childCount > 0)
+                {
+                    Debug.Log("inent menu thningy null setting select");
+                    ownedIdeasGrid.transform.GetChild(0).GetComponent<IdeaPanel>().mainButton.Select();
+                }
+                else
+                {
+                    displayedInventionsGrid.transform.GetChild(0).GetComponent<InventionPanel>().mainButton.Select();
+                }
             }
         }
         CheckControlsChanged();

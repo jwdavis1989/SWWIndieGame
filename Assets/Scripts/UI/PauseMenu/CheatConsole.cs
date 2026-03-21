@@ -30,25 +30,27 @@ public class CheatConsole : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            Toggle();
-        }
+        //if (Input.GetKeyDown(KeyCode.BackQuote))
+        //{
+        //    Toggle();
+        //}
     }
 
-    void Toggle()
+    public void Toggle(bool open)
     {
-        isOpen = !isOpen;
-        consoleRoot.SetActive(isOpen);
+        isOpen = open;
+        //consoleRoot.SetActive(isOpen);
 
         if (isOpen)
         {
             inputField.ActivateInputField();
-        }
+        }else 
+            inputField.DeactivateInputField();
     }
 
     public void OnSubmit()
     {
+        Debug.Log("OnSubmit");
         string input = inputField.text;
         inputField.text = "";
 

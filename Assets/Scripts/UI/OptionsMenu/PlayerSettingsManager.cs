@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 
 public class PlayerSettingsManager : MonoBehaviour
 {
-    [Header("Pause is a singleton")]
+    [Header("PlayerSettingsManager stores and handles save/load of player settings")]
     public AudioMixer mixer;
     public static PlayerSettingsManager instance;
     private string filename = "playerSettings.json";
