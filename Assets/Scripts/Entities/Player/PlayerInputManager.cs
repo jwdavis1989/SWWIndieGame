@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -935,16 +936,20 @@ public class PlayerInputManager : MonoBehaviour
     //seems to avoid certain input error compared to PlayerControls.Disable
     public void SafeDisable(bool disableCamera = true)
     {
+        Debug.Log("SafeDisable");
         isPlayerEnabled = false;
         playerControls.PlayerActions.Disable();
         playerControls.PlayerMovement.Disable();
-        if(disableCamera)
+        playerControls.UI.Disable();
+        if (disableCamera)
             playerControls.PlayerCamera.Disable();
     }
     public void SafeEnable()
     {
+        Debug.Log("SafeEnable");
         isPlayerEnabled = true;
         playerControls.PlayerActions.Enable();
+        playerControls.UI.Enable();
         playerControls.PlayerCamera.Enable();
         playerControls.PlayerMovement.Enable();
     }

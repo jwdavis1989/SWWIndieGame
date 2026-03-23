@@ -10,7 +10,7 @@ public class DungeonLevelData : ScriptableObject
         "I'm inclinded to use b1_n1, b1_n2, b2_n1, etc")]
     public string nodeID = "b1_n1";
 #if UNITY_EDITOR
-    public SceneAsset levelSelectScene;
+    public SceneAsset dungeonLevelScene;
 #endif
     public float startX = 0f;
     public float startY = 0f;
@@ -21,9 +21,9 @@ public class DungeonLevelData : ScriptableObject
 #if UNITY_EDITOR
     void OnValidate()
     {
-        if (levelSelectScene != null)
+        if (dungeonLevelScene != null)
         { // set scene name
-            levelSceneId = levelSelectScene.name;
+            levelSceneId = dungeonLevelScene.name;
         }
     }
 #endif
