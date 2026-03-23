@@ -113,12 +113,20 @@ public class DungeonLevelManager : MonoBehaviour
         if (backInput)
         {
             backInput = false;
-            if(backWindow != null && !saveWindow.activeInHierarchy)
+            if(backWindow != null && !(saveWindow.activeInHierarchy || backWindow.activeInHierarchy))
             {
                 backWindow.SetActive(true);
                 DisableLevelNavigation();
             }
-                
+            else if (saveWindow.activeInHierarchy)
+            {
+                CloseSaveWindow();
+            }
+            else if (backWindow.activeInHierarchy)
+            {
+                CloseBackWindow();
+            }
+
         }
     }
     public void OnSaveGameClick()
