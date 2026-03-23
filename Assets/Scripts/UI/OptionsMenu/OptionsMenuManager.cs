@@ -72,7 +72,7 @@ public class OptionsMenuManager : MonoBehaviour
             playerControls.OptionsMenu.Enable();
             PauseScript.instance.playerControls.PauseMenu.Disable();
             PauseScript.instance.playerControls.UI.PauseButton.Disable();
-            PlayerInputManager.instance.SafeDisable();//Shouldnt be necessary?
+            //PlayerInputManager.instance.SafeDisable();//Shouldnt be necessary?
         }
         // load tooltips
         if (InputSwitchDetector.IsCurrentlyGamepad())

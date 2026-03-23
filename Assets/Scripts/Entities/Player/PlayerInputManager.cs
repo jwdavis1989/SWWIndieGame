@@ -503,7 +503,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         if (enabled)
         {
-            if (focus)
+            if (focus && !PauseScript.instance.gamePaused)
             {
                 //playerControls.Enable();
                 SafeEnable();
