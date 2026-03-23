@@ -501,7 +501,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool isPlayerEnabled = true;
     private void OnApplicationFocus(bool focus)
     {
-        if (enabled && isPlayerEnabled)
+        if (enabled)
         {
             if (focus)
             {
