@@ -69,11 +69,12 @@ public class InputSwitchDetector : MonoBehaviour
         }
         if (currentDevice != newDevice)
         {
-            Debug.Log("Device changed to " + currentDevice);
+            Debug.Log("Device changed to " + currentDevice + " " + count++);
             deviceChanged = true;
             currentDevice = newDevice;
         }
     }
+    public static int count = 0;
     public static bool IsCurrentlyGamepad()
     {
         return instance.currentDevice == GAMEPAD;

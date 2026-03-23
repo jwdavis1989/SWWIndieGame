@@ -26,6 +26,7 @@ public class CheatConsole : MonoBehaviour
         RegisterCommand("clear", Clear);
         RegisterCommand("give_gold", GiveGold);
         RegisterCommand("teleport", Teleport);
+        inputField.onSubmit.AddListener(OnSubmit);
     }
 
     void Update()
@@ -48,11 +49,11 @@ public class CheatConsole : MonoBehaviour
             inputField.DeactivateInputField();
     }
 
-    public void OnSubmit()
+    public void OnSubmit(string input)
     {
-        Debug.Log("OnSubmit");
-        string input = inputField.text;
-        inputField.text = "";
+        Debug.Log("OnSubmit:"+input);
+        //input = inputField.text;
+        inputField.text = "Enter command...";
 
         ProcessCommand(input);
         inputField.ActivateInputField();

@@ -32,7 +32,7 @@ public class DungeonLevelManager : MonoBehaviour
         dungeonDatabase = DungeonManager.GetDB();
         dungeonData = dungeonDatabase.GetDungeon(dungeonId);
         foreach (DungeonLevelNodeUI node in nodes)
-        {
+        { // Show or Hide dungeon levels
             if (node.entrance)
                 node.Show();
             else node.Hide(hiddenDungeonLevelSprite);
@@ -49,8 +49,10 @@ public class DungeonLevelManager : MonoBehaviour
                     node.Show();
             }
         }
+        // Close open windows
         CloseBackWindow();
         CloseSaveWindow();
+        // Set up input
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
@@ -58,6 +60,7 @@ public class DungeonLevelManager : MonoBehaviour
             playerControls.DungeonLevelSelect.Back.performed += i => backInput = true;
             playerControls.Enable();
         }
+        // Show relevant tooltips
         if (InputSwitchDetector.IsCurrentlyGamepad())
         {
             foreach (GameObject gamepadeUI in gamepadTooltips)
@@ -87,7 +90,10 @@ public class DungeonLevelManager : MonoBehaviour
         {
             saveInput = false;
             if(saveWindow != null && !backWindow.activeInHierarchy)
+            {
                 saveWindow.SetActive(true);
+                DisableLevelNavigation();
+            }
         }
     }
     public void CloseSaveWindow()
@@ -107,14 +113,18 @@ public class DungeonLevelManager : MonoBehaviour
         if (backInput)
         {
             backInput = false;
-            if(backWindow != null && !saveWindow.activeInHierarchy) 
+            if(backWindow != null && !saveWindow.activeInHierarchy)
+            {
                 backWindow.SetActive(true);
+                DisableLevelNavigation();
+            }
+                
         }
     }
     public void OnSaveGameClick()
     {
-        DisableLevelNavigation();
         WorldSaveGameManager.instance.SaveGame();
+        CloseSaveWindow();
     }
     public void OnExitClick()
     {
