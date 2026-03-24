@@ -144,7 +144,11 @@ public class PlayerManager : CharacterManager
         //Inventions
         currentCharacterData.inventions = InventionManager.instance.SaveInventions();
         //Inventory
-        currentCharacterData.inventoryItems = GetComponent<Inventory>().SaveItems();
+        Inventory inventory = GetComponent<Inventory>();
+        currentCharacterData.inventoryItems = inventory.SaveItems();
+        currentCharacterData.weaponSalvage = inventory.SaveWeaponComponents();
+        //Dungeon
+        currentCharacterData.savedDungeons = DungeonManager.SaveDungeons();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
@@ -189,7 +193,9 @@ public class PlayerManager : CharacterManager
         //Inventions
         InventionManager.instance.LoadInventions(currentCharacterData.inventions);
         //Inventory
-        GetComponent<Inventory>().LoadInventory(currentCharacterData.inventoryItems);
+        GetComponent<Inventory>().LoadInventory(currentCharacterData.inventoryItems, currentCharacterData.weaponSalvage);
+        //Dungeon
+        DungeonManager.LoadDungeons(currentCharacterData.savedDungeons);
     }
 
     public void ToggleFlashlight()
@@ -416,12 +422,23 @@ public class PlayerManager : CharacterManager
         capeSystem.SetActive(false);
     }
 
-    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f)
+    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString=null)
     {
-        DisableCapeSystem();
-        transform.position = new Vector3(destinationX, destinationY, destinationZ);
-        SceneManager.LoadSceneAsync(sceneID);
-        EnableCapeSystem();
+        TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
+        TeleportData.playerManager = this;
+        /** Will use string name of scene if not null else uses index */
+        TeleportData.SceneIdString = sceneIdString;
+        TeleportData.SceneID = sceneID;
+        //Disable Controls
+        PlayerInputManager.instance.SafeDisable();
+        Time.timeScale = 0;
+
+        SceneManager.LoadScene("LoadingScene");
+
+        //DisableCapeSystem();
+        //transform.position = new Vector3(destinationX, destinationY, destinationZ);
+        //SceneManager.LoadSceneAsync(sceneID);
+        //EnableCapeSystem();
     }
 
     public override void CallPlayJumpAttackImpactVFX()

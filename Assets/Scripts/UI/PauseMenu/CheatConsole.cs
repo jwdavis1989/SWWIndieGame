@@ -26,31 +26,34 @@ public class CheatConsole : MonoBehaviour
         RegisterCommand("clear", Clear);
         RegisterCommand("give_gold", GiveGold);
         RegisterCommand("teleport", Teleport);
+        inputField.onSubmit.AddListener(OnSubmit);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.BackQuote))
-        {
-            Toggle();
-        }
+        //if (Input.GetKeyDown(KeyCode.BackQuote))
+        //{
+        //    Toggle();
+        //}
     }
 
-    void Toggle()
+    public void Toggle(bool open)
     {
-        isOpen = !isOpen;
-        consoleRoot.SetActive(isOpen);
+        isOpen = open;
+        //consoleRoot.SetActive(isOpen);
 
         if (isOpen)
         {
             inputField.ActivateInputField();
-        }
+        }else 
+            inputField.DeactivateInputField();
     }
 
-    public void OnSubmit()
+    public void OnSubmit(string input)
     {
-        string input = inputField.text;
-        inputField.text = "";
+        Debug.Log("OnSubmit:"+input);
+        //input = inputField.text;
+        inputField.text = "Enter command...";
 
         ProcessCommand(input);
         inputField.ActivateInputField();

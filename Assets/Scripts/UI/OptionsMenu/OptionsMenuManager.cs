@@ -16,6 +16,7 @@ public class OptionsMenuManager : MonoBehaviour
     
     [Header("Buttons, knobs, and switches")]
     public Toggle invertedToggle;
+    public Slider mainVolumeSlider;
     public Slider effectsVolumeSlider;
     public Slider musicVolumeSlider;
 
@@ -71,7 +72,7 @@ public class OptionsMenuManager : MonoBehaviour
             playerControls.OptionsMenu.Enable();
             PauseScript.instance.playerControls.PauseMenu.Disable();
             PauseScript.instance.playerControls.UI.PauseButton.Disable();
-            PlayerInputManager.instance.SafeDisable();//Shouldnt be necessary?
+            //PlayerInputManager.instance.SafeDisable();//Shouldnt be necessary?
         }
         // load tooltips
         if (InputSwitchDetector.IsCurrentlyGamepad())
@@ -101,7 +102,9 @@ public class OptionsMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(musicVolumeSlider != null)
+        if (mainVolumeSlider != null)
+            mainVolumeSlider.onValueChanged.AddListener(OnMainVolumeChange);
+        if (musicVolumeSlider != null)
         {
             musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChange);
         }
@@ -129,12 +132,10 @@ public class OptionsMenuManager : MonoBehaviour
     // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()
     {
-        //Debug.Log("PauseScript.CheckControlsChanged");
         InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
         inputSwitchDetector.CheckControlsChanged();
         if (inputSwitchDetector.deviceChanged)
         {
-            //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
             if (InputSwitchDetector.IsCurrentlyGamepad())
             {
@@ -151,8 +152,6 @@ public class OptionsMenuManager : MonoBehaviour
                     gamepadeUI.SetActive(false);
                 foreach (GameObject kbmUI in keyboardMouseTooltips)
                     kbmUI.SetActive(true);
-                //enable buttons
-                //EnableAllNavigation();
             }
         }
     }
@@ -256,17 +255,21 @@ public class OptionsMenuManager : MonoBehaviour
     // Save Window: Yes
     public void SaveThenCompleteSaveWindowAction()
     {
+        if (mainVolumeChanged)
+        {
+            SaveMainVolume(mainVolume);
+        }
         if (musicVolumeChanged)
         {
             SaveMusicVolume(musicVolume);
         }
-        if (invertChanged)
-        {
-            SaveInvert(inverted);
-        }
         if (effectsVolumeChanged)
         {
             SaveEffectsVolume(effectsVolume);
+        }
+        if (invertChanged)
+        {
+            SaveInvert(inverted);
         }
         PlayerSettingsManager.instance.Save();
         CompleteSaveWindowAction();
@@ -276,6 +279,7 @@ public class OptionsMenuManager : MonoBehaviour
         playerSettings = PlayerSettingsManager.instance.playerSettings;
         //Debug.Log("Loaded inverted as " + playerSettings.inverted);
         invertedToggle.isOn = playerSettings.inverted;
+        mainVolumeSlider.value = playerSettings.mainVolume;
         musicVolumeSlider.value = playerSettings.musicVolume;
         effectsVolumeSlider.value = playerSettings.effectsVolume;
         mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
@@ -297,6 +301,17 @@ public class OptionsMenuManager : MonoBehaviour
         PlayerSettingsManager.instance.playerSettings = playerSettings;
         //Debug.Log("Saving inverted as " + playerSettings.inverted);
     }
+    float mainVolume = 0;
+    bool mainVolumeChanged = false;
+    public void OnMainVolumeChange(float newValue)
+    {
+        if (mainVolume != newValue)
+        {
+            mainVolume = newValue;
+            isChanged = true;
+            mainVolumeChanged = true;
+        }
+    }
     float musicVolume = 0;
     bool musicVolumeChanged = false;
     public void OnMusicVolumeChange(float newValue)
@@ -317,6 +332,11 @@ public class OptionsMenuManager : MonoBehaviour
             isChanged = true;
             effectsVolumeChanged = true;
         }
+    }
+    void SaveMainVolume(float newValue)
+    {
+        playerSettings.mainVolume = SetMainVolumeLogarithmic(newValue); ;
+        PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     void SaveMusicVolume(float newValue)
     {
@@ -347,6 +367,10 @@ public class OptionsMenuManager : MonoBehaviour
         nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
         invertedToggle.navigation = nav;
 
+        nav = mainVolumeSlider.navigation;
+        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+        mainVolumeSlider.navigation = nav;
+
         nav = effectsVolumeSlider.navigation;
         nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
         effectsVolumeSlider.navigation = nav;
@@ -365,6 +389,13 @@ public class OptionsMenuManager : MonoBehaviour
         {
             playerControls.OptionsMenu.Disable();
         }
+    }
+    public float SetMainVolumeLogarithmic(float sliderValue)
+    {
+        // Convert linear slider (0–1) to logarithmic dB scale
+        float volume = Mathf.Log10(sliderValue) * 20;
+        mixer.SetFloat("MasterVolume", volume);
+        return volume;
     }
     public float SetSFXVolumeLogarithmic(float sliderValue)
     {
