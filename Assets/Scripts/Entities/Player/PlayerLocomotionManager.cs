@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -147,6 +148,18 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (player.isBoosting)
         {
+            Quaternion playerRotation;
+
+            //Set boost direction
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+            jumpDirection.y = 0;
+            jumpDirection.Normalize();
+
+            //Set player facing
+            playerRotation = Quaternion.LookRotation(jumpDirection);
+            player.transform.rotation = playerRotation;
+
             //Movement caused by boosting
             if (InventionManager.instance.CheckHasUpgrade(InventionID.ICARUS_BOOSTERS))
             {
