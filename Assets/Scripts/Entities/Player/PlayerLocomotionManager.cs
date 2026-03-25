@@ -36,8 +36,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Jump")]
     [SerializeField] float jumpHeight = 2f;
-    [SerializeField] float jumpForwardSpeed = 5f;
-    [SerializeField] float freeFallSpeed = 2f;
+    [SerializeField] float jumpForwardSpeed = 7.5f;
+    [SerializeField] float freeFallSpeed = 1f;
     [SerializeField] float hoverFallSpeed = 1f;
     private Vector3 jumpDirection;
 
@@ -485,6 +485,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
         }
 
+        //Set Stamina regen delay to 0
+        player.playerStatsManager.ResetStaminaRegenTimer();
+
+        //Handle Jump Jet VFX
         if (jumpDirection.x > 0 && !characterManager.isBoosting)
         {
             EnableJumpJets("Left");
