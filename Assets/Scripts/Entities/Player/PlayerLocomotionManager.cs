@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -36,8 +37,8 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     [Header("Jump")]
     [SerializeField] float jumpHeight = 2f;
-    [SerializeField] float jumpForwardSpeed = 5f;
-    [SerializeField] float freeFallSpeed = 2f;
+    [SerializeField] float jumpForwardSpeed = 7.5f;
+    [SerializeField] float freeFallSpeed = 1f;
     [SerializeField] float hoverFallSpeed = 1f;
     private Vector3 jumpDirection;
 
@@ -46,6 +47,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     private Vector3 rollDirection;
     [SerializeField] float dodgeBoostSpeed = 1f;
     [SerializeField] float airBoostSpeed = 2f;
+    [SerializeField] float airBoostVerticalRotationThrottle = 0.3f;
     public float icarusBoosterDashSpeedMultiplier = 2f;
     public GameObject forceFieldGraphic;
 
@@ -147,18 +149,41 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (player.isBoosting)
         {
+            Quaternion playerRotation;
+
+            //Set boost direction
+            jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+            jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+            jumpDirection.Normalize();
+
+            //Throttle max vertical angle to avoid infinite hover state bug
+            if (jumpDirection.y > airBoostVerticalRotationThrottle)
+            {
+                jumpDirection.y = airBoostVerticalRotationThrottle;
+            }
+            else if (jumpDirection.y < -airBoostVerticalRotationThrottle)
+            {
+                jumpDirection.y = -airBoostVerticalRotationThrottle;
+            }
+
+            //Set player facing
+            playerRotation = Quaternion.LookRotation(jumpDirection);
+            player.transform.rotation = playerRotation;
+            // if (player.transform.rotation.x < -40f)
+            // {
+            //     player.transform.rotation.eulerAngles.x = -40f;
+            // }
+
+            Vector3 newMovement = PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed;
             //Movement caused by boosting
             if (InventionManager.instance.CheckHasUpgrade(InventionID.ICARUS_BOOSTERS))
             {
                 //Player has Icarus Boosters
-                //player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
-                player.characterController.Move(PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed * icarusBoosterDashSpeedMultiplier);
+                newMovement *= icarusBoosterDashSpeedMultiplier;
             }
-            else
-            {
-                //player.characterController.Move(jumpDirection * Time.deltaTime * airBoostSpeed);
-                player.characterController.Move(PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed);
-            }
+
+            //Apply the new movement to the player
+            player.characterController.Move(newMovement);
         }
     }
 
@@ -485,6 +510,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             }
         }
 
+        //Set Stamina regen delay to 0
+        player.playerStatsManager.ResetStaminaRegenTimer();
+
+        //Handle Jump Jet VFX
         if (jumpDirection.x > 0 && !characterManager.isBoosting)
         {
             EnableJumpJets("Left");

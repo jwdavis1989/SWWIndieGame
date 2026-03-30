@@ -74,13 +74,21 @@ public class CharacterLocomotionManager : MonoBehaviour
             character.animator.SetFloat("InAirTimer", inAirTimer);
 
             //Increases gravity's effect over time
-            yVelocity.y += (gravityForce * Time.deltaTime);
+            if (!character.isBoosting)
+            {   
+                yVelocity.y += (gravityForce * Time.deltaTime);
+
+            }
         }
 
         //Apply downward force to character
         if (!character.isBoosting)
         {
             character.characterController.Move(yVelocity * Time.deltaTime);
+        }
+        else
+        {
+            yVelocity.y = 0f;
         }
     }
 
@@ -92,6 +100,10 @@ public class CharacterLocomotionManager : MonoBehaviour
 
         //Intended Version
         character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
+        if (character.isGrounded)
+        {
+            character.ResetRotationX();
+        }
     }
 
     //Draws ground check sphere in editor
