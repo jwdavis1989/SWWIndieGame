@@ -40,6 +40,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 1362106527690768097, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1425589638534366875, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: takeDamageGrunts.Array.data[0]
       value: 
@@ -192,6 +196,10 @@ PrefabInstance:
       propertyPath: MaxDistance
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 7319045630489361734, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
     - target: {fileID: 8275101353061020659, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: m_Name
       value: MasterworkFabricant
@@ -200,6 +208,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8275101353061020659, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4691494788290430180}
     - targetCorrespondingSourceObject: {fileID: 4171037218308774875, guid: 9c1433dfd672206449719597bc857927, type: 3}
       insertIndex: 1
       addedObject: {fileID: 413656152325979484}
@@ -304,6 +315,25 @@ MonoBehaviour:
   delayBeforeBobbingInSeconds: 0
   isBobbingDelayRandom: 1
   bobbingDelayRandomRange: 0.5
+--- !u!1 &6809378544639214776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8275101353061020659, guid: 9c1433dfd672206449719597bc857927, type: 3}
+  m_PrefabInstance: {fileID: 3218056555940116299}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4691494788290430180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6809378544639214776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422c8e0b81fd31940b9bc9f311c4451e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cullDistance: 20
+  checkIntervalInSeconds: 1
 --- !u!1 &7292982828826953493 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5304453510327988318, guid: 9c1433dfd672206449719597bc857927, type: 3}

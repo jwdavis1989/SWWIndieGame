@@ -6117,6 +6117,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1186929171741770601, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+      propertyPath: MaxDistance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 2758378335393257266, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       propertyPath: m_AutoRepath
       value: 0
@@ -6426,6 +6430,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5632615561119973379, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       insertIndex: 4
       addedObject: {fileID: 6478258743901471300}
+    - targetCorrespondingSourceObject: {fileID: 5632615561119973379, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5670254749888666516}
   m_SourcePrefab: {fileID: 100100000, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
 --- !u!1 &4804450776015224678 stripped
 GameObject:
@@ -6452,6 +6459,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a9e925ca095e74c6781bc9cceafc6743, type: 3}
   - {fileID: 8300000, guid: 1078039422a884908b82570ba0bfb6cd, type: 3}
   aggroSFX: {fileID: 8300000, guid: 31572d31fe9bc4d4d909f5a91c767e4a, type: 3}
+--- !u!114 &5670254749888666516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804450776015224678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 422c8e0b81fd31940b9bc9f311c4451e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cullDistance: 20
+  checkIntervalInSeconds: 1
 --- !u!4 &4926736014669671952 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5249100162518356341, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}

@@ -69,7 +69,7 @@ public class InputSwitchDetector : MonoBehaviour
         }
         if (currentDevice != newDevice)
         {
-            Debug.Log("Device changed to " + currentDevice + " " + count++);
+            //Debug.Log("Device changed to " + currentDevice + " " + count++);
             deviceChanged = true;
             currentDevice = newDevice;
         }

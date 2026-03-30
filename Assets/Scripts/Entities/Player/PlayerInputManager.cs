@@ -501,9 +501,9 @@ public class PlayerInputManager : MonoBehaviour
     public bool isPlayerEnabled = true;
     private void OnApplicationFocus(bool focus)
     {
-        if (enabled && isPlayerEnabled)
+        if (enabled)
         {
-            if (focus)
+            if (focus && !PauseScript.instance.gamePaused)
             {
                 //playerControls.Enable();
                 SafeEnable();
@@ -936,7 +936,7 @@ public class PlayerInputManager : MonoBehaviour
     //seems to avoid certain input error compared to PlayerControls.Disable
     public void SafeDisable(bool disableCamera = true)
     {
-        Debug.Log("SafeDisable");
+        //Debug.Log("SafeDisable");
         isPlayerEnabled = false;
         playerControls.PlayerActions.Disable();
         playerControls.PlayerMovement.Disable();
@@ -946,7 +946,7 @@ public class PlayerInputManager : MonoBehaviour
     }
     public void SafeEnable()
     {
-        Debug.Log("SafeEnable");
+        //Debug.Log("SafeEnable");
         isPlayerEnabled = true;
         playerControls.PlayerActions.Enable();
         playerControls.UI.Enable();
