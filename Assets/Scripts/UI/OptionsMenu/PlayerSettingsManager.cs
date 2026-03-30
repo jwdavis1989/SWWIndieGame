@@ -27,7 +27,7 @@ public class PlayerSettingsManager : MonoBehaviour
     public void Start()
     {
         filePath = Path.Combine(Application.persistentDataPath, filename);
-        Load();
+        LoadPlayerSettings();
     }
     // Player Settings Manager provides api for save & load of player settings and stores loaded player settings
     //    = Path.Combine(
@@ -36,28 +36,63 @@ public class PlayerSettingsManager : MonoBehaviour
     //);
     public  PlayerPrefs playerPrefs;
     // Start is called before the first frame update
-    public  void Load()
+    public void LoadPlayerSettings()
     {
         if (File.Exists(filePath))
         {
+            Debug.Log("Loading Player Settings");
             string json = File.ReadAllText(filePath);
             playerSettings = JsonUtility.FromJson<PlayerSettings>(json);
-            PlayerCamera.instance.isCameraInverted = playerSettings.inverted;
-            mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
-            mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
         }
         else
         {
+            Debug.Log("Creating Player Settings");
             // First run – create default settings
             playerSettings = new PlayerSettings();
-            Save();
+            playerSettings.inverted = false;
+            playerSettings.mainVolume = 1f;
+            playerSettings.musicVolume = 1f;
+            playerSettings.effectsVolume = 1f;
+            SavePlayerSettings();
         }
+        PlayerCamera.instance.isCameraInverted = playerSettings.inverted;
+        SetMainVolumeLogarithmic(playerSettings.mainVolume);
+        SetMusicVolumeLogarithmic(playerSettings.musicVolume);
+        SetSFXVolumeLogarithmic(playerSettings.effectsVolume);
     }
-    public void Save()
+    public void SavePlayerSettings()
     {
+
         string json = JsonUtility.ToJson(playerSettings, true);
         File.WriteAllText(filePath, json);
-        //Debug.Log("Settings Saved to " + filePath);//astest
+        Debug.Log("Settings Saved to " + filePath);//astest
+    }
+    public void SetMainVolumeLogarithmic(float sliderValue)
+    {
+        if(sliderValue > 1f) // cap volume in case of bad save data
+            sliderValue = 1f;
+        // Convert linear slider (0–1) to logarithmic dB scale
+        float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
+        float volumeDb = Mathf.Log10(adjusted) * 20;
+        mixer.SetFloat("MasterVolume", volumeDb);
+    }
+    public void SetSFXVolumeLogarithmic(float sliderValue)
+    {
+        if (sliderValue > 1f) // cap volume in case of bad save data
+            sliderValue = 1f;
+        // Convert linear slider (0–1) to logarithmic dB scale
+        float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
+        float volumeDb = Mathf.Log10(adjusted) * 20;
+        mixer.SetFloat("SFXVolume", volumeDb);
+    }
+    public void SetMusicVolumeLogarithmic(float sliderValue)
+    {
+        if (sliderValue > 1f) // cap volume in case of bad save data
+            sliderValue = 1f;
+        // Convert linear slider (0–1) to logarithmic dB scale
+        float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
+        float volumeDb = Mathf.Log10(adjusted) * 20;
+        mixer.SetFloat("MusicVolume", volumeDb);
     }
 }
 [Serializable] public class PlayerSettings

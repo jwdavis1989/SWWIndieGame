@@ -271,7 +271,7 @@ public class OptionsMenuManager : MonoBehaviour
         {
             SaveInvert(inverted);
         }
-        PlayerSettingsManager.instance.Save();
+        PlayerSettingsManager.instance.SavePlayerSettings();
         CompleteSaveWindowAction();
     }
     public void LoadOptions()
@@ -307,6 +307,7 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (mainVolume != newValue)
         {
+            Debug.Log("OnMainVolumeChange:" + newValue);
             mainVolume = newValue;
             isChanged = true;
             mainVolumeChanged = true;
@@ -317,6 +318,7 @@ public class OptionsMenuManager : MonoBehaviour
     public void OnMusicVolumeChange(float newValue)
     {
         if (musicVolume != newValue) {
+            Debug.Log("OnMusicVolumeChange:" + newValue);
             musicVolume = newValue;
             isChanged = true;
             musicVolumeChanged = true;
@@ -335,18 +337,21 @@ public class OptionsMenuManager : MonoBehaviour
     }
     void SaveMainVolume(float newValue)
     {
-        playerSettings.mainVolume = SetMainVolumeLogarithmic(newValue); ;
+        playerSettings.mainVolume = newValue;
+        PlayerSettingsManager.instance.SetMainVolumeLogarithmic(playerSettings.mainVolume);
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     void SaveMusicVolume(float newValue)
     {
-        playerSettings.musicVolume = SetMusicVolumeLogarithmic(newValue); ;
+        playerSettings.musicVolume = newValue;
+        PlayerSettingsManager.instance.SetMusicVolumeLogarithmic(playerSettings.musicVolume);
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     //.GetComponent<PlayerManager>().characterSoundFXManager.
     void SaveEffectsVolume(float newValue)
     {
-        playerSettings.effectsVolume = SetSFXVolumeLogarithmic(newValue);
+        playerSettings.effectsVolume = newValue;
+        PlayerSettingsManager.instance.SetSFXVolumeLogarithmic(playerSettings.effectsVolume);
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     void SwapFromOptionMenuControls()
@@ -389,26 +394,5 @@ public class OptionsMenuManager : MonoBehaviour
         {
             playerControls.OptionsMenu.Disable();
         }
-    }
-    public float SetMainVolumeLogarithmic(float sliderValue)
-    {
-        // Convert linear slider (0–1) to logarithmic dB scale
-        float volume = Mathf.Log10(sliderValue) * 20;
-        mixer.SetFloat("MasterVolume", volume);
-        return volume;
-    }
-    public float SetSFXVolumeLogarithmic(float sliderValue)
-    {
-        // Convert linear slider (0–1) to logarithmic dB scale
-        float volume = Mathf.Log10(sliderValue) * 20;
-        mixer.SetFloat("SFXVolume", volume);
-        return volume;
-    }
-    public float SetMusicVolumeLogarithmic(float sliderValue)
-    {
-        // Convert linear slider (0–1) to logarithmic dB scale
-        float volume = Mathf.Log10(sliderValue) * 20;
-        mixer.SetFloat("MusicVolume", volume);
-        return volume;
     }
 }
