@@ -69,6 +69,8 @@ public class PlayerSettingsManager : MonoBehaviour
     }
     public void SetMainVolumeLogarithmic(float sliderValue)
     {
+        if(sliderValue > 1f) // cap volume in case of bad save data
+            sliderValue = 1f;
         // Convert linear slider (0–1) to logarithmic dB scale
         float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
         float volumeDb = Mathf.Log10(adjusted) * 20;
@@ -76,6 +78,8 @@ public class PlayerSettingsManager : MonoBehaviour
     }
     public void SetSFXVolumeLogarithmic(float sliderValue)
     {
+        if (sliderValue > 1f) // cap volume in case of bad save data
+            sliderValue = 1f;
         // Convert linear slider (0–1) to logarithmic dB scale
         float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
         float volumeDb = Mathf.Log10(adjusted) * 20;
@@ -83,6 +87,8 @@ public class PlayerSettingsManager : MonoBehaviour
     }
     public void SetMusicVolumeLogarithmic(float sliderValue)
     {
+        if (sliderValue > 1f) // cap volume in case of bad save data
+            sliderValue = 1f;
         // Convert linear slider (0–1) to logarithmic dB scale
         float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
         float volumeDb = Mathf.Log10(adjusted) * 20;
