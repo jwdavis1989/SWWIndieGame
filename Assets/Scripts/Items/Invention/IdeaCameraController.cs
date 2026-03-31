@@ -291,7 +291,7 @@ public class IdeaCameraController : MonoBehaviour
         player.isMoving = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
         //Disable Controls
-        PlayerInputManager.instance.SafeDisable(false);
+        PlayerInputManager.instance.SafeDisable(false, true);
         //deactivate player camera
 
         PlayerCamera.instance.cameraObject.enabled = false;

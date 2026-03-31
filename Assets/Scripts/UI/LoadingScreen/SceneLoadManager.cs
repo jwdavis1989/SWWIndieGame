@@ -30,8 +30,11 @@ public class SceneLoadManager : MonoBehaviour
         operation.allowSceneActivation = true;
 
         // Enable Controls
-        PlayerInputManager.instance.SafeEnable();
-        Time.timeScale = 1;
+        if (TeleportData.enableAfterLoad)
+        {
+            PlayerInputManager.instance.SafeEnable();
+            Time.timeScale = 1;
+        }
         // Teleport
         TeleportData.playerManager.transform.position = TeleportData.Destination;
     }
@@ -42,4 +45,5 @@ public static class TeleportData
     public static string SceneIdString;
     public static Vector3 Destination;
     public static PlayerManager playerManager;
+    public static bool enableAfterLoad = true;
 }
