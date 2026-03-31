@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+
 
 //using System.Numerics;
 using UnityEngine;
@@ -532,7 +534,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void ApplyJumpingVelocity()
     {
         //Apply an upward velocity depending on forces in our game such as gravity
-        yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
+        if (!player.isLoading) 
+        {
+            yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
+        }
     }
 
     public void EnableJumpJets(string side)
