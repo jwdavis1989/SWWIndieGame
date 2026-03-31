@@ -423,15 +423,16 @@ public class PlayerManager : CharacterManager
         capeSystem.SetActive(false);
     }
 
-    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString=null)
+    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString=null, bool enableAfterLoad=true)
     {
         TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
         TeleportData.playerManager = this;
         /** Will use string name of scene if not null else uses index */
         TeleportData.SceneIdString = sceneIdString;
         TeleportData.SceneID = sceneID;
+        TeleportData.enableAfterLoad = enableAfterLoad;
         //Disable Controls
-        PlayerInputManager.instance.SafeDisable();
+        PlayerInputManager.instance.SafeDisable(true, true);
         Time.timeScale = 0;
 
         SceneManager.LoadScene("LoadingScene");
