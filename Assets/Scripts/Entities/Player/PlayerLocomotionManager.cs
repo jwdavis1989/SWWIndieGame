@@ -171,10 +171,6 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             //Set player facing
             playerRotation = Quaternion.LookRotation(jumpDirection);
             player.transform.rotation = playerRotation;
-            // if (player.transform.rotation.x < -40f)
-            // {
-            //     player.transform.rotation.eulerAngles.x = -40f;
-            // }
 
             Vector3 newMovement = PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed;
             //Movement caused by boosting
@@ -534,9 +530,13 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     public void ApplyJumpingVelocity()
     {
         //Apply an upward velocity depending on forces in our game such as gravity
-        if (!player.isLoading) 
+        if (player.hasGravity) 
         {
             yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
+        }
+        else
+        {
+            yVelocity.y = 0f;
         }
     }
 

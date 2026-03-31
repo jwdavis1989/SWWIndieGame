@@ -10,7 +10,7 @@ public class SceneLoadManager : MonoBehaviour
     void Start()
     {
         // Disable Player Gravity to avoid infinite falling bug
-        TeleportData.playerManager.isLoading = true;
+        TeleportData.playerManager.hasGravity = false;
 
         StartCoroutine(LoadScene());
     }
@@ -39,7 +39,7 @@ public class SceneLoadManager : MonoBehaviour
             Time.timeScale = 1;
 
             // Re-enable Player Gravity
-            TeleportData.playerManager.isLoading = false;
+            TeleportData.playerManager.hasGravity = true;
         }
         // Teleport
         TeleportData.playerManager.transform.position = TeleportData.Destination;

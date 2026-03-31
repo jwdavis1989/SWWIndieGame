@@ -55,10 +55,11 @@ public class CharacterLocomotionManager : MonoBehaviour
             //  Problem has been solved by noticing that jumping velocity is >4, while the float glitch is ~0.46, so checking for a sub-1 velocity 
             //  fixes the floating glitch!
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (yVelocity.y < 1)
+            if (yVelocity.y < 1 )
             {
                 yVelocity.y = groundedYVelocity;
             }
+
         }
         else
         {
@@ -82,7 +83,7 @@ public class CharacterLocomotionManager : MonoBehaviour
         }
 
         //Apply downward force to character
-        if (!character.isBoosting)
+        if (!character.isBoosting && character.hasGravity)
         {
             character.characterController.Move(yVelocity * Time.deltaTime);
         }

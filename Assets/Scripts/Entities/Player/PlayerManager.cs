@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : CharacterManager
 {
-    [HideInInspector] public bool isLoading = false;
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     //Turn on if adding multiplayer
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
