@@ -394,6 +394,7 @@ public class PlayerManager : CharacterManager
 
     public override void DisableBoosting()
     {
+        base.DisableBoosting();
         isBoosting = false;
     }
 
