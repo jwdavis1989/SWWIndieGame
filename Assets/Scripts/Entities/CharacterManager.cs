@@ -37,6 +37,7 @@ public class CharacterManager : MonoBehaviour
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
+    public bool hasGravity = true;
     public bool isFalling = false;
     public bool isBoosting = false;
     public bool isRolling = false;

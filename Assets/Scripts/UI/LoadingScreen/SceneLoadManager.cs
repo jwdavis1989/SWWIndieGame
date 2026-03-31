@@ -9,6 +9,9 @@ public class SceneLoadManager : MonoBehaviour
     public Scrollbar loadingBar;
     void Start()
     {
+        // Disable Player Gravity to avoid infinite falling bug
+        TeleportData.playerManager.hasGravity = false;
+
         StartCoroutine(LoadScene());
     }
     /** Will use string name of scene if not null else uses index */
@@ -34,6 +37,9 @@ public class SceneLoadManager : MonoBehaviour
         {
             PlayerInputManager.instance.SafeEnable();
             Time.timeScale = 1;
+
+            // Re-enable Player Gravity
+            TeleportData.playerManager.hasGravity = true;
         }
         // Teleport
         TeleportData.playerManager.transform.position = TeleportData.Destination;
