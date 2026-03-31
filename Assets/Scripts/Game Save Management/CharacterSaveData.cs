@@ -18,12 +18,9 @@ public class CharacterSaveData
     public float secondsPlayed;
 
     [Header("Weapons")]
-    public WeaponsArray weapons;
+    public WeaponsArray weapons = new WeaponsArray();
     public int indexOfEquippedWeapon = 0;
     public int indexOfEquippedSpecialWeapon = 0;
-    [Header("Components")]
-    public ComponentsArray ownedComponents;
-    public ComponentsArray ownedWpnComponents;
 
     //Q: Why not Vector3?
     //A: We can only save data from "Basic" variables (e.g. Int, Float, Bool, String, etc.)
@@ -41,17 +38,15 @@ public class CharacterSaveData
     public float currentStamina = 100;
 
     public Dictionary<string, bool> journalFlags = new Dictionary<string, bool>();
-    public IdeaStats[] ideas = new IdeaStats[(int)IdeaType.IDEAS_SIZE];
-    public bool[] inventions = new bool[0];
+    public List<IdeaSaveData> ideas = new List<IdeaSaveData>();
+    public List<string> inventions = new List<string>();
+    public List<InventoryItem> inventoryItems = new List<InventoryItem>();
+    public List<WeaponSalvageComponent> weaponSalvage = new List<WeaponSalvageComponent>();
+    public List<DungeonSaveData> savedDungeons = new List<DungeonSaveData>();
 
     public CharacterSaveData()
     {
-        this.weapons = new WeaponsArray();
         this.weapons.weaponStats = new WeaponStats[0];
-        this.ownedComponents = new ComponentsArray();
-        this.ownedComponents.components = new TinkerComponentStats[0];
-        this.ownedWpnComponents = new ComponentsArray();
-        this.ownedWpnComponents.components = new TinkerComponentStats[0];
     }
 
 }

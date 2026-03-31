@@ -51,6 +51,7 @@ MonoBehaviour:
   weaponDamageCollider: {fileID: 0}
   jumpAttackWeaponDamageCollider: {fileID: 0}
   isSpecialWeapon: 1
+  isWristWeapon: 0
   specialWeaponDamageMultiplier: 1.25
   spr: {fileID: 21300000, guid: bdf78ede7512af647ad83af92b3d9e5f, type: 3}
   hasObtained: 1
@@ -110,6 +111,7 @@ MonoBehaviour:
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
+    gunAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -123,13 +125,25 @@ MonoBehaviour:
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
+    singleTargetBulletAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 0}
   mainHandHeavyAttackAction: {fileID: 0}
   offHandCastMagicAttackAction: {fileID: 0}
-  projectile: {fileID: 0}
+  offHandShootGunAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 0}
   offHandSpellAnimation: 
+  offHandGunShootAnimation: 
   fullChargingTraitModifier: 1.25
+  gunModel: {fileID: 0}
+  bulletOriginLocation: {fileID: 0}
+  shootingTransform: {fileID: 0}
+  isSettingGunToFiringTransform: 0
+  isSetGunToHandTransform: 0
+  gunProjectile: {fileID: 0}
+  gunShotWarmUpVFX: {fileID: 0}
+  projectileForwardVelocityMultiplier: 7
+  projectileUpwardVelocityMultiplier: 4
+  projectileMass: 0.01
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
@@ -138,6 +152,8 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  gunAimSFX: {fileID: 0}
+  gunFireSFX: {fileID: 0}
   isInDebugMode: 0
 --- !u!1 &5053468531180226278
 GameObject:
@@ -403,6 +419,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f2b480d0d2f2481429a84a3787adf246, type: 3}
       propertyPath: m_Name
       value: BowieKnifeNOTEXTURE_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2b480d0d2f2481429a84a3787adf246, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2b480d0d2f2481429a84a3787adf246, type: 3}
       propertyPath: m_IsActive

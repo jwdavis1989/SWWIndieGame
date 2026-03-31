@@ -39,6 +39,9 @@ public class ParentPursueStanceState : PursueTargetState
         //If we have no target, then return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
         {
+            //Reset Animation Speed to Idle Speed
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
         //Make sure our navmesh is active. if not, then enable it

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,19 +7,22 @@ public class InteractableChestSimple : Interactable
 {
     public bool isClosed = true;
     //private bool hasUnlocked = false;
-    [Header("Swings to negative angle")]
+    [Header("Door object to rotate")]
     public GameObject door;
     private float currentDoorOpenTimer = 0f;
     private float maximumDoorOpenTimer = 0.5f;
     public float doorOpenAngle = 90f;
-    [Header("Items. Either set manually or let a separate script set")]
+    [Header("Minimap Icon")]
+    public GameObject minimapIcon;
+    [Header("Item's dropped")]
     public List<GameObject> contents = new List<GameObject>();
 
     [Header("Sound")]
     public AudioClip chestSound;//TODO use array?
 
-    [Header("TODO")]
+    [Header("Lock & Key")]
     public bool needsKey = false;
+    public string key_id = "brass_key";
     protected override void Start()
     {
         base.Start();
@@ -32,19 +36,34 @@ public class InteractableChestSimple : Interactable
         base.Interact(player);
 
         if (needsKey)
-        {
-            //TODO: In the future, add a version that handles needing a key!
+        { // needing a key
+            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
+            {
+                player.GetComponent<Inventory>().GetItem(key_id).quantity--;
+                SuccessfullyOpen(player);
+            }
+            else
+                SetColliderEnabled(true);
         }
         else
         {
-            if (chestSound != null)
-            {
-                player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
-            }
-            SetColliderEnabled(false);
-            StartCoroutine(OpenDoorOverTime());
+            SuccessfullyOpen(player);
         }
 
+    }
+    void SuccessfullyOpen(PlayerManager player)
+    {
+        //play sound
+        if (chestSound != null)
+            player.characterSoundFXManager.PlayAdvancedSoundFX(chestSound, 1, 1f, true, 0.05f);
+        //remove minimap icon
+        if (minimapIcon != null)
+            Destroy(minimapIcon);
+        //disable interactable
+        SetColliderEnabled(false);
+        //open animation
+        StartCoroutine(OpenDoorOverTime());
+        HandleLootTable();
     }
 
     IEnumerator OpenDoorOverTime()
@@ -55,26 +74,51 @@ public class InteractableChestSimple : Interactable
             var doorXOffset = (doorOpenAngle / maximumDoorOpenTimer) * Time.deltaTime;
             if (!isClosed)
                 doorXOffset = -doorXOffset;
-            //TODO Allow closing of door by negating 
-            //Move Left Door
+            //Move Door
             if (door != null)
             {
                 door.transform.Rotate(new Vector3(-doorXOffset, 0f, 0f));
             }
             yield return null;
         }
+        //activate items
         foreach (GameObject item in contents)
         {
             item.SetActive(true);
         }
-        isClosed = !isClosed;
-        if (isClosed)
-            interactableText = "Open";
-        else interactableText = "Close";
-        currentDoorOpenTimer = 0;
+
+        //reset values - Unecessary?
+        //isClosed = !isClosed;
+        //if (isClosed)
+        //    interactableText = "Open";
+        //else interactableText = "Close";
+        //currentDoorOpenTimer = 0;
     }
     public void SetColliderEnabled(bool enabled)
     {
         interactableCollider.enabled = enabled;
+    }
+    [SerializeField] LootTable lootTable;
+    public void HandleLootTable()
+    {
+        if (lootTable == null) return;
+        ItemDetails itemDetails = lootTable.GetRandomItem();
+        //contents.Add(
+        ItemDropManager.instance.DropItemById(itemDetails.itemId, transform);
+        //);
+        Debug.Log("HandleLootTable:GetRandomItem:" + itemDetails.itemId);
+
+    }
+    public override void OnTriggerEnter(Collider other)
+    {
+        PlayerManager player = other.GetComponent<PlayerManager>();
+
+        if (player != null)
+        {
+            //Pass the interaction to the player
+            player.playerInteractionManager.AddInteractionToList(this);
+            if (needsKey)
+                interactableText = "Locked";
+        }
     }
 }

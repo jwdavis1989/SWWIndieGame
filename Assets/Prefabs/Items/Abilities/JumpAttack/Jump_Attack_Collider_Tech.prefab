@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3710108789849565}
   - component: {fileID: 6465384018235322124}
   - component: {fileID: 500369073651974099}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TechCentralVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4911,7 +4911,7 @@ AudioSource:
   m_GameObject: {fileID: 295699798569067898}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: 1593e6457149b24408c65266fdbfe466, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.7
@@ -5009,7 +5009,7 @@ GameObject:
   - component: {fileID: 1608439064768421516}
   - component: {fileID: 4516867655527346574}
   - component: {fileID: 966099393634938648}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_300
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9897,7 +9897,7 @@ GameObject:
   - component: {fileID: 7015003654354571014}
   - component: {fileID: 1516172138830403877}
   - component: {fileID: 5393260302531044553}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_60
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14787,13 +14787,13 @@ GameObject:
   - component: {fileID: 6330018668465984977}
   - component: {fileID: 127685042654391878}
   - component: {fileID: 4049490715992562579}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Jump_Attack_Collider_Tech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7056024979900544158
 Transform:
   m_ObjectHideFlags: 0
@@ -19697,9 +19697,9 @@ MonoBehaviour:
     useMainCamera: 1
     cameras: []
     delay: 0
-    duration: 1
+    duration: 0.5
     shakeSpace: 0
-    shakeStrength: {x: 0.1, y: 0.1, z: 0.1}
+    shakeStrength: {x: 0.25, y: 0.25, z: 0.25}
     shakeCurve:
       serializedVersion: 2
       m_Curve:
@@ -19833,7 +19833,7 @@ AudioSource:
   m_GameObject: {fileID: 1549257713381026176}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: fa96e6493857cce42b622f9c2831fb17, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -19929,7 +19929,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4150573746204050010}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: VFX_ExplosionPuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19969,7 +19969,7 @@ GameObject:
   - component: {fileID: 9008766185534123318}
   - component: {fileID: 7214271710055033501}
   - component: {fileID: 8045127845598363577}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TechVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24869,7 +24869,7 @@ AudioSource:
   m_GameObject: {fileID: 4929873536876062174}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: fa96e6493857cce42b622f9c2831fb17, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -24967,7 +24967,7 @@ GameObject:
   - component: {fileID: 4483632457950447215}
   - component: {fileID: 7500494955715772154}
   - component: {fileID: 3872189526272528445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_120
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29855,7 +29855,7 @@ GameObject:
   - component: {fileID: 4227935321747278811}
   - component: {fileID: 5759330805395349757}
   - component: {fileID: 3519830695659223693}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_180
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34743,7 +34743,7 @@ GameObject:
   - component: {fileID: 7158733849306247581}
   - component: {fileID: 3219332316700322652}
   - component: {fileID: 5391772888732649086}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_240
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39631,7 +39631,7 @@ GameObject:
   - component: {fileID: 3625687566082363214}
   - component: {fileID: 1113396509425788045}
   - component: {fileID: 6065674613555766936}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44518,7 +44518,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2806273680653484671}
   - component: {fileID: 6039189412383063910}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44614,7 +44614,7 @@ GameObject:
   - component: {fileID: 7996332741866184571}
   - component: {fileID: 8408043208127061227}
   - component: {fileID: 3435578629305535366}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49526,7 +49526,7 @@ GameObject:
   - component: {fileID: 3023688744694414410}
   - component: {fileID: 8722032049912552739}
   - component: {fileID: 4401956890994996924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}

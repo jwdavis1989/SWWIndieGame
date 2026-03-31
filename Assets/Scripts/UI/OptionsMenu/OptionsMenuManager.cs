@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class OptionsMenuManager : MonoBehaviour
 {
     public static OptionsMenuManager instance;
-    [HideInInspector] public PlayerSettings playerSettings;
+    [HideInInspector] public PlayerSettings playerSettings; 
+    public AudioMixer mixer;
+    
     [Header("Buttons, knobs, and switches")]
     public Toggle invertedToggle;
+    public Slider mainVolumeSlider;
     public Slider effectsVolumeSlider;
     public Slider musicVolumeSlider;
 
@@ -43,40 +48,6 @@ public class OptionsMenuManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        //todo: shouldnt be necessary? 
-        invertedToggle.isOn = PlayerSettingsManager.instance.playerSettings.inverted;
-        //make sure changed is reset
-        isChanged = false;
-        invertChanged = false;
-        musicVolumeChanged = false;
-        saveWindow.SetActive(false);
-        ToggleNavigation(true);
-        //activate correct inputs
-        if (playerControls != null)
-        {
-            playerControls.OptionsMenu.Enable();
-            PauseScript.instance.playerControls.PauseMenu.Disable();
-            PauseScript.instance.playerControls.UI.Disable();
-            PlayerInputManager.instance.SafeDisable();//Shouldnt be necessary?
-        }
-    }
-    private void OnDisable()
-    {
-        isChanged = false;
-        SwapFromOptionMenuControls();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(musicVolumeSlider != null)
-        {
-            WorldMusicController.instance.GetComponent<AudioSource>().volume = musicVolumeSlider.value;
-            musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChange);
-        }
-        if (effectsVolumeSlider != null)
-        {
-            effectsVolumeSlider.onValueChanged.AddListener(OnEffectsVolumeChange);
-        }
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
@@ -86,6 +57,60 @@ public class OptionsMenuManager : MonoBehaviour
             playerControls.OptionsMenu.SaveSettings.performed += i => saveSettingInput = true;
             playerControls.Enable();
         }
+        //todo: shouldnt be necessary? 
+        invertedToggle.isOn = PlayerSettingsManager.instance.playerSettings.inverted;
+        //make sure changed is reset
+        isChanged = false;
+        invertChanged = false;
+        musicVolumeChanged = false;
+        effectsVolumeChanged = false;
+        saveWindow.SetActive(false);
+        ToggleNavigation(true);
+        //activate correct inputs
+        if (playerControls != null)
+        {
+            playerControls.OptionsMenu.Enable();
+            PauseScript.instance.playerControls.PauseMenu.Disable();
+            PauseScript.instance.playerControls.UI.PauseButton.Disable();
+        }
+        // load tooltips
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(true);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(false);
+        }
+        else
+        {
+            foreach (GameObject gamepadeUI in gamepadTooltips)
+                gamepadeUI.SetActive(false);
+            foreach (GameObject kbmUI in keyboardMouseTooltips)
+                kbmUI.SetActive(true);
+        }
+    }
+    private void OnDisable()
+    {
+        isChanged = false;
+        foreach (GameObject gamepadeUI in gamepadTooltips)
+            gamepadeUI.SetActive(false);
+        foreach (GameObject kbmUI in keyboardMouseTooltips)
+            kbmUI.SetActive(false);
+        SwapFromOptionMenuControls();
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (mainVolumeSlider != null)
+            mainVolumeSlider.onValueChanged.AddListener(OnMainVolumeChange);
+        if (musicVolumeSlider != null)
+        {
+            musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChange);
+        }
+        if (effectsVolumeSlider != null)
+        {
+            effectsVolumeSlider.onValueChanged.AddListener(OnEffectsVolumeChange);
+        }
     }
     // Update is called once per frame
     void Update()
@@ -93,8 +118,11 @@ public class OptionsMenuManager : MonoBehaviour
         CheckControlsChanged();
         HandleGamePadSelected();
         HandleSwitchMenuInput();
-        HandleExitPauseMenuInput();
         HandleSaveSettingsInput();
+    }
+    private void LateUpdate()
+    {
+        HandleExitPauseMenuInput();
     }
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************
@@ -103,30 +131,26 @@ public class OptionsMenuManager : MonoBehaviour
     // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()
     {
-        //Debug.Log("PauseScript.CheckControlsChanged");
         InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
         inputSwitchDetector.CheckControlsChanged();
         if (inputSwitchDetector.deviceChanged)
         {
-            //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
             if (InputSwitchDetector.IsCurrentlyGamepad())
             {
                 //Show controller UI
                 foreach (GameObject gamepadeUI in gamepadTooltips)
                     gamepadeUI.SetActive(true);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(false);
+                foreach (GameObject kbmUI in keyboardMouseTooltips)
+                    kbmUI.SetActive(false);
             }
             else //Keyboard
             {
                 //Hide Controller UI
                 foreach (GameObject gamepadeUI in gamepadTooltips)
                     gamepadeUI.SetActive(false);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(true);
-                //enable buttons
-                //EnableAllNavigation();
+                foreach (GameObject kbmUI in keyboardMouseTooltips)
+                    kbmUI.SetActive(true);
             }
         }
     }
@@ -146,6 +170,7 @@ public class OptionsMenuManager : MonoBehaviour
     {
         if (exitPauseMenuInput)
         {
+            //Debug.Log("exitPauseMenuInput - options menu isChanged=" + isChanged);
             exitPauseMenuInput = false;
             saveWindowAction = "UNPAUSE";
             if (isChanged)
@@ -197,9 +222,10 @@ public class OptionsMenuManager : MonoBehaviour
             }
         }
     }
-    // Save Window: No
+    // Save Window Exit
     public void CompleteSaveWindowAction()
     {
+        //Debug.Log("CompleteSaveWindowAction - saveWindowAction=" + saveWindowAction);
         saveWindow.SetActive(false);
         SwapFromOptionMenuControls();
         switch (saveWindowAction)
@@ -228,24 +254,35 @@ public class OptionsMenuManager : MonoBehaviour
     // Save Window: Yes
     public void SaveThenCompleteSaveWindowAction()
     {
+        if (mainVolumeChanged)
+        {
+            SaveMainVolume(mainVolume);
+        }
         if (musicVolumeChanged)
         {
             SaveMusicVolume(musicVolume);
+        }
+        if (effectsVolumeChanged)
+        {
+            SaveEffectsVolume(effectsVolume);
         }
         if (invertChanged)
         {
             SaveInvert(inverted);
         }
-        PlayerSettingsManager.instance.Save();
+        PlayerSettingsManager.instance.SavePlayerSettings();
         CompleteSaveWindowAction();
     }
     public void LoadOptions()
     {
         playerSettings = PlayerSettingsManager.instance.playerSettings;
-        Debug.Log("Loaded inverted as " + playerSettings.inverted);
+        //Debug.Log("Loaded inverted as " + playerSettings.inverted);
         invertedToggle.isOn = playerSettings.inverted;
+        mainVolumeSlider.value = playerSettings.mainVolume;
         musicVolumeSlider.value = playerSettings.musicVolume;
-        WorldMusicController.instance.GetComponent<AudioSource>().volume = playerSettings.musicVolume;
+        effectsVolumeSlider.value = playerSettings.effectsVolume;
+        mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
+        mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
     }
 
     bool invertChanged = false;
@@ -261,13 +298,26 @@ public class OptionsMenuManager : MonoBehaviour
         playerSettings.inverted = newValue;
         PlayerCamera.instance.isCameraInverted = newValue;
         PlayerSettingsManager.instance.playerSettings = playerSettings;
-        Debug.Log("Saving inverted as " + playerSettings.inverted);
+        //Debug.Log("Saving inverted as " + playerSettings.inverted);
+    }
+    float mainVolume = 0;
+    bool mainVolumeChanged = false;
+    public void OnMainVolumeChange(float newValue)
+    {
+        if (mainVolume != newValue)
+        {
+            Debug.Log("OnMainVolumeChange:" + newValue);
+            mainVolume = newValue;
+            isChanged = true;
+            mainVolumeChanged = true;
+        }
     }
     float musicVolume = 0;
     bool musicVolumeChanged = false;
     public void OnMusicVolumeChange(float newValue)
     {
         if (musicVolume != newValue) {
+            Debug.Log("OnMusicVolumeChange:" + newValue);
             musicVolume = newValue;
             isChanged = true;
             musicVolumeChanged = true;
@@ -284,17 +334,31 @@ public class OptionsMenuManager : MonoBehaviour
             effectsVolumeChanged = true;
         }
     }
+    void SaveMainVolume(float newValue)
+    {
+        playerSettings.mainVolume = newValue;
+        PlayerSettingsManager.instance.SetMainVolumeLogarithmic(playerSettings.mainVolume);
+        PlayerSettingsManager.instance.playerSettings = playerSettings;
+    }
     void SaveMusicVolume(float newValue)
     {
-        WorldMusicController.instance.GetComponent<AudioSource>().volume = newValue;
         playerSettings.musicVolume = newValue;
+        PlayerSettingsManager.instance.SetMusicVolumeLogarithmic(playerSettings.musicVolume);
+        PlayerSettingsManager.instance.playerSettings = playerSettings;
+    }
+    //.GetComponent<PlayerManager>().characterSoundFXManager.
+    void SaveEffectsVolume(float newValue)
+    {
+        playerSettings.effectsVolume = newValue;
+        PlayerSettingsManager.instance.SetSFXVolumeLogarithmic(playerSettings.effectsVolume);
         PlayerSettingsManager.instance.playerSettings = playerSettings;
     }
     void SwapFromOptionMenuControls()
     {
         DisableOptionsControls();
         PauseScript.instance.playerControls.PauseMenu.Enable();
-        PauseScript.instance.playerControls.UI.Enable();
+        //PauseScript.instance.playerControls.UI.Enable();
+        PauseScript.instance.playerControls.UI.PauseButton.Enable();
     }
     public void ActivateSaveWindow()
     {
@@ -306,6 +370,10 @@ public class OptionsMenuManager : MonoBehaviour
         Navigation nav = invertedToggle.navigation;
         nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
         invertedToggle.navigation = nav;
+
+        nav = mainVolumeSlider.navigation;
+        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+        mainVolumeSlider.navigation = nav;
 
         nav = effectsVolumeSlider.navigation;
         nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
@@ -326,12 +394,4 @@ public class OptionsMenuManager : MonoBehaviour
             playerControls.OptionsMenu.Disable();
         }
     }
-    //public bool recentlySave = false;
-    //public IEnumerator SaveTimer()
-    //{
-    //    recentlySave = true;
-    //    yield return new WaitForSeconds(1.5f);
-    //    recentlySave = false;
-    //}
-
 }

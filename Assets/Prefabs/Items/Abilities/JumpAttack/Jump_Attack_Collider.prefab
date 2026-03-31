@@ -42,6 +42,7 @@ Transform:
   - {fileID: 2448067608027223651}
   - {fileID: 5582579866700328795}
   - {fileID: 3068019145510513534}
+  - {fileID: 3008172799463193477}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4108489779816469498
@@ -110,6 +111,7 @@ MonoBehaviour:
   beastJumpAttackVFX: {fileID: 3759159952308884322}
   scalesJumpAttackVFX: {fileID: 6166923774370728829}
   techJumpAttackVFX: {fileID: 4113288619202359877}
+  MeteorImpactDecal: {fileID: 2301256294494675223}
 --- !u!135 &837617725228449830
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -139,9 +141,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
+    - target: {fileID: 357695953536306332, guid: 87ee7299dd44ed747af24dbb91bcd33b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3432958286849152088, guid: 87ee7299dd44ed747af24dbb91bcd33b, type: 3}
       propertyPath: m_Name
       value: CFXR2 Ground Hit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3432958286849152088, guid: 87ee7299dd44ed747af24dbb91bcd33b, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4113911032170361916, guid: 87ee7299dd44ed747af24dbb91bcd33b, type: 3}
       propertyPath: m_Materials.Array.size
@@ -240,6 +250,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8953264713256607884, guid: 87ee7299dd44ed747af24dbb91bcd33b, type: 3}
   m_PrefabInstance: {fileID: 1296658135131920712}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2330541292940094069
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4283938941443224219}
+    m_Modifications:
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811101522110557237, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_Name
+      value: MeteorImpactDecal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1811101522110557237, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+--- !u!114 &2301256294494675223 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4591431489772473186, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+  m_PrefabInstance: {fileID: 2330541292940094069}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42fc83e41ccab824aba5023cb924684c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &3008172799463193477 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 713983046712037872, guid: 1625d2b667e20f5489e5adfaa7bdadff, type: 3}
+  m_PrefabInstance: {fileID: 2330541292940094069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2426078599437286114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,33 +335,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Beast
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 43dc7859cfa60084086c59b0446895d7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -339,33 +402,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Tech
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 27deb56c01933f048a721456f5cfe8b9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -430,33 +469,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Scales
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 2ee4fcc6b226d714a80ca4431be67df2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -521,33 +536,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Ice
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 66e3de5bef606144d9ff8c51f2cb03cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -612,33 +603,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Wind
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 96c7d7f81824c2e49ac654371660b269, type: 3}
       propertyPath: m_LocalPosition.x
@@ -703,33 +670,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Light
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 792186d50e5b56e46a772a918437e9fd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -794,37 +737,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 675340406222462005, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Fire
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -869,10 +784,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1549257713381026176, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3923714162645389896}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
 --- !u!4 &4063663884631680578 stripped
 Transform:
@@ -884,27 +796,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1549257713381026176, guid: 3ecc1e36ae87e48409c07d73808a9bdb, type: 3}
   m_PrefabInstance: {fileID: 6451689661039317724}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &3923714162645389896
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5478928284321528668}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Radius: 1.75
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &6728121969990328780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -913,33 +804,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Lightning
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: 82aaa9b31bae19c4eb5bd9f49fbca95b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1004,33 +871,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4283938941443224219}
     m_Modifications:
-    - target: {fileID: 127685042654391878, guid: d04948041cce4cf40898914b726295af, type: 3}
-      propertyPath: cameraShake.duration
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: d04948041cce4cf40898914b726295af, type: 3}
-      propertyPath: cameraShake.shakeStrength.x
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: d04948041cce4cf40898914b726295af, type: 3}
-      propertyPath: cameraShake.shakeStrength.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 127685042654391878, guid: d04948041cce4cf40898914b726295af, type: 3}
-      propertyPath: cameraShake.shakeStrength.z
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1549257713381026176, guid: d04948041cce4cf40898914b726295af, type: 3}
       propertyPath: m_Name
       value: Jump_Attack_Collider_Earth
-      objectReference: {fileID: 0}
-    - target: {fileID: 1549257713381026176, guid: d04948041cce4cf40898914b726295af, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039189412383063910, guid: d04948041cce4cf40898914b726295af, type: 3}
-      propertyPath: m_Intensity
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7056024979900544158, guid: d04948041cce4cf40898914b726295af, type: 3}
       propertyPath: m_LocalPosition.x

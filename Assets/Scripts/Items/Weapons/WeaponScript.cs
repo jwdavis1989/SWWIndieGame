@@ -68,6 +68,8 @@ public enum WeaponFamily
 {
     [Header("Weapon Type")]
     public WeaponType weaponType = 0;
+    [Header("Case insensitive id for data lookup")]
+    public string weaponId = "";
     public bool isMonsterWeapon = false;
 
     [Header("Weapon Attributes")]
@@ -410,7 +412,7 @@ public class WeaponScript : MonoBehaviour
     {
         if (stats.durability > 0)
         {
-            if (!InventionManager.instance.CheckHasUpgrade(InventionType.DaedalusNanoMaterials)) //no upgrade
+            if (!InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS)) //no upgrade
                 stats.durability--; // Reduce durability
             else if (UnityEngine.Random.Range(0, 10) != 1) // 90% chance to reduce durability
                 stats.durability--; // Reduce durability
@@ -808,46 +810,60 @@ public class WeaponScript : MonoBehaviour
         {
             case ElementalDamageType.Fire:
                 newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 0;
                 if (isInDebugMode) Debug.Log("Highest Element: Fire");
                 break;
             case ElementalDamageType.Ice:
                 newJumpAttackDamageCollider.iceJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 1;
                 if (isInDebugMode) Debug.Log("Highest Element: Ice");
                 break;
             case ElementalDamageType.Lightning:
                 newJumpAttackDamageCollider.lightningJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 2;
                 if (isInDebugMode) Debug.Log("Highest Element: Lightning");
                 break;
             case ElementalDamageType.Wind:
                 newJumpAttackDamageCollider.windJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 3;
                 if (isInDebugMode) Debug.Log("Highest Element: Wind");
                 break;
             case ElementalDamageType.Earth:
                 newJumpAttackDamageCollider.earthJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 4;
                 if (isInDebugMode) Debug.Log("Highest Element: Earth");
                 break;
             case ElementalDamageType.Light:
                 newJumpAttackDamageCollider.lightJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 5;
                 if (isInDebugMode) Debug.Log("Highest Element: Light");
                 break;
             case ElementalDamageType.Beast:
                 newJumpAttackDamageCollider.beastJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 6;
                 if (isInDebugMode) Debug.Log("Highest Element: Beast");
                 break;
             case ElementalDamageType.Scales:
                 newJumpAttackDamageCollider.scalesJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 7;
                 if (isInDebugMode) Debug.Log("Highest Element: Scales");
                 break;
             case ElementalDamageType.Tech:
                 newJumpAttackDamageCollider.techJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 8;
                 if (isInDebugMode) Debug.Log("Highest Element: Tech");
                 break;
             default:
                 newJumpAttackDamageCollider.fireJumpAttackVFX.SetActive(true);
+                newJumpAttackDamageCollider.MeteorImpactDecal.currentColorIndex = 0;
                 if (isInDebugMode) Debug.Log("Highest Element: Default Case");
                 break;
         }
+
+        //Initialize MeteorSmashDecal's color to match highest element of weapon
+        newJumpAttackDamageCollider.MeteorImpactDecal.InitializeColorFading();
     }
+    
 
     // Minimum Threshold determines a cut off before we start allowing an element to be high enough to count for elemental graphics and effects
     public ElementalDamageType GetHighestElementalStat(float minimumThreshold = 0)
@@ -984,33 +1000,33 @@ public class WeaponScript : MonoBehaviour
         switch (stat)
         {
             case "Attack":
-                return "Attack improves all damage";
+                return "Attack improves all damage.";
             case "Block":
-                return "Block lowers damage";
+                return "Block lowers damage.";
             case "Durability":
-                return "Weapon is broken when durability is zero";
+                return "Weapon is broken when durability is zero.";
             case "Stability":
-                return "Stability reduces stagger";
+                return "Stability reduces stagger.";
             case "Fire":
-                return "Fire is strong against grass types";
+                return "Fire is strong against grass types.";
             case "Earth":
-                return "Earth is strong against newbs";
+                return "Earth is strong against armoured enemies.";
             case "Ice":
-                return "Ices is strong against fire types";
+                return "Ices is strong against fire types.";
             case "Light":
-                return "Light is good against undead";
+                return "Light is good against undead.";
             case "Lightning":
-                return "Lightning is good against water types";
+                return "Lightning is good against water types.";
             case "Beast":
-                return "Beast improves damage against natural animals";
+                return "Beast improves damage against natural animals.";
             case "Wind":
-                return "Wind improves damage against flying enemies";
+                return "Wind improves damage against flying enemies.";
             case "Scales":
-                return "Scales improves damage against fish and reptiles";
+                return "Scales improves damage against fish and reptiles.";
             case "Tech":
-                return "Tech improves damage to robots";
+                return "Tech improves damage to robots.";
             default:
-                return stat + " is good";
+                return stat + " is like totally good or something.";
         }
     }
 }

@@ -7,10 +7,11 @@ using UnityEngine.InputSystem.Users;
 
 public class InputSwitchDetector : MonoBehaviour
 {
-    public static string currentDevice = GAMEPAD;
+    public string currentDevice = GAMEPAD;
     public bool deviceChanged = false; // set to true when device is changed. Reset to false within context. E.g. WeaponMenu
     public static InputSwitchDetector instance;
     [SerializeField] bool anyGamepadInput = false;
+    [SerializeField] bool anyKeyboardOrMouse = false;
     PlayerControls playerControls;
     //constants
     public const string GAMEPAD = "GAMEPAD";
@@ -32,7 +33,8 @@ public class InputSwitchDetector : MonoBehaviour
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.PauseMenu.AnyGamepad.performed += i => anyGamepadInput = true;
+            playerControls.DeviceDetection.AnyGamepad.performed += i => anyGamepadInput = true;
+            playerControls.DeviceDetection.AnyKeyboardOrMouse.performed += i => anyKeyboardOrMouse = true;
             playerControls.Enable();
         }
     }
@@ -49,8 +51,8 @@ public class InputSwitchDetector : MonoBehaviour
                 newDevice = KEYBOARD;
                 //Debug.Log("Left mouse clicked");
             }
-            // Any keyboard key
-            if (Keyboard.current.anyKey.wasPressedThisFrame)
+            // Any keyboard key - TODO: see if binding any key in playerControls is more responsive
+            if (Keyboard.current.anyKey.wasPressedThisFrame || anyKeyboardOrMouse)
             {
                 newDevice = KEYBOARD;
                 //Debug.Log("A keyboard key was pressed!");
@@ -58,27 +60,23 @@ public class InputSwitchDetector : MonoBehaviour
         }
         else
         {
-            //if (Gamepad.current.buttonWest.wasPressedThisFrame || Gamepad.current.buttonEast.wasPressedThisFrame
-            //    || Gamepad.current.buttonNorth.wasPressedThisFrame || Gamepad.current.buttonSouth.wasPressedThisFrame
-            //    || Gamepad.current.leftTrigger.wasPressedThisFrame || Gamepad.current.rightTrigger.wasPressedThisFrame
-            //    || Gamepad.current.leftShoulder.wasPressedThisFrame || Gamepad.current.rightShoulder.wasPressedThisFrame)
             if(anyGamepadInput)
-            { //TODO: just bind something in PlayerControls
-                anyGamepadInput = false;
+            {
                 //Debug.Log("Gamepad updated while keyboard");
+                anyGamepadInput = false;
                 newDevice = GAMEPAD;
             }
         }
         if (currentDevice != newDevice)
         {
-            //device was changed
+            //Debug.Log("Device changed to " + currentDevice + " " + count++);
             deviceChanged = true;
             currentDevice = newDevice;
-            //Debug.Log("Device changed to " + currentDevice);
         }
     }
+    public static int count = 0;
     public static bool IsCurrentlyGamepad()
     {
-        return currentDevice == GAMEPAD;
+        return instance.currentDevice == GAMEPAD;
     }
 }

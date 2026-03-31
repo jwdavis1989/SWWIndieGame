@@ -20,7 +20,8 @@ public class CharacterLocomotionManager : MonoBehaviour
     [SerializeField] protected float groundedYVelocity = -20f;
     //The force at which our character begins to fall when ungrounded. This value increases over time when in the air. 
     [SerializeField] protected float fallStartYVelocity = -7f;
-    public float JumpAttackQuickFallSpeedModifier = 12f;
+    public float meteorStrikeVerticalSpeedModifier = 10f;
+    public float meteorStrikeHorizontalSpeedModifier = 60f;
 
     protected bool fallingVelocityHasBeenSet = false;
     protected float inAirTimer = 0f;
@@ -45,6 +46,7 @@ public class CharacterLocomotionManager : MonoBehaviour
             {
                 inAirTimer = 0;
                 fallingVelocityHasBeenSet = false;
+                yVelocity = Vector3.zero;
                 yVelocity.y = groundedYVelocity;
             }
 
@@ -53,10 +55,11 @@ public class CharacterLocomotionManager : MonoBehaviour
             //  Problem has been solved by noticing that jumping velocity is >4, while the float glitch is ~0.46, so checking for a sub-1 velocity 
             //  fixes the floating glitch!
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (yVelocity.y < 1)
+            if (yVelocity.y < 1 )
             {
                 yVelocity.y = groundedYVelocity;
             }
+
         }
         else
         {
@@ -72,13 +75,21 @@ public class CharacterLocomotionManager : MonoBehaviour
             character.animator.SetFloat("InAirTimer", inAirTimer);
 
             //Increases gravity's effect over time
-            yVelocity.y += (gravityForce * Time.deltaTime);
+            if (!character.isBoosting)
+            {   
+                yVelocity.y += (gravityForce * Time.deltaTime);
+
+            }
         }
 
         //Apply downward force to character
-        if (!character.isBoosting)
+        if (!character.isBoosting && character.hasGravity)
         {
             character.characterController.Move(yVelocity * Time.deltaTime);
+        }
+        else
+        {
+            yVelocity.y = 0f;
         }
     }
 
@@ -90,6 +101,10 @@ public class CharacterLocomotionManager : MonoBehaviour
 
         //Intended Version
         character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
+        if (character.isGrounded)
+        {
+            character.ResetRotationX();
+        }
     }
 
     //Draws ground check sphere in editor
@@ -123,8 +138,20 @@ public class CharacterLocomotionManager : MonoBehaviour
     {
         if (!character.isGrounded)
         {   
-            yVelocity *= JumpAttackQuickFallSpeedModifier;
+            Vector3 newFallDirection;
+            if (character.isLockedOn)
+            {
+                newFallDirection = (character.characterCombatManager.currentTarget.transform.position - character.transform.position).normalized * meteorStrikeHorizontalSpeedModifier;
+            }
+            else
+            {
+                newFallDirection = PlayerCamera.instance.transform.forward * meteorStrikeHorizontalSpeedModifier;
+                newFallDirection.y = meteorStrikeVerticalSpeedModifier * fallStartYVelocity;
+            }
+
+            yVelocity = newFallDirection;
         }
+        
     }
     
 }

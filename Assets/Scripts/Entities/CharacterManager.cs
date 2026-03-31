@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 //using Unity.Netcode;
 
@@ -36,6 +37,7 @@ public class CharacterManager : MonoBehaviour
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
+    public bool hasGravity = true;
     public bool isFalling = false;
     public bool isBoosting = false;
     public bool isRolling = false;
@@ -208,7 +210,7 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.OpenJumpAttackDamageCollider();
     }
 
-    public void CallPlayJumpAttackImpactVFX()
+    public virtual void CallPlayJumpAttackImpactVFX()
     {
         characterWeaponManager.PlayJumpAttackImpactVFX();
     }
@@ -248,14 +250,14 @@ public class CharacterManager : MonoBehaviour
 
     public void SetShootingModelAlignment()
     {
-        characterModel.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(90, -31.784f, 0);
+        // characterModel.transform.localRotation = Quaternion.Euler(0, 31.784f, 0);
+        // miniMapSprite.transform.localRotation = Quaternion.Euler(90, -31.784f, 0);
     }
 
     public void ResetModelAlignment()
     {
-        characterModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        miniMapSprite.transform.localRotation = Quaternion.Euler(90, 0, 0);
+        // characterModel.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        // miniMapSprite.transform.localRotation = Quaternion.Euler(90, 0, 0);
     }
 
     public virtual void DisableRollerJointInvulnerable()
@@ -271,6 +273,7 @@ public class CharacterManager : MonoBehaviour
     public virtual void DisableBoosting()
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
+        ResetRotationX();
     }
 
     public virtual void DisableBoostingAndHovering()
@@ -296,4 +299,25 @@ public class CharacterManager : MonoBehaviour
         //Update this if monsters use guns
     }
 
+    public virtual void EnableMeteorBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableMeteorBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void DisableMeteorDescentBoosterVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public virtual void ResetRotationX()
+    {
+        Vector3 currentRotation = transform.eulerAngles;
+        Vector3 newRotation = new Vector3(0f, currentRotation.y, currentRotation.z);
+        transform.rotation = Quaternion.Euler(newRotation);
+    }
 }

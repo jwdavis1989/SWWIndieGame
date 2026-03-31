@@ -5,9 +5,9 @@ using UnityEngine;
 [Serializable]
 public class InventionScript
 {
-    [Header("InventionScript is used to mark an object as an Invention")]
+    [Header("InventionScript is used to mark an object as an Invention TODO - Is this still used?")]
     public InventionType type;
-    public IdeaType[] neededIdeas;
+    //public IdeaType[] neededIdeas;
     [Header("Invent UI icon")]
     public Sprite icon;
     public string description;

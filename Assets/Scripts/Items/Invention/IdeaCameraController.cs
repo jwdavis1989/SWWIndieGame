@@ -40,6 +40,7 @@ public class IdeaCameraController : MonoBehaviour
     [Header("Controls")]
     PlayerControls playerControls;
     [SerializeField] bool capturePhotoInput = false;
+    [SerializeField] bool deactivateCameraViewInput = false;
     [Header("Rotation")]
     float leftAndRightLookAngle = 0;
     float leftAndRightRotationSpeed = 220f;
@@ -83,13 +84,16 @@ public class IdeaCameraController : MonoBehaviour
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.UI.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.IdeaCameraView.CaptureIdeaPhotoBtn.performed += i => capturePhotoInput = true;
+            playerControls.IdeaCameraView.DeactivateCameraView.performed += i => deactivateCameraViewInput = true;
             playerControls.Enable();
+            playerControls.IdeaCameraView.Disable();
         }
     }
-    public void Update()
+    public void LateUpdate()
     {
         HandleCapturePhotoInput();
+        HandleDeactivateCameraViewInput();
     }
     /** returns true if the player is in idea camera mode */
     static public bool isBusy()
@@ -162,13 +166,13 @@ public class IdeaCameraController : MonoBehaviour
             //Play Steve audio - Negative
             WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipNegative));
         }
-        else if (InventionManager.instance.CheckHasIdea(idea.type))
-        {
+        else if (InventionManager.instance.CheckHasIdea(idea.ideaId))
+        { 
             ideaPhotoText.text = "Idea " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
             previewControlsText.text += "\n<s> Replace Photo - [Enter] / (A)</s>";
             oldPhotoFrame.SetActive(true);
-            byte[] bytes = InventionManager.instance.GetIdeaPicture(idea.type);
+            byte[] bytes = InventionManager.instance.GetIdeaPicture(idea.ideaId);
             Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
             oldPhoto.GetComponent<RawImage>().texture = texture;
@@ -176,12 +180,12 @@ public class IdeaCameraController : MonoBehaviour
             //Play Steve audio - Scan
             WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipScan));
         }
-        else
+        else 
         {
-            InventionManager.instance.SetHasIdea(idea.type);
-            ideaPhotoText.text = "New idea! - " + idea.ToString();
+            InventionManager.instance.SetHasIdea(idea);
+            ideaPhotoText.text = "New idea! - " + InventionManager.instance.ideaDatabase.GetIdea(idea.ideaId).ideaName; 
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";
-            ReplacePhoto(idea.type);
+            ReplacePhoto(idea.ideaId);
             oldPhotoFrame.SetActive(false);
 
             //Play Steve audio - Affirmative
@@ -228,14 +232,14 @@ public class IdeaCameraController : MonoBehaviour
         yield return null;
     }
 
-    public void ReplacePhoto(IdeaType idea)
+    public void ReplacePhoto(string ideaID)
     {
         //if (System.IO.File.Exists(lastCaptureFilepath))
         if (lastCapturePng != null)
         {
             //load last picture
             //byte[] bytes = System.IO.File.ReadAllBytes(lastCaptureFilepath);
-            InventionManager.instance.SetIdeaPicture(lastCapturePng, idea);
+            InventionManager.instance.SetIdeaPicture(lastCapturePng, ideaID);
             //save
             //string saveFileName = Application.persistentDataPath + "/" + player.playerStatsManager.characterName + WorldSaveGameManager.instance.currentCharacterSlotBeingUsed + idea + ".png";//save file for idea
             //TODO - Only save locally on object then do this code as part of save/load system...
@@ -255,16 +259,25 @@ public class IdeaCameraController : MonoBehaviour
         //leftAndRightLookAngle = player.transform.rotation.y;
         //upAndDownLookAngle = 0;
     }
-    public void ActivateDeactiveCameraView()
+    //public void ActivateDeactiveCameraView()
+    //{
+    //    if (canvas.gameObject.activeSelf)
+    //    {
+    //        DeactivateIdeaCameraView();
+    //    }
+    //    else
+    //    {
+    //        ActivateIdeaCameraView();
+    //    }
+    //}
+    public void ActivateCameraViewInput()
     {
-        if (canvas.gameObject.activeSelf)
-        {
-            DeactivateIdeaCameraView();
-        }
-        else
-        {
-            ActivateIdeaCameraView();
-        }
+        StartCoroutine(WaitThenActivateCameraView());
+    }
+    public IEnumerator WaitThenActivateCameraView()
+    {
+        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        ActivateIdeaCameraView();
     }
     public void ActivateIdeaCameraView()
     {
@@ -277,10 +290,13 @@ public class IdeaCameraController : MonoBehaviour
         player.canMove = false;
         player.isMoving = false;
         PlayerUIManager.instance.gameObject.SetActive(false);
+        //Disable Controls
+        PlayerInputManager.instance.SafeDisable(false, true);
         //deactivate player camera
 
         PlayerCamera.instance.cameraObject.enabled = false;
         //activate camera ui
+        playerControls.IdeaCameraView.Enable();
         canvas.gameObject.SetActive(true);
         cameraLensCrosshair.SetActive(true);
         border.SetActive(true);
@@ -289,8 +305,10 @@ public class IdeaCameraController : MonoBehaviour
         ideaCamera.gameObject.SetActive(true);
 
         //Disable Weapon Graphics
-        PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(false);
-        PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(false);
+        if(PlayerWeaponManager.instance.GetMainHand() != null)
+            PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(false);
+        if (PlayerWeaponManager.instance.GetOffHand() != null)
+            PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(false);
 
     }
     public void DeactivateIdeaCameraView()
@@ -298,7 +316,9 @@ public class IdeaCameraController : MonoBehaviour
         //Set bool so the Interactable system understands a Menu window has closed
         PlayerUIManager.instance.menuWindowIsOpen = false;
 
-        //deactivate camera ui
+        //deactivate camera controls
+        playerControls.IdeaCameraView.Disable();
+        //deactivate camera ui - TODO pretty sure this should be simpler
         canvas.gameObject.SetActive(false);
         cameraLensCrosshair.SetActive(false);
         border.SetActive(false);
@@ -309,11 +329,19 @@ public class IdeaCameraController : MonoBehaviour
         PlayerUIManager.instance.gameObject.SetActive(true);
         player.canMove = true;
         takingPhoto = false;
+        //Enable Controls
+        PlayerInputManager.instance.SafeEnable();
 
         //Re-enable Weapon Graphics
         PlayerWeaponManager.instance.GetMainHand().gameObject.SetActive(true);
         PlayerWeaponManager.instance.GetOffHand().gameObject.SetActive(true);
-
+    }
+    IEnumerator WaitToEndOfFrameThenExit()
+    {
+        capturePhotoInput = false;
+        deactivateCameraViewInput = false;
+        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        DeactivateIdeaCameraView();
     }
     public void HandleRotations()
     {
@@ -368,6 +396,14 @@ public class IdeaCameraController : MonoBehaviour
         {
             capturePhotoInput = false;
             TakeScreenshotInput();
+        }
+    }
+    void HandleDeactivateCameraViewInput()
+    {
+        if (deactivateCameraViewInput) // [Esc], (Y), D-Pad Up
+        {
+            deactivateCameraViewInput = false;
+            StartCoroutine(WaitToEndOfFrameThenExit());
         }
     }
 }

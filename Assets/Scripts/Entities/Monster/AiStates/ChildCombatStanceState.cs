@@ -19,9 +19,10 @@ public class ChildCombatStanceState : CombatStanceState
     {
         SpawningBehavior explosionSpawner = aiCharacter.gameObject.GetComponent<SpawningBehavior>();
         FlashingBehavior flashingLight = aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>();
+        aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
         explosionSpawner.auto = true; // spawn explosion after interval
         flashingLight.ActivateFlashing(); //flashing light effect
-        aiCharacter.animator.speed = 3; // speed up
+        aiCharacter.animator.speed = 6; // speed up
         if (explosionSpawner.spawnList.Count > 0)//exploded
             aiCharacter.statsManager.currentHealth = 0;
         if (aiCharacter.statsManager.currentHealth <= 0)
@@ -43,6 +44,9 @@ public class ChildCombatStanceState : CombatStanceState
         //If Target is no longer present, return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
         {
+            //Reset Animation Speed to Idle Speed
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
         //If outside combat engagement range, switch to pursue target state

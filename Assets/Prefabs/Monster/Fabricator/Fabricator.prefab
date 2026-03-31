@@ -7585,7 +7585,8 @@ MonoBehaviour:
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
   fallStartYVelocity: -7
-  JumpAttackQuickFallSpeedModifier: 12
+  meteorStrikeVerticalSpeedModifier: 10
+  meteorStrikeHorizontalSpeedModifier: 60
 --- !u!114 &7756440885609404483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7600,6 +7601,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodSplatterVFX: {fileID: 0}
   deathVFX: {fileID: 3807916271835915907, guid: 54dfacbd747c888419e320ffb35f071e, type: 3}
+  leftFootstepDustVFXAnchor: {fileID: 0}
+  rightFootstepDustVFXAnchor: {fileID: 0}
   activeSpellWarmUpFX: {fileID: 0}
 --- !u!82 &1186929171741770601
 AudioSource:
@@ -7610,7 +7613,7 @@ AudioSource:
   m_GameObject: {fileID: 5632615561119973379}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -7852,7 +7855,9 @@ MonoBehaviour:
   characterLocomotionManager: {fileID: 0}
   characterUIManager: {fileID: 0}
   characterWeaponManager: {fileID: 0}
+  characterModel: {fileID: 0}
   isDead: 0
+  deathExplosionVFXDelay: 2
   faction: 3
   isPlayer: 0
   isRotatingAttacker: 0
@@ -7877,6 +7882,7 @@ MonoBehaviour:
   canBleed: 1
   isChargingAttack: 0
   isChargingSpellAttack: 0
+  isAiming: 0
   isInvulnerable: 0
   miniMapSprite: {fileID: 8604882355081962580}
   isInDebugMode: 0
@@ -7885,6 +7891,7 @@ MonoBehaviour:
   aiCharacterCombatManager: {fileID: 0}
   aiCharacterLocomotionManager: {fileID: 0}
   statsManager: {fileID: 0}
+  aiCharacterSoundFXManager: {fileID: 0}
   currentState: {fileID: 11400000, guid: 1cb59e6b735667441a633306849cb7ad, type: 2}
   idleState: {fileID: 11400000, guid: 1cb59e6b735667441a633306849cb7ad, type: 2}
   pursueTargetState: {fileID: 11400000, guid: fdf3e0d500d29b94f959871693c990b5, type: 2}
@@ -7965,7 +7972,7 @@ MonoBehaviour:
   canPerformBackStepAttack: 0
   canBlock: 1
   isAggro: 0
-  aggroRange: 5
+  aggroRange: 10
   minimumDetectionAngle: -35
   maximumDetectionAngle: 35
   distanceFromTarget: 0
@@ -8006,6 +8013,7 @@ MonoBehaviour:
   spawnList: []
   auto: 1
   spawnInterval: 2
+  spawnAnchorTransform: {fileID: 0}
 --- !u!1 &5655826789196114259
 GameObject:
   m_ObjectHideFlags: 0

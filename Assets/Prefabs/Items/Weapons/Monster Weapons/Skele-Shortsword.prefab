@@ -107,6 +107,7 @@ MonoBehaviour:
   beastJumpAttackVFX: {fileID: 0}
   scalesJumpAttackVFX: {fileID: 0}
   techJumpAttackVFX: {fileID: 0}
+  MeteorImpactDecal: {fileID: 0}
 --- !u!1 &4976341019228924520
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +219,7 @@ MonoBehaviour:
     lightRollingAttack01StaminaCostModifier: 1
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
+    gunAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -231,13 +233,25 @@ MonoBehaviour:
     lightRollingAttack01DamageMotionValue: 1
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
+    singleTargetBulletAttack01DamageMotionValue: 1
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
   offHandCastMagicAttackAction: {fileID: 0}
-  projectile: {fileID: 0}
+  offHandShootGunAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 1d7f32233af26c44899feb699f25e05b, type: 2}
   offHandSpellAnimation: 
+  offHandGunShootAnimation: 
   fullChargingTraitModifier: 1.25
+  gunModel: {fileID: 0}
+  bulletOriginLocation: {fileID: 0}
+  shootingTransform: {fileID: 0}
+  isSettingGunToFiringTransform: 0
+  isSetGunToHandTransform: 0
+  gunProjectile: {fileID: 0}
+  gunShotWarmUpVFX: {fileID: 0}
+  projectileForwardVelocityMultiplier: 7
+  projectileUpwardVelocityMultiplier: 4
+  projectileMass: 0.01
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
@@ -246,6 +260,8 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
+  gunAimSFX: {fileID: 0}
+  gunFireSFX: {fileID: 0}
   isInDebugMode: 0
 --- !u!1 &7105071253258005747
 GameObject:
@@ -408,6 +424,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 75c6fd057259ac640a7d564c4c489c8a, type: 3}
       propertyPath: m_Name
       value: switchbladecomb
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 75c6fd057259ac640a7d564c4c489c8a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -25,7 +25,6 @@ public class PauseScript : MonoBehaviour
     public GameObject playerHud;
     MenuTab lastMenuTab = MenuTab.Weapons;
     [Header("Controls")]
-    [SerializeField] public bool pauseInput = false;
     [SerializeField] public bool menuLeftInput = false;
     [SerializeField] public bool menuRightInput = false;
     [SerializeField] public bool exitPauseMenuInput = false;
@@ -34,15 +33,11 @@ public class PauseScript : MonoBehaviour
     public GameObject mainMenuButton;
     [Header("Controls Help")]
     PlayerInput playerInput;
-    //public Image bottomTooltip;
-    public GameObject bottomTooltipPauseMenuGamepad;
-    public GameObject bottomTooltipWeaponMenuGamepad;
-    //public List<GameObject> gamepadControlsUI;
-    GameObject keyboardControlsUI;
+    [Header("Tooltips and any elements that are activated/deactivated when switching inputs")]
+    public List<GameObject> gamepadTooltips = new List<GameObject>();
+    public List<GameObject> keyboardMouseTooltips = new List<GameObject>();
     [Header("Debug")]
     public bool debugMode = false;
-    [SerializeField] GameObject DebugSaveGameButton;
-    [SerializeField] GameObject DebugAddItemButton;
 
     [Header("Pause is a singleton")]
     public static PauseScript instance;
@@ -62,34 +57,30 @@ public class PauseScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         if (debugMode) return;//ASTEST
         DisableAllMenus();
-        //if (playerInput == null)
-        //{
-        //    playerInput = PlayerInputManager.instance.gameObject.GetComponent<PlayerInput>();
-        //    playerInput.onControlsChanged += OnControlsChanged;
-        //    //playerInput.actions["PauseButton"].performed += i => pauseInput = true;
-        //    //playerInput.actions["SwitchMenuLeft"].performed += i => menuLeftInput = true;
-        //    //playerInput.actions["SwitchMenuRight"].performed += i => menuRightInput = true;
-        //    playerInput.enabled = true;
-        //}
         if (playerControls == null)
         {
             playerControls = new PlayerControls();
-            playerControls.UI.PauseButton.performed += i => pauseInput = true;
             playerControls.PauseMenu.SwitchMenuLeft.performed += i => menuLeftInput = true;
             playerControls.PauseMenu.SwitchMenuRight.performed += i => menuRightInput = true;
             playerControls.PauseMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
             playerControls.Enable();
+            playerControls.PauseMenu.Disable();
         }
     }
     void Update()
     {
-        HandlePauseInput();
+        //HandlePauseInput();
         HandleSwitchMenuInput();
         HandleExitPauseMenuInput();
+        CheckControlsChanged();
+        HandleCheatMenu();
     }
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
+        menuLeftInput = false;
+        menuRightInput = false;
+        exitPauseMenuInput = false;
         yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
         Unpause();
     }
@@ -105,7 +96,7 @@ public class PauseScript : MonoBehaviour
             weaponMenu.SetActive(true);
         if (weaponMenuSideBar != null)
             weaponMenuSideBar.SetActive(true);
-        SetWeaponMenuTooltip();
+        //SetWeaponMenuTooltip();
     }
     public void InventoryMenuClick(bool settingsChanged = false)
     {
@@ -118,8 +109,8 @@ public class PauseScript : MonoBehaviour
         DisableAllMenus();
         if (inventoryMenu != null)
             inventoryMenu.SetActive(true);
-        SetMainPauseMenuTooltip();
-        bottomTooltipPauseMenuGamepad.SetActive(true);
+        //SetMainPauseMenuTooltip();
+        //bottomTooltipPauseMenuGamepad.SetActive(true);
     }
     public void InventMenuClick(bool settingsChanged = false)
     {
@@ -133,9 +124,9 @@ public class PauseScript : MonoBehaviour
         if (inventMenu != null)
         {
             inventMenu.SetActive(true);
-            InventionUIManager.instance.OpenInventionMenu();
+            InventionMenuManager.instance.OpenInventionMenu();
         }
-        SetMainPauseMenuTooltip();
+        //SetMainPauseMenuTooltip();
     }
     void DisableAllMenus()
     {
@@ -152,7 +143,7 @@ public class PauseScript : MonoBehaviour
         lastMenuTab = MenuTab.Options;
         DisableAllMenus();
         if (optionsMenu!= null) optionsMenu.SetActive(true);
-        SetMainPauseMenuTooltip();
+        //SetMainPauseMenuTooltip();
     }
     public void ExitMenuClick(bool settingsChanged = false)
     {
@@ -168,23 +159,7 @@ public class PauseScript : MonoBehaviour
         if(mainMenuButton != null)
             mainPauseMenuEvents.SetSelectedGameObject(mainMenuButton);
         mainMenuButton.GetComponent<Button>().Select();
-        SetMainPauseMenuTooltip();
-    }
-    void SetWeaponMenuTooltip()
-    {
-        bottomTooltipPauseMenuGamepad.SetActive(false);
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            bottomTooltipWeaponMenuGamepad.SetActive(true);
-        }
-    }
-    void SetMainPauseMenuTooltip()
-    {
-        bottomTooltipWeaponMenuGamepad.SetActive(false); 
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            bottomTooltipPauseMenuGamepad.SetActive(true);
-        }
+        //SetMainPauseMenuTooltip();
     }
     public void MainMenuClick()
     {
@@ -231,40 +206,25 @@ public class PauseScript : MonoBehaviour
             TinkerComponentManager.instance.DropRandomItem(playerObj.transform, 5.0f);
         }
     }
-    public void PauseUnpause()
+    public void HandlePauseInput()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
-            return;
-        if (gamePaused)
-            Unpause();
-        else
-            Pause();
-        
+        StartCoroutine(WaitToEndOfFrameThenPause());
     }
-    void Pause()
+    IEnumerator WaitToEndOfFrameThenPause()
     {
-        //PlayerInputManager.instance.enabled = false;
-        playerControls.PlayerActions.Disable();
+        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        Pause();
+    }
+    public void Pause()
+    {
+        //playerControls.PlayerActions.Disable();
         playerControls.PauseMenu.Enable();
-        playerControls.WeaponMenu.Enable();
-        playerControls.UI.Enable();
         Time.timeScale = 0;
         gamePaused = true;
         pauseMenu.SetActive(true);
-        //mainPauseMenu.SetActive(true);
-        //if (debugMode)
-        //{
-        //    DebugSaveGameButton.SetActive(true);
-        //    DebugAddItemButton.SetActive(true);
-        //}
-        //else
-        //{
-        //    DebugSaveGameButton.SetActive(false);
-        //    DebugAddItemButton.SetActive(false);
-        //}
 
         //Disable Controls
-        PlayerInputManager.instance.SafeDisable();
+        PlayerInputManager.instance.SafeDisable(true, true);
 
         //Set bool so the Interactable system understands a Menu window has opened
         PlayerUIManager.instance.menuWindowIsOpen = true;
@@ -294,16 +254,16 @@ public class PauseScript : MonoBehaviour
     }
     void Unpause()
     {
+        menuLeftInput = false;
+        menuRightInput = false;
+        exitPauseMenuInput = false;
         //playerControls.PlayerActions.Enable();
         playerControls.PauseMenu.Disable();
-        playerControls.WeaponMenu.Disable();
-        //playerControls.UI.Disable();//Currently causes game to be unpauseable
-        //PlayerInputManager.instance.enabled = true;
+        //playerControls.WeaponMenu.Disable();
         Time.timeScale = 1;
         gamePaused = false;
         weaponMenu.SetActive(false);
         weaponMenuSideBar.SetActive(false);
-        //mainPauseMenu.SetActive(true);
         pauseMenu.SetActive(false);
         inventMenu.SetActive(false);
         mainPauseMenuEvents.SetSelectedGameObject(mainPauseMenuEvents.firstSelectedGameObject);
@@ -316,20 +276,20 @@ public class PauseScript : MonoBehaviour
         PlayerUIManager.instance.menuWindowIsOpen = false;
         playerHud.SetActive(true);
     }
-    public void HandlePauseInput()
-    {
-        if (pauseInput) // [Esc], (Start/Menu)
-        {
-            //Debug.Log("PAUSE INPUT");
-            pauseInput = false;
-            PauseUnpause();
-        }
-    }
+    //public void HandlePauseInput()
+    //{
+    //    if (pauseInput) // [Esc], (Start/Menu)
+    //    {
+    //        //Debug.Log("PAUSE INPUT");
+    //        pauseInput = false;
+    //        PauseUnpause();
+    //    }
+    //}
     public void HandleExitPauseMenuInput()
     {
         if (exitPauseMenuInput) // [Esc], (Start/Menu)
         {
-            //Debug.Log("exitPauseMenuInput INPUT");
+            //Debug.Log("HandleExitPauseMenuInput PauseScript");
             exitPauseMenuInput = false;
             if (gamePaused)
                 StartCoroutine(WaitToEndOfFrameThenContinue());
@@ -391,6 +351,58 @@ public class PauseScript : MonoBehaviour
         //    newBtnSelected = topPanelButtons.transform.GetChild(1 + (int)lastMenuTab).gameObject;
         //    newBtnSelected.GetComponent<Button>().Select();
         //}
+    }
+    private void CheckControlsChanged()
+    {
+        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
+        inputSwitchDetector.CheckControlsChanged();
+        if (inputSwitchDetector.deviceChanged)
+        {
+            inputSwitchDetector.deviceChanged = false;
+            if (InputSwitchDetector.IsCurrentlyGamepad())
+            {
+                //Show controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(true);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(false);
+            }
+            else //Keyboard
+            {
+                //Hide Controller UI
+                foreach (GameObject gamepadeUI in gamepadTooltips)
+                    gamepadeUI.SetActive(false);
+                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+                    gamepadeUI.SetActive(true);
+            }
+        }
+    }
+    public GameObject cheatMenu;
+    CheatConsole cheatConsole;
+    private void HandleCheatMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            if(cheatConsole == null)
+                cheatConsole = GetComponent<CheatConsole>();
+            Debug.Log("BackQuote key pressed!");
+            // Add your action here
+            if (cheatMenu != null)
+            {
+                if (cheatMenu.activeSelf)
+                {
+                    cheatConsole.Toggle(false);
+                    cheatMenu.SetActive(false);
+                    PlayerInputManager.instance.SafeEnable();
+                }
+                else if (!gamePaused) // No cheat console on pause
+                {
+                    PlayerInputManager.instance.SafeDisable(true, true);
+                    cheatMenu.SetActive(true);
+                    cheatConsole.Toggle(true);
+                }
+            }
+        }
     }
     public enum MenuTab
     {

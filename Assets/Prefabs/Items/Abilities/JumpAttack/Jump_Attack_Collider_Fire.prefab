@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2801414870771090892}
   - component: {fileID: 4603265985126304092}
   - component: {fileID: 1741440201202110670}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Debris_216
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4900,7 +4900,7 @@ GameObject:
   - component: {fileID: 4105661421965572772}
   - component: {fileID: 3799859332898533878}
   - component: {fileID: 3181771453317594685}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9728,7 +9728,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7025300276936159219}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: VFX_ExplosionPuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9762,7 +9762,7 @@ GameObject:
   - component: {fileID: 6269017691760110332}
   - component: {fileID: 9222301009399117949}
   - component: {fileID: 3103493088686328529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_120
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14652,13 +14652,14 @@ GameObject:
   - component: {fileID: 6330018668465984977}
   - component: {fileID: 127685042654391878}
   - component: {fileID: 4049490715992562579}
-  m_Layer: 0
+  - component: {fileID: 4115533231066886904}
+  m_Layer: 6
   m_Name: Jump_Attack_Collider_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7056024979900544158
 Transform:
   m_ObjectHideFlags: 0
@@ -19562,9 +19563,9 @@ MonoBehaviour:
     useMainCamera: 1
     cameras: []
     delay: 0
-    duration: 1
+    duration: 0.5
     shakeSpace: 0
-    shakeStrength: {x: 0.1, y: 0.1, z: 0.1}
+    shakeStrength: {x: 0.25, y: 0.25, z: 0.25}
     shakeCurve:
       serializedVersion: 2
       m_Curve:
@@ -19698,7 +19699,7 @@ AudioSource:
   m_GameObject: {fileID: 1549257713381026176}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: 3e7558359355e094489c8e8f428a4fd1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -19785,6 +19786,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &4115533231066886904
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549257713381026176}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 1.75
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2613157555258672762
 GameObject:
   m_ObjectHideFlags: 0
@@ -19796,7 +19818,7 @@ GameObject:
   - component: {fileID: 1815455429082196986}
   - component: {fileID: 3017931966249774066}
   - component: {fileID: 2585997965536366735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PrimaryBlast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24695,7 +24717,7 @@ GameObject:
   - component: {fileID: 669774805276024740}
   - component: {fileID: 5601886688501545397}
   - component: {fileID: 658721856475347062}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29525,7 +29547,7 @@ GameObject:
   - component: {fileID: 7068276861646236269}
   - component: {fileID: 4191311445843588079}
   - component: {fileID: 7981215186938441050}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34355,7 +34377,7 @@ GameObject:
   - component: {fileID: 6321923659308978856}
   - component: {fileID: 3998471330232737433}
   - component: {fileID: 8919422513103372487}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_300
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39243,7 +39265,7 @@ GameObject:
   - component: {fileID: 2200444187044845947}
   - component: {fileID: 4018181557561522949}
   - component: {fileID: 1099784112966814976}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_240
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44131,7 +44153,7 @@ GameObject:
   - component: {fileID: 4802672449858171290}
   - component: {fileID: 5030779681163338322}
   - component: {fileID: 5190195183540484798}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Debris_144
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49020,7 +49042,7 @@ GameObject:
   - component: {fileID: 3522960768976281531}
   - component: {fileID: 4746614598075234082}
   - component: {fileID: 1950174436561581967}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53850,7 +53872,7 @@ GameObject:
   - component: {fileID: 8281647470149190876}
   - component: {fileID: 4218901928243236027}
   - component: {fileID: 8600711470265339920}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Debris_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58739,7 +58761,7 @@ GameObject:
   - component: {fileID: 609704807267990096}
   - component: {fileID: 885647637526381905}
   - component: {fileID: 5077929034405397480}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63569,7 +63591,7 @@ GameObject:
   - component: {fileID: 1016772925465070898}
   - component: {fileID: 6235687720279941504}
   - component: {fileID: 7282810818295976279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68456,7 +68478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2806273680653484671}
   - component: {fileID: 6039189412383063910}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68551,7 +68573,7 @@ GameObject:
   - component: {fileID: 3023688744694414410}
   - component: {fileID: 8722032049912552739}
   - component: {fileID: 4401956890994996924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73451,7 +73473,7 @@ GameObject:
   - component: {fileID: 8999608725364573014}
   - component: {fileID: 5012911511360878842}
   - component: {fileID: 1284562193674226141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_60
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78339,7 +78361,7 @@ GameObject:
   - component: {fileID: 193494260961443143}
   - component: {fileID: 8577725237606937531}
   - component: {fileID: 5895299677547512938}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_180
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83227,7 +83249,7 @@ GameObject:
   - component: {fileID: 5540271858789161338}
   - component: {fileID: 7037253715843701825}
   - component: {fileID: 7849642818162011939}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Debris_72
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88116,7 +88138,7 @@ GameObject:
   - component: {fileID: 8948134449304507172}
   - component: {fileID: 3860608132633602802}
   - component: {fileID: 7492195028720550470}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Debris_288
   m_TagString: Untagged
   m_Icon: {fileID: 0}

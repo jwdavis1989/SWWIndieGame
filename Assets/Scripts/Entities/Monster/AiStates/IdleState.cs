@@ -17,6 +17,11 @@ public class IdleState : AIState
             //Activate monster health bar
             aiCharacter.characterUIManager.ActivateHealthBar();
 
+            aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
+
+            //Set Animation Speed to AI's Movement Speed
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIMovementSpeedModifier;
+
             //Changes state to the pursue target state
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }

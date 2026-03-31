@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5777950084857102640}
   - component: {fileID: 5129672964216793397}
   - component: {fileID: 6170670931752942081}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_60
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4901,13 +4901,13 @@ GameObject:
   - component: {fileID: 6330018668465984977}
   - component: {fileID: 127685042654391878}
   - component: {fileID: 1624260060893924449}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Jump_Attack_Collider_Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7056024979900544158
 Transform:
   m_ObjectHideFlags: 0
@@ -9811,9 +9811,9 @@ MonoBehaviour:
     useMainCamera: 1
     cameras: []
     delay: 0
-    duration: 1
+    duration: 0.5
     shakeSpace: 0
-    shakeStrength: {x: 0.1, y: 0.1, z: 0.1}
+    shakeStrength: {x: 0.25, y: 0.25, z: 0.25}
     shakeCurve:
       serializedVersion: 2
       m_Curve:
@@ -9947,7 +9947,7 @@ AudioSource:
   m_GameObject: {fileID: 1549257713381026176}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: 1477c99253dea0e4fbfa39e5eda84e2c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.7
@@ -10045,7 +10045,7 @@ GameObject:
   - component: {fileID: 2475282568952199257}
   - component: {fileID: 6111614388259665437}
   - component: {fileID: 2708147169162952475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14932,7 +14932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5775739910792812903}
   - component: {fileID: 1963677211193763581}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: VFX_ExplosionPuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14969,7 +14969,7 @@ AudioSource:
   m_GameObject: {fileID: 1582993727442437107}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: f915df2c67637bd499fed026951f858f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
@@ -15067,7 +15067,7 @@ GameObject:
   - component: {fileID: 3766573740612495378}
   - component: {fileID: 8063464078381787675}
   - component: {fileID: 7762791560738445718}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_300
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19954,7 +19954,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3785976781503247087}
   - component: {fileID: 6431012404333931289}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20051,7 +20051,7 @@ GameObject:
   - component: {fileID: 5361492729789578670}
   - component: {fileID: 813439812553646346}
   - component: {fileID: 6138698888875672088}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightningVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24953,7 +24953,7 @@ AudioSource:
   m_GameObject: {fileID: 3561521570797182348}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: f915df2c67637bd499fed026951f858f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -25063,7 +25063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013795194409919659}
   - component: {fileID: 8945739491650510261}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightningCentralVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25095,7 +25095,7 @@ AudioSource:
   m_GameObject: {fileID: 4238290255914924841}
   m_Enabled: 0
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7058054441239713645, guid: 41ad4c02798d5ee4cade76a748fe1308, type: 2}
   m_audioClip: {fileID: 8300000, guid: 574a688b4a0e3ce488f6a215eceef318, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.8
@@ -25193,7 +25193,7 @@ GameObject:
   - component: {fileID: 9162988283792952033}
   - component: {fileID: 3172008843832014760}
   - component: {fileID: 9031666561521204523}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30093,7 +30093,7 @@ GameObject:
   - component: {fileID: 5830156053430645015}
   - component: {fileID: 816354749426652047}
   - component: {fileID: 6176708319986277332}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightningBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34995,7 +34995,7 @@ GameObject:
   - component: {fileID: 5102731362301620535}
   - component: {fileID: 735137186733861641}
   - component: {fileID: 2177695166178857678}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39895,7 +39895,7 @@ GameObject:
   - component: {fileID: 5103197060795421821}
   - component: {fileID: 4928817533511365730}
   - component: {fileID: 1169134445412483923}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_120
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44783,7 +44783,7 @@ GameObject:
   - component: {fileID: 4513906360244048757}
   - component: {fileID: 4550862107800611467}
   - component: {fileID: 2876730349159296561}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_180
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49671,7 +49671,7 @@ GameObject:
   - component: {fileID: 658050917237723865}
   - component: {fileID: 6751784957526811747}
   - component: {fileID: 9114909453789817110}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54521,7 +54521,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2806273680653484671}
   - component: {fileID: 6039189412383063910}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54616,7 +54616,7 @@ GameObject:
   - component: {fileID: 3023688744694414410}
   - component: {fileID: 8722032049912552739}
   - component: {fileID: 4401956890994996924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59516,7 +59516,7 @@ GameObject:
   - component: {fileID: 3972042973650083030}
   - component: {fileID: 1886795033825875541}
   - component: {fileID: 6970750759981186383}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OutterRing_240
   m_TagString: Untagged
   m_Icon: {fileID: 0}

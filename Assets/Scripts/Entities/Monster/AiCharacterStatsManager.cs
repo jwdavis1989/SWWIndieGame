@@ -10,9 +10,6 @@ public class AICharacterStatsManager : CharacterStatsManager
     public float goldDropChance = 0;// % as 0-1
     [Header("Amount of expierence points dropped")]
     public int expDropAmt = 0;
-    [Header("Tinker component drop chance as 0-1")]
-    public List<TinkerComponentDropChance> componentDropChances = new List<TinkerComponentDropChance>();
-    [Serializable] public class TinkerComponentDropChance { public TinkerComponentType type; public float dropChance; } //Allows for simply setting drop chances in editor
     public void DoAllDrops(bool isHitByMainHand, bool isHitByOffHand)
     {
         //Debug.Log("DoAllDrops:" + isHitByMainHand + " exp:" + expDropAmt + " g:" + goldDropChance);
@@ -20,13 +17,6 @@ public class AICharacterStatsManager : CharacterStatsManager
             DropExp(isHitByMainHand, isHitByOffHand);
         if (goldDropChance > UnityEngine.Random.value)
             DropGold();
-        foreach(TinkerComponentDropChance componentDropChance in componentDropChances)
-        {
-            if (componentDropChance.dropChance > UnityEngine.Random.value)
-            {
-                DropComponent(componentDropChance.type);
-            }
-        }
     }
     /** drop this characters gold */
     public void DropGold()
@@ -45,14 +35,6 @@ public class AICharacterStatsManager : CharacterStatsManager
         t.position = new Vector3 (newX, p.y, newZ);
         //drop the exp
         ItemDropManager.instance.DropExp(t, expDropAmt, isHitByMainHand, isHitByOffHand);
-    }
-    /** 
-     *  Drops a TinkerComponent at this objects location 
-     *  Returns a reference to the dropped TinkerComponent
-     */
-    public GameObject DropComponent(TinkerComponentType type)
-    {
-        return ItemDropManager.DropComponent(type, transform);
     }
     /** 
      *  Drops a weapon at this objects location 

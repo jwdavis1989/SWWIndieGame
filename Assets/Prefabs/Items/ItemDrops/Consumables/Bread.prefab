@@ -63,14 +63,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2714941730593906968}
+      addedObject: {fileID: 1355081263538911051}
   m_SourcePrefab: {fileID: 100100000, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
 --- !u!1 &8451483549712208552 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
   m_PrefabInstance: {fileID: 1864547948002784164}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2714941730593906968
+--- !u!114 &1355081263538911051
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -79,10 +79,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8451483549712208552}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a9623533ef3b3f4b9456d3755ddcfcb, type: 3}
+  m_Script: {fileID: 11500000, guid: 609d680c28e79a54397c4fdad18d3eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Bread
+  itemId: bread
   quantity: 0
-  effect: {fileID: 11400000, guid: 3e4d1fb384af82f4cb72720d318d463f, type: 2}
-  consumable: 1

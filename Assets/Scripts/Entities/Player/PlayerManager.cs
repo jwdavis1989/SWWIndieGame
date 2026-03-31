@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : CharacterManager
 {
-
     [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     //Turn on if adding multiplayer
     //[HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -20,6 +19,8 @@ public class PlayerManager : CharacterManager
     public GameObject flashlight;
     public GameObject cameraflashlight;
     public GameObject capeSystem;
+    private Cloth capeClothComponent;
+    private float capeClothWorldAccelerationModifier;
     [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
 
     [Header("Debug Menu")]
@@ -36,6 +37,8 @@ public class PlayerManager : CharacterManager
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
         playerInteractionManager = GetComponent<PlayerInteractionManager>();
+        capeClothComponent = capeSystem.GetComponentInChildren<Cloth>();
+        capeClothWorldAccelerationModifier = capeClothComponent.worldAccelerationScale;
 
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
@@ -131,14 +134,20 @@ public class PlayerManager : CharacterManager
         currentCharacterData.indexOfEquippedWeapon = PlayerWeaponManager.instance.indexOfEquippedWeapon;
         currentCharacterData.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon;
         //Tinker Components owned
-        currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
-        currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
+        //currentCharacterData.ownedComponents = TinkerComponentManager.instance.CreateSaveData();
+        //currentCharacterData.ownedWpnComponents = TinkerComponentManager.instance.CreateSaveData(true);
         //Journal flags
         currentCharacterData.journalFlags = JournalManager.instance.journalFlags;
         //Ideas
-        currentCharacterData.ideas = InventionManager.instance.ideas;
+        currentCharacterData.ideas = InventionManager.instance.obtainedIdeas;
         //Inventions
         currentCharacterData.inventions = InventionManager.instance.SaveInventions();
+        //Inventory
+        Inventory inventory = GetComponent<Inventory>();
+        currentCharacterData.inventoryItems = inventory.SaveItems();
+        currentCharacterData.weaponSalvage = inventory.SaveWeaponComponents();
+        //Dungeon
+        currentCharacterData.savedDungeons = DungeonManager.SaveDungeons();
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
@@ -174,17 +183,18 @@ public class PlayerManager : CharacterManager
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
         PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
         //Load TinkerComponents
-        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
-        TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);
+        //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
+        //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);
         //Load Journal Flags
         JournalManager.instance.journalFlags = currentCharacterData.journalFlags;
         //Ideas
-        InventionManager.instance.ideas = currentCharacterData.ideas;
+        InventionManager.instance.obtainedIdeas = currentCharacterData.ideas;
         //Inventions
-        if (!isNewGame)
-        {
-            InventionManager.instance.LoadInventions(currentCharacterData.inventions);
-        }
+        InventionManager.instance.LoadInventions(currentCharacterData.inventions);
+        //Inventory
+        GetComponent<Inventory>().LoadInventory(currentCharacterData.inventoryItems, currentCharacterData.weaponSalvage);
+        //Dungeon
+        DungeonManager.LoadDungeons(currentCharacterData.savedDungeons);
     }
 
     public void ToggleFlashlight()
@@ -356,7 +366,7 @@ public class PlayerManager : CharacterManager
 
     public override void DisableInvulnerable()
     {
-        if (!InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        if (!InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = false;
         }
@@ -365,7 +375,7 @@ public class PlayerManager : CharacterManager
     //Not currently being used because the dodge roll already begins invulnerability immediately, but is needed if that changes.
     public void EnableRollerJointInvulnerable()
     {
-        if (InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints))
+        if (InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = true;
         }
@@ -383,6 +393,7 @@ public class PlayerManager : CharacterManager
 
     public override void DisableBoosting()
     {
+        base.DisableBoosting();
         isBoosting = false;
     }
 
@@ -411,12 +422,61 @@ public class PlayerManager : CharacterManager
         capeSystem.SetActive(false);
     }
 
-    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f)
+    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString=null, bool enableAfterLoad=true)
     {
-        DisableCapeSystem();
-        transform.position = new Vector3(destinationX, destinationY, destinationZ);
-        SceneManager.LoadSceneAsync(sceneID);
-        EnableCapeSystem();
+        TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
+        TeleportData.playerManager = this;
+        /** Will use string name of scene if not null else uses index */
+        TeleportData.SceneIdString = sceneIdString;
+        TeleportData.SceneID = sceneID;
+        TeleportData.enableAfterLoad = enableAfterLoad;
+        //Disable Controls
+        PlayerInputManager.instance.SafeDisable(true, true);
+        Time.timeScale = 0;
+
+        SceneManager.LoadScene("LoadingScene");
+
+        //DisableCapeSystem();
+        //transform.position = new Vector3(destinationX, destinationY, destinationZ);
+        //SceneManager.LoadSceneAsync(sceneID);
+        //EnableCapeSystem();
+    }
+
+    public override void CallPlayJumpAttackImpactVFX()
+    {
+        base.CallPlayJumpAttackImpactVFX();
+
+        //Turn off Meteor Boosters just in case effect is interrupted
+        DisableMeteorBoosterVFX();
+        DisableMeteorDescentBoosterVFX();
+    }
+
+    public override void EnableMeteorBoosterVFX()
+    {
+        playerLocomotionManager.EnableMeteorBoosters();
+        playerLocomotionManager.JumpAttackQuickFall();
+    }
+
+    public override void DisableMeteorBoosterVFX()
+    {
+        playerLocomotionManager.DisableMeteorBoosters();
+    }
+
+    public override void DisableMeteorDescentBoosterVFX()
+    {
+        playerLocomotionManager.DisableMeteorDescentBoosters();
+    }
+
+    public void PauseClothPhysics()
+    {
+        //capeClothComponent.worldAccelerationScale = 0f;
+        capeClothComponent.enabled = false;
+    }
+
+    public void ResumeClothPhysics()
+    {
+        //capeClothComponent.worldAccelerationScale = capeClothWorldAccelerationModifier;
+        capeClothComponent.enabled = true;
     }
 
 }
