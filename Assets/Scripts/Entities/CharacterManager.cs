@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 //using Unity.Netcode;
 
@@ -36,6 +37,7 @@ public class CharacterManager : MonoBehaviour
     public bool isPerformingAction = false;
     public bool isJumping = false;
     public bool isGrounded = true;
+    public bool hasGravity = true;
     public bool isFalling = false;
     public bool isBoosting = false;
     public bool isRolling = false;
@@ -271,6 +273,7 @@ public class CharacterManager : MonoBehaviour
     public virtual void DisableBoosting()
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
+        ResetRotationX();
     }
 
     public virtual void DisableBoostingAndHovering()
@@ -311,4 +314,10 @@ public class CharacterManager : MonoBehaviour
         //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
 
+    public virtual void ResetRotationX()
+    {
+        Vector3 currentRotation = transform.eulerAngles;
+        Vector3 newRotation = new Vector3(0f, currentRotation.y, currentRotation.z);
+        transform.rotation = Quaternion.Euler(newRotation);
+    }
 }

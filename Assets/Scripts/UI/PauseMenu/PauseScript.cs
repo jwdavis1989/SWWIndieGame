@@ -224,7 +224,7 @@ public class PauseScript : MonoBehaviour
         pauseMenu.SetActive(true);
 
         //Disable Controls
-        PlayerInputManager.instance.SafeDisable();
+        PlayerInputManager.instance.SafeDisable(true, true);
 
         //Set bool so the Interactable system understands a Menu window has opened
         PlayerUIManager.instance.menuWindowIsOpen = true;
@@ -397,7 +397,7 @@ public class PauseScript : MonoBehaviour
                 }
                 else if (!gamePaused) // No cheat console on pause
                 {
-                    PlayerInputManager.instance.SafeDisable();
+                    PlayerInputManager.instance.SafeDisable(true, true);
                     cheatMenu.SetActive(true);
                     cheatConsole.Toggle(true);
                 }

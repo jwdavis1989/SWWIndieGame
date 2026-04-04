@@ -55,10 +55,11 @@ public class CharacterLocomotionManager : MonoBehaviour
             //  Problem has been solved by noticing that jumping velocity is >4, while the float glitch is ~0.46, so checking for a sub-1 velocity 
             //  fixes the floating glitch!
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (yVelocity.y < 1)
+            if (yVelocity.y < 1 )
             {
                 yVelocity.y = groundedYVelocity;
             }
+
         }
         else
         {
@@ -74,13 +75,21 @@ public class CharacterLocomotionManager : MonoBehaviour
             character.animator.SetFloat("InAirTimer", inAirTimer);
 
             //Increases gravity's effect over time
-            yVelocity.y += (gravityForce * Time.deltaTime);
+            if (!character.isBoosting)
+            {   
+                yVelocity.y += (gravityForce * Time.deltaTime);
+
+            }
         }
 
         //Apply downward force to character
-        if (!character.isBoosting)
+        if (!character.isBoosting && character.hasGravity)
         {
             character.characterController.Move(yVelocity * Time.deltaTime);
+        }
+        else
+        {
+            yVelocity.y = 0f;
         }
     }
 
@@ -92,6 +101,10 @@ public class CharacterLocomotionManager : MonoBehaviour
 
         //Intended Version
         character.isGrounded = Physics.CheckSphere(character.transform.position, groundCheckSphereRadius, groundLayer);
+        if (character.isGrounded)
+        {
+            character.ResetRotationX();
+        }
     }
 
     //Draws ground check sphere in editor

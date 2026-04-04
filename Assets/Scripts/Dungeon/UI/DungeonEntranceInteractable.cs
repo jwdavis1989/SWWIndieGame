@@ -72,8 +72,8 @@ public class DungeonEntranceInteractable : Interactable
             DungeonManager.CompleteCurrentDungeonLevel();
         }
         //DungeonManager
-        PlayerInputManager.instance.SafeDisable();
+        PlayerInputManager.instance.SafeDisable(true, true);
         Time.timeScale = 0;
-        TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(0,0,0,0, levelSelectScene);
+        TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(0,0,0,0, levelSelectScene, false);
     }
 }
