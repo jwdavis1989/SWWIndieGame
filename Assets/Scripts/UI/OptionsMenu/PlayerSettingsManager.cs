@@ -74,7 +74,7 @@ public class PlayerSettingsManager : MonoBehaviour
         // Convert linear slider (0–1) to logarithmic dB scale
         float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
         float volumeDb = Mathf.Log10(adjusted) * 20;
-        mixer.SetFloat("MasterVolume", volumeDb);
+        mixer.SetFloat("MainVolume", volumeDb);
     }
     public void SetSFXVolumeLogarithmic(float sliderValue)
     {

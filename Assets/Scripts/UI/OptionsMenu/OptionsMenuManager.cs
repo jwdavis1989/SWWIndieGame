@@ -281,6 +281,7 @@ public class OptionsMenuManager : MonoBehaviour
         mainVolumeSlider.value = playerSettings.mainVolume;
         musicVolumeSlider.value = playerSettings.musicVolume;
         effectsVolumeSlider.value = playerSettings.effectsVolume;
+        mixer.SetFloat("MainVolume", playerSettings.mainVolume);
         mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
         mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
     }
