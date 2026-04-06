@@ -670,7 +670,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 20
+  MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -760,6 +760,12 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   walkFootStepPitch: 1
   runFootStepPitch: 1.2
+  walkVolume: 1
+  runVolume: 1
+  backpedalVolume: 0.1
+  jumpFootStepVolume: 0.2
+  landingVolume: 0.2
+  rollVolume: 0.3
   takeDamageGrunts:
   - {fileID: 8300000, guid: 68f7fb07fe8eeac4fb98d7eba26fd824, type: 3}
   - {fileID: 8300000, guid: a775695000f506d44ab17df56e688370, type: 3}
@@ -767,7 +773,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c013371484d187849935e7da6b6ce999, type: 3}
   - {fileID: 8300000, guid: bb68f82716561c94383c49538528cb26, type: 3}
   - {fileID: 8300000, guid: 22e980b3bbb679248aee3c61fae2a722, type: 3}
-  aggroSFX: {fileID: 0}
+  aggroSFX: {fileID: 8300000, guid: da8ae842510d1ad4aa96aced2970e768, type: 3}
 --- !u!95 &1852746499727577451
 Animator:
   serializedVersion: 5
@@ -1041,7 +1047,7 @@ MonoBehaviour:
   canPerformBackStepAttack: 0
   canBlock: 1
   isAggro: 0
-  aggroRange: 10
+  visionDetectionRange: 10
   minimumDetectionAngle: -35
   maximumDetectionAngle: 35
   hearingDetectionRange: 5
