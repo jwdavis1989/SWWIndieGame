@@ -59,6 +59,7 @@ public class DungeonLevelManager : MonoBehaviour
             playerControls.DungeonLevelSelect.SaveGame.performed += i => saveInput = true;
             playerControls.DungeonLevelSelect.Back.performed += i => backInput = true;
             playerControls.Enable();
+            PlayerInputManager.instance.SafeDisable(true, true);
         }
         // Show relevant tooltips
         if (InputSwitchDetector.IsCurrentlyGamepad())

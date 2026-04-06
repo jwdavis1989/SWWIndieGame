@@ -202,6 +202,8 @@ public class InventoryMenuManager : MonoBehaviour
     }
     void SetQuickslotItem(int quickslotIndex)
     {
+        if(eventSystem.currentSelectedGameObject == null)
+            { return; }
         InventoryItemUI itemUI = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
         if (itemUI != null)
         {
