@@ -33,7 +33,7 @@ public class CullAudioPlayerOutsideDistance : MonoBehaviour
         float distanceSquared = (transform.position - playerTransform.position).sqrMagnitude;
         float thresholdSquared = cullDistance * cullDistance;
 
-        // Enable or disable all sources based on distance
+        //Enable or disable all sources based on distance
         bool isCurrentAudioSourceCloseEnough = distanceSquared < thresholdSquared;
         
         foreach (var source in audioSources)

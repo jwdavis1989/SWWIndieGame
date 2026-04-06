@@ -5,9 +5,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
 {
     [Header("Aggro")]
     public bool isAggro = false;
-    public float aggroRange = 5.0f;
+    public float visionDetectionRange = 10.0f;
     public float minimumDetectionAngle = -35f;
     public float maximumDetectionAngle = 35f;
+    public float hearingDetectionRange = 5f;
 
     [Header("Target Information")]
     public float distanceFromTarget;
@@ -33,7 +34,7 @@ public class AiCharacterCombatManager : CharacterCombatManager
             return;
         }
 
-        Collider[] colliders = Physics.OverlapSphere(aiCharacter.transform.position, aggroRange, WorldUtilityManager.instance.GetCharacterLayers());
+        Collider[] colliders = Physics.OverlapSphere(aiCharacter.transform.position, visionDetectionRange, WorldUtilityManager.instance.GetCharacterLayers());
 
         for(int i = 0; i < colliders.Length; i++) {
             CharacterManager targetCharacter = colliders[i].transform.GetComponent<CharacterManager>();
@@ -65,6 +66,15 @@ public class AiCharacterCombatManager : CharacterCombatManager
                         aiCharacter.characterCombatManager.SetTarget(targetCharacter);
                         PivotTowardsTarget(aiCharacter);
                     }
+                }
+                //Hearing
+                //Faster to check by squaring rather than needing to use the Square Root operation used by Vector3.Distance
+                else if((transform.position - targetCharacter.transform.position).sqrMagnitude < hearingDetectionRange * hearingDetectionRange)
+                {
+                    targetsDirection = targetCharacter.transform.position - transform.position;
+                    viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(transform, targetsDirection);
+                    aiCharacter.characterCombatManager.SetTarget(targetCharacter);
+                    PivotTowardsTarget(aiCharacter);
                 }
             }
         }

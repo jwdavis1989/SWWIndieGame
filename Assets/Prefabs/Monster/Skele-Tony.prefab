@@ -936,6 +936,7 @@ MonoBehaviour:
   isPerformingAction: 0
   isJumping: 0
   isGrounded: 1
+  hasGravity: 1
   isFalling: 0
   isBoosting: 0
   isRolling: 0
@@ -1040,9 +1041,10 @@ MonoBehaviour:
   canPerformBackStepAttack: 0
   canBlock: 1
   isAggro: 0
-  aggroRange: 5
+  aggroRange: 10
   minimumDetectionAngle: -35
   maximumDetectionAngle: 35
+  hearingDetectionRange: 5
   distanceFromTarget: 0
   viewableAngle: 0
   targetsDirection: {x: 0, y: 0, z: 0}
