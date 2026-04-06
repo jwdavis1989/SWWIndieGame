@@ -13,6 +13,14 @@ public class CharacterSoundFXManager : MonoBehaviour
     private float currentFootStepPitch;
     private float lastFootStep;
 
+    [Header("Volumes")]
+    public float walkVolume = 0.2f;
+    public float runVolume = 0.3f;
+    public float backpedalVolume = 0.1f;
+    public float jumpFootStepVolume = 0.2f;
+    public float landingVolume = 0.2f;
+    public float rollVolume = 0.3f;
+
     [SerializeField] protected AudioClip[] takeDamageGrunts;
 
 
@@ -86,18 +94,18 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     public void PlayLandingSFX()
     {
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], 0.2f, 1f, true, 0.1f, true);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], landingVolume, 1f, true, 0.1f, true);
     }
 
     public void PlayBackPedalSFX()
     {
         //audioSource.PlayOneShot(WorldSoundFXManager.instance.backPedalSFX);
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], 0.1f, 1f, true, 0.1f, true);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], backpedalVolume, 1f, true, 0.1f, true);
     }
 
     public void PlayJumpFootStepSFX()
     {
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], 0.2f, 1.1f, true, 0.1f, false);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], jumpFootStepVolume, 1.1f, true, 0.1f, false);
     }
 
     public void PlayFootStepSFX()
@@ -105,7 +113,7 @@ public class CharacterSoundFXManager : MonoBehaviour
         if (characterManager.isGrounded && !characterManager.isPerformingAction)
         {
             UpdateFootStepPitch();
-            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], 0.1f, currentFootStepPitch, true, 0.2f, true);
+            PlayAdvancedSoundFX(WorldSoundFXManager.instance.runFootStepSFX[Random.Range(0, runFootStepSFXCount)], walkVolume, currentFootStepPitch, true, 0.2f, true);
         }
     }
 
