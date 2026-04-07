@@ -82,7 +82,6 @@ public class AiCharacterCombatManager : CharacterCombatManager
 
     public override void AggroPlayer(GameObject player) {
         character.isLockedOn = true;
-        //LockOnTransform = player.transform;
         SetTarget(player.GetComponent<CharacterManager>());
     }
 
