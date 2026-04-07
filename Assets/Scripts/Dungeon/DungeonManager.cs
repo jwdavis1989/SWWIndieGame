@@ -94,4 +94,11 @@ public class DungeonManager : MonoBehaviour
             dungeonSaveData.savedNodes.Add(nodeSaveData);
         }
     }
+    public static float elapsedTime = 0;
+    public static float GetElapsedTime()
+    {
+        return elapsedTime;
+    }
+    public static bool mainHandUsed = false;
+    public static bool offHandUsed = false;
 }
