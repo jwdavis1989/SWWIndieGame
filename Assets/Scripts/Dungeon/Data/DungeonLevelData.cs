@@ -15,6 +15,8 @@ public class DungeonLevelData : ScriptableObject
     public float startX = 0f;
     public float startY = 0f;
     public float startZ = 0f;
+    public float startYRotation = 0f;
+    public List<DungeonChallengeData> dungeonChallenges = new List<DungeonChallengeData>();
     public List<DungeonLevelData> connections; // nodes you can travel to
     [HideInInspector] public string levelSceneId;
 

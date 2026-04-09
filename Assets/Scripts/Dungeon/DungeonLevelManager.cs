@@ -138,6 +138,7 @@ public class DungeonLevelManager : MonoBehaviour
     public void OnExitClick()
     {
         DisableLevelNavigation();
+        TeleportData.yRotation = dungeonData.exitYRotation;
         TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(-1, dungeonData.exitX, dungeonData.exitY, dungeonData.exitZ, dungeonData.exitSceneID);
     }
     void DisableLevelNavigation()

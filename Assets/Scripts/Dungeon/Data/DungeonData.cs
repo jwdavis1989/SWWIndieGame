@@ -19,7 +19,7 @@ public class DungeonData : ScriptableObject
     //TODO Check to see if [HideInInspector] causes this not to work after export
     [HideInInspector] public string dungeonLevelSelectSceneID;
     [HideInInspector] public string exitSceneID;
-    public float exitX = 0, exitY = 0, exitZ = 0;
+    public float exitX = 0, exitY = 0, exitZ = 0, exitYRotation = 0;
 
     public List<DungeonLevelData> dungeonNodes;
     public DungeonLevelData GetDungeonLevelNodeByID(string levelId)
