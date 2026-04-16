@@ -60,6 +60,7 @@ public class DungeonManager : MonoBehaviour
         {
             instance.currentDungeonId = dungeonData.dungeonId;
             instance.currentLevelId = dungeonLevelId;
+            TeleportData.yRotation = dungeonNode.startYRotation;
             TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(0, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonNode.levelSceneId);
         }
         else
@@ -94,6 +95,7 @@ public class DungeonManager : MonoBehaviour
             dungeonSaveData.savedNodes.Add(nodeSaveData);
         }
     }
+    //challenges
     public static float elapsedTime = 0;
     public static float GetElapsedTime()
     {

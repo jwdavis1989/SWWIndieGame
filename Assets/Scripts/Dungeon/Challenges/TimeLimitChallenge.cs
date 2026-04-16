@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Dungeon/Dungeon Challenges/Time Limit")]
 public class TimeLimitChallnge : DungeonChallengeData
 {
     public float timeLimit;
@@ -13,7 +14,8 @@ public class TimeLimitChallnge : DungeonChallengeData
     }
     public override void Initialize()
     {
-        description = "Beat the level in less than " + timeLimit + " seconds";
+        if(description == null || description.Length == 0) 
+            description = "Beat the level in less than " + timeLimit + " seconds";
         DungeonManager.elapsedTime = 0;
     }
 }
