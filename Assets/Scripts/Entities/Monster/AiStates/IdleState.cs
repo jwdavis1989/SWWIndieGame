@@ -7,6 +7,13 @@ using UnityEngine;
 public class IdleState : AIState
 {
     public override AIState Tick(AICharacterManager aiCharacter) {
+
+        //Check if current target is dead, if so, set to null to trigger new target search
+        if (aiCharacter.aiCharacterCombatManager.currentTarget != null && aiCharacter.aiCharacterCombatManager.currentTarget.isDead)
+        {
+            aiCharacter.aiCharacterCombatManager.currentTarget = null;
+        }
+
         //Case: Target Aquired
         if(aiCharacter.aiCharacterCombatManager.currentTarget != null) {
             //Turn on the enemy's Minimap Triangle if it's not already visible
