@@ -1,21 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[CreateAssetMenu(menuName = "Dungeon/Dungeon Challenges/One Hand")]
 public class OneHandChallenge : DungeonChallengeData
 {
-    public bool isMainHandOnly;
-
     public override bool IsFailed()
     {
-        if (isMainHandOnly)
-            return DungeonManager.offHandUsed;
-        else 
-            return DungeonManager.mainHandUsed;
+        return DungeonManager.offHandUsed;
     }
     public override void Initialize()
     {
-        description = "Beat the level using only your " + (isMainHandOnly ? "main hand":"off hand") + " weapon";
         DungeonManager.elapsedTime = 0;
     }
 }

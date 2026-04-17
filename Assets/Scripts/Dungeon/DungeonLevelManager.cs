@@ -16,6 +16,9 @@ public class DungeonLevelManager : MonoBehaviour
     public GameObject backWindow;
     public List<GameObject> keyboardMouseTooltips;
     public List<GameObject> gamepadTooltips;
+    public TooltipUI challengeTooltip;
+
+    //data
     private DungeonData dungeonData;
     private DungeonDatabase dungeonDatabase;
 
@@ -84,6 +87,39 @@ public class DungeonLevelManager : MonoBehaviour
         HandleBackInput();
         HandleSaveGameInput();
         CheckControlsChanged();
+        HandleGamepadSelectedObject();
+    }
+    GameObject currentCursorObj;
+    string selectedLevelId;
+    public void HandleGamepadSelectedObject()
+    {
+
+        if (currentCursorObj != eventSystem.currentSelectedGameObject)
+        { // Need to change active tooltip window
+            //Debug.Log("TooltipActive & New cursor obj");
+            currentCursorObj = eventSystem.currentSelectedGameObject;
+            if (currentCursorObj != null)
+            {
+                DungeonLevelNodeUI ui = currentCursorObj.GetComponentInParent<DungeonLevelNodeUI>();
+                if (ui != null)
+                {
+                    DungeonLevelData levelData = dungeonData.GetDungeonLevelNodeByID(ui.dungeonLevelId);
+                    if (levelData != null)
+                    {
+                        challengeTooltip.headerText.text = "Level " + levelData.nodeID;
+                        challengeTooltip.centerText.text = "";
+                        foreach (DungeonChallengeData challengeData in levelData.dungeonChallenges)
+                        {
+                            challengeTooltip.centerText.text += challengeData.description + "\n";
+                        }
+                    }
+                }
+            }
+            else // Nothing is selected. If on gamepad try to select something
+            {
+                
+            }
+        }
     }
     void HandleSaveGameInput()
     {
@@ -138,6 +174,7 @@ public class DungeonLevelManager : MonoBehaviour
     public void OnExitClick()
     {
         DisableLevelNavigation();
+        TeleportData.yRotation = dungeonData.exitYRotation;
         TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(-1, dungeonData.exitX, dungeonData.exitY, dungeonData.exitZ, dungeonData.exitSceneID);
     }
     void DisableLevelNavigation()
