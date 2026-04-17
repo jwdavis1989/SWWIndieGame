@@ -73,7 +73,7 @@ public class CharacterEffectsManager : MonoBehaviour
 
     public void ActivateFootstepVFX(bool isLeftInsteadOfRight)
     {
-        if (character.isGrounded && leftFootstepDustVFXAnchor && rightFootstepDustVFXAnchor)
+        if (!character.isDead && character.isGrounded && leftFootstepDustVFXAnchor && rightFootstepDustVFXAnchor)
         {
             if (isLeftInsteadOfRight)
             {
