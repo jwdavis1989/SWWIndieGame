@@ -574,7 +574,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleCameraFieldOfView()
     {
-        if (sprintInput)
+        if (sprintInput && !player.isDead)
         {
             //Camera Zoom-Out Juice to give the illusion of great speed
             if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting)
