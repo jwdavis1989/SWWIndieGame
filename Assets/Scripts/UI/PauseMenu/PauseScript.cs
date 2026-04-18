@@ -72,7 +72,7 @@ public class PauseScript : MonoBehaviour
         //HandlePauseInput();
         HandleSwitchMenuInput();
         HandleExitPauseMenuInput();
-        CheckControlsChanged();
+        //CheckControlsChanged();
         HandleCheatMenu();
     }
     WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
@@ -352,31 +352,31 @@ public class PauseScript : MonoBehaviour
         //    newBtnSelected.GetComponent<Button>().Select();
         //}
     }
-    private void CheckControlsChanged()
-    {
-        InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
-        inputSwitchDetector.CheckControlsChanged();
-        if (inputSwitchDetector.deviceChanged)
-        {
-            inputSwitchDetector.deviceChanged = false;
-            if (InputSwitchDetector.IsCurrentlyGamepad())
-            {
-                //Show controller UI
-                foreach (GameObject gamepadeUI in gamepadTooltips)
-                    gamepadeUI.SetActive(true);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(false);
-            }
-            else //Keyboard
-            {
-                //Hide Controller UI
-                foreach (GameObject gamepadeUI in gamepadTooltips)
-                    gamepadeUI.SetActive(false);
-                foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                    gamepadeUI.SetActive(true);
-            }
-        }
-    }
+    //private void CheckControlsChanged()
+    //{
+    //    InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
+    //    inputSwitchDetector.CheckControlsChanged();
+    //    if (inputSwitchDetector.deviceChanged)
+    //    {
+    //        inputSwitchDetector.deviceChanged = false;
+    //        if (InputSwitchDetector.IsCurrentlyGamepad())
+    //        {
+    //            //Show controller UI
+    //            foreach (GameObject gamepadeUI in gamepadTooltips)
+    //                gamepadeUI.SetActive(true);
+    //            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+    //                gamepadeUI.SetActive(false);
+    //        }
+    //        else //Keyboard
+    //        {
+    //            //Hide Controller UI
+    //            foreach (GameObject gamepadeUI in gamepadTooltips)
+    //                gamepadeUI.SetActive(false);
+    //            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+    //                gamepadeUI.SetActive(true);
+    //        }
+    //    }
+    //}
     public GameObject cheatMenu;
     CheatConsole cheatConsole;
     private void HandleCheatMenu()
