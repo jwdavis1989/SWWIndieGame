@@ -334,14 +334,43 @@ public class CharacterWeaponManager : MonoBehaviour
     }
 
     public void OpenDamageCollider() {
-        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponDamageCollider.EnableDamageCollider();
+        WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        currentWeapon.weaponDamageCollider.EnableDamageCollider();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
+        }
         //Play Whoosh SFX
         PlayMeleeWeaponSwingSFX();
     }
 
     public void CloseDamageCollider() {
-        ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().weaponDamageCollider.DisableDamageCollider();
+        WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        currentWeapon.weaponDamageCollider.DisableDamageCollider();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
+        }
     }
+
+    public void EnableBladeTrailVFX()
+    {
+        WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
+        }
+    }
+
+    public void DisableBladeTrailVFX()
+    {
+        WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
+        }
+    }
+    
     public void OpenJumpAttackDamageCollider() {
         //Play Whoosh SFX
         PlayMeleeWeaponSwingSFX();

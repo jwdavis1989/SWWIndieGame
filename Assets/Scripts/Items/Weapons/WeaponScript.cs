@@ -282,6 +282,9 @@ public class WeaponScript : MonoBehaviour
     public AudioClip gunAimSFX;
     public AudioClip gunFireSFX;
 
+    [Header("Melee SFX")]
+    public BladeTrail bladeTrailVFX;
+
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
 
@@ -305,6 +308,10 @@ public class WeaponScript : MonoBehaviour
         else
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
+            bladeTrailVFX = GetComponentInChildren<BladeTrail>();
+            if (bladeTrailVFX) {
+                bladeTrailVFX.gameObject.SetActive(false);
+            }
         }
 
         if (weaponDamageCollider)
@@ -936,6 +943,13 @@ public class WeaponScript : MonoBehaviour
                 highestElement = ElementalDamageType.Unaspected;
                 //if (isInDebugMode) Debug.Log("Highest Element: Unaspected");
                 break;
+        }
+
+        if (bladeTrailVFX)
+        {
+            bladeTrailVFX.gameObject.SetActive(true);
+            bladeTrailVFX.SetElementalTrailMaterial(highestElementStatIndex);
+            bladeTrailVFX.gameObject.SetActive(false);
         }
 
         return highestElement;
