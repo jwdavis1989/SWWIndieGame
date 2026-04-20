@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TerrainUtils;
 using UnityEngine.UI;
 
-public class DungeonLevelManager : MonoBehaviour
+public class DungeonLevelSelectManager : MonoBehaviour
 {
     [Header("DungeonLevelManager handle the level select of a particular dungeon\n" +
         "It should exist in the scene that holds that UI")]
@@ -110,10 +111,13 @@ public class DungeonLevelManager : MonoBehaviour
                     DungeonLevelData levelData = dungeonData.GetDungeonLevelNodeByID(ui.dungeonLevelId);
                     if (levelData != null)
                     {
+                        DungeonNodeSaveData nodeSaveData = DungeonManager.GetDungeonNodeProgress(dungeonData.dungeonId, levelData.nodeID);
                         //challengeTooltip.headerText.text = "Level " + levelData.nodeID;
                         challengeTooltip.centerText.text = "";
                         foreach (DungeonChallengeData challengeData in levelData.dungeonChallenges)
                         {
+                            if (nodeSaveData != null && nodeSaveData.challengesCompleted.Contains(challengeData.challengeId))
+                                challengeTooltip.centerText.text += "[Completed] ";
                             challengeTooltip.centerText.text += challengeData.description + "\n";
                         }
                     }
@@ -210,7 +214,7 @@ public class DungeonLevelManager : MonoBehaviour
     }
     void EnableLevelNavigation()
     {
-        string currentLevel = DungeonManager.instance.currentLevelId;
+        string currentLevel = DungeonManager.currentLevelId;
         foreach (DungeonLevelNodeUI lvlUI in nodes)
         {
             Navigation nav = lvlUI.button.navigation;

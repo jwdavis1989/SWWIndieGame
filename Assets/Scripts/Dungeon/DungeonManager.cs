@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DungeonManager : MonoBehaviour
@@ -8,8 +9,8 @@ public class DungeonManager : MonoBehaviour
         "It also handles saving and loading of player dungeon progress.")]
     public DungeonDatabase dungeonDatabase;
     [HideInInspector] public List<DungeonSaveData> savedDungeons = new List<DungeonSaveData>();
-    [HideInInspector] public string currentDungeonId = null;
-    [HideInInspector] public string currentLevelId = null;
+    [HideInInspector] public static string currentDungeonId = null;
+    [HideInInspector] public static string currentLevelId = null;
 
     //singleton behavior
     public static DungeonDatabase GetDB()
@@ -58,35 +59,49 @@ public class DungeonManager : MonoBehaviour
         DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID(dungeonLevelId);
         if(dungeonNode != null)
         {
-            instance.currentDungeonId = dungeonData.dungeonId;
-            instance.currentLevelId = dungeonLevelId;
+            currentDungeonId = dungeonData.dungeonId;
+            currentLevelId = dungeonLevelId;
             TeleportData.yRotation = dungeonNode.startYRotation;
             TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(0, dungeonNode.startX, dungeonNode.startY, dungeonNode.startZ, dungeonNode.levelSceneId);
+            foreach(DungeonChallengeData challenge in dungeonNode.dungeonChallenges)
+            {
+                challenge.Initialize();
+            }
         }
         else
             Debug.Log("EnterDungeonLevel dungeonNode null");
     }
-    public static void CompleteCurrentDungeonLevel()
+    public static void CompleteCurrentDungeonLevel(float completeTime = 0)
     {
+        elapsedTime = completeTime;
         if(instance.savedDungeons == null)
             instance.savedDungeons = new List<DungeonSaveData> ();
-        DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(instance.currentDungeonId);
-        DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID (instance.currentLevelId);
-        DungeonSaveData dungeonSaveData = instance.savedDungeons.Find((savedDungeon) => savedDungeon.dungeonId.Equals(instance.currentDungeonId));
+        DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(currentDungeonId);
+        DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID (currentLevelId);
+        DungeonSaveData dungeonSaveData = instance.savedDungeons.Find((savedDungeon) => savedDungeon.dungeonId.Equals(currentDungeonId));
         if (dungeonSaveData == null)
         { // No dungeon data yet saved
             dungeonSaveData = new DungeonSaveData ();
-            dungeonSaveData.dungeonId = instance.currentDungeonId;
+            dungeonSaveData.dungeonId = currentDungeonId;
             instance.savedDungeons.Add(dungeonSaveData);
         }
-        DungeonNodeSaveData nodeSaveData = GetDungeonNodeProgress(instance.currentDungeonId, instance.currentLevelId);
+        DungeonNodeSaveData nodeSaveData = GetDungeonNodeProgress(currentDungeonId, currentLevelId);
         if (nodeSaveData == null)
         { // current level not yet saved
             nodeSaveData = new DungeonNodeSaveData();
-            nodeSaveData.nodeID = instance.currentLevelId;
+            nodeSaveData.nodeID = currentLevelId;
             dungeonSaveData.savedNodes.Add(nodeSaveData);
         }
+        // mark level as complete
         nodeSaveData.completed = true;
+        foreach (DungeonChallengeData challenge in dungeonNode.dungeonChallenges)
+        {
+            if (!challenge.IsFailed())
+            {
+                nodeSaveData.challengesCompleted.Add(challenge.challengeId);
+            }
+        }
+        // unlock connecting level
         foreach (DungeonLevelData connectedNode in dungeonNode.connections)
         {
             nodeSaveData = new DungeonNodeSaveData();
