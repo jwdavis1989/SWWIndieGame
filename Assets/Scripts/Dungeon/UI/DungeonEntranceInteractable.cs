@@ -6,7 +6,6 @@ public class DungeonEntranceInteractable : Interactable
 {
     public string dungeon_id = "dungeon_id";
     public bool isInterior = false;
-    public bool isDungeonLevelExit = false;
     public bool needsKey = false;
     public string key_id = "none";
     protected override void Awake()
@@ -15,11 +14,7 @@ public class DungeonEntranceInteractable : Interactable
         interactableText = "Enter " + dungeon_id;
         DungeonData dungeonData = DungeonManager.GetDB().GetDungeon(dungeon_id);
         interactableText = "Enter " + dungeonData.dungeonName;
-        if (isDungeonLevelExit)
-        {
-            interactableText = "Exit level";
-        }
-        else if (isInterior)
+        if (isInterior)
         {
             interactableText = "Return to level select";
         }
@@ -67,10 +62,6 @@ public class DungeonEntranceInteractable : Interactable
     {
         DungeonData dungeonData = DungeonManager.GetDB().GetDungeon(dungeon_id);
         string levelSelectScene = dungeonData.dungeonLevelSelectSceneID;
-        if (isDungeonLevelExit)
-        {
-            DungeonManager.CompleteCurrentDungeonLevel();
-        }
         //DungeonManager
         PlayerInputManager.instance.SafeDisable(true, true);
         Time.timeScale = 0;

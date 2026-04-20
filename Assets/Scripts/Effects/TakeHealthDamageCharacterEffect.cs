@@ -120,6 +120,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                     if (enemy != null)
                     {
                         enemy.isHitByOffHand = true;
+                        DungeonManager.offHandUsed = true;
                     }
                 }
                 finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
