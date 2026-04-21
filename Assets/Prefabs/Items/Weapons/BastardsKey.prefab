@@ -83,6 +83,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1386738546077473026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3871958328628207590}
+  m_Layer: 6
+  m_Name: BladeHilt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3871958328628207590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386738546077473026}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -4.74}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3603721045252864097}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1638777909222385353
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,6 +317,7 @@ Transform:
   - {fileID: 910930281190182588}
   - {fileID: 8160164105334349053}
   - {fileID: 2663633714132073991}
+  - {fileID: 843773732200194262}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7257319045343483432
@@ -310,6 +342,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 2
+    weaponId: 
     isMonsterWeapon: 0
     attack: 23
     maxAttack: 46
@@ -407,6 +440,7 @@ MonoBehaviour:
   spellProjectileSFX: {fileID: 0}
   gunAimSFX: {fileID: 0}
   gunFireSFX: {fileID: 0}
+  bladeTrailVFX: {fileID: 0}
   isInDebugMode: 0
 --- !u!1 &7061731996036675610
 GameObject:
@@ -672,6 +706,107 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8647214573648463929
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3088215477585026883}
+  m_Layer: 6
+  m_Name: BladeTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3088215477585026883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8647214573648463929}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.19}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3603721045252864097}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3756863575613120613
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5783575807394235614}
+    m_Modifications:
+    - target: {fileID: 867721248113689905, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: bladeTip
+      value: 
+      objectReference: {fileID: 3088215477585026883}
+    - target: {fileID: 867721248113689905, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: bladeHilt
+      value: 
+      objectReference: {fileID: 3871958328628207590}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0020000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5888612299554908309, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+      propertyPath: m_Name
+      value: BladeTrail
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+--- !u!4 &843773732200194262 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4582025838720909491, guid: 6d1dadbe222b96248a848a49164736bf, type: 3}
+  m_PrefabInstance: {fileID: 3756863575613120613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3857408191186345866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -758,7 +893,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9f971a702e450e948a24b79dcdc44fa7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3088215477585026883}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9f971a702e450e948a24b79dcdc44fa7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3871958328628207590}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f971a702e450e948a24b79dcdc44fa7, type: 3}
 --- !u!4 &3603721045252864097 stripped
