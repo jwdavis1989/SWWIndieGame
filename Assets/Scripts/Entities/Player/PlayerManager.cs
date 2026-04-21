@@ -271,6 +271,7 @@ public class PlayerManager : CharacterManager
     {
         WeaponScript updatedWeapon;
         ElementalDamageType newHighestElement;
+        int newHighestElementIndex = 0;
 
         if (isMainHand)
         {
@@ -287,42 +288,52 @@ public class PlayerManager : CharacterManager
         {
             case ElementalDamageType.Fire:
                 newHighestElement = ElementalDamageType.Ice;
+                newHighestElementIndex = 1;
                 //if (isInDebugMode) Debug.Log("Highest Element: Fire");
                 break;
             case ElementalDamageType.Ice:
                 newHighestElement = ElementalDamageType.Lightning;
+                newHighestElementIndex = 2;
                 //if (isInDebugMode) Debug.Log("Highest Element: Ice");
                 break;
             case ElementalDamageType.Lightning:
                 newHighestElement = ElementalDamageType.Wind;
+                newHighestElementIndex = 3;
                 //if (isInDebugMode) Debug.Log("Highest Element: Lightning");
                 break;
             case ElementalDamageType.Wind:
                 newHighestElement = ElementalDamageType.Earth;
+                newHighestElementIndex = 4;
                 //if (isInDebugMode) Debug.Log("Highest Element: Wind");
                 break;
             case ElementalDamageType.Earth:
                 newHighestElement = ElementalDamageType.Light;
+                newHighestElementIndex = 5;
                 //if (isInDebugMode) Debug.Log("Highest Element: Earth");
                 break;
             case ElementalDamageType.Light:
                 newHighestElement = ElementalDamageType.Beast;
+                newHighestElementIndex = 6;
                 //if (isInDebugMode) Debug.Log("Highest Element: Light");
                 break;
             case ElementalDamageType.Beast:
                 newHighestElement = ElementalDamageType.Scales;
+                newHighestElementIndex = 7;
                 //if (isInDebugMode) Debug.Log("Highest Element: Beast");
                 break;
             case ElementalDamageType.Scales:
                 newHighestElement = ElementalDamageType.Tech;
+                newHighestElementIndex = 8;
                 //if (isInDebugMode) Debug.Log("Highest Element: Scales");
                 break;
             case ElementalDamageType.Tech:
                 newHighestElement = ElementalDamageType.Fire;
+                newHighestElementIndex = 0;
                 //if (isInDebugMode) Debug.Log("Highest Element: Tech");
                 break;
             default:
                 newHighestElement = ElementalDamageType.Fire;
+                newHighestElementIndex = 0;
                 //if (isInDebugMode) Debug.Log("Highest Element: Unaspected");
                 break;
         }
@@ -330,6 +341,12 @@ public class PlayerManager : CharacterManager
         updatedWeapon.stats.elemental.currentHighestElementalStat = newHighestElement;
         if (isMainHand)
         {
+            if (updatedWeapon.bladeTrailVFX)
+            {
+                updatedWeapon.bladeTrailVFX.gameObject.SetActive(true);
+                updatedWeapon.bladeTrailVFX.SetElementalTrailMaterial(newHighestElementIndex);
+                updatedWeapon.bladeTrailVFX.gameObject.SetActive(false);
+            }
             Debug.Log("Mainhand: Element changed to: " + newHighestElement);
         }
         else
