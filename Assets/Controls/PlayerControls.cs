@@ -2793,6 +2793,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FloorInfo"",
+                    ""type"": ""Button"",
+                    ""id"": ""49436a89-dd4f-4969-aba2-200bcc2ddd19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2837,6 +2846,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e1a109c-2565-4bc5-a5c1-9fd299ca3f3a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FloorInfo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3228,6 +3248,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_DungeonLevelSelect = asset.FindActionMap("DungeonLevelSelect", throwIfNotFound: true);
         m_DungeonLevelSelect_SaveGame = m_DungeonLevelSelect.FindAction("SaveGame", throwIfNotFound: true);
         m_DungeonLevelSelect_Back = m_DungeonLevelSelect.FindAction("Back", throwIfNotFound: true);
+        m_DungeonLevelSelect_FloorInfo = m_DungeonLevelSelect.FindAction("FloorInfo", throwIfNotFound: true);
         // DeviceDetection
         m_DeviceDetection = asset.FindActionMap("DeviceDetection", throwIfNotFound: true);
         m_DeviceDetection_AnyGamepad = m_DeviceDetection.FindAction("AnyGamepad", throwIfNotFound: true);
@@ -4377,12 +4398,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IDungeonLevelSelectActions> m_DungeonLevelSelectActionsCallbackInterfaces = new List<IDungeonLevelSelectActions>();
     private readonly InputAction m_DungeonLevelSelect_SaveGame;
     private readonly InputAction m_DungeonLevelSelect_Back;
+    private readonly InputAction m_DungeonLevelSelect_FloorInfo;
     public struct DungeonLevelSelectActions
     {
         private @PlayerControls m_Wrapper;
         public DungeonLevelSelectActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @SaveGame => m_Wrapper.m_DungeonLevelSelect_SaveGame;
         public InputAction @Back => m_Wrapper.m_DungeonLevelSelect_Back;
+        public InputAction @FloorInfo => m_Wrapper.m_DungeonLevelSelect_FloorInfo;
         public InputActionMap Get() { return m_Wrapper.m_DungeonLevelSelect; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -4398,6 +4421,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Back.started += instance.OnBack;
             @Back.performed += instance.OnBack;
             @Back.canceled += instance.OnBack;
+            @FloorInfo.started += instance.OnFloorInfo;
+            @FloorInfo.performed += instance.OnFloorInfo;
+            @FloorInfo.canceled += instance.OnFloorInfo;
         }
 
         private void UnregisterCallbacks(IDungeonLevelSelectActions instance)
@@ -4408,6 +4434,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Back.started -= instance.OnBack;
             @Back.performed -= instance.OnBack;
             @Back.canceled -= instance.OnBack;
+            @FloorInfo.started -= instance.OnFloorInfo;
+            @FloorInfo.performed -= instance.OnFloorInfo;
+            @FloorInfo.canceled -= instance.OnFloorInfo;
         }
 
         public void RemoveCallbacks(IDungeonLevelSelectActions instance)
@@ -4617,6 +4646,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnSaveGame(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnFloorInfo(InputAction.CallbackContext context);
     }
     public interface IDeviceDetectionActions
     {

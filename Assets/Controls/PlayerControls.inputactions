@@ -2771,6 +2771,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FloorInfo",
+                    "type": "Button",
+                    "id": "49436a89-dd4f-4969-aba2-200bcc2ddd19",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -2815,6 +2824,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e1a109c-2565-4bc5-a5c1-9fd299ca3f3a",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FloorInfo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

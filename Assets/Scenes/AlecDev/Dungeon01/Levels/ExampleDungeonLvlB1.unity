@@ -292,15 +292,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 158897390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27389ddcb2121ad44a38e10073a3ab52, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fbe0ec3e5d66434b93adf11d7124241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactableText: 
   interactableCollider: {fileID: 158897391}
   dungeon_id: example_dungeon
-  isInterior: 1
-  isDungeonLevelExit: 1
-  needsKey: 1
   key_id: iron_key
 --- !u!1 &272310536
 GameObject:
@@ -373,7 +370,6 @@ MonoBehaviour:
   interactableCollider: {fileID: 272310537}
   dungeon_id: example_dungeon
   isInterior: 1
-  isDungeonLevelExit: 0
   needsKey: 0
   key_id: none
 --- !u!1 &290511311

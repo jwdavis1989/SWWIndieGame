@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class DungeonChallengeData : ScriptableObject
 {
+    public string challengeId;
     public string description;
 
     public abstract void Initialize();

@@ -10,5 +10,5 @@ public class DungeonNodeSaveData
     public bool completed;
     public float bestTime;
     public bool unlocked;
-    public bool challengeCompleted;
+    public List<string> challengesCompleted = new List<string>();
 }

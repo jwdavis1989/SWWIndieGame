@@ -10,6 +10,6 @@ public class OneHandChallenge : DungeonChallengeData
     }
     public override void Initialize()
     {
-        DungeonManager.elapsedTime = 0;
+        //DungeonManager.elapsedTime = 0;
     }
 }
