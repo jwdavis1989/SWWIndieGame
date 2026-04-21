@@ -309,6 +309,10 @@ public class WeaponScript : MonoBehaviour
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
             bladeTrailVFX = GetComponentInChildren<BladeTrail>();
+            if (bladeTrailVFX)
+            {
+                bladeTrailVFX.gameObject.SetActive(false);
+            }
         }
 
         if (weaponDamageCollider)
@@ -946,7 +950,6 @@ public class WeaponScript : MonoBehaviour
         {
             bladeTrailVFX.gameObject.SetActive(true);
             bladeTrailVFX.SetElementalTrailMaterial(highestElementStatIndex);
-            Debug.Log("highestElementStatIndex: " + highestElementStatIndex);
             bladeTrailVFX.gameObject.SetActive(false);
         }
 

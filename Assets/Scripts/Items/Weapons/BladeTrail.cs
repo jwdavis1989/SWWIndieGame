@@ -25,7 +25,14 @@ public class BladeTrail : MonoBehaviour
         bladeVFXMesh = new Mesh(); 
         GetComponent<MeshFilter>().mesh = bladeVFXMesh; 
         meshRenderer = GetComponent<MeshRenderer>();
+    }
 
+    void Awake()
+    {
+        if (meshRenderer == null)
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+        }
     }
 
     void LateUpdate() {
