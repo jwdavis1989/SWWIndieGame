@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterThatOwnsThisWeapon: {fileID: 0}
   weaponFamily: 0
   weaponDamageCollider: {fileID: 0}
   jumpAttackWeaponDamageCollider: {fileID: 4862988502895012156, guid: 4790800cb316f2f479ac2620ab078ac7, type: 3}
@@ -373,6 +374,12 @@ MonoBehaviour:
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
   isInDebugMode: 0
+  ElementalMeshRenderers:
+  - {fileID: 4901150333366835506}
+  - {fileID: 3946345098008080305}
+  - {fileID: 7595253441193276951}
+  - {fileID: 1026375571048458538}
+  - {fileID: 2830751509227059468}
 --- !u!1 &2987232759146221702
 GameObject:
   m_ObjectHideFlags: 0
