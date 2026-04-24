@@ -118,4 +118,5 @@ public class DungeonManager : MonoBehaviour
     }
     public static bool mainHandUsed = false;
     public static bool offHandUsed = false;
+    public static bool healingItemUsed = false;
 }
