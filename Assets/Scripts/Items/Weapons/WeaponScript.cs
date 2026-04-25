@@ -997,8 +997,6 @@ public class WeaponScript : MonoBehaviour
 
     public void SetElementalWeaponMaterials(int highestElementStatIndex)
     {
-        Debug.Log($"Owner: {characterThatOwnsThisWeapon != null}, Manager: {PlayerWeaponManager.instance != null}");
-
         if (characterThatOwnsThisWeapon != null && characterThatOwnsThisWeapon.isPlayer)
         {
             if (PlayerWeaponManager.instance.elementalMaterialsArray != null && 
@@ -1007,6 +1005,7 @@ public class WeaponScript : MonoBehaviour
                 for (int i = 0; i < ElementalMeshRenderers.Length; i++)
                 {   
                     ElementalMeshRenderers[i].material = PlayerWeaponManager.instance.elementalMaterialsArray[highestElementStatIndex];
+                    //Debug.Log("Weapon Name: " + weaponFamily);
                 }
             }
             else
