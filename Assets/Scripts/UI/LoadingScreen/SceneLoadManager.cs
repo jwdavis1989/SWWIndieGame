@@ -44,32 +44,7 @@ public class SceneLoadManager : MonoBehaviour
         // Teleport
         TeleportData.playerManager.transform.position = TeleportData.Destination;
         TeleportData.playerManager.transform.rotation = Quaternion.Euler(new Vector3(0,TeleportData.yRotation,0));
-        FaceCameraForward(PlayerCamera.instance, TeleportData.playerManager);
-    }
-    void FaceCameraForward(PlayerCamera camera, PlayerManager player)
-    {
-        //This rotates this gameObject
-        Vector3 lookPosition = player.transform.position + (Vector3.forward*5.0f);
-        Debug.Log("playerPosition:" + player.transform.position);
-        Debug.Log("lookPosition:"+lookPosition);
-        Vector3 rotationDirection = lookPosition - camera.transform.position;
-        rotationDirection.Normalize();
-        rotationDirection.y = 0;
-
-        Quaternion targetRotation = Quaternion.LookRotation(rotationDirection);
-        camera.transform.rotation = Quaternion.Slerp(camera.transform.rotation, targetRotation, 0.25f);
-
-        //This rotates the pivot object
-        //We don't set rotationDirection.y = 0 because this is the up/down rotation
-        rotationDirection = lookPosition - camera.cameraPivotTransform.position;
-        rotationDirection.Normalize();
-
-        targetRotation = Quaternion.LookRotation(rotationDirection);
-        camera.cameraPivotTransform.transform.rotation = Quaternion.Slerp(camera.cameraPivotTransform.rotation, targetRotation, 0.25f);
-
-        ////Save our rotation values, so when we unlock it doesn't snap too far away
-        camera.leftAndRightLookAngle = camera.transform.eulerAngles.y;
-        camera.upAndDownLookAngle = camera.transform.eulerAngles.x;
+        PlayerCamera.instance.SnapCameraBehindPlayer();
     }
 }
 public static class TeleportData
