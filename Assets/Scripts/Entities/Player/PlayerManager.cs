@@ -339,6 +339,10 @@ public class PlayerManager : CharacterManager
         }
 
         updatedWeapon.stats.elemental.currentHighestElementalStat = newHighestElement;
+        
+        //Sets all glowing materials to match the current highest element
+        updatedWeapon.SetElementalWeaponMaterials(newHighestElementIndex);
+
         if (isMainHand)
         {
             //Sets blade trail VFX materials to match the current highest element
@@ -349,8 +353,6 @@ public class PlayerManager : CharacterManager
                 updatedWeapon.bladeTrailVFX.gameObject.SetActive(false);
             }
 
-            //Sets all glowing materials to match the current highest element
-            updatedWeapon.SetElementalWeaponMaterials(newHighestElementIndex);
             Debug.Log("Mainhand: Element changed to: " + newHighestElement);
         }
         else
