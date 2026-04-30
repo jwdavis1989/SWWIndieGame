@@ -395,4 +395,12 @@ public class OptionsMenuManager : MonoBehaviour
             playerControls.OptionsMenu.Disable();
         }
     }
+    public void OnOptionsScroll(Vector2 value)
+    {
+        Debug.Log("OnOptionsScroll:" + value);
+    }
+    public void OnVerticalScroll(float value)
+    {
+        Debug.Log("OnVerticalScroll:" + value);
+    }
 }
