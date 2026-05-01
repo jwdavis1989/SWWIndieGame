@@ -44,6 +44,7 @@ public class SceneLoadManager : MonoBehaviour
         // Teleport
         TeleportData.playerManager.transform.position = TeleportData.Destination;
         TeleportData.playerManager.transform.rotation = Quaternion.Euler(new Vector3(0,TeleportData.yRotation,0));
+        PlayerCamera.instance.SnapCameraBehindPlayer();
     }
 }
 public static class TeleportData

@@ -53,9 +53,9 @@ public class DungeonManager : MonoBehaviour
     }
     public static void EnterDungeonLevel(string dungeonId, string dungeonLevelId)
     {
-        Debug.Log("EnterDungeonLevel,"+dungeonId+","+dungeonLevelId+".");
+        //Debug.Log("EnterDungeonLevel,"+dungeonId+","+dungeonLevelId+".");
         DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(dungeonId);
-        Debug.Log("EnterDungeonLevel," + dungeonData.dungeonName + ".");
+        //Debug.Log("EnterDungeonLevel," + dungeonData.dungeonName + ".");
         DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID(dungeonLevelId);
         if(dungeonNode != null)
         {
@@ -118,4 +118,5 @@ public class DungeonManager : MonoBehaviour
     }
     public static bool mainHandUsed = false;
     public static bool offHandUsed = false;
+    public static bool healingItemUsed = false;
 }
