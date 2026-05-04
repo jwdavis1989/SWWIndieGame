@@ -374,6 +374,24 @@ public class CharacterWeaponManager : MonoBehaviour
             currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
         }
     }
+
+    public void EnableSpecialWeaponTrailVFX()
+    {
+        WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
+        }
+    }
+
+    public void DisableSpecialWeaponTrailVFX()
+    {
+        WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
+        }
+    }
     
     public void OpenJumpAttackDamageCollider() {
         //Play Whoosh SFX

@@ -311,11 +311,12 @@ public class WeaponScript : MonoBehaviour
         else
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-            bladeTrailVFX = GetComponentInChildren<BladeTrail>();
-            if (bladeTrailVFX)
-            {
-                bladeTrailVFX.gameObject.SetActive(false);
-            }
+        }
+            
+        bladeTrailVFX = GetComponentInChildren<BladeTrail>();
+        if (bladeTrailVFX)
+        {
+            bladeTrailVFX.gameObject.SetActive(false);
         }
 
         if (weaponDamageCollider)
