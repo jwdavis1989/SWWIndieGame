@@ -552,4 +552,34 @@ public class PlayerCamera : MonoBehaviour
     }
 
     public Transform GetPivotTransform() { return cameraPivotTransform; }
+
+    public void SnapCameraBehindPlayer(bool resetPitch = true)
+    {
+        if (player == null) return;
+
+        // Get player's forward direction (ignore vertical tilt)
+        Vector3 forward = player.transform.forward;
+        forward.y = 0;
+        forward.Normalize();
+
+        // Convert direction to angle
+        float targetYaw = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+
+        // Apply to camera angles
+        leftAndRightLookAngle = targetYaw;
+
+        if (resetPitch)
+        {
+            upAndDownLookAngle = 0f;
+        }
+
+        // Immediately apply rotation
+        transform.rotation = Quaternion.Euler(0f, leftAndRightLookAngle, 0f);
+
+        cameraPivotTransform.localRotation = Quaternion.Euler(
+            isCameraInverted ? -upAndDownLookAngle : upAndDownLookAngle,
+            0f,
+            0f
+        );
+    }
 }
