@@ -339,14 +339,24 @@ public class PlayerManager : CharacterManager
         }
 
         updatedWeapon.stats.elemental.currentHighestElementalStat = newHighestElement;
-        if (isMainHand)
+        
+        //Sets all glowing materials to match the current highest element
+        updatedWeapon.SetElementalWeaponMaterials(newHighestElementIndex);
+
+        if (updatedWeapon.bladeTrailVFX)
         {
+            //Sets blade trail VFX materials to match the current highest element
             if (updatedWeapon.bladeTrailVFX)
             {
                 updatedWeapon.bladeTrailVFX.gameObject.SetActive(true);
                 updatedWeapon.bladeTrailVFX.SetElementalTrailMaterial(newHighestElementIndex);
                 updatedWeapon.bladeTrailVFX.gameObject.SetActive(false);
             }
+        }
+        
+        if (isMainHand)
+        {
+
             Debug.Log("Mainhand: Element changed to: " + newHighestElement);
         }
         else
