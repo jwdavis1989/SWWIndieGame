@@ -121,6 +121,10 @@ public class CharacterWeaponManager : MonoBehaviour
         //Warning if using for npc - Currently still tracking single pokedex
         WeaponScript currentWeaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
         currentWeaponScript.hasObtained = true;
+
+        //Initialize Weapon Owner to avoid a race condition in Awake()
+        currentWeaponScript.characterThatOwnsThisWeapon = characterThatOwnsThisArsenal;
+        
         return weaponToAdd.GetComponent<WeaponScript>();
     }
     public void EquipWeapon(GameObject weapon)
@@ -365,6 +369,24 @@ public class CharacterWeaponManager : MonoBehaviour
     public void DisableBladeTrailVFX()
     {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
+        }
+    }
+
+    public void EnableSpecialWeaponTrailVFX()
+    {
+        WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
+        if (currentWeapon.bladeTrailVFX)
+        {   
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
+        }
+    }
+
+    public void DisableSpecialWeaponTrailVFX()
+    {
+        WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
         if (currentWeapon.bladeTrailVFX)
         {   
             currentWeapon.bladeTrailVFX.gameObject.SetActive(false);

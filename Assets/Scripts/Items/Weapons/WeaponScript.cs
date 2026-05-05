@@ -213,7 +213,7 @@ public class ElementalStats
  */
 public class WeaponScript : MonoBehaviour
 {
-    private CharacterManager characterThatOwnsThisWeapon;
+    public CharacterManager characterThatOwnsThisWeapon;
     [Header("Weapon Family - Important - Set in Prefab")]
     public WeaponFamily weaponFamily = 0;
 
@@ -288,6 +288,9 @@ public class WeaponScript : MonoBehaviour
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
 
+    [Header("ElementalMeshRenderers")]
+    public MeshRenderer[] ElementalMeshRenderers;
+
 
 
 
@@ -308,11 +311,12 @@ public class WeaponScript : MonoBehaviour
         else
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-            bladeTrailVFX = GetComponentInChildren<BladeTrail>();
-            if (bladeTrailVFX)
-            {
-                bladeTrailVFX.gameObject.SetActive(false);
-            }
+        }
+            
+        bladeTrailVFX = GetComponentInChildren<BladeTrail>();
+        if (bladeTrailVFX)
+        {
+            bladeTrailVFX.gameObject.SetActive(false);
         }
 
         if (weaponDamageCollider)
@@ -946,12 +950,16 @@ public class WeaponScript : MonoBehaviour
                 break;
         }
 
+        //Sets blade trail VFX materials to match the current highest element
         if (bladeTrailVFX)
         {
             bladeTrailVFX.gameObject.SetActive(true);
             bladeTrailVFX.SetElementalTrailMaterial(highestElementStatIndex);
             bladeTrailVFX.gameObject.SetActive(false);
         }
+
+        //Sets all glowing materials to match the current highest element
+        SetElementalWeaponMaterials(highestElementStatIndex);
 
         return highestElement;
     }
@@ -987,6 +995,27 @@ public class WeaponScript : MonoBehaviour
         }
         return formatted;
     }
+
+    public void SetElementalWeaponMaterials(int highestElementStatIndex)
+    {
+        if (characterThatOwnsThisWeapon != null && characterThatOwnsThisWeapon.isPlayer)
+        {
+            if (PlayerWeaponManager.instance.elementalMaterialsArray != null && 
+                highestElementStatIndex >= 0 && highestElementStatIndex < PlayerWeaponManager.instance.elementalMaterialsArray.Length)
+            {
+                for (int i = 0; i < ElementalMeshRenderers.Length; i++)
+                {   
+                    ElementalMeshRenderers[i].material = PlayerWeaponManager.instance.elementalMaterialsArray[highestElementStatIndex];
+                    //Debug.Log("Weapon Name: " + weaponFamily);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Elemental decoration material index out of range or empty.");
+            }
+        }
+    }
+
     public Dictionary<string, float> GetPrimaryStats()
     {
         Dictionary<string, float> rv = new Dictionary<string, float>();

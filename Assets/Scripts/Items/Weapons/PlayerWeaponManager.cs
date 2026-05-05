@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerWeaponManager : CharacterWeaponManager
 {
+    [Header("Materials database based on weapon's highest element")]
+    public Material[] elementalMaterialsArray; 
+    
     [Header("Description:List of Player's current wepaons\n\n")]
     public static PlayerWeaponManager instance;
     new public void Awake()
