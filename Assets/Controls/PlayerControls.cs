@@ -2126,6 +2126,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""e8418b95-67c8-4e30-8726-140cb419d2f9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2203,6 +2212,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SaveSettings"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6150136a-1b8c-4df1-b634-024e834eaba2"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2793,6 +2813,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FloorInfo"",
+                    ""type"": ""Button"",
+                    ""id"": ""49436a89-dd4f-4969-aba2-200bcc2ddd19"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2837,6 +2866,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Back"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e1a109c-2565-4bc5-a5c1-9fd299ca3f3a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FloorInfo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3208,6 +3248,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_OptionsMenu_SwitchMenuRight = m_OptionsMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
         m_OptionsMenu_ExitMenu = m_OptionsMenu.FindAction("ExitMenu", throwIfNotFound: true);
         m_OptionsMenu_SaveSettings = m_OptionsMenu.FindAction("SaveSettings", throwIfNotFound: true);
+        m_OptionsMenu_Scroll = m_OptionsMenu.FindAction("Scroll", throwIfNotFound: true);
         // UINavigation
         m_UINavigation = asset.FindActionMap("UINavigation", throwIfNotFound: true);
         m_UINavigation_Navigate = m_UINavigation.FindAction("Navigate", throwIfNotFound: true);
@@ -3228,6 +3269,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_DungeonLevelSelect = asset.FindActionMap("DungeonLevelSelect", throwIfNotFound: true);
         m_DungeonLevelSelect_SaveGame = m_DungeonLevelSelect.FindAction("SaveGame", throwIfNotFound: true);
         m_DungeonLevelSelect_Back = m_DungeonLevelSelect.FindAction("Back", throwIfNotFound: true);
+        m_DungeonLevelSelect_FloorInfo = m_DungeonLevelSelect.FindAction("FloorInfo", throwIfNotFound: true);
         // DeviceDetection
         m_DeviceDetection = asset.FindActionMap("DeviceDetection", throwIfNotFound: true);
         m_DeviceDetection_AnyGamepad = m_DeviceDetection.FindAction("AnyGamepad", throwIfNotFound: true);
@@ -4137,6 +4179,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_OptionsMenu_SwitchMenuRight;
     private readonly InputAction m_OptionsMenu_ExitMenu;
     private readonly InputAction m_OptionsMenu_SaveSettings;
+    private readonly InputAction m_OptionsMenu_Scroll;
     public struct OptionsMenuActions
     {
         private @PlayerControls m_Wrapper;
@@ -4145,6 +4188,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SwitchMenuRight => m_Wrapper.m_OptionsMenu_SwitchMenuRight;
         public InputAction @ExitMenu => m_Wrapper.m_OptionsMenu_ExitMenu;
         public InputAction @SaveSettings => m_Wrapper.m_OptionsMenu_SaveSettings;
+        public InputAction @Scroll => m_Wrapper.m_OptionsMenu_Scroll;
         public InputActionMap Get() { return m_Wrapper.m_OptionsMenu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -4166,6 +4210,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SaveSettings.started += instance.OnSaveSettings;
             @SaveSettings.performed += instance.OnSaveSettings;
             @SaveSettings.canceled += instance.OnSaveSettings;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
         }
 
         private void UnregisterCallbacks(IOptionsMenuActions instance)
@@ -4182,6 +4229,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SaveSettings.started -= instance.OnSaveSettings;
             @SaveSettings.performed -= instance.OnSaveSettings;
             @SaveSettings.canceled -= instance.OnSaveSettings;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
         }
 
         public void RemoveCallbacks(IOptionsMenuActions instance)
@@ -4377,12 +4427,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IDungeonLevelSelectActions> m_DungeonLevelSelectActionsCallbackInterfaces = new List<IDungeonLevelSelectActions>();
     private readonly InputAction m_DungeonLevelSelect_SaveGame;
     private readonly InputAction m_DungeonLevelSelect_Back;
+    private readonly InputAction m_DungeonLevelSelect_FloorInfo;
     public struct DungeonLevelSelectActions
     {
         private @PlayerControls m_Wrapper;
         public DungeonLevelSelectActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @SaveGame => m_Wrapper.m_DungeonLevelSelect_SaveGame;
         public InputAction @Back => m_Wrapper.m_DungeonLevelSelect_Back;
+        public InputAction @FloorInfo => m_Wrapper.m_DungeonLevelSelect_FloorInfo;
         public InputActionMap Get() { return m_Wrapper.m_DungeonLevelSelect; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -4398,6 +4450,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Back.started += instance.OnBack;
             @Back.performed += instance.OnBack;
             @Back.canceled += instance.OnBack;
+            @FloorInfo.started += instance.OnFloorInfo;
+            @FloorInfo.performed += instance.OnFloorInfo;
+            @FloorInfo.canceled += instance.OnFloorInfo;
         }
 
         private void UnregisterCallbacks(IDungeonLevelSelectActions instance)
@@ -4408,6 +4463,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Back.started -= instance.OnBack;
             @Back.performed -= instance.OnBack;
             @Back.canceled -= instance.OnBack;
+            @FloorInfo.started -= instance.OnFloorInfo;
+            @FloorInfo.performed -= instance.OnFloorInfo;
+            @FloorInfo.canceled -= instance.OnFloorInfo;
         }
 
         public void RemoveCallbacks(IDungeonLevelSelectActions instance)
@@ -4594,6 +4652,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSwitchMenuRight(InputAction.CallbackContext context);
         void OnExitMenu(InputAction.CallbackContext context);
         void OnSaveSettings(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
     }
     public interface IUINavigationActions
     {
@@ -4617,6 +4676,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnSaveGame(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnFloorInfo(InputAction.CallbackContext context);
     }
     public interface IDeviceDetectionActions
     {

@@ -1521,6 +1521,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1598391671035646725, guid: ce0f1dea9d2aa4240a049a23f07ca852, type: 3}
   m_PrefabInstance: {fileID: 3889511982359576649}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &514429535
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1001 &571041655
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4014,7 +4052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531702471838677501, guid: 398b3cd13438b474e8e5ce5035ea2f02, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -21
+      value: -20.999939
       objectReference: {fileID: 0}
     - target: {fileID: 7835150884418230111, guid: 398b3cd13438b474e8e5ce5035ea2f02, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4271,6 +4309,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2296929844261701772, guid: eddd9ee140b83b8428285dd52ba8c945, type: 3}
   m_PrefabInstance: {fileID: 7456427500368381488}
   m_PrefabAsset: {fileID: 0}
+--- !u!84 &926698305
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!4 &928978982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7382807977210591031, guid: 8ba6830e43a443c49ba2b60777be0626, type: 3}
@@ -4307,44 +4383,6 @@ MonoBehaviour:
   tintStrength: 1
   useExtinction: 0
   extinction: 0.75
---- !u!84 &971980370
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &977099178
 GameObject:
   m_ObjectHideFlags: 0
@@ -6731,8 +6769,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dungeonDatabase: {fileID: 11400000, guid: 8f39be7b44e6ebc43b88e64a27206fd7, type: 2}
   savedDungeons: []
-  currentDungeonId: 
-  currentLevelId: 
 --- !u!4 &1254521625
 Transform:
   m_ObjectHideFlags: 0
@@ -7559,44 +7595,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6222865805945855146, guid: 4cfba36386263a240a646037e4a86e26, type: 3}
   m_PrefabInstance: {fileID: 8507527742183862515}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &1436867216
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1444884804 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5561550452697079657, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
@@ -10911,7 +10909,7 @@ MonoBehaviour:
   isDead: 0
   deathExplosionVFXDelay: 5
   faction: 0
-  isPlayer: 0
+  isPlayer: 1
   isRotatingAttacker: 0
   isPerformingAction: 0
   isJumping: 0
@@ -11541,8 +11539,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 0}
-  walkFootStepPitch: 1
+  walkFootStepPitch: 0.8
   runFootStepPitch: 1.2
+  walkVolume: 0.8
+  runVolume: 0.4
+  backpedalVolume: 0.5
+  jumpFootStepVolume: 0.5
+  landingVolume: 0.5
+  rollVolume: 0.5
   takeDamageGrunts: []
   sprintBoosterAudioSource: {fileID: 0}
 --- !u!1 &6063556064147133994
@@ -13008,6 +13012,17 @@ MonoBehaviour:
   specialtyCooldownTimer: 0
   isSpecialWeaponOffCooldown: 1
   quickChargeCapacitorCooldownMultiplier: 0.8
+  elementalMaterialsArray:
+  - {fileID: 2100000, guid: ef1aec89c5d73274ca96a86ad38931ea, type: 2}
+  - {fileID: 2100000, guid: db8297b9a9d76444587b877842897ac0, type: 2}
+  - {fileID: 2100000, guid: 8c7c42a039f50ff4094b3401be4220a2, type: 2}
+  - {fileID: 2100000, guid: 49742f7f02fbad34e9e69ddc851ade16, type: 2}
+  - {fileID: 2100000, guid: d4007bae13af94b48b97431e59eba8d9, type: 2}
+  - {fileID: 2100000, guid: 4a4726b464cbcb6409cce4627e47ddab, type: 2}
+  - {fileID: 2100000, guid: ca61c59a19db6b948b1dfd1223b06d9b, type: 2}
+  - {fileID: 2100000, guid: a777073135672384785b36a1cc47021d, type: 2}
+  - {fileID: 2100000, guid: a5db7de152ece574d95ccd80e5e96354, type: 2}
+  - {fileID: 2100000, guid: eb9ca72a26dbecb46b80c1147ae87a24, type: 2}
 --- !u!114 &8671731848262977639
 MonoBehaviour:
   m_ObjectHideFlags: 0

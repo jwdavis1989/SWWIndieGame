@@ -15,6 +15,7 @@ public class HealCharacterEffect : ItemEffect
 
     public override void ProcessEffect(CharacterManager character)
     {
+        DungeonManager.healingItemUsed = true;
         //base.ProcessEffect(character);
 
         //Set new HP

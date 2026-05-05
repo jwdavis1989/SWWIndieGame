@@ -205,6 +205,26 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.CloseDamageCollider();
     }
 
+    public void CallEnableBladeTrailVFX()
+    {
+        characterWeaponManager.EnableBladeTrailVFX();
+    }
+
+    public void CallDisableBladeTrailVFX()
+    {
+        characterWeaponManager.DisableBladeTrailVFX();
+    }
+
+    public void CallEnableSpecialWeaponTrailVFX()
+    {
+        characterWeaponManager.EnableSpecialWeaponTrailVFX();
+    }
+
+    public void CallDisableSpecialWeaponTrailVFX()
+    {
+        characterWeaponManager.DisableSpecialWeaponTrailVFX();
+    }
+
     public void CallOpenJumpAttackDamageCollider()
     {
         characterWeaponManager.OpenJumpAttackDamageCollider();

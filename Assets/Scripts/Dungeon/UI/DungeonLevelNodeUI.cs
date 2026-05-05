@@ -19,13 +19,13 @@ public class DungeonLevelNodeUI : MonoBehaviour
     public Sprite dungeonLevelSprite;
     public bool showHiddenSprite = true;
 
-    public DungeonLevelManager dungeonLevelManager;
+    public DungeonLevelSelectManager dungeonLevelManager;
 
     //TODO - Onhover, onclick, show/hide, lock/unlock
     void Start()
     {
         if(dungeonLevelManager == null)
-            dungeonLevelManager = GetComponentInParent<DungeonLevelManager>();
+            dungeonLevelManager = GetComponentInParent<DungeonLevelSelectManager>();
     }
 
     public void Show()

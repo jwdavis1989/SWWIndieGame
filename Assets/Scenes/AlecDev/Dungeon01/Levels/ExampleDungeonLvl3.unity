@@ -187,15 +187,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 158897390}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27389ddcb2121ad44a38e10073a3ab52, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fbe0ec3e5d66434b93adf11d7124241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactableText: 
   interactableCollider: {fileID: 158897391}
   dungeon_id: example_dungeon
-  isInterior: 1
-  isDungeonLevelExit: 1
-  needsKey: 1
   key_id: iron_key
 --- !u!1 &250895473
 GameObject:
@@ -375,7 +372,6 @@ MonoBehaviour:
   interactableCollider: {fileID: 272310537}
   dungeon_id: example_dungeon
   isInterior: 1
-  isDungeonLevelExit: 0
   needsKey: 0
   key_id: none
 --- !u!1 &290511311
@@ -873,6 +869,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6666511530771334677, guid: d8c8350d1b35cd64db28e4e68533a019, type: 3}
   m_PrefabInstance: {fileID: 1164686665}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1165494493
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.6895914
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.543213
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 2375386293219967306, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3868504530908872297, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_Name
+      value: Skele-Tony
+      objectReference: {fileID: 0}
+    - target: {fileID: 4117506146327323473, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4117506146327323473, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4117506146327323473, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820920198137834055, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4820920198137834055, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f9fb2c85fce35d4588f4bc7a830a8e7, type: 3}
 --- !u!1 &1203988359
 GameObject:
   m_ObjectHideFlags: 0
@@ -2026,3 +2099,4 @@ SceneRoots:
   - {fileID: 290511312}
   - {fileID: 2092746403}
   - {fileID: 1871711387}
+  - {fileID: 1165494493}

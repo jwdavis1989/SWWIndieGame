@@ -337,6 +337,12 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             return;
         }
 
+        if (player.isDead)
+        {
+            characterManager.isSprinting = false;
+            return;
+        }
+
         // If we are moving, set sprinting to true
         if (PlayerInputManager.instance.moveAmount > 0)
         {

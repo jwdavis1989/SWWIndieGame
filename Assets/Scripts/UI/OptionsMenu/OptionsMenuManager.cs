@@ -32,6 +32,7 @@ public class OptionsMenuManager : MonoBehaviour
     [SerializeField] bool menuRightInput = false;
     [SerializeField] bool exitPauseMenuInput = false;
     [SerializeField] bool saveSettingInput = false;
+    [SerializeField] Vector2 scrollInput = new Vector2();
     //tooltips
     public List<GameObject> keyboardMouseTooltips;
     public List<GameObject> gamepadTooltips;
@@ -55,6 +56,7 @@ public class OptionsMenuManager : MonoBehaviour
             playerControls.OptionsMenu.SwitchMenuRight.performed += i => menuRightInput = true;
             playerControls.OptionsMenu.ExitMenu.performed += i => exitPauseMenuInput = true;
             playerControls.OptionsMenu.SaveSettings.performed += i => saveSettingInput = true;
+            playerControls.OptionsMenu.Scroll.performed += i => scrollInput = i.ReadValue<Vector2>();
             playerControls.Enable();
         }
         //todo: shouldnt be necessary? 
@@ -119,6 +121,7 @@ public class OptionsMenuManager : MonoBehaviour
         HandleGamePadSelected();
         HandleSwitchMenuInput();
         HandleSaveSettingsInput();
+        HandleScrollInput();
     }
     private void LateUpdate()
     {
@@ -127,7 +130,16 @@ public class OptionsMenuManager : MonoBehaviour
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************
      ***********************************************************************************************/
+    void HandleScrollInput()
+    {
+        float scrollY = scrollInput.y;
+        float scrollX = scrollInput.x;
+        if(scrollX != 0)
+        {
 
+        }
+        Debug.Log("ScrollX="+scrollX + " scrollY="+scrollY);
+    }
     // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()
     {
@@ -281,6 +293,7 @@ public class OptionsMenuManager : MonoBehaviour
         mainVolumeSlider.value = playerSettings.mainVolume;
         musicVolumeSlider.value = playerSettings.musicVolume;
         effectsVolumeSlider.value = playerSettings.effectsVolume;
+        mixer.SetFloat("MainVolume", playerSettings.mainVolume);
         mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
         mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
     }
@@ -393,5 +406,13 @@ public class OptionsMenuManager : MonoBehaviour
         {
             playerControls.OptionsMenu.Disable();
         }
+    }
+    public void OnOptionsScroll(Vector2 value)
+    {
+        Debug.Log("OnOptionsScroll:" + value);
+    }
+    public void OnVerticalScroll(float value)
+    {
+        Debug.Log("OnVerticalScroll:" + value);
     }
 }

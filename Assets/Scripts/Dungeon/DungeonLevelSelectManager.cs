@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.TerrainUtils;
 using UnityEngine.UI;
 
-public class DungeonLevelManager : MonoBehaviour
+public class DungeonLevelSelectManager : MonoBehaviour
 {
     [Header("DungeonLevelManager handle the level select of a particular dungeon\n" +
         "It should exist in the scene that holds that UI")]
@@ -16,6 +18,10 @@ public class DungeonLevelManager : MonoBehaviour
     public GameObject backWindow;
     public List<GameObject> keyboardMouseTooltips;
     public List<GameObject> gamepadTooltips;
+    public TooltipUI challengeTooltip;
+    public Button startingNode;
+
+    //data
     private DungeonData dungeonData;
     private DungeonDatabase dungeonDatabase;
 
@@ -24,6 +30,7 @@ public class DungeonLevelManager : MonoBehaviour
     public EventSystem eventSystem;
     public bool saveInput = false;
     public bool backInput = false;
+    public bool floorInfoInput = false;
 
 
     // Start is called before the first frame update
@@ -58,7 +65,9 @@ public class DungeonLevelManager : MonoBehaviour
             playerControls = new PlayerControls();
             playerControls.DungeonLevelSelect.SaveGame.performed += i => saveInput = true;
             playerControls.DungeonLevelSelect.Back.performed += i => backInput = true;
+            playerControls.DungeonLevelSelect.FloorInfo.performed += i => floorInfoInput = true;
             playerControls.Enable();
+            PlayerInputManager.instance.SafeDisable(true, true);
         }
         // Show relevant tooltips
         if (InputSwitchDetector.IsCurrentlyGamepad())
@@ -83,6 +92,49 @@ public class DungeonLevelManager : MonoBehaviour
         HandleBackInput();
         HandleSaveGameInput();
         CheckControlsChanged();
+        HandleFloorInfoInput();
+        HandleGamepadSelectedObject();
+    }
+    GameObject currentCursorObj;
+    string selectedLevelId;
+    public void HandleGamepadSelectedObject()
+    {
+        if (currentCursorObj != eventSystem.currentSelectedGameObject)
+        { // Need to change active tooltip window
+            //Debug.Log("TooltipActive & New cursor obj");
+            currentCursorObj = eventSystem.currentSelectedGameObject;
+            if (currentCursorObj != null)
+            {
+                DungeonLevelNodeUI ui = currentCursorObj.GetComponentInParent<DungeonLevelNodeUI>();
+                if (ui != null)
+                {
+                    DungeonLevelData levelData = dungeonData.GetDungeonLevelNodeByID(ui.dungeonLevelId);
+                    if (levelData != null)
+                    {
+                        DungeonNodeSaveData nodeSaveData = DungeonManager.GetDungeonNodeProgress(dungeonData.dungeonId, levelData.nodeID);
+                        //challengeTooltip.headerText.text = "Level " + levelData.nodeID;
+                        challengeTooltip.centerText.text = "";
+                        foreach (DungeonChallengeData challengeData in levelData.dungeonChallenges)
+                        {
+                            if (nodeSaveData != null && nodeSaveData.challengesCompleted.Contains(challengeData.challengeId))
+                                challengeTooltip.centerText.text += "[Completed] ";
+                            challengeTooltip.centerText.text += challengeData.description + "\n";
+                        }
+                    }
+                }
+            }
+            else // Nothing is selected. If on gamepad try to select something
+            {
+                if (startingNode != null && InputSwitchDetector.IsCurrentlyGamepad() && !IsWindowActive())
+                {
+                    startingNode.Select();
+                }
+            }
+        }
+    }
+    bool IsWindowActive()
+    {
+        return backWindow.activeInHierarchy || saveWindow.activeInHierarchy;
     }
     void HandleSaveGameInput()
     {
@@ -129,6 +181,17 @@ public class DungeonLevelManager : MonoBehaviour
 
         }
     }
+    void HandleFloorInfoInput()
+    {
+        if (floorInfoInput)
+        {
+            floorInfoInput = false;
+            if (!IsWindowActive())
+            {
+                challengeTooltip.gameObject.SetActive(!challengeTooltip.gameObject.activeInHierarchy);
+            }
+        }
+    }
     public void OnSaveGameClick()
     {
         WorldSaveGameManager.instance.SaveGame();
@@ -137,6 +200,7 @@ public class DungeonLevelManager : MonoBehaviour
     public void OnExitClick()
     {
         DisableLevelNavigation();
+        TeleportData.yRotation = dungeonData.exitYRotation;
         TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(-1, dungeonData.exitX, dungeonData.exitY, dungeonData.exitZ, dungeonData.exitSceneID);
     }
     void DisableLevelNavigation()
@@ -150,7 +214,7 @@ public class DungeonLevelManager : MonoBehaviour
     }
     void EnableLevelNavigation()
     {
-        string currentLevel = DungeonManager.instance.currentLevelId;
+        string currentLevel = DungeonManager.currentLevelId;
         foreach (DungeonLevelNodeUI lvlUI in nodes)
         {
             Navigation nav = lvlUI.button.navigation;

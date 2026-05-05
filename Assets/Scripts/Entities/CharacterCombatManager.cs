@@ -123,4 +123,8 @@ public class CharacterCombatManager : MonoBehaviour
         }
     }
 
+    public virtual void AggroPlayer(GameObject player) {
+        //Does nothing, is overriden by the AiCharacterCombatManager version of this method
+    }
+
 }

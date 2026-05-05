@@ -73,6 +73,8 @@ public class InputSwitchDetector : MonoBehaviour
             deviceChanged = true;
             currentDevice = newDevice;
         }
+        anyKeyboardOrMouse = false;
+        anyGamepadInput = false;
     }
     public static int count = 0;
     public static bool IsCurrentlyGamepad()
