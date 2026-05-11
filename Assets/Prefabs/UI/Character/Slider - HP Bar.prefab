@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 101513288818717400}
   - component: {fileID: 7986451330399452074}
   - component: {fileID: 6914069614599021489}
+  - component: {fileID: 5530741941540074606}
   m_Layer: 6
   m_Name: Text - CharacterName
   m_TagString: Untagged
@@ -134,6 +135,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5530741941540074606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696658938839956403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa83d0ceda31bf449da867990758eb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainText: {fileID: 6914069614599021489}
+  glitchDuration: 0.25
+  jitterIntensity: 4
+  glitchChars: 01!@#$%^&*
+  useChromaticAberration: 1
+  colorR: {r: 1, g: 0, b: 0, a: 0.5}
+  colorB: {r: 0, g: 1, b: 1, a: 0.5}
 --- !u!1 &1549094710025706510
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,11 +337,13 @@ MonoBehaviour:
   scaleBarLengthWithStats: 1
   widthScaleMultiplier: 1
   willDisplayCharacterNameOnDamage: 0
-  defaultTimeBeforeBarHides: 3
-  hideBarTimer: 0
+  defaultTimeBeforeBarTextHides: 3
+  hideBarTextTimer: 0
   currentDamageTaken: 0
   characterName: {fileID: 6914069614599021489}
   characterDamage: {fileID: 9029198736349923479}
+  oldHealthValue: 0
+  healthGlitch: {fileID: 0}
 --- !u!1 &1680404629702785217
 GameObject:
   m_ObjectHideFlags: 0
