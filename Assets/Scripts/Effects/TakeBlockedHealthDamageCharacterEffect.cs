@@ -164,6 +164,11 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         //Apply final damage to character's health
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
 
+        if (targetCharacter != null && targetCharacter.characterUIManager != null)
+        {   
+            targetCharacter.characterUIManager.TriggerGlitchTextEffect();
+        }
+
         //Calculate Poise Damage to determine if the character will be stunned
         //TODO
     }

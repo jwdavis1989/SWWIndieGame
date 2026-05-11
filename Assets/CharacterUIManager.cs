@@ -56,4 +56,19 @@ public class CharacterUIManager : MonoBehaviour
         // }
     }
 
+    public void TriggerGlitchTextEffect()
+    {   
+        if (characterHPBar == null)
+        {
+            return;
+        }
+
+        if (characterHPBar.healthGlitch == null)
+        {   
+            return;
+        }
+        
+        characterHPBar.healthGlitch.TriggerGlitch();
+    }
+
 }

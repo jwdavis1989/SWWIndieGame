@@ -16,6 +16,7 @@ public class UICharacterHPBar : UIStatBar
     [SerializeField] TextMeshProUGUI characterName;
     [SerializeField] TextMeshProUGUI characterDamage;
     [HideInInspector] public float oldHealthValue = 0f;
+    public TextGlitchVFX healthGlitch;
 
     protected override void Awake()
     {
@@ -33,6 +34,7 @@ public class UICharacterHPBar : UIStatBar
     protected override void Start()
     {
         base.Start();
+        healthGlitch = GetComponentInChildren<TextGlitchVFX>();
 
         //gameObject.SetActive(false);
     }

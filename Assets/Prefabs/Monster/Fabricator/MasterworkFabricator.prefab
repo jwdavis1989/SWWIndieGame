@@ -6182,6 +6182,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4279731073902078720, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+      propertyPath: characterName
+      value: FABRICATOR UNIT
+      objectReference: {fileID: 0}
+    - target: {fileID: 4279731073902078720, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       propertyPath: characterModel
       value: 
       objectReference: {fileID: 1224075882189129764}
@@ -6437,6 +6441,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5632615561119973379, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5670254749888666516}
+    - targetCorrespondingSourceObject: {fileID: 8961147574673359042, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2894274698741368686}
   m_SourcePrefab: {fileID: 100100000, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
 --- !u!1 &4804450776015224678 stripped
 GameObject:
@@ -6488,6 +6495,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5249100162518356341, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
   m_PrefabInstance: {fileID: 902906321959419749}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8132270271422414759 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8961147574673359042, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
+  m_PrefabInstance: {fileID: 902906321959419749}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2894274698741368686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8132270271422414759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa83d0ceda31bf449da867990758eb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainText: {fileID: 0}
+  glitchDuration: 0.25
+  jitterIntensity: 4
+  glitchChars: 01!@#$%^&*
+  useChromaticAberration: 1
+  colorR: {r: 1, g: 0, b: 0, a: 0.5}
+  colorB: {r: 0, g: 1, b: 1, a: 0.5}
 --- !u!4 &8177066549235337438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9078414862354134971, guid: b6d916f768dab2e46ab701c323454a6e, type: 3}
