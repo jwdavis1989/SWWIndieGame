@@ -158,6 +158,11 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
         //Reset the poise timer of the target creature
         targetCharacter.characterStatsManager.currentPoiseResetTimer = targetCharacter.characterStatsManager.defaultPoiseResetTimer;
+
+        if (targetCharacter != null && targetCharacter.characterUIManager != null)
+        {   
+            targetCharacter.characterUIManager.TriggerGlitchTextEffect();
+        }
     }
 
     public float CalculateNPCDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)

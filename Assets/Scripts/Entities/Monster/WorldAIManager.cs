@@ -15,6 +15,9 @@ public class WorldAIManager : MonoBehaviour
     [Header("Currently active enemies")]
     [SerializeField] List<GameObject> spawnedAiCharacters;
 
+    [Header("AI Activation Beacon Prefab")]
+    public GameObject activationBeaconGameObject;
+
     [Header("Debug")]
     [SerializeField] bool debugDespawnCharacters = false;
 
