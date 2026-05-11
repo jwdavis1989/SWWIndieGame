@@ -207,7 +207,7 @@ public class PlayerInputManager : MonoBehaviour
             });
             playerControls.PlayerActions.DebugTeleportToAlecDevDungeon.performed += (i =>
             {
-                player.TeleportPlayerToSceneAndCoordinates(6);  // AlecDev - 7/19/25: this is a alec dev dungeon
+                player.TeleportPlayerToSceneAndCoordinates(15);  // AlecDev - 7/19/25: this is a alec dev dungeon
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
