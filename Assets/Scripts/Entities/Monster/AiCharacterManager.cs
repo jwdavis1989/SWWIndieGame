@@ -28,6 +28,9 @@ public class AICharacterManager : CharacterManager
     public AttackState attackState;
     public FarFromTargetState farFromTargetState;
 
+    [Header("Activation Beacon")]
+    protected AIActivationBeacon activationBeacon;
+
     [Header("Determines which type of exp to drop on death")]
     public bool isHitByMainHand = false;
     public bool isHitByOffHand = false;
@@ -43,11 +46,26 @@ public class AICharacterManager : CharacterManager
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         ResetNavMeshAgentPosition();
 
+
         //Use a copy of the scriptable objects so the originals are not modified
         idleState = Instantiate(idleState);
         pursueTargetState = Instantiate(pursueTargetState);
 
         currentState = idleState;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        //Initialize UI manager to avoid race condition
+        characterUIManager.initializeUIManager();
+
+        //Initialize AIActivationBeacon
+        CreateActivationBeacon();
+
+        //Character should begin deactivated until they enter player render distance
+        DeactivateCharacter();
     }
 
     protected override void Update() {
@@ -69,6 +87,14 @@ public class AICharacterManager : CharacterManager
     {
         base.OnEnable();
 
+    }
+
+    //WARNING: Can't be overriden normally in Unity. If bugs involving OnDestroy effects failing, check here.
+    private void OnDestroy() {
+        if (activationBeacon != null)
+        {
+            Destroy(activationBeacon);
+        }
     }
 
     public void ResetNavMeshAgentPosition()
@@ -158,5 +184,54 @@ public class AICharacterManager : CharacterManager
         characterAnimatorManager.UpdateAnimatorMovementParameters(0, 1, false);
     }
 
+    public void ActivateCharacter()
+    {
+        gameObject.SetActive(true);
+
+        //Enable Renderers to save on memory
+        // characterModel.SetActive(true);
+        // animator.enabled = true;
+        // navMeshAgent.enabled = true;
+
+
+        aiCharacterCombatManager.isPlayerInRenderRange = true;
+    }
+
+    public void DeactivateCharacter()
+    {
+        //Disable Renderers to save on memory
+        // characterModel.SetActive(false);
+        // animator.enabled = false;
+        // navMeshAgent.enabled = false;
+
+        if (activationBeacon != null)
+        {
+            activationBeacon.transform.position = transform.position;
+            activationBeacon.gameObject.SetActive(true);
+        }
+
+        aiCharacterCombatManager.isPlayerInRenderRange = false;
+        aiCharacterCombatManager.SetTarget(null);
+
+        //Disable enemy to save on memory
+        gameObject.SetActive(false);
+    }
+
+    public void CreateActivationBeacon()
+    {
+        if (activationBeacon == null)
+        {
+            GameObject activationBeaconObject = Instantiate(WorldAIManager.instance.activationBeaconGameObject);
+            activationBeaconObject.transform.position = transform.position;
+
+            activationBeacon = activationBeaconObject.GetComponent<AIActivationBeacon>();
+            activationBeacon.SetOwnerOfBeacon(this);
+        }
+        else
+        {
+            activationBeacon.transform.position = transform.position;
+            activationBeacon.gameObject.SetActive(true);
+        }
+    }
 
 }

@@ -15,6 +15,9 @@ public class AiCharacterCombatManager : CharacterCombatManager
     public float viewableAngle; //Angle of our potential target
     public Vector3 targetsDirection;
 
+    [Header("Activation Range")]
+    public bool isPlayerInRenderRange = false;
+
     [Header("Action Recovery")]
     public float actionRecoveryTimer = 0f;
 
