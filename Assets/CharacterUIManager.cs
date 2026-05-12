@@ -77,7 +77,7 @@ public class CharacterUIManager : MonoBehaviour
         GameObject damagePopUpObject = Instantiate(WorldAIManager.instance.damagePopupPrefab, transform.position + Vector3.up, Quaternion.identity);
     
         // Initialize with the damage value
-        damagePopUpObject.GetComponent<DamagePopUp>().Setup(amount);
+        damagePopUpObject.GetComponentInChildren<DamagePopUp>().Setup(amount);
     }
 
 }

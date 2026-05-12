@@ -10,6 +10,9 @@ public class DamagePopUp : MonoBehaviour
     private Vector3 moveVector;
     private float minimumHorizontalSpeed = 2.5f;
     private float maximumHorizontalSpeed = 5f;
+    private float rotationMagnitude = 80f;
+    private float currentRotationSpeed;
+    private float startingRotationModifier = 0.2f;
 
     private float jitterAmount = 0.5f;
     private float gravity = 30f;
@@ -34,6 +37,8 @@ public class DamagePopUp : MonoBehaviour
 
         moveVector = new Vector3(horizontalSpeed * sideDirection, upwardSpeed, 0);
         timer = lifetime;
+
+        currentRotationSpeed = Random.Range(-rotationMagnitude, rotationMagnitude);
 
         //Start the animation
         StartCoroutine(AnimateScale());
@@ -76,19 +81,29 @@ public class DamagePopUp : MonoBehaviour
             0
         );
 
-        // Apply jitter to the visual child (not the parent, to keep movement clean)
+        //Apply jitter to the visual child (not the parent, to keep movement clean)
         textMesh.transform.localPosition = jitterOffset;
 
+        //Apply Rotation
+        transform.Rotate(new Vector3(0, 0, currentRotationSpeed * startingRotationModifier) * Time.deltaTime);
+
         timer -= Time.deltaTime;
-        if (timer <= 0) Destroy(gameObject);
+
+        if (timer <= 0) {
+            Destroy(gameObject);
+        }
         else if (timer < (lifetime / 2))
         {
+
             Color color = textMesh.color;
             color.a -= (1 / (lifetime / 2)) * Time.deltaTime * 2f;
             textMesh.color = color;
 
             //Apply gravity
             moveVector.y -= gravity * Time.deltaTime;
+
+            //Increase rotation as it falls
+            transform.Rotate(new Vector3(0, 0, currentRotationSpeed) * Time.deltaTime);
         }
     }
 }
