@@ -7,7 +7,7 @@ public class NoHealChallenge : DungeonChallengeData
 {
     public override bool IsFailed()
     {
-        return !DungeonManager.healingItemUsed;
+        return DungeonManager.healingItemUsed;
     }
     public override void Initialize()
     {
