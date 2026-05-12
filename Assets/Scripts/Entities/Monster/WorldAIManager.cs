@@ -18,6 +18,9 @@ public class WorldAIManager : MonoBehaviour
     [Header("AI Activation Beacon Prefab")]
     public GameObject activationBeaconGameObject;
 
+    [Header("DamagePopUp Prefab")]
+    public GameObject damagePopupPrefab;
+
     [Header("Debug")]
     [SerializeField] bool debugDespawnCharacters = false;
 

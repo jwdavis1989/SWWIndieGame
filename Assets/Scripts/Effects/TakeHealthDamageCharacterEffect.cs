@@ -159,9 +159,10 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Reset the poise timer of the target creature
         targetCharacter.characterStatsManager.currentPoiseResetTimer = targetCharacter.characterStatsManager.defaultPoiseResetTimer;
 
-        if (targetCharacter != null && targetCharacter.characterUIManager != null)
+        if (targetCharacter != null && targetCharacter.characterUIManager != null && !targetCharacter.isPlayer)
         {   
             targetCharacter.characterUIManager.TriggerGlitchTextEffect();
+            targetCharacter.characterUIManager.TriggerDamagePopUp(finalDamageDealt);
         }
     }
 
