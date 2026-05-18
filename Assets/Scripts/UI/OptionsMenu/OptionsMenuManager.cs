@@ -413,6 +413,10 @@ public class OptionsMenuManager : MonoBehaviour
         nav = musicVolumeSlider.navigation;
         nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
         musicVolumeSlider.navigation = nav;
+
+        nav = mouseSensitivitySlider.navigation;
+        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+        mouseSensitivitySlider.navigation = nav;
     }
     void DisableOptionsControls()
     {
