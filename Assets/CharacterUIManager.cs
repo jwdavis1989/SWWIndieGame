@@ -71,4 +71,13 @@ public class CharacterUIManager : MonoBehaviour
         characterHPBar.healthGlitch.TriggerGlitch();
     }
 
+    public void TriggerDamagePopUp(float amount)
+    {
+        // Spawn the prefab at the enemy's position
+        GameObject damagePopUpObject = Instantiate(WorldAIManager.instance.damagePopupPrefab, transform.position + Vector3.up, Quaternion.identity);
+    
+        // Initialize with the damage value
+        damagePopUpObject.GetComponentInChildren<DamagePopUp>().Setup(amount);
+    }
+
 }

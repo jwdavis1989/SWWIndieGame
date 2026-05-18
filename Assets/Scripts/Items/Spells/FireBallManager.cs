@@ -61,7 +61,7 @@ public class FireBallManager : SpellManager
         }
     }
 
-    public void InitializeFireBall(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType)
+    public void InitializeFireBall(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, bool hasGravity = true)
     {
         damageCollider.characterCausingDamage = characterCausingDamage;
         damageCollider.InitializeStats();
@@ -70,6 +70,9 @@ public class FireBallManager : SpellManager
             damageCollider.fullChargeModifier = characterCausingDamage.characterWeaponManager.GetEquippedWeapon(true).GetComponent<WeaponScript>().fullChargingTraitModifier;
         }
         highestElementalDamageType = currentHighestElementalDamageType;
+
+        //Set whether the projectile will fall over time or fly straight
+        fireBallRigidBody.useGravity = hasGravity;
     }
 
     public void InstantiateSpellDestructionFX()
