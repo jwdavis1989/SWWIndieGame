@@ -97,10 +97,14 @@ public class PlayerSettingsManager : MonoBehaviour
 }
 [Serializable] public class PlayerSettings
 {
+    //controls
+    public bool gamepad;//otherwise KB&M
     public bool inverted = true;//default to wrong
+    public float mouseSensitivity = 0.0f;
+    //volume
     public float mainVolume;
     public float musicVolume;
     public float effectsVolume;
+    //vfx
     public float brightness;
-    public bool gamepad;//otherwise KB&M
 }

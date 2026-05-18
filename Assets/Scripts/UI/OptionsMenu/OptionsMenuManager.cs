@@ -19,6 +19,7 @@ public class OptionsMenuManager : MonoBehaviour
     public Slider mainVolumeSlider;
     public Slider effectsVolumeSlider;
     public Slider musicVolumeSlider;
+    public Slider mouseSensitivitySlider;
 
     [Header("Save window")]
     public GameObject saveWindow;
@@ -112,6 +113,10 @@ public class OptionsMenuManager : MonoBehaviour
         if (effectsVolumeSlider != null)
         {
             effectsVolumeSlider.onValueChanged.AddListener(OnEffectsVolumeChange);
+        }
+        if(mouseSensitivitySlider != null)
+        {
+            mouseSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivityChanged);
         }
     }
     // Update is called once per frame
@@ -293,6 +298,8 @@ public class OptionsMenuManager : MonoBehaviour
         mainVolumeSlider.value = playerSettings.mainVolume;
         musicVolumeSlider.value = playerSettings.musicVolume;
         effectsVolumeSlider.value = playerSettings.effectsVolume;
+        if(mouseSensitivitySlider != null)
+            mouseSensitivitySlider.value = playerSettings.mouseSensitivity;
         mixer.SetFloat("MainVolume", playerSettings.mainVolume);
         mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
         mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
@@ -345,6 +352,17 @@ public class OptionsMenuManager : MonoBehaviour
             effectsVolume = newValue;
             isChanged = true;
             effectsVolumeChanged = true;
+        }
+    }
+    float mouseSensitivity = 0;
+    bool mouseSensitivityChanged = false;
+    public void OnMouseSensitivityChanged(float newValue)
+    {
+        if(mouseSensitivity != newValue)
+        {
+            mouseSensitivity = newValue;
+            isChanged = true;
+            mouseSensitivityChanged = true;
         }
     }
     void SaveMainVolume(float newValue)
