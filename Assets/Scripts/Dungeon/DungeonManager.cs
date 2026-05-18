@@ -71,7 +71,7 @@ public class DungeonManager : MonoBehaviour
         else
             Debug.Log("EnterDungeonLevel dungeonNode null");
     }
-    public static void CompleteCurrentDungeonLevel(float completeTime = 0)
+    public static void CompleteCurrentDungeonLevel(float completeTime = 0, string unlockedFloorId = null)
     {
         elapsedTime = completeTime;
         if(instance.savedDungeons == null)
@@ -104,10 +104,13 @@ public class DungeonManager : MonoBehaviour
         // unlock connecting level
         foreach (DungeonLevelData connectedNode in dungeonNode.connections)
         {
-            nodeSaveData = new DungeonNodeSaveData();
-            nodeSaveData.nodeID = connectedNode.nodeID;
-            nodeSaveData.unlocked = true;
-            dungeonSaveData.savedNodes.Add(nodeSaveData);
+            if(unlockedFloorId == null || unlockedFloorId.Trim().Length == 0 || connectedNode.nodeID.Equals(unlockedFloorId))
+            {
+                nodeSaveData = new DungeonNodeSaveData();
+                nodeSaveData.nodeID = connectedNode.nodeID;
+                nodeSaveData.unlocked = true;
+                dungeonSaveData.savedNodes.Add(nodeSaveData);
+            }
         }
     }
     //challenges
