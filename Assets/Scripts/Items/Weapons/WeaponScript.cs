@@ -263,8 +263,8 @@ public class WeaponScript : MonoBehaviour
     [Header("Gun Projectile")]
     [SerializeField] public GameObject gunProjectile = null;
     [SerializeField] public GameObject gunShotWarmUpVFX;
-    public float projectileForwardVelocityMultiplier = 7f;
-    public float projectileUpwardVelocityMultiplier = 4f;
+    public float projectileForwardVelocityMultiplier = 30f;
+    public float projectileUpwardVelocityMultiplier = 0f;
     public float projectileMass = 0.01f;
 
 
