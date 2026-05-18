@@ -762,8 +762,8 @@ public class WeaponScript : MonoBehaviour
         //Update the VFX to match the highest element of the magic weapon
         instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
-        FireBallManager fireBallManager = instantiatedGunProjectile.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat, false);
+        SemiAutoBulletManager bulletManager = instantiatedGunProjectile.GetComponent<SemiAutoBulletManager>();
+        bulletManager.InitializeBullet(character, stats.elemental.currentHighestElementalStat, false);
 
         //3. Zero out its location and unparent it
         instantiatedGunProjectile.transform.parent = bulletOriginLocation.transform;

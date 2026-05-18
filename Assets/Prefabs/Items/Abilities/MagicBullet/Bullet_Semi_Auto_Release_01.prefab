@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7743030383466164025}
   - component: {fileID: 7949444504793188433}
   - component: {fileID: 8138117589633198228}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: IceSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4979,7 +4979,7 @@ GameObject:
   - component: {fileID: 3343030717980360001}
   - component: {fileID: 5841383069685785000}
   - component: {fileID: 8742580060434354784}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Ember
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9823,7 +9823,7 @@ GameObject:
   - component: {fileID: 5112752881122550682}
   - component: {fileID: 3333451274177945591}
   - component: {fileID: 2796096641731259044}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: WindSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14881,7 +14881,7 @@ GameObject:
   - component: {fileID: 5531494898890798933}
   - component: {fileID: 5274353664037959284}
   - component: {fileID: 2799207176510499913}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19601,7 +19601,7 @@ GameObject:
   - component: {fileID: 8300083865434186308}
   - component: {fileID: 3407232985213531724}
   - component: {fileID: 834706786842484626}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24504,7 +24504,7 @@ GameObject:
   - component: {fileID: 8758887688020389758}
   - component: {fileID: 2013189191454998865}
   - component: {fileID: 3008832434074127345}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: LightSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29575,7 +29575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4309625673359892140}
   - component: {fileID: 8807634608469808751}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29670,7 +29670,7 @@ GameObject:
   - component: {fileID: 1467201607708911360}
   - component: {fileID: 7810482347858190100}
   - component: {fileID: 4343676416830243072}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Stars remains
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34583,7 +34583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 916401520911082575}
   - component: {fileID: 6447164458830999634}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34678,7 +34678,7 @@ GameObject:
   - component: {fileID: 2475648236561764478}
   - component: {fileID: 8876883261384176282}
   - component: {fileID: 1976700800921686036}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Small Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39485,7 +39485,7 @@ GameObject:
   - component: {fileID: 6694855551815335103}
   - component: {fileID: 3940082812789841679}
   - component: {fileID: 4772652635362326133}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44400,7 +44400,7 @@ GameObject:
   - component: {fileID: 4285887229794424200}
   - component: {fileID: 6452836652550305653}
   - component: {fileID: 6577965772269257776}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: FireSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49469,7 +49469,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4008315248383926740}
-  - component: {fileID: 1488970376158948715}
+  - component: {fileID: 3366227852881438538}
   - component: {fileID: 7859548882374867010}
   - component: {fileID: 893370845224794786}
   m_Layer: 8
@@ -49494,7 +49494,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6290033747959576124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1488970376158948715
+--- !u!114 &3366227852881438538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49503,7 +49503,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2765679641273303229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b07efd94c19ba3458d41f6b01583bf8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c91158ae38e46c46827846ebedf8c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   physicalDamage: 0
@@ -49528,8 +49528,8 @@ MonoBehaviour:
   blockingStaminaDamage: 25
   characterCausingDamage: {fileID: 0}
   spellDamageMotionValue: 0
-  weaponFamily: 10
-  timeUntilSpellDestruction: 0.4
+  weaponFamily: 5
+  timeUntilSpellDestruction: 0.1
 --- !u!54 &7859548882374867010
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -49589,7 +49589,7 @@ GameObject:
   - component: {fileID: 3722380250084269258}
   - component: {fileID: 8819779338050497168}
   - component: {fileID: 6837531666012276808}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Lines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54381,7 +54381,7 @@ GameObject:
   - component: {fileID: 6609714889466864411}
   - component: {fileID: 2938639732654451095}
   - component: {fileID: 7196883328646414493}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Glows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59045,7 +59045,7 @@ GameObject:
   - component: {fileID: 5316521416020040927}
   - component: {fileID: 4756734702815031766}
   - component: {fileID: 392134464478648098}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: TechSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64161,7 +64161,7 @@ GameObject:
   - component: {fileID: 5862271491676646933}
   - component: {fileID: 8124029897301345041}
   - component: {fileID: 852946681783187605}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69060,7 +69060,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7323214855729024972}
   - component: {fileID: 1441939191940483006}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69155,7 +69155,7 @@ GameObject:
   - component: {fileID: 3102983526010644464}
   - component: {fileID: 3096652748068948895}
   - component: {fileID: 3080611935170008564}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73947,10 +73947,10 @@ GameObject:
   - component: {fileID: 6290033747959576124}
   - component: {fileID: 6456271798410095019}
   - component: {fileID: 7086873379921107738}
-  - component: {fileID: -8109248853080684536}
+  - component: {fileID: 3165347500894965710}
   - component: {fileID: 490332069815079110}
   - component: {fileID: 7677678311520095271}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Bullet_Semi_Auto_Release_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74031,7 +74031,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8109248853080684536
+--- !u!114 &3165347500894965710
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74040,7 +74040,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4845079000888395174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c57ce679278cbdd4e81840cb3d787dee, type: 3}
+  m_Script: {fileID: 11500000, guid: b574d788affec6d4f89d31edd59b6736, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spellTargetCharacter: {fileID: 0}
@@ -74179,7 +74179,7 @@ GameObject:
   - component: {fileID: 6520150739650076126}
   - component: {fileID: 6093320994457128524}
   - component: {fileID: 1918516616974755602}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: BeastSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79116,7 +79116,7 @@ GameObject:
   - component: {fileID: 5011870826442799176}
   - component: {fileID: 3207575767997935139}
   - component: {fileID: 675704790430870257}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: LightningBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84136,7 +84136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 187668904803092519}
   - component: {fileID: 2524352312944567545}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84230,7 +84230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7466822987744665152}
   - component: {fileID: 3091319667391160691}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84324,7 +84324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 744663330022317789}
   - component: {fileID: 6949601618131847775}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: LightningSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84453,7 +84453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4994394891431450033}
   - component: {fileID: 315437395841495452}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84548,7 +84548,7 @@ GameObject:
   - component: {fileID: 7029113233226306813}
   - component: {fileID: 1023554052052051569}
   - component: {fileID: 4764252934252705295}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Rays
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89391,7 +89391,7 @@ GameObject:
   - component: {fileID: 1347525137847884157}
   - component: {fileID: 829060325556536466}
   - component: {fileID: 3631609634537568376}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: CFXR2 Poison Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94102,7 +94102,7 @@ GameObject:
   - component: {fileID: 7672625363584361383}
   - component: {fileID: 6649610846001772911}
   - component: {fileID: 7881340505752479614}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99001,7 +99001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3828806369257965076}
   - component: {fileID: 6125730539070347423}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99095,7 +99095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8055187128006581368}
   - component: {fileID: 1799494152517111230}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99190,7 +99190,7 @@ GameObject:
   - component: {fileID: 4902750083964547293}
   - component: {fileID: 747440406771149902}
   - component: {fileID: 1461830008934105897}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: CrossClaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103910,7 +103910,7 @@ GameObject:
   - component: {fileID: 4484777472680844833}
   - component: {fileID: 5592541256956230105}
   - component: {fileID: 6050436547785497202}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: ColliderVisualAid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103993,7 +103993,7 @@ GameObject:
   - component: {fileID: 8835528524027238236}
   - component: {fileID: 328128233078677014}
   - component: {fileID: 4551195047107998726}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Orbital
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108828,7 +108828,7 @@ GameObject:
   - component: {fileID: 1310712495998685241}
   - component: {fileID: 6191334936102189743}
   - component: {fileID: 3008610442851097944}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: ScalesSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113787,7 +113787,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4361368723452410602}
   - component: {fileID: 6217218660748606330}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113882,7 +113882,7 @@ GameObject:
   - component: {fileID: 5726419385134749816}
   - component: {fileID: 5978046163965852487}
   - component: {fileID: 3118473903290178486}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118674,7 +118674,7 @@ GameObject:
   - component: {fileID: 989913163423022435}
   - component: {fileID: 7600802337915244177}
   - component: {fileID: 8445937472758526018}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123525,7 +123525,7 @@ GameObject:
   - component: {fileID: 4481939017298833872}
   - component: {fileID: 5625968986068593172}
   - component: {fileID: 1526890675868399741}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128427,7 +128427,7 @@ GameObject:
   - component: {fileID: 6147019370852345424}
   - component: {fileID: 2498372618979050382}
   - component: {fileID: 6335551072952099177}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: EarthSpellVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133412,7 +133412,7 @@ GameObject:
   - component: {fileID: 8505153785912629602}
   - component: {fileID: 5386943639269661448}
   - component: {fileID: 7928826975360020874}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138312,7 +138312,7 @@ GameObject:
   - component: {fileID: 4276652085550314544}
   - component: {fileID: 7970025561236665503}
   - component: {fileID: 3073448977558597023}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142974,7 +142974,7 @@ GameObject:
   - component: {fileID: 6540238056003323225}
   - component: {fileID: 6426253782451181176}
   - component: {fileID: 3870934741934400064}
-  m_Layer: 14
+  m_Layer: 8
   m_Name: Impact small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
