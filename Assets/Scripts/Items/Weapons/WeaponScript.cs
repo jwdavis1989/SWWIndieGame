@@ -263,8 +263,8 @@ public class WeaponScript : MonoBehaviour
     [Header("Gun Projectile")]
     [SerializeField] public GameObject gunProjectile = null;
     [SerializeField] public GameObject gunShotWarmUpVFX;
-    public float projectileForwardVelocityMultiplier = 7f;
-    public float projectileUpwardVelocityMultiplier = 4f;
+    public float projectileForwardVelocityMultiplier = 30f;
+    public float projectileUpwardVelocityMultiplier = 0f;
     public float projectileMass = 0.01f;
 
 
@@ -762,8 +762,8 @@ public class WeaponScript : MonoBehaviour
         //Update the VFX to match the highest element of the magic weapon
         instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
-        FireBallManager fireBallManager = instantiatedGunProjectile.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+        SemiAutoBulletManager bulletManager = instantiatedGunProjectile.GetComponent<SemiAutoBulletManager>();
+        bulletManager.InitializeBullet(character, stats.elemental.currentHighestElementalStat, false);
 
         //3. Zero out its location and unparent it
         instantiatedGunProjectile.transform.parent = bulletOriginLocation.transform;

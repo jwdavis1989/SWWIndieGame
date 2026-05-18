@@ -2,25 +2,25 @@ using UnityEngine;
 
 public class BulletProjectileDamageCollider : DamageCollider
 {
-    private FireBallManager fireBallManager;
+    private SemiAutoBulletManager bulletManager;
 
     [Header("Attacking Character")]
     public CharacterManager characterCausingDamage;
 
-    [Header("Bullet Attack Modifiers")]
+    [Header("Spell Attack Modifiers")]
     public float spellDamageMotionValue;
     
 
     private WeaponScript weaponThatOwnsThisCollider;
     public WeaponFamily weaponFamily;
 
-    public float timeUntilSpellDestruction = 0.4f;
+    public float timeUntilSpellDestruction = 0.1f;
 
     protected override void Awake()
     {
         base.Awake();
 
-        fireBallManager = GetComponentInParent<FireBallManager>();
+        bulletManager = GetComponentInParent<SemiAutoBulletManager>();
     }
 
     public void InitializeStats()
@@ -61,7 +61,7 @@ public class BulletProjectileDamageCollider : DamageCollider
             //Damage
             DamageTarget(damageTarget);
 
-            fireBallManager.WaitThenInstantiateSpellDestructionFX(timeUntilSpellDestruction);
+            bulletManager.WaitThenInstantiateSpellDestructionFX(timeUntilSpellDestruction);
         }
         //}
     }
@@ -110,11 +110,16 @@ public class BulletProjectileDamageCollider : DamageCollider
                 case AttackType.AreaSpellAttack01:
                     attackMotionValue = weaponThatOwnsThisCollider.stats.areaSpellAttack01DamageMotionValue;
                     break;
+                
+                //Gun Attacks
+                case AttackType.SingleTargetBulletAttack01:
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.singleTargetBulletAttack01DamageMotionValue;
+                    break;
 
                 //Default
                 default:
                     attackMotionValue = 1;
-                    Debug.Log("ERROR: Spell Attack Type not set.");
+                    Debug.Log("ERROR: Bullet Attack Type not set.");
                     break;
             }
 
