@@ -7,6 +7,10 @@ public class DungeonExitInteractable : Interactable
     public string dungeon_id = "dungeon_id";
     public string key_id = "none";
 
+    [Header("Used for floors with multiple connecting floors. \n" +
+        "If blank all connecting floors will be unlocked")]
+    public string connectedFloorId = "";
+
     DungeonData dungeonData;
     private float elapsedTime = 0f;
     protected override void Awake()
@@ -56,7 +60,7 @@ public class DungeonExitInteractable : Interactable
     {
         //DungeonData dungeonData = DungeonManager.GetDB().GetDungeon(dungeon_id);
         string levelSelectScene = dungeonData.dungeonLevelSelectSceneID;
-        DungeonManager.CompleteCurrentDungeonLevel(elapsedTime);
+        DungeonManager.CompleteCurrentDungeonLevel(elapsedTime, connectedFloorId);
         //DungeonManager
         PlayerInputManager.instance.SafeDisable(true, true);
         TeleportData.yRotation = dungeonData.exitYRotation;
