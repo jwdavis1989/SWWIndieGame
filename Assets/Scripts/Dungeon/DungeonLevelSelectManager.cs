@@ -21,17 +21,22 @@ public class DungeonLevelSelectManager : MonoBehaviour
     public TooltipUI challengeTooltip;
     public Button startingNode;
 
+    //scrolling window
+    [Header("Scrolling window")]
+    public ScrollRect scrollRect;
+    public RectTransform content;
+
     //data
     private DungeonData dungeonData;
     private DungeonDatabase dungeonDatabase;
 
     //input
+    [Header("Input")]
     public PlayerControls playerControls;
     public EventSystem eventSystem;
     public bool saveInput = false;
     public bool backInput = false;
     public bool floorInfoInput = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -105,6 +110,11 @@ public class DungeonLevelSelectManager : MonoBehaviour
             currentCursorObj = eventSystem.currentSelectedGameObject;
             if (currentCursorObj != null)
             {
+                //scroll
+                RectTransform selectedRect = currentCursorObj.GetComponent<RectTransform>();
+                if (selectedRect != null)
+                    ScrollTo(selectedRect);
+                //Handle tooltip
                 DungeonLevelNodeUI ui = currentCursorObj.GetComponentInParent<DungeonLevelNodeUI>();
                 if (ui != null)
                 {
@@ -131,6 +141,22 @@ public class DungeonLevelSelectManager : MonoBehaviour
                 }
             }
         }
+    }
+    void ScrollTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+
+        Vector2 contentPos = (Vector2)scrollRect.transform.InverseTransformPoint(content.position);
+        Vector2 targetPos = (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
+
+        float difference = contentPos.y - targetPos.y;
+
+        float newY = scrollRect.content.anchoredPosition.y + difference;
+
+        scrollRect.content.anchoredPosition = new Vector2(
+            scrollRect.content.anchoredPosition.x,
+            Mathf.Clamp(newY, 0, content.rect.height)
+        );
     }
     bool IsWindowActive()
     {
