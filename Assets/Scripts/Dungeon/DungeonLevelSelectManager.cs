@@ -146,16 +146,26 @@ public class DungeonLevelSelectManager : MonoBehaviour
     {
         Canvas.ForceUpdateCanvases();
 
-        Vector2 contentPos = (Vector2)scrollRect.transform.InverseTransformPoint(content.position);
-        Vector2 targetPos = (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
+        RectTransform content = scrollRect.content;
+        RectTransform viewport = scrollRect.viewport;
 
-        float difference = contentPos.y - targetPos.y;
+        // Position of target relative to content
+        Vector2 localPos = content.InverseTransformPoint(target.position);
 
-        float newY = scrollRect.content.anchoredPosition.y + difference;
+        // Convert so top of content = 0
+        float targetY = -localPos.y;
 
-        scrollRect.content.anchoredPosition = new Vector2(
-            scrollRect.content.anchoredPosition.x,
-            Mathf.Clamp(newY, 0, content.rect.height)
+        // Center target in viewport (optional)
+        float centeredY = targetY - (viewport.rect.height / 2f);
+
+        // Clamp to valid scroll range
+        float maxScroll = content.rect.height - viewport.rect.height;
+
+        centeredY = Mathf.Clamp(centeredY, 0, maxScroll);
+
+        content.anchoredPosition = new Vector2(
+            content.anchoredPosition.x,
+            centeredY
         );
     }
     bool IsWindowActive()

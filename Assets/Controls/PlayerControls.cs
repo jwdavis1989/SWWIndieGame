@@ -2822,6 +2822,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollWheel"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""7d27777f-88d9-4aa9-89d2-251f590ac3d9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -2877,6 +2886,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""FloorInfo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43525d56-4385-4e6c-b702-0d795f25c876"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ScrollWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4710a52f-ff26-4a6c-8431-beceeb11aa09"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ScrollWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -3270,6 +3301,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_DungeonLevelSelect_SaveGame = m_DungeonLevelSelect.FindAction("SaveGame", throwIfNotFound: true);
         m_DungeonLevelSelect_Back = m_DungeonLevelSelect.FindAction("Back", throwIfNotFound: true);
         m_DungeonLevelSelect_FloorInfo = m_DungeonLevelSelect.FindAction("FloorInfo", throwIfNotFound: true);
+        m_DungeonLevelSelect_ScrollWheel = m_DungeonLevelSelect.FindAction("ScrollWheel", throwIfNotFound: true);
         // DeviceDetection
         m_DeviceDetection = asset.FindActionMap("DeviceDetection", throwIfNotFound: true);
         m_DeviceDetection_AnyGamepad = m_DeviceDetection.FindAction("AnyGamepad", throwIfNotFound: true);
@@ -4428,6 +4460,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_DungeonLevelSelect_SaveGame;
     private readonly InputAction m_DungeonLevelSelect_Back;
     private readonly InputAction m_DungeonLevelSelect_FloorInfo;
+    private readonly InputAction m_DungeonLevelSelect_ScrollWheel;
     public struct DungeonLevelSelectActions
     {
         private @PlayerControls m_Wrapper;
@@ -4435,6 +4468,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SaveGame => m_Wrapper.m_DungeonLevelSelect_SaveGame;
         public InputAction @Back => m_Wrapper.m_DungeonLevelSelect_Back;
         public InputAction @FloorInfo => m_Wrapper.m_DungeonLevelSelect_FloorInfo;
+        public InputAction @ScrollWheel => m_Wrapper.m_DungeonLevelSelect_ScrollWheel;
         public InputActionMap Get() { return m_Wrapper.m_DungeonLevelSelect; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -4453,6 +4487,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @FloorInfo.started += instance.OnFloorInfo;
             @FloorInfo.performed += instance.OnFloorInfo;
             @FloorInfo.canceled += instance.OnFloorInfo;
+            @ScrollWheel.started += instance.OnScrollWheel;
+            @ScrollWheel.performed += instance.OnScrollWheel;
+            @ScrollWheel.canceled += instance.OnScrollWheel;
         }
 
         private void UnregisterCallbacks(IDungeonLevelSelectActions instance)
@@ -4466,6 +4503,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @FloorInfo.started -= instance.OnFloorInfo;
             @FloorInfo.performed -= instance.OnFloorInfo;
             @FloorInfo.canceled -= instance.OnFloorInfo;
+            @ScrollWheel.started -= instance.OnScrollWheel;
+            @ScrollWheel.performed -= instance.OnScrollWheel;
+            @ScrollWheel.canceled -= instance.OnScrollWheel;
         }
 
         public void RemoveCallbacks(IDungeonLevelSelectActions instance)
@@ -4677,6 +4717,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSaveGame(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
         void OnFloorInfo(InputAction.CallbackContext context);
+        void OnScrollWheel(InputAction.CallbackContext context);
     }
     public interface IDeviceDetectionActions
     {
