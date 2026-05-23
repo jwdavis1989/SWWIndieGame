@@ -123,9 +123,12 @@ public class DungeonLevelSelectManager : MonoBehaviour
             if (currentCursorObj != null)
             {
                 //scroll
-                RectTransform selectedRect = currentCursorObj.GetComponent<RectTransform>();
-                if (selectedRect != null)
-                    ScrollTo(selectedRect);
+                if (InputSwitchDetector.IsCurrentlyGamepad())
+                {
+                    RectTransform selectedRect = currentCursorObj.GetComponent<RectTransform>();
+                    if (selectedRect != null)
+                        ScrollTo(selectedRect);
+                }
                 //Handle tooltip
                 DungeonLevelNodeUI ui = currentCursorObj.GetComponentInParent<DungeonLevelNodeUI>();
                 if (ui != null)
