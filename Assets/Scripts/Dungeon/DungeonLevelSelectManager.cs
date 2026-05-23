@@ -46,8 +46,14 @@ public class DungeonLevelSelectManager : MonoBehaviour
         foreach (DungeonLevelNodeUI node in nodes)
         { // Show or Hide dungeon levels
             if (node.entrance)
+            {
                 node.Show();
-            else node.Hide(hiddenDungeonLevelSprite);
+                //select & scroll to entrance
+                node.button.Select();
+                ScrollTo(node.button.GetComponent<RectTransform>());
+            }
+            else 
+                node.Hide(hiddenDungeonLevelSprite);
             DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID(node.dungeonLevelId);
             DungeonNodeSaveData dungeonNodeSaveData = DungeonManager.GetDungeonNodeProgress(dungeonId, node.dungeonLevelId);
             if (dungeonNodeSaveData != null)
@@ -59,6 +65,12 @@ public class DungeonLevelSelectManager : MonoBehaviour
                 }
                 else if (dungeonNodeSaveData.unlocked)
                     node.Show();
+            }
+            //select & scroll to current
+            if(DungeonManager.currentLevelId == node.dungeonLevelId)
+            {
+                node.button.Select();
+                ScrollTo(node.button.GetComponent<RectTransform>());
             }
         }
         // Close open windows
