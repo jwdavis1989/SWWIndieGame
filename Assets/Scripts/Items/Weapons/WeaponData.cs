@@ -27,8 +27,6 @@ public class WeaponData : ScriptableObject
 
 
     [Header("NOTE: I'm uncertain about all data below here and if it will be used.")]
-
-    public float maxSpeed = 1.0f;
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
     public float experiencePointsToNextLevel = 100.0f;
