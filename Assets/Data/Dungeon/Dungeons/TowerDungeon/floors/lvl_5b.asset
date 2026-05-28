@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75f916821bea56f45b4d07b0a4b5ca36, type: 3}
-  m_Name: lvl_3.2
+  m_Name: lvl_5b
   m_EditorClassIdentifier: 
-  nodeID: l_3.2
-  dungeonLevelScene: {fileID: 102900000, guid: 33d87dab150e5e143b7ca8d82a4b1dab, type: 3}
+  nodeID: l_5b
+  dungeonLevelName: Dungeon Level Name
+  dungeonLevelScene: {fileID: 102900000, guid: 28c9a7354a02cd1418c0cc3a06650bf9, type: 3}
   startX: 0
   startY: 0
   startZ: -8.5
   startYRotation: 0
-  dungeonChallenges: []
+  dungeonChallenges:
+  - {fileID: 11400000, guid: e8cfc35d8426ece46b8bde337fb26d90, type: 2}
   connections:
-  - {fileID: 11400000, guid: 077c89e43cc6cd2429a5599949a8ebd0, type: 2}
-  levelSceneId: tower_lvl_3.2
+  - {fileID: 11400000, guid: 15b92e20b2cb28b4685de6d53ed0f9f8, type: 2}
+  levelSceneId: tower_lvl_5b

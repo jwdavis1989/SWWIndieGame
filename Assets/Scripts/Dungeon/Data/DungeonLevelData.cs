@@ -6,9 +6,9 @@ using UnityEditor;
 [CreateAssetMenu(menuName = "Dungeon/Dungeon Level Data")]
 public class DungeonLevelData : ScriptableObject
 {
-    [Header("node id, unique to a particular dungeon.\n" +
-        "I'm inclinded to use b1_n1, b1_n2, b2_n1, etc")]
+    [Header("node id, unique to a particular dungeon.")]
     public string nodeID = "b1_n1";
+    public string dungeonLevelName = "Dungeon Level Name";
 #if UNITY_EDITOR
     public SceneAsset dungeonLevelScene;
 #endif

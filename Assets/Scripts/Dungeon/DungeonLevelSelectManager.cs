@@ -137,7 +137,7 @@ public class DungeonLevelSelectManager : MonoBehaviour
                     if (levelData != null)
                     {
                         DungeonNodeSaveData nodeSaveData = DungeonManager.GetDungeonNodeProgress(dungeonData.dungeonId, levelData.nodeID);
-                        //challengeTooltip.headerText.text = "Level " + levelData.nodeID;
+                        challengeTooltip.headerText.text = levelData.dungeonLevelName;
                         challengeTooltip.centerText.text = "";
                         foreach (DungeonChallengeData challengeData in levelData.dungeonChallenges)
                         {
