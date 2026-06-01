@@ -11,6 +11,8 @@ public class WeaponData : ScriptableObject
     [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
     public string weaponFamiliy;
+    public List<string> evolveWeaponIds = new List<string>();
+    public GameObject weaponGameObject;
 
     [Header("Base Weapon Attributes")]
     public float baseAttack = 1.0f;

@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: spark_rosary
   weaponFamiliy: magic_rosary
+  evolveWeaponIds:
+  - zap_rosary
+  weaponGameObject: {fileID: 1847124638102049318, guid: 21f0d7a41534d3348a9a048005af4e18, type: 3}
   baseAttack: 14
   maxAttack: 35
   basePoiseDamage: 1
@@ -45,7 +48,6 @@ MonoBehaviour:
     scalesPower: 34
     techPower: 34
     currentHighestElementalStat: 0
-  maxSpeed: 1
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100

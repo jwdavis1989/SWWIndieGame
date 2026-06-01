@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: flintlock
   weaponFamiliy: guns
+  evolveWeaponIds:
+  - revolver
+  weaponGameObject: {fileID: 1847124638102049318, guid: 7e520fe1274d8ae4f90c07bf66f07788, type: 3}
   baseAttack: 15
   maxAttack: 34
   basePoiseDamage: 1
@@ -45,7 +48,6 @@ MonoBehaviour:
     scalesPower: 34
     techPower: 34
     currentHighestElementalStat: 0
-  maxSpeed: 1
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100

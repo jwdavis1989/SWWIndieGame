@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9f8964d8b9be3498e7343d23802398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterThatOwnsThisWeapon: {fileID: 0}
   weaponFamily: 1
   weaponDamageCollider: {fileID: 0}
   jumpAttackWeaponDamageCollider: {fileID: 4862988502895012156, guid: 4790800cb316f2f479ac2620ab078ac7, type: 3}
@@ -155,7 +156,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 15
-    weaponId: 
+    weaponId: diamond_sword
     isMonsterWeapon: 0
     attack: 42
     maxAttack: 84
@@ -255,6 +256,7 @@ MonoBehaviour:
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
   isInDebugMode: 0
+  ElementalMeshRenderers: []
 --- !u!1 &5448427619865287834
 GameObject:
   m_ObjectHideFlags: 0
