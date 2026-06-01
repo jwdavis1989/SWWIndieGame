@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: lvl_1
   m_EditorClassIdentifier: 
   nodeID: l_1
+  dungeonLevelName: Monumental Entrance
   dungeonLevelScene: {fileID: 102900000, guid: 16f9c5ca71c026946a82df91a0dcfd9d, type: 3}
   startX: 0
   startY: 0
@@ -21,5 +22,6 @@ MonoBehaviour:
   dungeonChallenges:
   - {fileID: 11400000, guid: e8cfc35d8426ece46b8bde337fb26d90, type: 2}
   - {fileID: 11400000, guid: 0f3e760c6f27d2e4f83856655f72e4ff, type: 2}
-  connections: []
+  connections:
+  - {fileID: 11400000, guid: 077c89e43cc6cd2429a5599949a8ebd0, type: 2}
   levelSceneId: tower_lvl_1

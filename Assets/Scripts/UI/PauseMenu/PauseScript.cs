@@ -2,6 +2,7 @@ using NUnit.Framework.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -189,7 +190,10 @@ public class PauseScript : MonoBehaviour
         //}
         //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
         SceneManager.LoadScene(0);
+        //TODO REWORK TO WORK WITH LOADING SCREEN
+        //TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(0,0,0,0,"TitleSCreen",false);
     }
+
     public void ExitGameClicked()
     {
         Application.Quit();
