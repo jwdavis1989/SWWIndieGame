@@ -191,7 +191,9 @@ MonoBehaviour:
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
   isInDebugMode: 0
-  ElementalMeshRenderers: []
+  ElementalMeshRenderers:
+  - {fileID: 4082589086951870642}
+  MagicWeaponMeshRendererIndices: 00000000
 --- !u!1 &6253851391507794244
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +331,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a099fd7279e43c342a2357e9d35e3e26, type: 2}
+  - {fileID: 2100000, guid: 8c7c42a039f50ff4094b3401be4220a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
