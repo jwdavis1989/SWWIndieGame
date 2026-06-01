@@ -55,7 +55,10 @@ public class AggroAllMobsInRadius : MonoBehaviour
         //Set each aggro'ing character's lock on to the player, causing their state machine to swap to their pursueTargetState
         foreach (var aggrodCharacter in aggrodCharacterManagers)
         {
-            aggrodCharacter.characterCombatManager.currentTarget = playerCollider.GetComponent<CharacterManager>();
+            if (!aggrodCharacter.isPlayer)
+            {
+                aggrodCharacter.characterCombatManager.currentTarget = playerCollider.GetComponent<CharacterManager>();
+            }
         }
 
         //Deactivate Collider for optimization
