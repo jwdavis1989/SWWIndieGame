@@ -64,7 +64,8 @@ public enum WeaponFamily
 /*
  * Serializable WeaponStats used for JSON saving
  */
-[Serializable] public class WeaponStats
+[Serializable]
+public class WeaponStats
 {
     [Header("Weapon Type")]
     public WeaponType weaponType = 0;
@@ -263,9 +264,10 @@ public class WeaponScript : MonoBehaviour
     [Header("Gun Projectile")]
     [SerializeField] public GameObject gunProjectile = null;
     [SerializeField] public GameObject gunShotWarmUpVFX;
-    public float projectileForwardVelocityMultiplier = 7f;
-    public float projectileUpwardVelocityMultiplier = 4f;
+    public float projectileForwardVelocityMultiplier = 30f;
+    public float projectileUpwardVelocityMultiplier = 0f;
     public float projectileMass = 0.01f;
+    public float projectileLifeSpanInSeconds = 0.5f;
 
 
     [Header("Spell Projectile")]
@@ -290,6 +292,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("ElementalMeshRenderers")]
     public MeshRenderer[] ElementalMeshRenderers;
+    public int[] MagicWeaponMeshRendererIndices;
 
 
 
@@ -312,7 +315,7 @@ public class WeaponScript : MonoBehaviour
         {
             weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
         }
-            
+
         bladeTrailVFX = GetComponentInChildren<BladeTrail>();
         if (bladeTrailVFX)
         {
@@ -762,8 +765,8 @@ public class WeaponScript : MonoBehaviour
         //Update the VFX to match the highest element of the magic weapon
         instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
-        FireBallManager fireBallManager = instantiatedGunProjectile.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+        SemiAutoBulletManager bulletManager = instantiatedGunProjectile.GetComponent<SemiAutoBulletManager>();
+        bulletManager.InitializeBullet(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds, false);
 
         //3. Zero out its location and unparent it
         instantiatedGunProjectile.transform.parent = bulletOriginLocation.transform;
@@ -875,7 +878,7 @@ public class WeaponScript : MonoBehaviour
         //Initialize MeteorSmashDecal's color to match highest element of weapon
         newJumpAttackDamageCollider.MeteorImpactDecal.InitializeColorFading();
     }
-    
+
 
     // Minimum Threshold determines a cut off before we start allowing an element to be high enough to count for elemental graphics and effects
     public ElementalDamageType GetHighestElementalStat(float minimumThreshold = 0)
@@ -974,7 +977,7 @@ public class WeaponScript : MonoBehaviour
     public string GetWeaponFamilyFormatted()
     {
         if (weaponFamily == WeaponFamily.HammersOrWrenches)
-            return WeaponType.Wrench == stats.weaponType || stats.weaponType == WeaponType.ReinforcedWrench ? "Wrench": "Hammer";
+            return WeaponType.Wrench == stats.weaponType || stats.weaponType == WeaponType.ReinforcedWrench ? "Wrench" : "Hammer";
         string name = "" + weaponFamily;
         string formatted = "";
         foreach (char letter in name)
@@ -991,22 +994,50 @@ public class WeaponScript : MonoBehaviour
         formatted = formatted.Trim();//remove extra space
         if (formatted.Length > 0 && formatted[formatted.Length - 1] == 's')
         {//remove plurality
-            formatted = formatted.Substring(0,formatted.Length - 1);
+            formatted = formatted.Substring(0, formatted.Length - 1);
         }
         return formatted;
     }
 
     public void SetElementalWeaponMaterials(int highestElementStatIndex)
     {
+
         if (characterThatOwnsThisWeapon != null && characterThatOwnsThisWeapon.isPlayer)
         {
-            if (PlayerWeaponManager.instance.elementalMaterialsArray != null && 
+            //Check if Magic Weapon since they use a material array rather than an object array for their elemental decorations
+            bool isMagicWeapon = CheckIfMagicWeapon();
+
+
+            if (PlayerWeaponManager.instance.elementalMaterialsArray != null &&
                 highestElementStatIndex >= 0 && highestElementStatIndex < PlayerWeaponManager.instance.elementalMaterialsArray.Length)
             {
                 for (int i = 0; i < ElementalMeshRenderers.Length; i++)
-                {   
-                    ElementalMeshRenderers[i].material = PlayerWeaponManager.instance.elementalMaterialsArray[highestElementStatIndex];
-                    //Debug.Log("Weapon Name: " + weaponFamily);
+                {
+                    if (isMagicWeapon)
+                    {
+                        //Error Handling in case the weapon prefab was improperly set-up
+                        if (ElementalMeshRenderers.Length != MagicWeaponMeshRendererIndices.Length)
+                        {
+                            Debug.Log("ERROR - " + stats.weaponName +
+                                ": Length mismatch between ElementalMeshRenderers and MagicWeaponMeshRendererIndices List size at index: " + i + ".");
+                            return;
+                        }
+
+                        //Temporary variable that stores the copy of a MeshRenderer's returned Materials array
+                        Material[] tempMagicMaterials = ElementalMeshRenderers[i].materials;
+
+                        //Modify the temp copy with the correct elemental material
+                        tempMagicMaterials[MagicWeaponMeshRendererIndices[i]] = PlayerWeaponManager.instance.elementalMaterialsArray[highestElementStatIndex];
+
+                        //Assign the original MeshRenderer's materials array to the modified copy
+                        ElementalMeshRenderers[i].materials = tempMagicMaterials;
+                        Debug.Log(stats.weaponName + ": Magic Weapon");
+                    }
+                    else
+                    {
+                        ElementalMeshRenderers[i].material = PlayerWeaponManager.instance.elementalMaterialsArray[highestElementStatIndex];
+                        Debug.Log(stats.weaponName + ": Non-Magic Weapon");
+                    }
                 }
             }
             else
@@ -1014,6 +1045,14 @@ public class WeaponScript : MonoBehaviour
                 Debug.LogWarning("Elemental decoration material index out of range or empty.");
             }
         }
+    }
+
+    public bool CheckIfMagicWeapon()
+    {
+        return weaponFamily == WeaponFamily.MagicRings ||
+            weaponFamily == WeaponFamily.MagicRosary ||
+            weaponFamily == WeaponFamily.MagicStaves ||
+            weaponFamily == WeaponFamily.MagicWands;
     }
 
     public Dictionary<string, float> GetPrimaryStats()

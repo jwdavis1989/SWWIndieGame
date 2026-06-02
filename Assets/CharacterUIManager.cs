@@ -12,12 +12,19 @@ public class CharacterUIManager : MonoBehaviour
 
     public void Start()
     {
+        // character = GetComponent<CharacterManager>();
+        // characterHPBar = GetComponentInChildren<UICharacterHPBar>();
+        // characterHPBarObject = characterHPBar.gameObject;
+        // characterHPBar.gameObject.SetActive(false);
+    }
+
+    public void initializeUIManager()
+    {
         character = GetComponent<CharacterManager>();
         characterHPBar = GetComponentInChildren<UICharacterHPBar>();
         characterHPBarObject = characterHPBar.gameObject;
         characterHPBar.gameObject.SetActive(false);
     }
-
     //Might only exist if we add multiplayer
     // public void OnHPChange(float oldValue, float newValue)
     // {
@@ -47,6 +54,30 @@ public class CharacterUIManager : MonoBehaviour
         //     characterHPBar.hideBarTextTimer = characterHPBar.defaultTimeBeforeBarTextHides;
         //     characterHPBar.gameObject.SetActive(true);
         // }
+    }
+
+    public void TriggerGlitchTextEffect()
+    {   
+        if (characterHPBar == null)
+        {
+            return;
+        }
+
+        if (characterHPBar.healthGlitch == null)
+        {   
+            return;
+        }
+        
+        characterHPBar.healthGlitch.TriggerGlitch();
+    }
+
+    public void TriggerDamagePopUp(float amount)
+    {
+        // Spawn the prefab at the enemy's position
+        GameObject damagePopUpObject = Instantiate(WorldAIManager.instance.damagePopupPrefab, transform.position + Vector3.up, Quaternion.identity);
+    
+        // Initialize with the damage value
+        damagePopUpObject.GetComponentInChildren<DamagePopUp>().Setup(amount);
     }
 
 }

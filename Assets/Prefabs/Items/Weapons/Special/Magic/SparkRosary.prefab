@@ -193,7 +193,7 @@ MeshRenderer:
   m_Materials:
   - {fileID: 4874126678125670354, guid: 929b2399fed88664fbd4c001a7d78d8c, type: 3}
   - {fileID: 2100000, guid: d7645812850a7534bb7cfdc0c708bdad, type: 2}
-  - {fileID: 2100000, guid: a72635ebc4b8d1447901932678a51d03, type: 2}
+  - {fileID: 2100000, guid: 8c7c42a039f50ff4094b3401be4220a2, type: 2}
   - {fileID: -541708846208547136, guid: 929b2399fed88664fbd4c001a7d78d8c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 8
-    weaponId: 
+    weaponId: spark_rosary
     isMonsterWeapon: 0
     attack: 14
     maxAttack: 35
@@ -379,7 +379,9 @@ MonoBehaviour:
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
   isInDebugMode: 0
-  ElementalMeshRenderers: []
+  ElementalMeshRenderers:
+  - {fileID: 4090106115647355849}
+  MagicWeaponMeshRendererIndices: 02000000
 --- !u!1 &2782421642116038663
 GameObject:
   m_ObjectHideFlags: 0

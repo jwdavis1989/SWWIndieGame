@@ -16,6 +16,7 @@ public class UICharacterHPBar : UIStatBar
     [SerializeField] TextMeshProUGUI characterName;
     [SerializeField] TextMeshProUGUI characterDamage;
     [HideInInspector] public float oldHealthValue = 0f;
+    public TextGlitchVFX healthGlitch;
 
     protected override void Awake()
     {
@@ -33,6 +34,7 @@ public class UICharacterHPBar : UIStatBar
     protected override void Start()
     {
         base.Start();
+        healthGlitch = GetComponentInChildren<TextGlitchVFX>();
 
         //gameObject.SetActive(false);
     }
@@ -50,18 +52,18 @@ public class UICharacterHPBar : UIStatBar
         //Healing Received
         if (currentDamageTaken < 0)
         {
-            currentDamageTaken = Mathf.Abs(currentDamageTaken);
-            characterDamage.text = "+ " + currentDamageTaken.ToString();
+            // currentDamageTaken = Mathf.Abs(currentDamageTaken);
+            // characterDamage.text = "+ " + currentDamageTaken.ToString();
         }
         //Damage Received
         else if (currentDamageTaken > 0)
         {
-            characterDamage.text = "- " + currentDamageTaken.ToString();
+            // characterDamage.text = "- " + currentDamageTaken.ToString();
         }
         //No Health Change within last window
         else
         {
-            characterDamage.text = "";
+            // characterDamage.text = "";
         }
 
         //Check if their health has changed within the last window to update display timer
@@ -101,7 +103,7 @@ public class UICharacterHPBar : UIStatBar
         }
         else
         {
-            characterDamage.text = "";
+            //characterDamage.text = "";
             currentDamageTaken = 0;
         }
 

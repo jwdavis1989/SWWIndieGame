@@ -119,7 +119,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 10
-    weaponId: 
+    weaponId: revolver
     isMonsterWeapon: 0
     attack: 24
     maxAttack: 44
@@ -202,11 +202,12 @@ MonoBehaviour:
   shootingTransform: {fileID: 4197760213768889058}
   isSettingGunToFiringTransform: 0
   isSetGunToHandTransform: 0
-  gunProjectile: {fileID: 4845079000888395174, guid: ac3f58ce1b3c28b42a6c61a6dd06f303, type: 3}
+  gunProjectile: {fileID: 4845079000888395174, guid: d6d473156b57d0e4aafdae79188b5380, type: 3}
   gunShotWarmUpVFX: {fileID: 7910885794455592294}
-  projectileForwardVelocityMultiplier: 7
-  projectileUpwardVelocityMultiplier: 4
+  projectileForwardVelocityMultiplier: 30
+  projectileUpwardVelocityMultiplier: 0
   projectileMass: 0.01
+  projectileLifeSpanInSeconds: 0.5
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
@@ -223,6 +224,7 @@ MonoBehaviour:
   - {fileID: 1431024858490371545}
   - {fileID: 4441112189096488745}
   - {fileID: 3298740933637901909}
+  MagicWeaponMeshRendererIndices: 
 --- !u!1 &2149582985713168152
 GameObject:
   m_ObjectHideFlags: 0

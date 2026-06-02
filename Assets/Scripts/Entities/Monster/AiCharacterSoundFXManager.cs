@@ -5,10 +5,12 @@ using UnityEngine;
 public class AiCharacterSoundFXManager : CharacterSoundFXManager
 {
     public AudioClip aggroSFX;
+    public float aggroSFXVolume = 1f;
+    public float aggroSFXPitch = 1f;
 
     public void PlayAggroSFX()
     {
-        PlayAdvancedSoundFX(aggroSFX);
+        PlayAdvancedSoundFX(aggroSFX,aggroSFXVolume, aggroSFXPitch);
     }
     
 }

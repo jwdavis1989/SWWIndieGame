@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: bastard_sword
   weaponFamiliy: swords
+  evolveWeaponIds: []
+  weaponGameObject: {fileID: 4976341019228924520, guid: a015047b9396d3a479dda01eb39dfa71, type: 3}
   baseAttack: 23
   maxAttack: 46
   basePoiseDamage: 1
@@ -21,8 +23,8 @@ MonoBehaviour:
   maxDurability: 144
   baseBlock: 40
   maxBlock: 44
-  baseStability: 100
-  maxStability: 144
+  baseStability: 0
+  maxStability: 6
   baseElemental:
     firePower: 0
     icePower: 0
@@ -45,7 +47,6 @@ MonoBehaviour:
     scalesPower: 45
     techPower: 45
     currentHighestElementalStat: 0
-  maxSpeed: 1
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100

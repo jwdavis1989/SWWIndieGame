@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75f916821bea56f45b4d07b0a4b5ca36, type: 3}
+  m_Name: lvl_1
+  m_EditorClassIdentifier: 
+  nodeID: l_1
+  dungeonLevelName: Monumental Entrance
+  dungeonLevelScene: {fileID: 102900000, guid: 16f9c5ca71c026946a82df91a0dcfd9d, type: 3}
+  startX: 0
+  startY: 0
+  startZ: -8.5
+  startYRotation: 0
+  dungeonChallenges:
+  - {fileID: 11400000, guid: e8cfc35d8426ece46b8bde337fb26d90, type: 2}
+  - {fileID: 11400000, guid: 0f3e760c6f27d2e4f83856655f72e4ff, type: 2}
+  connections:
+  - {fileID: 11400000, guid: 077c89e43cc6cd2429a5599949a8ebd0, type: 2}
+  levelSceneId: tower_lvl_1

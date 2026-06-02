@@ -270,7 +270,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4abd846fd6577d148833140206b0cb32, type: 2}
+  - {fileID: 2100000, guid: db8297b9a9d76444587b877842897ac0, type: 2}
   - {fileID: 2100000, guid: 2dc86ed30ca980c4f8d8ba03e819ed18, type: 2}
   - {fileID: -3846018093981099296, guid: 17e8e89760e6a26448fab87bc25e15e5, type: 3}
   - {fileID: 2100000, guid: f0702790a8380e04fa62d91bcdd5d106, type: 2}
@@ -356,7 +356,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 14
-    weaponId: 
+    weaponId: frost_wand
     isMonsterWeapon: 0
     attack: 24
     maxAttack: 44
@@ -456,7 +456,10 @@ MonoBehaviour:
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
   isInDebugMode: 0
-  ElementalMeshRenderers: []
+  ElementalMeshRenderers:
+  - {fileID: 7416221030011749511}
+  - {fileID: 671927492529813235}
+  MagicWeaponMeshRendererIndices: 0000000000000000
 --- !u!1 &2427971762684267248
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +862,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 17e8e89760e6a26448fab87bc25e15e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4abd846fd6577d148833140206b0cb32, type: 2}
+      objectReference: {fileID: 2100000, guid: db8297b9a9d76444587b877842897ac0, type: 2}
     - target: {fileID: -7511558181221131132, guid: 17e8e89760e6a26448fab87bc25e15e5, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -893,6 +896,11 @@ PrefabInstance:
       addedObject: {fileID: 5485297486411236637}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17e8e89760e6a26448fab87bc25e15e5, type: 3}
+--- !u!23 &7416221030011749511 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 17e8e89760e6a26448fab87bc25e15e5, type: 3}
+  m_PrefabInstance: {fileID: 8154365372271908867}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8548000761647087592 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 17e8e89760e6a26448fab87bc25e15e5, type: 3}

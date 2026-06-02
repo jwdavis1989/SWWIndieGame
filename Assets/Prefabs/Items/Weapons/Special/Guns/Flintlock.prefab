@@ -300,7 +300,7 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 7
-    weaponId: 
+    weaponId: flintlock
     isMonsterWeapon: 0
     attack: 15
     maxAttack: 34
@@ -383,11 +383,12 @@ MonoBehaviour:
   shootingTransform: {fileID: 4396311816010705515}
   isSettingGunToFiringTransform: 0
   isSetGunToHandTransform: 0
-  gunProjectile: {fileID: 4845079000888395174, guid: ac3f58ce1b3c28b42a6c61a6dd06f303, type: 3}
+  gunProjectile: {fileID: 4845079000888395174, guid: d6d473156b57d0e4aafdae79188b5380, type: 3}
   gunShotWarmUpVFX: {fileID: 6856538553940896655}
-  projectileForwardVelocityMultiplier: 7
-  projectileUpwardVelocityMultiplier: 4
+  projectileForwardVelocityMultiplier: 30
+  projectileUpwardVelocityMultiplier: 0
   projectileMass: 0
+  projectileLifeSpanInSeconds: 0.5
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
@@ -405,6 +406,7 @@ MonoBehaviour:
   - {fileID: 6900144503491161570}
   - {fileID: 1598941405633228569}
   - {fileID: 3845313678227261234}
+  MagicWeaponMeshRendererIndices: 
 --- !u!1 &2100216276565433239
 GameObject:
   m_ObjectHideFlags: 0

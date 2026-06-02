@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: shortsword
   weaponFamiliy: swords
+  evolveWeaponIds:
+  - bastard_sword
+  - bell_blade
+  weaponGameObject: {fileID: 4976341019228924520, guid: 90c0779713c8b8c4c8299953ba57355d, type: 3}
   baseAttack: 15
   maxAttack: 36
   basePoiseDamage: 1
@@ -45,7 +49,6 @@ MonoBehaviour:
     scalesPower: 34
     techPower: 34
     currentHighestElementalStat: 0
-  maxSpeed: 1
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100
