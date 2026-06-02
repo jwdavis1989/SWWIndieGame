@@ -61,7 +61,7 @@ public class SemiAutoBulletManager : SpellManager
         }
     }
 
-    public void InitializeBullet(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, bool hasGravity = true)
+    public void InitializeBullet(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, float projectileLifetimeInSeconds, bool hasGravity = true)
     {
         damageCollider.characterCausingDamage = characterCausingDamage;
         damageCollider.InitializeStats();
@@ -73,6 +73,9 @@ public class SemiAutoBulletManager : SpellManager
 
         //Set whether the projectile will fall over time or fly straight
         fireBallRigidBody.useGravity = hasGravity;
+
+        //Destroy bullet after its lifetime ends
+        StartCoroutine(DestroyAfterTime(projectileLifetimeInSeconds));
     }
 
     public void InstantiateSpellDestructionFX()
@@ -106,6 +109,13 @@ public class SemiAutoBulletManager : SpellManager
     private IEnumerator WaitThenInstantiateFX(float timeToWaitInSeconds)
     {
         yield return new WaitForSeconds(timeToWaitInSeconds);
+
+        InstantiateSpellDestructionFX();
+    }
+
+    private IEnumerator DestroyAfterTime(float lifeSpanInSeconds)
+    {
+        yield return new WaitForSeconds(lifeSpanInSeconds);
 
         InstantiateSpellDestructionFX();
     }
