@@ -95,19 +95,20 @@ public class WeaponsController : MonoBehaviour
      * character - owner of the weapon to be evolved
      * @returns - a reference to the new weapon
      */
-    public GameObject EvolveWeapon(GameObject oldWpn, WeaponType newWeaponType, CharacterWeaponManager character)
+    public GameObject EvolveWeapon(GameObject oldWpn, string newWeaponType, CharacterWeaponManager character)
     {
         WeaponScript oldWpnScrpt = oldWpn.GetComponent<WeaponScript>();
         WeaponStats oldStats = oldWpnScrpt.stats;
         bool isSpecial = oldWpnScrpt.isSpecialWeapon;
-        GameObject newWpn = Instantiate(baseWeapons[(int)newWeaponType], oldWpn.transform.parent);
-        WeaponStats newStats = newWpn.GetComponent<WeaponScript>().stats;
-        newStats.attack = oldStats.attack;
-        newStats.durability = oldStats.durability;
-        newStats.block = oldStats.block;
-        newStats.stability = oldStats.stability;
-        newStats.elemental = oldStats.elemental;
-        newStats.currentTinkerPoints = oldStats.currentTinkerPoints;
+        ItemDetails newWeaponDetails = ItemDropManager.GetDB().GetItem(newWeaponType);
+        GameObject newWpn = Instantiate(newWeaponDetails.worldPrefab, oldWpn.transform.parent);
+        WeaponStats newStatsRef = newWpn.GetComponent<WeaponScript>().stats;
+        newStatsRef.attack = oldStats.attack;
+        newStatsRef.durability = oldStats.durability;
+        newStatsRef.block = oldStats.block;
+        newStatsRef.stability = oldStats.stability;
+        newStatsRef.elemental = oldStats.elemental;
+        newStatsRef.currentTinkerPoints = oldStats.currentTinkerPoints;
         if (isSpecial)
         {
             int oldWpnIndex = character.ownedSpecialWeapons.IndexOf(oldWpn);
@@ -123,15 +124,20 @@ public class WeaponsController : MonoBehaviour
         Destroy(oldWpn);
         return newWpn;
     }
-    public List<WeaponType> GetAvailableEvolves(WeaponScript curWpn)
+    public WeaponData GetWeaponData(string weaponId)
     {
-        List<WeaponType> evolves = GetAllEvolutions(curWpn.stats.weaponType);
-        List<WeaponType> availableEvolves = new List<WeaponType>();
-        foreach (WeaponType evolve in evolves)
+        return ItemDropManager.GetDB().GetWeaponData(weaponId);
+    }
+    public List<string> GetAvailableEvolves(WeaponScript curWpn)
+    {
+        WeaponData curWpnData = GetWeaponData(curWpn.stats.weaponId);
+        List<string> availableEvolves = new List<string>();
+        foreach (string evolve in curWpnData.evolveWeaponIds)
         {
-            WeaponScript newWpn = baseWeapons[(int)evolve].GetComponent<WeaponScript>();
+            //WeaponScript newWpn = baseWeapons[(int)evolve].GetComponent<WeaponScript>();
+            WeaponData newWpnData = GetWeaponData(evolve);
             //check diff between req stats and current stats
-            ElementalStats diff = newWpn.stats.elemental.Subract(curWpn.stats.elemental);
+            ElementalStats diff = newWpnData.baseElemental.Subract(curWpn.stats.elemental);
             if(diff.firePower <= 0 &&
                 diff.icePower <= 0 &&
                 diff.lightningPower <= 0 &&
@@ -141,65 +147,15 @@ public class WeaponsController : MonoBehaviour
                 diff.beastPower <= 0 &&
                 diff.scalesPower <= 0 &&
                 diff.techPower <= 0 &&
-                curWpn.stats.attack >= newWpn.stats.attack &&
-                curWpn.stats.durability >= newWpn.stats.durability &&
-                curWpn.stats.stability >= newWpn.stats.stability &&
-                curWpn.stats.block >= newWpn.stats.block)
+                curWpn.stats.attack >= newWpnData.baseAttack &&
+                curWpn.stats.durability >= newWpnData.baseDurability &&
+                curWpn.stats.stability >= newWpnData.baseStability &&
+                curWpn.stats.block >= newWpnData.baseBlock)
             {
                 availableEvolves.Add(evolve);
             }
         }
         return availableEvolves;
-    }
-    public List<WeaponType> GetAllEvolutions(WeaponType weaponType)
-    {
-        List<WeaponType> evolutions = new List<WeaponType>();
-        switch(weaponType){
-            case WeaponType.Shortsword:
-                evolutions.Add(WeaponType.BastardSword);
-                evolutions.Add(WeaponType.BroadSword); break;
-            case WeaponType.Wrench:
-                evolutions.Add(WeaponType.ReinforcedWrench);
-                break;
-            case WeaponType.BastardSword:
-                break;
-            case WeaponType.BroadSword:
-                break;
-            case WeaponType.BoneBlade:
-                //evolutions.Add(WeaponType.Deathknell);
-                break;
-            case WeaponType.ReinforcedWrench:
-                break;
-            case WeaponType.Dagger:
-                evolutions.Add(WeaponType.BowieKnife);
-                break;
-            case WeaponType.Flintlock:
-                evolutions.Add(WeaponType.Revolver);
-                evolutions.Add(WeaponType.ScrapGun); break;
-            case WeaponType.SparkCaster:
-                evolutions.Add(WeaponType.ZapCaster);
-                evolutions.Add(WeaponType.BurnCaster); break;
-            case WeaponType.BowieKnife:
-                break;
-            case WeaponType.Revolver:
-                break;
-            case WeaponType.ScrapGun:
-                break;
-            case WeaponType.ZapCaster:
-                break;
-            case WeaponType.BurnCaster:
-                break;
-            case WeaponType.FreezeCaster:
-                //evolutions.Add(WeaponType.SplashCaster);
-                break;
-            case WeaponType.DiamondSword:
-                break;
-        }
-        return evolutions;
-    }
-    public bool CheckHasObtained(WeaponType weaponType)
-    {
-        return GetBaseWeaponByType(weaponType).hasObtained;
     }
     public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
     {

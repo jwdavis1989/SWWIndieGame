@@ -21,17 +21,22 @@ public class DungeonLevelSelectManager : MonoBehaviour
     public TooltipUI challengeTooltip;
     public Button startingNode;
 
+    //scrolling window
+    [Header("Scrolling window")]
+    public ScrollRect scrollRect;
+    public RectTransform content;
+
     //data
     private DungeonData dungeonData;
     private DungeonDatabase dungeonDatabase;
 
     //input
+    [Header("Input")]
     public PlayerControls playerControls;
     public EventSystem eventSystem;
     public bool saveInput = false;
     public bool backInput = false;
     public bool floorInfoInput = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +46,14 @@ public class DungeonLevelSelectManager : MonoBehaviour
         foreach (DungeonLevelNodeUI node in nodes)
         { // Show or Hide dungeon levels
             if (node.entrance)
+            {
                 node.Show();
-            else node.Hide(hiddenDungeonLevelSprite);
+                //select & scroll to entrance
+                node.button.Select();
+                ScrollTo(node.button.GetComponent<RectTransform>());
+            }
+            else 
+                node.Hide(hiddenDungeonLevelSprite);
             DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID(node.dungeonLevelId);
             DungeonNodeSaveData dungeonNodeSaveData = DungeonManager.GetDungeonNodeProgress(dungeonId, node.dungeonLevelId);
             if (dungeonNodeSaveData != null)
@@ -54,6 +65,12 @@ public class DungeonLevelSelectManager : MonoBehaviour
                 }
                 else if (dungeonNodeSaveData.unlocked)
                     node.Show();
+            }
+            //select & scroll to current
+            if(DungeonManager.currentLevelId == node.dungeonLevelId)
+            {
+                node.button.Select();
+                ScrollTo(node.button.GetComponent<RectTransform>());
             }
         }
         // Close open windows
@@ -105,6 +122,14 @@ public class DungeonLevelSelectManager : MonoBehaviour
             currentCursorObj = eventSystem.currentSelectedGameObject;
             if (currentCursorObj != null)
             {
+                //scroll
+                if (InputSwitchDetector.IsCurrentlyGamepad())
+                {
+                    RectTransform selectedRect = currentCursorObj.GetComponent<RectTransform>();
+                    if (selectedRect != null)
+                        ScrollTo(selectedRect);
+                }
+                //Handle tooltip
                 DungeonLevelNodeUI ui = currentCursorObj.GetComponentInParent<DungeonLevelNodeUI>();
                 if (ui != null)
                 {
@@ -112,7 +137,7 @@ public class DungeonLevelSelectManager : MonoBehaviour
                     if (levelData != null)
                     {
                         DungeonNodeSaveData nodeSaveData = DungeonManager.GetDungeonNodeProgress(dungeonData.dungeonId, levelData.nodeID);
-                        //challengeTooltip.headerText.text = "Level " + levelData.nodeID;
+                        challengeTooltip.headerText.text = levelData.dungeonLevelName;
                         challengeTooltip.centerText.text = "";
                         foreach (DungeonChallengeData challengeData in levelData.dungeonChallenges)
                         {
@@ -131,6 +156,32 @@ public class DungeonLevelSelectManager : MonoBehaviour
                 }
             }
         }
+    }
+    void ScrollTo(RectTransform target)
+    {
+        Canvas.ForceUpdateCanvases();
+
+        RectTransform content = scrollRect.content;
+        RectTransform viewport = scrollRect.viewport;
+
+        // Position of target relative to content
+        Vector2 localPos = content.InverseTransformPoint(target.position);
+
+        // Convert so top of content = 0
+        float targetY = -localPos.y;
+
+        // Center target in viewport (optional)
+        float centeredY = targetY - (viewport.rect.height / 2f);
+
+        // Clamp to valid scroll range
+        float maxScroll = content.rect.height - viewport.rect.height;
+
+        centeredY = Mathf.Clamp(centeredY, 0, maxScroll);
+
+        content.anchoredPosition = new Vector2(
+            content.anchoredPosition.x,
+            centeredY
+        );
     }
     bool IsWindowActive()
     {

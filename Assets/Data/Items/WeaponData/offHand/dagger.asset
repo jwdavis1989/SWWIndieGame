@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: dagger
   weaponFamiliy: knives
+  evolveWeaponIds:
+  - bowie_knife
+  weaponGameObject: {fileID: 1847124638102049318, guid: 100648e5b545aa04187125a62c9bfe5b, type: 3}
   baseAttack: 15
   maxAttack: 36
   basePoiseDamage: 1
@@ -45,7 +48,6 @@ MonoBehaviour:
     scalesPower: 34
     techPower: 34
     currentHighestElementalStat: 0
-  maxSpeed: 1
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100

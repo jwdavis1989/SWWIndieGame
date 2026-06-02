@@ -213,8 +213,9 @@ public class WeaponMenuManager : MonoBehaviour
         {
             focusEvolutionsInput = false;
             WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
-            List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
-            List<WeaponType> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
+            WeaponData wpnData = ItemDropManager.GetDB().GetWeaponData(wpn.stats.weaponId);
+            List<string> evolves = wpnData.evolveWeaponIds;
+            List<string> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
             if (availEvolves.Count == 0)
                 return; // Do nothing
             ToggleComponentNavigation(false);
@@ -709,6 +710,10 @@ public class WeaponMenuManager : MonoBehaviour
         //primaryStatsText.text = primaryStats;
         //elementalStatsText.text = elementalStats;
     }
+    WeaponData GetWeaponData(string weaponId)
+    {
+        return ItemDropManager.GetDB().GetWeaponData(weaponId);
+    }
     void LoadWeaponEvolveButtons()
     {
         if (activeWeapon)
@@ -716,18 +721,22 @@ public class WeaponMenuManager : MonoBehaviour
             WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
             //weapon evolves
             WeaponsController weaponCntrller = WeaponsController.instance;
-            List<WeaponType> evolves = WeaponsController.instance.GetAllEvolutions(wpn.stats.weaponType);
-            List<WeaponType> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
-            if (evolves.Count >= 1)
+            WeaponData wpnData = GetWeaponData(wpn.stats.weaponId);
+            List<string> evolves = wpnData.evolveWeaponIds;
+            List<string> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
+            if (evolves.Count >= 1 && evolves[0].Trim().Length > 0)
             {
+                //Debug.Log("evolves[0]=" + evolves[0]);
                 wpnEvolveBtn1.SetActive(true);
-                WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[0]].GetComponent<WeaponScript>();
+                //WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[0]].GetComponent<WeaponScript>();
+                WeaponData evolWpnData = GetWeaponData(evolves[0]);
+                ItemDetails evolWpnDetails = ItemDropManager.GetDB().GetItem(evolves[0]);
                 GridElementController myBtnScrpt = wpnEvolveBtn1.GetComponent<GridElementController>();
                 if (availEvolves.Contains(evolves[0]))
                 {
-                    myBtnScrpt.topText.text = evolWpn.stats.weaponName;
+                    myBtnScrpt.topText.text = evolWpnDetails.itemName;
                     myBtnScrpt.mainButton.interactable = true;
-                    myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = evolWpnDetails.icon;
                     myBtnScrpt.mainButton.onClick.RemoveAllListeners();
                     myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
                     {
@@ -737,13 +746,13 @@ public class WeaponMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt.topText.text = evolWpn.stats.weaponName;
+                    myBtnScrpt.topText.text = evolWpnDetails.itemName;
                     //TODO: I'm setting it to always show ??? instead of the name when already discovered
                     //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
                     //{
                     String mysteryText = "";
                     foreach (char c in myBtnScrpt.topText.text)
-                        mysteryText += c == ' ' ? ' ' : '?';
+                        mysteryText += c == ' ' ? ' ' : '_';
                     myBtnScrpt.topText.text = mysteryText;
                     //}
                     myBtnScrpt.mainButton.interactable = false;
@@ -753,24 +762,19 @@ public class WeaponMenuManager : MonoBehaviour
             }
             else if (wpnEvolveBtn1 != null)
                 wpnEvolveBtn1.SetActive(false);
-            if (evolves.Count >= 2)
+            if (evolves.Count >= 2 && evolves[1].Trim().Length > 0)
             {//2nd weapon evolve
+                //Debug.Log("evolves[1]=" + evolves[1]);
                 wpnEvolveBtn2.SetActive(true);
-                WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
+                //WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
+                WeaponData evolWpnData = GetWeaponData(evolves[1]);
+                ItemDetails evolWpnDetails = ItemDropManager.GetDB().GetItem(evolves[1]);
                 GridElementController myBtnScrpt2 = wpnEvolveBtn2.GetComponent<GridElementController>();
                 if (availEvolves.Contains(evolves[1]))
                 {
-                    myBtnScrpt2.topText.text = evolWpn.stats.weaponName;
-                    //TODO: I'm setting it to always show ??? instead of the name when already discovered
-                    //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
-                    //{
-                    String mysteryText = "";
-                    foreach (char c in myBtnScrpt2.topText.text)
-                        mysteryText += c == ' ' ? ' ' : '?';
-                    myBtnScrpt2.topText.text = mysteryText;
-                    //}
+                    myBtnScrpt2.topText.text = evolWpnDetails.itemName;
                     myBtnScrpt2.mainButton.interactable = true;
-                    myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = evolWpn.spr;
+                    myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = evolWpnDetails.icon;
                     myBtnScrpt2.mainButton.onClick.RemoveAllListeners();
                     myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
                     {
@@ -780,7 +784,14 @@ public class WeaponMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    myBtnScrpt2.topText.text = WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType) ? evolWpn.stats.weaponName : "???";
+                    //TODO: I'm setting it to always show ??? instead of the name when already discovered
+                    //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
+                    //{
+                    String mysteryText = "";
+                    foreach (char c in myBtnScrpt2.topText.text)
+                        mysteryText += c == ' ' ? ' ' : '_';
+                    myBtnScrpt2.topText.text = mysteryText;
+                    //}
                     myBtnScrpt2.mainButton.interactable = false;
                     //myBtnScrpt2.bottomText.text = "";
                     myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;

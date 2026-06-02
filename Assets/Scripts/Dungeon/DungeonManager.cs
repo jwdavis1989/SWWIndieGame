@@ -69,7 +69,7 @@ public class DungeonManager : MonoBehaviour
             }
         }
         else
-            Debug.Log("EnterDungeonLevel dungeonNode null");
+            Debug.Log("EnterDungeonLevel dungeonNode null - dLid:"+ dungeonLevelId+" did:"+dungeonId);
     }
     public static void CompleteCurrentDungeonLevel(float completeTime = 0, string unlockedFloorId = null)
     {
