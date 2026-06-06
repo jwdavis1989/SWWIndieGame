@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StylizedBlueWater_100_100_0_0
-  m_Shader: {fileID: 4800000, guid: 17306c947082b1445b42c4bac253dcd0, type: 3}
+  m_Shader: {fileID: 4800000, guid: 8ac81107ba403964591991e3d0b9f143, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -114,6 +114,8 @@ Material:
     - _DstBlend: 0
     - _EdgeFoamThreshold: 0.502
     - _EdgeThreshold: 1
+    - _FadeEnd: 1000
+    - _FadeStart: 500
     - _FlickerSpeed: 2000
     - _FlowSpeed: 0.5
     - _FlowStrength: 0.1
@@ -135,6 +137,7 @@ Material:
     - _GlowStrength: 0
     - _HighlightStrength: 0.3
     - _HologramTransparency: 1
+    - _HorizonDarkness: 1
     - _IlluminationStrength: 1
     - _Metallic: 0
     - _Mode: 0

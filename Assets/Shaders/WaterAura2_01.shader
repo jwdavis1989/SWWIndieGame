@@ -1,4 +1,4 @@
-Shader "Custom/BasicWaterAura2_01"
+Shader "Custom/BasicWaterAura2_02"
 {
     Properties
     {
@@ -16,13 +16,18 @@ Shader "Custom/BasicWaterAura2_01"
         _FoamSpeed ("Foam Speed", Float) = 0.1
         _FoamNoiseScale ("Foam Noise Scale", Float) = 20
         _AuraIntensity ("Aura Intensity", Range(0, 1)) = 0.2
+        
+        //Fading controls
+        _FadeStart ("Fog Fade Start", Float) = 500
+        _FadeEnd ("Fog Fade End", Float) = 1000
+        _HorizonDarkness ("Horizon Darkness", Range(0, 1)) = 1.0 //1 = fully dark at edge
     }
     SubShader
     {
         Tags {"Queue"="Transparent" "RenderType"="Transparent"}
         LOD 200
 
-        //PASS 1: THE WATER
+        //PASS 1: WATER
         CGPROGRAM
         #pragma surface surf Lambert alpha:fade
         #pragma target 3.0
@@ -31,6 +36,7 @@ Shader "Custom/BasicWaterAura2_01"
         fixed4 _Color, _TextureColor, _FoamColor;
         float _WaveSpeed, _WaveStrength, _WaveAmount, _WaveFrequency, _TextureDistortion;
         float _FoamAmount, _FoamCutoff, _FoamSpeed, _FoamNoiseScale;
+        float _FadeStart, _FadeEnd, _HorizonDarkness;
 
         struct Input {
             float2 uv_MainTex;
@@ -38,19 +44,9 @@ Shader "Custom/BasicWaterAura2_01"
             float4 screenPos;
         };
 
-        float2 random2(float2 st) {
-            st = float2(dot(st, float2(127.1, 311.7)), dot(st, float2(269.5, 183.3)));
-            return -1.0 + 2.0 * frac(sin(st) * 43758.5453123);
-        }
-
-        float gradientNoise(float2 st) {
-            float2 i = floor(st); float2 f = frac(st);
-            float2 u = f*f*(3.0-2.0*f);
-            return lerp(lerp(dot(random2(i + float2(0.0,0.0)), f - float2(0.0,0.0)),
-                             dot(random2(i + float2(1.0,0.0)), f - float2(1.0,0.0)), u.x),
-                        lerp(dot(random2(i + float2(0.0,1.0)), f - float2(0.0,1.0)),
-                             dot(random2(i + float2(1.0,1.0)), f - float2(1.0,1.0)), u.x), u.y);
-        }
+        //Pseudo-random and noise functions omitted for brevity
+        float2 random2(float2 st) { st = float2(dot(st, float2(127.1, 311.7)), dot(st, float2(269.5, 183.3))); return -1.0 + 2.0 * frac(sin(st) * 43758.5453123); }
+        float gradientNoise(float2 st) { float2 i = floor(st); float2 f = frac(st); float2 u = f*f*(3.0-2.0*f); return lerp(lerp(dot(random2(i + float2(0.0,0.0)), f - float2(0.0,0.0)), dot(random2(i + float2(1.0,0.0)), f - float2(1.0,0.0)), u.x), lerp(dot(random2(i + float2(0.0,1.0)), f - float2(0.0,1.0)), dot(random2(i + float2(1.0,1.0)), f - float2(1.0,1.0)), u.x), u.y); }
 
         void surf (Input IN, inout SurfaceOutput o) {
             float2 uv = IN.uv_MainTex;
@@ -64,50 +60,43 @@ Shader "Custom/BasicWaterAura2_01"
             float foamLine = 1 - saturate(_FoamAmount * (depth - IN.screenPos.w));
             float foam = smoothstep(_FoamCutoff, 1, saturate(gradientNoise(foamUV) + foamLine));
 
-            o.Albedo = lerp(lerp(_Color.rgb, c.rgb, c.a), _FoamColor.rgb, foam);
-            o.Alpha = _Color.a;
+            float dist = distance(_WorldSpaceCameraPos, IN.worldPos);
+            float horizonFade = saturate((_FadeEnd - dist) / (_FadeEnd - _FadeStart));
+            
+            //DARKNESS: Lerp the color to black as it hits the horizon
+            float darkness = lerp(1.0, 1.0 - _HorizonDarkness, 1.0 - horizonFade);
+            
+            o.Albedo = lerp(lerp(_Color.rgb, c.rgb, c.a), _FoamColor.rgb, foam) * darkness;
+            o.Alpha = _Color.a * horizonFade;
         }
         ENDCG
 
-        //PASS 2: AURA VOLUMETRICS (ADDITIVE)
+        //PASS 2: AURA
         Pass
         {
-            Name "AuraPass"
-            ZWrite Off
-            Blend One One //Additive blending for light and fog injection
-            
+            ZWrite Off Blend One One 
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             #include "UnityCG.cginc"
             #include "Assets/Aura 2/Core/Code/Shaders/Aura.cginc"
 
-            struct v2f {
-                float4 pos : SV_POSITION;
-                float3 worldPos : TEXCOORD0;
-            };
+            struct v2f { float4 pos : SV_POSITION; float3 worldPos : TEXCOORD0; };
+            float _AuraIntensity, _FadeStart, _FadeEnd;
 
-            float _AuraIntensity;
-
-            v2f vert (appdata_base v) {
-                v2f o;
-                o.pos = UnityObjectToClipPos(v.vertex);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-                return o;
-            }
+            v2f vert (appdata_base v) { v2f o; o.pos = UnityObjectToClipPos(v.vertex); o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz; return o; }
 
             fixed4 frag (v2f i) : SV_Target {
                 float3 auraCoords = Aura2_GetFrustumSpaceCoordinates(float4(i.worldPos, 1.0));
-                
-                //Start with black to only add the Aura contribution
                 float3 auraResult = float3(0,0,0);
-                
-                //Apply lighting and fog to the empty black base
                 Aura2_ApplyLighting(auraResult, auraCoords, _AuraIntensity);
                 Aura2_ApplyFog(auraResult, auraCoords);
                 
-                //Additive blend means we only return what Aura adds to the pixel
-                return fixed4(auraResult, 1.0);
+                float dist = distance(_WorldSpaceCameraPos, i.worldPos);
+                float horizonFade = saturate((_FadeEnd - dist) / (_FadeEnd - _FadeStart));
+                
+                //Fade Aura lighting completely at the edge to prevent the "glow"
+                return fixed4(auraResult * horizonFade, 1.0);
             }
             ENDCG
         }
