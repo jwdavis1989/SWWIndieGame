@@ -24,6 +24,11 @@ public class WorldAIManager : MonoBehaviour
     [Header("Debug")]
     [SerializeField] bool debugDespawnCharacters = false;
 
+    public void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+    
     public void Awake()
     {
         if (instance == null)
