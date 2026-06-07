@@ -138,7 +138,7 @@ public class WeaponsController : MonoBehaviour
             WeaponData newWpnData = GetWeaponData(evolve);
             //check diff between req stats and current stats
             ElementalStats diff = newWpnData.baseElemental.Subract(curWpn.stats.elemental);
-            Debug.Log("Diff for " + newWpnData.itemId + " = " + diff.ToString());
+            //Debug.Log("Diff for " + newWpnData.itemId + " = " + diff.ToString());
             if(diff.firePower <= 0 &&
                 diff.icePower <= 0 &&
                 diff.lightningPower <= 0 &&
