@@ -138,6 +138,7 @@ public class WeaponsController : MonoBehaviour
             WeaponData newWpnData = GetWeaponData(evolve);
             //check diff between req stats and current stats
             ElementalStats diff = newWpnData.baseElemental.Subract(curWpn.stats.elemental);
+            Debug.Log("Diff for " + newWpnData.itemId + " = " + diff.ToString());
             if(diff.firePower <= 0 &&
                 diff.icePower <= 0 &&
                 diff.lightningPower <= 0 &&
@@ -148,9 +149,10 @@ public class WeaponsController : MonoBehaviour
                 diff.scalesPower <= 0 &&
                 diff.techPower <= 0 &&
                 curWpn.stats.attack >= newWpnData.baseAttack &&
-                curWpn.stats.durability >= newWpnData.baseDurability &&
-                curWpn.stats.stability >= newWpnData.baseStability &&
-                curWpn.stats.block >= newWpnData.baseBlock)
+                //curWpn.stats.durability >= newWpnData.baseDurability &&
+                curWpn.stats.stability >= newWpnData.baseStability //&&
+                //curWpn.stats.block >= newWpnData.baseBlock
+                 )
             {
                 availableEvolves.Add(evolve);
             }
