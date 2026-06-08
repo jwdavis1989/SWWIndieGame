@@ -190,9 +190,9 @@ public class TinkerComponentManager : MonoBehaviour
         }
         newAttack = Mathf.Min(newAttack, weapon.stats.maxAttack);
         //calc other stats
-        float newStab = Mathf.Min(tinkerComponentToAdd.stability + tinkerComponentToAdd.stability, weapon.stats.maxStability);
-        float newBlock = Mathf.Min(tinkerComponentToAdd.block + tinkerComponentToAdd.block, weapon.stats.maxBlock);
-        float newDur = Mathf.Min(tinkerComponentToAdd.durability + tinkerComponentToAdd.durability, weapon.stats.maxDurability);
+        float newStab = Mathf.Min(weapon.stats.stability + tinkerComponentToAdd.stability, weapon.stats.maxStability);
+        float newBlock = Mathf.Min(weapon.stats.block + tinkerComponentToAdd.block, weapon.stats.maxBlock);
+        float newDur = Mathf.Min(weapon.stats.durability + tinkerComponentToAdd.durability, weapon.stats.maxDurability);
         //calculate new elemental
         ElementalStats newStats = weapon.stats.elemental.Add(tinkerComponentToAdd.elementalStats);
         newStats.firePower = Mathf.Min(newStats.firePower, weapon.stats.maxElemental.firePower);

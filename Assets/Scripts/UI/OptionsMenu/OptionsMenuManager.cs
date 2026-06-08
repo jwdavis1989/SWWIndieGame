@@ -287,6 +287,8 @@ public class OptionsMenuManager : MonoBehaviour
         {
             SaveInvert(inverted);
         }
+        if(mouseSensitivityChanged)
+            SaveMouseSensitivity(mouseSensitivity);
         PlayerSettingsManager.instance.SavePlayerSettings();
         CompleteSaveWindowAction();
     }
@@ -383,6 +385,10 @@ public class OptionsMenuManager : MonoBehaviour
         playerSettings.effectsVolume = newValue;
         PlayerSettingsManager.instance.SetSFXVolumeLogarithmic(playerSettings.effectsVolume);
         PlayerSettingsManager.instance.playerSettings = playerSettings;
+    }
+    void SaveMouseSensitivity(float newValue)
+    {
+        PlayerSettingsManager.instance.playerSettings.mouseSensitivity = newValue;    
     }
     void SwapFromOptionMenuControls()
     {
