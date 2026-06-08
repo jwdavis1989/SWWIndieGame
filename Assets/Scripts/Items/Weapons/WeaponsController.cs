@@ -152,8 +152,8 @@ public class WeaponsController : MonoBehaviour
                 diff.techPower <= 0 &&
                 curWpn.stats.attack >= newWpnData.baseAttack &&
                 curWpn.stats.maxDurability >= newWpnData.baseDurability &&
-                curWpn.stats.stability >= newWpnData.baseStability //&&
-                //curWpn.stats.block >= newWpnData.baseBlock
+                curWpn.stats.stability >= newWpnData.baseStability &&
+                curWpn.stats.block >= newWpnData.baseBlock
                  )
             {
                 availableEvolves.Add(evolve);
