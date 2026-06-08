@@ -150,7 +150,7 @@ public class PlayerManager : CharacterManager
         currentCharacterData.savedDungeons = DungeonManager.SaveDungeons();
     }
 
-    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
     {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;

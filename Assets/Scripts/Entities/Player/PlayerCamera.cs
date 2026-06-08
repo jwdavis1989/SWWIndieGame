@@ -139,10 +139,12 @@ public class PlayerCamera : MonoBehaviour
         {
             //Normal Rotations
             //Rotate left and right based on horizontal movement on the right joystick
-            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
+            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime 
+                * PlayerSettingsManager.GetSensitivity();
 
             //Rotate up and down based on the vertical movement on the right Joystick
-            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
+            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime
+                * PlayerSettingsManager.GetSensitivity();
 
             //Clamp the up and down look angle between min/max values
             upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);

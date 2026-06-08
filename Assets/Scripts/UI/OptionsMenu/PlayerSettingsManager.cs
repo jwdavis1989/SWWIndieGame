@@ -94,13 +94,21 @@ public class PlayerSettingsManager : MonoBehaviour
         float volumeDb = Mathf.Log10(adjusted) * 20;
         mixer.SetFloat("MusicVolume", volumeDb);
     }
+    public static float GetSensitivity()
+    {
+        float sensitivity = instance.playerSettings.mouseSensitivity;
+        if (sensitivity < 0.1f) 
+            return 0.1f;
+        return sensitivity;
+    }
+    public static void SetSensitivity(float val) { instance.playerSettings.mouseSensitivity = val; }
 }
 [Serializable] public class PlayerSettings
 {
     //controls
     public bool gamepad;//otherwise KB&M
     public bool inverted = true;//default to wrong
-    public float mouseSensitivity = 0.0f;
+    public float mouseSensitivity = 1.0f;
     //volume
     public float mainVolume;
     public float musicVolume;
