@@ -207,6 +207,18 @@ public class ElementalStats
         sum.techPower = techPower + other.techPower;
         return sum;
     }
+    public override string ToString()
+    {
+        return "firePower:" + firePower + ", "
+        + "icePower:" + icePower + ", "
+        + "lightningPower:" + lightningPower + ", "
+        + "windPower:" + windPower + ", "
+        + "earthPower:" + earthPower + ", "
+        + "lightPower:" + lightPower + ", "
+        + "beastPower:" + beastPower + ", "
+        + "scalesPower:" + scalesPower + ", "
+        + "techPower:" + techPower;
+    }
 }
 /** 
  * Base weapon script containing weapon stats and behaviors

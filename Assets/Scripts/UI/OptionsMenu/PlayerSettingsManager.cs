@@ -40,13 +40,13 @@ public class PlayerSettingsManager : MonoBehaviour
     {
         if (File.Exists(filePath))
         {
-            Debug.Log("Loading Player Settings");
+            //Debug.Log("Loading Player Settings");
             string json = File.ReadAllText(filePath);
             playerSettings = JsonUtility.FromJson<PlayerSettings>(json);
         }
         else
         {
-            Debug.Log("Creating Player Settings");
+            //Debug.Log("Creating Player Settings");
             // First run – create default settings
             playerSettings = new PlayerSettings();
             playerSettings.inverted = false;
@@ -65,7 +65,7 @@ public class PlayerSettingsManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(playerSettings, true);
         File.WriteAllText(filePath, json);
-        Debug.Log("Settings Saved to " + filePath);//astest
+        //Debug.Log("Settings Saved to " + filePath);//astest
     }
     public void SetMainVolumeLogarithmic(float sliderValue)
     {
@@ -94,13 +94,21 @@ public class PlayerSettingsManager : MonoBehaviour
         float volumeDb = Mathf.Log10(adjusted) * 20;
         mixer.SetFloat("MusicVolume", volumeDb);
     }
+    public static float GetSensitivity()
+    {
+        float sensitivity = instance.playerSettings.mouseSensitivity;
+        if (sensitivity < 0.1f) 
+            return 0.1f;
+        return sensitivity;
+    }
+    public static void SetSensitivity(float val) { instance.playerSettings.mouseSensitivity = val; }
 }
 [Serializable] public class PlayerSettings
 {
     //controls
     public bool gamepad;//otherwise KB&M
     public bool inverted = true;//default to wrong
-    public float mouseSensitivity = 0.0f;
+    public float mouseSensitivity = 1.0f;
     //volume
     public float mainVolume;
     public float musicVolume;

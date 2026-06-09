@@ -724,6 +724,7 @@ public class WeaponMenuManager : MonoBehaviour
             WeaponData wpnData = GetWeaponData(wpn.stats.weaponId);
             List<string> evolves = wpnData.evolveWeaponIds;
             List<string> availEvolves = WeaponsController.instance.GetAvailableEvolves(wpn);
+            //Debug.Log("availEvolves =" + availEvolves.Count);//astest
             if (evolves.Count >= 1 && evolves[0].Trim().Length > 0)
             {
                 //Debug.Log("evolves[0]=" + evolves[0]);
@@ -731,6 +732,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[0]].GetComponent<WeaponScript>();
                 WeaponData evolWpnData = GetWeaponData(evolves[0]);
                 ItemDetails evolWpnDetails = ItemDropManager.GetDB().GetItem(evolves[0]);
+                //Debug.Log("evolWpnDetails 1 ="+ evolWpnDetails.itemName);//astest
                 GridElementController myBtnScrpt = wpnEvolveBtn1.GetComponent<GridElementController>();
                 if (availEvolves.Contains(evolves[0]))
                 {
@@ -769,6 +771,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
                 WeaponData evolWpnData = GetWeaponData(evolves[1]);
                 ItemDetails evolWpnDetails = ItemDropManager.GetDB().GetItem(evolves[1]);
+                Debug.Log("evolWpnDetails 2 =" + evolWpnDetails.itemName);//astest
                 GridElementController myBtnScrpt2 = wpnEvolveBtn2.GetComponent<GridElementController>();
                 if (availEvolves.Contains(evolves[1]))
                 {
