@@ -188,22 +188,24 @@ public class TinkerComponentManager : MonoBehaviour
         {
             newAttack += tinkerComponentToAdd.attack;
         }
-        newAttack = Mathf.Min(newAttack, weapon.stats.maxAttack);
+        //Calculate new stats concidering max possible value
+        WeaponData weaponData = ItemDropManager.GetDB().GetWeaponData(weapon.stats.weaponId);
+        newAttack = Mathf.Min(newAttack, weaponData.maxAttack);
         //calc other stats
-        float newStab = Mathf.Min(weapon.stats.stability + tinkerComponentToAdd.stability, weapon.stats.maxStability);
-        float newBlock = Mathf.Min(weapon.stats.block + tinkerComponentToAdd.block, weapon.stats.maxBlock);
-        float newDur = Mathf.Min(weapon.stats.durability + tinkerComponentToAdd.durability, weapon.stats.maxDurability);
+        float newStab = Mathf.Min(weapon.stats.stability + tinkerComponentToAdd.stability, weaponData.maxStability);
+        float newBlock = Mathf.Min(weapon.stats.block + tinkerComponentToAdd.block, weaponData.maxBlock);
+        float newDur = Mathf.Min(weapon.stats.durability + tinkerComponentToAdd.durability, weaponData.maxDurability);
         //calculate new elemental
         ElementalStats newStats = weapon.stats.elemental.Add(tinkerComponentToAdd.elementalStats);
-        newStats.firePower = Mathf.Min(newStats.firePower, weapon.stats.maxElemental.firePower);
-        newStats.icePower = Mathf.Min(newStats.icePower, weapon.stats.maxElemental.icePower);
-        newStats.lightningPower = Mathf.Min(newStats.lightningPower, weapon.stats.maxElemental.lightningPower);
-        newStats.windPower = Mathf.Min(newStats.windPower, weapon.stats.maxElemental.windPower);
-        newStats.earthPower = Mathf.Min(newStats.earthPower, weapon.stats.maxElemental.earthPower);
-        newStats.lightPower = Mathf.Min(newStats.lightPower, weapon.stats.maxElemental.lightPower);
-        newStats.beastPower = Mathf.Min(newStats.beastPower, weapon.stats.maxElemental.beastPower);
-        newStats.scalesPower = Mathf.Min(newStats.scalesPower, weapon.stats.maxElemental.scalesPower);
-        newStats.techPower = Mathf.Min(newStats.techPower, weapon.stats.maxElemental.techPower);
+        newStats.firePower = Mathf.Min(newStats.firePower, weaponData.maxElemental.firePower);
+        newStats.icePower = Mathf.Min(newStats.icePower, weaponData.maxElemental.icePower);
+        newStats.lightningPower = Mathf.Min(newStats.lightningPower, weaponData.maxElemental.lightningPower);
+        newStats.windPower = Mathf.Min(newStats.windPower, weaponData.maxElemental.windPower);
+        newStats.earthPower = Mathf.Min(newStats.earthPower, weaponData.maxElemental.earthPower);
+        newStats.lightPower = Mathf.Min(newStats.lightPower, weaponData.maxElemental.lightPower);
+        newStats.beastPower = Mathf.Min(newStats.beastPower, weaponData.maxElemental.beastPower);
+        newStats.scalesPower = Mathf.Min(newStats.scalesPower, weaponData.maxElemental.scalesPower);
+        newStats.techPower = Mathf.Min(newStats.techPower, weaponData.maxElemental.techPower);
         ElementalStats diffWithPrev = newStats.Subract(weapon.stats.elemental);
         //if any stat will be upgraded then we can upgrade
         if (diffWithPrev.firePower > 0 ||

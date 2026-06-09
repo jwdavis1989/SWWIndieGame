@@ -833,44 +833,16 @@ public class WeaponMenuManager : MonoBehaviour
         tinkerPointsCountText.text = "" + wpn.stats.currentTinkerPoints;
         WeaponStats stats = wpn.stats;
         ElementalStats el = stats.elemental;
-        Func<KeyValuePair<string, float>, Transform, KeyValuePair<string, float>> handleStatText = (stat,trans) =>
-        {
-            GameObject statTextObj = Instantiate(statsTextPrefab, trans);
-            bool greenTextShowing = false;
-            String greenText = "";
-            if(activeComponent != null)
-            {
-                if (activeComponent.GetStats().ContainsKey(stat.Key))
-                {
-                    greenTextShowing = true;
-                    greenText += "<size=16> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
-                }
-            }
-            statTextObj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing? "<color=\"green\">" : "") + stat.Value + greenText;
-            Button tooltipNavButton = statTextObj.GetComponentInChildren<Button>();
-            if (tooltipNavButton != null)
-            { // This handles the helper tooltips for the stats.
-                TogglingBehavior tooltipToggler = statTextObj.GetComponent<TogglingBehavior>();
-                if (tooltipToggler != null)
-                {
-                    TooltipUI tooltip = tooltipToggler.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
-                    tooltip.headerText.text = stat.Key;
-                    tooltip.centerText.text = WeaponScript.GetStatTooltip(stat.Key);
-                }
-                if (helpActive)
-                {
-                    Navigation nav = tooltipNavButton.navigation;
-                    nav.mode = Navigation.Mode.Automatic;
-                    tooltipNavButton.navigation = nav;
-                }
-            }
-            return stat;
-        };
-        Dictionary<string, float> primaryStats = wpn.GetPrimaryStats();
-        foreach (KeyValuePair<string, float> stat in primaryStats) handleStatText(stat, primaryStatsText.transform);
-        Dictionary<string, float> elementalStats = wpn.GetElementalStats();
-        foreach (KeyValuePair<string, float> stat in elementalStats) handleStatText(stat, elementalStatsText.transform);
-        //Exp
+        foreach (KeyValuePair<string, float> stat in wpn.GetPrimaryStatsForDisplay()) 
+            LoadStat(stat, primaryStatsText.transform);
+        // Durability
+        //GameObject blankSquare = Instantiate(statsTextPrefab, expStatsText.transform);
+        //blankSquare.GetComponent<TextMeshProUGUI>().text = "";
+        GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsText.transform);
+        durabiltyLeft.GetComponent<TextMeshProUGUI>().text = "Durability:";
+        GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsText.transform);
+        durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + "/" + stats.durability;
+        // Exp
         GameObject curExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
         GameObject curExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
         GameObject neededExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
@@ -880,9 +852,45 @@ public class WeaponMenuManager : MonoBehaviour
         neededExpText1.GetComponent<EventTrigger>().enabled = false;
         neededExpText2.GetComponent<EventTrigger>().enabled = false;
         curExpText1.GetComponent<TextMeshProUGUI>().text = "Current Exp:";
-        curExpText2.GetComponent<TextMeshProUGUI>().text = ""+ stats.currentExperiencePoints;
+        curExpText2.GetComponent<TextMeshProUGUI>().text = "" + stats.currentExperiencePoints;
         neededExpText1.GetComponent<TextMeshProUGUI>().text = "To Next Level:";
-        neededExpText2.GetComponent<TextMeshProUGUI>().text = ""+ stats.experiencePointsToNextLevel;
+        neededExpText2.GetComponent<TextMeshProUGUI>().text = "" + stats.experiencePointsToNextLevel;
+        // Elemental
+        foreach (KeyValuePair<string, float> stat in wpn.GetElementalStats()) 
+            LoadStat(stat, elementalStatsText.transform);
+    }
+    KeyValuePair<string, float> LoadStat(KeyValuePair<string, float> stat, Transform trans)
+    {
+        GameObject statTextObj = Instantiate(statsTextPrefab, trans);
+        bool greenTextShowing = false;
+        String greenText = "";
+        if (activeComponent != null)
+        {
+            if (activeComponent.GetStats().ContainsKey(stat.Key))
+            {
+                greenTextShowing = true;
+                greenText += "<size=16> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
+            }
+        }
+        statTextObj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing ? "<color=\"green\">" : "") + stat.Value + greenText;
+        Button tooltipNavButton = statTextObj.GetComponentInChildren<Button>();
+        if (tooltipNavButton != null)
+        { // This handles the helper tooltips for the stats.
+            TogglingBehavior tooltipToggler = statTextObj.GetComponent<TogglingBehavior>();
+            if (tooltipToggler != null)
+            {
+                TooltipUI tooltip = tooltipToggler.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
+                tooltip.headerText.text = stat.Key;
+                tooltip.centerText.text = WeaponScript.GetStatTooltip(stat.Key);
+            }
+            if (helpActive)
+            {
+                Navigation nav = tooltipNavButton.navigation;
+                nav.mode = Navigation.Mode.Automatic;
+                tooltipNavButton.navigation = nav;
+            }
+        }
+        return stat;
     }
     bool canBreakdownActiveWeapon = false;
     /**
@@ -1105,7 +1113,7 @@ public class WeaponMenuManager : MonoBehaviour
                 if (displayedCount == currentlySelectedComponentIndex)
                 {
                     tinkerComponentUI.mainButton.Select();
-                    Debug.Log("currentlySelectedComponentIndex:" + currentlySelectedComponentIndex + " displayedCount=" + displayedCount);
+                    //Debug.Log("currentlySelectedComponentIndex:" + currentlySelectedComponentIndex + " displayedCount=" + displayedCount);
                     //componentButtonSelected = true;
                 }
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, itemId, tinkerComponentData.stats))
