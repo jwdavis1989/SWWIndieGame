@@ -157,11 +157,17 @@ public class TinkerComponentManager : MonoBehaviour
     }
     private bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, TinkerComponentStats tinkerComponentToAdd, string itemId, bool doUpdate)
     {
-        if (weaponToUpgrade == null) { return false; }
+        if (weaponToUpgrade == null) 
+            return false;
+        if(itemId == "repair_kit") 
+            return true;
         WeaponScript weapon = weaponToUpgrade.GetComponent<WeaponScript>();
         // check tinker pointstinkerComponent
-        if (weapon.stats.currentTinkerPoints == 0) 
-            return false;
+        if (weapon.stats.currentTinkerPoints == 0)
+        {
+            Debug.Log("No tinker points.");
+            return false; 
+        }
         // check weapon component hand
         if (tinkerComponentToAdd.isWeapon && weapon.isSpecialWeapon != tinkerComponentToAdd.isSpecialWpn)
             return false;
@@ -207,6 +213,7 @@ public class TinkerComponentManager : MonoBehaviour
         newStats.scalesPower = Mathf.Min(newStats.scalesPower, weaponData.maxElemental.scalesPower);
         newStats.techPower = Mathf.Min(newStats.techPower, weaponData.maxElemental.techPower);
         ElementalStats diffWithPrev = newStats.Subract(weapon.stats.elemental);
+        Debug.Log("diffWithPrev:" + diffWithPrev);
         //if any stat will be upgraded then we can upgrade
         if (diffWithPrev.firePower > 0 ||
             diffWithPrev.icePower > 0 ||
@@ -222,6 +229,7 @@ public class TinkerComponentManager : MonoBehaviour
             (newDur > weapon.stats.durability) ||
             (newAttack > weapon.stats.attack))
         {
+            Debug.Log("canUpgrade:"+itemId);
             canUpgrade = true;
             if (doUpdate)
             {

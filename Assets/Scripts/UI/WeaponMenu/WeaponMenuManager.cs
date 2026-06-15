@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class WeaponMenuManager : MonoBehaviour
 {
@@ -446,6 +447,12 @@ public class WeaponMenuManager : MonoBehaviour
                             string refItemId = componentObj.GetComponent<TinkerComponentUI>().refItemId;
                             if (refComponent != null)
                                 SetTooltipToComponent(refComponent, refItemId);
+                            else
+                            {
+                                tooltipUI.headerText.text = "";
+                                tooltipUI.centerText.text = "";
+                                tooltipUI.bottomText.text = "";
+                            }
                         }
                     }
                 }
@@ -839,11 +846,11 @@ public class WeaponMenuManager : MonoBehaviour
         GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsText.transform);
         durabiltyLeft.GetComponent<TextMeshProUGUI>().text = "Durability:";
         GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsText.transform);
-        Debug.Log("activeComponentId:" + activeComponentId + ".");
+        //Debug.Log("activeComponentId:" + activeComponentId + ".");
         if (activeComponentId.Equals("repair_kit") && stats.currentDurability < stats.durability)
         {
                 durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability 
-                    + "<color=\"green\"><size=16> + 15</color></size>" + " / " + stats.durability;
+                    + "<color=\"green\"><size=16> + 25</color></size>" + " / " + stats.durability;
         }else
             durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + " / " + stats.durability;
         // Exp
@@ -1061,8 +1068,14 @@ public class WeaponMenuManager : MonoBehaviour
         int index = 0;
         //componentButtonSelected = false;
         Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
-        Dictionary<string,InventoryItem> baseComponents = inventory.GetTinkerComponents();
-        foreach (KeyValuePair<string, InventoryItem> kvp in baseComponents)
+        Dictionary<string,InventoryItem> ownedComponents = inventory.GetTinkerComponents();
+        if(ownedComponents.Count == 0)
+        {
+            tooltipUI.headerText.text = "";
+            tooltipUI.centerText.text = "";
+            tooltipUI.bottomText.text = "";
+        }
+        foreach (KeyValuePair<string, InventoryItem> kvp in ownedComponents)
         {
             string itemId = kvp.Key;
             int quantity = kvp.Value.quantity;
@@ -1122,6 +1135,7 @@ public class WeaponMenuManager : MonoBehaviour
                 }
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, itemId, tinkerComponentData.stats))
                 {
+                    Debug.Log("Can use:" + itemId);
                     /**   ADD EVENT TO COMPONENT CLICK   */
                     tinkerComponentUI.mainButton.onClick.AddListener(() =>
                     {
@@ -1155,12 +1169,13 @@ public class WeaponMenuManager : MonoBehaviour
                         }
                     });
                 }
+                //else Debug.Log("Can't use:" + itemId);
                 //else // cant use component. disable the button
                 //   tinkerComponentUI.mainButton.interactable = false;
             }
         }
         int count = 0;//count total unique components owned
-        foreach(var item in baseComponents)
+        foreach(var item in ownedComponents)
         {
             if(item.Value.quantity > 0)
                 count++;
@@ -1310,21 +1325,25 @@ public class WeaponMenuManager : MonoBehaviour
             tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + ", ";
         }
         tooltipUI.centerText.text = tooltipUI.centerText.text.Substring(0, tooltipUI.centerText.text.Length - 2);
+        tooltipUI.bottomText.text = "" + ItemDropManager.GetDB().GetItem(itemId).cost + " gp";
     }
-    private void RepairActiveWeapon()
+    private void RepairActiveWeapon(string repairItemId="repair_kit")
     {
+        Debug.Log("RepairActiveWeapon");
         if (activeWeapon != null)
         {
             WeaponScript weapon = activeWeapon.GetComponent<WeaponScript>();
             if (weapon.stats.currentDurability < weapon.stats.durability)
             {
                 Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
-                if(inventory.CheckOwnedQty("repair_kit") > 0)
+                if(inventory.CheckOwnedQty(repairItemId) > 0)
                 {
-                    inventory.UseItem("repair_kit");
+                    inventory.items[repairItemId].quantity--;
                     weapon.stats.currentDurability += 25;
                     if(weapon.stats.currentDurability > weapon.stats.durability) 
                         weapon.stats.currentDurability = weapon.stats.durability;
+                    LoadComponentsToScreen();
+                    LoadActiveWeaponStats();
                 }
             }
         }
