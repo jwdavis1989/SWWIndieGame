@@ -6,6 +6,7 @@ public class BuckshotBulletManager : BulletManager
     [Header("Buckshot Attributes")]
     public int pelletCount = 5;
     public float spreadInDegrees = 15f;
+    public float maxAudioPlayers = 3;
 
     [Header("Pellet Prefab")]
     GameObject pelletPrefab;
@@ -42,7 +43,7 @@ public class BuckshotBulletManager : BulletManager
             staggeredSpawn = spawnTransform.position + (transform.forward * (i * 0.1f));
             //spreadRotation = spawnTransform.rotation * Quaternion.Euler(Random.Range(-spreadInDegrees, spreadInDegrees), Random.Range(-spreadInDegrees, spreadInDegrees), 0);
             spreadRotation = spawnTransform.rotation *
-                 Quaternion.Euler(0, -90, 0) *
+                 Quaternion.Euler(0, -135, 0) *
                  Quaternion.Euler(Random.Range(-spreadInDegrees, spreadInDegrees),
                                   Random.Range(-spreadInDegrees, spreadInDegrees), 0);
 
@@ -70,46 +71,44 @@ public class BuckshotBulletManager : BulletManager
                 }
             }
 
-            //Force the Rigid Body location update
-            Rigidbody newRigidBody = newBuckshotPellet.GetComponent<Rigidbody>();
-            if (newRigidBody != null)
-            {
-                newRigidBody.position = staggeredSpawn;
-                newRigidBody.rotation = spreadRotation;
-                newRigidBody.velocity = spreadRotation * Vector3.forward * masterSpeed;
-
-                // Vector3 currentVelocity = newBuckshotBulletManager.fireBallRigidBody.velocity;
-                newBuckshotBulletManager.fireBallRigidBody.position = staggeredSpawn;
-                newBuckshotBulletManager.fireBallRigidBody.rotation = spreadRotation;
-                newBuckshotBulletManager.fireBallRigidBody.velocity = spreadRotation * Vector3.forward * masterSpeed;
-            }
 
             //Initialize Pellet Location and Scale
             newBuckshotPellet.transform.parent = null;
             newBuckshotPellet.transform.localScale = Vector3.one;
 
             newBuckshotBulletManager.pelletCount = 0;
-            Debug.Log("Highest Element: " + highestElementalDamageType);
             newBuckshotBulletManager.InitializeBullet(damageCollider.characterCausingDamage, highestElementalDamageType, projectileLifetimeInSeconds, newBuckshotPellet.transform, projectileUpwardVelocityMultiplier, projectileForwardVelocityMultiplier, fireBallRigidBody.useGravity);
+
+            Rigidbody bulletRigidbody = newBuckshotPellet.GetComponent<Rigidbody>();
 
             if (characterCausingDamage.isLockedOn)
             {
-                newBuckshotPellet.transform.LookAt(characterCausingDamage.characterCombatManager.currentTarget.transform.position);
+                //If locked on, point at target
+                //newBuckshotPellet.transform.LookAt(characterCausingDamage.characterCombatManager.currentTarget.transform.position);
+                newBuckshotPellet.transform.LookAt(characterCausingDamage.characterCombatManager.LockOnTransform.transform.position);
+                //Apply the spread rotation to the LookAt rotation
+                newBuckshotPellet.transform.rotation *= Quaternion.Euler(Random.Range(-spreadInDegrees, spreadInDegrees), Random.Range(-spreadInDegrees, spreadInDegrees), 0);
+                newBuckshotPellet.transform.rotation *= Quaternion.Euler(0, -225, 0);
             }
             else
             {
-                //instantiatedSpellProjectileFX.transform.forward = this.characterCausingThisDamagetransform.forward;
-                Vector3 newForward = characterCausingDamage.transform.forward + new UnityEngine.Vector3(0, 0, 0);
-                newBuckshotPellet.transform.forward = newForward;
+                newBuckshotPellet.transform.rotation = spreadRotation;
             }
 
-            //6. Set the projectile's velocity
-            Rigidbody bulletRigidbody = newBuckshotPellet.GetComponent<Rigidbody>();
             Vector3 upwardVelocity = newBuckshotPellet.transform.up * projectileUpwardVelocityMultiplier;
             Vector3 forwardVelocity = newBuckshotPellet.transform.forward * projectileForwardVelocityMultiplier;
-            Vector3 totalVelocity = upwardVelocity + forwardVelocity;
-            bulletRigidbody.velocity = totalVelocity;
+            bulletRigidbody.velocity = upwardVelocity + forwardVelocity;
 
+            //Limit number of sounds playing simultaneously for performance
+            if (i > (maxAudioPlayers - 1))
+            {
+                AudioSource[] audioSources = newBuckshotPellet.GetComponentsInChildren<AudioSource>();
+
+                foreach (var audioSource in audioSources)
+                {
+                    audioSource.enabled = false;
+                }
+            }
         }
     }
 
