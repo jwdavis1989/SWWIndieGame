@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SemiAutoBulletManager : SpellManager
+public class BulletManager : SpellManager
 {
     //This script serves as the central hub to manipulate and adjust the fireball spell once it's active:
     //1. Give the spell slight homing toward lock-on targets
@@ -13,13 +13,15 @@ public class SemiAutoBulletManager : SpellManager
     public BulletProjectileDamageCollider damageCollider;
 
     [Header("Instantiated FX")]
-    private GameObject instantiatedDestructionFX;
+    protected GameObject instantiatedDestructionFX;
     public ElementalDamageType highestElementalDamageType;
 
-    private bool hasCollided = false;
+    protected bool hasCollided = false;
     public bool isFullyCharged = false;
-    private Rigidbody fireBallRigidBody;
-    private Coroutine destructionFXCoroutine;
+    protected Rigidbody fireBallRigidBody;
+    protected Coroutine destructionFXCoroutine;
+
+    protected Transform spawnTransform;
 
     protected override void Awake()
     {
@@ -46,7 +48,7 @@ public class SemiAutoBulletManager : SpellManager
         //END OF COMMENT OUT SECTION
     }
 
-    private void OnCollisionEnter(Collision collision)
+    protected void OnCollisionEnter(Collision collision)
     {
         //Ignore collisions with Character layer. The Damage collider will handle character collisions while this is only for impact VFX
         // if (collision.gameObject.layer == 6 /*Character Layer*/)
@@ -61,7 +63,7 @@ public class SemiAutoBulletManager : SpellManager
         }
     }
 
-    public void InitializeBullet(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, float projectileLifetimeInSeconds, bool hasGravity = true)
+    public virtual void InitializeBullet(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, float projectileLifetimeInSeconds, Transform spawnTransform, float projectileUpwardVelocityMultiplier, float projectileForwardVelocityMultiplier, bool hasGravity = true)
     {
         damageCollider.characterCausingDamage = characterCausingDamage;
         damageCollider.InitializeStats();
@@ -71,11 +73,15 @@ public class SemiAutoBulletManager : SpellManager
         }
         highestElementalDamageType = currentHighestElementalDamageType;
 
+        this.spawnTransform = spawnTransform;
+
         //Set whether the projectile will fall over time or fly straight
         fireBallRigidBody.useGravity = hasGravity;
 
         //Destroy bullet after its lifetime ends
         StartCoroutine(DestroyAfterTime(projectileLifetimeInSeconds));
+
+        GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
     }
 
     public void InstantiateSpellDestructionFX()
@@ -103,17 +109,17 @@ public class SemiAutoBulletManager : SpellManager
         }
 
         destructionFXCoroutine = StartCoroutine(WaitThenInstantiateFX(timeToWaitInSeconds));
-        //StartCoroutine(WaitThenInstantiateFX(timeToWaitInSeconds));
+        StartCoroutine(WaitThenInstantiateFX(timeToWaitInSeconds));
     }
 
-    private IEnumerator WaitThenInstantiateFX(float timeToWaitInSeconds)
+    protected IEnumerator WaitThenInstantiateFX(float timeToWaitInSeconds)
     {
         yield return new WaitForSeconds(timeToWaitInSeconds);
 
         InstantiateSpellDestructionFX();
     }
 
-    private IEnumerator DestroyAfterTime(float lifeSpanInSeconds)
+    protected IEnumerator DestroyAfterTime(float lifeSpanInSeconds)
     {
         yield return new WaitForSeconds(lifeSpanInSeconds);
 
