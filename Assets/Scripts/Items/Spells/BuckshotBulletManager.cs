@@ -1,3 +1,4 @@
+using CartoonFX;
 using UnityEngine;
 
 public class BuckshotBulletManager : BulletManager
@@ -7,6 +8,7 @@ public class BuckshotBulletManager : BulletManager
     public int pelletCount = 5;
     public float spreadInDegrees = 15f;
     public float maxAudioPlayers = 3;
+    public float maxScreenShakes = 3;
 
     [Header("Pellet Prefab")]
     GameObject pelletPrefab;
@@ -22,7 +24,6 @@ public class BuckshotBulletManager : BulletManager
             InstantiatePellets(pelletCount, projectileLifetimeInSeconds, this.spawnTransform, characterCausingDamage, projectileUpwardVelocityMultiplier, projectileForwardVelocityMultiplier);
         }
 
-        Debug.Log(characterCausingDamage + "|" + currentHighestElementalDamageType + "|" + projectileLifetimeInSeconds + "|" + hasGravity);
     }
 
     public void InstantiatePellets(int currentPelletCount, float projectileLifetimeInSeconds, Transform spawnTransform, CharacterManager characterCausingDamage, float projectileUpwardVelocityMultiplier, float projectileForwardVelocityMultiplier)
@@ -39,9 +40,8 @@ public class BuckshotBulletManager : BulletManager
         for (int i = 0; i < currentPelletCount - 1; i++)
         {
 
-            // Nudge each pellet slightly forward so they aren't exactly on top of each other
+            //Nudge each pellet slightly forward so they aren't exactly on top of each other
             staggeredSpawn = spawnTransform.position + (transform.forward * (i * 0.1f));
-            //spreadRotation = spawnTransform.rotation * Quaternion.Euler(Random.Range(-spreadInDegrees, spreadInDegrees), Random.Range(-spreadInDegrees, spreadInDegrees), 0);
             spreadRotation = spawnTransform.rotation *
                  Quaternion.Euler(0, -135, 0) *
                  Quaternion.Euler(Random.Range(-spreadInDegrees, spreadInDegrees),
@@ -51,25 +51,26 @@ public class BuckshotBulletManager : BulletManager
             GameObject newBuckshotPellet = Instantiate(pelletPrefab, staggeredSpawn, spreadRotation);
             BuckshotBulletManager newBuckshotBulletManager = newBuckshotPellet.GetComponent<BuckshotBulletManager>();
 
-            //1. Get all colliders on the new pellet
-            Collider[] pelletColliders = newBuckshotPellet.GetComponentsInChildren<Collider>();
-            //2. Get all colliders on the character who shot it
-            Collider[] shooterColliders = damageCollider.characterCausingDamage.GetComponentsInChildren<Collider>();
+            //If projectiles start colliding and acting weird, uncomment this
+            // //1. Get all colliders on the new pellet
+            // Collider[] pelletColliders = newBuckshotPellet.GetComponentsInChildren<Collider>();
+            // //2. Get all colliders on the character who shot it
+            // Collider[] shooterColliders = damageCollider.characterCausingDamage.GetComponentsInChildren<Collider>();
 
-            Collider masterBulletCollider = GetComponent<Collider>();
-            Collider masterBulletDamageCollider = newBuckshotBulletManager.damageCollider.damageCollider;
-            //3. Tell Unity to ignore collisions between them
-            foreach (var pelletCollider in pelletColliders)
-            {
-                //4. Tell Pellets to ignore collisions with master bullet
-                if (masterBulletCollider != null) Physics.IgnoreCollision(pelletCollider, masterBulletCollider);
-                if (masterBulletDamageCollider != null) Physics.IgnoreCollision(pelletCollider, masterBulletDamageCollider);
+            // Collider masterBulletCollider = GetComponent<Collider>();
+            // Collider masterBulletDamageCollider = newBuckshotBulletManager.damageCollider.damageCollider;
+            // //3. Tell Unity to ignore collisions between them
+            // foreach (var pelletCollider in pelletColliders)
+            // {
+            //     //4. Tell Pellets to ignore collisions with master bullet
+            //     if (masterBulletCollider != null) Physics.IgnoreCollision(pelletCollider, masterBulletCollider);
+            //     if (masterBulletDamageCollider != null) Physics.IgnoreCollision(pelletCollider, masterBulletDamageCollider);
 
-                foreach (var shooterCollider in shooterColliders)
-                {
-                    Physics.IgnoreCollision(pelletCollider, shooterCollider);
-                }
-            }
+            //     foreach (var shooterCollider in shooterColliders)
+            //     {
+            //         Physics.IgnoreCollision(pelletCollider, shooterCollider);
+            //     }
+            // }
 
 
             //Initialize Pellet Location and Scale
@@ -84,7 +85,6 @@ public class BuckshotBulletManager : BulletManager
             if (characterCausingDamage.isLockedOn)
             {
                 //If locked on, point at target
-                //newBuckshotPellet.transform.LookAt(characterCausingDamage.characterCombatManager.currentTarget.transform.position);
                 newBuckshotPellet.transform.LookAt(characterCausingDamage.characterCombatManager.LockOnTransform.transform.position);
                 //Apply the spread rotation to the LookAt rotation
                 newBuckshotPellet.transform.rotation *= Quaternion.Euler(Random.Range(-spreadInDegrees, spreadInDegrees), Random.Range(-spreadInDegrees, spreadInDegrees), 0);
@@ -100,13 +100,22 @@ public class BuckshotBulletManager : BulletManager
             bulletRigidbody.velocity = upwardVelocity + forwardVelocity;
 
             //Limit number of sounds playing simultaneously for performance
-            if (i > (maxAudioPlayers - 1))
+            if (i > (maxAudioPlayers - 2))
             {
                 AudioSource[] audioSources = newBuckshotPellet.GetComponentsInChildren<AudioSource>();
-
                 foreach (var audioSource in audioSources)
                 {
                     audioSource.enabled = false;
+                }
+            }
+
+            //Limit number of Screen Shakes playing simultaneously for performance
+            if (i > (maxScreenShakes - 2))
+            {
+                CFXR_Effect[] screenShakes = newBuckshotPellet.GetComponentsInChildren<CFXR_Effect>();
+                foreach (var screenShake in screenShakes)
+                {
+                    screenShake.cameraShake.enabled = false;
                 }
             }
         }

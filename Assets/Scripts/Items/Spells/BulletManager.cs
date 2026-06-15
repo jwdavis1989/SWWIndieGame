@@ -97,7 +97,6 @@ public class BulletManager : SpellManager
 
         //Update Explosion VFX based on highest element of the magic weapon used to cast it
         instantiatedDestructionFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
-
         Destroy(gameObject);
     }
 
