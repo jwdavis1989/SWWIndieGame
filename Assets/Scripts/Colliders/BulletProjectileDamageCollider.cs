@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BulletProjectileDamageCollider : DamageCollider
 {
-    private SemiAutoBulletManager bulletManager;
+    private BulletManager bulletManager;
 
     [Header("Attacking Character")]
     public CharacterManager characterCausingDamage;
@@ -20,7 +20,7 @@ public class BulletProjectileDamageCollider : DamageCollider
     {
         base.Awake();
 
-        bulletManager = GetComponentInParent<SemiAutoBulletManager>();
+        bulletManager = GetComponentInParent<BulletManager>();
     }
 
     public void InitializeStats()

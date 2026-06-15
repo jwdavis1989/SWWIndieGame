@@ -772,13 +772,13 @@ public class WeaponScript : MonoBehaviour
 
         //2. Instantiate the Projectile
         BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<BulletOriginLocation>();
-        GameObject instantiatedGunProjectile = Instantiate(gunProjectile);
+        GameObject instantiatedGunProjectile = Instantiate(gunProjectile, bulletOriginLocation.transform);
 
         //Update the VFX to match the highest element of the magic weapon
         instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
-        SemiAutoBulletManager bulletManager = instantiatedGunProjectile.GetComponent<SemiAutoBulletManager>();
-        bulletManager.InitializeBullet(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds, false);
+        BulletManager bulletManager = instantiatedGunProjectile.GetComponent<BulletManager>();
+        bulletManager.InitializeBullet(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds, bulletOriginLocation.transform, projectileUpwardVelocityMultiplier, projectileForwardVelocityMultiplier, false);
 
         //3. Zero out its location and unparent it
         instantiatedGunProjectile.transform.parent = bulletOriginLocation.transform;
