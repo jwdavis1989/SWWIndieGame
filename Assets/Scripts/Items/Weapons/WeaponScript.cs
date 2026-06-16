@@ -75,22 +75,17 @@ public class WeaponStats
 
     [Header("Weapon Attributes")]
     public float attack = 1.0f;
-    public float maxAttack = 1.0f;
     public float basePoiseDamage = 35f; //Base 35 in case it's caused by traps
     private float traitShrapnelPoiseDamageModifier = 1.25f;
     public float durability = 1;
-    public float maxDurability = 1;
+    public float currentDurability = 1.0f;
     public float block = 1.0f;
-    public float maxBlock = 1.0f;
     public float stability = 1.0f;
-    public float maxStability = 1.0f;
     public ElementalStats elemental;
-    public ElementalStats maxElemental;
     public float speed = 1.0f;
     public float maxSpeed = 1.0f;
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
-    public float currentDurability = 1.0f;
     public int level = 1;
     public float currentExperiencePoints = 0.0f;
     public float experiencePointsToNextLevel = 100.0f;
@@ -1067,13 +1062,13 @@ public class WeaponScript : MonoBehaviour
             weaponFamily == WeaponFamily.MagicWands;
     }
 
-    public Dictionary<string, float> GetPrimaryStats()
+    public Dictionary<string, float> GetPrimaryStatsForDisplay()
     {
         Dictionary<string, float> rv = new Dictionary<string, float>();
         rv.Add("Attack", stats.attack);
         rv.Add("Block", stats.block);
-        rv.Add("Durability", stats.durability);
         rv.Add("Stability", stats.stability);
+        //rv.Add("Durability", stats.durability);
         return rv;
     }
     public Dictionary<string, float> GetElementalStats()

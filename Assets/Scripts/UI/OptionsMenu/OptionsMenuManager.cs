@@ -302,9 +302,6 @@ public class OptionsMenuManager : MonoBehaviour
         effectsVolumeSlider.value = playerSettings.effectsVolume;
         if(mouseSensitivitySlider != null)
             mouseSensitivitySlider.value = playerSettings.mouseSensitivity;
-        mixer.SetFloat("MainVolume", playerSettings.mainVolume);
-        mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
-        mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
     }
 
     bool invertChanged = false;
