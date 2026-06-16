@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageCollider : MonoBehaviour
 {
     [Header("Collider")]
-    protected Collider damageCollider;
+    public Collider damageCollider;
 
     [Header("Stats")]
     public float physicalDamage = 0f;
