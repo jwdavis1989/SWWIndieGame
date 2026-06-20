@@ -461,7 +461,10 @@ public class PlayerManager : CharacterManager
         PlayerInputManager.instance.SafeDisable(true, true);
         Time.timeScale = 0;
 
+        CharacterController playerController = GetComponent<CharacterController>();
+        playerController.enabled = false;
         SceneManager.LoadScene("LoadingScene");
+        playerController.enabled = true;
 
         //DisableCapeSystem();
         //transform.position = new Vector3(destinationX, destinationY, destinationZ);

@@ -454,7 +454,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     public void AttemptToPerformJump()
     {
-        //If performing any action, we don't want to allow a jump (Will change when combat is added)
+        //If performing any action, we don't want to allow a jump
         if (player.isPerformingAction)
         {
             return;
