@@ -61,6 +61,7 @@ public class PlayerManager : CharacterManager
         //Update UI Resources
         PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+        PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
 
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
@@ -101,6 +102,8 @@ public class PlayerManager : CharacterManager
         isDead = false;
         playerStatsManager.currentHealth = playerStatsManager.maxHealth;
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
+        playerStatsManager.currentFuel = playerStatsManager.maxFuel;
+        isOutOfFuel = false;
 
 
         //Play Rebirth Effects here
@@ -128,6 +131,7 @@ public class PlayerManager : CharacterManager
         //Resources
         currentCharacterData.currentHealth = playerStatsManager.currentHealth;
         currentCharacterData.currentStamina = playerStatsManager.currentStamina;
+        currentCharacterData.currentFuel = playerStatsManager.currentFuel;
 
         //Weapons
         currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
@@ -177,6 +181,18 @@ public class PlayerManager : CharacterManager
 
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+
+        //Fuel
+        playerStatsManager.maxFuel = playerStatsManager.CalculateFuelBasedOnCapacityLevel(playerStatsManager.capacity);
+        playerStatsManager.currentFuel = currentCharacterData.currentFuel;
+        if (currentCharacterData.currentFuel > 0)
+        {
+            isOutOfFuel = false;
+        }
+
+        PlayerUIManager.instance.playerUIHudManager.SetMaxFuelValue(playerStatsManager.maxFuel);
+        PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
+
 
         //Weapon Arsenal Data Loading here
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;

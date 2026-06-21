@@ -30,6 +30,8 @@ public class PlayerStatsManager : CharacterStatsManager
     {
         SetNewMaxHealthValue();
         SetNewMaxStaminaValue();
+        SetNewMaxFuelValue();
+        player.isOutOfFuel = false;
         if (player.isDead)
         {
             player.ReviveCharacter();

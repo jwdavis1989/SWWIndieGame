@@ -54,9 +54,11 @@ public class PlayerInputManager : MonoBehaviour
     public float cameraHorizontalInput;
     public float cameraVerticalInput;
     public float defaultCameraFieldOfView = 60f;
-    public float sprintCameraFieldOfViewMaximum = 90f;
-    public float sprintCameraFieldOfViewDecreaseSpeed = 30f;
-    public float sprintCameraFieldOfViewIncreaseSpeed = 15f;
+    public float currentSprintCameraFieldOfViewMaximum = 110f;
+    public float sprintCameraFieldOfViewMaximum = 70f;
+    public float sprintCameraFieldOfViewMaximumWithFuel = 110f;
+    public float sprintCameraFieldOfViewDecreaseSpeed = 90f;
+    public float sprintCameraFieldOfViewIncreaseSpeed = 90f;
 
     [Header("Lock-On Input")]
     public bool lockOnInput;
@@ -561,6 +563,7 @@ public class PlayerInputManager : MonoBehaviour
         else
         {
             player.playerLocomotionManager.characterManager.isSprinting = false;
+            player.playerLocomotionManager.characterManager.isSprintingBoosting = false;
             //Camera Zoom-Out Juice to give the illusion of Slowing Rapidly
             // if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting) {
             //     PlayerCamera.instance.cameraObject.fieldOfView -= sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
@@ -579,13 +582,13 @@ public class PlayerInputManager : MonoBehaviour
             //Camera Zoom-Out Juice to give the illusion of great speed
             if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting)
             {
-                if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum)
+                if (PlayerCamera.instance.cameraObject.fieldOfView < currentSprintCameraFieldOfViewMaximum)
                 {
                     PlayerCamera.instance.cameraObject.fieldOfView += sprintCameraFieldOfViewIncreaseSpeed * Time.deltaTime;
                 }
                 else
                 {
-                    PlayerCamera.instance.cameraObject.fieldOfView = sprintCameraFieldOfViewMaximum;
+                    PlayerCamera.instance.cameraObject.fieldOfView = currentSprintCameraFieldOfViewMaximum;
                 }
             }
             //Locked onto an enemy and need to reduce Field of View Extremely Rapidly

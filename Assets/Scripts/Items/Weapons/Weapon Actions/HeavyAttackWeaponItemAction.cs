@@ -68,7 +68,7 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
     
     private void PerformHeavyJumpAttack(CharacterManager characterPerformingAction)
     {
-        if (characterPerformingAction.isPerformingAction)
+        if (characterPerformingAction.isPerformingAction || characterPerformingAction.isOutOfFuel)
         {
             return;
         }

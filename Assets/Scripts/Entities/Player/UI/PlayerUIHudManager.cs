@@ -8,6 +8,7 @@ public class PlayerUIHudManager : MonoBehaviour
     [Header("Status Bars")]
     [SerializeField] UIStatBar healthBar;
     [SerializeField] UIStatBar staminaBar;
+    [SerializeField] UIStatBar fuelBar;
 
     [Header("Quick Slots")]
     [SerializeField] Image rightWeaponQuickSlotIcon;
@@ -33,15 +34,25 @@ public class PlayerUIHudManager : MonoBehaviour
         staminaBar.SetMaxStat(maxStamina);
     }
 
+    public void SetNewFuelValue(float newValue) {
+        fuelBar.SetStat(newValue);
+    }
+
+    public void SetMaxFuelValue(float maxStamina) {
+        fuelBar.SetMaxStat(maxStamina);
+    }
+
     public void RefreshHud() {
         //Reboot UI objects to force an update
         //Turn off
         healthBar.gameObject.SetActive(false);
         staminaBar.gameObject.SetActive(false);
+        fuelBar.gameObject.SetActive(false);
 
         //Turn on
         healthBar.gameObject.SetActive(true);
         staminaBar.gameObject.SetActive(true);
+        fuelBar.gameObject.SetActive(true);
     }
 
     //Remember to call this after a weapon has been added to your hand, or arsenal

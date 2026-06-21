@@ -453,6 +453,12 @@ public class CharacterWeaponManager : MonoBehaviour
                 break;
             case AttackType.HeavyJumpAttack01:
                 staminaDeducted *= currentWeapon.stats.heavyJumpAttack01StaminaCostModifier;
+
+                //Drain fuel
+                if (characterThatOwnsThisArsenal.characterStatsManager.currentFuel > 0)
+                {
+                    characterThatOwnsThisArsenal.characterStatsManager.currentFuel -= characterThatOwnsThisArsenal.characterStatsManager.meteorStrikeFuelCost;
+                }
                 break;
 
             //Running Attacks

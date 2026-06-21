@@ -47,6 +47,8 @@ public class CharacterManager : MonoBehaviour
     public bool canMove = true;
     public bool isMoving = false;
     public bool isSprinting = false;
+    public bool isSprintingBoosting = false;
+    public bool isOutOfFuel = false;
     public bool isLockedOn = false;
     public bool isBlocking = false;
     public bool isPerfectBlocking = false;

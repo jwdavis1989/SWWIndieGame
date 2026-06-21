@@ -9,6 +9,7 @@ public class CharacterStatsManager : MonoBehaviour
     //Move these to the CharacterNetworkManager if adding multiplayer
     public int endurance = 10;
     public int fortitude = 10;
+    public int capacity = 10;
 
     [Header("Defenses")]
     public float physicalDefense = 0f;
@@ -39,6 +40,13 @@ public class CharacterStatsManager : MonoBehaviour
     public float jumpStaminaCost = 25f;
     public float staminaTickTimer = 0.1f;
 
+    [Header("Fuel")]
+    public float currentFuel = 0;
+    public float maxFuel = 100;
+    public float sprintingFuelCost = 0.5f;
+    public float airDashFuelCost = 2f;
+    public float meteorStrikeFuelCost = 10f;
+
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
@@ -54,6 +62,7 @@ public class CharacterStatsManager : MonoBehaviour
     {
         CheckHP();
         HandlePoiseResetTimer();
+        HandleCheckFuelTank();
     }
 
     public float CalculateHealthBasedOnfortitudeLevel(int fortitude)
@@ -81,6 +90,19 @@ public class CharacterStatsManager : MonoBehaviour
         return endurance * 10f;
     }
 
+    public float CalculateFuelBasedOnCapacityLevel(int capacity)
+    {
+        //Create an equation for how stamina is calculated
+
+        //Use Mathf.RoundToInt and a float called stamina if your formula is more complex
+        // float stamina = 0;
+        // stamina = endurance * 10;
+        // return Mathf.RoundToInt(stamina);
+
+        //If simple formula, use this simpler and more efficient method
+        return capacity * 10f;
+    }
+
     //Only called when player gets an upgrade to these Resources
     public void SetNewMaxHealthValue()
     {
@@ -93,6 +115,13 @@ public class CharacterStatsManager : MonoBehaviour
         maxStamina = CalculateStaminaBasedOnEnduranceLevel(endurance);
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(maxStamina);
         currentStamina = maxStamina;
+    }
+    public void SetNewMaxFuelValue()
+    {
+        maxStamina = CalculateFuelBasedOnCapacityLevel(capacity);
+        PlayerUIManager.instance.playerUIHudManager.SetMaxFuelValue(maxFuel);
+        currentFuel = maxFuel;
+        character.isOutOfFuel = false;
     }
 
     public void RegenerateStamina()
@@ -169,6 +198,20 @@ public class CharacterStatsManager : MonoBehaviour
         else
         {
             totalPoiseDamage = 0;
+        }
+    }
+
+    protected virtual void HandleCheckFuelTank()
+    {
+        if (currentFuel <= 0)
+        {
+            currentFuel = 0;
+            character.isOutOfFuel = true;
+            PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximum;
+        }
+        else
+        {
+            PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximumWithFuel;
         }
     }
 }
