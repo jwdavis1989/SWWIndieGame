@@ -62,7 +62,6 @@ public class CharacterStatsManager : MonoBehaviour
     {
         CheckHP();
         HandlePoiseResetTimer();
-        HandleCheckFuelTank();
     }
 
     public float CalculateHealthBasedOnfortitudeLevel(int fortitude)
@@ -115,13 +114,6 @@ public class CharacterStatsManager : MonoBehaviour
         maxStamina = CalculateStaminaBasedOnEnduranceLevel(endurance);
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(maxStamina);
         currentStamina = maxStamina;
-    }
-    public void SetNewMaxFuelValue()
-    {
-        maxStamina = CalculateFuelBasedOnCapacityLevel(capacity);
-        PlayerUIManager.instance.playerUIHudManager.SetMaxFuelValue(maxFuel);
-        currentFuel = maxFuel;
-        character.isOutOfFuel = false;
     }
 
     public void RegenerateStamina()
@@ -201,17 +193,4 @@ public class CharacterStatsManager : MonoBehaviour
         }
     }
 
-    protected virtual void HandleCheckFuelTank()
-    {
-        if (currentFuel <= 0)
-        {
-            currentFuel = 0;
-            character.isOutOfFuel = true;
-            PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximum;
-        }
-        else
-        {
-            PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximumWithFuel;
-        }
-    }
 }

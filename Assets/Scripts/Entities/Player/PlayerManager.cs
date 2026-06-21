@@ -189,6 +189,10 @@ public class PlayerManager : CharacterManager
         {
             isOutOfFuel = false;
         }
+        if (currentCharacterData.currentFuel > currentCharacterData.currentFuel/2)
+        {
+            isRunningOnEmergencyPowerLevels = false;
+        }
 
         PlayerUIManager.instance.playerUIHudManager.SetMaxFuelValue(playerStatsManager.maxFuel);
         PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
@@ -221,7 +225,7 @@ public class PlayerManager : CharacterManager
             {
                 flashlight.SetActive(false);
             }
-            else
+            else if (!isRunningOnEmergencyPowerLevels)
             {
                 flashlight.SetActive(true);
             }
@@ -237,7 +241,7 @@ public class PlayerManager : CharacterManager
             {
                 cameraflashlight.SetActive(false);
             }
-            else
+            else if (!isRunningOnEmergencyPowerLevels)
             {
                 cameraflashlight.SetActive(true);
             }

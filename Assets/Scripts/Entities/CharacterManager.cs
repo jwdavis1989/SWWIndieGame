@@ -49,6 +49,7 @@ public class CharacterManager : MonoBehaviour
     public bool isSprinting = false;
     public bool isSprintingBoosting = false;
     public bool isOutOfFuel = false;
+    public bool isRunningOnEmergencyPowerLevels = false;
     public bool isLockedOn = false;
     public bool isBlocking = false;
     public bool isPerfectBlocking = false;
