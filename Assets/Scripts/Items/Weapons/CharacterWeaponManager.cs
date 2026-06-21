@@ -120,6 +120,7 @@ public class CharacterWeaponManager : MonoBehaviour
         }
         //Warning if using for npc - Currently still tracking single pokedex
         WeaponScript currentWeaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
+        currentWeaponScript.stats.currentDurability = currentWeaponScript.stats.durability;
         currentWeaponScript.hasObtained = true;
 
         //Initialize Weapon Owner to avoid a race condition in Awake()
