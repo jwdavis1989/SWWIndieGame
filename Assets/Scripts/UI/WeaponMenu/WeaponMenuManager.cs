@@ -841,18 +841,7 @@ public class WeaponMenuManager : MonoBehaviour
         foreach (KeyValuePair<string, float> stat in wpn.GetPrimaryStatsForDisplay()) 
             LoadStat(stat, primaryStatsText.transform);
         // Durability
-        //GameObject blankSquare = Instantiate(statsTextPrefab, expStatsText.transform);
-        //blankSquare.GetComponent<TextMeshProUGUI>().text = "";
-        GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsText.transform);
-        durabiltyLeft.GetComponent<TextMeshProUGUI>().text = "Durability:";
-        GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsText.transform);
-        //Debug.Log("activeComponentId:" + activeComponentId + ".");
-        if (activeComponentId.Equals("repair_kit") && stats.currentDurability < stats.durability)
-        {
-                durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability 
-                    + "<color=\"green\"><size=16> + 25</color></size>" + " / " + stats.durability;
-        }else
-            durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + " / " + stats.durability;
+        LoadDurability(stats);
         // Exp
         GameObject curExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
         GameObject curExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
@@ -902,6 +891,27 @@ public class WeaponMenuManager : MonoBehaviour
             }
         }
         return stat;
+    }
+    void LoadDurability(WeaponStats stats)
+    {
+        // Durability
+        GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsText.transform);
+        durabiltyLeft.GetComponent<TextMeshProUGUI>().text = "Durability:";
+        GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsText.transform);
+        // green text for max durability
+        string greenTextEnd = "";
+        string greenTextStart = "";
+        if (activeComponent != null && activeComponent.durability > 0)
+        {
+            greenTextStart = "<color=\"green\">";
+            greenTextEnd += "<size=16> + " + activeComponent.durability + "</color></size>";
+        }
+        durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + " / " + greenTextStart + stats.durability + greenTextEnd;
+        //if (activeComponentId.Equals("repair_kit") && stats.currentDurability < stats.durability)
+        //{ // green text for repair kit
+        //    durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + "<color=\"green\"><size=16> + 25</color></size>" 
+        //        + " / " + greenTextStart + stats.durability + greenTextEnd;
+        //}
     }
     bool canBreakdownActiveWeapon = false;
     /**

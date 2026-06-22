@@ -132,13 +132,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
                         DungeonManager.offHandUsed = true;
                     }
                 }
-                weapon.stats.currentDurability -= 1;
-                if(weapon.stats.currentDurability < 0)
-                {
-                    weapon.stats.currentDurability = 0;
-                    finalDamageDealt = 1;
-                }else
-                    finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
+                finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
 
                 //Aggro the monster if they aren't already
                 if (characterCausingDamage.isPlayer && targetCharacter.characterCombatManager.currentTarget == null)

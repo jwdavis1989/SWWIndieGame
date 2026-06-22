@@ -350,10 +350,19 @@ public class IdeaCameraController : MonoBehaviour
             return;
         }
         //Normal Rotations
-        //Rotate left and right based on horizontal movement on the right joystick
-        leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
-        //Rotate up and down based on the vertical movement on the right Joystick
-        upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
+        if (InputSwitchDetector.IsCurrentlyGamepad())
+        {
+            //Rotate left and right based on horizontal movement on the right joystick
+            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
+            //Rotate up and down based on the vertical movement on the right Joystick
+            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
+        }
+        else
+        { // Mouse rotations - Mouse input already handles for delta time
+            float mouseSensitivy = 0.1f;
+            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * mouseSensitivy;
+            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * mouseSensitivy;
+        }
         //Clamp the up and down look angle between min/max values
         upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
 

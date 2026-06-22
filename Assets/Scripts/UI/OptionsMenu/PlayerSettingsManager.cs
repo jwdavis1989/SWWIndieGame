@@ -99,6 +99,8 @@ public class PlayerSettingsManager : MonoBehaviour
         float sensitivity = instance.playerSettings.mouseSensitivity;
         if (sensitivity < 0.1f) 
             return 0.1f;
+        if (sensitivity > 1f)
+            return 1f;
         return sensitivity;
     }
     public static void SetSensitivity(float val) { instance.playerSettings.mouseSensitivity = val; }
