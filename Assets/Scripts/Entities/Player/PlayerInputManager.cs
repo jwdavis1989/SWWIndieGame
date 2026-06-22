@@ -203,11 +203,11 @@ public class PlayerInputManager : MonoBehaviour
             });
             playerControls.PlayerActions.DebugTeleportToAlecDev2.performed += (i =>
             {
-                player.TeleportPlayerToSceneAndCoordinates(5, -50, 21, -80);  // AlecDev - 7/19/25: this is a grassy pirate island
+                player.TeleportPlayerToSceneAndCoordinates(5, -50, 21, -80);  // grassy island
             });
             playerControls.PlayerActions.DebugTeleportToAlecDevDungeon.performed += (i =>
             {
-                player.TeleportPlayerToSceneAndCoordinates(15);  // AlecDev - 7/19/25: this is a alec dev dungeon
+                player.TeleportPlayerToSceneAndCoordinates(15);  // tower level select
             });
             playerControls.PlayerActions.DebugFullResources.performed += i => player.playerStatsManager.FullyRestoreResources();
 
