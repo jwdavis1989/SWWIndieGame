@@ -59,14 +59,14 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager.HandleAllMovement();
 
         //Update UI Resources
-        PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
-        PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
-        PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
+        // PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
+        // PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+        // PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
 
         //Radial UI Stat Bars
-        PlayerUIManager.instance.radialHPBar.UpdateStatBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
-        PlayerUIManager.instance.radialStaminaBar.UpdateStatBar(playerStatsManager.currentStamina, playerStatsManager.maxStamina);
-        PlayerUIManager.instance.radialFuelBar.UpdateStatBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        PlayerUIManager.instance.playerUIHudManager.UpdateStaminaBar(playerStatsManager.currentStamina, playerStatsManager.maxStamina);
+        PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
 
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
@@ -109,7 +109,7 @@ public class PlayerManager : CharacterManager
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
         playerStatsManager.currentFuel = playerStatsManager.maxFuel;
         isOutOfFuel = false;
-        PlayerUIManager.instance.radialHPBar.UpdateStatBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
 
 
         //Play Rebirth Effects here
@@ -178,15 +178,15 @@ public class PlayerManager : CharacterManager
         playerStatsManager.maxHealth = playerStatsManager.CalculateHealthBasedOnfortitudeLevel(playerStatsManager.fortitude);
         playerStatsManager.currentHealth = currentCharacterData.currentHealth;
 
-        PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerStatsManager.maxHealth);
-        PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        
+
 
         //Stamina
         playerStatsManager.maxStamina = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerStatsManager.endurance);
         playerStatsManager.currentStamina = currentCharacterData.currentStamina;
 
-        PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
-        PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+        PlayerUIManager.instance.playerUIHudManager.UpdateStaminaBar(playerStatsManager.currentStamina, playerStatsManager.maxStamina);
 
         //Fuel
         playerStatsManager.maxFuel = playerStatsManager.CalculateFuelBasedOnCapacityLevel(playerStatsManager.capacity);
@@ -200,8 +200,8 @@ public class PlayerManager : CharacterManager
             isRunningOnEmergencyPowerLevels = false;
         }
 
-        PlayerUIManager.instance.playerUIHudManager.SetMaxFuelValue(playerStatsManager.maxFuel);
-        PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
+        
+        PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
 
 
         //Weapon Arsenal Data Loading here

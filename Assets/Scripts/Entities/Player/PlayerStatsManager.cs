@@ -47,6 +47,7 @@ public class PlayerStatsManager : CharacterStatsManager
         SetNewMaxStaminaValue();
         SetNewMaxFuelValue();
         player.isOutOfFuel = false;
+        player.isRunningOnEmergencyPowerLevels = false;
         if (player.isDead)
         {
             player.ReviveCharacter();
@@ -60,11 +61,10 @@ public class PlayerStatsManager : CharacterStatsManager
     public void SetNewMaxFuelValue()
     {
         maxStamina = CalculateFuelBasedOnCapacityLevel(capacity);
-        PlayerUIManager.instance.playerUIHudManager.SetMaxFuelValue(maxFuel);
         currentFuel = maxFuel;
         player.isOutOfFuel = false;
         player.isRunningOnEmergencyPowerLevels = false;
-        PlayerUIManager.instance.radialFuelBar.UpdateStatBar(currentFuel, maxFuel);
+        PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(currentFuel, maxFuel);
     }
 
     protected virtual void HandleCheckFuelTank()

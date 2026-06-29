@@ -10,9 +10,9 @@ public class PlayerUIManager : MonoBehaviour
     [HideInInspector] public PlayerUIHudManager playerUIHudManager;
     [HideInInspector] public PlayerUIPopUpManager playerUIPopUpManager;
     public PauseScript playerUIPauseMenu;
-    public UIRadialStatBar radialHPBar;
-    public UIRadialStatBar radialStaminaBar;
-    public UIRadialStatBar radialFuelBar;
+    // public UIRadialStatBar radialHPBar;
+    // public UIRadialStatBar radialStaminaBar;
+    // public UIRadialStatBar radialFuelBar;
 
     [Header("UI Flags")]
     public bool menuWindowIsOpen = false;   //Inventory Screen/Equipmen Menu/Blacksmith menu, etc. //TODO: This needs to be toggled by Alec's pause system.

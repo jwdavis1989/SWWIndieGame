@@ -148,7 +148,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
         if (targetCharacter.isPlayer)
         {
-            PlayerUIManager.instance.radialHPBar.UpdateStatBar(targetCharacter.characterStatsManager.currentHealth, targetCharacter.characterStatsManager.maxHealth);
+            PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(targetCharacter.characterStatsManager.currentHealth, targetCharacter.characterStatsManager.maxHealth);
         }
 
         //Calculate Poise Damage to determine if the character will be stunned
