@@ -108,12 +108,14 @@ public class CharacterStatsManager : MonoBehaviour
         maxHealth = CalculateHealthBasedOnfortitudeLevel(fortitude);
         PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(maxHealth);
         currentHealth = maxHealth;
+        PlayerUIManager.instance.radialHPBar.UpdateStatBar(currentHealth, maxHealth);
     }
     public void SetNewMaxStaminaValue()
     {
         maxStamina = CalculateStaminaBasedOnEnduranceLevel(endurance);
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(maxStamina);
         currentStamina = maxStamina;
+        PlayerUIManager.instance.radialStaminaBar.UpdateStatBar(currentStamina, maxStamina);
     }
 
     public void RegenerateStamina()

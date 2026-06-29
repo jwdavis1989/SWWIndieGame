@@ -163,6 +163,10 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
 
         //Apply final damage to character's health
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
+        if (targetCharacter.isPlayer)
+        {
+            PlayerUIManager.instance.radialHPBar.UpdateStatBar(targetCharacter.characterStatsManager.currentHealth, targetCharacter.characterStatsManager.maxHealth);
+        }
 
         if (targetCharacter != null && targetCharacter.characterUIManager != null)
         {   

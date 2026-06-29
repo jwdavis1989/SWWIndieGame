@@ -64,6 +64,7 @@ public class PlayerStatsManager : CharacterStatsManager
         currentFuel = maxFuel;
         player.isOutOfFuel = false;
         player.isRunningOnEmergencyPowerLevels = false;
+        PlayerUIManager.instance.radialFuelBar.UpdateStatBar(currentFuel, maxFuel);
     }
 
     protected virtual void HandleCheckFuelTank()
@@ -74,8 +75,7 @@ public class PlayerStatsManager : CharacterStatsManager
             {
                 currentFuel = 0;
                 player.isOutOfFuel = true;
-                PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximum;
-                Debug.Log("Camera FoV: " + PlayerCamera.instance.cameraObject.fieldOfView);
+                PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximum;                Debug.Log("Camera FoV: " + PlayerCamera.instance.cameraObject.fieldOfView);
 
                 //TODO: Add a coroutine call here to play some beeping and red flashing for polish
             }

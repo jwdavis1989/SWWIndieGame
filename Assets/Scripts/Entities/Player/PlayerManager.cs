@@ -63,6 +63,11 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
         PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
 
+        //Radial UI Stat Bars
+        PlayerUIManager.instance.radialHPBar.UpdateStatBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        PlayerUIManager.instance.radialStaminaBar.UpdateStatBar(playerStatsManager.currentStamina, playerStatsManager.maxStamina);
+        PlayerUIManager.instance.radialFuelBar.UpdateStatBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
+
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
 
@@ -104,6 +109,7 @@ public class PlayerManager : CharacterManager
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
         playerStatsManager.currentFuel = playerStatsManager.maxFuel;
         isOutOfFuel = false;
+        PlayerUIManager.instance.radialHPBar.UpdateStatBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
 
 
         //Play Rebirth Effects here
