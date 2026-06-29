@@ -499,6 +499,9 @@ public class WeaponScript : MonoBehaviour
         }
 
         character.characterAnimatorManager.PlayTargetActionAnimation(offHandSpellAnimation, true);
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
     }
 
     public virtual void SuccessfullyCastSpell(CharacterManager character)
@@ -735,6 +738,9 @@ public class WeaponScript : MonoBehaviour
 
         //Change character model Rotation to counter animation's root motion rotation in the nation
         character.SetShootingModelAlignment();
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
     }
 
     public virtual void InstantiateWarmUpGunFX(CharacterManager character)
@@ -809,7 +815,7 @@ public class WeaponScript : MonoBehaviour
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
     {
-        if (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0)
+        if (!character.canComboSpecialAttack && (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0))
         {
             return false;
         }

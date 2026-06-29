@@ -62,6 +62,7 @@ public class CharacterManager : MonoBehaviour
     public bool isChargingSpellAttack = false;
     public bool isAiming = false;
     public bool isInvulnerable = false;
+    public bool canComboSpecialAttack = false;
 
     [Header("Minimap Sprite")]
     public GameObject miniMapSprite;
@@ -196,6 +197,7 @@ public class CharacterManager : MonoBehaviour
     public void CallDrainStaminaBasedOnAttack()
     {
         characterWeaponManager.DrainStaminaBasedOnAttack();
+        DisableCanComboSpecialWeapon();
     }
 
     public void CallOpenDamageCollider()
@@ -342,5 +344,15 @@ public class CharacterManager : MonoBehaviour
         Vector3 currentRotation = transform.eulerAngles;
         Vector3 newRotation = new Vector3(0f, currentRotation.y, currentRotation.z);
         transform.rotation = Quaternion.Euler(newRotation);
+    }
+
+    public virtual void EnableCanComboSpecialWeapon()
+    {
+        canComboSpecialAttack = true;
+    }
+
+    public virtual void DisableCanComboSpecialWeapon()
+    {
+        canComboSpecialAttack = false;
     }
 }

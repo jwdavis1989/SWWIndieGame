@@ -43,6 +43,7 @@ public class CharacterCombatManager : MonoBehaviour
     public virtual void EnableCanDoCombo()
     {
         canComboWithMainHandWeapon = true;
+        character.canComboSpecialAttack = true;
     }
 
     public virtual void DisableCanDoCombo()

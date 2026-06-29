@@ -676,7 +676,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleOffHandSpecialAttackInput()
     {
-        if (specialAttackInput && !player.isBlocking && !player.isPerformingAction)
+        if (specialAttackInput && ((!player.isBlocking && !player.isPerformingAction) || player.canComboSpecialAttack))
         {
             specialAttackInput = false;
 
@@ -704,6 +704,14 @@ public class PlayerInputManager : MonoBehaviour
                 }
 
                 player.characterWeaponManager.ResetSpecialWeaponCooldownTimer();
+            }
+
+            if (player.isPerformingAction)
+            {
+                player.DisableCanRotate();
+                player.CallCloseDamageCollider();
+                player.playerCombatManager.DisableCanDoCombo();
+                player.CallDisableBladeTrailVFX();
             }
         }
     }
