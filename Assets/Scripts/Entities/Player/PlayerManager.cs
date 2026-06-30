@@ -110,6 +110,10 @@ public class PlayerManager : CharacterManager
         playerStatsManager.currentFuel = playerStatsManager.maxFuel;
         isOutOfFuel = false;
         PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        if (miniMapSprite != null)
+        {
+            miniMapSprite.SetActive(true);
+        }
 
 
         //Play Rebirth Effects here
