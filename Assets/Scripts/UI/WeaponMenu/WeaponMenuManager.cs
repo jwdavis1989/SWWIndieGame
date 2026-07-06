@@ -100,6 +100,8 @@ public class WeaponMenuManager : MonoBehaviour
             playerControls.WeaponMenu.Enable();
         // load tooltips
         LoadControlTooltips();
+        //close submenus
+        CloseWeaponSubmenu();
     }
     private void OnDisable()
     {
@@ -325,29 +327,6 @@ public class WeaponMenuManager : MonoBehaviour
     }
     void HandleOpenWeaponSubmenuInput()
     {
-        //if (isHolding)
-        //{
-        //    holdTime += Time.unscaledDeltaTime;
-        //    holdToBreakdownWpnImage.fillAmount = holdTime / holdDuration;
-        //    //Color currentColor = holdToBreakdownWpnImage.color; // Get the current color
-        //    //currentColor.a = holdTime / holdDuration;      // Modify the alpha component
-        //    //holdToBreakdownWpnImage.color = currentColor;
-        //    //Debug.Log("SETTING FILL AMOUNT TO " + holdToBreakdownWpnImage.fillAmount);  
-        //    if (holdTime >= holdDuration)
-        //    {
-        //        isHolding = false;
-        //        holdTime = 0f;
-        //        holdToBreakdownWpnImage.fillAmount = 0f;
-        //    }
-        //}
-        //if (breakdownWeaponStarted)
-        //{
-        //    breakdownWeaponStarted = false;
-        //    //Debug.Log("breakdownWeaponStarted");
-        //    isHolding = canBreakdownActiveWeapon;
-        //    holdTime = 0f;
-        //    holdToBreakdownWpnImage.fillAmount = 0f;
-        //}
         if (weaponSubmenuInput)
         {
             weaponSubmenuInput = false;
@@ -356,14 +335,6 @@ public class WeaponMenuManager : MonoBehaviour
             if(!submenuActive)
                 OpenWeaponSubmenu();
         }
-        //if (breakdownWeaponCanceled)
-        //{
-        //    breakdownWeaponCanceled = false;
-        //    //Debug.Log("breakdownWeaponCanceled");
-        //    isHolding = false;
-        //    holdTime = 0f;
-        //    holdToBreakdownWpnImage.fillAmount = 0f;
-        //}
     }
     public void SalvageConfirmOnClick() { BreakDownActiveWeapon(); CloseSalvageConfirmWindow(); }
     void OpenWeaponSubmenu()
@@ -1362,7 +1333,6 @@ public class WeaponMenuManager : MonoBehaviour
     public void RepairActiveWeapon()
     {
         string repairItemId = "repair_kit";
-        Debug.Log("RepairActiveWeapon");
         if (activeWeapon != null)
         {
             WeaponScript weapon = activeWeapon.GetComponent<WeaponScript>();
@@ -1372,9 +1342,7 @@ public class WeaponMenuManager : MonoBehaviour
                 if(inventory.CheckOwnedQty(repairItemId) > 0)
                 {
                     inventory.items[repairItemId].quantity--;
-                    weapon.stats.currentDurability += 25;
-                    if(weapon.stats.currentDurability > weapon.stats.durability) 
-                        weapon.stats.currentDurability = weapon.stats.durability;
+                    weapon.stats.currentDurability = weapon.stats.durability;
                     CloseWeaponSubmenu();
                     LoadComponentsToScreen();
                     LoadActiveWeaponStats();
