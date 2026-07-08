@@ -36,6 +36,9 @@ public class WorldSoundFXManager : MonoBehaviour
     public AudioClip[] runFootStepSFX;
     public AudioClip backPedalSFX;
 
+    [Header("UI Sounds")]
+    public AudioClip flashlightGlitchSFX;
+
     [Header("Ambience")]
     public AudioClip caveAmbience;
 

@@ -86,6 +86,7 @@ public class PlayerStatsManager : CharacterStatsManager
                 if (!isFlickering)
                 {
                     StartCoroutine(FlickerAndShutOffFlashlight());
+                    player.playerSoundFXManager.PlayFlashlightGlitchSoundFX();
                 }
 
             }
