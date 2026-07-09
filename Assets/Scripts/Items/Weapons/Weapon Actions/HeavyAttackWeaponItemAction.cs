@@ -14,6 +14,7 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
 
     [Header("Jump Attacks")]
     [SerializeField] string heavy_jump_attack_01 = "Main_Heavy_Jump_Attack_01";
+    [SerializeField] string light_jump_attack_01 = "Main_Light_Jump_Attack_01";
 
     public override void AttemptToPerformAction(CharacterManager characterPerformingAction)
     {
@@ -68,11 +69,19 @@ public class HeavyAttackWeaponItemAction : WeaponItemAction
     
     private void PerformHeavyJumpAttack(CharacterManager characterPerformingAction)
     {
-        if (characterPerformingAction.isPerformingAction || characterPerformingAction.isOutOfFuel)
+        if (characterPerformingAction.isPerformingAction)
         {
             return;
         }
 
-        characterPerformingAction.characterAnimatorManager.PlayTargetAttackActionAnimation(AttackType.HeavyJumpAttack01, heavy_jump_attack_01, true);
+        if (characterPerformingAction.isOutOfFuel)
+        {
+            characterPerformingAction.characterAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightJumpAttack01, light_jump_attack_01, true);
+        }
+        else
+        {
+            characterPerformingAction.characterAnimatorManager.PlayTargetAttackActionAnimation(AttackType.HeavyJumpAttack01, heavy_jump_attack_01, true);    
+        }
+
     }
 }
