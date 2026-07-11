@@ -84,7 +84,7 @@ public class BulletManager : SpellManager
         GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
     }
 
-    public void InstantiateSpellDestructionFX()
+    public virtual void InstantiateSpellDestructionFX()
     {
         if (isFullyCharged)
         {
