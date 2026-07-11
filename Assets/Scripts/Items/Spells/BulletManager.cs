@@ -13,11 +13,8 @@ public class BulletManager : SpellManager
     public BulletProjectileDamageCollider damageCollider;
 
     [Header("Instantiated FX")]
-    protected GameObject instantiatedDestructionFX;
-    public ElementalDamageType highestElementalDamageType;
 
     protected bool hasCollided = false;
-    public bool isFullyCharged = false;
     protected Rigidbody fireBallRigidBody;
     protected Coroutine destructionFXCoroutine;
 
@@ -84,22 +81,6 @@ public class BulletManager : SpellManager
         GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
     }
 
-    public virtual void InstantiateSpellDestructionFX()
-    {
-        if (isFullyCharged)
-        {
-            instantiatedDestructionFX = Instantiate(impactParticleFullChargeVFX, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            instantiatedDestructionFX = Instantiate(impactParticleVFX, transform.position, Quaternion.identity);
-        }
-
-        //Update Explosion VFX based on highest element of the magic weapon used to cast it
-        instantiatedDestructionFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
-        Destroy(gameObject);
-    }
-
     public void WaitThenInstantiateSpellDestructionFX(float timeToWaitInSeconds)
     {
         if (destructionFXCoroutine != null)
@@ -109,20 +90,6 @@ public class BulletManager : SpellManager
 
         destructionFXCoroutine = StartCoroutine(WaitThenInstantiateFX(timeToWaitInSeconds));
         StartCoroutine(WaitThenInstantiateFX(timeToWaitInSeconds));
-    }
-
-    protected IEnumerator WaitThenInstantiateFX(float timeToWaitInSeconds)
-    {
-        yield return new WaitForSeconds(timeToWaitInSeconds);
-
-        InstantiateSpellDestructionFX();
-    }
-
-    protected IEnumerator DestroyAfterTime(float lifeSpanInSeconds)
-    {
-        yield return new WaitForSeconds(lifeSpanInSeconds);
-
-        InstantiateSpellDestructionFX();
     }
     
 }
