@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5085161609606457167}
   - component: {fileID: 7910965047899056692}
   - component: {fileID: 3529058443776942330}
+  - component: {fileID: 5725808812873024506}
   m_Layer: 11
   m_Name: SquareSprite
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.16, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.04166667, y: 0.04166667, z: 0.04166667}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7520194632642996783}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8861d9695438cc248ae44d9692031533, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0e91bdf013b0b224d80b1bbfc2245212, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,6 +98,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b85ca6e09034e4caab60ff859e8b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5725808812873024506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476052976350844029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5c71f7306f7569478cf2ab034769429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 1
+  isSpinningFromStart: 1
 --- !u!1 &4415513754113756704
 GameObject:
   m_ObjectHideFlags: 0
