@@ -304,16 +304,16 @@ public class PlayerInputManager : MonoBehaviour
             pauseInput = false;
             if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
                 return;
-            else 
+            else
                 PauseScript.instance.HandlePauseInput();
         }
     }
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
-        if(cycleQuickSlotGamepad != 0)
+        if (cycleQuickSlotGamepad != 0)
         {
-            if(cycleQuickSlotGamepad > 0)
+            if (cycleQuickSlotGamepad > 0)
             {
                 //USED FOR IDEA CAM NOW
                 //Debug.Log("cycle gamepad 1");
@@ -455,11 +455,13 @@ public class PlayerInputManager : MonoBehaviour
                 if (mouseWheelVerticalInput == 1)
                 {
                     PlayerWeaponManager.instance.NextWeapon();
+                    player.playerSoundFXManager.PlayWeaponSwapSoundFX();
 
                 }
                 else if (mouseWheelVerticalInput == -1)
                 {
                     PlayerWeaponManager.instance.nextSpecialWeapon();
+                    player.playerSoundFXManager.PlayWeaponSwapSoundFX();
                 }
             }
             prevMouseWheelVerticalInput = mouseWheelVerticalInput;
@@ -473,6 +475,7 @@ public class PlayerInputManager : MonoBehaviour
             ChangeRightWeaponDPad = false;
 
             PlayerWeaponManager.instance.NextWeapon();
+            player.playerSoundFXManager.PlayWeaponSwapSoundFX();
         }
     }
 
@@ -483,6 +486,7 @@ public class PlayerInputManager : MonoBehaviour
             ChangeLeftWeaponDPad = false;
 
             PlayerWeaponManager.instance.nextSpecialWeapon();
+            player.playerSoundFXManager.PlayWeaponSwapSoundFX();
         }
     }
 
@@ -510,7 +514,7 @@ public class PlayerInputManager : MonoBehaviour
                 //playerControls.Enable();
                 SafeEnable();
             }
-            else if(isPlayerEnabled)
+            else if (isPlayerEnabled)
             {
                 SafeDisable();
                 //playerControls.Disable();

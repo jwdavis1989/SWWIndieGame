@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSoundFXManager : CharacterSoundFXManager
 {
     public AudioSource sprintBoosterAudioSource;
+    public AudioClip switchWeaponAudio;
 
     protected override void Start()
     {
@@ -64,6 +65,11 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
         PlayAdvancedSoundFX(WorldSoundFXManager.instance.flashlightGlitchSFX, 2f, 1f, false);
         PlayAdvancedSoundFX(WorldSoundFXManager.instance.flashlightGlitchSFX, 2f, 0.9f, false);
         PlayAdvancedSoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(IdeaCameraController.instance.steveAudioClipNegative));
+    }
+
+    public void PlayWeaponSwapSoundFX()
+    {
+        PlayAdvancedSoundFX(switchWeaponAudio);
     }
 
 }
