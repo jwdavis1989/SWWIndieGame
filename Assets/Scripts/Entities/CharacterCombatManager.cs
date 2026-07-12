@@ -51,6 +51,11 @@ public class CharacterCombatManager : MonoBehaviour
         canComboWithMainHandWeapon = false;
     }
 
+    public virtual void DisableCanDoSpecialCombo()
+    {
+        character.canComboSpecialAttack = false;
+    }
+
     public void EnableCanDoRollingAttack()
     {
         canPerformRollingAttack = true;
