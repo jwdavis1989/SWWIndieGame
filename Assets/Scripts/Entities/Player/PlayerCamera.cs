@@ -140,7 +140,7 @@ public class PlayerCamera : MonoBehaviour
             //Normal Rotations
             if (InputSwitchDetector.IsCurrentlyGamepad())
             {
-                float gamepadSensitivity = 1f;
+                float gamepadSensitivity = PlayerSettingsManager.GetSensitivity();
                 //Rotate left and right based on horizontal movement on the right joystick
                 leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime * gamepadSensitivity;
                 //Rotate up and down based on the vertical movement on the right Joystick
@@ -149,8 +149,9 @@ public class PlayerCamera : MonoBehaviour
             else
             { // Mouse input - Already handles for Delta Time
                 float mouseSensitivity = PlayerSettingsManager.GetSensitivity();
-                leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * mouseSensitivity;
-                upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * mouseSensitivity;
+                float rotationSpeed = 1f;//leftAndRightRotationSpeed,upAndDownRotationSpeed
+                leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * rotationSpeed) * mouseSensitivity;
+                upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * rotationSpeed) * mouseSensitivity;
             }
             //Clamp the up and down look angle between min/max values
             upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
