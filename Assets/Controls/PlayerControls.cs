@@ -1502,7 +1502,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""BreakdownWeapon"",
+                    ""name"": ""WeaponSubmenu"",
                     ""type"": ""Button"",
                     ""id"": ""47ac9c4a-3310-421f-8791-3d463dd6ac29"",
                     ""expectedControlType"": ""Button"",
@@ -1744,7 +1744,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""BreakdownWeapon"",
+                    ""action"": ""WeaponSubmenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1755,7 +1755,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""BreakdownWeapon"",
+                    ""action"": ""WeaponSubmenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -3060,6 +3060,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""61be2c3e-a3b8-4647-aae5-71852890a7ee"",
+                    ""path"": ""<Joystick>/stick/right"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1284fe65-f39d-43a5-a256-1ac7720ff219"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""2a5aef66-79eb-4a79-8b74-982f56b715e7"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
@@ -3255,7 +3277,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_WeaponMenu_SwitchWeaponUp = m_WeaponMenu.FindAction("SwitchWeaponUp", throwIfNotFound: true);
         m_WeaponMenu_SwitchWeaponDown = m_WeaponMenu.FindAction("SwitchWeaponDown", throwIfNotFound: true);
         m_WeaponMenu_EquipWeapon = m_WeaponMenu.FindAction("EquipWeapon", throwIfNotFound: true);
-        m_WeaponMenu_BreakdownWeapon = m_WeaponMenu.FindAction("BreakdownWeapon", throwIfNotFound: true);
+        m_WeaponMenu_WeaponSubmenu = m_WeaponMenu.FindAction("WeaponSubmenu", throwIfNotFound: true);
         m_WeaponMenu_WeaponPreviewMovement = m_WeaponMenu.FindAction("WeaponPreviewMovement", throwIfNotFound: true);
         m_WeaponMenu_FocusComponentsWindow = m_WeaponMenu.FindAction("FocusComponentsWindow", throwIfNotFound: true);
         m_WeaponMenu_FocusEvolutionsWindow = m_WeaponMenu.FindAction("FocusEvolutionsWindow", throwIfNotFound: true);
@@ -3932,7 +3954,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_WeaponMenu_SwitchWeaponUp;
     private readonly InputAction m_WeaponMenu_SwitchWeaponDown;
     private readonly InputAction m_WeaponMenu_EquipWeapon;
-    private readonly InputAction m_WeaponMenu_BreakdownWeapon;
+    private readonly InputAction m_WeaponMenu_WeaponSubmenu;
     private readonly InputAction m_WeaponMenu_WeaponPreviewMovement;
     private readonly InputAction m_WeaponMenu_FocusComponentsWindow;
     private readonly InputAction m_WeaponMenu_FocusEvolutionsWindow;
@@ -3947,7 +3969,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SwitchWeaponUp => m_Wrapper.m_WeaponMenu_SwitchWeaponUp;
         public InputAction @SwitchWeaponDown => m_Wrapper.m_WeaponMenu_SwitchWeaponDown;
         public InputAction @EquipWeapon => m_Wrapper.m_WeaponMenu_EquipWeapon;
-        public InputAction @BreakdownWeapon => m_Wrapper.m_WeaponMenu_BreakdownWeapon;
+        public InputAction @WeaponSubmenu => m_Wrapper.m_WeaponMenu_WeaponSubmenu;
         public InputAction @WeaponPreviewMovement => m_Wrapper.m_WeaponMenu_WeaponPreviewMovement;
         public InputAction @FocusComponentsWindow => m_Wrapper.m_WeaponMenu_FocusComponentsWindow;
         public InputAction @FocusEvolutionsWindow => m_Wrapper.m_WeaponMenu_FocusEvolutionsWindow;
@@ -3981,9 +4003,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @EquipWeapon.started += instance.OnEquipWeapon;
             @EquipWeapon.performed += instance.OnEquipWeapon;
             @EquipWeapon.canceled += instance.OnEquipWeapon;
-            @BreakdownWeapon.started += instance.OnBreakdownWeapon;
-            @BreakdownWeapon.performed += instance.OnBreakdownWeapon;
-            @BreakdownWeapon.canceled += instance.OnBreakdownWeapon;
+            @WeaponSubmenu.started += instance.OnWeaponSubmenu;
+            @WeaponSubmenu.performed += instance.OnWeaponSubmenu;
+            @WeaponSubmenu.canceled += instance.OnWeaponSubmenu;
             @WeaponPreviewMovement.started += instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.performed += instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.canceled += instance.OnWeaponPreviewMovement;
@@ -4018,9 +4040,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @EquipWeapon.started -= instance.OnEquipWeapon;
             @EquipWeapon.performed -= instance.OnEquipWeapon;
             @EquipWeapon.canceled -= instance.OnEquipWeapon;
-            @BreakdownWeapon.started -= instance.OnBreakdownWeapon;
-            @BreakdownWeapon.performed -= instance.OnBreakdownWeapon;
-            @BreakdownWeapon.canceled -= instance.OnBreakdownWeapon;
+            @WeaponSubmenu.started -= instance.OnWeaponSubmenu;
+            @WeaponSubmenu.performed -= instance.OnWeaponSubmenu;
+            @WeaponSubmenu.canceled -= instance.OnWeaponSubmenu;
             @WeaponPreviewMovement.started -= instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.performed -= instance.OnWeaponPreviewMovement;
             @WeaponPreviewMovement.canceled -= instance.OnWeaponPreviewMovement;
@@ -4665,7 +4687,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSwitchWeaponUp(InputAction.CallbackContext context);
         void OnSwitchWeaponDown(InputAction.CallbackContext context);
         void OnEquipWeapon(InputAction.CallbackContext context);
-        void OnBreakdownWeapon(InputAction.CallbackContext context);
+        void OnWeaponSubmenu(InputAction.CallbackContext context);
         void OnWeaponPreviewMovement(InputAction.CallbackContext context);
         void OnFocusComponentsWindow(InputAction.CallbackContext context);
         void OnFocusEvolutionsWindow(InputAction.CallbackContext context);

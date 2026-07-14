@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 3498906361258301351, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c33e2c95e6a78c547a779d6270be0f91, type: 3}
+      objectReference: {fileID: 21300000, guid: b520f03ba4959d0449019e60a8b7ff9e, type: 3}
     - target: {fileID: 5000122106806564273, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       propertyPath: m_Name
-      value: Battery
+      value: FuelCell
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6109603862540192664, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
@@ -63,14 +63,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3169823462238294126}
+      addedObject: {fileID: -4943025160731837438}
   m_SourcePrefab: {fileID: 100100000, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
 --- !u!1 &7212439140588696491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7829938928240353548, guid: 8799fc429a2065049bf63f73a8ed7bbf, type: 3}
   m_PrefabInstance: {fileID: 630007892064162471}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3169823462238294126
+--- !u!114 &-4943025160731837438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,5 +82,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609d680c28e79a54397c4fdad18d3eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemId: battery
+  itemId: fuel_cell
   quantity: 0

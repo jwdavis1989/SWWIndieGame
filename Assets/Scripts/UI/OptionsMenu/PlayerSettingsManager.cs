@@ -96,9 +96,13 @@ public class PlayerSettingsManager : MonoBehaviour
     }
     public static float GetSensitivity()
     {
-        float sensitivity = instance.playerSettings.mouseSensitivity;
+        float sensitivity = InputSwitchDetector.IsCurrentlyGamepad() ? 
+            instance.playerSettings.gamepadSensitivity :instance.playerSettings.mouseSensitivity;
+        Debug.Log("isGamepad=" + InputSwitchDetector.IsCurrentlyGamepad() + " sensitivity:" + sensitivity);
         if (sensitivity < 0.1f) 
             return 0.1f;
+        if (sensitivity > 3f)
+            return 3f;
         return sensitivity;
     }
     public static void SetSensitivity(float val) { instance.playerSettings.mouseSensitivity = val; }
@@ -109,6 +113,7 @@ public class PlayerSettingsManager : MonoBehaviour
     public bool gamepad;//otherwise KB&M
     public bool inverted = true;//default to wrong
     public float mouseSensitivity = 1.0f;
+    public float gamepadSensitivity = 1.0f;
     //volume
     public float mainVolume;
     public float musicVolume;

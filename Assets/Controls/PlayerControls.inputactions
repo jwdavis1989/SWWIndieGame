@@ -1480,7 +1480,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BreakdownWeapon",
+                    "name": "WeaponSubmenu",
                     "type": "Button",
                     "id": "47ac9c4a-3310-421f-8791-3d463dd6ac29",
                     "expectedControlType": "Button",
@@ -1722,7 +1722,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "BreakdownWeapon",
+                    "action": "WeaponSubmenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1733,7 +1733,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "BreakdownWeapon",
+                    "action": "WeaponSubmenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -3029,6 +3029,28 @@
                     "name": "",
                     "id": "93ccac17-2ad6-4543-a401-3e37c99d9a88",
                     "path": "<Gamepad>/leftTrigger",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "61be2c3e-a3b8-4647-aae5-71852890a7ee",
+                    "path": "<Joystick>/stick/right",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1284fe65-f39d-43a5-a256-1ac7720ff219",
+                    "path": "<Joystick>/stick/left",
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",

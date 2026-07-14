@@ -48,8 +48,6 @@ public class WeaponsController : MonoBehaviour
         // Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
         SortWeaponsByType();
-        // If debug mode is on run some basic tests
-        RunTests();
     }
 
     public void Awake() {
@@ -70,24 +68,6 @@ public class WeaponsController : MonoBehaviour
         }
         //Set weapons here
         baseWeapons = weaponsInitilizer;
-    }
-    //Some simple tests to demonstrate functionality
-    void RunTests()
-    {
-        if (debugMode)//astest
-        {
-            Debug.Log("============== LIST OF ALL WEAPONS =====================" + baseWeapons.Length + " :" + baseWeapons.ToString());
-            int i = 0;
-            foreach (GameObject weaponObj in baseWeapons)
-            {
-                WeaponScript weapon = weaponObj.GetComponent<WeaponScript>();
-                if (weapon.stats.weaponType == WeaponType.UNKNOWN)
-                    break;
-                Debug.Log("Weapon " + i + ":" + weapon.stats.weaponName + " Atk: " + weapon.stats.attack
-                    + " Fire:" + weapon.stats.elemental.firePower
-                    + " Type:" + weapon.stats.weaponType);
-            }
-        }
     }
     /** Replace old weapon with it's evolution
      * oldWpn - weapon to be olved
@@ -151,7 +131,7 @@ public class WeaponsController : MonoBehaviour
                 diff.scalesPower <= 0 &&
                 diff.techPower <= 0 &&
                 curWpn.stats.attack >= newWpnData.baseAttack &&
-                curWpn.stats.maxDurability >= newWpnData.baseDurability &&
+                curWpn.stats.durability >= newWpnData.baseDurability &&
                 curWpn.stats.stability >= newWpnData.baseStability &&
                 curWpn.stats.block >= newWpnData.baseBlock
                  )

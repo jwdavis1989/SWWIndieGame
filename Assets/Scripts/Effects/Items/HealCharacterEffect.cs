@@ -9,7 +9,6 @@ public class HealCharacterEffect : ItemEffect
     public float damageHealed = 0f;
 
     [Header("Sound Effect")]
-    public bool willPlayHealSFX = true;
     public AudioClip healSFX;
     public GameObject healEffect;//could spawn a heal effect prefab?
 
@@ -30,13 +29,17 @@ public class HealCharacterEffect : ItemEffect
     }
     private void PlayHealVFX(CharacterManager character)
     {
-
+        if (healEffect != null)
+        {
+            Instantiate(healEffect);
+        }
     }
 
     private void PlayHealSFX(CharacterManager damagedCharacter)
     {
-        AudioClip impactSFX;
-        impactSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.rollSFX);
-        damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(impactSFX, 1, 1f, true, 0.1f);
+        if (healSFX != null)
+        {
+            damagedCharacter.characterSoundFXManager.PlayAdvancedSoundFX(healSFX);
+        }
     }
 }
