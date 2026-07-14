@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class PlayerUIHudManager : MonoBehaviour
 {
     [Header("Status Bars")]
-    [SerializeField] UIStatBar healthBar;
-    [SerializeField] UIStatBar staminaBar;
+    [SerializeField] UIRadialStatBar healthBar;
+    [SerializeField] UIRadialStatBar staminaBar;
+    [SerializeField] UIRadialStatBar fuelBar;
 
     [Header("Quick Slots")]
     [SerializeField] Image rightWeaponQuickSlotIcon;
@@ -17,20 +18,19 @@ public class PlayerUIHudManager : MonoBehaviour
         //
     }
 
-    public void SetNewHealthValue(float newValue) {
-        healthBar.SetStat(newValue);
+    public void UpdateHealthBar(float currentValue, float maxValue)
+    {
+        if(healthBar != null) healthBar.UpdateStatBar(currentValue, maxValue);
     }
 
-    public void SetMaxHealthValue(float maxHealth) {
-        healthBar.SetMaxStat(maxHealth);
+    public void UpdateStaminaBar(float currentValue, float maxValue)
+    {
+        if(healthBar != null) staminaBar.UpdateStatBar(currentValue, maxValue);
     }
 
-    public void SetNewStaminaValue(float newValue) {
-        staminaBar.SetStat(newValue);
-    }
-
-    public void SetMaxStaminaValue(float maxStamina) {
-        staminaBar.SetMaxStat(maxStamina);
+    public void UpdateFuelBar(float currentValue, float maxValue)
+    {
+        if(healthBar != null) fuelBar.UpdateStatBar(currentValue, maxValue);
     }
 
     public void RefreshHud() {
@@ -38,10 +38,12 @@ public class PlayerUIHudManager : MonoBehaviour
         //Turn off
         healthBar.gameObject.SetActive(false);
         staminaBar.gameObject.SetActive(false);
+        fuelBar.gameObject.SetActive(false);
 
         //Turn on
         healthBar.gameObject.SetActive(true);
         staminaBar.gameObject.SetActive(true);
+        fuelBar.gameObject.SetActive(true);
     }
 
     //Remember to call this after a weapon has been added to your hand, or arsenal

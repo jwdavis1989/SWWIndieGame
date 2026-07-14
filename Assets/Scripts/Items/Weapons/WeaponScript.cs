@@ -75,22 +75,17 @@ public class WeaponStats
 
     [Header("Weapon Attributes")]
     public float attack = 1.0f;
-    public float maxAttack = 1.0f;
     public float basePoiseDamage = 35f; //Base 35 in case it's caused by traps
     private float traitShrapnelPoiseDamageModifier = 1.25f;
     public float durability = 1;
-    public float maxDurability = 1;
+    public float currentDurability = 1.0f;
     public float block = 1.0f;
-    public float maxBlock = 1.0f;
     public float stability = 1.0f;
-    public float maxStability = 1.0f;
     public ElementalStats elemental;
-    public ElementalStats maxElemental;
     public float speed = 1.0f;
     public float maxSpeed = 1.0f;
     public float xpToLevel = 100.0f;
     public int tinkerPointsPerLvl = 1;
-    public float currentDurability = 1.0f;
     public int level = 1;
     public float currentExperiencePoints = 0.0f;
     public float experiencePointsToNextLevel = 100.0f;
@@ -206,6 +201,18 @@ public class ElementalStats
         sum.scalesPower = scalesPower + other.scalesPower;
         sum.techPower = techPower + other.techPower;
         return sum;
+    }
+    public override string ToString()
+    {
+        return "firePower:" + firePower + ", "
+        + "icePower:" + icePower + ", "
+        + "lightningPower:" + lightningPower + ", "
+        + "windPower:" + windPower + ", "
+        + "earthPower:" + earthPower + ", "
+        + "lightPower:" + lightPower + ", "
+        + "beastPower:" + beastPower + ", "
+        + "scalesPower:" + scalesPower + ", "
+        + "techPower:" + techPower;
     }
 }
 /** 
@@ -425,12 +432,12 @@ public class WeaponScript : MonoBehaviour
     //}
     public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
-        if (stats.durability > 0)
+        if (stats.currentDurability > 0)
         {
             if (!InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS)) //no upgrade
-                stats.durability--; // Reduce durability
+                stats.currentDurability--; // Reduce durability
             else if (UnityEngine.Random.Range(0, 10) != 1) // 90% chance to reduce durability
-                stats.durability--; // Reduce durability
+                stats.currentDurability--; // Reduce durability
         }
         else
             return 0; // The weapon is broken. Return without doing damage
@@ -487,6 +494,9 @@ public class WeaponScript : MonoBehaviour
         }
 
         character.characterAnimatorManager.PlayTargetActionAnimation(offHandSpellAnimation, true);
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
     }
 
     public virtual void SuccessfullyCastSpell(CharacterManager character)
@@ -502,7 +512,7 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellProjectileFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds);
 
         //3. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
@@ -559,7 +569,7 @@ public class WeaponScript : MonoBehaviour
         //3. Apply Damage to the projectiles damage collider
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
         fireBallManager.isFullyCharged = true;
-        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds);
 
         //4. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
@@ -723,6 +733,9 @@ public class WeaponScript : MonoBehaviour
 
         //Change character model Rotation to counter animation's root motion rotation in the nation
         character.SetShootingModelAlignment();
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
     }
 
     public virtual void InstantiateWarmUpGunFX(CharacterManager character)
@@ -760,13 +773,13 @@ public class WeaponScript : MonoBehaviour
 
         //2. Instantiate the Projectile
         BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<BulletOriginLocation>();
-        GameObject instantiatedGunProjectile = Instantiate(gunProjectile);
+        GameObject instantiatedGunProjectile = Instantiate(gunProjectile, bulletOriginLocation.transform);
 
         //Update the VFX to match the highest element of the magic weapon
         instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
-        SemiAutoBulletManager bulletManager = instantiatedGunProjectile.GetComponent<SemiAutoBulletManager>();
-        bulletManager.InitializeBullet(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds, false);
+        BulletManager bulletManager = instantiatedGunProjectile.GetComponent<BulletManager>();
+        bulletManager.InitializeBullet(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds, bulletOriginLocation.transform, projectileUpwardVelocityMultiplier, projectileForwardVelocityMultiplier, false);
 
         //3. Zero out its location and unparent it
         instantiatedGunProjectile.transform.parent = bulletOriginLocation.transform;
@@ -797,7 +810,7 @@ public class WeaponScript : MonoBehaviour
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
     {
-        if (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0)
+        if (!character.canComboSpecialAttack && (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0))
         {
             return false;
         }
@@ -1055,13 +1068,13 @@ public class WeaponScript : MonoBehaviour
             weaponFamily == WeaponFamily.MagicWands;
     }
 
-    public Dictionary<string, float> GetPrimaryStats()
+    public Dictionary<string, float> GetPrimaryStatsForDisplay()
     {
         Dictionary<string, float> rv = new Dictionary<string, float>();
         rv.Add("Attack", stats.attack);
         rv.Add("Block", stats.block);
-        rv.Add("Durability", stats.durability);
         rv.Add("Stability", stats.stability);
+        //rv.Add("Durability", stats.durability);
         return rv;
     }
     public Dictionary<string, float> GetElementalStats()

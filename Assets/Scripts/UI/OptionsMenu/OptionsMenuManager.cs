@@ -20,6 +20,7 @@ public class OptionsMenuManager : MonoBehaviour
     public Slider effectsVolumeSlider;
     public Slider musicVolumeSlider;
     public Slider mouseSensitivitySlider;
+    public Slider gamepadSensitivitySlider;
 
     [Header("Save window")]
     public GameObject saveWindow;
@@ -117,6 +118,10 @@ public class OptionsMenuManager : MonoBehaviour
         if(mouseSensitivitySlider != null)
         {
             mouseSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivityChanged);
+        }
+        if (gamepadSensitivitySlider != null)
+        {
+            gamepadSensitivitySlider.onValueChanged.AddListener(OnGamepadSensitivityChanged);
         }
     }
     // Update is called once per frame
@@ -287,6 +292,10 @@ public class OptionsMenuManager : MonoBehaviour
         {
             SaveInvert(inverted);
         }
+        if(mouseSensitivityChanged)
+            SaveMouseSensitivity(mouseSensitivity);
+        if(gamepadSensitivityChanged)
+            SaveGamepadSensitivity(gamepadSensitivity);
         PlayerSettingsManager.instance.SavePlayerSettings();
         CompleteSaveWindowAction();
     }
@@ -300,9 +309,8 @@ public class OptionsMenuManager : MonoBehaviour
         effectsVolumeSlider.value = playerSettings.effectsVolume;
         if(mouseSensitivitySlider != null)
             mouseSensitivitySlider.value = playerSettings.mouseSensitivity;
-        mixer.SetFloat("MainVolume", playerSettings.mainVolume);
-        mixer.SetFloat("MusicVolume", playerSettings.musicVolume);
-        mixer.SetFloat("SFXVolume", playerSettings.musicVolume);
+        if (gamepadSensitivitySlider != null)
+            gamepadSensitivitySlider.value = playerSettings.gamepadSensitivity;
     }
 
     bool invertChanged = false;
@@ -365,6 +373,17 @@ public class OptionsMenuManager : MonoBehaviour
             mouseSensitivityChanged = true;
         }
     }
+    float gamepadSensitivity = 0;
+    bool gamepadSensitivityChanged = false;
+    public void OnGamepadSensitivityChanged(float newValue)
+    {
+        if (gamepadSensitivity != newValue)
+        {
+            gamepadSensitivity = newValue;
+            isChanged = true;
+            gamepadSensitivityChanged = true;
+        }
+    }
     void SaveMainVolume(float newValue)
     {
         playerSettings.mainVolume = newValue;
@@ -383,6 +402,14 @@ public class OptionsMenuManager : MonoBehaviour
         playerSettings.effectsVolume = newValue;
         PlayerSettingsManager.instance.SetSFXVolumeLogarithmic(playerSettings.effectsVolume);
         PlayerSettingsManager.instance.playerSettings = playerSettings;
+    }
+    void SaveMouseSensitivity(float newValue)
+    {
+        PlayerSettingsManager.instance.playerSettings.mouseSensitivity = newValue;    
+    }
+    void SaveGamepadSensitivity(float newValue)
+    {
+        PlayerSettingsManager.instance.playerSettings.gamepadSensitivity = newValue;
     }
     void SwapFromOptionMenuControls()
     {
@@ -417,6 +444,10 @@ public class OptionsMenuManager : MonoBehaviour
         nav = mouseSensitivitySlider.navigation;
         nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
         mouseSensitivitySlider.navigation = nav;
+
+        nav = gamepadSensitivitySlider.navigation;
+        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+        gamepadSensitivitySlider.navigation = nav;
     }
     void DisableOptionsControls()
     {

@@ -59,8 +59,14 @@ public class PlayerManager : CharacterManager
         playerLocomotionManager.HandleAllMovement();
 
         //Update UI Resources
-        PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
-        PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+        // PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
+        // PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+        // PlayerUIManager.instance.playerUIHudManager.SetNewFuelValue(playerStatsManager.currentFuel);
+
+        //Radial UI Stat Bars
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        PlayerUIManager.instance.playerUIHudManager.UpdateStaminaBar(playerStatsManager.currentStamina, playerStatsManager.maxStamina);
+        PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
 
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
@@ -101,6 +107,13 @@ public class PlayerManager : CharacterManager
         isDead = false;
         playerStatsManager.currentHealth = playerStatsManager.maxHealth;
         playerStatsManager.currentStamina = playerStatsManager.maxStamina;
+        playerStatsManager.currentFuel = playerStatsManager.maxFuel;
+        isOutOfFuel = false;
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        if (miniMapSprite != null)
+        {
+            miniMapSprite.SetActive(true);
+        }
 
 
         //Play Rebirth Effects here
@@ -128,6 +141,7 @@ public class PlayerManager : CharacterManager
         //Resources
         currentCharacterData.currentHealth = playerStatsManager.currentHealth;
         currentCharacterData.currentStamina = playerStatsManager.currentStamina;
+        currentCharacterData.currentFuel = playerStatsManager.currentFuel;
 
         //Weapons
         currentCharacterData.weapons = PlayerWeaponManager.instance.GetCurrentWeapons();
@@ -150,7 +164,7 @@ public class PlayerManager : CharacterManager
         currentCharacterData.savedDungeons = DungeonManager.SaveDungeons();
     }
 
-    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData, bool isNewGame)
+    public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
     {
         //File Name
         currentCharacterData.characterName = playerStatsManager.characterName;
@@ -168,15 +182,31 @@ public class PlayerManager : CharacterManager
         playerStatsManager.maxHealth = playerStatsManager.CalculateHealthBasedOnfortitudeLevel(playerStatsManager.fortitude);
         playerStatsManager.currentHealth = currentCharacterData.currentHealth;
 
-        PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerStatsManager.maxHealth);
-        PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue(playerStatsManager.currentHealth);
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+        
+
 
         //Stamina
         playerStatsManager.maxStamina = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerStatsManager.endurance);
         playerStatsManager.currentStamina = currentCharacterData.currentStamina;
 
-        PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerStatsManager.maxStamina);
-        PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue(playerStatsManager.currentStamina);
+        PlayerUIManager.instance.playerUIHudManager.UpdateStaminaBar(playerStatsManager.currentStamina, playerStatsManager.maxStamina);
+
+        //Fuel
+        playerStatsManager.maxFuel = playerStatsManager.CalculateFuelBasedOnCapacityLevel(playerStatsManager.capacity);
+        playerStatsManager.currentFuel = currentCharacterData.currentFuel;
+        if (currentCharacterData.currentFuel > 0)
+        {
+            isOutOfFuel = false;
+        }
+        if (currentCharacterData.currentFuel > currentCharacterData.currentFuel/2)
+        {
+            isRunningOnEmergencyPowerLevels = false;
+        }
+
+        
+        PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
+
 
         //Weapon Arsenal Data Loading here
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
@@ -205,7 +235,7 @@ public class PlayerManager : CharacterManager
             {
                 flashlight.SetActive(false);
             }
-            else
+            else if (!isRunningOnEmergencyPowerLevels)
             {
                 flashlight.SetActive(true);
             }
@@ -221,7 +251,7 @@ public class PlayerManager : CharacterManager
             {
                 cameraflashlight.SetActive(false);
             }
-            else
+            else if (!isRunningOnEmergencyPowerLevels)
             {
                 cameraflashlight.SetActive(true);
             }
@@ -461,7 +491,10 @@ public class PlayerManager : CharacterManager
         PlayerInputManager.instance.SafeDisable(true, true);
         Time.timeScale = 0;
 
+        CharacterController playerController = GetComponent<CharacterController>();
+        playerController.enabled = false;
         SceneManager.LoadScene("LoadingScene");
+        playerController.enabled = true;
 
         //DisableCapeSystem();
         //transform.position = new Vector3(destinationX, destinationY, destinationZ);

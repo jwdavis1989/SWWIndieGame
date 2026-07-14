@@ -43,6 +43,7 @@ public class CharacterCombatManager : MonoBehaviour
     public virtual void EnableCanDoCombo()
     {
         canComboWithMainHandWeapon = true;
+        character.canComboSpecialAttack = true;
     }
 
     public virtual void DisableCanDoCombo()
@@ -50,9 +51,17 @@ public class CharacterCombatManager : MonoBehaviour
         canComboWithMainHandWeapon = false;
     }
 
+    public virtual void DisableCanDoSpecialCombo()
+    {
+        character.canComboSpecialAttack = false;
+    }
+
     public void EnableCanDoRollingAttack()
     {
         canPerformRollingAttack = true;
+        
+        //TODO: Uncomment out if you can solve the sliding issue when using special weapons as a roll->Special combo
+        //character.canComboSpecialAttack = true;
     }
 
     public void DisableCanDoRollingAttack()
@@ -63,6 +72,7 @@ public class CharacterCombatManager : MonoBehaviour
     public void EnableCanDoBackStepAttack()
     {
         canPerformBackStepAttack = true;
+        character.canComboSpecialAttack = true;
     }
 
     public void DisableCanDoBackStepAttack()

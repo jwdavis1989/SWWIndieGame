@@ -371,7 +371,7 @@ MonoBehaviour:
   isSpecialWeapon: 0
   isWristWeapon: 0
   specialWeaponDamageMultiplier: 1.25
-  spr: {fileID: 21300000, guid: d511495ea09ac9e49b881bcf17f09b19, type: 3}
+  spr: {fileID: 21300000, guid: a013c703324003e42a23ce52672c46c5, type: 3}
   hasObtained: 1
   stats:
     weaponType: 0
@@ -463,6 +463,7 @@ MonoBehaviour:
   projectileForwardVelocityMultiplier: 7
   projectileUpwardVelocityMultiplier: 4
   projectileMass: 0.01
+  projectileLifeSpanInSeconds: 0.5
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
@@ -482,6 +483,7 @@ MonoBehaviour:
   - {fileID: 6742614010190408291}
   - {fileID: 1374102791667766265}
   - {fileID: 2850839944814312093}
+  MagicWeaponMeshRendererIndices: 
 --- !u!1 &6383954935425568884
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,6 +716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26ec8518b4d45f4298e4dd16d4e8c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCollider: {fileID: 0}
   physicalDamage: 0
   elementalStats:
     firePower: 0

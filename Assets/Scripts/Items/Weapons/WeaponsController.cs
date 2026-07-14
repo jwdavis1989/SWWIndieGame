@@ -48,8 +48,6 @@ public class WeaponsController : MonoBehaviour
         // Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
         SortWeaponsByType();
-        // If debug mode is on run some basic tests
-        RunTests();
     }
 
     public void Awake() {
@@ -70,24 +68,6 @@ public class WeaponsController : MonoBehaviour
         }
         //Set weapons here
         baseWeapons = weaponsInitilizer;
-    }
-    //Some simple tests to demonstrate functionality
-    void RunTests()
-    {
-        if (debugMode)//astest
-        {
-            Debug.Log("============== LIST OF ALL WEAPONS =====================" + baseWeapons.Length + " :" + baseWeapons.ToString());
-            int i = 0;
-            foreach (GameObject weaponObj in baseWeapons)
-            {
-                WeaponScript weapon = weaponObj.GetComponent<WeaponScript>();
-                if (weapon.stats.weaponType == WeaponType.UNKNOWN)
-                    break;
-                Debug.Log("Weapon " + i + ":" + weapon.stats.weaponName + " Atk: " + weapon.stats.attack
-                    + " Fire:" + weapon.stats.elemental.firePower
-                    + " Type:" + weapon.stats.weaponType);
-            }
-        }
     }
     /** Replace old weapon with it's evolution
      * oldWpn - weapon to be olved
@@ -138,7 +118,10 @@ public class WeaponsController : MonoBehaviour
             WeaponData newWpnData = GetWeaponData(evolve);
             //check diff between req stats and current stats
             ElementalStats diff = newWpnData.baseElemental.Subract(curWpn.stats.elemental);
-            if(diff.firePower <= 0 &&
+            //Debug.Log("Diff for " + newWpnData.itemId + " = " + diff.ToString());
+            //Debug.Log("Block for " + newWpnData.itemId + " = " + curWpn.stats.block + " need:"+newWpnData.baseBlock);
+            //Debug.Log("Dur for " + newWpnData.itemId + " = " + curWpn.stats.maxDurability + " need:" + newWpnData.baseDurability);
+            if (diff.firePower <= 0 &&
                 diff.icePower <= 0 &&
                 diff.lightningPower <= 0 &&
                 diff.windPower <= 0 &&
@@ -150,7 +133,8 @@ public class WeaponsController : MonoBehaviour
                 curWpn.stats.attack >= newWpnData.baseAttack &&
                 curWpn.stats.durability >= newWpnData.baseDurability &&
                 curWpn.stats.stability >= newWpnData.baseStability &&
-                curWpn.stats.block >= newWpnData.baseBlock)
+                curWpn.stats.block >= newWpnData.baseBlock
+                 )
             {
                 availableEvolves.Add(evolve);
             }

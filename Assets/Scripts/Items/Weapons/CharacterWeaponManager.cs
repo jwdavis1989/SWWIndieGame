@@ -84,11 +84,11 @@ public class CharacterWeaponManager : MonoBehaviour
     public WeaponScript AddWeaponToCurrentWeapons(WeaponType weaponType)
     {
         int i = (int)weaponType;
-        WeaponScript newWeapon = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
+        WeaponScript newWeaponBase = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
         GameObject weaponToAdd;
-        if (newWeapon.isSpecialWeapon)
+        if (newWeaponBase.isSpecialWeapon)
         {
-            if (!newWeapon.isWristWeapon)
+            if (!newWeaponBase.isWristWeapon)
             {
                 weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
             }
@@ -118,6 +118,9 @@ public class CharacterWeaponManager : MonoBehaviour
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }
+        //set durability
+        WeaponScript newWeaponScr = weaponToAdd.GetComponent<WeaponScript>();
+        newWeaponScr.stats.currentDurability = newWeaponScr.stats.durability;
         //Warning if using for npc - Currently still tracking single pokedex
         WeaponScript currentWeaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
         currentWeaponScript.hasObtained = true;
@@ -453,6 +456,12 @@ public class CharacterWeaponManager : MonoBehaviour
                 break;
             case AttackType.HeavyJumpAttack01:
                 staminaDeducted *= currentWeapon.stats.heavyJumpAttack01StaminaCostModifier;
+
+                //Drain fuel
+                if (characterThatOwnsThisArsenal.characterStatsManager.currentFuel > 0)
+                {
+                    characterThatOwnsThisArsenal.characterStatsManager.currentFuel -= characterThatOwnsThisArsenal.characterStatsManager.meteorStrikeFuelCost;
+                }
                 break;
 
             //Running Attacks

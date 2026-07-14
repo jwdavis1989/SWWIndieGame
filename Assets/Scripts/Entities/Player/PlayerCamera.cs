@@ -138,12 +138,21 @@ public class PlayerCamera : MonoBehaviour
         else
         {
             //Normal Rotations
-            //Rotate left and right based on horizontal movement on the right joystick
-            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
-
-            //Rotate up and down based on the vertical movement on the right Joystick
-            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
-
+            if (InputSwitchDetector.IsCurrentlyGamepad())
+            {
+                float gamepadSensitivity = PlayerSettingsManager.GetSensitivity();
+                //Rotate left and right based on horizontal movement on the right joystick
+                leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime * gamepadSensitivity;
+                //Rotate up and down based on the vertical movement on the right Joystick
+                upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime * gamepadSensitivity;
+            }
+            else
+            { // Mouse input - Already handles for Delta Time
+                float mouseSensitivity = PlayerSettingsManager.GetSensitivity();
+                float rotationSpeed = 1f;//leftAndRightRotationSpeed,upAndDownRotationSpeed
+                leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * rotationSpeed) * mouseSensitivity;
+                upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * rotationSpeed) * mouseSensitivity;
+            }
             //Clamp the up and down look angle between min/max values
             upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
 
@@ -530,7 +539,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void HandlePlaySprintLineVFX()
     {
-        if (!player.isLockedOn && (player.isSprinting || player.isBoosting) && !sprintingSpeedLinesVFX.activeSelf)
+        if (!player.isLockedOn && (player.isSprintingBoosting || player.isBoosting) && !sprintingSpeedLinesVFX.activeSelf)
         {
             sprintingSpeedLinesVFX.SetActive(true);
         }
@@ -538,7 +547,7 @@ public class PlayerCamera : MonoBehaviour
             (!player.playerLocomotionManager.airDashBoosters.activeSelf && !player.isGrounded)
             // player.isFalling
              || player.isLockedOn
-             || (!player.isSprinting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf)
+             || (!player.isSprintingBoosting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf)
             )
         {
             sprintingSpeedLinesVFX.SetActive(false);

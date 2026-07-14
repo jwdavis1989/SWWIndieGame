@@ -110,6 +110,7 @@ public class WorldSaveGameManager : MonoBehaviour
     public void AttemptToCreateNewGame() {
         saveFileDataWriter = new SaveFileDataWriter();
         saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
+        PlayerSettingsManager.SetSensitivity(1.0f);
 
         //Check if we can make a new slot (Check for pre-existing slot)
         //Slot 01
@@ -257,7 +258,7 @@ public class WorldSaveGameManager : MonoBehaviour
         saveFileDataWriter.saveFileName = fileName;
         currentCharacterData = saveFileDataWriter.LoadSaveFile();
 
-        StartCoroutine(LoadWorldScene(false));
+        StartCoroutine(LoadWorldScene());
     }
 
     public void SaveGame() {
@@ -330,7 +331,7 @@ public class WorldSaveGameManager : MonoBehaviour
         characterSlot10 = saveFileDataWriter.LoadSaveFile();
     }
 
-    public IEnumerator LoadWorldScene(bool isNewGame = true) {
+    public IEnumerator LoadWorldScene() {
         //If you only have 1 entry scene
         //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
 
@@ -344,7 +345,7 @@ public class WorldSaveGameManager : MonoBehaviour
         //If you want to use different scenes for levels in your project, use this
         AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
         //Give player object data from file
-        player.LoadGameFromCurrentCharacterData(ref currentCharacterData, isNewGame);
+        player.LoadGameFromCurrentCharacterData(ref currentCharacterData);
         yield return null;
     }
 
