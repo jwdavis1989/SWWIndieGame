@@ -7,11 +7,12 @@ public class BuckshotBulletManager : BulletManager
     [Header("Buckshot Attributes")]
     public int pelletCount = 5;
     public float spreadInDegrees = 15f;
-    public float maxAudioPlayers = 3;
-    public float maxScreenShakes = 3;
+    public float mutedPellets = 3;
+    public bool isMute = false;
 
     [Header("Pellet Prefab")]
     GameObject pelletPrefab;
+    [SerializeField] protected GameObject mutedImpactParticleVFX;
 
     public override void InitializeBullet(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, float projectileLifetimeInSeconds, Transform spawnTransform, float projectileUpwardVelocityMultiplier, float projectileForwardVelocityMultiplier, bool hasGravity = true)
     {
@@ -47,7 +48,6 @@ public class BuckshotBulletManager : BulletManager
                  Quaternion.Euler(Random.Range(-spreadInDegrees, spreadInDegrees),
                                   Random.Range(-spreadInDegrees, spreadInDegrees), 0);
 
-
             GameObject newBuckshotPellet = Instantiate(pelletPrefab, staggeredSpawn, spreadRotation);
             BuckshotBulletManager newBuckshotBulletManager = newBuckshotPellet.GetComponent<BuckshotBulletManager>();
 
@@ -77,6 +77,10 @@ public class BuckshotBulletManager : BulletManager
             newBuckshotPellet.transform.parent = null;
             newBuckshotPellet.transform.localScale = Vector3.one;
 
+            if (i > (pelletCount - mutedPellets - 2))
+            {
+                newBuckshotBulletManager.isMute = true;
+            }
             newBuckshotBulletManager.pelletCount = 0;
             newBuckshotBulletManager.InitializeBullet(damageCollider.characterCausingDamage, highestElementalDamageType, projectileLifetimeInSeconds, newBuckshotPellet.transform, projectileUpwardVelocityMultiplier, projectileForwardVelocityMultiplier, fireBallRigidBody.useGravity);
 
@@ -98,27 +102,24 @@ public class BuckshotBulletManager : BulletManager
             Vector3 upwardVelocity = newBuckshotPellet.transform.up * projectileUpwardVelocityMultiplier;
             Vector3 forwardVelocity = newBuckshotPellet.transform.forward * projectileForwardVelocityMultiplier;
             bulletRigidbody.velocity = upwardVelocity + forwardVelocity;
-
-            //Limit number of sounds playing simultaneously for performance
-            if (i > (maxAudioPlayers - 2))
-            {
-                AudioSource[] audioSources = newBuckshotPellet.GetComponentsInChildren<AudioSource>();
-                foreach (var audioSource in audioSources)
-                {
-                    audioSource.enabled = false;
-                }
-            }
-
-            //Limit number of Screen Shakes playing simultaneously for performance
-            if (i > (maxScreenShakes - 2))
-            {
-                CFXR_Effect[] screenShakes = newBuckshotPellet.GetComponentsInChildren<CFXR_Effect>();
-                foreach (var screenShake in screenShakes)
-                {
-                    screenShake.cameraShake.enabled = false;
-                }
-            }
         }
     }
+
+    public override void InstantiateSpellDestructionFX()
+    {
+        if (isMute)
+        {
+            instantiatedDestructionFX = Instantiate(mutedImpactParticleVFX, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            instantiatedDestructionFX = Instantiate(impactParticleVFX, transform.position, Quaternion.identity);
+        }
+
+        //Update Explosion VFX based on highest element of the magic weapon used to cast it
+        instantiatedDestructionFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
+        Destroy(gameObject);
+    }
+
 
 }

@@ -57,6 +57,27 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0
+        functionName: DisableCanDoSpecialCombo
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: EnableCanRotate
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.29890484
+        functionName: DisableCanRotate
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.3191254
         functionName: CallDrainStaminaBasedOnAttack
         data: 
@@ -78,15 +99,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.28985506
-        functionName: DisableCanRotate
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: EnableCanRotate
+      - time: 0.6682024
+        functionName: EnableCanDoCombo
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: b7eeaa51706ce3e42a800ff0cc3a5ab8, type: 3}
         floatParameter: 0

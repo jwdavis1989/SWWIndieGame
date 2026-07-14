@@ -494,6 +494,9 @@ public class WeaponScript : MonoBehaviour
         }
 
         character.characterAnimatorManager.PlayTargetActionAnimation(offHandSpellAnimation, true);
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
     }
 
     public virtual void SuccessfullyCastSpell(CharacterManager character)
@@ -509,7 +512,7 @@ public class WeaponScript : MonoBehaviour
         instantiatedSpellProjectileFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
-        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds);
 
         //3. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
@@ -566,7 +569,7 @@ public class WeaponScript : MonoBehaviour
         //3. Apply Damage to the projectiles damage collider
         FireBallManager fireBallManager = instantiatedSpellProjectileFX.GetComponent<FireBallManager>();
         fireBallManager.isFullyCharged = true;
-        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat);
+        fireBallManager.InitializeFireBall(character, stats.elemental.currentHighestElementalStat, projectileLifeSpanInSeconds);
 
         //4. Zero out its location and unparent it
         instantiatedSpellProjectileFX.transform.parent = spellOriginLocation.transform;
@@ -730,6 +733,9 @@ public class WeaponScript : MonoBehaviour
 
         //Change character model Rotation to counter animation's root motion rotation in the nation
         character.SetShootingModelAlignment();
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
     }
 
     public virtual void InstantiateWarmUpGunFX(CharacterManager character)
@@ -804,7 +810,7 @@ public class WeaponScript : MonoBehaviour
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
     {
-        if (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0)
+        if (!character.canComboSpecialAttack && (character.isPerformingAction || character.isJumping || character.characterStatsManager.currentStamina <= 0))
         {
             return false;
         }

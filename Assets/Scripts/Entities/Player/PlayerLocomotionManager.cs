@@ -32,9 +32,10 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [Header("Movement Settings")]
     private Vector3 moveDirection;
     private Vector3 targetRotationDirection;
-    [SerializeField] float walkingSpeed = 2f;
-    [SerializeField] float runningSpeed = 5f;
-    [SerializeField] float sprintingSpeed = 7f;
+    [SerializeField] float walkingSpeed = 1.5f;
+    [SerializeField] float runningSpeed = 4.5f;
+    [SerializeField] float sprintingSpeed = 6f;
+    [SerializeField] float sprintingBoostingSpeed = 8f;
     [SerializeField] float rotationSpeed = 15f;
 
     [Header("Jump")]
@@ -112,7 +113,14 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
         if (characterManager.isSprinting)
         {
-            player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
+            if (characterManager.isSprintingBoosting && !characterManager.isOutOfFuel)
+            {
+                player.characterController.Move(moveDirection * sprintingBoostingSpeed * Time.deltaTime);
+            }
+            else
+            {   
+                player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
+            }
         }
         else
         {
@@ -329,17 +337,20 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.isPerformingAction)
         {
             characterManager.isSprinting = false;
+            characterManager.isSprintingBoosting = false;
         }
         //If we're out of stamina, set sprinting to false
         if (player.playerStatsManager.currentStamina <= 0)
         {
             characterManager.isSprinting = false;
+            characterManager.isSprintingBoosting = false;
             return;
         }
 
         if (player.isDead)
         {
             characterManager.isSprinting = false;
+            characterManager.isSprintingBoosting = false;
             return;
         }
 
@@ -348,20 +359,36 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             characterManager.isSprinting = true;
 
-            //Play Booster Fire Sound Effect
-            player.playerSoundFXManager.PlaySprintBoostSoundFX();
+            if(!player.isOutOfFuel)
+            {
+                characterManager.isSprintingBoosting = true;
+
+                //Play Booster Fire Sound Effect
+                player.playerSoundFXManager.PlaySprintBoostSoundFX();
+            }
 
         }
         //If stationary, set it to false
         else
         {
             characterManager.isSprinting = false;
+            characterManager.isSprintingBoosting = false;
         }
 
         if (characterManager.isSprinting)
         {
             player.playerStatsManager.currentStamina -= player.playerStatsManager.sprintingStaminaCost * Time.deltaTime;
             player.playerStatsManager.ResetStaminaRegenTimer();
+
+            //Factor in Fuel cost when sprint boosting
+            if(!player.isOutOfFuel)   
+            {
+                player.playerStatsManager.currentFuel -= player.playerStatsManager.sprintingFuelCost * Time.deltaTime;
+            }
+            else
+            {
+                characterManager.isSprintingBoosting = false;
+            }
         }
 
     }
@@ -401,7 +428,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
                 //Subtract Stamina for roll
                 player.playerStatsManager.currentStamina -= player.playerStatsManager.dodgeStaminaCost;
             }
-            else
+            else if (!player.isOutOfFuel)
             {
                 //Boosting flag
                 player.isBoosting = true;
@@ -428,6 +455,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
                 //Subtract Stamina for airdash
                 player.playerStatsManager.currentStamina -= player.playerStatsManager.airDashStaminaCost;
+                player.playerStatsManager.currentFuel -= player.playerStatsManager.airDashFuelCost;
             }
 
             //Activate Force Field Graphic
@@ -454,7 +482,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     public void AttemptToPerformJump()
     {
-        //If performing any action, we don't want to allow a jump (Will change when combat is added)
+        //If performing any action, we don't want to allow a jump
         if (player.isPerformingAction)
         {
             return;
@@ -582,11 +610,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     public void HandleBackBoosterJets()
     {
-        if (characterManager.isSprinting && !backBoosters.activeSelf)
+        if (characterManager.isSprintingBoosting && !backBoosters.activeSelf)
         {
             backBoosters.SetActive(true);
         }
-        else if (!characterManager.isSprinting && backBoosters.activeSelf == true)
+        else if (!characterManager.isSprintingBoosting && backBoosters.activeSelf == true)
         {
             backBoosters.SetActive(false);
         }
@@ -594,7 +622,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
     public void HandleBoosterIgnitionVFX()
     {
-        if (player.isSprinting || player.isBoosting)
+        if (player.isSprintingBoosting || player.isBoosting)
         {
             boosterIgnitionVFX.SetActive(true);
         }

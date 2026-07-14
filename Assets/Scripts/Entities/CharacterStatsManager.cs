@@ -9,6 +9,7 @@ public class CharacterStatsManager : MonoBehaviour
     //Move these to the CharacterNetworkManager if adding multiplayer
     public int endurance = 10;
     public int fortitude = 10;
+    public int capacity = 10;
 
     [Header("Defenses")]
     public float physicalDefense = 0f;
@@ -38,6 +39,13 @@ public class CharacterStatsManager : MonoBehaviour
     public float airDashStaminaCost = 40f;
     public float jumpStaminaCost = 25f;
     public float staminaTickTimer = 0.1f;
+
+    [Header("Fuel")]
+    public float currentFuel = 0;
+    public float maxFuel = 100;
+    public float sprintingFuelCost = 0.5f;
+    public float airDashFuelCost = 2f;
+    public float meteorStrikeFuelCost = 10f;
 
     protected virtual void Awake()
     {
@@ -81,18 +89,38 @@ public class CharacterStatsManager : MonoBehaviour
         return endurance * 10f;
     }
 
+    public float CalculateFuelBasedOnCapacityLevel(int capacity)
+    {
+        //Create an equation for how stamina is calculated
+
+        //Use Mathf.RoundToInt and a float called stamina if your formula is more complex
+        // float stamina = 0;
+        // stamina = endurance * 10;
+        // return Mathf.RoundToInt(stamina);
+
+        //If simple formula, use this simpler and more efficient method
+        return capacity * 10f;
+    }
+
     //Only called when player gets an upgrade to these Resources
     public void SetNewMaxHealthValue()
     {
         maxHealth = CalculateHealthBasedOnfortitudeLevel(fortitude);
-        PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(maxHealth);
         currentHealth = maxHealth;
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(currentHealth, maxHealth);
     }
     public void SetNewMaxStaminaValue()
     {
         maxStamina = CalculateStaminaBasedOnEnduranceLevel(endurance);
-        PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(maxStamina);
         currentStamina = maxStamina;
+        PlayerUIManager.instance.playerUIHudManager.UpdateStaminaBar(currentStamina, maxStamina);
+    }
+
+    public void SetNewMaxFuelValue()
+    {
+        maxHealth = CalculateHealthBasedOnfortitudeLevel(capacity);
+        currentFuel = maxFuel;
+        PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(currentFuel, maxFuel);
     }
 
     public void RegenerateStamina()
@@ -171,4 +199,5 @@ public class CharacterStatsManager : MonoBehaviour
             totalPoiseDamage = 0;
         }
     }
+
 }
