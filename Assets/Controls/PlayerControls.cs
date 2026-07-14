@@ -3060,6 +3060,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""61be2c3e-a3b8-4647-aae5-71852890a7ee"",
+                    ""path"": ""<Joystick>/stick/right"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1284fe65-f39d-43a5-a256-1ac7720ff219"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyGamepad"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""2a5aef66-79eb-4a79-8b74-982f56b715e7"",
                     ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
