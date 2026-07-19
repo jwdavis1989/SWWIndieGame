@@ -54,9 +54,11 @@ public class PlayerInputManager : MonoBehaviour
     public float cameraHorizontalInput;
     public float cameraVerticalInput;
     public float defaultCameraFieldOfView = 60f;
-    public float sprintCameraFieldOfViewMaximum = 90f;
-    public float sprintCameraFieldOfViewDecreaseSpeed = 30f;
-    public float sprintCameraFieldOfViewIncreaseSpeed = 15f;
+    public float currentSprintCameraFieldOfViewMaximum = 110f;
+    public float sprintCameraFieldOfViewMaximum = 70f;
+    public float sprintCameraFieldOfViewMaximumWithFuel = 110f;
+    public float sprintCameraFieldOfViewDecreaseSpeed = 90f;
+    public float sprintCameraFieldOfViewIncreaseSpeed = 90f;
 
     [Header("Lock-On Input")]
     public bool lockOnInput;
@@ -302,16 +304,16 @@ public class PlayerInputManager : MonoBehaviour
             pauseInput = false;
             if (SceneManager.GetActiveScene().buildIndex == 0) //dont pause on title screen
                 return;
-            else 
+            else
                 PauseScript.instance.HandlePauseInput();
         }
     }
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
-        if(cycleQuickSlotGamepad != 0)
+        if (cycleQuickSlotGamepad != 0)
         {
-            if(cycleQuickSlotGamepad > 0)
+            if (cycleQuickSlotGamepad > 0)
             {
                 //USED FOR IDEA CAM NOW
                 //Debug.Log("cycle gamepad 1");
@@ -453,11 +455,13 @@ public class PlayerInputManager : MonoBehaviour
                 if (mouseWheelVerticalInput == 1)
                 {
                     PlayerWeaponManager.instance.NextWeapon();
+                    player.playerSoundFXManager.PlayWeaponSwapSoundFX();
 
                 }
                 else if (mouseWheelVerticalInput == -1)
                 {
                     PlayerWeaponManager.instance.nextSpecialWeapon();
+                    player.playerSoundFXManager.PlayWeaponSwapSoundFX();
                 }
             }
             prevMouseWheelVerticalInput = mouseWheelVerticalInput;
@@ -471,6 +475,7 @@ public class PlayerInputManager : MonoBehaviour
             ChangeRightWeaponDPad = false;
 
             PlayerWeaponManager.instance.NextWeapon();
+            player.playerSoundFXManager.PlayWeaponSwapSoundFX();
         }
     }
 
@@ -481,6 +486,7 @@ public class PlayerInputManager : MonoBehaviour
             ChangeLeftWeaponDPad = false;
 
             PlayerWeaponManager.instance.nextSpecialWeapon();
+            player.playerSoundFXManager.PlayWeaponSwapSoundFX();
         }
     }
 
@@ -508,7 +514,7 @@ public class PlayerInputManager : MonoBehaviour
                 //playerControls.Enable();
                 SafeEnable();
             }
-            else if(isPlayerEnabled)
+            else if (isPlayerEnabled)
             {
                 SafeDisable();
                 //playerControls.Disable();
@@ -561,6 +567,7 @@ public class PlayerInputManager : MonoBehaviour
         else
         {
             player.playerLocomotionManager.characterManager.isSprinting = false;
+            player.playerLocomotionManager.characterManager.isSprintingBoosting = false;
             //Camera Zoom-Out Juice to give the illusion of Slowing Rapidly
             // if (PlayerCamera.instance.cameraObject.fieldOfView > defaultCameraFieldOfView && !player.isBoosting) {
             //     PlayerCamera.instance.cameraObject.fieldOfView -= sprintCameraFieldOfViewDecreaseSpeed * Time.deltaTime;
@@ -579,13 +586,13 @@ public class PlayerInputManager : MonoBehaviour
             //Camera Zoom-Out Juice to give the illusion of great speed
             if (!player.isLockedOn && player.playerStatsManager.currentStamina > 0 || player.isBoosting)
             {
-                if (PlayerCamera.instance.cameraObject.fieldOfView < sprintCameraFieldOfViewMaximum)
+                if (PlayerCamera.instance.cameraObject.fieldOfView < currentSprintCameraFieldOfViewMaximum)
                 {
                     PlayerCamera.instance.cameraObject.fieldOfView += sprintCameraFieldOfViewIncreaseSpeed * Time.deltaTime;
                 }
                 else
                 {
-                    PlayerCamera.instance.cameraObject.fieldOfView = sprintCameraFieldOfViewMaximum;
+                    PlayerCamera.instance.cameraObject.fieldOfView = currentSprintCameraFieldOfViewMaximum;
                 }
             }
             //Locked onto an enemy and need to reduce Field of View Extremely Rapidly
@@ -673,7 +680,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleOffHandSpecialAttackInput()
     {
-        if (specialAttackInput && !player.isBlocking && !player.isPerformingAction)
+        if (specialAttackInput && ((!player.isBlocking && !player.isPerformingAction) || player.canComboSpecialAttack))
         {
             specialAttackInput = false;
 
@@ -701,6 +708,14 @@ public class PlayerInputManager : MonoBehaviour
                 }
 
                 player.characterWeaponManager.ResetSpecialWeaponCooldownTimer();
+            }
+
+            if (player.isPerformingAction)
+            {
+                player.DisableCanRotate();
+                player.CallCloseDamageCollider();
+                player.playerCombatManager.DisableCanDoCombo();
+                player.CallDisableBladeTrailVFX();
             }
         }
     }

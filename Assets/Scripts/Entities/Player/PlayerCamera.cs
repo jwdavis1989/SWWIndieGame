@@ -539,7 +539,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void HandlePlaySprintLineVFX()
     {
-        if (!player.isLockedOn && (player.isSprinting || player.isBoosting) && !sprintingSpeedLinesVFX.activeSelf)
+        if (!player.isLockedOn && (player.isSprintingBoosting || player.isBoosting) && !sprintingSpeedLinesVFX.activeSelf)
         {
             sprintingSpeedLinesVFX.SetActive(true);
         }
@@ -547,7 +547,7 @@ public class PlayerCamera : MonoBehaviour
             (!player.playerLocomotionManager.airDashBoosters.activeSelf && !player.isGrounded)
             // player.isFalling
              || player.isLockedOn
-             || (!player.isSprinting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf)
+             || (!player.isSprintingBoosting && !player.isBoosting && sprintingSpeedLinesVFX.activeSelf)
             )
         {
             sprintingSpeedLinesVFX.SetActive(false);

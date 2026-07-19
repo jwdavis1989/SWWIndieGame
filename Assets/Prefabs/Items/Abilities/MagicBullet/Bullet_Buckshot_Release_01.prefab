@@ -75231,15 +75231,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellTargetCharacter: {fileID: 0}
-  impactParticleVFX: {fileID: 1549257713381026176, guid: 8c661ec2481231f4a8ad6adcedcb3a7b, type: 3}
-  impactParticleFullChargeVFX: {fileID: 1549257713381026176, guid: 8c661ec2481231f4a8ad6adcedcb3a7b, type: 3}
+  impactParticleVFX: {fileID: 1549257713381026176, guid: 76881144384f6044cb101f1d9048fa5e, type: 3}
+  impactParticleFullChargeVFX: {fileID: 1549257713381026176, guid: 76881144384f6044cb101f1d9048fa5e, type: 3}
   damageCollider: {fileID: 0}
   highestElementalDamageType: 0
   isFullyCharged: 0
   pelletCount: 5
   spreadInDegrees: 15
-  maxAudioPlayers: 0
-  maxScreenShakes: 0
+  mutedPellets: 3
+  isMute: 0
+  mutedImpactParticleVFX: {fileID: 1549257713381026176, guid: 920dbbbdd17a77940b7201ac3b7c7617, type: 3}
 --- !u!114 &490332069815079110
 MonoBehaviour:
   m_ObjectHideFlags: 0

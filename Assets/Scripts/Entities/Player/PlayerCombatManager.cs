@@ -26,6 +26,7 @@ public class PlayerCombatManager : CharacterCombatManager
     //Animation Event Calls
     public override void EnableCanDoCombo() {
         canComboWithMainHandWeapon = true;
+        character.canComboSpecialAttack = true;
     }
 
     public override void DisableCanDoCombo() {

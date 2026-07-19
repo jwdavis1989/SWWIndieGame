@@ -20,6 +20,7 @@ public class ResetActionFlag : StateMachineBehaviour
         character.isJumping = false;
         character.isBoosting = false;
         character.isRolling = false;
+        character.canComboSpecialAttack = false;
 
         //TODO: Investigate if this is causing bugs for AI.
         //This was needed to keep enemies from being automatically set to no root motion

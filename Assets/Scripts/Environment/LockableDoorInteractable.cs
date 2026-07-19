@@ -11,13 +11,16 @@ public class LockableDoorInteractable : Interactable
     public bool isLocked = true;
     private float currentDoorOpenTimer = 0f;
     private float maximumDoorOpenTimer = 3f;
+    private float doorEndOfStopTimer = 0.5f;
     public float doorOpenDistance = 1.5f;
     public bool needsKey = false;
+    public AudioSource audioSource;
 
     protected override void Start()
     {
         base.Start();
         interactableText = "Open Door";
+        audioSource = GetComponent<AudioSource>();
     }
 
     public override void Interact(PlayerManager player)
@@ -39,6 +42,13 @@ public class LockableDoorInteractable : Interactable
 
                 hasUnlocked = true;
                 StartCoroutine(OpenDoorOverTime());
+                WorldSoundFXManager worldSoundFXManager = WorldSoundFXManager.instance;
+                AudioClip unlockSFX = worldSoundFXManager.ChooseRandomSFXFromArray(worldSoundFXManager.ruinsDoorOpenSFX);
+                worldSoundFXManager.PlayAdvancedSoundFX(audioSource, unlockSFX, 1f, unlockSFX.length/(maximumDoorOpenTimer + doorEndOfStopTimer), false);
+
+                IdeaCameraController ideaCameraController = IdeaCameraController.instance;
+                AudioClip unlockBeepSFX = worldSoundFXManager.ChooseRandomSFXFromArray(ideaCameraController.steveAudioClipAffirmative);
+                worldSoundFXManager.PlayAdvancedSoundFX(PlayerCamera.instance.player.playerSoundFXManager.audioSource, unlockBeepSFX);
             }
         }
 

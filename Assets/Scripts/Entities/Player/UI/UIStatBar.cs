@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//NOTE: Deprecated Component Originally Used for Bar-based Health Bars
 public class UIStatBar : MonoBehaviour
 {
     protected Slider slider;

@@ -36,6 +36,7 @@ public class CharacterSaveData
     [Header("Resources")]
     public float currentHealth = 100;
     public float currentStamina = 100;
+    public float currentFuel = 100;
 
     public Dictionary<string, bool> journalFlags = new Dictionary<string, bool>();
     public List<IdeaSaveData> ideas = new List<IdeaSaveData>();

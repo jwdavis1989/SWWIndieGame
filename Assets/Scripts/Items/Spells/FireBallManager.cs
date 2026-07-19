@@ -13,11 +13,8 @@ public class FireBallManager : SpellManager
     public SpellProjectileDamageCollider damageCollider;
 
     [Header("Instantiated FX")]
-    private GameObject instantiatedDestructionFX;
-    public ElementalDamageType highestElementalDamageType;
 
     private bool hasCollided = false;
-    public bool isFullyCharged = false;
     private Rigidbody fireBallRigidBody;
     private Coroutine destructionFXCoroutine;
 
@@ -61,7 +58,7 @@ public class FireBallManager : SpellManager
         }
     }
 
-    public void InitializeFireBall(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, bool hasGravity = true)
+    public void InitializeFireBall(CharacterManager characterCausingDamage, ElementalDamageType currentHighestElementalDamageType, float projectileLifetimeInSeconds, bool hasGravity = true)
     {
         damageCollider.characterCausingDamage = characterCausingDamage;
         damageCollider.InitializeStats();
@@ -73,23 +70,9 @@ public class FireBallManager : SpellManager
 
         //Set whether the projectile will fall over time or fly straight
         fireBallRigidBody.useGravity = hasGravity;
-    }
 
-    public void InstantiateSpellDestructionFX()
-    {
-        if (isFullyCharged)
-        {
-            instantiatedDestructionFX = Instantiate(impactParticleFullChargeVFX, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            instantiatedDestructionFX = Instantiate(impactParticleVFX, transform.position, Quaternion.identity);
-        }
-
-        //Update Explosion VFX based on highest element of the magic weapon used to cast it
-        instantiatedDestructionFX.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(highestElementalDamageType);
-
-        Destroy(gameObject);
+        //Destroy bullet after its lifetime ends
+        StartCoroutine(DestroyAfterTime(projectileLifetimeInSeconds));
     }
 
     public void WaitThenInstantiateSpellDestructionFX(float timeToWaitInSeconds)
@@ -103,11 +86,5 @@ public class FireBallManager : SpellManager
         //StartCoroutine(WaitThenInstantiateFX(timeToWaitInSeconds));
     }
 
-    private IEnumerator WaitThenInstantiateFX(float timeToWaitInSeconds)
-    {
-        yield return new WaitForSeconds(timeToWaitInSeconds);
-
-        InstantiateSpellDestructionFX();
-    }
     
 }
