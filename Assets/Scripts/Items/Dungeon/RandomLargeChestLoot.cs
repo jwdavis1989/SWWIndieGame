@@ -50,7 +50,7 @@ public class RandomLargeChestLoot : MonoBehaviour
             else
             {
                 //drop weapon
-                Debug.Log("Stocking Weapon " + (randomNumber>50f?"BoneBlade": "Frost Wand"));
+                //Debug.Log("Stocking Weapon " + (randomNumber>50f?"BoneBlade": "Frost Wand"));
                 if (randomNumber > 50f) // drop Bone Scimitar
                     itemToAdd = ItemDropManager.DropWeapon(WeaponType.BoneBlade, transform);
                 else // drop Frost Wand
