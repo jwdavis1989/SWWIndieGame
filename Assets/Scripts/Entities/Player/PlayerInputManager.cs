@@ -706,6 +706,19 @@ public class PlayerInputManager : MonoBehaviour
                     PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandShootGunAttackAction,
                                                     currentOffHandWeapon);
                 }
+                //Else If Dagger
+                else if (currentOffHandWeaponFamily == WeaponFamily.Daggers)
+                {
+                    PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandDaggerAttackAction,
+                                                    currentOffHandWeapon);
+                }
+                //Else If Drone
+                else if (currentOffHandWeaponFamily == WeaponFamily.Drones)
+                {
+                    //TODO: Add Drones post-MVP
+                    // PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandDroneAttackAction,
+                    //                                 currentOffHandWeapon);
+                }
 
                 player.characterWeaponManager.ResetSpecialWeaponCooldownTimer();
             }

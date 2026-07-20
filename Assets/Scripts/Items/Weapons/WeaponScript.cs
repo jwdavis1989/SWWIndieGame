@@ -242,10 +242,11 @@ public class WeaponScript : MonoBehaviour
     public WeaponStats stats;
 
     [Header("Actions")]
-    public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
-    public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
+    public WeaponItemAction mainHandLightAttackAction;      //One hand light attack
+    public WeaponItemAction mainHandHeavyAttackAction;      //One hand heavy attack
     public WeaponItemAction offHandCastMagicAttackAction;   //Off hand Magic Special Attack
-    public WeaponItemAction offHandShootGunAttackAction;   //Off hand Gun Special Attack
+    public WeaponItemAction offHandShootGunAttackAction;    //Off hand Gun Special Attack
+    public WeaponItemAction offHandDaggerAttackAction;      //Off hand Dagger Special Attack
 
 
 
@@ -806,6 +807,22 @@ public class WeaponScript : MonoBehaviour
         Vector3 forwardVelocity = instantiatedGunProjectile.transform.forward * projectileForwardVelocityMultiplier;
         Vector3 totalVelocity = upwardVelocity + forwardVelocity;
         bulletRigidbody.velocity = totalVelocity;
+    }
+
+    public virtual void AttemptToDaggerAttack(CharacterManager character)
+    {
+        if (!CanIUseThisSpecialAttack(character))
+        {
+            return;
+        }
+
+        character.characterAnimatorManager.PlayTargetActionAnimation(offHandGunShootAnimation, true);
+
+        //Change character model Rotation to counter animation's root motion rotation in the nation
+        character.SetShootingModelAlignment();
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
     }
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
