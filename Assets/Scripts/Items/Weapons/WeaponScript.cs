@@ -289,6 +289,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Dagger Attributes")]
     public float daggerTeleportDistance = 5f;
+    public float daggerNoAttackTeleportDistanceModifier = 2f;
     public float daggerBackStabBehindTargetDistance = 1.5f;
     public float daggerTeleportDelay = 0.2f;
     public LayerMask daggerTeleportTargetLayer;
@@ -835,7 +836,7 @@ public class WeaponScript : MonoBehaviour
 
     public virtual void SuccessfullyDaggerAttack(CharacterManager character)
     {
-        //1. Destroy any Warm Up FX remaining from the gun shot
+        //Destroy any Warm Up FX remaining from other VFX
         character.characterCombatManager.DestroyAllCurrentActionFX();
 
         //Teleport behind locked target and backstab automatically if locked on
@@ -843,38 +844,23 @@ public class WeaponScript : MonoBehaviour
         {
             CharacterManager teleportTargetCharacter = character.characterCombatManager.currentTarget;
             Vector3 teleportPosition = teleportTargetCharacter.transform.position - (teleportTargetCharacter.transform.forward * daggerBackStabBehindTargetDistance);
-            
             StartCoroutine(DaggerTeleportSequence(character, teleportPosition, teleportTargetCharacter.transform));
-
-            // character.transform.position = teleportPosition;
-            // character.transform.LookAt(teleportTargetCharacter.transform);
-
-            // //Perform the Stab animation itself()
-            // character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
         }
         else
         {
-            //Ray daggerTeleportRaycast = new Ray(character.transform.position, character.transform.forward);
-
-            // if Raycast enemy in front of character based on their facing within a distance of daggerTeleportDistance
-            if (Physics.Raycast(character.transform.position, character.transform.forward, out RaycastHit hit, daggerTeleportDistance, daggerTeleportTargetLayer))
+            //if Raycast enemy in front of character based on their facing within a distance of daggerTeleportDistance
+            if (Physics.Raycast(character.transform.position, /*PlayerCamera.instance*/character.transform.forward, out RaycastHit hit, daggerTeleportDistance + PlayerCamera.instance.unlockedCameraHeight, daggerTeleportTargetLayer))
             {
                 //Magnetize to the first enemy hit by raycast and teleport behind them to backstab
                 Transform enemyTransform = hit.transform;
                 Vector3 teleportPosition = enemyTransform.transform.position - (enemyTransform.transform.forward * daggerBackStabBehindTargetDistance);
-                
-                StartCoroutine(DaggerTeleportSequence(character, teleportPosition, enemyTransform.transform));
-                
-                // character.transform.position = teleportPosition;
-                // transform.LookAt(enemyTransform);
 
-                // //Perform the Stab animation itself()
-                // character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+                StartCoroutine(DaggerTeleportSequence(character, teleportPosition, enemyTransform.transform));
             }
             //Teleport up to your dash distance, daggerTeleportDistance, (while respecting wall collision) then stab
             else
             {
-                Vector3 targetDashPosition = character.transform.position + (character.transform.forward * daggerTeleportDistance);
+                Vector3 targetDashPosition = character.transform.position + (/*PlayerCamera.instance*/character.transform.forward * daggerTeleportDistance * daggerNoAttackTeleportDistanceModifier);
                 Vector3 finalDashPosition = targetDashPosition;
 
                 if (Physics.Linecast(character.transform.position, targetDashPosition, out RaycastHit wallHit, daggerTeleportWallLayer))
@@ -883,23 +869,13 @@ public class WeaponScript : MonoBehaviour
                     finalDashPosition = wallHit.point - (transform.forward * 0.5f);
                 }
 
-                StartCoroutine(DaggerTeleportSequence(character, finalDashPosition, null));
-
-                // else
-                // {
-                //     // Clear path, move full distance
-                //     character.transform.position = targetDashPosition;
-                // }
-
-                //Perform the Stab animation itself()
-                // character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+                StartCoroutine(DaggerTeleportSequence(character, finalDashPosition, null, false));
             }
         }
         character.canRotate = false;
-
     }
 
-    private IEnumerator DaggerTeleportSequence(CharacterManager character, Vector3 destination, Transform targetToLookAt)
+    private IEnumerator DaggerTeleportSequence(CharacterManager character, Vector3 destination, Transform targetToLookAt, bool willAttackAtEnd = true)
     {
         //1. Puff of smoke at current position
         if (daggerTeleportSmokeVFX != null)
@@ -921,6 +897,18 @@ public class WeaponScript : MonoBehaviour
             character.canRotate = true;
             character.transform.LookAt(targetToLookAt);
         }
+        else if (PlayerCamera.instance != null)
+        {
+            //If no enemy hit, flatten the camera's forward vector to ignore up/down tilt
+            Vector3 cameraForwardDirection = PlayerCamera.instance.transform.forward;
+            cameraForwardDirection.y = 0; // Flatten the Y axis
+
+            // Only apply rotation if the vector is valid to avoid error spam
+            if (cameraForwardDirection.sqrMagnitude > 0.001f)
+            {
+                character.transform.rotation = Quaternion.LookRotation(cameraForwardDirection);
+            }
+        }
 
         //5. Puff of smoke at destination
         if (daggerTeleportSmokeVFX != null)
@@ -933,7 +921,14 @@ public class WeaponScript : MonoBehaviour
         if (daggerUserMesh != null) daggerUserMesh.SetActive(true);
 
         //7. Perform the Stab animation itself
-        character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+        if (willAttackAtEnd)
+        {
+            character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+        }
+        else
+        {
+            character.canRotate = true;
+        }
     }
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
