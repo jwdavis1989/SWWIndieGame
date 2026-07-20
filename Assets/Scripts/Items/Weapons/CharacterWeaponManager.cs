@@ -42,7 +42,7 @@ public class CharacterWeaponManager : MonoBehaviour
     }
     public void Awake()
     {
-        if(characterThatOwnsThisArsenal == null && gameObject.GetComponent<CharacterManager>() != null)
+        if (characterThatOwnsThisArsenal == null && gameObject.GetComponent<CharacterManager>() != null)
         {
             characterThatOwnsThisArsenal = gameObject.GetComponent<CharacterManager>();
         }
@@ -71,9 +71,9 @@ public class CharacterWeaponManager : MonoBehaviour
     public int TotalWeapons()
     {
         int total = 0;
-        if(ownedWeapons != null)
+        if (ownedWeapons != null)
             total += ownedWeapons.Count;
-        if(ownedSpecialWeapons != null)
+        if (ownedSpecialWeapons != null)
             total += ownedSpecialWeapons.Count;
         return total;
     }
@@ -96,7 +96,7 @@ public class CharacterWeaponManager : MonoBehaviour
             {
                 weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, wristOffHandWeaponAnchor.transform);
             }
-            
+
             ownedSpecialWeapons.Add(weaponToAdd);
 
             //Update Equipped Weapon Icon if this is your first special weapon
@@ -127,7 +127,7 @@ public class CharacterWeaponManager : MonoBehaviour
 
         //Initialize Weapon Owner to avoid a race condition in Awake()
         currentWeaponScript.characterThatOwnsThisWeapon = characterThatOwnsThisArsenal;
-        
+
         return weaponToAdd.GetComponent<WeaponScript>();
     }
     public void EquipWeapon(GameObject weapon)
@@ -146,9 +146,9 @@ public class CharacterWeaponManager : MonoBehaviour
         else
             ChangeWeapon(index);
     }
-        /**
-         * Change equipped weapon
-         */
+    /**
+     * Change equipped weapon
+     */
     public void ChangeWeapon(int index)
     {
         if (index < ownedWeapons.Count && ownedWeapons[index] != null)
@@ -206,7 +206,8 @@ public class CharacterWeaponManager : MonoBehaviour
             characterThatOwnsThisArsenal.characterAnimatorManager.PlayTargetActionAnimation("Swap_Left_Weapon_01", false, false, true, true);
 
             //Update Weapon Slot UI for the player only
-            if (characterThatOwnsThisArsenal.isPlayer) {
+            if (characterThatOwnsThisArsenal.isPlayer)
+            {
                 PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
             }
         }
@@ -244,7 +245,7 @@ public class CharacterWeaponManager : MonoBehaviour
                 return null;
             return ownedSpecialWeapons[indexOfEquippedSpecialWeapon];
         }
-        if (ownedWeapons.Count == 0) 
+        if (ownedWeapons.Count == 0)
             return null;
         return ownedWeapons[indexOfEquippedWeapon];
     }
@@ -340,22 +341,46 @@ public class CharacterWeaponManager : MonoBehaviour
         weaponAction.AttemptToPerformAction(characterThatOwnsThisArsenal);
     }
 
-    public void OpenDamageCollider() {
+    public void OpenDamageCollider()
+    {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
         currentWeapon.weaponDamageCollider.EnableDamageCollider();
         if (currentWeapon.bladeTrailVFX)
-        {   
+        {
             currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
         }
         //Play Whoosh SFX
         PlayMeleeWeaponSwingSFX();
     }
 
-    public void CloseDamageCollider() {
+    public void CloseDamageCollider()
+    {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
         currentWeapon.weaponDamageCollider.DisableDamageCollider();
         if (currentWeapon.bladeTrailVFX)
-        {   
+        {
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
+        }
+    }
+
+    public void OpenSpecialDamageCollider()
+    {
+        WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
+        currentWeapon.weaponDamageCollider.EnableDamageCollider();
+        if (currentWeapon.bladeTrailVFX)
+        {
+            currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
+        }
+        //Play Whoosh SFX
+        PlayMeleeWeaponSwingSFX();
+    }
+
+    public void CloseSpecialDamageCollider()
+    {
+        WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
+        currentWeapon.weaponDamageCollider.DisableDamageCollider();
+        if (currentWeapon.bladeTrailVFX)
+        {
             currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
         }
     }
@@ -364,7 +389,7 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
         if (currentWeapon.bladeTrailVFX)
-        {   
+        {
             currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
         }
     }
@@ -373,7 +398,7 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
         if (currentWeapon.bladeTrailVFX)
-        {   
+        {
             currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
         }
     }
@@ -382,7 +407,7 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
         if (currentWeapon.bladeTrailVFX)
-        {   
+        {
             currentWeapon.bladeTrailVFX.gameObject.SetActive(true);
         }
     }
@@ -391,17 +416,19 @@ public class CharacterWeaponManager : MonoBehaviour
     {
         WeaponScript currentWeapon = ownedSpecialWeapons[indexOfEquippedSpecialWeapon].GetComponent<WeaponScript>();
         if (currentWeapon.bladeTrailVFX)
-        {   
+        {
             currentWeapon.bladeTrailVFX.gameObject.SetActive(false);
         }
     }
-    
-    public void OpenJumpAttackDamageCollider() {
+
+    public void OpenJumpAttackDamageCollider()
+    {
         //Play Whoosh SFX
         PlayMeleeWeaponSwingSFX();
     }
 
-    public void CloseJumpAttackDamageCollider() {
+    public void CloseJumpAttackDamageCollider()
+    {
         //ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().jumpAttackWeaponDamageCollider.DisableDamageCollider();
     }
 
@@ -410,9 +437,11 @@ public class CharacterWeaponManager : MonoBehaviour
         ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>().InstantiateJumpAttackCollider();
     }
 
-    public void DrainStaminaBasedOnAttack()
+    public void DrainStaminaBasedOnAttack(bool isSpecialWeapon = false)
     {
-        WeaponScript currentWeapon = ownedWeapons[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+        WeaponScript currentWeapon = GetEquippedWeapon(isSpecialWeapon).GetComponent<WeaponScript>();
+        //[indexOfEquippedWeapon].GetComponent<WeaponScript>();
+
 
         if (currentWeapon == null)
         {
@@ -479,9 +508,16 @@ public class CharacterWeaponManager : MonoBehaviour
                 staminaDeducted *= currentWeapon.stats.lightBackstepAttack01StaminaCostModifier;
                 break;
 
+            //Special Weapons
             //Magic Attacks
             case AttackType.AreaSpellAttack01:
                 staminaDeducted *= currentWeapon.stats.areaSpellAttack01StaminaCostModifier;
+                break;
+            case AttackType.SingleTargetBulletAttack01:
+                staminaDeducted *= currentWeapon.stats.gunAttack01StaminaCostModifier;
+                break;
+            case AttackType.DaggerAttack01:
+                staminaDeducted *= currentWeapon.stats.daggerAttack01StaminaCostModifier;
                 break;
 
             //Default
@@ -492,38 +528,40 @@ public class CharacterWeaponManager : MonoBehaviour
         characterThatOwnsThisArsenal.characterStatsManager.currentStamina -= staminaDeducted;
     }
 
-    private void PlayMeleeWeaponSwingSFX() {
+    private void PlayMeleeWeaponSwingSFX()
+    {
         AudioClip meleeWeaponSwingSFX;
         //e.g. If Fire damage is greater, play burn SFX
         //e.g. If Lightning damage is greater, play Zap SFX
 
-        switch (GetMainHand().weaponFamily) {
-                case WeaponFamily.Swords:
-                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
-                    break;
-                case WeaponFamily.GreatSwords:
-                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.heavySlashingWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 0.8f, true, 0.1f);
-                    break;
-                case WeaponFamily.HammersOrWrenches:
-                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.bludgeoningWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
-                    break;
-                case WeaponFamily.Scythes:
-                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.scytheWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 0.8f, true, 0.1f);
-                    break;
-                case WeaponFamily.Daggers:
-                    meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.piercingWeaponSwingSFX);
-                    characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
-                    break;
-                case WeaponFamily.NotYetSet:
-                    Debug.Log("Weapon Family not set on Prefab!");
-                    break;
-                default:
-                    Debug.Log("Weapon Family not set on Prefab!");
-                    break;
-            }
+        switch (GetMainHand().weaponFamily)
+        {
+            case WeaponFamily.Swords:
+                meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.slashingWeaponSwingSFX);
+                characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
+                break;
+            case WeaponFamily.GreatSwords:
+                meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.heavySlashingWeaponSwingSFX);
+                characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 0.8f, true, 0.1f);
+                break;
+            case WeaponFamily.HammersOrWrenches:
+                meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.bludgeoningWeaponSwingSFX);
+                characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
+                break;
+            case WeaponFamily.Scythes:
+                meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.scytheWeaponSwingSFX);
+                characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 0.8f, true, 0.1f);
+                break;
+            case WeaponFamily.Daggers:
+                meleeWeaponSwingSFX = WorldSoundFXManager.instance.ChooseRandomSFXFromArray(WorldSoundFXManager.instance.piercingWeaponSwingSFX);
+                characterThatOwnsThisArsenal.characterSoundFXManager.PlayAdvancedSoundFX(meleeWeaponSwingSFX, 0.5f, 1f, true, 0.1f);
+                break;
+            case WeaponFamily.NotYetSet:
+                Debug.Log("Weapon Family not set on Prefab!");
+                break;
+            default:
+                Debug.Log("Weapon Family not set on Prefab!");
+                break;
+        }
     }
 }

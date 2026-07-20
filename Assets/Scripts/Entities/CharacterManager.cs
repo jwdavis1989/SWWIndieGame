@@ -210,6 +210,19 @@ public class CharacterManager : MonoBehaviour
         characterWeaponManager.CloseDamageCollider();
     }
 
+    public void CallOpenSpecialDamageCollider()
+    {
+        Debug.Log(1);
+        characterWeaponManager.OpenSpecialDamageCollider();
+        
+        Debug.Log(2);
+    }
+
+    public void CallCloseSpecialDamageCollider()
+    {
+        characterWeaponManager.CloseSpecialDamageCollider();
+    }
+
     public void CallEnableBladeTrailVFX()
     {
         characterWeaponManager.EnableBladeTrailVFX();

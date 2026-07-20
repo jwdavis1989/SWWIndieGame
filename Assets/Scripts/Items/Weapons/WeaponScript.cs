@@ -123,6 +123,9 @@ public class WeaponStats
     //Guns
     public float gunAttack01StaminaCostModifier = 1f;
 
+    //Daggers
+    public float daggerAttack01StaminaCostModifier = 1f;
+
     [Header("Motion Values")]
     //Light
     public float lightAttack01DamageMotionValue = 1f;
@@ -155,6 +158,9 @@ public class WeaponStats
 
     //Guns
     public float singleTargetBulletAttack01DamageMotionValue = 1f;
+
+    //Daggers
+    public float daggerTeleportAttackDamageMotionValue = 1.25f;
 
 
 }
@@ -318,17 +324,9 @@ public class WeaponScript : MonoBehaviour
 
     public void Awake()
     {
-        if (isSpecialWeapon)
+        if (isSpecialWeapon && weaponFamily != WeaponFamily.Daggers)
         {
-            // if (projectile != null)
-            // {
-            //     weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
-            // }
-            // else
-            // {
-            //     weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-            // }
-            InitializeGunTransform();
+            InitializeGunTransform();  
         }
         else
         {
@@ -1167,12 +1165,12 @@ public class WeaponScript : MonoBehaviour
 
                         //Assign the original MeshRenderer's materials array to the modified copy
                         ElementalMeshRenderers[i].materials = tempMagicMaterials;
-                        Debug.Log(stats.weaponName + ": Magic Weapon");
+                        //Debug.Log(stats.weaponName + ": Magic Weapon");
                     }
                     else
                     {
                         ElementalMeshRenderers[i].material = PlayerWeaponManager.instance.elementalMaterialsArray[highestElementStatIndex];
-                        Debug.Log(stats.weaponName + ": Non-Magic Weapon");
+                        //Debug.Log(stats.weaponName + ": Non-Magic Weapon");
                     }
                 }
             }
