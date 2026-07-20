@@ -254,6 +254,7 @@ public class WeaponScript : MonoBehaviour
     public AnimatorOverrideController weaponAnimatorOverride;
     [SerializeField] protected string offHandSpellAnimation;
     [SerializeField] protected string offHandGunShootAnimation;
+    [SerializeField] protected string offHandDaggerAttackAnimation;
 
     [Header("Weapon Family Specific")]
     [Header("Magic Special Weapons")]
@@ -285,6 +286,12 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] public GameObject spellChargeVFX;
     [SerializeField] public GameObject spellProjectileVFX;
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
+
+    [Header("Dagger Attributes")]
+    public float daggerTeleportDistance = 5f;
+    public float daggerBackStabBehindTargetDistance = 1.5f;
+    public LayerMask daggerTeleportTargetLayer;
+    public LayerMask daggerTeleportWallLayer;
 
     [Header("Ranged SFX")]
     public AudioClip spellReleaseSFX;
@@ -776,7 +783,7 @@ public class WeaponScript : MonoBehaviour
         BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<BulletOriginLocation>();
         GameObject instantiatedGunProjectile = Instantiate(gunProjectile, bulletOriginLocation.transform);
 
-        //Update the VFX to match the highest element of the magic weapon
+        //Update the VFX to match the highest element of the special weapon
         instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
         BulletManager bulletManager = instantiatedGunProjectile.GetComponent<BulletManager>();
@@ -816,13 +823,66 @@ public class WeaponScript : MonoBehaviour
             return;
         }
 
-        character.characterAnimatorManager.PlayTargetActionAnimation(offHandGunShootAnimation, true);
-
-        //Change character model Rotation to counter animation's root motion rotation in the nation
-        character.SetShootingModelAlignment();
+        //character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+        SuccessfullyDaggerAttack(character);
 
         //Turn off Player's ability to combo with special attacks
         character.canComboSpecialAttack = false;
+    }
+
+    public virtual void SuccessfullyDaggerAttack(CharacterManager character)
+    {
+        //1. Destroy any Warm Up FX remaining from the gun shot
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //Teleport behind locked target and backstab automatically if locked on
+        if (character.isLockedOn)
+        {
+            CharacterManager teleportTargetCharacter = character.characterCombatManager.currentTarget;
+            Vector3 teleportPosition = teleportTargetCharacter.transform.position - (teleportTargetCharacter.transform.forward * daggerBackStabBehindTargetDistance);
+            character.transform.position = teleportPosition;
+            character.transform.LookAt(teleportTargetCharacter.transform);
+
+            //Perform the Stab animation itself()
+            character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+        }
+        else
+        {
+            //Ray daggerTeleportRaycast = new Ray(character.transform.position, character.transform.forward);
+
+            // if Raycast enemy in front of character based on their facing within a distance of daggerTeleportDistance
+            if (Physics.Raycast(character.transform.position, character.transform.forward, out RaycastHit hit, daggerTeleportDistance, daggerTeleportTargetLayer))
+            {
+                //Magnetize to the first enemy hit by raycast and teleport behind them to backstab
+                Transform enemyTransform = hit.transform;
+                Vector3 teleportPosition = enemyTransform.transform.position - (enemyTransform.transform.forward * daggerBackStabBehindTargetDistance);
+                character.transform.position = teleportPosition;
+                transform.LookAt(enemyTransform);
+
+                //Perform the Stab animation itself()
+                character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+            }
+            //Teleport up to your dash distance, daggerTeleportDistance, (while respecting wall collision) then stab
+            else
+            {
+                Vector3 targetDashPosition = character.transform.position + (character.transform.forward * daggerTeleportDistance);
+
+                if (Physics.Linecast(transform.position, targetDashPosition, out RaycastHit wallHit, daggerTeleportWallLayer))
+                {
+                    // Stop short of the wall hit point
+                    character.transform.position = wallHit.point - (transform.forward * 0.5f);
+                }
+                else
+                {
+                    // Clear path, move full distance
+                    character.transform.position = targetDashPosition;
+                }
+
+                //Perform the Stab animation itself()
+                character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+            }
+        }
+
     }
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
