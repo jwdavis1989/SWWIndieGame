@@ -288,10 +288,12 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
 
     [Header("Dagger Attributes")]
-    public float daggerTeleportDistance = 5f;
+    public float daggerTeleportDistance = 10f;
     public float daggerBackStabBehindTargetDistance = 1.5f;
+    public float daggerTeleportDelay = 0.2f;
     public LayerMask daggerTeleportTargetLayer;
     public LayerMask daggerTeleportWallLayer;
+    public GameObject daggerUserMesh;
 
     [Header("Ranged SFX")]
     public AudioClip spellReleaseSFX;
@@ -301,6 +303,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Melee SFX")]
     public BladeTrail bladeTrailVFX;
+    public ParticleSystem daggerTeleportSmokeVFX;
 
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
@@ -840,11 +843,14 @@ public class WeaponScript : MonoBehaviour
         {
             CharacterManager teleportTargetCharacter = character.characterCombatManager.currentTarget;
             Vector3 teleportPosition = teleportTargetCharacter.transform.position - (teleportTargetCharacter.transform.forward * daggerBackStabBehindTargetDistance);
-            character.transform.position = teleportPosition;
-            character.transform.LookAt(teleportTargetCharacter.transform);
+            
+            StartCoroutine(DaggerTeleportSequence(character, teleportPosition, teleportTargetCharacter.transform));
 
-            //Perform the Stab animation itself()
-            character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+            // character.transform.position = teleportPosition;
+            // character.transform.LookAt(teleportTargetCharacter.transform);
+
+            // //Perform the Stab animation itself()
+            // character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
         }
         else
         {
@@ -856,33 +862,76 @@ public class WeaponScript : MonoBehaviour
                 //Magnetize to the first enemy hit by raycast and teleport behind them to backstab
                 Transform enemyTransform = hit.transform;
                 Vector3 teleportPosition = enemyTransform.transform.position - (enemyTransform.transform.forward * daggerBackStabBehindTargetDistance);
-                character.transform.position = teleportPosition;
-                transform.LookAt(enemyTransform);
+                
+                StartCoroutine(DaggerTeleportSequence(character, teleportPosition, enemyTransform.transform));
+                
+                // character.transform.position = teleportPosition;
+                // transform.LookAt(enemyTransform);
 
-                //Perform the Stab animation itself()
-                character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+                // //Perform the Stab animation itself()
+                // character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
             }
             //Teleport up to your dash distance, daggerTeleportDistance, (while respecting wall collision) then stab
             else
             {
                 Vector3 targetDashPosition = character.transform.position + (character.transform.forward * daggerTeleportDistance);
+                Vector3 finalDashPosition = targetDashPosition;
 
-                if (Physics.Linecast(transform.position, targetDashPosition, out RaycastHit wallHit, daggerTeleportWallLayer))
+                if (Physics.Linecast(character.transform.position, targetDashPosition, out RaycastHit wallHit, daggerTeleportWallLayer))
                 {
                     // Stop short of the wall hit point
-                    character.transform.position = wallHit.point - (transform.forward * 0.5f);
+                    finalDashPosition = wallHit.point - (transform.forward * 0.5f);
                 }
-                else
-                {
-                    // Clear path, move full distance
-                    character.transform.position = targetDashPosition;
-                }
+
+                StartCoroutine(DaggerTeleportSequence(character, finalDashPosition, null));
+
+                // else
+                // {
+                //     // Clear path, move full distance
+                //     character.transform.position = targetDashPosition;
+                // }
 
                 //Perform the Stab animation itself()
-                character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+                // character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
             }
         }
+        character.canRotate = false;
 
+    }
+
+    private IEnumerator DaggerTeleportSequence(CharacterManager character, Vector3 destination, Transform targetToLookAt)
+    {
+        //1. Puff of smoke at current position
+        if (daggerTeleportSmokeVFX != null)
+        {
+            Instantiate(daggerTeleportSmokeVFX, character.transform.position, Quaternion.identity);
+        }
+
+        //2. Hide the character visual mesh instantly
+        if (daggerUserMesh != null) daggerUserMesh.SetActive(false);
+
+        //3. Wait for the smoke to cover them
+        yield return new WaitForSeconds(daggerTeleportDelay);
+
+        //4. Move to destination and rotate
+        character.transform.position = destination;
+        if (targetToLookAt != null)
+        {
+            character.canRotate = true;
+            character.transform.LookAt(targetToLookAt);
+        }
+
+        //5. Puff of smoke at destination
+        if (daggerTeleportSmokeVFX != null)
+        {
+            Instantiate(daggerTeleportSmokeVFX, character.transform.position, Quaternion.identity);
+        }
+
+        //6. Show character visual mesh again
+        if (daggerUserMesh != null) daggerUserMesh.SetActive(true);
+
+        //7. Perform the Stab animation itself
+        character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
     }
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)

@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847124638102049318}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39,7 +39,7 @@ Transform:
   - {fileID: 18512936253350557}
   - {fileID: 6764746420122938674}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &2772885370573196530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,17 +147,20 @@ MonoBehaviour:
   spellProjectileFullChargeVFX: {fileID: 0}
   daggerTeleportDistance: 5
   daggerBackStabBehindTargetDistance: 1.5
+  daggerTeleportDelay: 0.2
   daggerTeleportTargetLayer:
     serializedVersion: 2
     m_Bits: 1088
   daggerTeleportWallLayer:
     serializedVersion: 2
     m_Bits: 131073
+  daggerUserMesh: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
   gunAimSFX: {fileID: 0}
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
+  daggerTeleportSmokeVFX: {fileID: 0}
   isInDebugMode: 0
   ElementalMeshRenderers:
   - {fileID: 1708940436514994139}
@@ -359,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 5053468531180226278}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: 0, y: 0.0007000044, z: -0.269}
+  m_LocalPosition: {x: 0, y: 0.0007000044, z: -0.453}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -384,7 +387,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 0.39}
+  m_Size: {x: 1.5, y: 3, z: 1.5}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &3682149039508956798
 MonoBehaviour:
