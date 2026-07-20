@@ -288,7 +288,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
 
     [Header("Dagger Attributes")]
-    public float daggerTeleportDistance = 10f;
+    public float daggerTeleportDistance = 5f;
     public float daggerBackStabBehindTargetDistance = 1.5f;
     public float daggerTeleportDelay = 0.2f;
     public LayerMask daggerTeleportTargetLayer;
@@ -303,7 +303,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Melee SFX")]
     public BladeTrail bladeTrailVFX;
-    public ParticleSystem daggerTeleportSmokeVFX;
+    public GameObject daggerTeleportSmokeVFX;
 
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
@@ -905,6 +905,7 @@ public class WeaponScript : MonoBehaviour
         if (daggerTeleportSmokeVFX != null)
         {
             Instantiate(daggerTeleportSmokeVFX, character.transform.position, Quaternion.identity);
+            WorldSoundFXManager.instance.PlayAdvancedSoundFX(character.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.daggerTeleportBeginSFX);
         }
 
         //2. Hide the character visual mesh instantly
@@ -925,6 +926,7 @@ public class WeaponScript : MonoBehaviour
         if (daggerTeleportSmokeVFX != null)
         {
             Instantiate(daggerTeleportSmokeVFX, character.transform.position, Quaternion.identity);
+            WorldSoundFXManager.instance.PlayAdvancedSoundFX(character.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.daggerTeleportEndSFX);
         }
 
         //6. Show character visual mesh again
