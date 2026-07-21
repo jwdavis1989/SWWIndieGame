@@ -213,7 +213,7 @@ public class TinkerComponentManager : MonoBehaviour
         newStats.scalesPower = Mathf.Min(newStats.scalesPower, weaponData.maxElemental.scalesPower);
         newStats.techPower = Mathf.Min(newStats.techPower, weaponData.maxElemental.techPower);
         ElementalStats diffWithPrev = newStats.Subract(weapon.stats.elemental);
-        Debug.Log("diffWithPrev:" + diffWithPrev);
+        //Debug.Log("diffWithPrev:" + diffWithPrev);
         //if any stat will be upgraded then we can upgrade
         if (diffWithPrev.firePower > 0 ||
             diffWithPrev.icePower > 0 ||
