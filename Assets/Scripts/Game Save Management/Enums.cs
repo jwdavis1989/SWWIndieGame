@@ -39,6 +39,7 @@ public enum AttackType
     BackstepHeavyAttack01,
     AreaSpellAttack01,
     SingleTargetBulletAttack01,
+    DaggerAttack01,
     HeavyJumpAttack01,
     LightJumpAttack01,
     Attack1

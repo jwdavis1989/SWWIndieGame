@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847124638102049318}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39,7 +39,7 @@ Transform:
   - {fileID: 18512936253350557}
   - {fileID: 6764746420122938674}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &2772885370573196530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,14 +66,11 @@ MonoBehaviour:
     weaponId: bowie_knife
     isMonsterWeapon: 1
     attack: 22
-    maxAttack: 45
     basePoiseDamage: 35
     durability: 100
-    maxDurability: 134
+    currentDurability: 1
     block: 0
-    maxBlock: 0
     stability: 0
-    maxStability: 0
     elemental:
       firePower: 0
       icePower: 0
@@ -85,22 +82,10 @@ MonoBehaviour:
       scalesPower: 22
       techPower: 0
       currentHighestElementalStat: 0
-    maxElemental:
-      firePower: 45
-      icePower: 45
-      lightningPower: 45
-      windPower: 45
-      earthPower: 45
-      lightPower: 45
-      beastPower: 45
-      scalesPower: 45
-      techPower: 45
-      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
     xpToLevel: 100
     tinkerPointsPerLvl: 1
-    currentDurability: 1
     level: 1
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
@@ -137,9 +122,11 @@ MonoBehaviour:
   mainHandHeavyAttackAction: {fileID: 0}
   offHandCastMagicAttackAction: {fileID: 0}
   offHandShootGunAttackAction: {fileID: 0}
+  offHandDaggerAttackAction: {fileID: 11400000, guid: 6e67367aa7dce6e44bb4d16f136f7994, type: 2}
   weaponAnimatorOverride: {fileID: 0}
   offHandSpellAnimation: 
   offHandGunShootAnimation: 
+  offHandDaggerAttackAnimation: Dagger_Off_Stab_01
   fullChargingTraitModifier: 1.25
   gunModel: {fileID: 0}
   bulletOriginLocation: {fileID: 0}
@@ -151,17 +138,29 @@ MonoBehaviour:
   projectileForwardVelocityMultiplier: 7
   projectileUpwardVelocityMultiplier: 4
   projectileMass: 0.01
+  projectileLifeSpanInSeconds: 0.5
   spellForwardVelocityMultiplier: 7
   spellUpwardVelocityMultiplier: 4
   spellCastWarmUpVFX: {fileID: 0}
   spellChargeVFX: {fileID: 0}
   spellProjectileVFX: {fileID: 0}
   spellProjectileFullChargeVFX: {fileID: 0}
+  daggerTeleportDistance: 5
+  daggerBackStabBehindTargetDistance: 1.5
+  daggerTeleportDelay: 0.2
+  daggerTeleportTargetLayer:
+    serializedVersion: 2
+    m_Bits: 1088
+  daggerTeleportWallLayer:
+    serializedVersion: 2
+    m_Bits: 131073
+  daggerUserMesh: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
   gunAimSFX: {fileID: 0}
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
+  daggerTeleportSmokeVFX: {fileID: 7224905467363075243, guid: 2597d051aa8c51f429c48d1adc1a3941, type: 3}
   isInDebugMode: 0
   ElementalMeshRenderers:
   - {fileID: 1708940436514994139}
@@ -169,6 +168,7 @@ MonoBehaviour:
   - {fileID: 8687198634395537915}
   - {fileID: 3706659510388288953}
   - {fileID: 70633244984787224}
+  MagicWeaponMeshRendererIndices: 
 --- !u!1 &2561419945204897641
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 5053468531180226278}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: 0, y: 0.0007000044, z: -0.09205}
+  m_LocalPosition: {x: 0, y: 0.0007000044, z: -0.453}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -387,7 +387,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 2.16, z: 0.39}
+  m_Size: {x: 1.5, y: 3, z: 1.5}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &3682149039508956798
 MonoBehaviour:
@@ -401,6 +401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26ec8518b4d45f4298e4dd16d4e8c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCollider: {fileID: 0}
   physicalDamage: 0
   elementalStats:
     firePower: 0
