@@ -87,7 +87,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
             //Damage
             DamageTarget(damageTarget);
-            
+
         }
         //}
     }
@@ -155,7 +155,8 @@ public class MeleeWeaponDamageCollider : DamageCollider
                     attackMotionValue = weaponThatOwnsThisCollider.stats.lightJumpAttack01DamageMotionValue;
                     break;
                 case AttackType.HeavyJumpAttack01:
-                    attackMotionValue = weaponThatOwnsThisCollider.stats.heavyJumpAttack01DamageMotionValue;
+                    //attackMotionValue = weaponThatOwnsThisCollider.stats.heavyJumpAttack01DamageMotionValue;
+                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyJumpAttack01DamageMotionValue;
                     break;
 
                 //Charge Heavy Attacks
@@ -175,7 +176,14 @@ public class MeleeWeaponDamageCollider : DamageCollider
             }
 
             //Calculate Poise Damage
-            damageEffect.poiseDamage = attackMotionValue * weaponThatOwnsThisCollider.stats.basePoiseDamage;
+            if (weaponThatOwnsThisCollider != null)
+            {
+                damageEffect.poiseDamage = attackMotionValue * weaponThatOwnsThisCollider.stats.basePoiseDamage;
+            }
+            else
+            {
+                damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.GetMainHand().stats.basePoiseDamage;
+            }
         }
         else
         {
