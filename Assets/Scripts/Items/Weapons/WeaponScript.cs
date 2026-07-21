@@ -123,6 +123,9 @@ public class WeaponStats
     //Guns
     public float gunAttack01StaminaCostModifier = 1f;
 
+    //Daggers
+    public float daggerAttack01StaminaCostModifier = 1f;
+
     [Header("Motion Values")]
     //Light
     public float lightAttack01DamageMotionValue = 1f;
@@ -155,6 +158,9 @@ public class WeaponStats
 
     //Guns
     public float singleTargetBulletAttack01DamageMotionValue = 1f;
+
+    //Daggers
+    public float daggerTeleportAttackDamageMotionValue = 1.25f;
 
 
 }
@@ -242,10 +248,11 @@ public class WeaponScript : MonoBehaviour
     public WeaponStats stats;
 
     [Header("Actions")]
-    public WeaponItemAction mainHandLightAttackAction;  //One hand light attack
-    public WeaponItemAction mainHandHeavyAttackAction;  //One hand heavy attack
+    public WeaponItemAction mainHandLightAttackAction;      //One hand light attack
+    public WeaponItemAction mainHandHeavyAttackAction;      //One hand heavy attack
     public WeaponItemAction offHandCastMagicAttackAction;   //Off hand Magic Special Attack
-    public WeaponItemAction offHandShootGunAttackAction;   //Off hand Gun Special Attack
+    public WeaponItemAction offHandShootGunAttackAction;    //Off hand Gun Special Attack
+    public WeaponItemAction offHandDaggerAttackAction;      //Off hand Dagger Special Attack
 
 
 
@@ -253,6 +260,7 @@ public class WeaponScript : MonoBehaviour
     public AnimatorOverrideController weaponAnimatorOverride;
     [SerializeField] protected string offHandSpellAnimation;
     [SerializeField] protected string offHandGunShootAnimation;
+    [SerializeField] protected string offHandDaggerAttackAnimation;
 
     [Header("Weapon Family Specific")]
     [Header("Magic Special Weapons")]
@@ -285,6 +293,15 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] public GameObject spellProjectileVFX;
     [SerializeField] public GameObject spellProjectileFullChargeVFX;
 
+    [Header("Dagger Attributes")]
+    public float daggerTeleportDistance = 5f;
+    public float daggerNoAttackTeleportDistanceModifier = 2f;
+    public float daggerBackStabBehindTargetDistance = 1.5f;
+    public float daggerTeleportDelay = 0.2f;
+    public LayerMask daggerTeleportTargetLayer;
+    public LayerMask daggerTeleportWallLayer;
+    public GameObject daggerUserMesh;
+
     [Header("Ranged SFX")]
     public AudioClip spellReleaseSFX;
     public AudioClip spellProjectileSFX;
@@ -293,6 +310,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Melee SFX")]
     public BladeTrail bladeTrailVFX;
+    public GameObject daggerTeleportSmokeVFX;
 
     [Header("Debug Mode")]
     public bool isInDebugMode = false;
@@ -306,17 +324,9 @@ public class WeaponScript : MonoBehaviour
 
     public void Awake()
     {
-        if (isSpecialWeapon)
+        if (isSpecialWeapon && weaponFamily != WeaponFamily.Daggers)
         {
-            // if (projectile != null)
-            // {
-            //     weaponDamageCollider = projectile.GetComponent<MeleeWeaponDamageCollider>();
-            // }
-            // else
-            // {
-            //     weaponDamageCollider = GetComponentInChildren<MeleeWeaponDamageCollider>();
-            // }
-            InitializeGunTransform();
+            InitializeGunTransform();  
         }
         else
         {
@@ -775,7 +785,7 @@ public class WeaponScript : MonoBehaviour
         BulletOriginLocation bulletOriginLocation = character.characterWeaponManager.GetEquippedWeapon(true).GetComponentInChildren<BulletOriginLocation>();
         GameObject instantiatedGunProjectile = Instantiate(gunProjectile, bulletOriginLocation.transform);
 
-        //Update the VFX to match the highest element of the magic weapon
+        //Update the VFX to match the highest element of the special weapon
         instantiatedGunProjectile.GetComponent<SpellElementalVFXManager>().ChangeVFXBasedOnElement(stats.elemental.currentHighestElementalStat);
 
         BulletManager bulletManager = instantiatedGunProjectile.GetComponent<BulletManager>();
@@ -806,6 +816,117 @@ public class WeaponScript : MonoBehaviour
         Vector3 forwardVelocity = instantiatedGunProjectile.transform.forward * projectileForwardVelocityMultiplier;
         Vector3 totalVelocity = upwardVelocity + forwardVelocity;
         bulletRigidbody.velocity = totalVelocity;
+    }
+
+    public virtual void AttemptToDaggerAttack(CharacterManager character)
+    {
+        if (!CanIUseThisSpecialAttack(character))
+        {
+            return;
+        }
+
+        //character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+        SuccessfullyDaggerAttack(character);
+
+        //Turn off Player's ability to combo with special attacks
+        character.canComboSpecialAttack = false;
+    }
+
+    public virtual void SuccessfullyDaggerAttack(CharacterManager character)
+    {
+        //Destroy any Warm Up FX remaining from other VFX
+        character.characterCombatManager.DestroyAllCurrentActionFX();
+
+        //Teleport behind locked target and backstab automatically if locked on
+        if (character.isLockedOn)
+        {
+            CharacterManager teleportTargetCharacter = character.characterCombatManager.currentTarget;
+            Vector3 teleportPosition = teleportTargetCharacter.transform.position - (teleportTargetCharacter.transform.forward * daggerBackStabBehindTargetDistance);
+            StartCoroutine(DaggerTeleportSequence(character, teleportPosition, teleportTargetCharacter.transform));
+        }
+        else
+        {
+            //if Raycast enemy in front of character based on their facing within a distance of daggerTeleportDistance
+            if (Physics.Raycast(character.transform.position, /*PlayerCamera.instance*/character.transform.forward, out RaycastHit hit, daggerTeleportDistance + PlayerCamera.instance.unlockedCameraHeight, daggerTeleportTargetLayer))
+            {
+                //Magnetize to the first enemy hit by raycast and teleport behind them to backstab
+                Transform enemyTransform = hit.transform;
+                Vector3 teleportPosition = enemyTransform.transform.position - (enemyTransform.transform.forward * daggerBackStabBehindTargetDistance);
+
+                StartCoroutine(DaggerTeleportSequence(character, teleportPosition, enemyTransform.transform));
+            }
+            //Teleport up to your dash distance, daggerTeleportDistance, (while respecting wall collision) then stab
+            else
+            {
+                Vector3 targetDashPosition = character.transform.position + (/*PlayerCamera.instance*/character.transform.forward * daggerTeleportDistance * daggerNoAttackTeleportDistanceModifier);
+                Vector3 finalDashPosition = targetDashPosition;
+
+                if (Physics.Linecast(character.transform.position, targetDashPosition, out RaycastHit wallHit, daggerTeleportWallLayer))
+                {
+                    // Stop short of the wall hit point
+                    finalDashPosition = wallHit.point - (transform.forward * 0.5f);
+                }
+
+                StartCoroutine(DaggerTeleportSequence(character, finalDashPosition, null, false));
+            }
+        }
+        character.canRotate = false;
+    }
+
+    private IEnumerator DaggerTeleportSequence(CharacterManager character, Vector3 destination, Transform targetToLookAt, bool willAttackAtEnd = true)
+    {
+        //1. Puff of smoke at current position
+        if (daggerTeleportSmokeVFX != null)
+        {
+            Instantiate(daggerTeleportSmokeVFX, character.transform.position, Quaternion.identity);
+            WorldSoundFXManager.instance.PlayAdvancedSoundFX(character.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.daggerTeleportBeginSFX);
+        }
+
+        //2. Hide the character visual mesh instantly
+        if (daggerUserMesh != null) daggerUserMesh.SetActive(false);
+
+        //3. Wait for the smoke to cover them
+        yield return new WaitForSeconds(daggerTeleportDelay);
+
+        //4. Move to destination and rotate
+        character.transform.position = destination;
+        if (targetToLookAt != null)
+        {
+            character.canRotate = true;
+            character.transform.LookAt(targetToLookAt);
+        }
+        else if (PlayerCamera.instance != null)
+        {
+            //If no enemy hit, flatten the camera's forward vector to ignore up/down tilt
+            Vector3 cameraForwardDirection = PlayerCamera.instance.transform.forward;
+            cameraForwardDirection.y = 0; // Flatten the Y axis
+
+            // Only apply rotation if the vector is valid to avoid error spam
+            if (cameraForwardDirection.sqrMagnitude > 0.001f)
+            {
+                character.transform.rotation = Quaternion.LookRotation(cameraForwardDirection);
+            }
+        }
+
+        //5. Puff of smoke at destination
+        if (daggerTeleportSmokeVFX != null)
+        {
+            Instantiate(daggerTeleportSmokeVFX, character.transform.position, Quaternion.identity);
+            WorldSoundFXManager.instance.PlayAdvancedSoundFX(character.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.daggerTeleportEndSFX);
+        }
+
+        //6. Show character visual mesh again
+        if (daggerUserMesh != null) daggerUserMesh.SetActive(true);
+
+        //7. Perform the Stab animation itself
+        if (willAttackAtEnd)
+        {
+            character.characterAnimatorManager.PlayTargetActionAnimation(offHandDaggerAttackAnimation, true);
+        }
+        else
+        {
+            character.canRotate = true;
+        }
     }
 
     protected virtual bool CanIUseThisSpecialAttack(CharacterManager character)
@@ -1044,12 +1165,12 @@ public class WeaponScript : MonoBehaviour
 
                         //Assign the original MeshRenderer's materials array to the modified copy
                         ElementalMeshRenderers[i].materials = tempMagicMaterials;
-                        Debug.Log(stats.weaponName + ": Magic Weapon");
+                        //Debug.Log(stats.weaponName + ": Magic Weapon");
                     }
                     else
                     {
                         ElementalMeshRenderers[i].material = PlayerWeaponManager.instance.elementalMaterialsArray[highestElementStatIndex];
-                        Debug.Log(stats.weaponName + ": Non-Magic Weapon");
+                        //Debug.Log(stats.weaponName + ": Non-Magic Weapon");
                     }
                 }
             }
