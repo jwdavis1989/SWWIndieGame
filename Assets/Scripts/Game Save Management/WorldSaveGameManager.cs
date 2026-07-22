@@ -110,7 +110,6 @@ public class WorldSaveGameManager : MonoBehaviour
     public void AttemptToCreateNewGame() {
         saveFileDataWriter = new SaveFileDataWriter();
         saveFileDataWriter.saveDataDirectoryPath = Application.persistentDataPath;
-        PlayerSettingsManager.SetSensitivity(1.0f);
 
         //Check if we can make a new slot (Check for pre-existing slot)
         //Slot 01

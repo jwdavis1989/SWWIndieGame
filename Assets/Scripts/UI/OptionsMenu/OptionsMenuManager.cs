@@ -12,9 +12,9 @@ using UnityEngine.UI;
 public class OptionsMenuManager : MonoBehaviour
 {
     public static OptionsMenuManager instance;
-    [HideInInspector] public PlayerSettings playerSettings; 
+    [HideInInspector] public PlayerSettings playerSettings;
     public AudioMixer mixer;
-    
+
     [Header("Buttons, knobs, and switches")]
     public Toggle invertedToggle;
     public Slider mainVolumeSlider;
@@ -80,6 +80,8 @@ public class OptionsMenuManager : MonoBehaviour
             PauseScript.instance.playerControls.PauseMenu.Disable();
             PauseScript.instance.playerControls.UI.PauseButton.Disable();
         }
+        //load options
+        LoadOptions();
         // load tooltips
         if (InputSwitchDetector.IsCurrentlyGamepad())
         {
@@ -118,7 +120,7 @@ public class OptionsMenuManager : MonoBehaviour
         {
             effectsVolumeSlider.onValueChanged.AddListener(OnEffectsVolumeChange);
         }
-        if(mouseSensitivitySlider != null)
+        if (mouseSensitivitySlider != null)
         {
             mouseSensitivitySlider.onValueChanged.AddListener(OnMouseSensitivityChanged);
         }
@@ -147,11 +149,11 @@ public class OptionsMenuManager : MonoBehaviour
     {
         float scrollY = scrollInput.y;
         float scrollX = scrollInput.x;
-        if(scrollX != 0)
+        if (scrollX != 0)
         {
 
         }
-        Debug.Log("ScrollX="+scrollX + " scrollY="+scrollY);
+        Debug.Log("ScrollX=" + scrollX + " scrollY=" + scrollY);
     }
     // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()
@@ -257,11 +259,11 @@ public class OptionsMenuManager : MonoBehaviour
         {
             case "UNPAUSE":
                 PauseScript.instance.exitPauseMenuInput = true;
-                PauseScript.instance.HandleExitPauseMenuInput(); 
+                PauseScript.instance.HandleExitPauseMenuInput();
                 break;
             case "LEFT":
                 PauseScript.instance.menuLeftInput = true;
-                PauseScript.instance.HandleSwitchMenuInput(); 
+                PauseScript.instance.HandleSwitchMenuInput();
                 break;
             case "RIGHT":
                 PauseScript.instance.menuRightInput = true;
@@ -295,9 +297,9 @@ public class OptionsMenuManager : MonoBehaviour
         {
             SaveInvert(inverted);
         }
-        if(mouseSensitivityChanged)
+        if (mouseSensitivityChanged)
             SaveMouseSensitivity(mouseSensitivity);
-        if(gamepadSensitivityChanged)
+        if (gamepadSensitivityChanged)
             SaveGamepadSensitivity(gamepadSensitivity);
         PlayerSettingsManager.instance.SavePlayerSettings();
         CompleteSaveWindowAction();
@@ -310,10 +312,16 @@ public class OptionsMenuManager : MonoBehaviour
         mainVolumeSlider.value = playerSettings.mainVolume;
         musicVolumeSlider.value = playerSettings.musicVolume;
         effectsVolumeSlider.value = playerSettings.effectsVolume;
-        if(mouseSensitivitySlider != null)
-            mouseSensitivitySlider.value = playerSettings.mouseSensitivity;
-        if (gamepadSensitivitySlider != null)
-            gamepadSensitivitySlider.value = playerSettings.gamepadSensitivity;
+        mouseSensitivitySlider.value = playerSettings.mouseSensitivity;
+        gamepadSensitivitySlider.value = playerSettings.gamepadSensitivity;
+
+        int percent = (int)(playerSettings.gamepadSensitivity * 100f);
+        if (percent < 10) percent = 10;
+        gamepadSensitivityPercentText.text = percent + "%";
+
+        percent = (int)(playerSettings.mouseSensitivity * 100f);
+        if (percent < 10) percent = 10;
+        mouseSensitivityPercentText.text = percent + "%";
     }
 
     bool invertChanged = false;
@@ -347,12 +355,13 @@ public class OptionsMenuManager : MonoBehaviour
     bool musicVolumeChanged = false;
     public void OnMusicVolumeChange(float newValue)
     {
-        if (musicVolume != newValue) {
+        if (musicVolume != newValue)
+        {
             Debug.Log("OnMusicVolumeChange:" + newValue);
             musicVolume = newValue;
             isChanged = true;
             musicVolumeChanged = true;
-        } 
+        }
     }
     float effectsVolume = 0;
     bool effectsVolumeChanged = false;
@@ -369,7 +378,7 @@ public class OptionsMenuManager : MonoBehaviour
     bool mouseSensitivityChanged = false;
     public void OnMouseSensitivityChanged(float newValue)
     {
-        if(mouseSensitivity != newValue)
+        if (mouseSensitivity != newValue)
         {
             mouseSensitivity = newValue;
             int percent = (int)(newValue * 100f);
@@ -388,7 +397,7 @@ public class OptionsMenuManager : MonoBehaviour
             gamepadSensitivity = newValue;
             isChanged = true;
             int percent = (int)(newValue * 100f);
-            if(percent < 10) percent = 10;
+            if (percent < 10) percent = 10;
             gamepadSensitivityPercentText.text = percent + "%";
             gamepadSensitivityChanged = true;
         }
@@ -414,7 +423,7 @@ public class OptionsMenuManager : MonoBehaviour
     }
     void SaveMouseSensitivity(float newValue)
     {
-        PlayerSettingsManager.instance.playerSettings.mouseSensitivity = newValue;    
+        PlayerSettingsManager.instance.playerSettings.mouseSensitivity = newValue;
     }
     void SaveGamepadSensitivity(float newValue)
     {
