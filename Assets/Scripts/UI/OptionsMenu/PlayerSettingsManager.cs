@@ -94,9 +94,9 @@ public class PlayerSettingsManager : MonoBehaviour
         float volumeDb = Mathf.Log10(adjusted) * 20;
         mixer.SetFloat("MusicVolume", volumeDb);
     }
-    public static float GetSensitivity()
+    public static float GetSensitivity(bool gamepad)
     {
-        float sensitivity = InputSwitchDetector.IsCurrentlyGamepad() ? 
+        float sensitivity = gamepad ? 
             instance.playerSettings.gamepadSensitivity :instance.playerSettings.mouseSensitivity;
         //Debug.Log("isGamepad=" + InputSwitchDetector.IsCurrentlyGamepad() + " sensitivity:" + sensitivity);
         if (sensitivity < 0.1f) 

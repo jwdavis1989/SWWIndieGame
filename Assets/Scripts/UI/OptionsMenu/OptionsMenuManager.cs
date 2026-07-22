@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
@@ -21,6 +22,8 @@ public class OptionsMenuManager : MonoBehaviour
     public Slider musicVolumeSlider;
     public Slider mouseSensitivitySlider;
     public Slider gamepadSensitivitySlider;
+    public TextMeshProUGUI gamepadSensitivityPercentText;
+    public TextMeshProUGUI mouseSensitivityPercentText;
 
     [Header("Save window")]
     public GameObject saveWindow;
@@ -369,6 +372,9 @@ public class OptionsMenuManager : MonoBehaviour
         if(mouseSensitivity != newValue)
         {
             mouseSensitivity = newValue;
+            int percent = (int)(newValue * 100f);
+            if (percent < 10) percent = 10;
+            mouseSensitivityPercentText.text = percent + "%";
             isChanged = true;
             mouseSensitivityChanged = true;
         }
@@ -381,6 +387,9 @@ public class OptionsMenuManager : MonoBehaviour
         {
             gamepadSensitivity = newValue;
             isChanged = true;
+            int percent = (int)(newValue * 100f);
+            if(percent < 10) percent = 10;
+            gamepadSensitivityPercentText.text = percent + "%";
             gamepadSensitivityChanged = true;
         }
     }

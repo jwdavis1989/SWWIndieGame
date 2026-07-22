@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AICharacterStatsManager : CharacterStatsManager
 {
+    [Header("=-=-  AICharacterStatsManager  -=-=\n")]
     [Header("Amount of gold dropped")]
     public int goldDrop = 0;
     [Header("Gold drop chance as 0-1")]
