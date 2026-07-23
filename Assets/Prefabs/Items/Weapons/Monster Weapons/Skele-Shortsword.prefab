@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac097a6ebe1dd8459fabe3252f2f97b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCollider: {fileID: 0}
   physicalDamage: 0
   elementalStats:
     firePower: 0
@@ -200,17 +201,14 @@ MonoBehaviour:
   hasObtained: 1
   stats:
     weaponType: 16
-    weaponId: 
+    weaponId: skeleton_shortsword
     isMonsterWeapon: 1
     attack: 15
-    maxAttack: 36
     basePoiseDamage: 35
     durability: 100
-    maxDurability: 134
+    currentDurability: 1
     block: 40
-    maxBlock: 42
     stability: 0
-    maxStability: 5
     elemental:
       firePower: 0
       icePower: 0
@@ -222,22 +220,10 @@ MonoBehaviour:
       scalesPower: 0
       techPower: 0
       currentHighestElementalStat: 0
-    maxElemental:
-      firePower: 34
-      icePower: 34
-      lightningPower: 34
-      windPower: 34
-      earthPower: 34
-      lightPower: 34
-      beastPower: 34
-      scalesPower: 34
-      techPower: 34
-      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
     xpToLevel: 100
     tinkerPointsPerLvl: 1
-    currentDurability: 1
     level: 1
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
@@ -256,6 +242,7 @@ MonoBehaviour:
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
     gunAttack01StaminaCostModifier: 1
+    daggerAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -270,13 +257,16 @@ MonoBehaviour:
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
     singleTargetBulletAttack01DamageMotionValue: 1
+    daggerTeleportAttackDamageMotionValue: 1.25
   mainHandLightAttackAction: {fileID: 11400000, guid: a9f008ea76ac8774f824ee9bac8a835e, type: 2}
   mainHandHeavyAttackAction: {fileID: 11400000, guid: ffbccdf4ded330e4baaea77beb5d0106, type: 2}
   offHandCastMagicAttackAction: {fileID: 0}
   offHandShootGunAttackAction: {fileID: 0}
+  offHandDaggerAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 1d7f32233af26c44899feb699f25e05b, type: 2}
   offHandSpellAnimation: 
   offHandGunShootAnimation: 
+  offHandDaggerAttackAnimation: 
   fullChargingTraitModifier: 1.25
   gunModel: {fileID: 0}
   bulletOriginLocation: {fileID: 0}
@@ -295,11 +285,23 @@ MonoBehaviour:
   spellChargeVFX: {fileID: 0}
   spellProjectileVFX: {fileID: 0}
   spellProjectileFullChargeVFX: {fileID: 0}
+  daggerTeleportDistance: 5
+  daggerNoAttackTeleportDistanceModifier: 2
+  daggerBackStabBehindTargetDistance: 1.5
+  daggerTeleportDelay: 0.2
+  daggerTeleportTargetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  daggerTeleportWallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  daggerUserMesh: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
   gunAimSFX: {fileID: 0}
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
+  daggerTeleportSmokeVFX: {fileID: 0}
   isInDebugMode: 0
   ElementalMeshRenderers: []
   MagicWeaponMeshRendererIndices: 
@@ -369,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26ec8518b4d45f4298e4dd16d4e8c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCollider: {fileID: 0}
   physicalDamage: 0
   elementalStats:
     firePower: 0

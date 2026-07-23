@@ -49,16 +49,15 @@ public class CharacterWeaponManager : MonoBehaviour
 
         if (ownedWeapons.Count > 0)
         {
-            List<WeaponType> weaponTypes = new List<WeaponType>();
+            List<string> weaponItemIds = new List<string>();
             foreach (var weapon in ownedWeapons)
             {
-                weaponTypes.Add(weapon.GetComponent<WeaponScript>().stats.weaponType);
+                weaponItemIds.Add(weapon.GetComponent<WeaponScript>().stats.weaponId);  
             }
             ownedWeapons = new List<GameObject>();
-
-            foreach (WeaponType weaponType in weaponTypes)
+            foreach (string weaponId in weaponItemIds)
             {
-                AddWeaponToCurrentWeapons(weaponType);
+                AddWeaponById(weaponId);
             }
         }
     }

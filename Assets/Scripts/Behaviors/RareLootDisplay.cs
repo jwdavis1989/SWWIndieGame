@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RareLootDisplay : MonoBehaviour
 {
+    string lootItemId = "bone_scimitar";
     // Start is called before the first frame update
     void Start()
     {
@@ -21,19 +22,14 @@ public class RareLootDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // could make item spin here
     }
     IEnumerator WaitThenGiveToPlayer()
     {
         // wait
         yield return new WaitForSeconds(3);
         // give to player
-        WeaponType weaponType = WeaponType.BoneBlade;
-        WeaponScript weaponScript = GetComponent<WeaponScript>();
-        if (weaponScript != null)
-            weaponType = weaponScript.stats.weaponType;
-        else Debug.Log("WeaponScript Null!");
-        PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
+        PlayerWeaponManager.instance.AddWeaponById(lootItemId);
         // end this object
         Destroy(gameObject);
     }
