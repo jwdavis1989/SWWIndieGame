@@ -129,6 +129,50 @@ public class CharacterWeaponManager : MonoBehaviour
         currentWeaponScript.characterThatOwnsThisWeapon = characterThatOwnsThisArsenal;
 
         return weaponToAdd.GetComponent<WeaponScript>();
+    }/**
+     * Adds weapon of any type to current weapons
+     * Returns a reference to the weapon that was added
+     */
+    public WeaponScript AddWeaponById(string itemId)
+    {
+        WeaponData weaponData = ItemDropManager.GetDB().GetWeaponData(itemId);
+        ItemDetails itemDetails = ItemDropManager.GetDB().GetItem(itemId);
+        GameObject weaponToAdd = weaponData.weaponGameObject.gameObject;
+        if (weaponData.isSpecialWeapon)
+        {
+            if (!weaponData.isWristWeapon)
+            {
+                weaponToAdd = Instantiate(weaponToAdd, offHandWeaponAnchor.transform);
+            }
+            else
+            {
+                weaponToAdd = Instantiate(weaponToAdd, wristOffHandWeaponAnchor.transform);
+            }
+            ownedSpecialWeapons.Add(weaponToAdd);
+            //Update Equipped Weapon Icon if this is your first special weapon
+            //Alec, this might cause bugs later if I goofed so heads-up lol
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0)
+            {
+                PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
+            }
+        }
+        else
+        {
+            weaponToAdd = Instantiate(weaponToAdd, mainHandWeaponAnchor.transform);
+            ownedWeapons.Add(weaponToAdd);
+            //Update Equipped Weapon Icon if this is your first weapon
+            //Alec, this might cause bugs later if I goofed so heads-up lol
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0)
+            {
+                PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+            }
+        }
+        //set durability
+        WeaponScript newWeaponScr = weaponToAdd.GetComponent<WeaponScript>();
+        newWeaponScr.stats.currentDurability = newWeaponScr.stats.durability;
+        //Initialize Weapon Owner to avoid a race condition in Awake()
+        newWeaponScr.characterThatOwnsThisWeapon = characterThatOwnsThisArsenal;
+        return weaponToAdd.GetComponent<WeaponScript>();
     }
     public void EquipWeapon(GameObject weapon)
     {

@@ -10,6 +10,9 @@ public class WeaponData : ScriptableObject
 
     [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
+    public bool isMonsterWeapon = false;
+    public bool isSpecialWeapon = false;
+    public bool isWristWeapon = false;
     public string weaponFamiliy;
     public List<string> evolveWeaponIds = new List<string>();
     public GameObject weaponGameObject;
