@@ -189,9 +189,14 @@ public class OptionsMenuManager : MonoBehaviour
         { //Handle Lost gamepad Cursor
             if (invertedToggle != null)
             {
-                invertedToggle.Select();
+                //invertedToggle.Select();
+                mainVolumeSlider.Select();
             }
         }
+        //else
+        //{
+        //    Debug.Log("GamePadSelected:"+eventSystem.currentSelectedGameObject);
+        //}
     }
     public void HandleExitPauseMenuInput()
     {
