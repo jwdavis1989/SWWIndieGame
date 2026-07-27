@@ -102,9 +102,9 @@ public class PlayerSettingsManager : MonoBehaviour
         float sensitivity = gamepad ? 
             instance.playerSettings.gamepadSensitivity :instance.playerSettings.mouseSensitivity;
         //Debug.Log("isGamepad=" + InputSwitchDetector.IsCurrentlyGamepad() + " sensitivity:" + sensitivity);
-        if (sensitivity < 0.1f) 
+        if (sensitivity < 0.1f) // bottom cap 10%
             return 0.1f;
-        if (sensitivity > 3f)
+        if (sensitivity > 3f) // upper cap 300%
             return 3f;
         return sensitivity;
     }

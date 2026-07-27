@@ -350,18 +350,20 @@ public class IdeaCameraController : MonoBehaviour
             return;
         }
         //Normal Rotations
-        if (InputSwitchDetector.IsCurrentlyGamepad())
+        if (Mathf.Abs(PlayerInputManager.instance.gamepadCameraVerticalInput) + Mathf.Abs(PlayerInputManager.instance.gamepadCameraHorizontalInput) > 0.01f)
         {
+            float gamepadSensitivity = PlayerSettingsManager.GetSensitivity(true);
             //Rotate left and right based on horizontal movement on the right joystick
-            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime;
+            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * Time.deltaTime * gamepadSensitivity;
             //Rotate up and down based on the vertical movement on the right Joystick
-            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime;
+            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime * gamepadSensitivity;
         }
         else
-        { // Mouse rotations - Mouse input already handles for delta time
-            float mouseSensitivy = 0.1f;
-            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * leftAndRightRotationSpeed) * mouseSensitivy;
-            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * mouseSensitivy;
+        { // Mouse input - Already handles for Delta Time
+            float mouseSensitivity = PlayerSettingsManager.GetSensitivity(false);
+            float rotationSpeed = 1f;//leftAndRightRotationSpeed,upAndDownRotationSpeed
+            leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * rotationSpeed) * mouseSensitivity;
+            upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * rotationSpeed) * mouseSensitivity;
         }
         //Clamp the up and down look angle between min/max values
         upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
