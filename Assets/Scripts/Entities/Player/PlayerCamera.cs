@@ -148,11 +148,11 @@ public class PlayerCamera : MonoBehaviour
                 upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * upAndDownRotationSpeed) * Time.deltaTime * gamepadSensitivity;
             }
             else
-            { // Mouse input - Already handles for Delta Time
+            { // Mouse input - Note: Delta [Mouse] already handles for delta Time
                 float mouseSensitivity = PlayerSettingsManager.GetSensitivity(false);
-                float rotationSpeed = 1f;//leftAndRightRotationSpeed,upAndDownRotationSpeed
-                leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * rotationSpeed) * mouseSensitivity;
-                upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * rotationSpeed) * mouseSensitivity;
+                float rotationMultiplier = 1f;//leftAndRightRotationSpeed,upAndDownRotationSpeed
+                leftAndRightLookAngle += (PlayerInputManager.instance.cameraHorizontalInput * rotationMultiplier) * mouseSensitivity;
+                upAndDownLookAngle -= (PlayerInputManager.instance.cameraVerticalInput * rotationMultiplier) * mouseSensitivity;
             }
             //Clamp the up and down look angle between min/max values
             upAndDownLookAngle = Mathf.Clamp(upAndDownLookAngle, minimumPivot, maximumPivot);
