@@ -15,9 +15,11 @@ public class PlayerUIHudManager : MonoBehaviour
     [SerializeField] Image rightWeaponQuickSlotIcon;
     [SerializeField] Image leftWeaponQuickSlotIcon;
 
-    [Header("Special Weapon Cooldown Animation")]
+    [Header("Special Weapon Cooldown VFX")]
     [SerializeField] Image leftWeaponQuickSlotCooldownFillBar;
     [SerializeField] TextMeshProUGUI leftWeaponQuickSlotCooldownText;
+    public AudioClip specialWeaponCooldownEndSFX;
+    public PlayerManager player;
     private float specialCooldown = 5f;
     private float specialCurrentCooldown = 0.0f;
     private bool specialIsCoolingDown = false;
@@ -66,6 +68,10 @@ public class PlayerUIHudManager : MonoBehaviour
                 specialCurrentCooldown = 0.0f;
                 leftWeaponQuickSlotCooldownFillBar.fillAmount = 0.0f;
                 leftWeaponQuickSlotCooldownText.text = "";
+                if (player != null)
+                {
+                    player.characterSoundFXManager.PlayAdvancedSoundFX(specialWeaponCooldownEndSFX);
+                }
             }
         }
     }
