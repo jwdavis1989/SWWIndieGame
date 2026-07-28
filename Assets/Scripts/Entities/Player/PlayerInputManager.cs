@@ -462,7 +462,7 @@ public class PlayerInputManager : MonoBehaviour
                     player.playerSoundFXManager.PlayWeaponSwapSoundFX();
 
                 }
-                else if (mouseWheelVerticalInput == -1)
+                else if (mouseWheelVerticalInput == -1 && player.characterWeaponManager.isSpecialWeaponOffCooldown)
                 {
                     PlayerWeaponManager.instance.nextSpecialWeapon();
                     player.playerSoundFXManager.PlayWeaponSwapSoundFX();
@@ -485,7 +485,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleGamePadLeftWeaponSwapInput()
     {
-        if (ChangeLeftWeaponDPad && !player.isBlocking)
+        if (ChangeLeftWeaponDPad && !player.isBlocking && player.characterWeaponManager.isSpecialWeaponOffCooldown)
         {
             ChangeLeftWeaponDPad = false;
 
