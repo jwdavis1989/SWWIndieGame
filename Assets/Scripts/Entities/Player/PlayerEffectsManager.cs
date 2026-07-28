@@ -8,7 +8,8 @@ public class PlayerEffectsManager : CharacterEffectsManager
     [SerializeField] InstantCharacterEffect effectToTest;
     [SerializeField] bool ProcessEffect = false;
 
-    private void Update() {
+    public override void Update() {
+        base.Update();
         if (ProcessEffect) {
             ProcessEffect = false;
 

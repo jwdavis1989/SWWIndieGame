@@ -34,16 +34,16 @@ public class ItemDropManager : MonoBehaviour
         e.isOffHandExp = giveOffHandExp;
         return exp;
     }
-    public static GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
-    {
-        //Warning: CreateWeapon creates object under the Transform loc which would cause the weapon to dissapear when loc (possibly a dead enemy) dissapears
-        GameObject weaponDrop = WeaponsController.instance.CreateWeapon(type, loc);
-        return weaponDrop;
-    }
+    //public static GameObject DropWeapon(WeaponType type, Transform loc) //TODO dropped weapons pickup-able
+    //{
+    //    //Warning: CreateWeapon creates object under the Transform loc which would cause the weapon to dissapear when loc (possibly a dead enemy) dissapears
+    //    GameObject weaponDrop = WeaponsController.instance.CreateWeapon(type, loc);
+    //    return weaponDrop;
+    //}
     public static GameObject DropWeaponById(string itemId, Transform loc) //TODO dropped weapons pickup-able
     {
         //Warning: CreateWeapon creates object under the Transform loc which would cause the weapon to dissapear when loc (possibly a dead enemy) dissapears
-        GameObject weaponDrop = WeaponsController.instance.CreateWeaponById(itemId, loc);
+        GameObject weaponDrop = Instantiate(GetDB().GetWeaponData(itemId).weaponGameObject, loc);
         return weaponDrop;
     }
     public GameObject DropItemById(string itemId, Transform loc)

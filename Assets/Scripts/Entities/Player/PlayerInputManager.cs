@@ -51,8 +51,11 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
+    [SerializeField] Vector2 gamepadCameraInput; 
     public float cameraHorizontalInput;
     public float cameraVerticalInput;
+    public float gamepadCameraHorizontalInput;
+    public float gamepadCameraVerticalInput;
     public float defaultCameraFieldOfView = 60f;
     public float currentSprintCameraFieldOfViewMaximum = 110f;
     public float sprintCameraFieldOfViewMaximum = 70f;
@@ -140,6 +143,7 @@ public class PlayerInputManager : MonoBehaviour
             //I believe these are establishing event listeners/subscribing
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
+            playerControls.PlayerCamera.MovementGamepad.performed += i => gamepadCameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
 
@@ -494,6 +498,8 @@ public class PlayerInputManager : MonoBehaviour
     {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
+        gamepadCameraVerticalInput = gamepadCameraInput.y;
+        gamepadCameraHorizontalInput = gamepadCameraInput.x;
     }
 
     private void HandleMiniMapZoomToggle()
