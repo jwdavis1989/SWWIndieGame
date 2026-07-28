@@ -80,55 +80,56 @@ public class CharacterWeaponManager : MonoBehaviour
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
      */
-    public WeaponScript AddWeaponToCurrentWeapons(WeaponType weaponType)
-    {
-        int i = (int)weaponType;
-        WeaponScript newWeaponBase = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
-        GameObject weaponToAdd;
-        if (newWeaponBase.isSpecialWeapon)
-        {
-            if (!newWeaponBase.isWristWeapon)
-            {
-                weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
-            }
-            else
-            {
-                weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, wristOffHandWeaponAnchor.transform);
-            }
+    //public WeaponScript AddWeaponToCurrentWeapons(WeaponType weaponType)
+    //{
+    //    int i = (int)weaponType;
+    //    WeaponScript newWeaponBase = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
+    //    GameObject weaponToAdd;
+    //    if (newWeaponBase.isSpecialWeapon)
+    //    {
+    //        if (!newWeaponBase.isWristWeapon)
+    //        {
+    //            weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, offHandWeaponAnchor.transform);
+    //        }
+    //        else
+    //        {
+    //            weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, wristOffHandWeaponAnchor.transform);
+    //        }
 
-            ownedSpecialWeapons.Add(weaponToAdd);
+    //        ownedSpecialWeapons.Add(weaponToAdd);
 
-            //Update Equipped Weapon Icon if this is your first special weapon
-            //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0)
-            {
-                PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
-            }
-        }
-        else
-        {
-            weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, mainHandWeaponAnchor.transform);
-            ownedWeapons.Add(weaponToAdd);
+    //        //Update Equipped Weapon Icon if this is your first special weapon
+    //        //Alec, this might cause bugs later if I goofed so heads-up lol
+    //        if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0)
+    //        {
+    //            PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        weaponToAdd = WeaponsController.instance.CreateWeapon(weaponType, mainHandWeaponAnchor.transform);
+    //        ownedWeapons.Add(weaponToAdd);
 
-            //Update Equipped Weapon Icon if this is your first weapon
-            //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0)
-            {
-                PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
-            }
-        }
-        //set durability
-        WeaponScript newWeaponScr = weaponToAdd.GetComponent<WeaponScript>();
-        newWeaponScr.stats.currentDurability = newWeaponScr.stats.durability;
-        //Warning if using for npc - Currently still tracking single pokedex
-        WeaponScript currentWeaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
-        currentWeaponScript.hasObtained = true;
+    //        //Update Equipped Weapon Icon if this is your first weapon
+    //        //Alec, this might cause bugs later if I goofed so heads-up lol
+    //        if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0)
+    //        {
+    //            PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
+    //        }
+    //    }
+    //    //set durability
+    //    WeaponScript newWeaponScr = weaponToAdd.GetComponent<WeaponScript>();
+    //    newWeaponScr.stats.currentDurability = newWeaponScr.stats.durability;
+    //    //Warning if using for npc - Currently still tracking single pokedex
+    //    WeaponScript currentWeaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
+    //    currentWeaponScript.hasObtained = true;
 
-        //Initialize Weapon Owner to avoid a race condition in Awake()
-        currentWeaponScript.characterThatOwnsThisWeapon = characterThatOwnsThisArsenal;
+    //    //Initialize Weapon Owner to avoid a race condition in Awake()
+    //    currentWeaponScript.characterThatOwnsThisWeapon = characterThatOwnsThisArsenal;
 
-        return weaponToAdd.GetComponent<WeaponScript>();
-    }/**
+    //    return weaponToAdd.GetComponent<WeaponScript>();
+    //}
+    /**
      * Adds weapon of any type to current weapons
      * Returns a reference to the weapon that was added
      */
@@ -304,7 +305,8 @@ public class CharacterWeaponManager : MonoBehaviour
         int specialI = 0;
         foreach (WeaponStats weaponStat in weaponsJson.weaponStats)
         {
-            WeaponScript weaponScript = AddWeaponToCurrentWeapons(weaponStat.weaponType);
+            WeaponScript weaponScript = AddWeaponById(weaponStat.weaponId);
+                //AddWeaponToCurrentWeapons(weaponStat.weaponType);
             if (weaponScript.isSpecialWeapon)
             {
                 ownedSpecialWeapons[specialI].GetComponent<WeaponScript>().stats = weaponStat;

@@ -44,6 +44,7 @@ public class PlayerManager : CharacterManager
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
         PlayerInputManager.instance.player = this;
         WorldSaveGameManager.instance.player = this;
+        TeleportData.playerManager = this;
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
