@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,8 +15,59 @@ public class PlayerUIHudManager : MonoBehaviour
     [SerializeField] Image rightWeaponQuickSlotIcon;
     [SerializeField] Image leftWeaponQuickSlotIcon;
 
+    [Header("Special Weapon Cooldown Animation")]
+    [SerializeField] Image leftWeaponQuickSlotCooldownFillBar;
+    [SerializeField] TextMeshProUGUI leftWeaponQuickSlotCooldownText;
+    private float specialCooldown = 5f;
+    private float specialCurrentCooldown = 0.0f;
+    private bool specialIsCoolingDown = false;
+
+
     public void Awake() {
         //
+    }
+
+    public void Start()
+    {
+        if (leftWeaponQuickSlotCooldownFillBar != null)
+        {
+            leftWeaponQuickSlotCooldownFillBar.fillAmount = 0.0f;
+        }
+        if (leftWeaponQuickSlotCooldownText != null)
+        {
+            leftWeaponQuickSlotCooldownText.text = "";
+        }
+    }
+
+    public void Update()
+    {
+        if (specialIsCoolingDown)
+        {
+            // Subtract time to tick downward
+            specialCurrentCooldown -= Time.deltaTime;
+
+            // Calculate the remaining fill percentage (goes from 1.0 down to 0.0)
+            leftWeaponQuickSlotCooldownFillBar.fillAmount = specialCurrentCooldown / specialCooldown;
+
+            //Update Cooldown Text
+            if (specialCurrentCooldown < 1.0f)
+            {
+                leftWeaponQuickSlotCooldownText.text = specialCurrentCooldown.ToString("F1");
+            }
+            else
+            {
+                leftWeaponQuickSlotCooldownText.text = Mathf.CeilToInt(specialCurrentCooldown).ToString();
+            }
+
+            // Stop the cooldown when the timer hits zero
+            if (specialCurrentCooldown <= 0.0f)
+            {
+                specialIsCoolingDown = false;
+                specialCurrentCooldown = 0.0f;
+                leftWeaponQuickSlotCooldownFillBar.fillAmount = 0.0f;
+                leftWeaponQuickSlotCooldownText.text = "";
+            }
+        }
     }
 
     public void UpdateHealthBar(float currentValue, float maxValue)
@@ -101,6 +153,21 @@ public class PlayerUIHudManager : MonoBehaviour
             return;
         }
 
+    }
+
+    public void StartSpecialCooldownAnimation(float cooldownDurationInSeconds)
+    {
+        specialCooldown = cooldownDurationInSeconds;
+        specialCurrentCooldown = specialCooldown;
+        specialIsCoolingDown = true;
+        if (leftWeaponQuickSlotCooldownFillBar != null)
+        {
+            leftWeaponQuickSlotCooldownFillBar.fillAmount = 1.0f;
+        }
+        if (leftWeaponQuickSlotCooldownText != null)
+        {
+            leftWeaponQuickSlotCooldownText.text = Mathf.CeilToInt(specialCurrentCooldown).ToString();
+        }
     }
 
 }
