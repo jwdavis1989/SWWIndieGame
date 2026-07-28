@@ -24,24 +24,14 @@ public class WeaponsController : MonoBehaviour
     "   Use this if adding a weapon to the game world\n" +
     "   Use PlayerWeaponManager to add directly to the player\n" +
     "   Use CharacterWeaponManager to add to another character")]
-    [Header("List of all weapons. Will use prefab added in Editor.")]
-    public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start()
+    [Header("List of all weapons. Will use prefab added in Editor. \n" +
+        "TODO REMOVE - USE DATABASE INSTEAD")]
+    public GameObject[] baseWeapons; // list of all weapons, load with prefabs in Unity Editor. Initilized in Start() TODO REMOVE
     public bool debugMode = false; // Debug Text, adds to current weapons on Start
 
-    /**
-    * Creates and returns a weapon of any type at any location
-    */
-    public GameObject CreateWeapon(WeaponType type, Transform location)
+    public GameObject CreateWeaponById(string itemId, Transform location)
     {
-        return Instantiate(baseWeapons[(int)type], location);
-    }
-    public GameObject CreateWeaponById(string itemId, Transform location) // TODO
-    {
-        foreach (var weapon in baseWeapons)
-            if (weapon.GetComponent<WeaponScript>() != null)
-                if(weapon.GetComponent<WeaponScript>().stats.weaponName == itemId)
-                    return Instantiate(weapon,location);
-        return null;
+        return ItemDropManager.DropWeaponById(itemId, location);
     }
     void Start()
     {
