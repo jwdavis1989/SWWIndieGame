@@ -87,7 +87,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
             //Damage
             DamageTarget(damageTarget);
-            
+
         }
         //}
     }
@@ -131,40 +131,43 @@ public class MeleeWeaponDamageCollider : DamageCollider
         {
             switch (characterCausingDamage.characterWeaponManager.currentAttackType)
             {
-
                 //Light Attacks
                 case AttackType.LightAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightAttack01DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.lightAttack01DamageMotionValue;
                     break;
                 case AttackType.LightAttack02:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightAttack02DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.lightAttack02DamageMotionValue;
                     break;
                 case AttackType.LightAttack03:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightAttack03DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.lightAttack03DamageMotionValue;
                     break;
 
                 //Heavy Attacks
                 case AttackType.HeavyAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyAttack01DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.heavyAttack01DamageMotionValue;
                     break;
                 case AttackType.HeavyAttack02:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyAttack02DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.heavyAttack02DamageMotionValue;
                     break;
 
                 //Jumping Attacks
                 case AttackType.LightJumpAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.lightJumpAttack01DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.lightJumpAttack01DamageMotionValue;
                     break;
                 case AttackType.HeavyJumpAttack01:
+                    //attackMotionValue = weaponThatOwnsThisCollider.stats.heavyJumpAttack01DamageMotionValue;
                     attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyJumpAttack01DamageMotionValue;
                     break;
 
                 //Charge Heavy Attacks
                 case AttackType.ChargedAttack01:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyChargedAttack01DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.heavyChargedAttack01DamageMotionValue;
                     break;
                 case AttackType.ChargedAttack02:
-                    attackMotionValue = characterCausingDamage.characterWeaponManager.GetMainHand().stats.heavyChargedAttack02DamageMotionValue;
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.heavyChargedAttack02DamageMotionValue;
+                    break;
+                case AttackType.DaggerAttack01:
+                    attackMotionValue = weaponThatOwnsThisCollider.stats.daggerTeleportAttackDamageMotionValue;
                     break;
 
                 //Default
@@ -173,7 +176,14 @@ public class MeleeWeaponDamageCollider : DamageCollider
             }
 
             //Calculate Poise Damage
-            damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.GetMainHand().stats.basePoiseDamage;
+            if (weaponThatOwnsThisCollider != null)
+            {
+                damageEffect.poiseDamage = attackMotionValue * weaponThatOwnsThisCollider.stats.basePoiseDamage;
+            }
+            else
+            {
+                damageEffect.poiseDamage = attackMotionValue * characterCausingDamage.characterWeaponManager.GetMainHand().stats.basePoiseDamage;
+            }
         }
         else
         {

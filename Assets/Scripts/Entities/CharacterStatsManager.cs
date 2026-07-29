@@ -56,6 +56,7 @@ public class CharacterStatsManager : MonoBehaviour
     {
         CalculateHealthBasedOnfortitudeLevel(fortitude);
         CalculateHealthBasedOnfortitudeLevel(endurance);
+        prevHealth = currentHealth;
     }
 
     public virtual void Update()
@@ -162,7 +163,13 @@ public class CharacterStatsManager : MonoBehaviour
     {
         staminaRegenerationTimer = 0;
     }
-
+    float prevHealth = 0;
+    public float CheckHPChanged()
+    {
+        float diff = prevHealth - currentHealth;
+        prevHealth = currentHealth;
+        return diff;
+    }
     public void CheckHP()
     {
         if (currentHealth <= 0 && !character.isDead)

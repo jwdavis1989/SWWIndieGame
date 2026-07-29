@@ -81,8 +81,11 @@ public class PlayerSettingsManager : MonoBehaviour
         if (sliderValue > 1f) // cap volume in case of bad save data
             sliderValue = 1f;
         // Convert linear slider (0–1) to logarithmic dB scale
-        float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
-        float volumeDb = Mathf.Log10(adjusted) * 20;
+        // V1
+        float volumeDb = Mathf.Log10(Mathf.Max(sliderValue, 0.0001f)) * 20f;
+        // V2 - This version apparently gives finer control towards the low end
+        //float adjusted = Math.Max(sliderValue * sliderValue, 0.0001f);
+        //float volumeDb = Mathf.Log10(adjusted) * 20;
         mixer.SetFloat("SFXVolume", volumeDb);
     }
     public void SetMusicVolumeLogarithmic(float sliderValue)
@@ -94,18 +97,17 @@ public class PlayerSettingsManager : MonoBehaviour
         float volumeDb = Mathf.Log10(adjusted) * 20;
         mixer.SetFloat("MusicVolume", volumeDb);
     }
-    public static float GetSensitivity()
+    public static float GetSensitivity(bool gamepad)
     {
-        float sensitivity = InputSwitchDetector.IsCurrentlyGamepad() ? 
+        float sensitivity = gamepad ? 
             instance.playerSettings.gamepadSensitivity :instance.playerSettings.mouseSensitivity;
-        Debug.Log("isGamepad=" + InputSwitchDetector.IsCurrentlyGamepad() + " sensitivity:" + sensitivity);
-        if (sensitivity < 0.1f) 
+        //Debug.Log("isGamepad=" + InputSwitchDetector.IsCurrentlyGamepad() + " sensitivity:" + sensitivity);
+        if (sensitivity < 0.1f) // bottom cap 10%
             return 0.1f;
-        if (sensitivity > 3f)
+        if (sensitivity > 3f) // upper cap 300%
             return 3f;
         return sensitivity;
     }
-    public static void SetSensitivity(float val) { instance.playerSettings.mouseSensitivity = val; }
 }
 [Serializable] public class PlayerSettings
 {

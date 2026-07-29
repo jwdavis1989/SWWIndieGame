@@ -51,8 +51,11 @@ public class PlayerInputManager : MonoBehaviour
 
     [Header("Camera Movement Input")]
     [SerializeField] Vector2 cameraInput;
+    [SerializeField] Vector2 gamepadCameraInput; 
     public float cameraHorizontalInput;
     public float cameraVerticalInput;
+    public float gamepadCameraHorizontalInput;
+    public float gamepadCameraVerticalInput;
     public float defaultCameraFieldOfView = 60f;
     public float currentSprintCameraFieldOfViewMaximum = 110f;
     public float sprintCameraFieldOfViewMaximum = 70f;
@@ -140,6 +143,7 @@ public class PlayerInputManager : MonoBehaviour
             //I believe these are establishing event listeners/subscribing
             playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
             playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
+            playerControls.PlayerCamera.MovementGamepad.performed += i => gamepadCameraInput = i.ReadValue<Vector2>();
             playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
             playerControls.PlayerActions.Jump.performed += i => jumpInput = true;
 
@@ -458,7 +462,7 @@ public class PlayerInputManager : MonoBehaviour
                     player.playerSoundFXManager.PlayWeaponSwapSoundFX();
 
                 }
-                else if (mouseWheelVerticalInput == -1)
+                else if (mouseWheelVerticalInput == -1 && player.characterWeaponManager.isSpecialWeaponOffCooldown)
                 {
                     PlayerWeaponManager.instance.nextSpecialWeapon();
                     player.playerSoundFXManager.PlayWeaponSwapSoundFX();
@@ -481,7 +485,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void HandleGamePadLeftWeaponSwapInput()
     {
-        if (ChangeLeftWeaponDPad && !player.isBlocking)
+        if (ChangeLeftWeaponDPad && !player.isBlocking && player.characterWeaponManager.isSpecialWeaponOffCooldown)
         {
             ChangeLeftWeaponDPad = false;
 
@@ -494,6 +498,8 @@ public class PlayerInputManager : MonoBehaviour
     {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
+        gamepadCameraVerticalInput = gamepadCameraInput.y;
+        gamepadCameraHorizontalInput = gamepadCameraInput.x;
     }
 
     private void HandleMiniMapZoomToggle()
@@ -705,6 +711,19 @@ public class PlayerInputManager : MonoBehaviour
                 {
                     PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandShootGunAttackAction,
                                                     currentOffHandWeapon);
+                }
+                //Else If Dagger
+                else if (currentOffHandWeaponFamily == WeaponFamily.Daggers)
+                {
+                    PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandDaggerAttackAction,
+                                                    currentOffHandWeapon);
+                }
+                //Else If Drone
+                else if (currentOffHandWeaponFamily == WeaponFamily.Drones)
+                {
+                    //TODO: Add Drones post-MVP
+                    // PlayerWeaponManager.instance.PerformWeaponBasedAction(currentOffHandWeapon.offHandDroneAttackAction,
+                    //                                 currentOffHandWeapon);
                 }
 
                 player.characterWeaponManager.ResetSpecialWeaponCooldownTimer();

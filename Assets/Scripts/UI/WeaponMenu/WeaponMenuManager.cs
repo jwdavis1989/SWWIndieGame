@@ -350,7 +350,7 @@ public class WeaponMenuManager : MonoBehaviour
     public void CloseWeaponSubmenu()
     {
         ToggleComponentNavigation(true);
-        Debug.Log("CloseWeaponSubmenu");
+        //Debug.Log("CloseWeaponSubmenu");
         if (weaponSubmenu != null)
             weaponSubmenu.SetActive(false);
         submenuActive = false;
@@ -1138,7 +1138,7 @@ public class WeaponMenuManager : MonoBehaviour
                 }
                 if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, itemId, tinkerComponentData.stats))
                 {
-                    Debug.Log("Can use:" + itemId);
+                    //Debug.Log("Can use:" + itemId);
                     /**   ADD EVENT TO COMPONENT CLICK   */
                     tinkerComponentUI.mainButton.onClick.AddListener(() =>
                     {

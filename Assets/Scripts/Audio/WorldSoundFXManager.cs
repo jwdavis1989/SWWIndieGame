@@ -35,6 +35,8 @@ public class WorldSoundFXManager : MonoBehaviour
     public AudioClip[] walkFootStepSFX;
     public AudioClip[] runFootStepSFX;
     public AudioClip backPedalSFX;
+    public AudioClip daggerTeleportBeginSFX;
+    public AudioClip daggerTeleportEndSFX;
     public AudioClip[] ruinsDoorOpenSFX;
 
     [Header("UI Sounds")]

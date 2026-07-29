@@ -44,6 +44,7 @@ public class PlayerManager : CharacterManager
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
         PlayerInputManager.instance.player = this;
         WorldSaveGameManager.instance.player = this;
+        TeleportData.playerManager = this;
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
@@ -211,7 +212,7 @@ public class PlayerManager : CharacterManager
         //Weapon Arsenal Data Loading here
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
-        PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
+        PlayerWeaponManager.instance.LoadWeapons(currentCharacterData.weapons);
         //Load TinkerComponents
         //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
         //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);
@@ -264,33 +265,15 @@ public class PlayerManager : CharacterManager
 
     public void DebugAddWeapon()
     {
-        WeaponScript weaponScript;
-        WeaponType weaponType;
-        bool isSpecial;
-
-        for (int i = 0; i < System.Enum.GetValues(typeof(WeaponType)).Length - 1; i++)
+        foreach (WeaponData aWeapon in ItemDropManager.GetDB().weaponDetails)
         {
-            weaponScript = WeaponsController.instance.baseWeapons[i].GetComponent<WeaponScript>();
-            weaponType = weaponScript.stats.weaponType;
-            isSpecial = WeaponsController.instance.baseWeapons[(int)weaponType].GetComponent<WeaponScript>().isSpecialWeapon;
-
-            //Only add a weapon if it's a player weapon
-            if (!weaponScript.stats.isMonsterWeapon)
-            {
-                PlayerWeaponManager.instance.SetAllWeaponsToInactive(isSpecial);
-                PlayerWeaponManager.instance.AddWeaponToCurrentWeapons(weaponType);
-                if (isSpecial)
-                {
-                    PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
-                    //PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
-                }
-                else
-                {
-                    PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
-                    //PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
-                }
-            }
+            if (aWeapon.isMonsterWeapon) 
+                continue;
+            PlayerWeaponManager.instance.SetAllWeaponsToInactive(aWeapon.isSpecialWeapon);
+            PlayerWeaponManager.instance.AddWeaponById(aWeapon.itemId);
         }
+        PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
+        PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
 
         //Update Weapon HUD Display
         PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
