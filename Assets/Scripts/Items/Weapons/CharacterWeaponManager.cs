@@ -52,7 +52,7 @@ public class CharacterWeaponManager : MonoBehaviour
             List<string> weaponItemIds = new List<string>();
             foreach (var weapon in ownedWeapons)
             {
-                weaponItemIds.Add(weapon.GetComponent<WeaponScript>().stats.weaponId);  
+                weaponItemIds.Add(weapon.GetComponent<WeaponScript>().stats.weaponId);
             }
             ownedWeapons = new List<GameObject>();
             foreach (string weaponId in weaponItemIds)
@@ -303,7 +303,7 @@ public class CharacterWeaponManager : MonoBehaviour
         foreach (WeaponStats weaponStat in weaponsJson.weaponStats)
         {
             WeaponScript weaponScript = AddWeaponById(weaponStat.weaponId);
-                //AddWeaponToCurrentWeapons(weaponStat.weaponType);
+            //AddWeaponToCurrentWeapons(weaponStat.weaponType);
             if (weaponScript.isSpecialWeapon)
             {
                 ownedSpecialWeapons[specialI].GetComponent<WeaponScript>().stats = weaponStat;
@@ -367,9 +367,15 @@ public class CharacterWeaponManager : MonoBehaviour
     public virtual void ResetSpecialWeaponCooldownTimer()
     {
         specialtyCooldownTimer = specialtyCooldown;
-        if (characterThatOwnsThisArsenal.isPlayer && InventionManager.instance.CheckHasUpgrade(InventionID.QUICKCHARGE_CAPACITORY))
+        if (characterThatOwnsThisArsenal.isPlayer)
         {
-            specialtyCooldownTimer *= quickChargeCapacitorCooldownMultiplier;
+            if (InventionManager.instance.CheckHasUpgrade(InventionID.QUICKCHARGE_CAPACITORY))
+            {
+                specialtyCooldownTimer *= quickChargeCapacitorCooldownMultiplier;
+            }
+
+            //Start Cooldown Fill Bar Animation
+            PlayerUIManager.instance.playerUIHudManager.StartSpecialCooldownAnimation(specialtyCooldown);
         }
         isSpecialWeaponOffCooldown = false;
     }
