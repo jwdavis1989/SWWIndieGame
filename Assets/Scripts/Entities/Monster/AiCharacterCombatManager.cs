@@ -31,6 +31,20 @@ public class AiCharacterCombatManager : CharacterCombatManager
     public bool canRun = false;
     public float AIRunningSpeedModifier = 1f;
     public float farRangeDistanceThreshold = 10f;
+    public InstantCharacterEffect onDamageTakenEffect = null;
+
+    public override void Awake()
+    {
+        base.Awake();
+    }
+    public void Update()
+    {
+        if(character.characterStatsManager.CheckHPChanged() < 0)
+        { //health has decreased
+            if(onDamageTakenEffect != null)
+                character.characterEffectsManager.ProcessInstantEffect(onDamageTakenEffect);
+        }
+    }
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {
         if(currentTarget != null) {

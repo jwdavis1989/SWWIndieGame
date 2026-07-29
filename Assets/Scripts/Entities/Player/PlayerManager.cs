@@ -212,7 +212,7 @@ public class PlayerManager : CharacterManager
         //Weapon Arsenal Data Loading here
         PlayerWeaponManager.instance.indexOfEquippedWeapon = currentCharacterData.indexOfEquippedWeapon;
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = currentCharacterData.indexOfEquippedSpecialWeapon;
-        PlayerWeaponManager.instance.setCurrentWeapons(currentCharacterData.weapons);
+        PlayerWeaponManager.instance.LoadWeapons(currentCharacterData.weapons);
         //Load TinkerComponents
         //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedComponents);
         //TinkerComponentManager.instance.LoadComponentSaveData(currentCharacterData.ownedWpnComponents, true);

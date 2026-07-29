@@ -293,11 +293,8 @@ public class CharacterWeaponManager : MonoBehaviour
             return null;
         return ownedWeapons[indexOfEquippedWeapon];
     }
-    /**
-     *  Loads weapons from Array
-     *  Used by load game systems
-     */
-    public void setCurrentWeapons(WeaponsArray weaponsJson)
+    /** Used when loading game */
+    public void LoadWeapons(WeaponsArray weaponsJson)
     {
         ownedWeapons = new List<GameObject>();
         ownedSpecialWeapons = new List<GameObject>();
