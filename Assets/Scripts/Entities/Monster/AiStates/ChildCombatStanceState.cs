@@ -19,10 +19,11 @@ public class ChildCombatStanceState : CombatStanceState
     {
         SpawningBehavior explosionSpawner = aiCharacter.gameObject.GetComponent<SpawningBehavior>();
         FlashingBehavior flashingLight = aiCharacter.gameObject.GetComponentInChildren<FlashingBehavior>();
+        AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
         aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
         explosionSpawner.auto = true; // spawn explosion after interval
         flashingLight.ActivateFlashing(); //flashing light effect
-        aiCharacter.animator.speed = 6; // speed up
+        aiCharacter.animator.speed = aiCharacterCombatManager.GetSprintingSpeed(); // speed up
         if (explosionSpawner.spawnList.Count > 0)//exploded
             aiCharacter.statsManager.currentHealth = 0;
         if (aiCharacter.statsManager.currentHealth <= 0)
@@ -35,7 +36,7 @@ public class ChildCombatStanceState : CombatStanceState
             aiCharacter.navMeshAgent.enabled = true;
         }
         //Rotate to face our target
-        aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
+        aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
         //movement
         NavMeshPath path = new NavMeshPath();
         aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
@@ -45,7 +46,7 @@ public class ChildCombatStanceState : CombatStanceState
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
         {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+            aiCharacter.animator.speed = aiCharacterCombatManager.GetBasicMovementSpeed();
 
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }

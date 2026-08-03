@@ -30,6 +30,7 @@ public class CombatStanceState : AIState
 
     public override AIState Tick(AICharacterManager aiCharacter)
     {
+        AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
         if (aiCharacter.isPerformingAction) {
             return this;
         }
@@ -40,18 +41,18 @@ public class CombatStanceState : AIState
 
         //If you want the AI Character to face and turn towards its target when its outside its Field of View
         if (!aiCharacter.isMoving) {
-            if (aiCharacter.aiCharacterCombatManager.viewableAngle < -30 || aiCharacter.aiCharacterCombatManager.viewableAngle > 30) {
-                aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+            if (aiCharacterCombatManager.viewableAngle < -30 || aiCharacterCombatManager.viewableAngle > 30) {
+                aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
             }
         }
 
         //Rotate to face our target
-        aiCharacter.aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
+        aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
         //If Target is no longer present, return to the Idle State
-        if (aiCharacter.aiCharacterCombatManager.currentTarget == null) {
+        if (aiCharacterCombatManager.currentTarget == null) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
 
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
@@ -73,41 +74,43 @@ public class CombatStanceState : AIState
         }
 
         //If outside combat engagement range, switch to pursue target state
-        if (aiCharacter.aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance) {
+        if (aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance) {
 
             //Set Animation Speed to AI's Movement Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIMovementSpeedModifier;
+            aiCharacter.animator.speed = aiCharacterCombatManager.GetBasicMovementSpeed();
 
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }
 
         NavMeshPath path = new NavMeshPath();
-        aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+        aiCharacter.navMeshAgent.CalculatePath(aiCharacterCombatManager.currentTarget.transform.position, path);
         aiCharacter.navMeshAgent.SetPath(path);
 
         return this;
     }
 
-    protected virtual void GetNewAttack(AICharacterManager aiCharacter) {
+    protected virtual void GetNewAttack(AICharacterManager aiCharacter)
+    {
+        AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
         //1. Sort through all possible attacks
         potentialAttacks = new List<AiCharacterAttackAction>();
 
         //2. Remove attacks that can't be used in this situation (based on angle.direction)
         foreach (var potentialAttack in aiCharacterAttacks) {
             //Target is too Close
-            if (potentialAttack.minimumAttackDistance > aiCharacter.aiCharacterCombatManager.distanceFromTarget) {
+            if (potentialAttack.minimumAttackDistance > aiCharacterCombatManager.distanceFromTarget) {
                 continue;
             }
             //Target is too Far
-            if (potentialAttack.maximumAttackDistance < aiCharacter.aiCharacterCombatManager.distanceFromTarget) {
+            if (potentialAttack.maximumAttackDistance < aiCharacterCombatManager.distanceFromTarget) {
                 continue;
             }
             //Target Outside Minimum Attack Angle
-            if (potentialAttack.minimumAttackAngle > aiCharacter.aiCharacterCombatManager.viewableAngle) {
+            if (potentialAttack.minimumAttackAngle > aiCharacterCombatManager.viewableAngle) {
                 continue;
             }
             //Target Outside Maximum Attack Angle
-            if (potentialAttack.maximumAttackAngle < aiCharacter.aiCharacterCombatManager.viewableAngle) {
+            if (potentialAttack.maximumAttackAngle < aiCharacterCombatManager.viewableAngle) {
                 continue;
             }
 

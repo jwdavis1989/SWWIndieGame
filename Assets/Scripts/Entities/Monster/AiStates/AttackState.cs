@@ -18,15 +18,17 @@ public class AttackState : AIState {
     [SerializeField] protected bool pivotAfterAttack = false;
 
     public override AIState Tick(AICharacterManager aiCharacter) {
-        if (aiCharacter.aiCharacterCombatManager.currentTarget == null || aiCharacter.aiCharacterCombatManager.currentTarget.isDead) {
+        AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
+        if (aiCharacterCombatManager.currentTarget == null || aiCharacterCombatManager.currentTarget.isDead) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
+                //aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
 
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
         //Rotate towards the target whilst attacking
-        aiCharacter.aiCharacterCombatManager.RotateTowardsTargetWhileAttacking(aiCharacter);
+        aiCharacterCombatManager.RotateTowardsTargetWhileAttacking(aiCharacter);
 
         //Set movement values to 0
         aiCharacter.characterAnimatorManager.UpdateAnimatorMovementParameters(0, 0, false);
@@ -47,7 +49,7 @@ public class AttackState : AIState {
         if (!hasPerformedAttack)
         {
             //If we are still recovering from an action, wait before performing another
-            if (aiCharacter.aiCharacterCombatManager.actionRecoveryTimer > 0)
+            if (aiCharacterCombatManager.actionRecoveryTimer > 0)
             {
                 return this;
             }
@@ -59,7 +61,7 @@ public class AttackState : AIState {
         }
 
         if (pivotAfterAttack) {
-            aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+            aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
         }
 
         return SwitchState(aiCharacter, aiCharacter.combatStanceState);

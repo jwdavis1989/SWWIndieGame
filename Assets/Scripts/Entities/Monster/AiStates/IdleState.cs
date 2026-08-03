@@ -6,16 +6,17 @@ using UnityEngine;
 
 public class IdleState : AIState
 {
-    public override AIState Tick(AICharacterManager aiCharacter) {
-
+    public override AIState Tick(AICharacterManager aiCharacter)
+    {
+        AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
         //Check if current target is dead, if so, set to null to trigger new target search
-        if (aiCharacter.aiCharacterCombatManager.currentTarget != null && aiCharacter.aiCharacterCombatManager.currentTarget.isDead)
+        if (aiCharacterCombatManager.currentTarget != null && aiCharacterCombatManager.currentTarget.isDead)
         {
-            aiCharacter.aiCharacterCombatManager.currentTarget = null;
+            aiCharacterCombatManager.currentTarget = null;
         }
 
         //Case: Target Aquired
-        if(aiCharacter.aiCharacterCombatManager.currentTarget != null) {
+        if(aiCharacterCombatManager.currentTarget != null) {
             //Turn on the enemy's Minimap Triangle if it's not already visible
             if (aiCharacter.miniMapSprite != null && !aiCharacter.isDead) {
                 aiCharacter.miniMapSprite.SetActive(true);
@@ -27,7 +28,7 @@ public class IdleState : AIState
             aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
 
             //Set Animation Speed to AI's Movement Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIMovementSpeedModifier;
+            aiCharacter.animator.speed = aiCharacterCombatManager.GetBasicMovementSpeed();
 
             //Changes state to the pursue target state
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);

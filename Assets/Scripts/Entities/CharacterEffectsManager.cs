@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterEffectsManager : MonoBehaviour
 {
     //Process Instant Effects (e.g. Take Damage, Healing)
-    public List<TimedCharacterEffect> activeTimedEffects = new List<TimedCharacterEffect>();
+    public List<ActiveCharacterEffect> activeTimedEffects = new List<ActiveCharacterEffect>();
 
     //Process Timed Effects (Poison, Builds-up)
 
@@ -30,10 +30,13 @@ public class CharacterEffectsManager : MonoBehaviour
     public virtual void Update()
     {
         if (activeTimedEffects != null)
-            foreach(TimedCharacterEffect effect in activeTimedEffects)
+        {
+            foreach (ActiveCharacterEffect effect in activeTimedEffects)
             {
-                effect.ApplyEffect(character);
+                effect.TickEffect(character);
             }
+            activeTimedEffects.RemoveAll(e => e.finished);
+        }
     }
 
     public virtual void ProcessInstantEffect(InstantCharacterEffect effect)

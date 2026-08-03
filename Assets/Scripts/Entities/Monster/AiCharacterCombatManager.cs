@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,6 +33,8 @@ public class AiCharacterCombatManager : CharacterCombatManager
     public bool canRun = false;
     public float AIRunningSpeedModifier = 1f;
     public float farRangeDistanceThreshold = 10f;
+    private List<AISpeedModifier> speedModifiers = new List<AISpeedModifier>();
+    [Header("Effect which applies on to this character when it takes damage")]
     public InstantCharacterEffect onDamageTakenEffect = null;
 
     public override void Awake()
@@ -163,5 +167,49 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         return distanceFromTarget >= farRangeDistanceThreshold;
     }
-
+    public float GetIdleMovementSpeed()
+    {
+        Debug.Log("GetIdleMovementSpeed:" + ApplySpeedModifiers(AIIdleAnimationSpeedModifier));
+        return ApplySpeedModifiers(AIIdleAnimationSpeedModifier);
+    }
+    public float GetBasicMovementSpeed()
+    {
+        Debug.Log("GetBasicMovementSpeed:" + ApplySpeedModifiers(AIMovementSpeedModifier));
+        return ApplySpeedModifiers(AIMovementSpeedModifier);
+    }
+    public float GetSprintingSpeed()
+    {
+        Debug.Log("GetSprintingSpeed:" + ApplySpeedModifiers(AIRunningSpeedModifier));
+        return ApplySpeedModifiers(AIRunningSpeedModifier);
+    }
+    public float GetAttackMovementSpeed()
+    {
+        Debug.Log("GetAttackMovementSpeed:" + ApplySpeedModifiers(AIAttackSpeedModifier));
+        return ApplySpeedModifiers(AIAttackSpeedModifier);
+    }
+    float ApplySpeedModifiers(float currentSpeed)
+    {
+        float rv = currentSpeed;
+        foreach (AISpeedModifier speedModifier in speedModifiers)
+            rv *= speedModifier.modifier;
+        Debug.Log("ApplySpeedModifiers:"+speedModifiers.Count+ " to:"+gameObject.name+ " speed:"+currentSpeed + " to:"+rv);
+        return currentSpeed;
+    }
+    public void AddSpeedModifier(string id, float modifer)
+    {
+        AISpeedModifier speedModifier = new AISpeedModifier();
+        speedModifier.id = id;
+        speedModifier.modifier = modifer;
+        speedModifiers.Add(speedModifier);
+    }
+    public void RemoveSpeedModifer(string id)
+    {
+        foreach (AISpeedModifier modifer in speedModifiers)
+        {
+            if (modifer.id == id)
+                speedModifiers.Remove(modifer);
+            break;
+        }
+    }
+    [Serializable] class AISpeedModifier { public string id; public float modifier; }
 }

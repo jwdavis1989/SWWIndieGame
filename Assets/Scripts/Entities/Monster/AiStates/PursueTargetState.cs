@@ -13,11 +13,11 @@ public class PursueTargetState : AIState
         if (aiCharacter.isPerformingAction) {
             return this;
         }
-
+        AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
         //If we have no target, then return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
 
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
@@ -28,14 +28,14 @@ public class PursueTargetState : AIState
         }
 
         //If our target is outside of our field of view, pivot to face them
-        if (aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumDetectionAngle 
-         || aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumDetectionAngle) {
-            aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+        if (aiCharacterCombatManager.viewableAngle < aiCharacterCombatManager.minimumDetectionAngle 
+         || aiCharacterCombatManager.viewableAngle > aiCharacterCombatManager.maximumDetectionAngle) {
+            aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
         }
 
         aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
 
-    if (aiCharacter.navMeshAgent)
+        if (aiCharacter.navMeshAgent)
         {
             //If we are in combat range of the target, switch to Combat Stance State
             //Option 01
@@ -43,7 +43,7 @@ public class PursueTargetState : AIState
             //     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             // }
 
-            if (aiCharacter.aiCharacterCombatManager.CheckTargetFarRangeThreshold() && aiCharacter.farFromTargetState != null)
+            if (aiCharacterCombatManager.CheckTargetFarRangeThreshold() && aiCharacter.farFromTargetState != null)
             {
                 return SwitchState(aiCharacter, aiCharacter.farFromTargetState);
             }
@@ -52,7 +52,7 @@ public class PursueTargetState : AIState
             if (aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
 
                 //Reset AI's animation speed to their attack speed modifier
-                aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIAttackSpeedModifier;
+                aiCharacter.animator.speed = aiCharacterCombatManager.GetAttackMovementSpeed();
 
                 return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             }
@@ -65,7 +65,7 @@ public class PursueTargetState : AIState
 
             //Option 2: Worse Performance, guaranteed to work, tutorial cites ~60 characters using it simultaneously with no noticible performance drop
             NavMeshPath path = new NavMeshPath();
-            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+            aiCharacter.navMeshAgent.CalculatePath(aiCharacterCombatManager.currentTarget.transform.position, path);
             aiCharacter.navMeshAgent.SetPath(path);
         }
 

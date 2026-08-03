@@ -13,11 +13,11 @@ public class FarFromTargetState : AIState
         if (aiCharacter.isPerformingAction) {
             return this;
         }
-
+        AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
         //If we have no target, then return to the Idle State
-        if (aiCharacter.aiCharacterCombatManager.currentTarget == null) {
+        if (aiCharacterCombatManager.currentTarget == null) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
 
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
@@ -28,9 +28,9 @@ public class FarFromTargetState : AIState
         }
 
         //If our target is outside of our field of view, pivot to face them
-        if (aiCharacter.aiCharacterCombatManager.viewableAngle < aiCharacter.aiCharacterCombatManager.minimumDetectionAngle 
-         || aiCharacter.aiCharacterCombatManager.viewableAngle > aiCharacter.aiCharacterCombatManager.maximumDetectionAngle) {
-            aiCharacter.aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
+        if (aiCharacterCombatManager.viewableAngle < aiCharacterCombatManager.minimumDetectionAngle 
+         || aiCharacterCombatManager.viewableAngle > aiCharacterCombatManager.maximumDetectionAngle) {
+            aiCharacterCombatManager.PivotTowardsTarget(aiCharacter);
         }
 
         aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
@@ -38,25 +38,25 @@ public class FarFromTargetState : AIState
     if (aiCharacter.navMeshAgent)
         {
             //Dynamically begin sprinting if the target gets out of your range or not
-            if (aiCharacter.aiCharacterCombatManager.canRun)
+            if (aiCharacterCombatManager.canRun)
             {
                 //Set Animation Speed to AI's Running Speed
-                aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIRunningSpeedModifier;
+                aiCharacter.animator.speed = aiCharacterCombatManager.GetSprintingSpeed();
 
                 aiCharacter.BeginRunningAtTarget();
             }
 
             //Option 02 - Only use for melee enemies, will use a different approach for ranged enemies
-            if (aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
+            if (aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
 
                 //Reset AI's animation speed to their attack speed modifier
-                aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIAttackSpeedModifier;
+                aiCharacter.animator.speed = aiCharacterCombatManager.GetAttackMovementSpeed();
 
                 return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             }
 
             NavMeshPath path = new NavMeshPath();
-            aiCharacter.navMeshAgent.CalculatePath(aiCharacter.aiCharacterCombatManager.currentTarget.transform.position, path);
+            aiCharacter.navMeshAgent.CalculatePath(aiCharacterCombatManager.currentTarget.transform.position, path);
             aiCharacter.navMeshAgent.SetPath(path);
         }
 

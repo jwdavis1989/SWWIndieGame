@@ -40,7 +40,7 @@ public class ParentPursueStanceState : PursueTargetState
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
         {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
+            aiCharacter.animator.speed = aiCharacter.aiCharacterCombatManager.GetIdleMovementSpeed();
 
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
