@@ -17,7 +17,7 @@ public class PursueTargetState : AIState
         //If we have no target, then return to the Idle State
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
+            aiCharacterCombatManager.SetIdleSpeed(aiCharacter);
 
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
@@ -52,7 +52,7 @@ public class PursueTargetState : AIState
             if (aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
 
                 //Reset AI's animation speed to their attack speed modifier
-                aiCharacter.animator.speed = aiCharacterCombatManager.GetAttackMovementSpeed();
+                aiCharacterCombatManager.SetAttackSpeed(aiCharacter);
 
                 return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             }

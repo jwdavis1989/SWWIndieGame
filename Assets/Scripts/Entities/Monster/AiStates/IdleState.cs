@@ -28,7 +28,7 @@ public class IdleState : AIState
             aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
 
             //Set Animation Speed to AI's Movement Speed
-            aiCharacter.animator.speed = aiCharacterCombatManager.GetBasicMovementSpeed();
+            aiCharacterCombatManager.SetBasicSpeed(aiCharacter);
 
             //Changes state to the pursue target state
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);

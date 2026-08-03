@@ -20,7 +20,8 @@ public class SlowMovementEffect : TimedCharacterEffect
             Debug.Log("Adding slow effect to AI:" + character.name);
             AiCharacterCombatManager combatManager = character.GetComponent<AiCharacterCombatManager>();
             combatManager.AddSpeedModifier(effectId, movementMultipler);
-            character.animator.speed = combatManager.GetBasicMovementSpeed();
+            AICharacterManager aICharacterManager = character.GetComponent<AICharacterManager>();
+            combatManager.SetBasicSpeed(aICharacterManager);
         }
     }
     public override void OnEffectFinish(CharacterManager character)
@@ -31,13 +32,12 @@ public class SlowMovementEffect : TimedCharacterEffect
         {
             PlayerLocomotionManager locomotionManager = character.GetComponent<PlayerLocomotionManager>();
             locomotionManager.RemoveSpeedModifer(effectId);
-
         }
         else
         { // AI Character
             AiCharacterCombatManager combatManager = character.GetComponent<AiCharacterCombatManager>();
             combatManager.RemoveSpeedModifer(effectId);
-            character.animator.speed = combatManager.GetBasicMovementSpeed();
+            combatManager.SetBasicSpeed(character.GetComponent<AICharacterManager>());
         }
     }
     public override ActiveCharacterEffect ActiveEffect()

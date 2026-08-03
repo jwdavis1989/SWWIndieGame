@@ -17,8 +17,7 @@ public class FarFromTargetState : AIState
         //If we have no target, then return to the Idle State
         if (aiCharacterCombatManager.currentTarget == null) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
-
+            aiCharacterCombatManager.SetIdleSpeed(aiCharacter);
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
@@ -41,7 +40,7 @@ public class FarFromTargetState : AIState
             if (aiCharacterCombatManager.canRun)
             {
                 //Set Animation Speed to AI's Running Speed
-                aiCharacter.animator.speed = aiCharacterCombatManager.GetSprintingSpeed();
+                aiCharacterCombatManager.SetSprintingSpeed(aiCharacter);
 
                 aiCharacter.BeginRunningAtTarget();
             }
@@ -50,7 +49,7 @@ public class FarFromTargetState : AIState
             if (aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance) {
 
                 //Reset AI's animation speed to their attack speed modifier
-                aiCharacter.animator.speed = aiCharacterCombatManager.GetAttackMovementSpeed();
+                aiCharacterCombatManager.SetAttackSpeed(aiCharacter);
 
                 return SwitchState(aiCharacter, aiCharacter.combatStanceState);
             }

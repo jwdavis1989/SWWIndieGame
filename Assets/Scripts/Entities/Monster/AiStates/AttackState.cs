@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 [CreateAssetMenu(menuName ="A.I./States/Attack")]
 public class AttackState : AIState {
@@ -21,9 +22,7 @@ public class AttackState : AIState {
         AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
         if (aiCharacterCombatManager.currentTarget == null || aiCharacterCombatManager.currentTarget.isDead) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
-                //aiCharacter.aiCharacterCombatManager.AIIdleAnimationSpeedModifier;
-
+            aiCharacterCombatManager.SetIdleSpeed(aiCharacter);
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 

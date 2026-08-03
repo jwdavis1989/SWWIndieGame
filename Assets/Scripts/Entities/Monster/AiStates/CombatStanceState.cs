@@ -52,8 +52,7 @@ public class CombatStanceState : AIState
         //If Target is no longer present, return to the Idle State
         if (aiCharacterCombatManager.currentTarget == null) {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacterCombatManager.GetIdleMovementSpeed();
-
+            aiCharacterCombatManager.SetIdleSpeed(aiCharacter);
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
 
@@ -77,8 +76,7 @@ public class CombatStanceState : AIState
         if (aiCharacterCombatManager.distanceFromTarget > maximumEngagementDistance) {
 
             //Set Animation Speed to AI's Movement Speed
-            aiCharacter.animator.speed = aiCharacterCombatManager.GetBasicMovementSpeed();
-
+            aiCharacterCombatManager.SetBasicSpeed(aiCharacter);
             return SwitchState(aiCharacter, aiCharacter.pursueTargetState);
         }
 

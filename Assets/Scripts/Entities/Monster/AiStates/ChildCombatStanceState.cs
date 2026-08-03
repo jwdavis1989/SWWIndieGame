@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 [CreateAssetMenu(menuName = "A.I./States/ChildCombatStanceState")]
 public class ChildCombatStanceState : CombatStanceState
 {
@@ -23,7 +24,9 @@ public class ChildCombatStanceState : CombatStanceState
         aiCharacter.aiCharacterSoundFXManager.PlayAggroSFX();
         explosionSpawner.auto = true; // spawn explosion after interval
         flashingLight.ActivateFlashing(); //flashing light effect
-        aiCharacter.animator.speed = aiCharacterCombatManager.GetSprintingSpeed(); // speed up
+        // Speed up
+        aiCharacterCombatManager.SetSprintingSpeed(aiCharacter);
+
         if (explosionSpawner.spawnList.Count > 0)//exploded
             aiCharacter.statsManager.currentHealth = 0;
         if (aiCharacter.statsManager.currentHealth <= 0)
@@ -46,8 +49,7 @@ public class ChildCombatStanceState : CombatStanceState
         if (aiCharacter.aiCharacterCombatManager.currentTarget == null)
         {
             //Reset Animation Speed to Idle Speed
-            aiCharacter.animator.speed = aiCharacterCombatManager.GetBasicMovementSpeed();
-
+            aiCharacterCombatManager.SetIdleSpeed(aiCharacter);
             return SwitchState(aiCharacter, aiCharacter.idleState);
         }
         //If outside combat engagement range, switch to pursue target state

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class AiCharacterCombatManager : CharacterCombatManager
 {
@@ -167,32 +168,40 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         return distanceFromTarget >= farRangeDistanceThreshold;
     }
-    public float GetIdleMovementSpeed()
+    public void SetIdleSpeed(AICharacterManager aiCharacter)
     {
-        Debug.Log("GetIdleMovementSpeed:" + ApplySpeedModifiers(AIIdleAnimationSpeedModifier));
-        return ApplySpeedModifiers(AIIdleAnimationSpeedModifier);
+        float newSpeed = ApplySpeedModifiers(AIIdleAnimationSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        aiCharacter.navMeshAgent.speed = newSpeed;
+        aiCharacter.navMeshAgent.acceleration = newSpeed;
     }
-    public float GetBasicMovementSpeed()
+    public void SetBasicSpeed(AICharacterManager aiCharacter)
     {
-        Debug.Log("GetBasicMovementSpeed:" + ApplySpeedModifiers(AIMovementSpeedModifier));
-        return ApplySpeedModifiers(AIMovementSpeedModifier);
+        float newSpeed = ApplySpeedModifiers(AIMovementSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        aiCharacter.navMeshAgent.speed = newSpeed;
+        aiCharacter.navMeshAgent.acceleration = newSpeed;
     }
-    public float GetSprintingSpeed()
+    public void SetSprintingSpeed(AICharacterManager aiCharacter)
     {
-        Debug.Log("GetSprintingSpeed:" + ApplySpeedModifiers(AIRunningSpeedModifier));
-        return ApplySpeedModifiers(AIRunningSpeedModifier);
+        float newSpeed = ApplySpeedModifiers(AIRunningSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        aiCharacter.navMeshAgent.speed = newSpeed;
+        aiCharacter.navMeshAgent.acceleration = newSpeed;
     }
-    public float GetAttackMovementSpeed()
+    public void SetAttackSpeed(AICharacterManager aiCharacter)
     {
-        Debug.Log("GetAttackMovementSpeed:" + ApplySpeedModifiers(AIAttackSpeedModifier));
-        return ApplySpeedModifiers(AIAttackSpeedModifier);
+        float newSpeed = ApplySpeedModifiers(AIAttackSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        aiCharacter.navMeshAgent.speed = newSpeed;
+        aiCharacter.navMeshAgent.acceleration = newSpeed;
     }
     float ApplySpeedModifiers(float currentSpeed)
     {
         float rv = currentSpeed;
         foreach (AISpeedModifier speedModifier in speedModifiers)
             rv *= speedModifier.modifier;
-        Debug.Log("ApplySpeedModifiers:"+speedModifiers.Count+ " to:"+gameObject.name+ " speed:"+currentSpeed + " to:"+rv);
+        //Debug.Log("ApplySpeedModifiers:"+ speedModifiers.Count+ " to:"+gameObject.name+ " speed:"+currentSpeed + " to:"+rv);
         return currentSpeed;
     }
     public void AddSpeedModifier(string id, float modifer)
