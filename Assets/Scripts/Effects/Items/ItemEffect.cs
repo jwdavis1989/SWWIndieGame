@@ -7,4 +7,5 @@ public class ItemEffect : InstantCharacterEffect
 {
     [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
+    public InstantCharacterEffect characterEffect;
 }

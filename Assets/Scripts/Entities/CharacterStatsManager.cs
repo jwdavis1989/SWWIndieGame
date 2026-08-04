@@ -166,7 +166,7 @@ public class CharacterStatsManager : MonoBehaviour
     float prevHealth = 0;
     public float CheckHPChanged()
     {
-        float diff = prevHealth - currentHealth;
+        float diff = currentHealth - prevHealth;
         prevHealth = currentHealth;
         return diff;
     }

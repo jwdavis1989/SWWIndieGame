@@ -769,7 +769,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //WeaponScript evolWpn = weaponCntrller.baseWeapons[(int)evolves[1]].GetComponent<WeaponScript>();
                 WeaponData evolWpnData = GetWeaponData(evolves[1]);
                 ItemDetails evolWpnDetails = ItemDropManager.GetDB().GetItem(evolves[1]);
-                Debug.Log("evolWpnDetails 2 =" + evolWpnDetails.itemName);//astest
+                //Debug.Log("evolWpnDetails 2 =" + evolWpnDetails.itemName);//astest
                 GridElementController myBtnScrpt2 = wpnEvolveBtn2.GetComponent<GridElementController>();
                 if (availEvolves.Contains(evolves[1]))
                 {

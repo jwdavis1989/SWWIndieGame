@@ -153,7 +153,7 @@ public class OptionsMenuManager : MonoBehaviour
         {
 
         }
-        Debug.Log("ScrollX=" + scrollX + " scrollY=" + scrollY);
+        //Debug.Log("ScrollX=" + scrollX + " scrollY=" + scrollY);
     }
     // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()

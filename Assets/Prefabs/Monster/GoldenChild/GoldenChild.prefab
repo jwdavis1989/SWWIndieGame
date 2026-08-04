@@ -291,10 +291,30 @@ PrefabInstance:
     - target: {fileID: 5296059884117083492, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: onDamageTakenEffect
       value: 
-      objectReference: {fileID: 11400000, guid: 099137f7db4bc0a42b4807a49e7d2f2f, type: 2}
+      objectReference: {fileID: 11400000, guid: d22f1e1154e569a4ba631901f64f7e3b, type: 2}
+    - target: {fileID: 5296059884117083492, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: AIAttackSpeedModifier
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5296059884117083492, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: hearingDetectionRange
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296059884117083492, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: isPlayerInRenderRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296059884117083492, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: AIRunningSpeedModifier
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296059884117083492, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: AIMovementSpeedModifier
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5296059884117083492, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: AIIdleAnimationSpeedModifier
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5895844468428608954, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: m_LocalPosition.y
@@ -390,15 +410,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: endurance
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: fortitude
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: maxHealth
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: expDropAmt
@@ -406,7 +426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: currentHealth
-      value: 50
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: goldDropChance
