@@ -201,8 +201,8 @@ public class AiCharacterCombatManager : CharacterCombatManager
         float rv = currentSpeed;
         foreach (AISpeedModifier speedModifier in speedModifiers)
             rv *= speedModifier.modifier;
-        //Debug.Log("ApplySpeedModifiers:"+ speedModifiers.Count+ " to:"+gameObject.name+ " speed:"+currentSpeed + " to:"+rv);
-        return currentSpeed;
+        //Debug.Log("ApplySpeedModifiers:"+ speedModifiers.Count+ " to:"+ gameObject.name+ " speed:"+currentSpeed + " to:"+rv);
+        return rv;
     }
     public void AddSpeedModifier(string id, float modifer)
     {
