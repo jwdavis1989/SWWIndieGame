@@ -7,7 +7,7 @@ public class ItemDetails : ScriptableObject
 {
     [Header("InventoryItemDetails contains unchanging info about items. " +
         "\nI.e. Information that does not change such as the description. " +
-        "\nThis is so that it can be kept as a single copy and looked up by name. ")]
+        "\nThis is so that it can be kept as a single copy per component and looked up by id. ")]
     [Header("Unique I.D.\nCase insensitive")]
     public string itemId;
     [Header("Display name")]

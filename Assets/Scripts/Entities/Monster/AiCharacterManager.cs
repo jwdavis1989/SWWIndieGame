@@ -12,6 +12,8 @@ public class AICharacterManager : CharacterManager
 
     [Header("Navmesh Agent")]
     public NavMeshAgent navMeshAgent;
+    [Header("Navmesh movement speed used")]
+    public bool navMeshMovement = false;
 
     [HideInInspector] public AiCharacterCombatManager aiCharacterCombatManager;
     [HideInInspector] public AICharacterLocomotionManager aiCharacterLocomotionManager;
