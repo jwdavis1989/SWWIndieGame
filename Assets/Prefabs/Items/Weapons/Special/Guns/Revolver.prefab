@@ -115,21 +115,18 @@ MonoBehaviour:
   isSpecialWeapon: 1
   isWristWeapon: 0
   specialWeaponDamageMultiplier: 1.25
-  spr: {fileID: 21300000, guid: 525b457f482c67a44811460a927e3bb6, type: 3}
+  spr: {fileID: 21300000, guid: 83b58f74f775d3a4588398f857af77fb, type: 3}
   hasObtained: 1
   stats:
     weaponType: 10
     weaponId: revolver
     isMonsterWeapon: 0
     attack: 24
-    maxAttack: 44
     basePoiseDamage: 35
     durability: 100
-    maxDurability: 134
+    currentDurability: 1
     block: 0
-    maxBlock: 0
     stability: 0
-    maxStability: 0
     elemental:
       firePower: 0
       icePower: 0
@@ -141,22 +138,10 @@ MonoBehaviour:
       scalesPower: 0
       techPower: 0
       currentHighestElementalStat: 0
-    maxElemental:
-      firePower: 45
-      icePower: 45
-      lightningPower: 45
-      windPower: 45
-      earthPower: 45
-      lightPower: 45
-      beastPower: 45
-      scalesPower: 45
-      techPower: 45
-      currentHighestElementalStat: 0
     speed: 1
     maxSpeed: 1
     xpToLevel: 100
     tinkerPointsPerLvl: 1
-    currentDurability: 1
     level: 1
     currentExperiencePoints: 0
     experiencePointsToNextLevel: 100
@@ -175,6 +160,7 @@ MonoBehaviour:
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
     gunAttack01StaminaCostModifier: 1
+    daggerAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -189,13 +175,16 @@ MonoBehaviour:
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
     singleTargetBulletAttack01DamageMotionValue: 1
+    daggerTeleportAttackDamageMotionValue: 1.25
   mainHandLightAttackAction: {fileID: 0}
   mainHandHeavyAttackAction: {fileID: 0}
   offHandCastMagicAttackAction: {fileID: 0}
   offHandShootGunAttackAction: {fileID: 11400000, guid: 3ea986456a9c1d94ea85b8cb163c1eb3, type: 2}
+  offHandDaggerAttackAction: {fileID: 0}
   weaponAnimatorOverride: {fileID: 0}
   offHandSpellAnimation: 
   offHandGunShootAnimation: Gun_Off_Aim_01
+  offHandDaggerAttackAnimation: 
   fullChargingTraitModifier: 1.25
   gunModel: {fileID: 7683042005724609386}
   bulletOriginLocation: {fileID: 0}
@@ -214,11 +203,23 @@ MonoBehaviour:
   spellChargeVFX: {fileID: 0}
   spellProjectileVFX: {fileID: 0}
   spellProjectileFullChargeVFX: {fileID: 0}
+  daggerTeleportDistance: 5
+  daggerNoAttackTeleportDistanceModifier: 2
+  daggerBackStabBehindTargetDistance: 1.5
+  daggerTeleportDelay: 0.2
+  daggerTeleportTargetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  daggerTeleportWallLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  daggerUserMesh: {fileID: 0}
   spellReleaseSFX: {fileID: 0}
   spellProjectileSFX: {fileID: 0}
   gunAimSFX: {fileID: 0}
   gunFireSFX: {fileID: 0}
   bladeTrailVFX: {fileID: 0}
+  daggerTeleportSmokeVFX: {fileID: 0}
   isInDebugMode: 0
   ElementalMeshRenderers:
   - {fileID: 1431024858490371545}

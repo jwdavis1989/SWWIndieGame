@@ -75,7 +75,7 @@ public class PlayerStatsManager : CharacterStatsManager
             {
                 currentFuel = 0;
                 player.isOutOfFuel = true;
-                PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximum;                Debug.Log("Camera FoV: " + PlayerCamera.instance.cameraObject.fieldOfView);
+                PlayerInputManager.instance.currentSprintCameraFieldOfViewMaximum = PlayerInputManager.instance.sprintCameraFieldOfViewMaximum;
 
                 //TODO: Add a coroutine call here to play some beeping and red flashing for polish
             }
