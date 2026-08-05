@@ -172,29 +172,41 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         float newSpeed = ApplySpeedModifiers(AIIdleAnimationSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
-        aiCharacter.navMeshAgent.speed = newSpeed;
-        aiCharacter.navMeshAgent.acceleration = newSpeed;
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
     }
     public void SetBasicSpeed(AICharacterManager aiCharacter)
     {
         float newSpeed = ApplySpeedModifiers(AIMovementSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
-        aiCharacter.navMeshAgent.speed = newSpeed;
-        aiCharacter.navMeshAgent.acceleration = newSpeed;
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
     }
     public void SetSprintingSpeed(AICharacterManager aiCharacter)
     {
         float newSpeed = ApplySpeedModifiers(AIRunningSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
-        aiCharacter.navMeshAgent.speed = newSpeed;
-        aiCharacter.navMeshAgent.acceleration = newSpeed;
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
     }
     public void SetAttackSpeed(AICharacterManager aiCharacter)
     {
         float newSpeed = ApplySpeedModifiers(AIAttackSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
-        aiCharacter.navMeshAgent.speed = newSpeed;
-        aiCharacter.navMeshAgent.acceleration = newSpeed;
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
     }
     float ApplySpeedModifiers(float currentSpeed)
     {
