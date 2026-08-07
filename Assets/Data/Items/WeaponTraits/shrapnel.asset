@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ba8da455c41e44469dfb95b5f766909, type: 3}
-  m_Name: poison_01
+  m_Name: shrapnel
   m_EditorClassIdentifier: 
-  traitId: poison_01
-  displayName: Poison
-  description: "Leaves a lingering damage-over-time effect on creatures damaged by
-    this weapon. Refreshes on reapplication, does not stack! Deals 100% of the attack\u2019s
-    final damage over the next 15 seconds."
-  icon: {fileID: 21300000, guid: 7cbae14a51f6df34dae8a3b49d106c6e, type: 3}
-  inheritable: 1
+  traitId: shrapnel
+  displayName: Shrapnel
+  description: '(Guns only, non-Inheritable): Weapon deals 25% bonus Poise Damage.
+
+'
+  icon: {fileID: 0}
+  inheritable: 0

@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     public InventionManager inventionManager; //Reference to tinker components
     public CharacterWeaponManager weapons;//Reference to weapons list
     public List<WeaponSalvageComponent> weaponSalvageComponents;
+    public List<string> weaponTraits = new List<string>();
 
     //quickslots, simply storing the item name
     public const int TOTAL_QUICKSLOTS = 4;

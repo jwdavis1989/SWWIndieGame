@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: boneScimitar
   m_EditorClassIdentifier: 
   itemId: bone_scimitar
+  isMonsterWeapon: 0
+  isSpecialWeapon: 0
+  isWristWeapon: 0
   weaponFamiliy: swords
   evolveWeaponIds: []
+  startingTraits:
+  - {fileID: 11400000, guid: 8b2d3cf6da9be70418cc1a0d1f750874, type: 2}
+  - {fileID: 11400000, guid: b8f31f30ee1d87c418c4edd6da856634, type: 2}
   weaponGameObject: {fileID: 1847124638102049318, guid: 91126c8b3483f194183ae835ecbab083, type: 3}
   baseAttack: 22
   maxAttack: 45
@@ -50,28 +56,3 @@ MonoBehaviour:
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100
-  baseStaminaCost: 20
-  lightAttack01StaminaCostModifier: 1
-  lightAttack02StaminaCostModifier: 1
-  lightAttack03StaminaCostModifier: 1
-  heavyAttack01StaminaCostModifier: 1.2
-  heavyAttack02StaminaCostModifier: 1.2
-  lightJumpAttack01StaminaCostModifier: 1
-  heavyJumpAttack01StaminaCostModifier: 4
-  lightRunningAttack01StaminaCostModifier: 1
-  lightRollingAttack01StaminaCostModifier: 1
-  lightBackstepAttack01StaminaCostModifier: 1
-  lightAttack01DamageMotionValue: 1
-  lightAttack02DamageMotionValue: 1.1
-  lightAttack03DamageMotionValue: 1.2
-  heavyAttack01DamageMotionValue: 1.4
-  heavyAttack02DamageMotionValue: 1.6
-  heavyChargedAttack01DamageMotionValue: 2
-  heavyChargedAttack02DamageMotionValue: 2.2
-  lightJumpAttack01DamageMotionValue: 1
-  heavyJumpAttack01DamageMotionValue: 1.8
-  lightRunningAttack01DamageMotionValue: 1
-  lightRollingAttack01DamageMotionValue: 1
-  lightBackstepAttack01DamageMotionValue: 1
-  areaSpellAttack01DamageMotionValue: 1
-  singleTargetBulletAttack01DamageMotionValue: 1

@@ -747,14 +747,11 @@ public class WeaponMenuManager : MonoBehaviour
                 else
                 {
                     myBtnScrpt.topText.text = evolWpnDetails.itemName;
-                    //TODO: I'm setting it to always show ??? instead of the name when already discovered
-                    //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
-                    //{
-                    String mysteryText = "";
+                    //Note: I'm setting it to always show underscores instead of the name when already discovered
+                    string mysteryText = "";
                     foreach (char c in myBtnScrpt.topText.text)
                         mysteryText += c == ' ' ? ' ' : '_';
                     myBtnScrpt.topText.text = mysteryText;
-                    //}
                     myBtnScrpt.mainButton.interactable = false;
                     myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
                     //myBtnScrpt.mainButtonForeground.GetComponent<RawImage>().texture = defaultUnkownIcon.texture;
@@ -785,14 +782,11 @@ public class WeaponMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    //TODO: I'm setting it to always show ??? instead of the name when already discovered
-                    //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
-                    //{
+                    //Note: I'm setting it to always show underscores instead of the name when already discovered
                     String mysteryText = "";
                     foreach (char c in myBtnScrpt2.topText.text)
                         mysteryText += c == ' ' ? ' ' : '_';
                     myBtnScrpt2.topText.text = mysteryText;
-                    //}
                     myBtnScrpt2.mainButton.interactable = false;
                     //myBtnScrpt2.bottomText.text = "";
                     myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;

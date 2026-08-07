@@ -67,7 +67,8 @@ public enum WeaponFamily
 [Serializable]
 public class WeaponStats
 {
-    [Header("Weapon Type")]
+    [Header("WeaponStats are saved to save file")]
+    [Header("Weapon Type - old")]
     public WeaponType weaponType = 0;
     [Header("Case insensitive id for data lookup")]
     public string weaponId = "";
@@ -90,7 +91,8 @@ public class WeaponStats
     public float currentExperiencePoints = 0.0f;
     public float experiencePointsToNextLevel = 100.0f;
     public int currentTinkerPoints = 0;
-    public String weaponName = "BaseWeaponName";
+    public string weaponName = "BaseWeaponName";
+    public List<string> weaponTraits;
 
     [Header("Stamina Costs")]
     public float baseStaminaCost = 20f;
