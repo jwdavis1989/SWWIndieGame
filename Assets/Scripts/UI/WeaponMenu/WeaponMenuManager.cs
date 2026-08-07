@@ -894,6 +894,33 @@ public class WeaponMenuManager : MonoBehaviour
             greenTextEnd += "<size=16> + " + activeComponent.durability + "</color></size>";
         }
         durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + " / " + greenTextStart + stats.durability + greenTextEnd;
+        Button tooltipNavButton = durabiltyLeft.GetComponentInChildren<Button>();
+        Button tooltipNavButton2 = durabiltyRight.GetComponentInChildren<Button>();
+
+        TogglingBehavior tooltipTogglerright = durabiltyRight.GetComponent<TogglingBehavior>();
+        Destroy(tooltipNavButton2);
+        Destroy(tooltipTogglerright);
+        if (tooltipNavButton != null)
+        { // This handles the helper tooltips for the stats.
+            TogglingBehavior tooltipTogglerLeft = durabiltyLeft.GetComponent<TogglingBehavior>();
+            if (tooltipTogglerLeft != null) {
+                TooltipUI tooltip = tooltipTogglerLeft.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
+                tooltip.headerText.text = "Durability";
+                tooltip.centerText.text = WeaponScript.GetStatTooltip("Durability");
+                //tooltip = tooltipTogglerLeft.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
+                //tooltip.headerText.text = "Durability";
+                //tooltip.centerText.text = WeaponScript.GetStatTooltip("Durability");
+            }
+            if (helpActive)
+            {
+                Navigation nav = tooltipNavButton.navigation;
+                nav.mode = Navigation.Mode.Automatic;
+                tooltipNavButton.navigation = nav;
+                //nav = tooltipNavButton2.navigation;
+                //nav.mode = Navigation.Mode.Automatic;
+                //tooltipNavButton2.navigation = nav;
+            }
+        }
         //if (activeComponentId.Equals("repair_kit") && stats.currentDurability < stats.durability)
         //{ // green text for repair kit
         //    durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + "<color=\"green\"><size=16> + 25</color></size>" 
