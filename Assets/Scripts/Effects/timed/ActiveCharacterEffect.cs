@@ -22,6 +22,8 @@ public class ActiveCharacterEffect
         }
         // Decrement duration
         remainingDuration -= Time.deltaTime;
+        //tick
+        effect.OnEffectTick(character);
         if (remainingDuration <= 0 && !finished)
         { // Complete effect
             finished = true;

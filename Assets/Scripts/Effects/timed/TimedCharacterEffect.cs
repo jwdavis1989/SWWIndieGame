@@ -16,6 +16,10 @@ public class TimedCharacterEffect : ScriptableObject
     { 
         // virtual method
     }
+    public virtual void OnEffectTick(CharacterManager character)
+    {
+        // virtual method
+    }
     public virtual void OnEffectFinish(CharacterManager character)
     {
         // virtual method
