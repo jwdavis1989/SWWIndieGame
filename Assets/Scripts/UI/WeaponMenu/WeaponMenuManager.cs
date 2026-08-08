@@ -898,7 +898,7 @@ public class WeaponMenuManager : MonoBehaviour
         Button tooltipNavButton2 = durabiltyRight.GetComponentInChildren<Button>();
 
         TogglingBehavior tooltipTogglerright = durabiltyRight.GetComponent<TogglingBehavior>();
-        Destroy(tooltipNavButton2);
+        //Destroy(tooltipNavButton2);
         Destroy(tooltipTogglerright);
         if (tooltipNavButton != null)
         { // This handles the helper tooltips for the stats.
@@ -907,18 +907,12 @@ public class WeaponMenuManager : MonoBehaviour
                 TooltipUI tooltip = tooltipTogglerLeft.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
                 tooltip.headerText.text = "Durability";
                 tooltip.centerText.text = WeaponScript.GetStatTooltip("Durability");
-                //tooltip = tooltipTogglerLeft.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
-                //tooltip.headerText.text = "Durability";
-                //tooltip.centerText.text = WeaponScript.GetStatTooltip("Durability");
             }
             if (helpActive)
             {
                 Navigation nav = tooltipNavButton.navigation;
                 nav.mode = Navigation.Mode.Automatic;
                 tooltipNavButton.navigation = nav;
-                //nav = tooltipNavButton2.navigation;
-                //nav.mode = Navigation.Mode.Automatic;
-                //tooltipNavButton2.navigation = nav;
             }
         }
         //if (activeComponentId.Equals("repair_kit") && stats.currentDurability < stats.durability)

@@ -148,6 +148,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: fe3dba8ab30e40c46b0ffa8c697efe80, type: 2}
+    - target: {fileID: 2917579273476832219, guid: 9c1433dfd672206449719597bc857927, type: 3}
+      propertyPath: spawnPrefab
+      value: 
+      objectReference: {fileID: 3646435120374606057, guid: 49327d5d1060cb24a9d8293e3533eea9, type: 3}
     - target: {fileID: 2939624865876806303, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.007610064
@@ -274,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4759998910804994776, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: secondsToLive
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4832032014815919250, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -410,15 +414,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: endurance
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: fortitude
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: maxHealth
-      value: 500
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: expDropAmt
@@ -426,7 +430,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: currentHealth
-      value: 500
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 7607941038927677604, guid: 9c1433dfd672206449719597bc857927, type: 3}
       propertyPath: goldDropChance
