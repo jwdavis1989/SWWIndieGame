@@ -1244,6 +1244,8 @@ public class WeaponScript : MonoBehaviour
                 return "Scales improves damage against fish and reptiles.";
             case "Tech":
                 return "Tech improves damage to robots.";
+            case "Experience":
+                return "Experience is gained by defeating monsters and levels up your weapon.";
             default:
                 return stat + " is like totally good or something.";
         }
