@@ -170,6 +170,11 @@ public class CharacterWeaponManager : MonoBehaviour
         //set durability
         WeaponScript newWeaponScr = weaponToAdd.GetComponent<WeaponScript>();
         newWeaponScr.stats.currentDurability = newWeaponScr.stats.durability;
+        //set traits
+        foreach (WeaponTraitData weaponTrait in weaponData.startingTraits)
+        {
+            newWeaponScr.stats.weaponTraits.Add(weaponTrait.traitId);
+        }
         //Initialize Weapon Owner to avoid a race condition in Awake()
         newWeaponScr.characterThatOwnsThisWeapon = characterThatOwnsThisArsenal;
         return weaponToAdd.GetComponent<WeaponScript>();

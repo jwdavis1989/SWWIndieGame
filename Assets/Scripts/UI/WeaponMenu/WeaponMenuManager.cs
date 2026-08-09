@@ -21,6 +21,8 @@ public class WeaponMenuManager : MonoBehaviour
     public GameObject primaryStatsText;
     public GameObject expStatsText;
     public GameObject elementalStatsText;
+    public GameObject weaponTraitUIPrefab;
+    public GridLayoutGroup weaponTraitGrid;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI activeWeaponTierLevelText;
     public TextMeshProUGUI tinkerPointsCountText;
@@ -812,6 +814,8 @@ public class WeaponMenuManager : MonoBehaviour
             Destroy(child.gameObject);
         foreach (Transform child in expStatsText.transform)
             Destroy(child.gameObject);
+        foreach (Transform child in weaponTraitGrid.transform)
+            Destroy(child.gameObject);
         if (activeWeapon == null || activeWeapon.GetComponent<WeaponScript>() == null)
         {// no active weapon
             weaponPreviewHeaderText.text = "";
@@ -830,18 +834,34 @@ public class WeaponMenuManager : MonoBehaviour
         // Durability
         LoadDurability(stats);
         // Exp
-        GameObject curExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject curExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject neededExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject neededExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
-        curExpText1.GetComponent<EventTrigger>().enabled = false; // disable hover events
-        curExpText2.GetComponent<EventTrigger>().enabled = false;
-        neededExpText1.GetComponent<EventTrigger>().enabled = false;
-        neededExpText2.GetComponent<EventTrigger>().enabled = false;
-        curExpText1.GetComponent<TextMeshProUGUI>().text = "Current Exp:";
-        curExpText2.GetComponent<TextMeshProUGUI>().text = "" + stats.currentExperiencePoints;
-        neededExpText1.GetComponent<TextMeshProUGUI>().text = "To Next Level:";
-        neededExpText2.GetComponent<TextMeshProUGUI>().text = "" + stats.experiencePointsToNextLevel;
+        GameObject curExpTextLeft = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject curExpTextRight = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject neededExpTextLeft = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject neededExpTextRight = Instantiate(statsTextPrefab, expStatsText.transform);
+        curExpTextLeft.GetComponent<EventTrigger>().enabled = false; // disable hover events
+        curExpTextRight.GetComponent<EventTrigger>().enabled = false;
+        neededExpTextLeft.GetComponent<EventTrigger>().enabled = false;
+        neededExpTextRight.GetComponent<EventTrigger>().enabled = false;
+        curExpTextLeft.GetComponent<TextMeshProUGUI>().text = "Current Exp:";
+        curExpTextRight.GetComponent<TextMeshProUGUI>().text = "" + stats.currentExperiencePoints;
+        neededExpTextLeft.GetComponent<TextMeshProUGUI>().text = "To Next Level:";
+        neededExpTextRight.GetComponent<TextMeshProUGUI>().text = "" + stats.experiencePointsToNextLevel;
+        //weapon traits
+        foreach(string traitId in wpn.stats.weaponTraits)
+        {
+            WeaponTraitData traitData = ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+            WeaponTraitButtonUI weaponTraitUI = Instantiate(weaponTraitUIPrefab, weaponTraitGrid.transform).GetComponent<WeaponTraitButtonUI>();
+            weaponTraitUI.weaponTraitIcon.sprite = traitData.icon;
+            weaponTraitUI.weaponTraitId = traitId;
+            //Add tooltip on hover event
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) =>
+            {
+                WeaponTraitTooltipOnHover(traitId);
+            });
+            weaponTraitUI.weaponTraitButton.GetComponent<EventTrigger>().triggers.Add(entry);
+        }
         // Elemental
         foreach (KeyValuePair<string, float> stat in wpn.GetElementalStats()) 
             LoadStat(stat, elementalStatsText.transform);
@@ -1364,5 +1384,12 @@ public class WeaponMenuManager : MonoBehaviour
                 }
             }
         }
+    }
+    public void WeaponTraitTooltipOnHover(string traitId)
+    {
+        WeaponTraitData traitData = ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+        tooltipUI.headerText.text = traitData.displayName;
+        tooltipUI.centerText.text = traitData.description;
+        tooltipUI.bottomText.text = "";
     }
 }
