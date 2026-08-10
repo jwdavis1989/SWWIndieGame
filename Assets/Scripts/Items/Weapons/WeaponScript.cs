@@ -430,18 +430,6 @@ public class WeaponScript : MonoBehaviour
             //TODO PLAY LEVEL UP NOISE/ANIMATION
         }
     }
-
-    //public virtual void attackTarget(GameObject target)
-    //{
-    //    if (isInDebugMode) Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST
-    //    if (target != null) {
-    //        //calculateElementalDamage(stats.attack, target);
-    //        //target.GetComponent<EnemyController>().hp -= stats.attack;
-    //        //TODO
-    //        //play weapon animation
-    //        //set reload/recharge
-    //    }
-    //}
     public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
         if (stats.currentDurability > 0)
