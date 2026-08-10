@@ -18,9 +18,9 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Weapon Menu\n")]
     [Header("Active Weapon Preview")]
     public GameObject statsTextPrefab;
-    public GameObject primaryStatsText;
-    public GameObject expStatsText;
-    public GameObject elementalStatsText;
+    public GameObject primaryStatsTextGrid;
+    public GameObject expStatsTextGrid;
+    public GameObject elementalStatsTextGrid;
     public GameObject weaponTraitUIPrefab;
     public GridLayoutGroup weaponTraitGrid;
     public TextMeshProUGUI weaponPreviewHeaderText;
@@ -77,11 +77,11 @@ public class WeaponMenuManager : MonoBehaviour
     {
         foreach (Transform child in weaponsGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in primaryStatsText.transform)
+        foreach (Transform child in primaryStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in elementalStatsText.transform)
+        foreach (Transform child in elementalStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in expStatsText.transform)
+        foreach (Transform child in expStatsTextGrid.transform)
             Destroy(child.gameObject);
         foreach (Transform child in componentsGrid.transform)
             Destroy(child.gameObject);
@@ -147,7 +147,7 @@ public class WeaponMenuManager : MonoBehaviour
                     salvageConfirmWindow.GetComponentInChildren<Button>().Select();
             }
             else if (helpActive){
-                primaryStatsText.transform.GetChild(0).GetComponent<Button>().Select();
+                primaryStatsTextGrid.transform.GetChild(0).GetComponent<Button>().Select();
             }else if (componentsGrid.transform.childCount > 0){
                 componentsGrid.transform.GetChild(0).GetComponentInChildren<Button>().Select();
             }
@@ -228,6 +228,7 @@ public class WeaponMenuManager : MonoBehaviour
             return; // Do nothing
         ToggleComponentNavigation(false);
         ToggleStatTooltipNavigation(false);
+        ToggleWeaponTraitNavigation(false);
         ToggleEvolutionNavigation(true);
         //select first available evol
         bool selected = false;
@@ -398,10 +399,11 @@ public class WeaponMenuManager : MonoBehaviour
             if (helpActive)
             {
                 ToggleStatTooltipNavigation(true);
+                ToggleWeaponTraitNavigation(true);
                 ToggleComponentNavigation(false);
                 ToggleEvolutionNavigation(false);
                 //select first stat
-                foreach (Transform obj in primaryStatsText.transform)
+                foreach (Transform obj in primaryStatsTextGrid.transform)
                 {
                     obj.GetComponent<Button>().Select();
                     break;
@@ -410,6 +412,7 @@ public class WeaponMenuManager : MonoBehaviour
             else
             {
                 ToggleStatTooltipNavigation(false);
+                ToggleWeaponTraitNavigation(false);
                 ToggleComponentNavigation(true);// will select first component if available
                 ToggleEvolutionNavigation(false);// prolly not necessary but just in case
             }
@@ -472,7 +475,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //TODO: if (gamepad) 
                 if (helpActive)
                 {
-                    foreach (Transform obj in primaryStatsText.transform)
+                    foreach (Transform obj in primaryStatsTextGrid.transform)
                     {
                         obj.GetComponent<Button>().Select();
                         break;
@@ -808,11 +811,11 @@ public class WeaponMenuManager : MonoBehaviour
     private string activeComponentId = "";//selected with gamepad or on hover
     void LoadActiveWeaponStats()
     {
-        foreach (Transform child in primaryStatsText.transform)
+        foreach (Transform child in primaryStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in elementalStatsText.transform)
+        foreach (Transform child in elementalStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in expStatsText.transform)
+        foreach (Transform child in expStatsTextGrid.transform)
             Destroy(child.gameObject);
         foreach (Transform child in weaponTraitGrid.transform)
             Destroy(child.gameObject);
@@ -830,7 +833,7 @@ public class WeaponMenuManager : MonoBehaviour
         WeaponStats stats = wpn.stats;
         ElementalStats el = stats.elemental;
         foreach (KeyValuePair<string, float> stat in wpn.GetPrimaryStatsForDisplay()) 
-            LoadStat(stat, primaryStatsText.transform);
+            LoadStat(stat, primaryStatsTextGrid.transform);
         // Durability
         LoadDurabilityToScreen(stats);
         // Exp
@@ -842,7 +845,7 @@ public class WeaponMenuManager : MonoBehaviour
         }
         // Elemental
         foreach (KeyValuePair<string, float> stat in wpn.GetElementalStats()) 
-            LoadStat(stat, elementalStatsText.transform);
+            LoadStat(stat, elementalStatsTextGrid.transform);
     }
     KeyValuePair<string, float> LoadStat(KeyValuePair<string, float> stat, Transform trans)
     {
@@ -892,10 +895,10 @@ public class WeaponMenuManager : MonoBehaviour
     void LoadDurabilityToScreen(WeaponStats stats)
     {
         // Durability
-        GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
         LoadStatTooltip(durabiltyLeft, "Durability");
         durabiltyLeft.GetComponent<TextMeshProUGUI>().text = "Durability:";
-        GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
         // green text for max durability
         string greenTextEnd = "";
         string greenTextStart = "";
@@ -910,10 +913,10 @@ public class WeaponMenuManager : MonoBehaviour
     }
     void LoadExperienceToScreen(WeaponStats stats)
     {
-        GameObject curExpTextLeft = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject curExpTextRight = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject neededExpTextLeft = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject neededExpTextRight = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject curExpTextLeft = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        GameObject curExpTextRight = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        GameObject neededExpTextLeft = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        GameObject neededExpTextRight = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
         //curExpTextLeft.GetComponent<EventTrigger>().enabled = false; 
         curExpTextRight.GetComponent<EventTrigger>().enabled = false; // disable hover events
         neededExpTextLeft.GetComponent<EventTrigger>().enabled = false;
@@ -1266,6 +1269,7 @@ public class WeaponMenuManager : MonoBehaviour
         ToggleComponentNavigation(true);
         ToggleEvolutionNavigation(true);
         //ToggleStatTooltipNavigation(true);
+        //ToggleWeaponTraitNavigation(true);
         SetKBMStatTooltipNavigation();
     }
     private void ToggleComponentNavigation(bool enable)
@@ -1319,13 +1323,24 @@ public class WeaponMenuManager : MonoBehaviour
             Button button = obj.GetComponent<Button>();
             button.interactable = helpActive;
             Navigation nav = button.navigation;
-            nav.mode = helpActive ? Navigation.Mode.Automatic : Navigation.Mode.None;
+            nav.mode = helpActive && weaponStatUI.statId.Length > 0 ? Navigation.Mode.Automatic : Navigation.Mode.None;
             obj.GetComponent<Button>().navigation = nav;
             return obj;
         };
-        foreach (Transform obj in primaryStatsText.transform) handleTooltip(obj);
-        foreach (Transform obj in expStatsText.transform) handleTooltip(obj);
-        foreach (Transform obj in elementalStatsText.transform) handleTooltip(obj);
+        foreach (Transform obj in primaryStatsTextGrid.transform) handleTooltip(obj);
+        foreach (Transform obj in elementalStatsTextGrid.transform) handleTooltip(obj);
+        foreach (Transform obj in expStatsTextGrid.transform) handleTooltip(obj);
+    }
+    private void ToggleWeaponTraitNavigation(bool enable)
+    {
+        foreach (Transform obj in weaponTraitGrid.transform)
+        {
+            Button button = obj.GetComponent<WeaponTraitButtonUI>().weaponTraitButton;
+            button.interactable = helpActive;
+            Navigation nav = button.navigation;
+            nav.mode = helpActive ? Navigation.Mode.Automatic : Navigation.Mode.None;
+            button.navigation = nav;
+        }
     }
     private void SetKBMStatTooltipNavigation()
     {
@@ -1341,8 +1356,8 @@ public class WeaponMenuManager : MonoBehaviour
             obj.GetComponent<Button>().navigation = nav;
             return obj;
         };
-        foreach (Transform obj in primaryStatsText.transform) handleTooltip(obj);
-        foreach (Transform obj in elementalStatsText.transform) handleTooltip(obj);
+        foreach (Transform obj in primaryStatsTextGrid.transform) handleTooltip(obj);
+        foreach (Transform obj in elementalStatsTextGrid.transform) handleTooltip(obj);
     }
     private void SetTooltipToComponent(TinkerComponentStats component, string itemId)
     {
