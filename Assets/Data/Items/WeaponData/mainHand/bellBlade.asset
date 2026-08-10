@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: bellBlade
   m_EditorClassIdentifier: 
   itemId: bell_blade
+  isMonsterWeapon: 0
+  isSpecialWeapon: 0
+  isWristWeapon: 0
   weaponFamiliy: swords
   evolveWeaponIds: []
+  startingTraits:
+  - {fileID: 11400000, guid: 81c2c84a3c93a4f49804af57a7f08911, type: 2}
   weaponGameObject: {fileID: 1847124638102049318, guid: 89513a285f3e2ff4d95918e6f7535e9d, type: 3}
   baseAttack: 22
   maxAttack: 45
@@ -50,28 +55,3 @@ MonoBehaviour:
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100
-  baseStaminaCost: 20
-  lightAttack01StaminaCostModifier: 1
-  lightAttack02StaminaCostModifier: 1
-  lightAttack03StaminaCostModifier: 1
-  heavyAttack01StaminaCostModifier: 1.2
-  heavyAttack02StaminaCostModifier: 1.2
-  lightJumpAttack01StaminaCostModifier: 1
-  heavyJumpAttack01StaminaCostModifier: 4
-  lightRunningAttack01StaminaCostModifier: 1
-  lightRollingAttack01StaminaCostModifier: 1
-  lightBackstepAttack01StaminaCostModifier: 1
-  lightAttack01DamageMotionValue: 1
-  lightAttack02DamageMotionValue: 1.1
-  lightAttack03DamageMotionValue: 1.2
-  heavyAttack01DamageMotionValue: 1.4
-  heavyAttack02DamageMotionValue: 1.6
-  heavyChargedAttack01DamageMotionValue: 2
-  heavyChargedAttack02DamageMotionValue: 2.2
-  lightJumpAttack01DamageMotionValue: 1
-  heavyJumpAttack01DamageMotionValue: 1.8
-  lightRunningAttack01DamageMotionValue: 1
-  lightRollingAttack01DamageMotionValue: 1
-  lightBackstepAttack01DamageMotionValue: 1
-  areaSpellAttack01DamageMotionValue: 1
-  singleTargetBulletAttack01DamageMotionValue: 1

@@ -18,9 +18,11 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Weapon Menu\n")]
     [Header("Active Weapon Preview")]
     public GameObject statsTextPrefab;
-    public GameObject primaryStatsText;
-    public GameObject expStatsText;
-    public GameObject elementalStatsText;
+    public GameObject primaryStatsTextGrid;
+    public GameObject expStatsTextGrid;
+    public GameObject elementalStatsTextGrid;
+    public GameObject weaponTraitUIPrefab;
+    public GridLayoutGroup weaponTraitGrid;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI activeWeaponTierLevelText;
     public TextMeshProUGUI tinkerPointsCountText;
@@ -75,11 +77,11 @@ public class WeaponMenuManager : MonoBehaviour
     {
         foreach (Transform child in weaponsGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in primaryStatsText.transform)
+        foreach (Transform child in primaryStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in elementalStatsText.transform)
+        foreach (Transform child in elementalStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in expStatsText.transform)
+        foreach (Transform child in expStatsTextGrid.transform)
             Destroy(child.gameObject);
         foreach (Transform child in componentsGrid.transform)
             Destroy(child.gameObject);
@@ -145,7 +147,7 @@ public class WeaponMenuManager : MonoBehaviour
                     salvageConfirmWindow.GetComponentInChildren<Button>().Select();
             }
             else if (helpActive){
-                primaryStatsText.transform.GetChild(0).GetComponent<Button>().Select();
+                primaryStatsTextGrid.transform.GetChild(0).GetComponent<Button>().Select();
             }else if (componentsGrid.transform.childCount > 0){
                 componentsGrid.transform.GetChild(0).GetComponentInChildren<Button>().Select();
             }
@@ -226,6 +228,7 @@ public class WeaponMenuManager : MonoBehaviour
             return; // Do nothing
         ToggleComponentNavigation(false);
         ToggleStatTooltipNavigation(false);
+        ToggleWeaponTraitNavigation(false);
         ToggleEvolutionNavigation(true);
         //select first available evol
         bool selected = false;
@@ -396,10 +399,11 @@ public class WeaponMenuManager : MonoBehaviour
             if (helpActive)
             {
                 ToggleStatTooltipNavigation(true);
+                ToggleWeaponTraitNavigation(true);
                 ToggleComponentNavigation(false);
                 ToggleEvolutionNavigation(false);
                 //select first stat
-                foreach (Transform obj in primaryStatsText.transform)
+                foreach (Transform obj in primaryStatsTextGrid.transform)
                 {
                     obj.GetComponent<Button>().Select();
                     break;
@@ -408,6 +412,7 @@ public class WeaponMenuManager : MonoBehaviour
             else
             {
                 ToggleStatTooltipNavigation(false);
+                ToggleWeaponTraitNavigation(false);
                 ToggleComponentNavigation(true);// will select first component if available
                 ToggleEvolutionNavigation(false);// prolly not necessary but just in case
             }
@@ -455,10 +460,10 @@ public class WeaponMenuManager : MonoBehaviour
                     //foreach (Transform obj in componentsGrid.transform)
                     //    obj.GetComponent<TinkerComponentUI>().tooltipHolder.SetActive(false);
                 }
-                foreach (Transform obj in primaryStatsText.transform)
-                    obj.GetComponent<TogglingBehavior>().Toggle(false);
-                foreach (Transform obj in elementalStatsText.transform)
-                    obj.GetComponent<TogglingBehavior>().Toggle(false);
+                //foreach (Transform obj in primaryStatsText.transform)
+                //    obj.GetComponent<TogglingBehavior>().Toggle(false);
+                //foreach (Transform obj in elementalStatsText.transform)
+                //    obj.GetComponent<TogglingBehavior>().Toggle(false);
                 TogglingBehavior togglingBehavior = currentCursorObj.GetComponent<TogglingBehavior>();
                 if (togglingBehavior != null)
                 {
@@ -470,7 +475,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //TODO: if (gamepad) 
                 if (helpActive)
                 {
-                    foreach (Transform obj in primaryStatsText.transform)
+                    foreach (Transform obj in primaryStatsTextGrid.transform)
                     {
                         obj.GetComponent<Button>().Select();
                         break;
@@ -747,14 +752,11 @@ public class WeaponMenuManager : MonoBehaviour
                 else
                 {
                     myBtnScrpt.topText.text = evolWpnDetails.itemName;
-                    //TODO: I'm setting it to always show ??? instead of the name when already discovered
-                    //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
-                    //{
-                    String mysteryText = "";
+                    //Note: I'm setting it to always show underscores instead of the name when already discovered
+                    string mysteryText = "";
                     foreach (char c in myBtnScrpt.topText.text)
                         mysteryText += c == ' ' ? ' ' : '_';
                     myBtnScrpt.topText.text = mysteryText;
-                    //}
                     myBtnScrpt.mainButton.interactable = false;
                     myBtnScrpt.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
                     //myBtnScrpt.mainButtonForeground.GetComponent<RawImage>().texture = defaultUnkownIcon.texture;
@@ -785,14 +787,11 @@ public class WeaponMenuManager : MonoBehaviour
                 }
                 else
                 {
-                    //TODO: I'm setting it to always show ??? instead of the name when already discovered
-                    //if (!WeaponsController.instance.CheckHasObtained(evolWpn.stats.weaponType))
-                    //{
+                    //Note: I'm setting it to always show underscores instead of the name when already discovered
                     String mysteryText = "";
                     foreach (char c in myBtnScrpt2.topText.text)
                         mysteryText += c == ' ' ? ' ' : '_';
                     myBtnScrpt2.topText.text = mysteryText;
-                    //}
                     myBtnScrpt2.mainButton.interactable = false;
                     //myBtnScrpt2.bottomText.text = "";
                     myBtnScrpt2.mainButtonForeground.GetComponent<Image>().sprite = defaultUnkownIcon;
@@ -812,11 +811,13 @@ public class WeaponMenuManager : MonoBehaviour
     private string activeComponentId = "";//selected with gamepad or on hover
     void LoadActiveWeaponStats()
     {
-        foreach (Transform child in primaryStatsText.transform)
+        foreach (Transform child in primaryStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in elementalStatsText.transform)
+        foreach (Transform child in elementalStatsTextGrid.transform)
             Destroy(child.gameObject);
-        foreach (Transform child in expStatsText.transform)
+        foreach (Transform child in expStatsTextGrid.transform)
+            Destroy(child.gameObject);
+        foreach (Transform child in weaponTraitGrid.transform)
             Destroy(child.gameObject);
         if (activeWeapon == null || activeWeapon.GetComponent<WeaponScript>() == null)
         {// no active weapon
@@ -832,29 +833,25 @@ public class WeaponMenuManager : MonoBehaviour
         WeaponStats stats = wpn.stats;
         ElementalStats el = stats.elemental;
         foreach (KeyValuePair<string, float> stat in wpn.GetPrimaryStatsForDisplay()) 
-            LoadStat(stat, primaryStatsText.transform);
+            LoadStat(stat, primaryStatsTextGrid.transform);
         // Durability
-        LoadDurability(stats);
+        LoadDurabilityToScreen(stats);
         // Exp
-        GameObject curExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject curExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject neededExpText1 = Instantiate(statsTextPrefab, expStatsText.transform);
-        GameObject neededExpText2 = Instantiate(statsTextPrefab, expStatsText.transform);
-        curExpText1.GetComponent<EventTrigger>().enabled = false; // disable hover events
-        curExpText2.GetComponent<EventTrigger>().enabled = false;
-        neededExpText1.GetComponent<EventTrigger>().enabled = false;
-        neededExpText2.GetComponent<EventTrigger>().enabled = false;
-        curExpText1.GetComponent<TextMeshProUGUI>().text = "Current Exp:";
-        curExpText2.GetComponent<TextMeshProUGUI>().text = "" + stats.currentExperiencePoints;
-        neededExpText1.GetComponent<TextMeshProUGUI>().text = "To Next Level:";
-        neededExpText2.GetComponent<TextMeshProUGUI>().text = "" + stats.experiencePointsToNextLevel;
+        LoadExperienceToScreen(stats);
+        //weapon traits
+        foreach(string traitId in wpn.stats.weaponTraits)
+        {
+            LoadWeaponTrait(traitId);
+        }
         // Elemental
         foreach (KeyValuePair<string, float> stat in wpn.GetElementalStats()) 
-            LoadStat(stat, elementalStatsText.transform);
+            LoadStat(stat, elementalStatsTextGrid.transform);
     }
     KeyValuePair<string, float> LoadStat(KeyValuePair<string, float> stat, Transform trans)
     {
         GameObject statTextObj = Instantiate(statsTextPrefab, trans);
+        WeaponStatUI weaponStatUI = statTextObj.GetComponent<WeaponStatUI>();
+        weaponStatUI.statId = stat.Key;
         bool greenTextShowing = false;
         string greenText = "";
         if (activeComponent != null)
@@ -865,32 +862,43 @@ public class WeaponMenuManager : MonoBehaviour
                 greenText += "<size=16> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
             }
         }
-        statTextObj.GetComponent<TextMeshProUGUI>().text = stat.Key + ": " + (greenTextShowing ? "<color=\"green\">" : "") + stat.Value + greenText;
-        Button tooltipNavButton = statTextObj.GetComponentInChildren<Button>();
-        if (tooltipNavButton != null)
-        { // This handles the helper tooltips for the stats.
-            TogglingBehavior tooltipToggler = statTextObj.GetComponent<TogglingBehavior>();
-            if (tooltipToggler != null)
-            {
-                TooltipUI tooltip = tooltipToggler.Toggle(true)[0].gameObject.GetComponent<TooltipUI>();
-                tooltip.headerText.text = stat.Key;
-                tooltip.centerText.text = WeaponScript.GetStatTooltip(stat.Key);
-            }
-            if (helpActive)
-            {
-                Navigation nav = tooltipNavButton.navigation;
-                nav.mode = Navigation.Mode.Automatic;
-                tooltipNavButton.navigation = nav;
-            }
-        }
+        weaponStatUI.textUI.text = stat.Key + ": " + (greenTextShowing ? "<color=\"green\">" : "") + stat.Value + greenText;
+        LoadStatTooltip(statTextObj, stat.Key);
         return stat;
     }
-    void LoadDurability(WeaponStats stats)
+    void LoadStatTooltip(GameObject statObj, string statId)
+    {
+        WeaponStatUI statUIObj = statObj.GetComponent<WeaponStatUI>();
+        statUIObj.statId = statId;
+        EventTrigger trigger = statObj.GetComponent<EventTrigger>();
+        // PointerEnter Entry
+        EventTrigger.Entry hoverEntry = new EventTrigger.Entry();
+        hoverEntry.eventID = EventTriggerType.PointerEnter;
+        hoverEntry.callback.AddListener((eventData) =>
+        {
+            tooltipUI.headerText.text = statId;
+            tooltipUI.centerText.text = WeaponScript.GetStatTooltip(statId);
+            tooltipUI.bottomText.text = "";
+        });
+        trigger.triggers.Add(hoverEntry);
+        //Select Entry
+        EventTrigger.Entry selectEntry = new EventTrigger.Entry();
+        selectEntry.eventID = EventTriggerType.Select;
+        selectEntry.callback.AddListener((eventData) =>
+        {
+            tooltipUI.headerText.text = statId;
+            tooltipUI.centerText.text = WeaponScript.GetStatTooltip(statId);
+            tooltipUI.bottomText.text = "";
+        });
+        trigger.triggers.Add(selectEntry);
+    }
+    void LoadDurabilityToScreen(WeaponStats stats)
     {
         // Durability
-        GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject durabiltyLeft = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        LoadStatTooltip(durabiltyLeft, "Durability");
         durabiltyLeft.GetComponent<TextMeshProUGUI>().text = "Durability:";
-        GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsText.transform);
+        GameObject durabiltyRight = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
         // green text for max durability
         string greenTextEnd = "";
         string greenTextStart = "";
@@ -900,13 +908,47 @@ public class WeaponMenuManager : MonoBehaviour
             greenTextEnd += "<size=16> + " + activeComponent.durability + "</color></size>";
         }
         durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + " / " + greenTextStart + stats.durability + greenTextEnd;
-        //if (activeComponentId.Equals("repair_kit") && stats.currentDurability < stats.durability)
-        //{ // green text for repair kit
-        //    durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + "<color=\"green\"><size=16> + 25</color></size>" 
-        //        + " / " + greenTextStart + stats.durability + greenTextEnd;
-        //}
+        Button tooltipNavButton = durabiltyLeft.GetComponentInChildren<Button>();
+        //tooltipNavButton.navigation
+    }
+    void LoadExperienceToScreen(WeaponStats stats)
+    {
+        GameObject curExpTextLeft = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        GameObject curExpTextRight = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        GameObject neededExpTextLeft = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        GameObject neededExpTextRight = Instantiate(statsTextPrefab, expStatsTextGrid.transform);
+        //curExpTextLeft.GetComponent<EventTrigger>().enabled = false; 
+        curExpTextRight.GetComponent<EventTrigger>().enabled = false; // disable hover events
+        neededExpTextLeft.GetComponent<EventTrigger>().enabled = false;
+        neededExpTextRight.GetComponent<EventTrigger>().enabled = false;
+        curExpTextLeft.GetComponent<TextMeshProUGUI>().text = "Current Exp:";
+        curExpTextRight.GetComponent<TextMeshProUGUI>().text = "" + stats.currentExperiencePoints;
+        neededExpTextLeft.GetComponent<TextMeshProUGUI>().text = "To Next Level:";
+        neededExpTextRight.GetComponent<TextMeshProUGUI>().text = "" + stats.experiencePointsToNextLevel;
+        LoadStatTooltip(curExpTextLeft, "Experience");
     }
     bool canBreakdownActiveWeapon = false;
+    void LoadWeaponTrait(string traitId)
+    {
+        WeaponTraitData traitData = ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+        WeaponTraitButtonUI weaponTraitUI = Instantiate(weaponTraitUIPrefab, weaponTraitGrid.transform).GetComponent<WeaponTraitButtonUI>();
+        weaponTraitUI.weaponTraitIcon.sprite = traitData.icon;
+        weaponTraitUI.weaponTraitId = traitId;
+        //Add tooltip on hover event
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+        entry.callback.AddListener((eventData) =>
+        {
+            WeaponTraitTooltipOnHover(traitId);
+        });
+        weaponTraitUI.weaponTraitButton.GetComponent<EventTrigger>().triggers.Add(entry);
+        entry.eventID = EventTriggerType.Select;
+        entry.callback.AddListener((eventData) =>
+        {
+            WeaponTraitTooltipOnHover(traitId);
+        });
+        weaponTraitUI.weaponTraitButton.GetComponent<EventTrigger>().triggers.Add(entry);
+    }
     /**
      * Clear weapons grid and reload it with current values
      */
@@ -1111,20 +1153,6 @@ public class WeaponMenuManager : MonoBehaviour
                     tinkerComponentUI.mainButton.Select();
                 });
                 tinkerComponentUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
-                //if (tinkerComponentUI.tooltipUI != null)
-                //if (tooltipUI != null)
-                //{
-                //    //TooltipUI tooltipUI = tinkerComponentUI.tooltipUI;
-                //    tooltipUI.headerText.text = componentScript.stats.itemName;
-                //    tooltipUI.bottomText.text = componentScript.stats.price + " gp";//gold points - placeholder name
-                //    tooltipUI.centerText.text = "";
-                //    foreach(KeyValuePair<string,float> stat in componentScript.GetStats())
-                //    {
-                //        tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + "\n";
-                //    }
-                //    tooltipUI.gameObject.SetActive(false);
-                //}
-                //tinkerComponentUI.tooltipHolder.SetActive(false);
                 tinkerComponentUI.countText.text = "" + quantity;
                 //tinkerComponent.cornerButton.gameObject.SetActive(false);
                 if(itemDetails.icon)//Icon
@@ -1241,6 +1269,7 @@ public class WeaponMenuManager : MonoBehaviour
         ToggleComponentNavigation(true);
         ToggleEvolutionNavigation(true);
         //ToggleStatTooltipNavigation(true);
+        //ToggleWeaponTraitNavigation(true);
         SetKBMStatTooltipNavigation();
     }
     private void ToggleComponentNavigation(bool enable)
@@ -1287,17 +1316,31 @@ public class WeaponMenuManager : MonoBehaviour
         helpActive = enable;
         Func<Transform, Transform> handleTooltip = (obj) =>
         {
-            obj.GetComponent<TogglingBehavior>().Toggle(helpActive);
+            WeaponStatUI weaponStatUI = obj.GetComponent<WeaponStatUI>();
+            tooltipUI.headerText.text = weaponStatUI.statId;
+            //obj.GetComponent<TogglingBehavior>().Toggle(helpActive);
             // Make navigatiable if tooltip active or turn off navigation if not
             Button button = obj.GetComponent<Button>();
             button.interactable = helpActive;
             Navigation nav = button.navigation;
-            nav.mode = helpActive ? Navigation.Mode.Automatic : Navigation.Mode.None;
+            nav.mode = helpActive && weaponStatUI.statId.Length > 0 ? Navigation.Mode.Automatic : Navigation.Mode.None;
             obj.GetComponent<Button>().navigation = nav;
             return obj;
         };
-        foreach (Transform obj in primaryStatsText.transform) handleTooltip(obj);
-        foreach (Transform obj in elementalStatsText.transform) handleTooltip(obj);
+        foreach (Transform obj in primaryStatsTextGrid.transform) handleTooltip(obj);
+        foreach (Transform obj in elementalStatsTextGrid.transform) handleTooltip(obj);
+        foreach (Transform obj in expStatsTextGrid.transform) handleTooltip(obj);
+    }
+    private void ToggleWeaponTraitNavigation(bool enable)
+    {
+        foreach (Transform obj in weaponTraitGrid.transform)
+        {
+            Button button = obj.GetComponent<WeaponTraitButtonUI>().weaponTraitButton;
+            button.interactable = helpActive;
+            Navigation nav = button.navigation;
+            nav.mode = helpActive ? Navigation.Mode.Automatic : Navigation.Mode.None;
+            button.navigation = nav;
+        }
     }
     private void SetKBMStatTooltipNavigation()
     {
@@ -1313,8 +1356,8 @@ public class WeaponMenuManager : MonoBehaviour
             obj.GetComponent<Button>().navigation = nav;
             return obj;
         };
-        foreach (Transform obj in primaryStatsText.transform) handleTooltip(obj);
-        foreach (Transform obj in elementalStatsText.transform) handleTooltip(obj);
+        foreach (Transform obj in primaryStatsTextGrid.transform) handleTooltip(obj);
+        foreach (Transform obj in elementalStatsTextGrid.transform) handleTooltip(obj);
     }
     private void SetTooltipToComponent(TinkerComponentStats component, string itemId)
     {
@@ -1349,5 +1392,12 @@ public class WeaponMenuManager : MonoBehaviour
                 }
             }
         }
+    }
+    public void WeaponTraitTooltipOnHover(string traitId)
+    {
+        WeaponTraitData traitData = ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+        tooltipUI.headerText.text = traitData.displayName;
+        tooltipUI.centerText.text = traitData.description;
+        tooltipUI.bottomText.text = "";
     }
 }

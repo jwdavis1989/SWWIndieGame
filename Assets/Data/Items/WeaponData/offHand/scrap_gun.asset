@@ -18,6 +18,9 @@ MonoBehaviour:
   isWristWeapon: 0
   weaponFamiliy: shotguns
   evolveWeaponIds: []
+  startingTraits:
+  - {fileID: 11400000, guid: 5e5da9390f44639429ff21f7c08fa6be, type: 2}
+  - {fileID: 11400000, guid: 84216d238e6c92b4b97c5c7ed31ba578, type: 2}
   weaponGameObject: {fileID: 1847124638102049318, guid: 3b7247045da0a6549956bf07a77bb04a, type: 3}
   baseAttack: 25
   maxAttack: 44
@@ -53,28 +56,3 @@ MonoBehaviour:
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100
-  baseStaminaCost: 20
-  lightAttack01StaminaCostModifier: 1
-  lightAttack02StaminaCostModifier: 1
-  lightAttack03StaminaCostModifier: 1
-  heavyAttack01StaminaCostModifier: 1.2
-  heavyAttack02StaminaCostModifier: 1.2
-  lightJumpAttack01StaminaCostModifier: 1
-  heavyJumpAttack01StaminaCostModifier: 4
-  lightRunningAttack01StaminaCostModifier: 1
-  lightRollingAttack01StaminaCostModifier: 1
-  lightBackstepAttack01StaminaCostModifier: 1
-  lightAttack01DamageMotionValue: 1
-  lightAttack02DamageMotionValue: 1.1
-  lightAttack03DamageMotionValue: 1.2
-  heavyAttack01DamageMotionValue: 1.4
-  heavyAttack02DamageMotionValue: 1.6
-  heavyChargedAttack01DamageMotionValue: 2
-  heavyChargedAttack02DamageMotionValue: 2.2
-  lightJumpAttack01DamageMotionValue: 1
-  heavyJumpAttack01DamageMotionValue: 1.8
-  lightRunningAttack01DamageMotionValue: 1
-  lightRollingAttack01DamageMotionValue: 1
-  lightBackstepAttack01DamageMotionValue: 1
-  areaSpellAttack01DamageMotionValue: 1
-  singleTargetBulletAttack01DamageMotionValue: 1

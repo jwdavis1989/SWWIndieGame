@@ -245,8 +245,18 @@ public class TinkerComponentManager : MonoBehaviour
                 {
                     //weaponComponents.Remove(tinkerComponentPassed);
                     //TODO
+                    //WeaponSalvageComponent weaponSalvage;
+                    //foreach(string weaponTraitId in weaponSalvage.weaponTraits)
+                    //{
+                    //    if (weapon.stats.weaponTraits.Contains(weaponTraitId))
+                    //        continue; // already have this trait, skip it
+                    //    WeaponTraitData weaponTraitData = ItemDropManager.GetDB().GetWeaponTraitData(weaponTraitId);
+                    //    if(weaponTraitData != null && weaponTraitData.inheritable)
+                    //        weapon.stats.weaponTraits.Add(weaponTraitId); // inherit trait
+                    //}
                 }
                 weapon.SetWeaponDamage(weapon.weaponDamageCollider);
+
             }
         }
         return canUpgrade;

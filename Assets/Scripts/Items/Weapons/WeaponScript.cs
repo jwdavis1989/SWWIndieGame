@@ -67,7 +67,8 @@ public enum WeaponFamily
 [Serializable]
 public class WeaponStats
 {
-    [Header("Weapon Type")]
+    [Header("WeaponStats are saved to save file")]
+    [Header("Weapon Type - old")]
     public WeaponType weaponType = 0;
     [Header("Case insensitive id for data lookup")]
     public string weaponId = "";
@@ -90,7 +91,8 @@ public class WeaponStats
     public float currentExperiencePoints = 0.0f;
     public float experiencePointsToNextLevel = 100.0f;
     public int currentTinkerPoints = 0;
-    public String weaponName = "BaseWeaponName";
+    public string weaponName = "BaseWeaponName";
+    public List<string> weaponTraits;
 
     [Header("Stamina Costs")]
     public float baseStaminaCost = 20f;
@@ -428,18 +430,6 @@ public class WeaponScript : MonoBehaviour
             //TODO PLAY LEVEL UP NOISE/ANIMATION
         }
     }
-
-    //public virtual void attackTarget(GameObject target)
-    //{
-    //    if (isInDebugMode) Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST
-    //    if (target != null) {
-    //        //calculateElementalDamage(stats.attack, target);
-    //        //target.GetComponent<EnemyController>().hp -= stats.attack;
-    //        //TODO
-    //        //play weapon animation
-    //        //set reload/recharge
-    //    }
-    //}
     public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
         if (stats.currentDurability > 0)
@@ -1242,6 +1232,8 @@ public class WeaponScript : MonoBehaviour
                 return "Scales improves damage against fish and reptiles.";
             case "Tech":
                 return "Tech improves damage to robots.";
+            case "Experience":
+                return "Experience is gained by defeating monsters and levels up your weapon.";
             default:
                 return stat + " is like totally good or something.";
         }

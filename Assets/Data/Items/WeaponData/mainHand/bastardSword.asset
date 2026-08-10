@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: bastardSword
   m_EditorClassIdentifier: 
   itemId: bastard_sword
+  isMonsterWeapon: 0
+  isSpecialWeapon: 0
+  isWristWeapon: 0
   weaponFamiliy: swords
   evolveWeaponIds: []
+  startingTraits:
+  - {fileID: 11400000, guid: 76f94d6a555d0af4d8960157281398af, type: 2}
   weaponGameObject: {fileID: 4976341019228924520, guid: a015047b9396d3a479dda01eb39dfa71, type: 3}
   baseAttack: 23
   maxAttack: 46
@@ -50,28 +55,3 @@ MonoBehaviour:
   xpToLevel: 100
   tinkerPointsPerLvl: 1
   experiencePointsToNextLevel: 100
-  baseStaminaCost: 20
-  lightAttack01StaminaCostModifier: 1
-  lightAttack02StaminaCostModifier: 1
-  lightAttack03StaminaCostModifier: 1
-  heavyAttack01StaminaCostModifier: 1.2
-  heavyAttack02StaminaCostModifier: 1.2
-  lightJumpAttack01StaminaCostModifier: 1
-  heavyJumpAttack01StaminaCostModifier: 4
-  lightRunningAttack01StaminaCostModifier: 1
-  lightRollingAttack01StaminaCostModifier: 1
-  lightBackstepAttack01StaminaCostModifier: 1
-  lightAttack01DamageMotionValue: 1
-  lightAttack02DamageMotionValue: 1.1
-  lightAttack03DamageMotionValue: 1.2
-  heavyAttack01DamageMotionValue: 1.4
-  heavyAttack02DamageMotionValue: 1.6
-  heavyChargedAttack01DamageMotionValue: 2
-  heavyChargedAttack02DamageMotionValue: 2.2
-  lightJumpAttack01DamageMotionValue: 1
-  heavyJumpAttack01DamageMotionValue: 1.8
-  lightRunningAttack01DamageMotionValue: 1
-  lightRollingAttack01DamageMotionValue: 1
-  lightBackstepAttack01DamageMotionValue: 1
-  areaSpellAttack01DamageMotionValue: 1
-  singleTargetBulletAttack01DamageMotionValue: 1

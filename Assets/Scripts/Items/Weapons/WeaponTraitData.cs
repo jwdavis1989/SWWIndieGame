@@ -9,4 +9,5 @@ public class WeaponTraitData : ScriptableObject
     public string displayName;
     [TextArea]public string description;
     public Sprite icon;
+    public bool inheritable = false;
 }

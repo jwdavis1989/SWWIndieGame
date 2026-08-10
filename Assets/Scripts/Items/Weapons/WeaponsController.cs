@@ -79,6 +79,8 @@ public class WeaponsController : MonoBehaviour
         newStatsRef.stability = oldStats.stability;
         newStatsRef.elemental = oldStats.elemental;
         newStatsRef.currentTinkerPoints = oldStats.currentTinkerPoints;
+        foreach(string oldTrait in oldStats.weaponTraits)
+            newStatsRef.weaponTraits.Add(oldTrait);
         if (isSpecial)
         {
             int oldWpnIndex = character.ownedSpecialWeapons.IndexOf(oldWpn);
@@ -131,10 +133,10 @@ public class WeaponsController : MonoBehaviour
         }
         return availableEvolves;
     }
-    public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
-    {
-        return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
-    }
+    //public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
+    //{
+    //    return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
+    //}
 }
 
 //used for JSON array

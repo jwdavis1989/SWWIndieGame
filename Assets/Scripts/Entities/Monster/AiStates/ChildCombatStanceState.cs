@@ -27,8 +27,14 @@ public class ChildCombatStanceState : CombatStanceState
         // Speed up
         aiCharacterCombatManager.SetSprintingSpeed(aiCharacter);
 
-        if (explosionSpawner.spawnList.Count > 0)//exploded
+        if (explosionSpawner.spawnList.Count > 0)
+        {
+            //exploded
             aiCharacter.statsManager.currentHealth = 0;
+            aiCharacter.statsManager.expDropAmt = 0;
+            aiCharacter.statsManager.goldDropChance = 0;
+            aiCharacter.statsManager.goldDrop = 0;
+        }
         if (aiCharacter.statsManager.currentHealth <= 0)
         {//don't flash and explode if killed
             explosionSpawner.auto = false;
