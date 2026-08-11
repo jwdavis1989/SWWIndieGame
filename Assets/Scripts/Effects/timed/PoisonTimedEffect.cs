@@ -29,7 +29,7 @@ public class PoisonActiveEffect : ActiveCharacterEffect
         if (!finished)
         {
             timeSinceTick = timeSinceTick + Time.deltaTime;
-            if (timeSinceTick > poisonEffect.interval)
+            while (timeSinceTick >= poisonEffect.interval)
             {
                 CharacterStatsManager characterStatsManager = character.characterStatsManager;
                 timeSinceTick -= poisonEffect.interval;
@@ -51,19 +51,19 @@ public class ApplyPoisonEffect : ApplyTimedEffect
     public override void ProcessEffect(CharacterManager character)
     {
         CharacterManager target = character.characterCombatManager.currentTarget;
-        float damage = 1f;
+        float damagePerTick = 1f;
         if (character && character.characterCombatManager && character.characterCombatManager.currentWeaponBeingUsed)
         {
-            damage = character.characterCombatManager.currentWeaponBeingUsed.stats.attack;
-            damage /= (timedEffect.startingDuration + poisonEffect.interval);
+            float totalDamage = character.characterCombatManager.currentWeaponBeingUsed.stats.attack;
+            float numberOfTicks = timedEffect.startingDuration / poisonEffect.interval;
+            damagePerTick = totalDamage / numberOfTicks;
         }
-        //todo: check stackable
         /* Add timed effect */
         if (!timedEffect.stackable && target.characterEffectsManager.activeTimedEffects.Exists(
                 (eff) => eff.effect.effectId == timedEffect.effectId))
         { // Non-Stackable so don't process
             return;
         }
-        target.characterEffectsManager.activeTimedEffects.Add(poisonEffect.ActiveEffect(damage));
+        target.characterEffectsManager.activeTimedEffects.Add(poisonEffect.ActiveEffect(damagePerTick));
     }
 }
