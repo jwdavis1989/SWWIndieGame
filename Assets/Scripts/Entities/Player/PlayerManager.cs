@@ -184,7 +184,7 @@ public class PlayerManager : CharacterManager
         playerStatsManager.currentHealth = currentCharacterData.currentHealth;
 
         PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
-        
+
 
 
         //Stamina
@@ -200,12 +200,12 @@ public class PlayerManager : CharacterManager
         {
             isOutOfFuel = false;
         }
-        if (currentCharacterData.currentFuel > currentCharacterData.currentFuel/2)
+        if (currentCharacterData.currentFuel > currentCharacterData.currentFuel / 2)
         {
             isRunningOnEmergencyPowerLevels = false;
         }
 
-        
+
         PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
 
 
@@ -267,7 +267,7 @@ public class PlayerManager : CharacterManager
     {
         foreach (WeaponData aWeapon in ItemDropManager.GetDB().weaponDetails)
         {
-            if (aWeapon.isMonsterWeapon) 
+            if (aWeapon.isMonsterWeapon)
                 continue;
             PlayerWeaponManager.instance.SetAllWeaponsToInactive(aWeapon.isSpecialWeapon);
             PlayerWeaponManager.instance.AddWeaponById(aWeapon.itemId);
@@ -352,7 +352,7 @@ public class PlayerManager : CharacterManager
         }
 
         updatedWeapon.stats.elemental.currentHighestElementalStat = newHighestElement;
-        
+
         //Sets all glowing materials to match the current highest element
         updatedWeapon.SetElementalWeaponMaterials(newHighestElementIndex);
 
@@ -366,7 +366,7 @@ public class PlayerManager : CharacterManager
                 updatedWeapon.bladeTrailVFX.gameObject.SetActive(false);
             }
         }
-        
+
         if (isMainHand)
         {
 
@@ -462,7 +462,7 @@ public class PlayerManager : CharacterManager
         capeSystem.SetActive(false);
     }
 
-    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString=null, bool enableAfterLoad=true)
+    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString = null, bool enableAfterLoad = true)
     {
         TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
         TeleportData.playerManager = this;
@@ -476,7 +476,7 @@ public class PlayerManager : CharacterManager
 
         CharacterController playerController = GetComponent<CharacterController>();
         playerController.enabled = false;
-        TeleportData.playerManager.transform.position = new Vector3(0,0,0);
+        TeleportData.playerManager.transform.position = new Vector3(0, 0, 0);
         SceneManager.LoadScene("LoadingScene");
         playerController.enabled = true;
 
@@ -522,5 +522,9 @@ public class PlayerManager : CharacterManager
         //capeClothComponent.worldAccelerationScale = capeClothWorldAccelerationModifier;
         capeClothComponent.enabled = true;
     }
-
+    public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
+    {
+        base.ApplyDamage(damage, characterCausingDamage, isMainHand);
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+    }
 }

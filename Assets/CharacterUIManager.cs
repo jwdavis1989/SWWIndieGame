@@ -70,14 +70,33 @@ public class CharacterUIManager : MonoBehaviour
         
         characterHPBar.healthGlitch.TriggerGlitch();
     }
-
-    public void TriggerDamagePopUp(float amount)
+    public void TriggerDamagePopUp(float amount, string color = "white")
     {
         // Spawn the prefab at the enemy's position
         GameObject damagePopUpObject = Instantiate(WorldAIManager.instance.damagePopupPrefab, transform.position + Vector3.up, Quaternion.identity);
-    
+
+        DamagePopUp damagePopUp = damagePopUpObject.GetComponentInChildren<DamagePopUp>();
         // Initialize with the damage value
-        damagePopUpObject.GetComponentInChildren<DamagePopUp>().Setup(amount);
+        damagePopUp.Setup(amount);
+
+        switch (color)
+        {
+            case "white":
+                damagePopUp.SetColor(Color.white);
+                break;
+            case "red":
+                damagePopUp.SetColor(Color.red);
+                break;
+            case "green":
+                damagePopUp.SetColor(Color.green);
+                break;
+            case "yellow":
+                damagePopUp.SetColor(Color.yellow);
+                break;
+            default:
+                damagePopUp.SetColor(Color.white);
+                break;
+        }
     }
 
 }

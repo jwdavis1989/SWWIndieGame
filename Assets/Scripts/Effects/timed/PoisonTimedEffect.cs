@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Character Effects/Timed Effects/Poison Effect")]
 public class PoisonTimedEffect : TimedCharacterEffect
 {
-    public ApplyPoisonEffect applicator;
     public float interval = 1;
     public ActiveCharacterEffect ActiveEffect(float damage)
     {
@@ -31,39 +30,10 @@ public class PoisonActiveEffect : ActiveCharacterEffect
             timeSinceTick = timeSinceTick + Time.deltaTime;
             while (timeSinceTick >= poisonEffect.interval)
             {
-                CharacterStatsManager characterStatsManager = character.characterStatsManager;
                 timeSinceTick -= poisonEffect.interval;
-                characterStatsManager.currentHealth -= damageOnTick;
-                if (character.isPlayer)
-                {
-                    PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(characterStatsManager.currentHealth, characterStatsManager.maxHealth);
-                }
+                character.ApplyDamage(damageOnTick, null, false, "green");
                 Debug.Log("Tick Damage:" + damageOnTick);
             }
         }
-    }
-}
-
-[CreateAssetMenu(menuName = "Character Effects/Instant Effects/Apply Poison Effect")]
-public class ApplyPoisonEffect : ApplyTimedEffect
-{
-    public PoisonTimedEffect poisonEffect;
-    public override void ProcessEffect(CharacterManager character)
-    {
-        CharacterManager target = character.characterCombatManager.currentTarget;
-        float damagePerTick = 1f;
-        if (character && character.characterCombatManager && character.characterCombatManager.currentWeaponBeingUsed)
-        {
-            float totalDamage = character.characterCombatManager.currentWeaponBeingUsed.stats.attack;
-            float numberOfTicks = timedEffect.startingDuration / poisonEffect.interval;
-            damagePerTick = totalDamage / numberOfTicks;
-        }
-        /* Add timed effect */
-        if (!timedEffect.stackable && target.characterEffectsManager.activeTimedEffects.Exists(
-                (eff) => eff.effect.effectId == timedEffect.effectId))
-        { // Non-Stackable so don't process
-            return;
-        }
-        target.characterEffectsManager.activeTimedEffects.Add(poisonEffect.ActiveEffect(damagePerTick));
     }
 }

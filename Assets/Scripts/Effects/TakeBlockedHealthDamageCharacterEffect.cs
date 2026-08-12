@@ -111,34 +111,12 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             if (!targetCharacter.isPlayer)
             {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
-                if (characterCausingDamage.characterWeaponManager == null)
+                CharacterWeaponManager characterWeaponManager = characterCausingDamage.characterWeaponManager;
+                if (characterWeaponManager == null)
                     Debug.LogError("ERROR: Weapon manager not set!");
-                WeaponScript weapon;
-                if (isMainHand)
-                {
-                    weapon = characterCausingDamage.characterWeaponManager.GetMainHand();
-                    
-                    if (enemy != null)
-                    {
-                        enemy.isHitByMainHand = true;
-                    }
-                }
-                else
-                {
-                    weapon = characterCausingDamage.characterWeaponManager.GetOffHand();
-                    if (enemy != null)
-                    {
-                        enemy.isHitByOffHand = true;
-                        DungeonManager.offHandUsed = true;
-                    }
-                }
+                WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
                 finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
 
-                //Aggro the monster if they aren't already
-                if (characterCausingDamage.isPlayer && targetCharacter.characterCombatManager.currentTarget == null)
-                {
-                    targetCharacter.characterCombatManager.AggroPlayer(characterCausingDamage.gameObject);
-                }
             }
             else
             {
@@ -162,6 +140,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
         }
 
         //Apply final damage to character's health
+        targetCharacter.ApplyDamage(finalDamageDealt, characterCausingDamage, isMainHand);
         targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
         if (targetCharacter.isPlayer)
         {

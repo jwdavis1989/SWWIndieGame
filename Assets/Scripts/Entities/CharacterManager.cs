@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 //using Unity.Netcode;
 
 //If creating online coop, replace public class CharacterManager : MonoBehaviour with the following line:
@@ -367,5 +368,9 @@ public class CharacterManager : MonoBehaviour
     public virtual void DisableCanComboSpecialWeapon()
     {
         canComboSpecialAttack = false;
+    }
+    public virtual void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
+    {
+        characterStatsManager.currentHealth -= damage;
     }
 }

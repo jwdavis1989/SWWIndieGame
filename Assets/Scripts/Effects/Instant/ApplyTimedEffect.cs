@@ -10,7 +10,8 @@ public class ApplyTimedEffect : InstantCharacterEffect
         /* Add timed effect */
         if (!timedEffect.stackable && character.characterEffectsManager.activeTimedEffects.Exists(
                 (eff) => eff.effect.effectId == timedEffect.effectId))
-        { // Non-Stackable so don't process
+        {
+            // Non-Stackable so don't process
                 return;
         }
         character.characterEffectsManager.activeTimedEffects.Add(timedEffect.ActiveEffect());

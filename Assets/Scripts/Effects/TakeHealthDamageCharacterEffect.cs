@@ -102,34 +102,12 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             if (!targetCharacter.isPlayer)
             {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
-                if (characterCausingDamage.characterWeaponManager == null)
+                CharacterWeaponManager characterWeaponManager = characterCausingDamage.characterWeaponManager;
+                if (characterWeaponManager == null)
                     Debug.LogError("ERROR: Weapon manager not set!");
-                //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
-                WeaponScript weapon;
-                if (isMainHand)
-                {
-                    weapon = characterCausingDamage.characterWeaponManager.GetMainHand();
-                    if (enemy != null)
-                    {
-                        enemy.isHitByMainHand = true;
-                    }
-                }
-                else
-                {
-                    weapon = characterCausingDamage.characterWeaponManager.GetOffHand();
-                    if (enemy != null)
-                    {
-                        enemy.isHitByOffHand = true;
-                        DungeonManager.offHandUsed = true;
-                    }
-                }
+                WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
                 finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
-
-                //Aggro the monster if they aren't already
-                if (characterCausingDamage.isPlayer && targetCharacter.characterCombatManager.currentTarget == null)
-                {
-                    targetCharacter.characterCombatManager.AggroPlayer(characterCausingDamage.gameObject);
-                }
+                weapon.ApplyOnHitEffects(targetCharacter);
             }
             else
             {
@@ -144,12 +122,15 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
 
         //Apply final damage to character's health
-        Debug.Log("HPDmg: " + finalDamageDealt);
-        targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
-        if (targetCharacter.isPlayer)
-        {
-            PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(targetCharacter.characterStatsManager.currentHealth, targetCharacter.characterStatsManager.maxHealth);
-        }
+        targetCharacter.ApplyDamage(finalDamageDealt, characterCausingDamage, isMainHand);
+
+        //Moved to ApplyDamage
+        //Debug.Log("HPDmg: " + finalDamageDealt);
+        //targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
+        //if (targetCharacter.isPlayer)
+        //{
+        //    PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(targetCharacter.characterStatsManager.currentHealth, targetCharacter.characterStatsManager.maxHealth);
+        //}
 
         //Calculate Poise Damage to determine if the character will be stunned
         targetCharacter.characterStatsManager.totalPoiseDamage -= poiseDamage;
@@ -163,11 +144,12 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Reset the poise timer of the target creature
         targetCharacter.characterStatsManager.currentPoiseResetTimer = targetCharacter.characterStatsManager.defaultPoiseResetTimer;
 
-        if (targetCharacter != null && targetCharacter.characterUIManager != null && !targetCharacter.isPlayer)
-        {   
-            targetCharacter.characterUIManager.TriggerGlitchTextEffect();
-            targetCharacter.characterUIManager.TriggerDamagePopUp(finalDamageDealt);
-        }
+        //Moved to ApplyDamage
+        //if (targetCharacter != null && targetCharacter.characterUIManager != null && !targetCharacter.isPlayer)
+        //{   
+        //    targetCharacter.characterUIManager.TriggerGlitchTextEffect();
+        //    targetCharacter.characterUIManager.TriggerDamagePopUp(finalDamageDealt);
+        //}
     }
 
     public float CalculateNPCDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)

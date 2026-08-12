@@ -10,4 +10,5 @@ public class WeaponTraitData : ScriptableObject
     [TextArea]public string description;
     public Sprite icon;
     public bool inheritable = false;
+    public InstantCharacterEffect onHitEffect = null;
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
 public class AICharacterManager : CharacterManager
 {
@@ -235,5 +236,27 @@ public class AICharacterManager : CharacterManager
             activationBeacon.gameObject.SetActive(true);
         }
     }
-
+    public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
+    {
+        base.ApplyDamage(damage, characterCausingDamage, isMainHand);
+        if (characterCausingDamage != null)
+        {
+            if (isMainHand) {
+                isHitByMainHand = true;
+            } else {
+                isHitByOffHand = true;
+                DungeonManager.offHandUsed = true;
+            }
+            //Aggro the monster if they aren't already
+            if (characterCausingDamage.isPlayer && characterCombatManager.currentTarget == null)
+            {
+                characterCombatManager.AggroPlayer(characterCausingDamage.gameObject);
+            }
+        }
+        if (characterUIManager != null)
+        {
+            characterUIManager.TriggerGlitchTextEffect();
+            characterUIManager.TriggerDamagePopUp(damage, damageColor);
+        }
+    }
 }
