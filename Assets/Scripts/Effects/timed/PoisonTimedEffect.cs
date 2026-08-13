@@ -30,6 +30,7 @@ public class PoisonActiveEffect : ActiveCharacterEffect
             timeSinceTick = timeSinceTick + Time.deltaTime;
             while (timeSinceTick >= poisonEffect.interval)
             {
+                //Debug.Log("PoisonActiveEffect tick:" + effect.effectId);
                 timeSinceTick -= poisonEffect.interval;
                 character.ApplyDamage(damageOnTick, null, false, "green");
                 //Debug.Log("Tick Damage:" + damageOnTick);

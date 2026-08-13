@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ActiveCharacterEffect
 {
+    [Header("ActiveCharacterEffect is a simple object which tracks the life of an effect")]
     public TimedCharacterEffect effect;
     public float remainingDuration;
     [HideInInspector] public bool started = false;
@@ -19,6 +20,7 @@ public class ActiveCharacterEffect
         { // Start effect
             started = true;
             effect.OnEffectStart(character);
+            //Debug.Log("Effect start:" + effect.effectId);
         }
         // Decrement duration
         remainingDuration -= Time.deltaTime;
@@ -28,6 +30,7 @@ public class ActiveCharacterEffect
         { // Complete effect
             finished = true;
             effect.OnEffectFinish(character);
+            Debug.Log("Effect end:" + effect.effectId);
         }
     }
 }

@@ -444,14 +444,15 @@ public class WeaponScript : MonoBehaviour
             //TODO PLAY LEVEL UP NOISE/ANIMATION
         }
     }
-    public void ApplyWeaponOnHitEffects(CharacterManager targetCharacter)
+    public void ApplyWeaponOnHitEffects(CharacterManager targetCharacter, float hitDamage)
     {
         foreach(string weaponTraitId in stats.weaponTraits)
         {
             WeaponTraitData traitData = WeaponsController.GetWeaponTraitData(weaponTraitId);
             if (traitData.onHitEffect != null)
             {
-                targetCharacter.characterEffectsManager.ProcessInstantEffect(traitData.onHitEffect);
+                //Debug.Log("ApplyWeaponOnHitEffects:" + traitData.onHitEffect.timedEffect.effectId);//astest
+                targetCharacter.characterEffectsManager.ProcessInstantEffect(traitData.onHitEffect.Instantiate(hitDamage));
             }
         }
     }

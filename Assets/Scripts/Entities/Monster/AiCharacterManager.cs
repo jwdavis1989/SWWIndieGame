@@ -259,4 +259,20 @@ public class AICharacterManager : CharacterManager
             characterUIManager.TriggerDamagePopUp(damage, damageColor);
         }
     }
+    public override void ApplyOnHitEffects(CharacterManager target, float hitDamage = 1, bool isMainHand = false)
+    {
+        if (characterWeaponManager != null)
+        {
+            WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
+            if (weapon != null)
+            {
+                weapon.ApplyWeaponOnHitEffects(target, hitDamage);
+            }
+        }
+        else if (aiCharacterCombatManager.onHitEffect != null)
+        {
+            target.characterEffectsManager.ProcessInstantEffect(aiCharacterCombatManager.onHitEffect.Instantiate(hitDamage));
+        }
+        //else do on hit effects from enemies without weapons?
+    }
 }

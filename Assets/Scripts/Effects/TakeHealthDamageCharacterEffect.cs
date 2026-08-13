@@ -81,7 +81,8 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             PlayDirectionalBasedDamageAnimation(character);
 
             //Check for build-ups (Poison, Bleed, ect)
-            characterCausingDamage.ApplyOnHitEffects(character);
+            if(characterCausingDamage != null)
+                characterCausingDamage.ApplyOnHitEffects(character, finalDamageDealt, isMainHand);
 
             //Play damage sound FX
             PlayDamageSFX(character);
