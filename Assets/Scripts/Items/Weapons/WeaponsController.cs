@@ -137,6 +137,10 @@ public class WeaponsController : MonoBehaviour
     //{
     //    return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
     //}
+    public static WeaponTraitData GetWeaponTraitData(string traitId)
+    {
+        return ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+    }
 }
 
 //used for JSON array

@@ -6,14 +6,18 @@ public class ApplyTimedEffect : InstantCharacterEffect
     public TimedCharacterEffect timedEffect;
     public override void ProcessEffect(CharacterManager character)
     {
-        //todo: check stackable
-        /* Add timed effect */
-        if (!timedEffect.stackable && character.characterEffectsManager.activeTimedEffects.Exists(
-                (eff) => eff.effect.effectId == timedEffect.effectId))
-        {
-            // Non-Stackable so don't process
-                return;
+        if (!timedEffect.stackable)
+        { // check for duplicates
+            foreach (ActiveCharacterEffect eff in character.characterEffectsManager.activeTimedEffects) {
+                if (eff.effect.effectId.Equals(timedEffect.effectId)) {
+                    // refresh duration
+                    eff.remainingDuration = eff.effect.startingDuration;
+                    // return without adding effect again
+                    return;
+                }
+            }
         }
+        /* Add timed effect */
         character.characterEffectsManager.activeTimedEffects.Add(timedEffect.ActiveEffect());
     }
 }

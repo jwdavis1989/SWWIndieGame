@@ -86,7 +86,7 @@ public class DungeonLevelSelectManager : MonoBehaviour
             playerControls.Enable();
             PlayerInputManager.instance.SafeDisable(true, true);
         }
-        // Show relevant cpoisonEffect
+        // Show relevant control tooltips
         bool isGamepad = InputSwitchDetector.IsCurrentlyGamepad();
         foreach (GameObject gamepadeUI in gamepadTooltips)
             gamepadeUI.SetActive(isGamepad);

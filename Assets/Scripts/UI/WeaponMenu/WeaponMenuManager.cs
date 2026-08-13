@@ -930,7 +930,7 @@ public class WeaponMenuManager : MonoBehaviour
     bool canBreakdownActiveWeapon = false;
     void LoadWeaponTrait(string traitId)
     {
-        WeaponTraitData traitData = ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+        WeaponTraitData traitData = WeaponsController.GetWeaponTraitData(traitId);
         WeaponTraitButtonUI weaponTraitUI = Instantiate(weaponTraitUIPrefab, weaponTraitGrid.transform).GetComponent<WeaponTraitButtonUI>();
         weaponTraitUI.weaponTraitIcon.sprite = traitData.icon;
         weaponTraitUI.weaponTraitId = traitId;
@@ -1395,7 +1395,7 @@ public class WeaponMenuManager : MonoBehaviour
     }
     public void WeaponTraitTooltipOnHover(string traitId)
     {
-        WeaponTraitData traitData = ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+        WeaponTraitData traitData = WeaponsController.GetWeaponTraitData(traitId);
         tooltipUI.headerText.text = traitData.displayName;
         tooltipUI.centerText.text = traitData.description;
         tooltipUI.bottomText.text = "";

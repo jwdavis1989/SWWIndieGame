@@ -6,7 +6,7 @@ using UnityEngine;
 public class PoisonTimedEffect : TimedCharacterEffect
 {
     public float interval = 1;
-    public ActiveCharacterEffect ActiveEffect(float damage)
+    public PoisonActiveEffect ActiveEffect(float damage)
     {
         PoisonActiveEffect effect = new PoisonActiveEffect(this, startingDuration);
         effect.damageOnTick = damage;
@@ -32,7 +32,7 @@ public class PoisonActiveEffect : ActiveCharacterEffect
             {
                 timeSinceTick -= poisonEffect.interval;
                 character.ApplyDamage(damageOnTick, null, false, "green");
-                Debug.Log("Tick Damage:" + damageOnTick);
+                //Debug.Log("Tick Damage:" + damageOnTick);
             }
         }
     }
