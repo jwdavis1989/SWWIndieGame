@@ -90,6 +90,7 @@ public class TakeBlockedHealthDamageCharacterEffect : InstantCharacterEffect
             PlayDirectionalBasedBlockingAnimation(character);
 
             //Check for build-ups (Poison, Bleed, ect)
+            characterCausingDamage.ApplyOnHitEffects(character);
 
             //Play damage sound FX
             PlayDamageSFX(character);

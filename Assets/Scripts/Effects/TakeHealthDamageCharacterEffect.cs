@@ -81,6 +81,7 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             PlayDirectionalBasedDamageAnimation(character);
 
             //Check for build-ups (Poison, Bleed, ect)
+            characterCausingDamage.ApplyOnHitEffects(character);
 
             //Play damage sound FX
             PlayDamageSFX(character);
@@ -107,7 +108,6 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
                     Debug.LogError("ERROR: Weapon manager not set!");
                 WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
                 finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
-                weapon.ApplyOnHitEffects(targetCharacter);
             }
             else
             {

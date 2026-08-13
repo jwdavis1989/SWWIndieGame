@@ -373,4 +373,14 @@ public class CharacterManager : MonoBehaviour
     {
         characterStatsManager.currentHealth -= damage;
     }
+    public virtual void ApplyOnHitEffects(CharacterManager target, bool isMainHand = false)
+    {
+        if (characterWeaponManager != null){
+            WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
+            if (weapon != null){
+                weapon.ApplyWeaponOnHitEffects(target);
+            }
+        }
+        //else do on hit effects from enemies without weapons?
+    }
 }
