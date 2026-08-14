@@ -406,7 +406,7 @@ public class PlayerManager : CharacterManager
 
     public override void DisableInvulnerable()
     {
-        if (!InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
+        if (!InventionManager.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = false;
         }
@@ -415,7 +415,7 @@ public class PlayerManager : CharacterManager
     //Not currently being used because the dodge roll already begins invulnerability immediately, but is needed if that changes.
     public void EnableRollerJointInvulnerable()
     {
-        if (InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
+        if (InventionManager.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = true;
         }

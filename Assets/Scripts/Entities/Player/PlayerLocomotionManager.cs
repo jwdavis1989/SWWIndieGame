@@ -183,7 +183,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
 
             Vector3 newMovement = PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * ApplySpeedModifiers(airBoostSpeed);
             //Movement caused by boosting
-            if (InventionManager.instance.CheckHasUpgrade(InventionID.ICARUS_BOOSTERS))
+            if (InventionManager.CheckHasUpgrade(InventionID.ICARUS_BOOSTERS))
             {
                 //Player has Icarus Boosters
                 newMovement *= icarusBoosterDashSpeedMultiplier;

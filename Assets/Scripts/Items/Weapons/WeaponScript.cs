@@ -458,12 +458,20 @@ public class WeaponScript : MonoBehaviour
     }
     public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
+        // Check durability
         if (stats.currentDurability > 0)
         {
-            if (!InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS)) //no upgrade
-                stats.currentDurability--; // Reduce durability
-            else if (UnityEngine.Random.Range(0, 10) != 1) // 90% chance to reduce durability
-                stats.currentDurability--; // Reduce durability
+            bool daedalus_upgrade = InventionManager.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS);
+            bool reduceDurability = !daedalus_upgrade || UnityEngine.Random.Range(0, 10) != 1;
+            if (reduceDurability)
+            {
+                float durabilityDamage = 1;
+                if (stats.weaponTraits.Contains("durable"))
+                    durabilityDamage = 0.85f;
+                else if (stats.weaponTraits.Contains("fragile"))
+                    durabilityDamage = 1.15f;
+                stats.currentDurability -= durabilityDamage;
+            }
         }
         else
             return 0; // The weapon is broken. Return without doing damage

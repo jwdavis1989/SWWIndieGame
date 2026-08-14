@@ -907,7 +907,8 @@ public class WeaponMenuManager : MonoBehaviour
             greenTextStart = "<color=\"green\">";
             greenTextEnd += "<size=16> + " + activeComponent.durability + "</color></size>";
         }
-        durabiltyRight.GetComponent<TextMeshProUGUI>().text = stats.currentDurability + " / " + greenTextStart + stats.durability + greenTextEnd;
+        string durabilityText = "" + Math.Round(stats.currentDurability) + " / " + greenTextStart + stats.durability + greenTextEnd; ;
+        durabiltyRight.GetComponent<TextMeshProUGUI>().text = durabilityText;
         Button tooltipNavButton = durabiltyLeft.GetComponentInChildren<Button>();
         //tooltipNavButton.navigation
     }
