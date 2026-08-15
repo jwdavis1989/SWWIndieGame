@@ -164,6 +164,8 @@ public class PlayerManager : CharacterManager
         currentCharacterData.weaponSalvage = inventory.SaveWeaponComponents();
         //Dungeon
         currentCharacterData.savedDungeons = DungeonManager.SaveDungeons();
+        // Active effects
+        currentCharacterData.activeCharacterEffects = characterEffectsManager.activeTimedEffects;
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
@@ -227,6 +229,8 @@ public class PlayerManager : CharacterManager
         GetComponent<Inventory>().LoadInventory(currentCharacterData.inventoryItems, currentCharacterData.weaponSalvage);
         //Dungeon
         DungeonManager.LoadDungeons(currentCharacterData.savedDungeons);
+        // Active effects
+        characterEffectsManager.activeTimedEffects = currentCharacterData.activeCharacterEffects; 
     }
 
     public void ToggleFlashlight()

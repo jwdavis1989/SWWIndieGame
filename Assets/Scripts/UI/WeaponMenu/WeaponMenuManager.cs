@@ -1110,9 +1110,7 @@ public class WeaponMenuManager : MonoBehaviour
         int displayedCount = 0;
         int maxDisplayed = 28;
         int componentsToSkip = curComponentPage * cmpntPerRow;
-        //basic components
         int index = 0;
-        //componentButtonSelected = false;
         Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
         ItemDatabase itemDatabase = ItemDropManager.GetDB();
         Dictionary<string,InventoryItem> ownedComponents = inventory.GetTinkerComponents();
@@ -1123,14 +1121,12 @@ public class WeaponMenuManager : MonoBehaviour
             tooltipUI.bottomText.text = "";
         }
         //load regular tinker components
-        foreach (KeyValuePair<string, InventoryItem> kvp in ownedComponents)
-        {
+        foreach (KeyValuePair<string, InventoryItem> kvp in ownedComponents){
             LoadComponent(kvp, itemDatabase, ref componentsToSkip, ref index, ref displayedCount, maxDisplayed);
         }
 
         // Load weapon components
-        foreach (WeaponSalvageComponent salvage in inventory.weaponSalvageComponents)
-        {
+        foreach (WeaponSalvageComponent salvage in inventory.weaponSalvageComponents) {
             LoadWeaponSalvageComponent(salvage, itemDatabase, ref componentsToSkip, ref index, ref displayedCount, maxDisplayed);
         }
 
@@ -1186,14 +1182,11 @@ public class WeaponMenuManager : MonoBehaviour
             });
             tinkerComponentUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
             tinkerComponentUI.countText.text = "" + quantity;
-            //tinkerComponent.cornerButton.gameObject.SetActive(false);
             if (itemDetails.icon)//Icon
                 tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = itemDetails.icon;
-            //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
             if (displayedCount == currentlySelectedComponentIndex)
             {
                 tinkerComponentUI.mainButton.Select();
-                //Debug.Log("currentlySelectedComponentIndex:" + currentlySelectedComponentIndex + " displayedCount=" + displayedCount);
                 //componentButtonSelected = true;
             }
             if (TinkerComponentManager.CanUseComponent(activeWeapon, itemId, tinkerComponentData.stats))

@@ -181,7 +181,7 @@ public class CharacterWeaponManager : MonoBehaviour
     }
     public void EquipWeapon(GameObject weapon)
     {
-        Debug.Log("Active weapon is " + weapon.name);//astest
+        //Debug.Log("Active weapon is " + weapon.name);//astest
         int index = -1;
         index = ownedWeapons.FindIndex(wpn => wpn == weapon);
         if (index == -1)
@@ -190,7 +190,7 @@ public class CharacterWeaponManager : MonoBehaviour
             if (index != -1)
                 ChangeSpecialWeapon(index);
             else
-                Debug.LogWarning("EquipWeapon called and not found");
+                Debug.LogError("EquipWeapon called and not found");
         }
         else
             ChangeWeapon(index);

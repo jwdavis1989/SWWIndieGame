@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class ActiveCharacterEffect
 {
-    [Header("ActiveCharacterEffect is a simple object which tracks the life of an effect")]
+    [Header("ActiveCharacterEffect is a simple object which tracks the life of an effect\n"
+        +"Note: Added to save file. Not sure if necessary")]
     public TimedCharacterEffect effect;
     public float remainingDuration;
     [HideInInspector] public bool started = false;
