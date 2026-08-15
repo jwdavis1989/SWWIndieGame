@@ -12,6 +12,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class WeaponMenuManager : MonoBehaviour
 {
@@ -1101,10 +1102,9 @@ public class WeaponMenuManager : MonoBehaviour
      */
     int currentlySelectedComponentIndex = 0;
     //bool componentButtonSelected = false;
-    void LoadComponentsToScreen()
+    void LoadComponentsToScreen() 
     {
-        foreach (Transform child in componentsGrid.transform)
-        {
+        foreach (Transform child in componentsGrid.transform)  {
             Destroy(child.gameObject);
         }
         int displayedCount = 0;
@@ -1114,6 +1114,7 @@ public class WeaponMenuManager : MonoBehaviour
         int index = 0;
         //componentButtonSelected = false;
         Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
+        ItemDatabase itemDatabase = ItemDropManager.GetDB();
         Dictionary<string,InventoryItem> ownedComponents = inventory.GetTinkerComponents();
         if(ownedComponents.Count == 0)
         {
@@ -1121,94 +1122,20 @@ public class WeaponMenuManager : MonoBehaviour
             tooltipUI.centerText.text = "";
             tooltipUI.bottomText.text = "";
         }
+        //load regular tinker components
         foreach (KeyValuePair<string, InventoryItem> kvp in ownedComponents)
         {
-            string itemId = kvp.Key;
-            int quantity = kvp.Value.quantity;
-            ItemDatabase itemDatabase = ItemDropManager.GetDB();
-            TinkerComponentData tinkerComponentData = itemDatabase.GetTinkerComponentData(itemId);
-            ItemDetails itemDetails = itemDatabase.GetItem(itemId);
-            if (quantity > 0)
-            {
-                if(componentsToSkip > 0)
-                {
-                    componentsToSkip--;
-                    continue;
-                }
-                index++;
-                if (++displayedCount > maxDisplayed) break;
-                GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
-                TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
-                if (tinkerComponentUI == null) break;
-                if (tinkerComponentData == null) Debug.Log("tinkerComponentData null:" + itemId);
-                else if (tinkerComponentData.stats == null) Debug.Log("tinkerComponentData stats null:" + itemId);
-                tinkerComponentUI.index = index;
-                tinkerComponentUI.refComponent = tinkerComponentData.stats;
-                tinkerComponentUI.refItemId = tinkerComponentData.itemId;
-                //Add tooltip on hover event
-                EventTrigger.Entry entry = new EventTrigger.Entry();
-                entry.eventID = EventTriggerType.PointerEnter;
-                entry.callback.AddListener((eventData) =>
-                {
-                    SetTooltipToComponent(tinkerComponentData.stats, tinkerComponentData.itemId);
-                    tinkerComponentUI.mainButton.Select();
-                });
-                tinkerComponentUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
-                tinkerComponentUI.countText.text = "" + quantity;
-                //tinkerComponent.cornerButton.gameObject.SetActive(false);
-                if(itemDetails.icon)//Icon
-                    tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = itemDetails.icon;
-                //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
-                if (displayedCount == currentlySelectedComponentIndex)
-                {
-                    tinkerComponentUI.mainButton.Select();
-                    //Debug.Log("currentlySelectedComponentIndex:" + currentlySelectedComponentIndex + " displayedCount=" + displayedCount);
-                    //componentButtonSelected = true;
-                }
-                if (TinkerComponentManager.instance.CanUseComponent(activeWeapon, itemId, tinkerComponentData.stats))
-                {
-                    //Debug.Log("Can use:" + itemId);
-                    /**   ADD EVENT TO COMPONENT CLICK   */
-                    tinkerComponentUI.mainButton.onClick.AddListener(() =>
-                    {
-                        if (itemId.Equals("repair_kit"))
-                        {
-                            RepairActiveWeapon();
-                            DisplayActiveWeapon();
-                            LoadComponentsToScreen();
-                        }
-                        else if (activeWeapon != null && TinkerComponentManager.instance.UseComponent(activeWeapon, itemId, tinkerComponentData.stats))
-                        {
-                            int newCount = tinkerComponentUI.countText.text.Trim().ParseLargeInteger() - 1;
-                            if (newCount > 0)
-                            {
-                                tinkerComponentUI.countText.text = "" + newCount;
-                            }
-                            else
-                            {
-                                Destroy(gridElement);
-                            }
-                            DisplayActiveWeapon();
-                            currentlySelectedComponentIndex = tinkerComponentUI.index;
-                            if(currentlySelectedComponentIndex < 0)
-                                currentlySelectedComponentIndex = 0;
-                            //Debug.Log("onclick currentlySelectedComponentIndex:"+ currentlySelectedComponentIndex);
-                            LoadComponentsToScreen();
-                        }
-                        else
-                        {
-                            Debug.Log("Failed to use component " + itemDetails.itemName);
-                        }
-                    });
-                }
-                //else Debug.Log("Can't use:" + itemId);
-                //else // cant use component. disable the button
-                //   tinkerComponentUI.mainButton.interactable = false;
-            }
+            LoadComponent(kvp, itemDatabase, ref componentsToSkip, ref index, ref displayedCount, maxDisplayed);
         }
-        int count = 0;//count total unique components owned
-        foreach(var item in ownedComponents)
+
+        // Load weapon components
+        foreach (WeaponSalvageComponent salvage in inventory.weaponSalvageComponents)
         {
+            LoadWeaponSalvageComponent(salvage, itemDatabase, ref componentsToSkip, ref index, ref displayedCount, maxDisplayed);
+        }
+
+        int count = 0;//count total unique components owned
+        foreach(var item in ownedComponents) {
             if(item.Value.quantity > 0)
                 count++;
         }
@@ -1224,6 +1151,144 @@ public class WeaponMenuManager : MonoBehaviour
             cmpntScroll.numberOfSteps = numOfPage;
             cmpntScroll.size = 1.0f / numOfPage;
             cmpntCurrentStep = Mathf.Round(cmpntScroll.value * numOfPage);
+        }
+    }
+    public void LoadComponent(KeyValuePair<string, InventoryItem> kvp, ItemDatabase itemDatabase, ref int componentsToSkip, ref int index, ref int displayedCount, in int maxDisplayed)
+    {
+        string itemId = kvp.Key;
+        int quantity = kvp.Value.quantity;
+        TinkerComponentData tinkerComponentData = itemDatabase.GetTinkerComponentData(itemId);
+        ItemDetails itemDetails = itemDatabase.GetItem(itemId);
+        if (quantity > 0)
+        {
+            if (componentsToSkip > 0)
+            {
+                componentsToSkip--;
+                return;
+            }
+            index++;
+            if (++displayedCount > maxDisplayed) return;
+            GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
+            TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
+            if (tinkerComponentUI == null) return;
+            if (tinkerComponentData == null) Debug.Log("tinkerComponentData null:" + itemId);
+            else if (tinkerComponentData.stats == null) Debug.Log("tinkerComponentData stats null:" + itemId);
+            tinkerComponentUI.index = index;
+            tinkerComponentUI.refComponent = tinkerComponentData.stats;
+            tinkerComponentUI.refItemId = tinkerComponentData.itemId;
+            //Add tooltip on hover event
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) =>
+            {
+                SetTooltipToComponent(tinkerComponentData.stats, tinkerComponentData.itemId);
+                tinkerComponentUI.mainButton.Select();
+            });
+            tinkerComponentUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
+            tinkerComponentUI.countText.text = "" + quantity;
+            //tinkerComponent.cornerButton.gameObject.SetActive(false);
+            if (itemDetails.icon)//Icon
+                tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = itemDetails.icon;
+            //if (TinkerComponentManager.instance.CanUseComponent(PlayerWeaponManager.instance.GetEquippedWeapon(), component))
+            if (displayedCount == currentlySelectedComponentIndex)
+            {
+                tinkerComponentUI.mainButton.Select();
+                //Debug.Log("currentlySelectedComponentIndex:" + currentlySelectedComponentIndex + " displayedCount=" + displayedCount);
+                //componentButtonSelected = true;
+            }
+            if (TinkerComponentManager.CanUseComponent(activeWeapon, itemId, tinkerComponentData.stats))
+            {
+                //Debug.Log("Can use:" + itemId);
+                /**   ADD EVENT TO COMPONENT CLICK   */
+                tinkerComponentUI.mainButton.onClick.AddListener(() =>
+                {
+                    if (itemId.Equals("repair_kit"))
+                    {
+                        RepairActiveWeapon();
+                        DisplayActiveWeapon();
+                        LoadComponentsToScreen();
+                    }
+                    else if (activeWeapon != null && TinkerComponentManager.UseComponent(activeWeapon, itemId, tinkerComponentData.stats))
+                    {
+                        int newCount = tinkerComponentUI.countText.text.Trim().ParseLargeInteger() - 1;
+                        if (newCount > 0)
+                        {
+                            tinkerComponentUI.countText.text = "" + newCount;
+                        }
+                        else
+                        {
+                            Destroy(gridElement);
+                        }
+                        DisplayActiveWeapon();
+                        currentlySelectedComponentIndex = tinkerComponentUI.index;
+                        if (currentlySelectedComponentIndex < 0)
+                            currentlySelectedComponentIndex = 0;
+                        //Debug.Log("onclick currentlySelectedComponentIndex:"+ currentlySelectedComponentIndex);
+                        LoadComponentsToScreen();
+                    }
+                    else
+                    {
+                        Debug.Log("Failed to use component " + itemDetails.itemName);
+                    }
+                });
+            }
+            //else Debug.Log("Can't use:" + itemId);
+            //else // cant use component. disable the button
+            //   tinkerComponentUI.mainButton.interactable = false;
+        }
+    }
+    public void LoadWeaponSalvageComponent(WeaponSalvageComponent salvage, ItemDatabase itemDatabase, ref int componentsToSkip, ref int index, ref int displayedCount, in int maxDisplayed)
+    {
+        ItemDetails itemDetails = itemDatabase.GetItem(salvage.itemId);
+        if (componentsToSkip > 0)
+        {
+            componentsToSkip--;
+            return;
+        }
+        index++;
+        if (++displayedCount > maxDisplayed) return;
+        GameObject gridElement = Instantiate(tinkerComponentPrefab, componentsGrid.transform);
+        TinkerComponentUI tinkerComponentUI = gridElement.GetComponent<TinkerComponentUI>();
+        if (tinkerComponentUI == null) return;
+        tinkerComponentUI.index = index;
+        tinkerComponentUI.refComponent = salvage.stats;
+        tinkerComponentUI.refItemId = salvage.itemId;
+        //Add tooltip on hover event
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerEnter;
+        entry.callback.AddListener((eventData) =>
+        {
+            SetTooltipToSalvage(salvage, salvage.itemId);
+            tinkerComponentUI.mainButton.Select();
+        });
+        tinkerComponentUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
+        tinkerComponentUI.countText.text = "1"; //qty
+        if (itemDetails.icon)//Icon
+            tinkerComponentUI.foregroundIcon.GetComponent<Image>().sprite = itemDetails.icon;
+        if (displayedCount == currentlySelectedComponentIndex){
+            tinkerComponentUI.mainButton.Select();
+        }
+        if (TinkerComponentManager.CanUseComponent(activeWeapon, salvage.itemId, salvage.stats, salvage))
+        {
+            //Debug.Log("Can use:" + itemId);
+            /**   ADD EVENT TO COMPONENT CLICK   */
+            tinkerComponentUI.mainButton.onClick.AddListener(() =>
+            {
+                if (activeWeapon != null && TinkerComponentManager.UseComponent(activeWeapon, salvage.itemId, salvage.stats, salvage))
+                {
+                    Destroy(gridElement);
+                    DisplayActiveWeapon();
+                    currentlySelectedComponentIndex = tinkerComponentUI.index;
+                    if (currentlySelectedComponentIndex < 0)
+                        currentlySelectedComponentIndex = 0;
+                    //Debug.Log("onclick currentlySelectedComponentIndex:"+ currentlySelectedComponentIndex);
+                    LoadComponentsToScreen();
+                }
+                else
+                {
+                    Debug.Log("Failed to use component " + itemDetails.itemName);
+                }
+            });
         }
     }
     private void ReloadUpgradeMenu()
@@ -1372,6 +1437,20 @@ public class WeaponMenuManager : MonoBehaviour
             tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + ", ";
         }
         tooltipUI.centerText.text = tooltipUI.centerText.text.Substring(0, tooltipUI.centerText.text.Length - 2);
+        tooltipUI.bottomText.text = "" + ItemDropManager.GetDB().GetItem(itemId).cost + " gp";
+    }
+    private void SetTooltipToSalvage(WeaponSalvageComponent component, string itemId)
+    {
+
+        ItemDatabase itemDatabase = ItemDropManager.GetDB();
+        string itemName = itemDatabase.GetItem(itemId).itemName;
+        tooltipUI.headerText.text = itemName;
+        tooltipUI.centerText.text = "";
+        foreach (KeyValuePair<string, float> stat in component.stats.GetStats())
+        {
+            tooltipUI.centerText.text += stat.Key + ": +" + stat.Value + ", ";
+        }
+        tooltipUI.centerText.text = tooltipUI.centerText.text.Substring(0, tooltipUI.centerText.text.Length - 2); // remove extra comma
         tooltipUI.bottomText.text = "" + ItemDropManager.GetDB().GetItem(itemId).cost + " gp";
     }
     public void RepairActiveWeapon()

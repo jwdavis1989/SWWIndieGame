@@ -15,6 +15,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
     [HideInInspector] public PlayerInteractionManager playerInteractionManager;
+    [HideInInspector] public Inventory inventory;
 
     public GameObject flashlight;
     public GameObject cameraflashlight;
@@ -37,6 +38,7 @@ public class PlayerManager : CharacterManager
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
         playerInteractionManager = GetComponent<PlayerInteractionManager>();
+        inventory = GetComponent<Inventory>();
         capeClothComponent = capeSystem.GetComponentInChildren<Cloth>();
         capeClothWorldAccelerationModifier = capeClothComponent.worldAccelerationScale;
 
@@ -158,7 +160,6 @@ public class PlayerManager : CharacterManager
         //Inventions
         currentCharacterData.inventions = InventionManager.instance.SaveInventions();
         //Inventory
-        Inventory inventory = GetComponent<Inventory>();
         currentCharacterData.inventoryItems = inventory.SaveItems();
         currentCharacterData.weaponSalvage = inventory.SaveWeaponComponents();
         //Dungeon
