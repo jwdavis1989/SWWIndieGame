@@ -687,6 +687,7 @@ public class WeaponMenuManager : MonoBehaviour
                 Destroy(currentWeaponPreview);
             currentWeaponPreview = Instantiate(activeWeapon, weaponPreviewHolder);
             currentWeaponPreview.SetActive(true);
+
             if (wpn.isSpecialWeapon && wpn.stats.weaponType != WeaponType.Dagger && wpn.stats.weaponType != WeaponType.BowieKnife)
             {
                 currentWeaponPreview.transform.localPosition = new Vector3(0, -0.05f, 0);
