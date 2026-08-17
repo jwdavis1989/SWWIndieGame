@@ -356,7 +356,7 @@ public class InventoryMenuManager : MonoBehaviour
         ItemDetails itemDetails = GetItemDetails(itemId);
         tooltip.headerText.text = itemDetails.itemName;
         tooltip.centerText.text = itemDetails.description;
-        tooltip.bottomText.text = qty + "  -  " + itemDetails.cost + " gp";
+        tooltip.bottomText.text = "x" + qty + "  -  " + itemDetails.cost + " gp";
     }
 
     ItemDetails GetItemDetails(string itemId)

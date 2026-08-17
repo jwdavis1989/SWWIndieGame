@@ -60,6 +60,7 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Camera Movement Input")]
     PlayerControls playerControls;
     [SerializeField] Vector2 previewCameraInput;
+    private bool cursorInPreviewCamera = false;
 
     [Header("Submenus")]
     public bool submenuActive = false;
@@ -161,8 +162,7 @@ public class WeaponMenuManager : MonoBehaviour
         //HandleFocusComponentsInput();
         HandleGamepadSelectedObject();//Moving through components/etc.
         CheckControlsChanged();//Gamepad <> KB&M
-        if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf)
-        {
+        if (currentWeaponPreview != null && !currentWeaponPreview.activeSelf){
             currentWeaponPreview.SetActive(true);
         }
     }
@@ -177,6 +177,8 @@ public class WeaponMenuManager : MonoBehaviour
         if (activeWeapon == null)
             return;
         if (submenuActive)
+            return;
+        if (!InputSwitchDetector.IsCurrentlyGamepad() && !cursorInPreviewCamera)
             return;
         //rotate
         if (previewCameraInput.x > 0.75f)
@@ -207,6 +209,8 @@ public class WeaponMenuManager : MonoBehaviour
             weaponPreviewHolder.transform.position = newPosition;
         }
     }
+    public void WeaponPreviewCursorEnter() { cursorInPreviewCamera = true; }
+    public void WeaponPreviewCursorExit() { cursorInPreviewCamera = false; }
     //void HandleFocusComponentsInput()
     //{
     //    if (focusComponentsInput)
