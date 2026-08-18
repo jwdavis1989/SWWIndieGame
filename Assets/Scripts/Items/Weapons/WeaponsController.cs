@@ -96,7 +96,7 @@ public class WeaponsController : MonoBehaviour
         Destroy(oldWpn);
         return newWpn;
     }
-    public WeaponData GetWeaponData(string weaponId)
+    public static WeaponData GetWeaponData(string weaponId)
     {
         return ItemDropManager.GetDB().GetWeaponData(weaponId);
     }

@@ -686,26 +686,36 @@ public class WeaponMenuManager : MonoBehaviour
         if (activeWeapon)
         {
             WeaponScript wpn = activeWeapon.GetComponent<WeaponScript>();
+            WeaponData wpnData = WeaponsController.GetWeaponData(wpn.stats.weaponId);
+            WeaponPreviewRotation previewRotation = wpnData.weaponPreviewRotation;
             //preview
             if (currentWeaponPreview != null)
                 Destroy(currentWeaponPreview);
             currentWeaponPreview = Instantiate(activeWeapon, weaponPreviewHolder);
+            Destroy(currentWeaponPreview.GetComponent<WeaponScript>());
             currentWeaponPreview.SetActive(true);
 
-            if (wpn.isSpecialWeapon && wpn.stats.weaponType != WeaponType.Dagger && wpn.stats.weaponType != WeaponType.BowieKnife)
-            {
-                currentWeaponPreview.transform.localPosition = new Vector3(0, -0.05f, 0);
-                currentWeaponPreview.transform.localRotation = Quaternion.Euler(340f, 295f, 305f);
-                weaponPreviewHolder.localPosition = new Vector3(0, 0, 0);
-                weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
-            }
-            else
-            {
-                currentWeaponPreview.transform.localPosition = new Vector3(0, -0.5f, 0);
-                currentWeaponPreview.transform.localRotation = Quaternion.Euler(90f, 90f, 0);
-                weaponPreviewHolder.localPosition = new Vector3(0, 0, 0);
-                weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
-            }
+            currentWeaponPreview.transform.localPosition = new Vector3(0, previewRotation.height, 0);
+            currentWeaponPreview.transform.localRotation = Quaternion.Euler(previewRotation.x, previewRotation.y, previewRotation.z);
+            weaponPreviewHolder.localPosition = new Vector3(0, 0, previewRotation.zoom);
+            weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
+
+            //if (wpn.isSpecialWeapon && wpn.stats.weaponType != WeaponType.Dagger && wpn.stats.weaponType != WeaponType.BowieKnife)
+            //{
+            //    currentWeaponPreview.transform.localPosition = new Vector3(0, -0.05f, 0);
+            //    currentWeaponPreview.transform.localRotation = Quaternion.Euler(previewRotation.x, previewRotation.y, previewRotation.z);
+            //        //Quaternion.Euler(340f, 295f, 305f);
+            //    weaponPreviewHolder.localPosition = new Vector3(0, 0, -2);
+            //    weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
+            //}
+            //else
+            //{
+            //    currentWeaponPreview.transform.localPosition = new Vector3(0, -0.5f, 0);
+            //    currentWeaponPreview.transform.localRotation = Quaternion.Euler(previewRotation.x, previewRotation.y, previewRotation.z);
+            //    //Quaternion.Euler(90f, 90f, 0);
+            //    weaponPreviewHolder.localPosition = new Vector3(0, 0, 0);
+            //    weaponPreviewHolder.localRotation = Quaternion.Euler(0, 0, 315f);
+            //}
             currentWeaponPreview.layer = LayerMask.NameToLayer("WeaponPreview");
             foreach (Transform t in currentWeaponPreview.GetComponentsInChildren<Transform>())
                 t.gameObject.layer = LayerMask.NameToLayer("WeaponPreview");
@@ -949,6 +959,7 @@ public class WeaponMenuManager : MonoBehaviour
             WeaponTraitTooltipOnHover(traitId);
         });
         weaponTraitUI.weaponTraitButton.GetComponent<EventTrigger>().triggers.Add(entry);
+        entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.Select;
         entry.callback.AddListener((eventData) =>
         {
