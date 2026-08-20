@@ -87,6 +87,49 @@ public class Inventory : MonoBehaviour
     {
         return weaponSalvageComponents;
     }
+        public ItemDetails GetItemDetails(string itemId){
+        return ItemDropManager.GetDB().GetItem(itemId);
+    }
+    public Dictionary<string, InventoryItem> GetItemsSorted(string sortType)
+    {
+        if (string.Equals(sortType, "value", StringComparison.OrdinalIgnoreCase)) {
+            return items
+                .OrderBy(entry =>
+                {
+                    ItemDetails itemDetails = GetItemDetails(entry.Value.itemId);
+                    return itemDetails.cost;
+                })
+                .ThenBy(entry => entry.Value.itemId)
+                .ToDictionary(entry => entry.Key, entry => entry.Value);
+        } else if (string.Equals(sortType, "itemType", StringComparison.OrdinalIgnoreCase)) {
+            return items
+                .OrderBy(entry =>
+                {
+                    ItemDetails itemDetails = GetItemDetails(entry.Value.itemId);
+                    return itemDetails.itemType;
+                })
+                .ThenBy(entry => entry.Value.itemId)
+                .ToDictionary(entry => entry.Key, entry => entry.Value);
+        } else {
+            Debug.LogWarning("Invalid sortType: " + sortType);
+            return items;
+        }
+    }
+    public Dictionary<string, InventoryItem> GetItemsFilteredByType(string itemType)
+    {
+        if (string.IsNullOrWhiteSpace(itemType)) {
+            Debug.LogWarning("GetItemsFilteredByType called with null/empty itemType.");
+            return new Dictionary<string, InventoryItem>();
+        }
+        return items
+            .Where(entry =>
+            {
+                ItemDetails itemDetails = GetItemDetails(entry.Value.itemId);
+                return itemDetails != null &&
+                       string.Equals(itemDetails.itemType, itemType, StringComparison.OrdinalIgnoreCase);
+            })
+            .ToDictionary(entry => entry.Key, entry => entry.Value);
+    }
 }
 [Serializable]
 public class InventoryItem
