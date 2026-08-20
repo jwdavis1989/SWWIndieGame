@@ -17,11 +17,12 @@ public class DialogueConditions : MonoBehaviour
     }
     public void CheckFirstIdea()
     {
-        canSeeDialogue = InventionManager.instance.CheckHasIdea(IdeaID.METAL_PLATING);
+        canSeeDialogue = InventionManager.CheckHasIdea(IdeaID.METAL_PLATING);
     }
     public void CheckHasNotOpenedInventMenu()
     {
-        canSeeDialogue = !JournalManager.instance.journalFlags.ContainsKey(JournalManager.hasOpenedInventMenuKey);
+        canSeeDialogue = !JournalManager.CheckJournalFlag(JournalManager.hasOpenedInventMenuKey);
+        //instance.journalFlags.ContainsKey(JournalManager.hasOpenedInventMenuKey);
     }
     public void CheckIsFirst(NPCDialogue dialogue)
     {

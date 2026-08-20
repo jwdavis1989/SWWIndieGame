@@ -182,7 +182,7 @@ public class InventionMenuManager : MonoBehaviour
             //add owned IDEA BUTTON BEHAVIOUR  
             ideaPanel.mainButton.onClick.AddListener(()=>OwnedIdeaOnclick(savedIdea.ideaID, ideaPanel));
         }
-        int numOfPage = totalIdeaCount / ideasPerRow;
+        int numOfPage = Mathf.CeilToInt(totalIdeaCount / (float)ideasPerRow);
 
         //TODO scrolling
         //if (numOfPage < 2)

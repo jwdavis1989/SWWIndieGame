@@ -106,9 +106,9 @@ public class InventionManager : MonoBehaviour
         //ideas[(int)idea].image = ideaPicture;
     }
     /** returns true if the player has photograped the idea */
-    public bool CheckHasIdea(string ideaId)
+    public static bool CheckHasIdea(string ideaId)
     {
-        foreach (IdeaSaveData idea in obtainedIdeas)
+        foreach (IdeaSaveData idea in instance.obtainedIdeas)
         {
             if(idea.ideaID == ideaId)
                 return true; 

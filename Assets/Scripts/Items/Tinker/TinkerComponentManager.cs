@@ -229,7 +229,7 @@ public class TinkerComponentManager : MonoBehaviour
             (newDur > weapon.stats.durability) ||
             (newAttack > weapon.stats.attack))
         {
-            Debug.Log("canUpgrade:"+itemId);
+            //Debug.Log("canUpgrade:"+itemId);
             canUpgrade = true;
             if (doUpdate) {
                 weapon.stats.elemental = newStats;
