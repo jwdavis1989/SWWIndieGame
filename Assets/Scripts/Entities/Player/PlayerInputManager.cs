@@ -315,18 +315,10 @@ public class PlayerInputManager : MonoBehaviour
     //Use item button
     void HandleUseItemQuickSlotInput()
     {
-        if (cycleQuickSlotGamepad != 0)
-        {
-            if (cycleQuickSlotGamepad > 0)
-            {
-                //USED FOR IDEA CAM NOW
-                //Debug.Log("cycle gamepad 1");
-                //if (currentSelectedQuickslot < 3)
-                //    currentSelectedQuickslot++;
-                //else currentSelectedQuickslot = 0;
-            }
-            else
-            {
+        if (cycleQuickSlotGamepad != 0) {
+            if (cycleQuickSlotGamepad > 0) {
+                // UP - USED FOR IDEA CAM NOW
+            } else { // DOWN
                 //Debug.Log("cycle gamepad 2");
                 if (currentSelectedQuickslot > 0)
                     currentSelectedQuickslot--;
@@ -335,48 +327,39 @@ public class PlayerInputManager : MonoBehaviour
             cycleQuickSlotGamepad = 0;
         }
         bool anyInput = false;
-        if (useQuickslotGamepad) // [1], (Y)
-        {
+        if (useQuickslotGamepad) { // (Y)
             useQuickslotGamepad = false;
             anyInput = true;
         }
-        if (useQuickslot1)
-        {
-            //Debug.Log("useQuickslot1");
+        if (useQuickslot1) {
             useQuickslot1 = false;
             anyInput = true;
             currentSelectedQuickslot = 0;
         }
-        if (useQuickslot2)
-        {
+        if (useQuickslot2) {
             useQuickslot2 = false;
             anyInput = true;
             currentSelectedQuickslot = 1;
         }
-        if (useQuickslot3)
-        {
+        if (useQuickslot3) {
             useQuickslot3 = false;
             anyInput = true;
             currentSelectedQuickslot = 2;
         }
-        if (useQuickslot4)
-        {
+        if (useQuickslot4) {
             useQuickslot4 = false;
             anyInput = true;
             currentSelectedQuickslot = 3;
         }
-        if (anyInput)
-        {
+        if (anyInput) {
             if (player.isBlocking || DialogueManager.IsInDialogue() || PauseScript.instance.gamePaused || SceneManager.GetActiveScene().buildIndex == 0)
                 return; //dont use on title screen
             //Debug.Log("using quickslot " + currentSelectedQuickslot);
             Inventory playerInventory = player.GetComponent<Inventory>();
-            if (playerInventory != null && playerInventory.quickSlotItems[currentSelectedQuickslot] != null)
-            {
+            if (playerInventory != null && playerInventory.quickSlotItems[currentSelectedQuickslot] != null) {
                 string itemId = playerInventory.GetQuickSlotItemId(currentSelectedQuickslot);
                 //Debug.Log("using quickslot id:"+itemId+".");
-                if (itemId != "" && playerInventory.items.ContainsKey(itemId))
-                {
+                if (itemId != "" && playerInventory.inventoryItems.ContainsKey(itemId)) {
                     //Debug.Log("using item. id:" + itemId + ".");
                     playerInventory.UseItem(itemId);
                 }

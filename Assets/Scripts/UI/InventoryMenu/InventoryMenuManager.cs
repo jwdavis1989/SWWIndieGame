@@ -36,6 +36,8 @@ public class InventoryMenuManager : MonoBehaviour
     [HideInInspector][SerializeField] bool quickSlot3 = false;
     [HideInInspector][SerializeField] bool quickSlot4 = false; 
     [HideInInspector][SerializeField] float cycleQuickSlotGamepad = 0;
+    [HideInInspector][SerializeField] bool sortItemsInput = false;
+    [HideInInspector][SerializeField] bool filterItemsByCatergoryInput = false;
     GameObject currentCursorObj = null; // mostly used for gamepad
     [Header("Tooltips and any elements that are activated/deactivated when switching inputs")]
     public List<GameObject> gamepadTooltips = new List<GameObject>();
@@ -73,6 +75,8 @@ public class InventoryMenuManager : MonoBehaviour
             quickSlot2 = false;
             quickSlot3 = false;
             quickSlot4 = false;
+            sortItemsInput = false;
+            filterItemsByCatergoryInput = false;
             playerControls.InventoryMenu.Disable();
             //hide bottom tooltips
             foreach (GameObject gamepadeUI in gamepadTooltips)
@@ -94,6 +98,8 @@ public class InventoryMenuManager : MonoBehaviour
             playerControls.InventoryMenu.QuickslotButton2.performed += i => quickSlot2 = true;
             playerControls.InventoryMenu.QuickslotButton3.performed += i => quickSlot3 = true;
             playerControls.InventoryMenu.QuickslotButton4.performed += i => quickSlot4 = true;
+            playerControls.InventoryMenu.SortItems.performed += i => sortItemsInput = true;
+            playerControls.InventoryMenu.FilterItemsByCategory.performed += i => filterItemsByCatergoryInput = true;
             playerControls.PlayerActions.CycleQuickslot.performed += i => cycleQuickSlotGamepad = playerControls.PlayerActions.CycleQuickslot.ReadValue<float>();
             playerControls.Enable();
         }
@@ -107,6 +113,8 @@ public class InventoryMenuManager : MonoBehaviour
         HandleUseButtonInput();
         HandlequickSlotGamepadInput();
         HandlequickSlotKeyboardInput();
+        HandleSortItemsInput();
+        HandleFilterItemsByCategory();
     }
 
     /***********************************************************************************************
@@ -197,13 +205,30 @@ public class InventoryMenuManager : MonoBehaviour
             }
         }
     }
+    private string currentSortType = "";
+    public void HandleSortItemsInput()
+    {
+        if (sortItemsInput) {
+            sortItemsInput = false;
+            currentSortType = "cost";
+            LoadItemsToWindow();
+        }
+    }
+    private string currentFilter = "";
+    public void HandleFilterItemsByCategory()
+    {
+        if (filterItemsByCatergoryInput) {
+            filterItemsByCatergoryInput = false;
+            currentFilter = "component";
+            LoadItemsToWindow();
+        }
+    }
     private void CheckControlsChanged()
     {
         //Debug.Log("PauseScript.CheckControlsChanged");
         InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
         inputSwitchDetector.CheckControlsChanged();
-        if (inputSwitchDetector.deviceChanged)
-        {
+        if (inputSwitchDetector.deviceChanged) {
             //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
             LoadControlTooltips();
@@ -258,7 +283,7 @@ public class InventoryMenuManager : MonoBehaviour
         //{
         //    //TODO
         //}
-        foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.items) {
+        foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.inventoryItems) {
             InventoryItem item = itemKVP.Value;
             ItemDetails itemDetails = GetItemDetails(itemKVP.Key);
             if (item == null || itemDetails == null) continue;

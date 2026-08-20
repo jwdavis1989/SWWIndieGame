@@ -1550,7 +1550,7 @@ public class WeaponMenuManager : MonoBehaviour
                 Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
                 if(inventory.CheckOwnedQty(repairItemId) > 0)
                 {
-                    inventory.items[repairItemId].quantity--;
+                    inventory.inventoryItems[repairItemId].quantity--;
                     weapon.stats.currentDurability = weapon.stats.durability;
                     CloseWeaponSubmenu();
                     LoadComponentsToScreen();

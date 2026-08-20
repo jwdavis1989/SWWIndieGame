@@ -21,4 +21,8 @@ public class ItemDetails : ScriptableObject
     public GameObject worldPrefab;
     [TextArea] public string description;
 
+
+    public bool IsConsumable() {
+        return itemType.ToLower().Equals("consumable");
+    }
 }

@@ -275,7 +275,7 @@ public class PlayerManager : CharacterManager
             if (aWeapon.isMonsterWeapon)
                 continue;
             PlayerWeaponManager.instance.SetAllWeaponsToInactive(aWeapon.isSpecialWeapon);
-            PlayerWeaponManager.instance.AddWeaponById(aWeapon.itemId);
+            PlayerWeaponManager.instance.AddBaseWeaponById(aWeapon.itemId);
         }
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
         PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;

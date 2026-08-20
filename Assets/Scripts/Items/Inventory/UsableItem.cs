@@ -20,7 +20,7 @@ public class UsableItem : PickupableItem
             quantity--;
             if (quantity <= 0)
             {
-                player.GetComponent<Inventory>().items.Remove(itemId);
+                player.GetComponent<Inventory>().inventoryItems.Remove(itemId);
                 Destroy(gameObject);
             }
         }
