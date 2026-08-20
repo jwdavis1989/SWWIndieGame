@@ -14,9 +14,9 @@ public class JournalManager : MonoBehaviour
         journalFlags[hasNotOpenedInventMenuKey] = true;
     }
 
-    public bool CheckJournalFlag(string key)
+    public static bool CheckJournalFlag(string key)
     {
-        return journalFlags[key];
+        return instance.journalFlags[key];
     }
     public void Awake()
     {

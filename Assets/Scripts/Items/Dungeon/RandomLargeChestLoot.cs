@@ -12,8 +12,7 @@ public class RandomLargeChestLoot : MonoBehaviour
         if(hasRun) return;
         else hasRun = true;
         InteractableChestSimple chest = GetComponent<InteractableChestSimple>();
-        if (chest != null)
-        {
+        if (chest != null) {
             //add random component
             //GameObject randomComponent = TinkerComponentManager.instance.DropRandomGem(transform);
             //chest.contents.Add(randomComponent);
@@ -27,26 +26,20 @@ public class RandomLargeChestLoot : MonoBehaviour
             if (floor < 6)
                 gemDropChance = 80f; //80%
 
-            if (floor >= 6 && !JournalManager.instance.CheckJournalFlag(JournalManager.hasObtainedTier2RareWeapon))
-            { // first Floor 6+ Large Chest. Guaranteed weapon.
+            if (floor >= 6 && !JournalManager.CheckJournalFlag(JournalManager.hasObtainedTier2RareWeapon)) { 
+                // first Floor 6+ Large Chest. Guaranteed weapon.
                 gemDropChance = -1f;
-                if (randomNumber > 50f)
-                { // drop Bone Scimitar
+                if (randomNumber > 50f) { // drop Bone Scimitar
                     itemToAdd = ItemDropManager.DropWeaponById("bone_scimitar", transform);
-                }
-                else
-                { // drop Frost Wand
+                } else { // drop Frost Wand
                     itemToAdd = ItemDropManager.DropWeaponById("frost_wand", transform);
                 }
                 itemToAdd.AddComponent<RareLootDisplay>();
             }
 
-            if (randomNumber < gemDropChance)
-            {
+            if (randomNumber < gemDropChance) {
                 itemToAdd = TinkerComponentManager.instance.DropRandomGem(transform);
-            }
-            else
-            {
+            } else {
                 //drop weapon
                 //Debug.Log("Stocking Weapon " + (randomNumber>50f?"BoneBlade": "Frost Wand"));
                 if (randomNumber > 50f) // drop Bone Scimitar

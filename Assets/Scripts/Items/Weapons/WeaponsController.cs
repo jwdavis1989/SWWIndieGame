@@ -96,7 +96,7 @@ public class WeaponsController : MonoBehaviour
         Destroy(oldWpn);
         return newWpn;
     }
-    public WeaponData GetWeaponData(string weaponId)
+    public static WeaponData GetWeaponData(string weaponId)
     {
         return ItemDropManager.GetDB().GetWeaponData(weaponId);
     }
@@ -137,6 +137,10 @@ public class WeaponsController : MonoBehaviour
     //{
     //    return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
     //}
+    public static WeaponTraitData GetWeaponTraitData(string traitId)
+    {
+        return ItemDropManager.GetDB().GetWeaponTraitData(traitId);
+    }
 }
 
 //used for JSON array

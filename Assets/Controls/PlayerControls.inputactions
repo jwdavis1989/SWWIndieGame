@@ -1251,7 +1251,7 @@
                     "name": "DialogueContinue",
                     "type": "Button",
                     "id": "ef92f6aa-327e-4cc7-958d-798b0088b416",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -1394,7 +1394,7 @@
                     "name": "SwitchMenuLeft",
                     "type": "Button",
                     "id": "6ea47575-3a52-46b2-a331-eaae2908c69c",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -1484,7 +1484,7 @@
                     "name": "PauseButton",
                     "type": "Button",
                     "id": "3609a37f-ed55-45eb-b6ca-7f943e4108bc",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1866,7 +1866,7 @@
                     "name": "PauseButton",
                     "type": "Button",
                     "id": "0ab0b513-4364-486c-91ff-fe6428c774d1",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1893,7 +1893,7 @@
                     "name": "QuickslotButtonGamepad",
                     "type": "Button",
                     "id": "ac81a98b-25ff-4d76-9e1a-fcb48dce7898",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1938,7 +1938,25 @@
                     "name": "UseButton",
                     "type": "Button",
                     "id": "fb548e66-816f-4dff-94ae-b9edbdfcf79a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SortItems",
+                    "type": "Button",
+                    "id": "9d7d5c5e-ef41-4880-8a57-dae1ec40693b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FilterItemsByCategory",
+                    "type": "Button",
+                    "id": "34c06d80-02aa-4989-b80b-fc4be12f8ba5",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -2008,6 +2026,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13ff73e6-30bb-402f-81ed-5db550548a33",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SortItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbf17246-c3b2-4ca8-a3c8-9a2a7a951238",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SortItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "540e7b43-73ad-41db-b58e-b8d99b9aa2da",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FilterItemsByCategory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90fde1e2-13ae-44a2-bf55-7c89f4ed294b",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FilterItemsByCategory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -2137,7 +2199,7 @@
                     "name": "SwitchMenuLeft",
                     "type": "Button",
                     "id": "ab5d20d8-ab3f-42a3-bd54-696b1aec597a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false

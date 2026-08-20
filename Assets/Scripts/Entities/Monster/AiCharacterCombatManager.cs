@@ -35,8 +35,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
     public float AIRunningSpeedModifier = 1f;
     public float farRangeDistanceThreshold = 10f;
     private List<AISpeedModifier> speedModifiers = new List<AISpeedModifier>();
+    [Header("Effect which applies to characters hit by this character")]
+    public OnHitEffect onHitEffect = null;
     [Header("Effect which applies on to this character when it takes damage")]
-    public InstantCharacterEffect onDamageTakenEffect = null;
+    public OnHitEffect onDamageTakenEffect = null;
 
     public override void Awake()
     {
@@ -44,11 +46,16 @@ public class AiCharacterCombatManager : CharacterCombatManager
     }
     public void Update()
     {
-        if(character.characterStatsManager.CheckHPChanged() < 0)
-        { //health has decreased
-            if(onDamageTakenEffect != null)
-                character.characterEffectsManager.ProcessInstantEffect(onDamageTakenEffect);
-        }
+        HandleOnDamageTakenEffect();
+    }
+
+    void HandleOnDamageTakenEffect()
+    {
+        if (onDamageTakenEffect == null)
+            return;
+        float damageTaken = character.characterStatsManager.CheckDamageTaken();
+        if (damageTaken > 0)
+            character.characterEffectsManager.ProcessInstantEffect(onDamageTakenEffect.Instantiate(damageTaken));
     }
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {

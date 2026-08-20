@@ -17,6 +17,7 @@ public class WeaponData : ScriptableObject
     public List<string> evolveWeaponIds = new List<string>();
     public List<WeaponTraitData> startingTraits = new List<WeaponTraitData>();
     public GameObject weaponGameObject;
+    public WeaponPreviewRotation weaponPreviewRotation;
 
     [Header("Base Weapon Attributes")]
     public float baseAttack = 1.0f;
@@ -81,4 +82,11 @@ public class WeaponData : ScriptableObject
     //    public float areaSpellAttack01DamageMotionValue = 1f;
     //    //Guns
     //    public float singleTargetBulletAttack01DamageMotionValue = 1f;
+
+    // helper class for weapon preview rotation
+}
+[Serializable]
+public class WeaponPreviewRotation
+{
+    public float x, y, z, zoom, height;
 }

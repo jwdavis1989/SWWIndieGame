@@ -9,6 +9,8 @@ public class SceneLoadManager : MonoBehaviour
     public Scrollbar loadingBar;
     void Start()
     {
+        // Move player to origin
+        TeleportData.playerManager.transform.position = new Vector3(0,0,0);
         // Disable Player Gravity to avoid infinite falling bug
         TeleportData.playerManager.hasGravity = false;
 

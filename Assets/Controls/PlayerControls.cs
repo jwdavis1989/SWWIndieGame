@@ -1337,7 +1337,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""DialogueContinue"",
                     ""type"": ""Button"",
                     ""id"": ""ef92f6aa-327e-4cc7-958d-798b0088b416"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
@@ -1480,7 +1480,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""SwitchMenuLeft"",
                     ""type"": ""Button"",
                     ""id"": ""6ea47575-3a52-46b2-a331-eaae2908c69c"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
@@ -1570,7 +1570,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""PauseButton"",
                     ""type"": ""Button"",
                     ""id"": ""3609a37f-ed55-45eb-b6ca-7f943e4108bc"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1952,7 +1952,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""PauseButton"",
                     ""type"": ""Button"",
                     ""id"": ""0ab0b513-4364-486c-91ff-fe6428c774d1"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1979,7 +1979,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""QuickslotButtonGamepad"",
                     ""type"": ""Button"",
                     ""id"": ""ac81a98b-25ff-4d76-9e1a-fcb48dce7898"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -2024,7 +2024,25 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""UseButton"",
                     ""type"": ""Button"",
                     ""id"": ""fb548e66-816f-4dff-94ae-b9edbdfcf79a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SortItems"",
+                    ""type"": ""Button"",
+                    ""id"": ""9d7d5c5e-ef41-4880-8a57-dae1ec40693b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FilterItemsByCategory"",
+                    ""type"": ""Button"",
+                    ""id"": ""34c06d80-02aa-4989-b80b-fc4be12f8ba5"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -2094,6 +2112,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""UseButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""13ff73e6-30bb-402f-81ed-5db550548a33"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SortItems"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bbf17246-c3b2-4ca8-a3c8-9a2a7a951238"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SortItems"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""540e7b43-73ad-41db-b58e-b8d99b9aa2da"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FilterItemsByCategory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""90fde1e2-13ae-44a2-bf55-7c89f4ed294b"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FilterItemsByCategory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -2223,7 +2285,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""SwitchMenuLeft"",
                     ""type"": ""Button"",
                     ""id"": ""ab5d20d8-ab3f-42a3-bd54-696b1aec597a"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
@@ -3421,6 +3483,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_InventoryMenu_QuickslotButton3 = m_InventoryMenu.FindAction("QuickslotButton3", throwIfNotFound: true);
         m_InventoryMenu_QuickslotButton4 = m_InventoryMenu.FindAction("QuickslotButton4", throwIfNotFound: true);
         m_InventoryMenu_UseButton = m_InventoryMenu.FindAction("UseButton", throwIfNotFound: true);
+        m_InventoryMenu_SortItems = m_InventoryMenu.FindAction("SortItems", throwIfNotFound: true);
+        m_InventoryMenu_FilterItemsByCategory = m_InventoryMenu.FindAction("FilterItemsByCategory", throwIfNotFound: true);
         // InventMenu
         m_InventMenu = asset.FindActionMap("InventMenu", throwIfNotFound: true);
         m_InventMenu_InventButton = m_InventMenu.FindAction("InventButton", throwIfNotFound: true);
@@ -4706,6 +4770,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_InventoryMenu_QuickslotButton3;
     private readonly InputAction m_InventoryMenu_QuickslotButton4;
     private readonly InputAction m_InventoryMenu_UseButton;
+    private readonly InputAction m_InventoryMenu_SortItems;
+    private readonly InputAction m_InventoryMenu_FilterItemsByCategory;
     /// <summary>
     /// Provides access to input actions defined in input action map "InventoryMenu".
     /// </summary>
@@ -4753,6 +4819,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "InventoryMenu/UseButton".
         /// </summary>
         public InputAction @UseButton => m_Wrapper.m_InventoryMenu_UseButton;
+        /// <summary>
+        /// Provides access to the underlying input action "InventoryMenu/SortItems".
+        /// </summary>
+        public InputAction @SortItems => m_Wrapper.m_InventoryMenu_SortItems;
+        /// <summary>
+        /// Provides access to the underlying input action "InventoryMenu/FilterItemsByCategory".
+        /// </summary>
+        public InputAction @FilterItemsByCategory => m_Wrapper.m_InventoryMenu_FilterItemsByCategory;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -4806,6 +4880,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UseButton.started += instance.OnUseButton;
             @UseButton.performed += instance.OnUseButton;
             @UseButton.canceled += instance.OnUseButton;
+            @SortItems.started += instance.OnSortItems;
+            @SortItems.performed += instance.OnSortItems;
+            @SortItems.canceled += instance.OnSortItems;
+            @FilterItemsByCategory.started += instance.OnFilterItemsByCategory;
+            @FilterItemsByCategory.performed += instance.OnFilterItemsByCategory;
+            @FilterItemsByCategory.canceled += instance.OnFilterItemsByCategory;
         }
 
         /// <summary>
@@ -4844,6 +4924,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @UseButton.started -= instance.OnUseButton;
             @UseButton.performed -= instance.OnUseButton;
             @UseButton.canceled -= instance.OnUseButton;
+            @SortItems.started -= instance.OnSortItems;
+            @SortItems.performed -= instance.OnSortItems;
+            @SortItems.canceled -= instance.OnSortItems;
+            @FilterItemsByCategory.started -= instance.OnFilterItemsByCategory;
+            @FilterItemsByCategory.performed -= instance.OnFilterItemsByCategory;
+            @FilterItemsByCategory.canceled -= instance.OnFilterItemsByCategory;
         }
 
         /// <summary>
@@ -6201,6 +6287,20 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnUseButton(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SortItems" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSortItems(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FilterItemsByCategory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFilterItemsByCategory(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "InventMenu" which allows adding and removing callbacks.

@@ -68,9 +68,9 @@ public class InventionManager : MonoBehaviour
         SetHasObtained("air_boosters");
     }
     /** returns true if the player has aquired the upgrade */
-    public bool CheckHasUpgrade(string inventId)
+    public static bool CheckHasUpgrade(string inventId)
     {
-        return obtainedInventions.Contains(inventId);
+        return instance.obtainedInventions.Contains(inventId);
             //allInventions[(int)inventType].hasObtained;
     }
     /** flag that this invention type has been aquired */
@@ -106,9 +106,9 @@ public class InventionManager : MonoBehaviour
         //ideas[(int)idea].image = ideaPicture;
     }
     /** returns true if the player has photograped the idea */
-    public bool CheckHasIdea(string ideaId)
+    public static bool CheckHasIdea(string ideaId)
     {
-        foreach (IdeaSaveData idea in obtainedIdeas)
+        foreach (IdeaSaveData idea in instance.obtainedIdeas)
         {
             if(idea.ideaID == ideaId)
                 return true; 
@@ -188,14 +188,14 @@ public class InventionManager : MonoBehaviour
         switch (newInventionId.ToLower())
         {
             case "quick_charge_capacitor":// InventionType.QuickChargeCapacitory:
-                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.QuickChargeCapacitory);
+                //No immediate effects. Check using InventionManager.CheckHasUpgrade(InventionType.QuickChargeCapacitory);
                 break;
             case "predictive_neural_link":
-                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.PredictiveNeuralLink);
+                //No immediate effects. Check using InventionManager.CheckHasUpgrade(InventionID.PredictiveNeuralLink);
                 break;
-            case "icarus_boosters": // Icarus Boosters: No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.IcarusBoosters);
+            case "icarus_boosters": // Icarus Boosters: No immediate effects. Check using InventionManager.CheckHasUpgrade(InventionID.IcarusBoosters);
                 break;
-            case "treasure_scanner"://.TreasureScanner:: No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.TreasureScanner);
+            case "treasure_scanner"://.TreasureScanner:: No immediate effects. Check using InventionManager.CheckHasUpgrade(InventionID.TreasureScanner);
                 break;
             case "golem_endoplating"://.GolemEndoplating:
                 player.characterStatsManager.fortitude += 1;
@@ -205,12 +205,11 @@ public class InventionManager : MonoBehaviour
                 player.characterStatsManager.endurance += 1;
                 player.characterStatsManager.SetNewMaxStaminaValue();
                 break;
-            case "roller_joints"://.RollerJoints:
-                //No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionType.RollerJoints);
+            case InventionID.ROLLER_JOINT:  //No immediate effects. Check using InventionManager.CheckHasUpgrade(InventionType.RollerJoints);
                 break;
             case "enemy_radar"://.EnemyRadar:
                 break;
-            case "daedalus_nano_materials":// Daedalus Nano Materials: No immediate effects. Check using InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS);
+            case InventionID.DAEDALUS_NANO_MATERIALS:// Daedalus Nano Materials: No immediate effects. Check using InventionManager.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS);
                 break;
             case "synthetic_diamond"://.SyntheticDiamond:
                 ItemDropManager.instance.DropItemById("diamond", player.transform);

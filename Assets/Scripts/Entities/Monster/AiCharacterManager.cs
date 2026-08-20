@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
 public class AICharacterManager : CharacterManager
 {
@@ -235,5 +236,43 @@ public class AICharacterManager : CharacterManager
             activationBeacon.gameObject.SetActive(true);
         }
     }
-
+    public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
+    {
+        base.ApplyDamage(damage, characterCausingDamage, isMainHand);
+        if (characterCausingDamage != null)
+        {
+            if (isMainHand) {
+                isHitByMainHand = true;
+            } else {
+                isHitByOffHand = true;
+                DungeonManager.offHandUsed = true;
+            }
+            //Aggro the monster if they aren't already
+            if (characterCausingDamage.isPlayer && characterCombatManager.currentTarget == null)
+            {
+                characterCombatManager.AggroPlayer(characterCausingDamage.gameObject);
+            }
+        }
+        if (characterUIManager != null)
+        {
+            characterUIManager.TriggerGlitchTextEffect();
+            characterUIManager.TriggerDamagePopUp(damage, damageColor);
+        }
+    }
+    public override void ApplyOnHitEffects(CharacterManager target, float hitDamage = 1, bool isMainHand = false)
+    {
+        if (characterWeaponManager != null)
+        {
+            WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
+            if (weapon != null)
+            {
+                weapon.ApplyWeaponOnHitEffects(target, hitDamage);
+            }
+        }
+        else if (aiCharacterCombatManager.onHitEffect != null)
+        {
+            target.characterEffectsManager.ProcessInstantEffect(aiCharacterCombatManager.onHitEffect.Instantiate(hitDamage));
+        }
+        //else do on hit effects from enemies without weapons?
+    }
 }

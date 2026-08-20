@@ -102,7 +102,7 @@ public class TinkerComponentManager : MonoBehaviour
         }
         wpnToBreak.AddComponent<TinkerComponent>();
         WeaponSalvageComponent rv = new WeaponSalvageComponent();
-
+        rv.weaponTraits = weapon.stats.weaponTraits;
             //wpnToBreak.GetComponent<TinkerComponent>().stats;
         rv.stats.elementalStats = weapon.stats.elemental;
         rv.stats.attack = weapon.stats.attack;
@@ -144,18 +144,18 @@ public class TinkerComponentManager : MonoBehaviour
     /**
      * CanUseComponent will return true if any stat will be upgraded. I.e. if any matching stat is not currently maxed
      */
-    public bool CanUseComponent(GameObject weapon, string itemId, TinkerComponentStats tinkerComponent)
+    public static bool CanUseComponent(GameObject weapon, string itemId, TinkerComponentStats tinkerComponent, WeaponSalvageComponent salvage = null)
     {
-        return AddTinkerComponentToWeapon(weapon, tinkerComponent, itemId, false);
+        return instance.AddTinkerComponentToWeapon(weapon, tinkerComponent, itemId, false, salvage);
     }
     /**
      * Adds a component to a weapon. returns true if succesfully updated
      */
-    public bool UseComponent(GameObject weapon, string itemId, TinkerComponentStats tinkerComponent)
+    public static bool UseComponent(GameObject weapon, string itemId, TinkerComponentStats tinkerComponent, WeaponSalvageComponent salvage = null)
     {
-        return AddTinkerComponentToWeapon(weapon, tinkerComponent, itemId, true);
+        return instance.AddTinkerComponentToWeapon(weapon, tinkerComponent, itemId, true, salvage);
     }
-    private bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, TinkerComponentStats tinkerComponentToAdd, string itemId, bool doUpdate)
+    private bool AddTinkerComponentToWeapon(GameObject weaponToUpgrade, TinkerComponentStats tinkerComponentToAdd, string itemId, bool doUpdate, WeaponSalvageComponent salvage)
     {
         if (weaponToUpgrade == null) 
             return false;
@@ -229,34 +229,39 @@ public class TinkerComponentManager : MonoBehaviour
             (newDur > weapon.stats.durability) ||
             (newAttack > weapon.stats.attack))
         {
-            Debug.Log("canUpgrade:"+itemId);
+            //Debug.Log("canUpgrade:"+itemId);
             canUpgrade = true;
-            if (doUpdate)
-            {
+            if (doUpdate) {
                 weapon.stats.elemental = newStats;
                 weapon.stats.attack = newAttack;
                 weapon.stats.stability = newStab;
                 weapon.stats.block = newBlock;
                 weapon.stats.durability = newDur;
-                Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
-                inventory.GetItem(itemId).quantity--;
                 weapon.stats.currentTinkerPoints--;
-                if (tinkerComponentToAdd.isWeapon)
-                {
-                    //weaponComponents.Remove(tinkerComponentPassed);
-                    //TODO
+
+                Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
+                if (salvage != null){
                     //WeaponSalvageComponent weaponSalvage;
-                    //foreach(string weaponTraitId in weaponSalvage.weaponTraits)
-                    //{
-                    //    if (weapon.stats.weaponTraits.Contains(weaponTraitId))
-                    //        continue; // already have this trait, skip it
-                    //    WeaponTraitData weaponTraitData = ItemDropManager.GetDB().GetWeaponTraitData(weaponTraitId);
-                    //    if(weaponTraitData != null && weaponTraitData.inheritable)
-                    //        weapon.stats.weaponTraits.Add(weaponTraitId); // inherit trait
-                    //}
+                    foreach (string weaponTraitId in salvage.weaponTraits)
+                    {
+                        List<string> weaponTraits = weapon.stats.weaponTraits;
+                        if (weapon.stats.weaponTraits.Contains(weaponTraitId))
+                            continue; // already have this trait, skip it
+                        if(weaponTraitId.ToLower().Equals("fragile") && weaponTraits.Contains("durable")){
+                            weaponTraits.Remove("durable");
+                        }else if (weaponTraitId.ToLower().Equals("durable") && weaponTraits.Contains("fragile")){
+                            weaponTraits.Remove("fragile");
+                        } else {
+                            WeaponTraitData weaponTraitData = ItemDropManager.GetDB().GetWeaponTraitData(weaponTraitId);
+                            if (weaponTraitData != null && weaponTraitData.inheritable)
+                                weaponTraits.Add(weaponTraitId); // inherit trait
+                        }
+                    }
+                    inventory.weaponSalvageComponents.Remove(salvage);
+                } else  {
+                    inventory.GetItem(itemId).quantity--;
                 }
                 weapon.SetWeaponDamage(weapon.weaponDamageCollider);
-
             }
         }
         return canUpgrade;

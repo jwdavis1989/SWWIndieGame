@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TimedCharacterEffect : ScriptableObject
 {
+    [Header("TimedCharacterEffect is a Data which stores static data & effect ")]
     public string effectId;  
     public bool stackable = false;
     public float startingDuration;
