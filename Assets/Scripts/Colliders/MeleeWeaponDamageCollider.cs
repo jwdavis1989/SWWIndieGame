@@ -127,7 +127,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
         damageEffect.isReducedByArmor = isReducedByArmor;
 
         //Determine Motion Value
-        if (characterCausingDamage.characterWeaponManager != null)
+        if (characterCausingDamage.characterWeaponManager != null && weaponThatOwnsThisCollider != null)
         {
             switch (characterCausingDamage.characterWeaponManager.currentAttackType)
             {
@@ -172,6 +172,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
                 //Default
                 default:
+                    attackMotionValue = 1f;
                     break;
             }
 
