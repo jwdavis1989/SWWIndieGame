@@ -81,6 +81,8 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             PlayDirectionalBasedDamageAnimation(character);
 
             //Check for build-ups (Poison, Bleed, ect)
+            if(characterCausingDamage != null)
+                characterCausingDamage.ApplyOnHitEffects(character, finalDamageDealt, isMainHand);
 
             //Play damage sound FX
             PlayDamageSFX(character);
@@ -102,34 +104,11 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
             if (!targetCharacter.isPlayer)
             {
                 AICharacterManager enemy = targetCharacter.GetComponent<AICharacterManager>();
-                if (characterCausingDamage.characterWeaponManager == null)
+                CharacterWeaponManager characterWeaponManager = characterCausingDamage.characterWeaponManager;
+                if (characterWeaponManager == null)
                     Debug.LogError("ERROR: Weapon manager not set!");
-                //finalDamageDealt = PlayerWeaponManager.instance.ownedWeapons[PlayerWeaponManager.instance.indexOfEquippedWeapon].GetComponent<WeaponScript>().CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
-                WeaponScript weapon;
-                if (isMainHand)
-                {
-                    weapon = characterCausingDamage.characterWeaponManager.GetMainHand();
-                    if (enemy != null)
-                    {
-                        enemy.isHitByMainHand = true;
-                    }
-                }
-                else
-                {
-                    weapon = characterCausingDamage.characterWeaponManager.GetOffHand();
-                    if (enemy != null)
-                    {
-                        enemy.isHitByOffHand = true;
-                        DungeonManager.offHandUsed = true;
-                    }
-                }
+                WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
                 finalDamageDealt = weapon.CalculateTotalDamage(targetCharacter, attackMotionValue, fullChargeModifier);
-
-                //Aggro the monster if they aren't already
-                if (characterCausingDamage.isPlayer && targetCharacter.characterCombatManager.currentTarget == null)
-                {
-                    targetCharacter.characterCombatManager.AggroPlayer(characterCausingDamage.gameObject);
-                }
             }
             else
             {
@@ -144,12 +123,15 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
 
 
         //Apply final damage to character's health
-        Debug.Log("HPDmg: " + finalDamageDealt);
-        targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
-        if (targetCharacter.isPlayer)
-        {
-            PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(targetCharacter.characterStatsManager.currentHealth, targetCharacter.characterStatsManager.maxHealth);
-        }
+        targetCharacter.ApplyDamage(finalDamageDealt, characterCausingDamage, isMainHand);
+
+        //Moved to ApplyDamage
+        //Debug.Log("HPDmg: " + finalDamageDealt);
+        //targetCharacter.characterStatsManager.currentHealth -= finalDamageDealt;
+        //if (targetCharacter.isPlayer)
+        //{
+        //    PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(targetCharacter.characterStatsManager.currentHealth, targetCharacter.characterStatsManager.maxHealth);
+        //}
 
         //Calculate Poise Damage to determine if the character will be stunned
         targetCharacter.characterStatsManager.totalPoiseDamage -= poiseDamage;
@@ -163,27 +145,24 @@ public class TakeHealthDamageCharacterEffect : InstantCharacterEffect
         //Reset the poise timer of the target creature
         targetCharacter.characterStatsManager.currentPoiseResetTimer = targetCharacter.characterStatsManager.defaultPoiseResetTimer;
 
-        if (targetCharacter != null && targetCharacter.characterUIManager != null && !targetCharacter.isPlayer)
-        {   
-            targetCharacter.characterUIManager.TriggerGlitchTextEffect();
-            targetCharacter.characterUIManager.TriggerDamagePopUp(finalDamageDealt);
-        }
+        //Moved to ApplyDamage
+        //if (targetCharacter != null && targetCharacter.characterUIManager != null && !targetCharacter.isPlayer)
+        //{   
+        //    targetCharacter.characterUIManager.TriggerGlitchTextEffect();
+        //    targetCharacter.characterUIManager.TriggerDamagePopUp(finalDamageDealt);
+        //}
     }
 
     public float CalculateNPCDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
         float result = physicalDamage * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
-        //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
-        result += physicalDamage * (elementalDamage.firePower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.firePower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.icePower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.icePower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.lightningPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightningPower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.windPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.windPower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.earthPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.earthPower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.lightPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.lightPower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.beastPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.scalesPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower) * isReducedByArmor);
-        result += physicalDamage * (elementalDamage.techPower * 0.005f) * ((1 - targetCharacter.characterStatsManager.elementalDefenses.techPower) * isReducedByArmor);
+        Dictionary<string, float> damageElements = elementalDamage.ToElementalDictionary();
+        Dictionary<string, float> defenseElements = targetCharacter.characterStatsManager.elementalDefenses.ToElementalDictionary();
+        foreach (KeyValuePair<string, float> stat in damageElements)
+        {
+            result += physicalDamage * (stat.Value * 0.005f) * ((1 - defenseElements[stat.Key]) * isReducedByArmor);
+        }
 
         if (result > 0)
         {

@@ -86,21 +86,12 @@ public class DungeonLevelSelectManager : MonoBehaviour
             playerControls.Enable();
             PlayerInputManager.instance.SafeDisable(true, true);
         }
-        // Show relevant tooltips
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(true);
-            foreach (GameObject kbmUI in keyboardMouseTooltips)
-                kbmUI.SetActive(false);
-        }
-        else
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(false);
-            foreach (GameObject kbmUI in keyboardMouseTooltips)
-                kbmUI.SetActive(true);
-        }
+        // Show relevant control tooltips
+        bool isGamepad = InputSwitchDetector.IsCurrentlyGamepad();
+        foreach (GameObject gamepadeUI in gamepadTooltips)
+            gamepadeUI.SetActive(isGamepad);
+        foreach (GameObject kbmUI in keyboardMouseTooltips)
+            kbmUI.SetActive(!isGamepad);
     }
 
     // Update is called once per frame

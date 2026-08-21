@@ -10,11 +10,13 @@ public class ItemDatabase : ScriptableObject
     public List<ItemDetails> items;
     public List<ItemEffect> itemEffects;
     public List<WeaponData> weaponDetails;
+    public List<WeaponTraitData> weaponTraits;
     public List<TinkerComponentData> componentDetails;
 
     private Dictionary<string, ItemDetails> itemLookup;
     public Dictionary<string, ItemEffect> itemEffectsLookup;
     private Dictionary<string, WeaponData> weaponDetailsLookup;
+    private Dictionary<string, WeaponTraitData> weaponTraitsLookup;
     public Dictionary<string, TinkerComponentData> componentDetailsLookup;
 
     public void Initialize()
@@ -22,50 +24,42 @@ public class ItemDatabase : ScriptableObject
         itemLookup = new Dictionary<string, ItemDetails>();
         itemEffectsLookup = new Dictionary<string, ItemEffect>();
         weaponDetailsLookup = new Dictionary<string, WeaponData>();
+        weaponTraitsLookup = new Dictionary<string, WeaponTraitData>();
         componentDetailsLookup = new Dictionary<string, TinkerComponentData>();
 
-        foreach (ItemDetails item in items)
-        {
-            if (!itemLookup.ContainsKey(item.itemId.ToLower()))
-            {
+        foreach (ItemDetails item in items){
+            if (!itemLookup.ContainsKey(item.itemId.ToLower())){
                 itemLookup.Add(item.itemId.ToLower(), item);
-            }
-            else
-            {
+            }  else {
                 Debug.LogWarning($"Duplicate itemId: {item.itemId}");
             }
         }
-        foreach (ItemEffect itemEffect in itemEffects)
-        {
-            if (!itemEffectsLookup.ContainsKey(itemEffect.itemId.ToLower()))
-            {
+        foreach (ItemEffect itemEffect in itemEffects){
+            if (!itemEffectsLookup.ContainsKey(itemEffect.itemId.ToLower())){
                 itemEffectsLookup.Add(itemEffect.itemId.ToLower(), itemEffect);
-            }
-            else
-            {
+            }  else  {
                 Debug.LogWarning($"Duplicate itemEffect.itemId: {itemEffect.itemId}");
             }
         }
-        foreach (WeaponData weaponData in weaponDetails)
-        {
-            if (!weaponDetailsLookup.ContainsKey(weaponData.itemId.ToLower()))
-            {
+        foreach (WeaponData weaponData in weaponDetails) {
+            if (!weaponDetailsLookup.ContainsKey(weaponData.itemId.ToLower())){
                 weaponDetailsLookup.Add(weaponData.itemId.ToLower(), weaponData);
-            }
-            else
-            {
+            } else  {
                 Debug.LogWarning($"Duplicate weaponData.itemId: {weaponData.itemId}");
             }
         }
-        foreach (TinkerComponentData componentData in componentDetails)
-        {
-            if (!componentDetailsLookup.ContainsKey(componentData.itemId.ToLower()))
-            {
+        foreach (TinkerComponentData componentData in componentDetails) {
+            if (!componentDetailsLookup.ContainsKey(componentData.itemId.ToLower())){
                 componentDetailsLookup.Add(componentData.itemId.ToLower(), componentData);
-            }
-            else
-            {
+            } else {
                 Debug.LogWarning($"Duplicate componentData.itemId: {componentData.itemId}");
+            }
+        }
+        foreach (WeaponTraitData weaponTraitData in weaponTraits) {
+            if (!weaponTraitsLookup.ContainsKey(weaponTraitData.traitId.ToLower())){
+                weaponTraitsLookup.Add(weaponTraitData.traitId.ToLower(), weaponTraitData);
+            } else {
+                Debug.LogWarning($"Duplicate weaponTraitData.traitId: {weaponTraitData.traitId}");
             }
         }
     }
@@ -92,6 +86,14 @@ public class ItemDatabase : ScriptableObject
             Initialize();
         itemId = itemId.ToLower();//case insensitivity
         weaponDetailsLookup.TryGetValue(itemId, out var data);
+        return data;
+    }
+    public WeaponTraitData GetWeaponTraitData(string itemId)
+    {
+        if (itemEffectsLookup == null)
+            Initialize();
+        itemId = itemId.ToLower();//case insensitivity
+        weaponTraitsLookup.TryGetValue(itemId, out var data);
         return data;
     }
     public TinkerComponentData GetTinkerComponentData(string itemId)

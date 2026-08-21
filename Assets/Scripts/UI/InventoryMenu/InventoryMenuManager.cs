@@ -36,6 +36,8 @@ public class InventoryMenuManager : MonoBehaviour
     [HideInInspector][SerializeField] bool quickSlot3 = false;
     [HideInInspector][SerializeField] bool quickSlot4 = false; 
     [HideInInspector][SerializeField] float cycleQuickSlotGamepad = 0;
+    [HideInInspector][SerializeField] bool sortItemsInput = false;
+    [HideInInspector][SerializeField] bool filterItemsByCatergoryInput = false;
     GameObject currentCursorObj = null; // mostly used for gamepad
     [Header("Tooltips and any elements that are activated/deactivated when switching inputs")]
     public List<GameObject> gamepadTooltips = new List<GameObject>();
@@ -44,19 +46,15 @@ public class InventoryMenuManager : MonoBehaviour
     public static InventoryMenuManager instance;
     public void Awake()
     {
-        if (instance == null)
-        {
+        if (instance == null) {
             instance = this;
-        }
-        else
-        {
+        } else {
             Destroy(gameObject);
         }
     }
     public void OnEnable()
     {
-        if(playerInventory == null)
-        {
+        if(playerInventory == null) {
             playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
             playerStatsManager = playerInventory.GetComponent<PlayerStatsManager>();
         }
@@ -70,14 +68,15 @@ public class InventoryMenuManager : MonoBehaviour
 
     public void OnDisable()
     {
-        if (playerControls != null)
-        {
+        if (playerControls != null) {
             useButtonPerformed = false;
             quickSlotGamepad = false;
             quickSlot1 = false;
             quickSlot2 = false;
             quickSlot3 = false;
             quickSlot4 = false;
+            sortItemsInput = false;
+            filterItemsByCatergoryInput = false;
             playerControls.InventoryMenu.Disable();
             //hide bottom tooltips
             foreach (GameObject gamepadeUI in gamepadTooltips)
@@ -90,8 +89,7 @@ public class InventoryMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (playerControls == null)
-        {
+        if (playerControls == null) {
             //Debug.Log("setting weapon menu controls...");
             playerControls = new PlayerControls();
             playerControls.InventoryMenu.UseButton.performed += i => useButtonPerformed = true;
@@ -100,6 +98,8 @@ public class InventoryMenuManager : MonoBehaviour
             playerControls.InventoryMenu.QuickslotButton2.performed += i => quickSlot2 = true;
             playerControls.InventoryMenu.QuickslotButton3.performed += i => quickSlot3 = true;
             playerControls.InventoryMenu.QuickslotButton4.performed += i => quickSlot4 = true;
+            playerControls.InventoryMenu.SortItems.performed += i => sortItemsInput = true;
+            playerControls.InventoryMenu.FilterItemsByCategory.performed += i => filterItemsByCatergoryInput = true;
             playerControls.PlayerActions.CycleQuickslot.performed += i => cycleQuickSlotGamepad = playerControls.PlayerActions.CycleQuickslot.ReadValue<float>();
             playerControls.Enable();
         }
@@ -113,6 +113,8 @@ public class InventoryMenuManager : MonoBehaviour
         HandleUseButtonInput();
         HandlequickSlotGamepadInput();
         HandlequickSlotKeyboardInput();
+        HandleSortItemsInput();
+        HandleFilterItemsByCategory();
     }
 
     /***********************************************************************************************
@@ -121,17 +123,13 @@ public class InventoryMenuManager : MonoBehaviour
     GameObject currentlySelectedObj;
     public void HandleUseButtonInput()
     {
-        if (useButtonPerformed)
-        {
+        if (useButtonPerformed) {
             useButtonPerformed = false;
-            if (eventSystem.currentSelectedGameObject != null)
-            {
-                if (inventoryWindow.transform.childCount > 0)
-                {
+            if (eventSystem.currentSelectedGameObject != null) {
+                if (inventoryWindow.transform.childCount > 0) {
                     string itemId = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>().itemId;
                     ItemEffect itemEffect = itemDatabase.GetItemEffect(itemId);
-                    if (itemEffect != null)
-                    {
+                    if (itemEffect != null) {
                         playerInventory.UseItem(itemId);
                         LoadItemsToWindow();
                         LoadQuickslots();
@@ -151,15 +149,12 @@ public class InventoryMenuManager : MonoBehaviour
         //cycling
         if (cycleQuickSlotGamepad != 0)
         {
-            if (cycleQuickSlotGamepad < 0)
-            {
+            if (cycleQuickSlotGamepad < 0) {
                 //Debug.Log("cycle gamepad 1");
                 if (currentSelectedQuickslot < 3)
                     currentSelectedQuickslot++;
                 else currentSelectedQuickslot = 0;
-            }
-            else
-            {
+            } else {
                 //Debug.Log("cycle gamepad 2");
                 if (currentSelectedQuickslot > 0)
                     currentSelectedQuickslot--;
@@ -171,31 +166,26 @@ public class InventoryMenuManager : MonoBehaviour
             }
         }
         //using
-        if(quickSlotGamepad)
-        {
+        if(quickSlotGamepad) {
             quickSlotGamepad = false;
             SetQuickslotItem(currentSelectedQuickslot);
         }
     }
     public void HandlequickSlotKeyboardInput()
     {
-        if (quickSlot1)
-        {
+        if (quickSlot1) {
             quickSlot1 = false;
             SetQuickslotItem(0);
         }
-        if (quickSlot2) 
-        { 
+        if (quickSlot2) { 
             quickSlot2 = false;
             SetQuickslotItem(1);
         }
-        if (quickSlot3)
-        {
+        if (quickSlot3) {
             quickSlot3 = false;
             SetQuickslotItem(2);
         }
-        if (quickSlot4)
-        {
+        if (quickSlot4) {
             quickSlot4 = false;
             SetQuickslotItem(3);
         }
@@ -203,18 +193,34 @@ public class InventoryMenuManager : MonoBehaviour
     void SetQuickslotItem(int quickslotIndex)
     {
         if(eventSystem.currentSelectedGameObject == null)
-            { return; }
+            return; 
         InventoryItemUI itemUI = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
-        if (itemUI != null)
-        {
+        if (itemUI != null) {
             //UsableItem usableItem = playerInventory.GetItem(itemUI.itemId).GetComponent<UsableItem>();
             ItemEffect itemEffect = itemDatabase.GetItemEffect(itemUI.itemId);
             ItemDetails itemDetails = itemDatabase.GetItem(itemUI.itemId);
-            if (itemEffect != null && "usable,consumable".Contains(itemDetails.itemType))
-            {
+            if (itemEffect != null && "usable,consumable".Contains(itemDetails.itemType)) {
                 playerInventory.quickSlotItems[quickslotIndex] = itemUI.itemId;
                 LoadQuickslots();
             }
+        }
+    }
+    private string currentSortType = "";
+    public void HandleSortItemsInput()
+    {
+        if (sortItemsInput) {
+            sortItemsInput = false;
+            currentSortType = "cost";
+            LoadItemsToWindow();
+        }
+    }
+    private string currentFilter = "";
+    public void HandleFilterItemsByCategory()
+    {
+        if (filterItemsByCatergoryInput) {
+            filterItemsByCatergoryInput = false;
+            currentFilter = "component";
+            LoadItemsToWindow();
         }
     }
     private void CheckControlsChanged()
@@ -222,8 +228,7 @@ public class InventoryMenuManager : MonoBehaviour
         //Debug.Log("PauseScript.CheckControlsChanged");
         InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;
         inputSwitchDetector.CheckControlsChanged();
-        if (inputSwitchDetector.deviceChanged)
-        {
+        if (inputSwitchDetector.deviceChanged) {
             //Debug.Log("PauseScript.CheckControlsChanged Device Changed!" + inputSwitchDetector.currentDevice);
             inputSwitchDetector.deviceChanged = false;
             LoadControlTooltips();
@@ -231,40 +236,26 @@ public class InventoryMenuManager : MonoBehaviour
     }
     public void LoadControlTooltips()
     {
-        if (InputSwitchDetector.IsCurrentlyGamepad())
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(true);
-            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                gamepadeUI.SetActive(false);
-        }
-        else //Keyboard
-        {
-            foreach (GameObject gamepadeUI in gamepadTooltips)
-                gamepadeUI.SetActive(false);
-            foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-                gamepadeUI.SetActive(true);
-            //enable correct navigation scheme
-            //HandleNavigation();
-        }
+        bool isGamepad = InputSwitchDetector.IsCurrentlyGamepad();
+        foreach (GameObject gamepadeUI in gamepadTooltips)
+            gamepadeUI.SetActive(isGamepad);
+        foreach (GameObject gamepadeUI in keyboardMouseTooltips)
+            gamepadeUI.SetActive(!isGamepad);
     }
     public void HandleGamepadSelectedObject()
     {
-        if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad())
-        { //Handle Lost gamepad Cursor
-            if (inventoryWindow.transform.childCount > 0)
-            {
+        // Lost gamepad Cursor
+        if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad()) {
+            if (inventoryWindow.transform.childCount > 0) {
                 inventoryWindow.transform.GetChild(0).GetComponentInChildren<Button>().Select();
             }
         }
-        if (currentCursorObj != eventSystem.currentSelectedGameObject)
-        {
+        // Change in selected objcet
+        if (currentCursorObj != eventSystem.currentSelectedGameObject) {
             currentCursorObj = eventSystem.currentSelectedGameObject;
-            if (currentCursorObj != null)
-            {
+            if (currentCursorObj != null) {
                 InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
-                if (ui != null)
-                { // currently on a tinker component
+                if (ui != null) { // currently on a tinker component
                     SetTooltipToItem(ui.itemId);
                 }
             }
@@ -281,8 +272,7 @@ public class InventoryMenuManager : MonoBehaviour
         //load gold
         goldText.text = playerStatsManager.gold + " gp";
         //reload items
-        foreach (Transform child in inventoryWindow.transform)
-        {
+        foreach (Transform child in inventoryWindow.transform) {
             Destroy(child.gameObject);
         }
         int displayedCount = 0;
@@ -293,15 +283,12 @@ public class InventoryMenuManager : MonoBehaviour
         //{
         //    //TODO
         //}
-        foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.items)
-        {
+        foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.inventoryItems) {
             InventoryItem item = itemKVP.Value;
             ItemDetails itemDetails = GetItemDetails(itemKVP.Key);
             if (item == null || itemDetails == null) continue;
-            if (item.quantity > 0)
-            {
-                if (itemsToSkip > 0)
-                {
+            if (item.quantity > 0) {
+                if (itemsToSkip > 0) {
                     itemsToSkip--;
                     continue;
                 }
@@ -325,26 +312,21 @@ public class InventoryMenuManager : MonoBehaviour
     }
     void LoadQuickslots()
     {
-        int TOTOL_QUICKSLOTS = 4;
-        for (int i = 0; i < TOTOL_QUICKSLOTS; i++)
-        {
+        int TOTAL_QUICKSLOTS = 4;
+        for (int i = 0; i < TOTAL_QUICKSLOTS; i++) {
             if (InputSwitchDetector.IsCurrentlyGamepad())
                 quickslotUIs[i].gamepadSelectedIcon.SetActive(i == currentSelectedQuickslot);
             if (playerInventory == null) break;
             if (playerInventory.quickSlotItems[i] == null) continue;
             string itemId = playerInventory.GetQuickSlotItemId(i);
-            if (itemId != null && itemId != "")
-            {
+            if (itemId != null && itemId != "") {
                 ItemDetails itemDetails = GetItemDetails(itemId);
-                if (itemDetails != null)
-                {
+                if (itemDetails != null) {
                     quickslotUIs[i].itemUI.mainButtonForeground.sprite = itemDetails.icon;
                     quickslotUIs[i].itemText.text = itemDetails.itemName;
                 }
                 else Debug.Log("Item Details Not Found:"+itemId);
-            }
-            else
-            {
+            } else {
                 quickslotUIs[i].itemText.text = "None";
                 quickslotUIs[i].itemUI.mainButtonForeground.sprite = emptyQuickslotSpr;
             }
@@ -356,16 +338,12 @@ public class InventoryMenuManager : MonoBehaviour
         ItemDetails itemDetails = GetItemDetails(itemId);
         tooltip.headerText.text = itemDetails.itemName;
         tooltip.centerText.text = itemDetails.description;
-        tooltip.bottomText.text = qty + "  -  " + itemDetails.cost + " gp";
+        tooltip.bottomText.text = "x" + qty + "  -  " + itemDetails.cost + " gp";
     }
 
     ItemDetails GetItemDetails(string itemId)
     {
-        //foreach (ItemDetails details in inventoryItemDetails)
-        //    if (details.itemName == itemName)
-        //        return details;
         return itemDatabase.GetItem(itemId);
-        //return null;
     }
 
     //private void ToggleItemNavigation(bool enable)

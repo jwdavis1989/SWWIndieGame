@@ -14,4 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   traitId: poison_01
   displayName: Poison
-  icon: {fileID: 0}
+  description: "Leaves a lingering damage-over-time effect on creatures damaged by
+    this weapon. Deals 100% of the attack\u2019s final damage over the next 15 seconds."
+  icon: {fileID: 21300000, guid: 4c91ae7a2f34c194c918712eef1042e0, type: 3}
+  inheritable: 1
+  onHitEffect: {fileID: 11400000, guid: 93ac092ee665f754c8133eb74799e0be, type: 2}

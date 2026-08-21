@@ -182,7 +182,7 @@ public class InventionMenuManager : MonoBehaviour
             //add owned IDEA BUTTON BEHAVIOUR  
             ideaPanel.mainButton.onClick.AddListener(()=>OwnedIdeaOnclick(savedIdea.ideaID, ideaPanel));
         }
-        int numOfPage = totalIdeaCount / ideasPerRow;
+        int numOfPage = Mathf.CeilToInt(totalIdeaCount / (float)ideasPerRow);
 
         //TODO scrolling
         //if (numOfPage < 2)
@@ -514,7 +514,7 @@ public class InventionMenuManager : MonoBehaviour
             //Show the partial name for the half invented idea
             string needIdeaName = InventionManager.instance.ideaDatabase.GetIdea(possibleInvention.ideas[neededIdeaUnmatched]).ideaName;
             string displayName = "";
-            int displayedLetters = InventionManager.instance.CheckHasUpgrade(InventionID.PREDICTIVE_NEURALINK)
+            int displayedLetters = InventionManager.CheckHasUpgrade(InventionID.PREDICTIVE_NEURALINK)
                 ? needIdeaName.Length/4 : 1;
             for (int i = 0; i < needIdeaName.Length; i++)
             {

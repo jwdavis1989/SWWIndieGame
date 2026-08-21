@@ -67,7 +67,8 @@ public enum WeaponFamily
 [Serializable]
 public class WeaponStats
 {
-    [Header("Weapon Type")]
+    [Header("WeaponStats are saved to save file")]
+    [Header("Weapon Type - old")]
     public WeaponType weaponType = 0;
     [Header("Case insensitive id for data lookup")]
     public string weaponId = "";
@@ -90,7 +91,8 @@ public class WeaponStats
     public float currentExperiencePoints = 0.0f;
     public float experiencePointsToNextLevel = 100.0f;
     public int currentTinkerPoints = 0;
-    public String weaponName = "BaseWeaponName";
+    public string weaponName = "BaseWeaponName";
+    public List<string> weaponTraits;
 
     [Header("Stamina Costs")]
     public float baseStaminaCost = 20f;
@@ -207,6 +209,20 @@ public class ElementalStats
         sum.scalesPower = scalesPower + other.scalesPower;
         sum.techPower = techPower + other.techPower;
         return sum;
+    }
+    public Dictionary<string, float> ToElementalDictionary()
+    {
+        Dictionary<string, float> rv = new Dictionary<string, float>();
+        rv.Add("Fire", firePower);
+        rv.Add("Earth", earthPower);
+        rv.Add("Ice", icePower);
+        rv.Add("Light", lightPower);
+        rv.Add("Lightning", lightningPower);
+        rv.Add("Beast", beastPower);
+        rv.Add("Wind", windPower);
+        rv.Add("Scales", scalesPower);
+        rv.Add("Tech", techPower);
+        return rv;
     }
     public override string ToString()
     {
@@ -428,43 +444,47 @@ public class WeaponScript : MonoBehaviour
             //TODO PLAY LEVEL UP NOISE/ANIMATION
         }
     }
-
-    //public virtual void attackTarget(GameObject target)
-    //{
-    //    if (isInDebugMode) Debug.Log("BaseWeaponScript stats.attackTarget called.");//ASTEST
-    //    if (target != null) {
-    //        //calculateElementalDamage(stats.attack, target);
-    //        //target.GetComponent<EnemyController>().hp -= stats.attack;
-    //        //TODO
-    //        //play weapon animation
-    //        //set reload/recharge
-    //    }
-    //}
+    public void ApplyWeaponOnHitEffects(CharacterManager targetCharacter, float hitDamage)
+    {
+        foreach(string weaponTraitId in stats.weaponTraits)
+        {
+            WeaponTraitData traitData = WeaponsController.GetWeaponTraitData(weaponTraitId);
+            if (traitData.onHitEffect != null)
+            {
+                //Debug.Log("ApplyWeaponOnHitEffects:" + traitData.onHitEffect.timedEffect.effectId);//astest
+                targetCharacter.characterEffectsManager.ProcessInstantEffect(traitData.onHitEffect.Instantiate(hitDamage));
+            }
+        }
+    }
     public float CalculateTotalDamage(CharacterManager targetCharacter, float attackMotionValue = 1f, float fullChargeModifier = 1f)
     {
+        // Check durability
         if (stats.currentDurability > 0)
         {
-            if (!InventionManager.instance.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS)) //no upgrade
-                stats.currentDurability--; // Reduce durability
-            else if (UnityEngine.Random.Range(0, 10) != 1) // 90% chance to reduce durability
-                stats.currentDurability--; // Reduce durability
+            bool daedalus_upgrade = InventionManager.CheckHasUpgrade(InventionID.DAEDALUS_NANO_MATERIALS);
+            bool reduceDurability = !daedalus_upgrade || UnityEngine.Random.Range(0, 10) != 1;
+            if (reduceDurability)
+            {
+                float durabilityDamage = 1;
+                if (stats.weaponTraits.Contains("durable"))
+                    durabilityDamage = 0.85f;
+                else if (stats.weaponTraits.Contains("fragile"))
+                    durabilityDamage = 1.15f;
+                stats.currentDurability -= durabilityDamage;
+            }
         }
         else
             return 0; // The weapon is broken. Return without doing damage
 
         float result = stats.attack * (1 - targetCharacter.characterStatsManager.physicalDefense);
 
-        //I feel like there should be a way to do this iteratively, but with the ElementalStats class as it is, I don't know of any way to do so atm.
-        result += stats.attack * (stats.elemental.firePower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.firePower);
-        result += stats.attack * (stats.elemental.icePower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.icePower);
-        result += stats.attack * (stats.elemental.lightningPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.lightningPower);
-        result += stats.attack * (stats.elemental.windPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.windPower);
-        result += stats.attack * (stats.elemental.earthPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.earthPower);
-        result += stats.attack * (stats.elemental.lightPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.lightPower);
-        result += stats.attack * (stats.elemental.beastPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.beastPower);
-        result += stats.attack * (stats.elemental.scalesPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.scalesPower);
-        result += stats.attack * (stats.elemental.techPower * 0.005f) * (1 - targetCharacter.characterStatsManager.elementalDefenses.techPower);
 
+        Dictionary<string, float> damageElements = stats.elemental.ToElementalDictionary();
+        Dictionary<string, float> defenseElements = targetCharacter.characterStatsManager.elementalDefenses.ToElementalDictionary();
+        foreach (KeyValuePair<string, float> damageStat in damageElements)
+        {
+            result += stats.attack * (damageStat.Value * 0.005f) * (1 - defenseElements[damageStat.Key]);
+        }
         //Calculate block modifier
         float blockingState = targetCharacter.isPerfectBlocking ? targetCharacter.perfectBlockModifier : 1f;
 
@@ -1200,17 +1220,7 @@ public class WeaponScript : MonoBehaviour
     }
     public Dictionary<string, float> GetElementalStats()
     {
-        Dictionary<string, float> rv = new Dictionary<string, float>();
-        rv.Add("Fire", stats.elemental.firePower);
-        rv.Add("Earth", stats.elemental.earthPower);
-        rv.Add("Ice", stats.elemental.icePower);
-        rv.Add("Light", stats.elemental.lightPower);
-        rv.Add("Lightning", stats.elemental.lightningPower);
-        rv.Add("Beast", stats.elemental.beastPower);
-        rv.Add("Wind", stats.elemental.windPower);
-        rv.Add("Scales", stats.elemental.scalesPower);
-        rv.Add("Tech", stats.elemental.techPower);
-        return rv;
+        return stats.elemental.ToElementalDictionary();
     }
     public static string GetStatTooltip(string stat)
     {
@@ -1242,6 +1252,8 @@ public class WeaponScript : MonoBehaviour
                 return "Scales improves damage against fish and reptiles.";
             case "Tech":
                 return "Tech improves damage to robots.";
+            case "Experience":
+                return "Experience is gained by defeating monsters and levels up your weapon.";
             default:
                 return stat + " is like totally good or something.";
         }

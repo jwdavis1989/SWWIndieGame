@@ -63,6 +63,7 @@ public class TinkerComponent : PickupableItem
 [Serializable]
 public class TinkerComponentStats
 {
+    public string tinkerComponentId;
     [Header("Stats")]
     public float attack = 0;
     public float durability = 0;
@@ -99,5 +100,6 @@ public class WeaponSalvageComponent
     public string itemId;
     public string itemName = "Default";
     public TinkerComponentStats stats = new TinkerComponentStats();
+    public List<string> weaponTraits = new List<string>();
 }
 

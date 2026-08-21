@@ -166,7 +166,7 @@ public class IdeaCameraController : MonoBehaviour
             //Play Steve audio - Negative
             WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipNegative));
         }
-        else if (InventionManager.instance.CheckHasIdea(idea.ideaId))
+        else if (InventionManager.CheckHasIdea(idea.ideaId))
         { 
             ideaPhotoText.text = "Idea " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";

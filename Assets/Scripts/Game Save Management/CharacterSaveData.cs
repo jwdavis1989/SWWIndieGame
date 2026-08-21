@@ -44,6 +44,7 @@ public class CharacterSaveData
     public List<InventoryItem> inventoryItems = new List<InventoryItem>();
     public List<WeaponSalvageComponent> weaponSalvage = new List<WeaponSalvageComponent>();
     public List<DungeonSaveData> savedDungeons = new List<DungeonSaveData>();
+    public List<ActiveCharacterEffect> activeCharacterEffects = new List<ActiveCharacterEffect>();
 
     public CharacterSaveData()
     {

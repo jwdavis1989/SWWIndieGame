@@ -106,4 +106,8 @@ public class DamagePopUp : MonoBehaviour
             transform.Rotate(new Vector3(0, 0, currentRotationSpeed) * Time.deltaTime);
         }
     }
+    public void SetColor(Color color)
+    {
+        textMesh.color = color;
+    }
 }

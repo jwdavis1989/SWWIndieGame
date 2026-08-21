@@ -79,6 +79,8 @@ public class WeaponsController : MonoBehaviour
         newStatsRef.stability = oldStats.stability;
         newStatsRef.elemental = oldStats.elemental;
         newStatsRef.currentTinkerPoints = oldStats.currentTinkerPoints;
+        foreach(string oldTrait in oldStats.weaponTraits)
+            newStatsRef.weaponTraits.Add(oldTrait);
         if (isSpecial)
         {
             int oldWpnIndex = character.ownedSpecialWeapons.IndexOf(oldWpn);
@@ -94,7 +96,7 @@ public class WeaponsController : MonoBehaviour
         Destroy(oldWpn);
         return newWpn;
     }
-    public WeaponData GetWeaponData(string weaponId)
+    public static WeaponData GetWeaponData(string weaponId)
     {
         return ItemDropManager.GetDB().GetWeaponData(weaponId);
     }
@@ -131,9 +133,13 @@ public class WeaponsController : MonoBehaviour
         }
         return availableEvolves;
     }
-    public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
+    //public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
+    //{
+    //    return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
+    //}
+    public static WeaponTraitData GetWeaponTraitData(string traitId)
     {
-        return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
+        return ItemDropManager.GetDB().GetWeaponTraitData(traitId);
     }
 }
 
