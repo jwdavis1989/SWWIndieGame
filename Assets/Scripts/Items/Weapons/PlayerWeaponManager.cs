@@ -24,5 +24,10 @@ public class PlayerWeaponManager : CharacterWeaponManager
     {
         //Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 }

@@ -56,6 +56,7 @@ public class PauseScript : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         if (debugMode) return;//ASTEST
         DisableAllMenus();
         if (playerControls == null)
@@ -76,13 +77,17 @@ public class PauseScript : MonoBehaviour
         //CheckControlsChanged();
         HandleCheatMenu();
     }
-    WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
+    //WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
     {
         menuLeftInput = false;
         menuRightInput = false;
         exitPauseMenuInput = false;
-        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        yield return new WaitForEndOfFrame(); //wait for end of frame to avoid both paused/unpaused input triggering
         Unpause();
     }
     public void WeaponMenuClick(bool settingsChanged=false)
@@ -164,30 +169,35 @@ public class PauseScript : MonoBehaviour
     }
     public void MainMenuClick()
     {
+        StartCoroutine(WaitToEndOfFrameThenExitToMainMenu());
+    }
+    IEnumerator WaitToEndOfFrameThenExitToMainMenu()
+    {
+        yield return new WaitForEndOfFrame(); //wait for end of frame t
         /* DontDestroyOnLoad prevents simply loading the title screen from properly resetting. 
            This is dealt with here by destroying objects individually.
-           DontDestoryOnLoad cannot be looped through */ 
+           DontDestoryOnLoad cannot be looped through */
 
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
         Unpause();
         //Destroy(GameObject.Find("DontDestroyOnLoad")); //Not a real object
-        Destroy(GameObject.Find("Player"));
-        Destroy(GameObject.Find("Player Camera"));
-        Destroy(GameObject.Find("Player Input Manager"));
-        //Destroy(GameObject.Find("Player UI Manager")); //For some reason destroying this causes issues on title screen
-        Destroy(GameObject.Find("TinkerComponentManager"));
-        Destroy(GameObject.Find("WeaponController"));
-        Destroy(GameObject.Find("MiniMap Camera"));
-        Destroy(GameObject.Find("JournalManager"));
-        Destroy(GameObject.Find("IdeaCameraController"));
-        Destroy(GameObject.Find("WorldMusicManager"));
-        Destroy(GameObject.Find("WorldSaveGameManager"));
+        //Destroy(GameObject.Find("Player"));
+        //Destroy(GameObject.Find("Player Camera"));
+        //Destroy(GameObject.Find("Player Input Manager"));
+        ////Destroy(GameObject.Find("Player UI Manager")); //For some reason destroying this causes issues on title screen
+        //Destroy(GameObject.Find("TinkerComponentManager"));
+        //Destroy(GameObject.Find("WeaponController"));
+        //Destroy(GameObject.Find("MiniMap Camera"));
+        //Destroy(GameObject.Find("JournalManager"));
+        //Destroy(GameObject.Find("IdeaCameraController"));
+        //Destroy(GameObject.Find("WorldMusicManager"));
+        //Destroy(GameObject.Find("WorldSaveGameManager"));
         //Scene scne = GameObject.Find("Player").scene;
-        //GameObject ddol = GameObject.Find("DontDestroyOnLoad");
-        //foreach(GameObject obj in scne.GetRootGameObjects())
-        //{
-        //    Destroy(obj);
-        //}
+        foreach (GameObject go in WorldUtilityManager.DontDestroyOnLoadObjs)
+        {
+            Debug.Log("Destroying obj:" + go.name);
+            Destroy(go);
+        }
         //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
         SceneManager.LoadScene(0);
         //TODO REWORK TO WORK WITH LOADING SCREEN
@@ -216,7 +226,7 @@ public class PauseScript : MonoBehaviour
     }
     IEnumerator WaitToEndOfFrameThenPause()
     {
-        yield return frameEnd; //wait for end of frame to avoid both paused/unpaused input triggering
+        yield return new WaitForEndOfFrame(); //wait for end of frame to avoid both paused/unpaused input triggering
         Pause();
     }
     public void Pause()

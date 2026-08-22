@@ -69,6 +69,7 @@ public class PlayerCamera : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         cameraZPosition = cameraObject.transform.localPosition.z;
     }
 
@@ -82,6 +83,10 @@ public class PlayerCamera : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     // public void Update() {

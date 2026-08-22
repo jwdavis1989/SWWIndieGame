@@ -29,6 +29,10 @@ public class PlayerSettingsManager : MonoBehaviour
         filePath = Path.Combine(Application.persistentDataPath, filename);
         LoadPlayerSettings();
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
     // Player Settings Manager provides api for save & load of player settings and stores loaded player settings
     //    = Path.Combine(
     //    Application.persistentDataPath,

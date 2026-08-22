@@ -38,6 +38,10 @@ public class InputSwitchDetector : MonoBehaviour
             playerControls.Enable();
         }
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
     public void CheckControlsChanged()
     {
         //Debug.Log("InputSwitchDetector.CheckControlsChanged");

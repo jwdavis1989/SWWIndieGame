@@ -21,6 +21,7 @@ public class PlayerUIManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
     }
 
     // Update is called once per frame
@@ -43,5 +44,9 @@ public class PlayerUIManager : MonoBehaviour
         playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
         playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
     }
-    
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
+
 }

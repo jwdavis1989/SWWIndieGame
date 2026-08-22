@@ -54,6 +54,10 @@ public class ExitMenuScript : MonoBehaviour
         foreach (GameObject kbmUI in keyboardMouseTooltips)
             kbmUI.SetActive(false);
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
     private void CheckControlsChanged()
     {
         InputSwitchDetector inputSwitchDetector = InputSwitchDetector.instance;

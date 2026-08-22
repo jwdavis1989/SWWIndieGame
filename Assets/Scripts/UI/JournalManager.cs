@@ -24,17 +24,17 @@ public class JournalManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
-
-
-
-
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
 
 
 

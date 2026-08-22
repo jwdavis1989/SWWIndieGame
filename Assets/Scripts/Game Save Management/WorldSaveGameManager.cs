@@ -43,6 +43,7 @@ public class WorldSaveGameManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         LoadAllCharacterProfiles();
     }
 
@@ -67,6 +68,10 @@ public class WorldSaveGameManager : MonoBehaviour
         else {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     public string DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot characterSlot) {

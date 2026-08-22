@@ -49,6 +49,10 @@ public class TitleScreenManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
     //EventSystem eventSystem;
     //public void Update()
     //{

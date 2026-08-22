@@ -31,6 +31,7 @@ public class DialogueManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         }
         else
         {
@@ -51,6 +52,10 @@ public class DialogueManager : MonoBehaviour
             playerControls.UI.DialogueContinue.performed += i => dialogueContinueInput = true;
             playerControls.Enable();
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     // Update is called once per frame

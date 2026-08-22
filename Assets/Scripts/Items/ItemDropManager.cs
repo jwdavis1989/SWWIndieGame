@@ -96,5 +96,10 @@ public class ItemDropManager : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 }

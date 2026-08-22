@@ -18,6 +18,7 @@ public class WorldMusicController : MonoBehaviour
     void Start() {
         audioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         PlayTitleScreenMusic();
     }
 
@@ -42,6 +43,7 @@ public class WorldMusicController : MonoBehaviour
         //If we destroy this object, we unsubcribe from this event
         //This is to do with subscribing and might require research
         SceneManager.activeSceneChanged -= OnSceneChange;
+        instance = null; // For main menu button
     }
 
     public void PlayAdvancedMusic(AudioClip soundFX, float volume = 1f, float pitch = 1f, bool loop = true, bool randomizePitch = false, 

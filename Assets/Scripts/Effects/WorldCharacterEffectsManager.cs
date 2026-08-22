@@ -26,6 +26,10 @@ public class WorldCharacterEffectsManager : MonoBehaviour
 
         GenerateEffectIDs();
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
 
     private void GenerateEffectIDs() {
         for (int i = 0; i < instantEffects.Count; i++) {

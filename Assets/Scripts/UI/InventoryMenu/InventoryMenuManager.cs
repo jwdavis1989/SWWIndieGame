@@ -116,6 +116,10 @@ public class InventoryMenuManager : MonoBehaviour
         HandleSortItemsInput();
         HandleFilterItemsByCategory();
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
 
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************

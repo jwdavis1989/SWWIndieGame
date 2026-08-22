@@ -26,6 +26,10 @@ public class DungeonManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
     public static DungeonNodeSaveData GetDungeonNodeProgress(string dungeonId, string nodeId)
     {
         foreach (DungeonSaveData savedDungeon in instance.savedDungeons){

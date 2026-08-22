@@ -30,6 +30,7 @@ public class InventionManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         }
         else
         {
@@ -43,7 +44,10 @@ public class InventionManager : MonoBehaviour
         obtainedIdeas = new List<IdeaSaveData>();
         player = GameObject.Find("Player").GetComponent<PlayerManager>();
         //StartCoroutine(CheckForSavedIdeas());
-        DontDestroyOnLoad(gameObject);
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     //INVENTION

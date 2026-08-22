@@ -61,10 +61,15 @@ public class TinkerComponentManager : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         playerInventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
         itemDatabase = GetComponent<ItemDropManager>().itemDatabase;
         //Load base stats from json
         //LoadAllComponentTypes();
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
     //Array of Tinker Component Pre-Fabs. Use to instantiate components ingame and track players count of each component
     [Header("TinkerComponentManager is a singleton containing:\n " +

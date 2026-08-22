@@ -27,6 +27,7 @@ public class MiniMapManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
     }
 
     private void Awake() {
@@ -54,6 +55,10 @@ public class MiniMapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     private void OnApplicationFocus() {
