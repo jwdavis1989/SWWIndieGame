@@ -31,7 +31,7 @@ public class DialogueManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -56,6 +56,7 @@ public class DialogueManager : MonoBehaviour
     private void OnDestroy()
     {
         instance = null; // For main menu button
+        playerControls.Dispose();
     }
 
     // Update is called once per frame

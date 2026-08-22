@@ -14,6 +14,7 @@ public class ExitMenuScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
             Destroy(this);

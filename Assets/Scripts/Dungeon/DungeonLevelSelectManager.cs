@@ -103,6 +103,10 @@ public class DungeonLevelSelectManager : MonoBehaviour
         HandleFloorInfoInput();
         HandleGamepadSelectedObject();
     }
+    private void OnDestroy()
+    {
+        playerControls.Dispose();
+    }
     GameObject currentCursorObj;
     string selectedLevelId;
     public void HandleGamepadSelectedObject()

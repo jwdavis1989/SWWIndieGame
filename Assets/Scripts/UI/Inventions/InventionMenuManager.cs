@@ -48,7 +48,7 @@ public class InventionMenuManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             eventSystem = PauseScript.instance.mainPauseMenuEvents;
         }
         else

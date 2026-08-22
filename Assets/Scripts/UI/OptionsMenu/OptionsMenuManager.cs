@@ -47,6 +47,7 @@ public class OptionsMenuManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             LoadOptions();
         }
         else
@@ -145,6 +146,7 @@ public class OptionsMenuManager : MonoBehaviour
     private void OnDestroy()
     {
         instance = null; // For main menu button
+        playerControls.Dispose();
     }
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************

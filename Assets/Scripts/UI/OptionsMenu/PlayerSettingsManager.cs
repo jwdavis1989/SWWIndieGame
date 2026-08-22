@@ -18,6 +18,7 @@ public class PlayerSettingsManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {

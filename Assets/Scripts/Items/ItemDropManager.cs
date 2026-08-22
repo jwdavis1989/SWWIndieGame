@@ -87,6 +87,7 @@ public class ItemDropManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -96,7 +97,7 @@ public class ItemDropManager : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
     }
     private void OnDestroy()
     {

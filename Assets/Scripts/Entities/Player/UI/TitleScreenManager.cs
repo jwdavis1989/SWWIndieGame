@@ -42,6 +42,7 @@ public class TitleScreenManager : MonoBehaviour
     private void Awake() {
         if (instance == null) {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             audioSource = GetComponent<AudioSource>();
             //PlayTitleScreenBackgroundMusic();
         }

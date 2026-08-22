@@ -66,7 +66,7 @@ public class IdeaCameraController : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             AttachCameraToPlayer();
         }
         else
@@ -99,6 +99,7 @@ public class IdeaCameraController : MonoBehaviour
     private void OnDestroy()
     {
         instance = null; // For main menu button
+        playerControls.Dispose();
     }
     /** returns true if the player is in idea camera mode */
     static public bool isBusy()

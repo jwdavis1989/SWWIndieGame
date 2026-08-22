@@ -68,8 +68,6 @@ public class PlayerCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
         cameraZPosition = cameraObject.transform.localPosition.z;
     }
 
@@ -78,6 +76,8 @@ public class PlayerCamera : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {

@@ -26,8 +26,7 @@ public class WorldAIManager : MonoBehaviour
 
     public void Start()
     {
-        DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
     
     public void Awake()
@@ -35,6 +34,8 @@ public class WorldAIManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {

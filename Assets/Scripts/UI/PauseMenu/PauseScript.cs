@@ -47,6 +47,7 @@ public class PauseScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -56,7 +57,7 @@ public class PauseScript : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
         if (debugMode) return;//ASTEST
         DisableAllMenus();
         if (playerControls == null)
@@ -80,6 +81,7 @@ public class PauseScript : MonoBehaviour
     private void OnDestroy()
     {
         instance = null; // For main menu button
+        playerControls.Dispose();
     }
     //WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
     IEnumerator WaitToEndOfFrameThenContinue()
@@ -179,7 +181,7 @@ public class PauseScript : MonoBehaviour
            DontDestoryOnLoad cannot be looped through */
 
         //GameObject.Find("Player").transform.position = new Vector3(0,0,0);
-        Unpause();
+        //Unpause();
         //Destroy(GameObject.Find("DontDestroyOnLoad")); //Not a real object
         //Destroy(GameObject.Find("Player"));
         //Destroy(GameObject.Find("Player Camera"));
@@ -193,13 +195,19 @@ public class PauseScript : MonoBehaviour
         //Destroy(GameObject.Find("WorldMusicManager"));
         //Destroy(GameObject.Find("WorldSaveGameManager"));
         //Scene scne = GameObject.Find("Player").scene;
-        foreach (GameObject go in WorldUtilityManager.DontDestroyOnLoadObjs)
+        foreach (GameObject go in WorldUtilityManager.StaticObjects)
         {
-            Debug.Log("Destroying obj:" + go.name);
+            //Debug.Log("Destroying obj:" + go.name);
             Destroy(go);
         }
         //GameObject.Find("DontDestroyOnLoad").transform.DetachChildren();
-        SceneManager.LoadScene(0);
+        TeleportData.SceneID = 0;
+        TeleportData.playerManager = null;
+        TeleportData.SceneIdString = "TitleScreen";
+        TeleportData.enableAfterLoad = false;
+        playerControls.Dispose();
+        SceneManager.LoadScene("LoadingScene");
+        //SceneManager.LoadScene(0);
         //TODO REWORK TO WORK WITH LOADING SCREEN
         //TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(0,0,0,0,"TitleSCreen",false);
     }

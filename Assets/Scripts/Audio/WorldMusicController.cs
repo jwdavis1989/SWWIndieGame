@@ -18,7 +18,7 @@ public class WorldMusicController : MonoBehaviour
     void Start() {
         audioSource = GetComponent<AudioSource>();
         DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
         PlayTitleScreenMusic();
     }
 

@@ -30,7 +30,7 @@ public class InventionManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {

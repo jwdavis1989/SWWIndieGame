@@ -44,13 +44,17 @@ public class PlayerManager : CharacterManager
 
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
-        PlayerInputManager.instance.player = this;
-        WorldSaveGameManager.instance.player = this;
         TeleportData.playerManager = this;
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
 
+    }
+    protected override void Start()
+    {
+        PlayerInputManager.instance.player = this;
+        WorldSaveGameManager.instance.player = this;
+        base.Start();
     }
 
     // Update is called once per frame

@@ -166,6 +166,10 @@ public class WeaponMenuManager : MonoBehaviour
             currentWeaponPreview.SetActive(true);
         }
     }
+    private void OnDestroy()
+    {
+        playerControls.Dispose();
+    }
 
     //**************************** I N P U T ****************************
     float rotationSpeed = 100;

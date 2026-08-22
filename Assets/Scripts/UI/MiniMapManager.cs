@@ -27,13 +27,14 @@ public class MiniMapManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
     }
 
     private void Awake() {
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             miniMapCamera = GetComponent<Camera>();
 
             if (hudMiniMap == null)

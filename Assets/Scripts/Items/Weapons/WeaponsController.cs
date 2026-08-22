@@ -37,7 +37,7 @@ public class WeaponsController : MonoBehaviour
     {
         // Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
         SortWeaponsByType();
     }
 

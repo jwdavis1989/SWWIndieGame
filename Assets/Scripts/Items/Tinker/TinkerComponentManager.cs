@@ -52,6 +52,7 @@ public class TinkerComponentManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -61,7 +62,7 @@ public class TinkerComponentManager : MonoBehaviour
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
-        WorldUtilityManager.DontDestroyOnLoadObjs.Add(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
         playerInventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
         itemDatabase = GetComponent<ItemDropManager>().itemDatabase;
         //Load base stats from json
