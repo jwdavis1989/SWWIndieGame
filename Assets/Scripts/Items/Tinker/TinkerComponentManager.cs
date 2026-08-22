@@ -262,6 +262,7 @@ public class TinkerComponentManager : MonoBehaviour
                     inventory.GetItem(itemId).quantity--;
                 }
                 weapon.SetWeaponDamage(weapon.weaponDamageCollider);
+                weapon.UpdateHighestElementalStat();
             }
         }
         return canUpgrade;
