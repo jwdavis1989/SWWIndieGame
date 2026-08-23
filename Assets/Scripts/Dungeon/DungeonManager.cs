@@ -22,6 +22,7 @@ public class DungeonManager : MonoBehaviour
     {
         if (instance == null){
             instance = this;
+            DontDestroyOnLoad(gameObject);
             WorldUtilityManager.StaticObjects.Add(gameObject);
         } else {
             Destroy(gameObject);

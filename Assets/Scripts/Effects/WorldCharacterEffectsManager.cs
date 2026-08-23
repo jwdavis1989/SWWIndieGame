@@ -18,14 +18,14 @@ public class WorldCharacterEffectsManager : MonoBehaviour
 
     private void Awake() {
         if (instance == null) {
-            Debug.Log("Creating WorldCharacterEffectsManager " + gameObject.name);
+            //Debug.Log("Creating WorldCharacterEffectsManager " + gameObject.name);
             instance = this;
             DontDestroyOnLoad(gameObject);
             WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
-            Debug.Log("Extra WorldCharacterEffectsManager " + gameObject.name);
+            //Debug.Log("Extra WorldCharacterEffectsManager " + gameObject.name);
             Destroy(gameObject);
         }
 
@@ -33,7 +33,7 @@ public class WorldCharacterEffectsManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Debug.Log("Destroy WorldCharacterEffectsManager " + gameObject.name);
+        //Debug.Log("Destroy WorldCharacterEffectsManager " + gameObject.name);
         instance = null; // For main menu button
     }
 
