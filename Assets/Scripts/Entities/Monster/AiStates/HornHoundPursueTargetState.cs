@@ -58,37 +58,30 @@ public class HornHoundPursueTargetState : PursueTargetState
             if (aiCharacter.aiCharacterCombatManager.distanceFromTarget <= aiCharacter.navMeshAgent.stoppingDistance)
             {
                 //Calculate if the HornHound is behind its target
-                Vector3 directionToAI = (aiCharacter.transform.position - aiCharacter.aiCharacterCombatManager.currentTarget.transform.position).normalized;
-                float dotProduct = Vector3.Dot(aiCharacter.aiCharacterCombatManager.currentTarget.transform.forward, directionToAI);
-                Debug.Log("True: " + dotProduct);
+                // Vector3 directionToAI = (aiCharacter.transform.position - aiCharacter.aiCharacterCombatManager.currentTarget.transform.position).normalized;
+                // float dotProduct = Vector3.Dot(aiCharacter.aiCharacterCombatManager.currentTarget.transform.forward, directionToAI);
 
-                //float dotProduct = Vector3.Dot(aiCharacter.aiCharacterCombatManager.currentTarget.transform.forward, aiCharacter.transform.forward);
-
-                if (dotProduct < 0)
-                //if (dotProduct > 0.5f)
-                {
+                // if (dotProduct < 0)
+                // {
                     //Reset AI's animation speed to their attack speed modifier
                     aiCharacterCombatManager.SetAttackSpeed(aiCharacter);
 
                     
                     Debug.Log("New State: Combat");
                     return SwitchState(aiCharacter, aiCharacter.combatStanceState);
-                }
-                else
-                {
+                // }
+                // else
+                // {
                     
-                    Debug.Log("New State: Flanking");
-                    aiCharacter.BeginFlankingAndRunningAtTarget();
-                }
+                //     Debug.Log("New State: Flanking");
+                //     aiCharacter.BeginFlankingAndRunningAtTarget();
+                // }
             }
-            else
-            {
-                Vector3 directionToAI = (aiCharacter.transform.position - aiCharacter.aiCharacterCombatManager.currentTarget.transform.position).normalized;
-                float dotProduct = Vector3.Dot(aiCharacter.aiCharacterCombatManager.currentTarget.transform.forward, directionToAI);
-                Debug.Log("False: " + dotProduct);
-                Debug.Log("New State: Flanking");
-                aiCharacter.BeginFlankingAndRunningAtTarget();
-            }
+            // else
+            // {
+            //     Debug.Log("New State: Flanking");
+            //     aiCharacter.BeginFlankingAndRunningAtTarget();
+            // }
 
             //if target is not reachable/far return home
 

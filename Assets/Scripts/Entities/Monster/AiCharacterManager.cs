@@ -38,6 +38,9 @@ public class AICharacterManager : CharacterManager
     public bool isHitByMainHand = false;
     public bool isHitByOffHand = false;
 
+    [Header("Default Flank Direction")]
+    private bool flankRight = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -71,18 +74,21 @@ public class AICharacterManager : CharacterManager
         DeactivateCharacter();
     }
 
-    protected override void Update() {
+    protected override void Update()
+    {
         base.Update();
 
         aiCharacterCombatManager.HandleActionRecovery(this);
     }
-    protected override void FixedUpdate() {
+    protected override void FixedUpdate()
+    {
         base.FixedUpdate();
 
         ProcessStateMachine();
     }
 
-    protected override void LateUpdate() {
+    protected override void LateUpdate()
+    {
         base.LateUpdate();
     }
 
@@ -93,7 +99,8 @@ public class AICharacterManager : CharacterManager
     }
 
     //WARNING: Can't be overriden normally in Unity. If bugs involving OnDestroy effects failing, check here.
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         if (activationBeacon != null)
         {
             Destroy(activationBeacon);
@@ -102,7 +109,8 @@ public class AICharacterManager : CharacterManager
 
     public void ResetNavMeshAgentPosition()
     {
-        if (navMeshAgent) {
+        if (navMeshAgent)
+        {
             navMeshAgent.enabled = false;
             navMeshAgent.Warp(transform.position);
             navMeshAgent.enabled = true;
@@ -145,11 +153,13 @@ public class AICharacterManager : CharacterManager
             Destroy(this.gameObject);
         }
     }
-    
-    public void ProcessStateMachine() {
+
+    public void ProcessStateMachine()
+    {
         AIState nextState = currentState?.Tick(this);
 
-        if (nextState != null) {
+        if (nextState != null)
+        {
             currentState = nextState;
         }
 
@@ -160,24 +170,29 @@ public class AICharacterManager : CharacterManager
             navMeshAgent.transform.localRotation = Quaternion.identity;
         }
 
-        if (aiCharacterCombatManager.currentTarget != null) {
+        if (aiCharacterCombatManager.currentTarget != null)
+        {
             aiCharacterCombatManager.targetsDirection = aiCharacterCombatManager.currentTarget.transform.position - transform.position;
             aiCharacterCombatManager.viewableAngle = WorldUtilityManager.instance.GetAngleOfTarget(transform, aiCharacterCombatManager.targetsDirection);
             aiCharacterCombatManager.distanceFromTarget = Vector3.Distance(transform.position, aiCharacterCombatManager.currentTarget.transform.position);
         }
 
-        if (navMeshAgent && navMeshAgent.enabled) {
+        if (navMeshAgent && navMeshAgent.enabled)
+        {
             Vector3 agentDestination = navMeshAgent.destination;
             float remainingDistance = Vector3.Distance(agentDestination, transform.position);
 
-            if (remainingDistance > navMeshAgent.stoppingDistance) {
+            if (remainingDistance > navMeshAgent.stoppingDistance)
+            {
                 isMoving = true;
             }
-            else {
+            else
+            {
                 isMoving = false;
             }
         }
-        else {
+        else
+        {
             isMoving = false;
         }
     }
@@ -185,6 +200,48 @@ public class AICharacterManager : CharacterManager
     public void BeginRunningAtTarget()
     {
         characterAnimatorManager.UpdateAnimatorMovementParameters(0, 1, false);
+    }
+
+    public void BeginFlankingTarget()
+    {
+        // characterAnimatorManager.UpdateAnimatorMovementParameters(0.5f, 0, false);
+
+        //1. Play the walking animation
+        characterAnimatorManager.UpdateAnimatorMovementParameters(0.5f, 0, false);
+        
+        //2. Safeguard check for targets
+        if (aiCharacterCombatManager.currentTarget == null || navMeshAgent == null) {
+            return; 
+        }
+        
+        Transform targetTransform = aiCharacterCombatManager.currentTarget.transform;
+        
+        //3. Randomize the direction if the agent has reached its destination or has no path
+        if (!navMeshAgent.hasPath || navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        {
+            flankRight = Random.value > 0.5f;
+        }
+        
+        //4. Determine flank direction based on the randomized choice
+        //Positive right vector moves right, negative right vector moves left
+        Vector3 sideDirection = flankRight ? targetTransform.right : -targetTransform.right;
+        
+        //Combine side direction with a slight pull toward the back of the player
+        Vector3 flankDirection = (sideDirection - targetTransform.forward).normalized;// Determine how far away from the player the flanking path should orbit (e.g., 2 meters)
+        float flankRadius = 2f;
+        Vector3 targetFlankPosition = targetTransform.position + (flankDirection * flankRadius);
+        
+        //5. Sample the NavMesh to find the closest valid walkable point
+        if (NavMesh.SamplePosition(targetFlankPosition, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        {
+            //6. Tell the agent to move to the flanking point
+            navMeshAgent.SetDestination(hit.position);
+        }
+    }
+
+    public void BeginFlankingTargetFast()
+    {
+        characterAnimatorManager.UpdateAnimatorMovementParameters(1, 0, false);
     }
 
     public void BeginFlankingAndRunningAtTarget()
@@ -251,9 +308,12 @@ public class AICharacterManager : CharacterManager
         base.ApplyDamage(damage, characterCausingDamage, isMainHand);
         if (characterCausingDamage != null)
         {
-            if (isMainHand) {
+            if (isMainHand)
+            {
                 isHitByMainHand = true;
-            } else {
+            }
+            else
+            {
                 isHitByOffHand = true;
                 DungeonManager.offHandUsed = true;
             }
