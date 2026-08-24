@@ -27,12 +27,14 @@ public class MiniMapManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
     }
 
     private void Awake() {
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             miniMapCamera = GetComponent<Camera>();
 
             if (hudMiniMap == null)
@@ -54,6 +56,10 @@ public class MiniMapManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     private void OnApplicationFocus() {

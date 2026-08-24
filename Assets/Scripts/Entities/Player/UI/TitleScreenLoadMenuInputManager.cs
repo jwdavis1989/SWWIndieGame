@@ -27,6 +27,7 @@ public class TitleScreenLoadMenuInputManager : MonoBehaviour
 
     private void OnDisable() {
         playerControls.Disable();
+        playerControls.Dispose();
     }
 
 }

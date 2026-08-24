@@ -37,6 +37,7 @@ public class WeaponsController : MonoBehaviour
     {
         // Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
         SortWeaponsByType();
     }
 
@@ -47,6 +48,10 @@ public class WeaponsController : MonoBehaviour
         else {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
     public void SortWeaponsByType()
     {

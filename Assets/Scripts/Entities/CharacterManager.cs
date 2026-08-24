@@ -76,6 +76,7 @@ public class CharacterManager : MonoBehaviour
         if (isPlayer)
         {
             DontDestroyOnLoad(this);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
 
         characterController = GetComponent<CharacterController>();

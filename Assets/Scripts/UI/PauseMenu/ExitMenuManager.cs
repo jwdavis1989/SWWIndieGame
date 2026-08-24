@@ -14,6 +14,7 @@ public class ExitMenuScript : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
             Destroy(this);
@@ -53,6 +54,10 @@ public class ExitMenuScript : MonoBehaviour
             gamepadeUI.SetActive(false);
         foreach (GameObject kbmUI in keyboardMouseTooltips)
             kbmUI.SetActive(false);
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
     private void CheckControlsChanged()
     {

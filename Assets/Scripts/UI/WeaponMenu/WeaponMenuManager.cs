@@ -166,6 +166,10 @@ public class WeaponMenuManager : MonoBehaviour
             currentWeaponPreview.SetActive(true);
         }
     }
+    private void OnDestroy()
+    {
+        playerControls.Dispose();
+    }
 
     //**************************** I N P U T ****************************
     float rotationSpeed = 100;
@@ -385,7 +389,9 @@ public class WeaponMenuManager : MonoBehaviour
     void OpenWeaponSubmenu()
     {
         ToggleComponentNavigation(false);
-        Debug.Log("OpenWeaponSubmenu");
+        ToggleEvolutionNavigation(false);
+        ToggleStatTooltipNavigation(false);
+        //Debug.Log("OpenWeaponSubmenu");
         if(weaponSubmenu != null && !submenuActive)
         {
             weaponSubmenu.SetActive(true);
@@ -1473,15 +1479,23 @@ public class WeaponMenuManager : MonoBehaviour
             //obj.GetComponent<TogglingBehavior>().Toggle(helpActive);
             // Make navigatiable if tooltip active or turn off navigation if not
             Button button = obj.GetComponent<Button>();
-            button.interactable = helpActive;
+            button.interactable = enable;
             Navigation nav = button.navigation;
-            nav.mode = helpActive && weaponStatUI.statId.Length > 0 ? Navigation.Mode.Automatic : Navigation.Mode.None;
-            obj.GetComponent<Button>().navigation = nav;
+            nav.mode = enable && weaponStatUI.statId.Length > 0 ? Navigation.Mode.Automatic : Navigation.Mode.None;
+            button.navigation = nav;
             return obj;
         };
         foreach (Transform obj in primaryStatsTextGrid.transform) handleTooltip(obj);
         foreach (Transform obj in elementalStatsTextGrid.transform) handleTooltip(obj);
         foreach (Transform obj in expStatsTextGrid.transform) handleTooltip(obj);
+        foreach (Transform obj in weaponTraitGrid.transform) {
+            WeaponTraitButtonUI weaponStatUI = obj.GetComponent<WeaponTraitButtonUI>();
+            Button button = weaponStatUI.weaponTraitButton;
+            button.interactable = enable;
+            Navigation nav = button.navigation;
+            nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+            button.navigation = nav;
+        }
     }
     private void ToggleWeaponTraitNavigation(bool enable)
     {

@@ -48,6 +48,7 @@ public class InventoryMenuManager : MonoBehaviour
     {
         if (instance == null) {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         } else {
             Destroy(gameObject);
         }
@@ -115,6 +116,11 @@ public class InventoryMenuManager : MonoBehaviour
         HandlequickSlotKeyboardInput();
         HandleSortItemsInput();
         HandleFilterItemsByCategory();
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+        playerControls.Dispose();
     }
 
     /***********************************************************************************************

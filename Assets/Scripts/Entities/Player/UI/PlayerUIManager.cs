@@ -20,7 +20,7 @@ public class PlayerUIManager : MonoBehaviour
 
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
@@ -34,6 +34,8 @@ public class PlayerUIManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -43,5 +45,9 @@ public class PlayerUIManager : MonoBehaviour
         playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
         playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
     }
-    
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
+
 }

@@ -82,8 +82,6 @@ public class PlayerInputManager : MonoBehaviour
     //Start is called before the first frame update
     void Start()
     {
-        //Has to happen before we disable the instance
-        DontDestroyOnLoad(gameObject);
 
         //When the scene changes, run this logic
         //This is to do with subscribing and might require research
@@ -247,6 +245,8 @@ public class PlayerInputManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -284,7 +284,11 @@ public class PlayerInputManager : MonoBehaviour
         //If we destroy this object, we unsubcribe from this event
         //This is to do with subscribing and might require research
         SceneManager.activeSceneChanged -= OnSceneChange;
+        instance = null; // For main menu button
+        playerControls.PlayerActions.DebugTestAddWeapon.Reset();
+        playerControls.Dispose();
     }
+    void DN() { }
     //Interact Button
     void HandleInteractInput()
     {
