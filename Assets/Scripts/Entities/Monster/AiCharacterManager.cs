@@ -241,7 +241,37 @@ public class AICharacterManager : CharacterManager
 
     public void BeginFlankingTargetFast()
     {
+        //1. Play the walking animation
         characterAnimatorManager.UpdateAnimatorMovementParameters(1, 0, false);
+        
+        //2. Safeguard check for targets
+        if (aiCharacterCombatManager.currentTarget == null || navMeshAgent == null) {
+            return; 
+        }
+        
+        Transform targetTransform = aiCharacterCombatManager.currentTarget.transform;
+        
+        //3. Randomize the direction if the agent has reached its destination or has no path
+        if (!navMeshAgent.hasPath || navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        {
+            flankRight = Random.value > 0.5f;
+        }
+        
+        //4. Determine flank direction based on the randomized choice
+        //Positive right vector moves right, negative right vector moves left
+        Vector3 sideDirection = flankRight ? targetTransform.right : -targetTransform.right;
+        
+        //Combine side direction with a slight pull toward the back of the player
+        Vector3 flankDirection = (sideDirection - targetTransform.forward).normalized;// Determine how far away from the player the flanking path should orbit (e.g., 2 meters)
+        float flankRadius = 2f;
+        Vector3 targetFlankPosition = targetTransform.position + (flankDirection * flankRadius);
+        
+        //5. Sample the NavMesh to find the closest valid walkable point
+        if (NavMesh.SamplePosition(targetFlankPosition, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        {
+            //6. Tell the agent to move to the flanking point
+            navMeshAgent.SetDestination(hit.position);
+        }
     }
 
     public void BeginFlankingAndRunningAtTarget()

@@ -14,6 +14,13 @@ public class HornHoundCombatStanceState : CombatStanceState
     public override AIState Tick(AICharacterManager aiCharacter)
     {
         AiCharacterCombatManager aiCharacterCombatManager = aiCharacter.aiCharacterCombatManager;
+
+        //Cache the stopping distance once for efficiency
+        if (originalStoppingDistance < 0)
+        {
+            originalStoppingDistance = aiCharacter.navMeshAgent.stoppingDistance;
+        }
+
         if (aiCharacter.isPerformingAction)
         {
             return this;
@@ -83,7 +90,7 @@ public class HornHoundCombatStanceState : CombatStanceState
             {
                 //Character is not behind target, so try to flank
                 aiCharacter.navMeshAgent.stoppingDistance = flankingStoppingDistance;
-                aiCharacter.BeginFlankingTarget();
+                aiCharacter.BeginFlankingTargetFast();
                 return this;
             }
         }
