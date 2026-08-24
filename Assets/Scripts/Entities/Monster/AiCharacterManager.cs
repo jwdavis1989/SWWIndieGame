@@ -187,6 +187,16 @@ public class AICharacterManager : CharacterManager
         characterAnimatorManager.UpdateAnimatorMovementParameters(0, 1, false);
     }
 
+    public void BeginFlankingAndRunningAtTarget()
+    {
+        characterAnimatorManager.UpdateAnimatorMovementParameters(1, 1, false);
+    }
+
+    public void BeginFlankingAndWalkingAtTarget()
+    {
+        characterAnimatorManager.UpdateAnimatorMovementParameters(0.5f, 0.5f, false);
+    }
+
     public void ActivateCharacter()
     {
         gameObject.SetActive(true);
