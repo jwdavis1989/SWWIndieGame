@@ -19,6 +19,7 @@ public class InteractableChestSimple : Interactable
 
     [Header("Sound")]
     public AudioClip chestSound;//TODO use array?
+    public Animator animator;
 
     [Header("Lock & Key")]
     public bool needsKey = false;
@@ -62,6 +63,7 @@ public class InteractableChestSimple : Interactable
         //disable interactable
         SetColliderEnabled(false);
         //open animation
+        animator?.SetBool("isOpened", true);
         StartCoroutine(OpenDoorOverTime());
         HandleLootTable();
     }
