@@ -216,7 +216,12 @@ public class InventoryMenuManager : MonoBehaviour
     {
         if (sortItemsInput) {
             sortItemsInput = false;
-            currentSortType = "cost";
+            if(currentSortType == "cost")
+                currentSortType = "itemType";
+            else if (currentSortType == "itemType")
+                currentSortType = "";
+            else
+                currentSortType = "cost";
             LoadItemsToWindow();
         }
     }
@@ -289,7 +294,13 @@ public class InventoryMenuManager : MonoBehaviour
         //{
         //    //TODO
         //}
-        foreach (KeyValuePair<string, InventoryItem> itemKVP in playerInventory.inventoryItems) {
+        Dictionary<string, InventoryItem> items = playerInventory.inventoryItems;
+        if (currentSortType == "cost")
+            items = playerInventory.GetItemsSorted("cost");
+        else if (currentSortType == "itemType")
+            items = playerInventory.GetItemsSorted("itemType");
+
+        foreach (KeyValuePair<string, InventoryItem> itemKVP in items) {
             InventoryItem item = itemKVP.Value;
             ItemDetails itemDetails = GetItemDetails(itemKVP.Key);
             if (item == null || itemDetails == null) continue;

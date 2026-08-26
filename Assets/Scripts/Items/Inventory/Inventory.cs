@@ -105,7 +105,7 @@ public class Inventory : MonoBehaviour
     }
     public Dictionary<string, InventoryItem> GetItemsSorted(string sortType)
     {
-        if (string.Equals(sortType, "value", StringComparison.OrdinalIgnoreCase)) {
+        if (string.Equals(sortType, "cost", StringComparison.OrdinalIgnoreCase)) {
             return inventoryItems
                 .OrderBy(entry =>
                 {
