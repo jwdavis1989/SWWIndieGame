@@ -19,6 +19,7 @@ public class InteractableChestSimple : Interactable
 
     [Header("Sound")]
     public AudioClip chestSound;//TODO use array?
+    public Animator animator;
 
     [Header("Lock & Key")]
     public bool needsKey = false;
@@ -35,18 +36,13 @@ public class InteractableChestSimple : Interactable
     {
         base.Interact(player);
 
-        if (needsKey)
-        { // needing a key
-            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
-            {
+        if (needsKey) { // needing a key
+            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0) {
                 player.GetComponent<Inventory>().GetItem(key_id).quantity--;
                 SuccessfullyOpen(player);
-            }
-            else
+            } else
                 SetColliderEnabled(true);
-        }
-        else
-        {
+        } else {
             SuccessfullyOpen(player);
         }
 
@@ -62,6 +58,8 @@ public class InteractableChestSimple : Interactable
         //disable interactable
         SetColliderEnabled(false);
         //open animation
+        if(animator != null)
+            animator?.SetBool("isOpened", true);
         StartCoroutine(OpenDoorOverTime());
         HandleLootTable();
     }
@@ -112,9 +110,7 @@ public class InteractableChestSimple : Interactable
     public override void OnTriggerEnter(Collider other)
     {
         PlayerManager player = other.GetComponent<PlayerManager>();
-
-        if (player != null)
-        {
+        if (player != null) {
             //Pass the interaction to the player
             player.playerInteractionManager.AddInteractionToList(this);
             if (needsKey)
