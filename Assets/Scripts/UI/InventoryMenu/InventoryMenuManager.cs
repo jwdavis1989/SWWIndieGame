@@ -16,6 +16,8 @@ public class InventoryMenuManager : MonoBehaviour
     public QuickslotUI[] quickslotUIs = new QuickslotUI[4];
     public Sprite emptyQuickslotSpr = null;
     public TextMeshProUGUI goldText;
+    public TextMeshProUGUI sortText;
+    public TextMeshProUGUI filterText;
     [Header("Prefab for inventory item UI Element")]
     public GameObject itemUIPrefab;
     [Header("ScriptableObjects - Contain static item data")]
@@ -65,6 +67,8 @@ public class InventoryMenuManager : MonoBehaviour
         LoadQuickslots();
         // load tooltips
         LoadControlTooltips();
+        sortText.text = "";
+        filterText.text = "";
     }
 
     public void OnDisable()
@@ -78,6 +82,8 @@ public class InventoryMenuManager : MonoBehaviour
             quickSlot4 = false;
             sortItemsInput = false;
             filterItemsByCatergoryInput = false;
+            currentSortType = "";
+            currentFilter = "";
             playerControls.InventoryMenu.Disable();
             //hide bottom tooltips
             foreach (GameObject gamepadeUI in gamepadTooltips)
@@ -214,23 +220,38 @@ public class InventoryMenuManager : MonoBehaviour
     private string currentSortType = "";
     public void HandleSortItemsInput()
     {
-        if (sortItemsInput) {
+        if (sortItemsInput)
+        {
             sortItemsInput = false;
-            if(currentSortType == "cost")
-                currentSortType = "itemType";
-            else if (currentSortType == "itemType")
+            if (currentSortType == "Cost")
+                currentSortType = "Category";
+            else if (currentSortType == "Category")
                 currentSortType = "";
             else
-                currentSortType = "cost";
+                currentSortType = "Cost";
+            sortText.text = currentSortType + " -";
             LoadItemsToWindow();
         }
     }
     private string currentFilter = "";
     public void HandleFilterItemsByCategory()
     {
-        if (filterItemsByCatergoryInput) {
+        if (filterItemsByCatergoryInput)
+        {
             filterItemsByCatergoryInput = false;
-            currentFilter = "component";
+            if (currentFilter == "Consumable")
+                currentFilter = "Component";
+            else if (currentFilter == "Component")
+                currentFilter = "Weapon";
+            else if (currentFilter == "Weapon")
+                currentFilter = "";
+            else
+                currentFilter = "Consumable";
+
+            if (currentFilter == "")
+                filterText.text = "";
+            else
+                filterText.text = "- " + currentFilter;
             LoadItemsToWindow();
         }
     }
@@ -287,44 +308,46 @@ public class InventoryMenuManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         int displayedCount = 0;
-        int maxDisplayed = 32;
+        int maxDisplayed = 55;
         int itemsToSkip = curItemRow * itemsPerRow;
         int index = 0;
         //if(filters != null)
         //{
         //    //TODO
         //}
-        Dictionary<string, InventoryItem> items = playerInventory.inventoryItems;
-        if (currentSortType == "cost")
-            items = playerInventory.GetItemsSorted("cost");
-        else if (currentSortType == "itemType")
-            items = playerInventory.GetItemsSorted("itemType");
 
-        foreach (KeyValuePair<string, InventoryItem> itemKVP in items) {
+        Dictionary<string, InventoryItem> items = playerInventory.GetItems(currentFilter, currentSortType);
+        foreach (KeyValuePair<string, InventoryItem> itemKVP in items)
+        {
             InventoryItem item = itemKVP.Value;
-            ItemDetails itemDetails = GetItemDetails(itemKVP.Key);
-            if (item == null || itemDetails == null) continue;
-            if (item.quantity > 0) {
-                if (itemsToSkip > 0) {
-                    itemsToSkip--;
-                    continue;
-                }
-                index++;
-                if (++displayedCount > maxDisplayed) break;
-                GameObject itemGridElement = Instantiate(itemUIPrefab, inventoryWindow.transform);
-                InventoryItemUI itemUI = itemGridElement.GetComponent<InventoryItemUI>();
-                itemUI.mainButtonForeground.sprite = itemDetails.icon;
-                itemUI.itemId = itemDetails.itemId;
-                //Add tooltip on hover event
-                EventTrigger.Entry entry = new EventTrigger.Entry();
-                entry.eventID = EventTriggerType.PointerEnter;
-                entry.callback.AddListener((eventData) =>
-                {
-                    SetTooltipToItem(itemUI.itemId);
-                    itemUI.mainButton.Select();
-                });
-                itemUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
+            string itemId = itemKVP.Key;
+            WeaponScript weapon = null;
+            //if (item.uniqueItem){
+            //    itemId = itemId.Split("##")[0];
+            //}
+            ItemDetails itemDetails = GetItemDetails(itemId);
+            if (item == null || itemDetails == null || item.quantity <= 0) continue;
+            if (itemsToSkip > 0) {
+                itemsToSkip--;
+                continue;
             }
+            index++;
+            if (++displayedCount > maxDisplayed) break;
+            if(itemDetails.itemType == "weapon")
+                weapon = playerInventory.GetComponent<CharacterWeaponManager>().FindWeaponByInventoryItem(item);
+            GameObject itemGridElement = Instantiate(itemUIPrefab, inventoryWindow.transform);
+            InventoryItemUI itemUI = itemGridElement.GetComponent<InventoryItemUI>();
+            itemUI.mainButtonForeground.sprite = itemDetails.icon;
+            itemUI.itemId = itemDetails.itemId;
+            //Add tooltip on hover event
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) =>
+            {
+                SetTooltipToItem(itemUI.itemId, weapon);
+                itemUI.mainButton.Select();
+            });
+            itemUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
         }
     }
     void LoadQuickslots()
@@ -349,12 +372,15 @@ public class InventoryMenuManager : MonoBehaviour
             }
         }
     }
-    void SetTooltipToItem(string itemId)
+    void SetTooltipToItem(string itemId, WeaponScript weapon = null)
     {
         int qty = playerInventory.GetItem(itemId).quantity;
         ItemDetails itemDetails = GetItemDetails(itemId);
         tooltip.headerText.text = itemDetails.itemName;
         tooltip.centerText.text = itemDetails.description;
+        if (weapon != null) {
+            tooltip.centerText.text += "\n" + weapon.GetInventoryStatsDisplay();
+        }
         tooltip.bottomText.text = "x" + qty + "  -  " + itemDetails.cost + " gp";
     }
 

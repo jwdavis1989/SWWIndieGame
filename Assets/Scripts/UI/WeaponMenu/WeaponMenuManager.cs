@@ -883,8 +883,7 @@ public class WeaponMenuManager : MonoBehaviour
         // Exp
         LoadExperienceToScreen(stats);
         //weapon traits
-        foreach(string traitId in wpn.stats.weaponTraits)
-        {
+        foreach(string traitId in wpn.stats.weaponTraits) {
             LoadWeaponTrait(traitId);
         }
         // Elemental
@@ -898,10 +897,8 @@ public class WeaponMenuManager : MonoBehaviour
         weaponStatUI.statId = stat.Key;
         bool greenTextShowing = false;
         string greenText = "";
-        if (activeComponent != null)
-        {
-            if (activeComponent.GetStats().ContainsKey(stat.Key))
-            {
+        if (activeComponent != null){ // A component is selected or hovered
+            if (activeComponent.GetStats().ContainsKey(stat.Key)){
                 greenTextShowing = true;
                 greenText += "<size=16> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
             }

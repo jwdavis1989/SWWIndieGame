@@ -140,24 +140,24 @@ public class CharacterWeaponManager : MonoBehaviour
         WeaponData weaponData = ItemDropManager.GetDB().GetWeaponData(itemId);
         ItemDetails itemDetails = ItemDropManager.GetDB().GetItem(itemId);
         GameObject weaponToAdd = weaponData.weaponGameObject.gameObject;
-        if (weaponData.isSpecialWeapon) {
-            if (!weaponData.isWristWeapon) {
+        if (weaponData.isSpecialWeapon){
+            if (!weaponData.isWristWeapon){
                 weaponToAdd = Instantiate(weaponToAdd, offHandWeaponAnchor.transform);
-            } else  {
+            }else{
                 weaponToAdd = Instantiate(weaponToAdd, wristOffHandWeaponAnchor.transform);
             }
             ownedSpecialWeapons.Add(weaponToAdd);
             //Update Equipped Weapon Icon if this is your first special weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedSpecialWeapon == 0){
                 PlayerUIManager.instance.playerUIHudManager.SetLeftWeaponQuickSlotIcon();
             }
-        } else {
+        }else{
             weaponToAdd = Instantiate(weaponToAdd, mainHandWeaponAnchor.transform);
             ownedWeapons.Add(weaponToAdd);
             //Update Equipped Weapon Icon if this is your first weapon
             //Alec, this might cause bugs later if I goofed so heads-up lol
-            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0) {
+            if (characterThatOwnsThisArsenal.isPlayer && indexOfEquippedWeapon == 0){
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
         }
@@ -165,7 +165,7 @@ public class CharacterWeaponManager : MonoBehaviour
         WeaponScript newWeaponScr = weaponToAdd.GetComponent<WeaponScript>();
         newWeaponScr.stats.currentDurability = newWeaponScr.stats.durability;
         //set traits
-        foreach (WeaponTraitData weaponTrait in weaponData.startingTraits) {
+        foreach (WeaponTraitData weaponTrait in weaponData.startingTraits){
             newWeaponScr.stats.weaponTraits.Add(weaponTrait.traitId);
         }
         //Initialize Weapon Owner to avoid a race condition in Awake()
@@ -173,18 +173,15 @@ public class CharacterWeaponManager : MonoBehaviour
 
         // add to inventory
         Inventory inventory = GetComponent<Inventory>();
-        if (inventory != null) {
+        if (inventory != null){
             //inventory.items.Add();
             InventoryItem newItem = new InventoryItem();
-            newItem.itemId = itemId;// + "" + DateTime.Now;
+            newItem.itemId = itemId;// + "##" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             newItem.quantity = 1;
             newItem.uniqueItem = true;
-            if(inventory.inventoryItems.ContainsKey(itemId)) 
-                inventory.inventoryItems[itemId].quantity += 1;
-             else
-                inventory.inventoryItems.Add(itemId, newItem);
+            inventory.inventoryItems.Add(itemId, newItem);
+            newWeaponScr.inventoryItem = newItem;
         }
-
         return weaponToAdd.GetComponent<WeaponScript>();
     }
     public void EquipWeapon(GameObject weapon)
@@ -202,6 +199,18 @@ public class CharacterWeaponManager : MonoBehaviour
         }
         else
             ChangeWeapon(index);
+    }
+    public WeaponScript FindWeaponByInventoryItem(InventoryItem item)
+    {
+        foreach(GameObject wpnObj in ownedWeapons){
+            if (wpnObj.GetComponent<WeaponScript>().inventoryItem == item)
+                return wpnObj.GetComponent<WeaponScript>();
+        }
+        foreach (GameObject wpnObj in ownedSpecialWeapons){
+            if (wpnObj.GetComponent<WeaponScript>().inventoryItem == item)
+                return wpnObj.GetComponent<WeaponScript>();
+        }
+        return null;
     }
     /**
      * Change equipped weapon

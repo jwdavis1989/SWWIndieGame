@@ -130,10 +130,11 @@ public class Inventory : MonoBehaviour
     }
     public Dictionary<string, InventoryItem> GetItemsFilteredByType(string itemType)
     {
-        if (string.IsNullOrWhiteSpace(itemType)) {
-            Debug.LogWarning("GetItemsFilteredByType called with null/empty itemType.");
-            return new Dictionary<string, InventoryItem>();
+        if (string.IsNullOrWhiteSpace(itemType))
+        {
+            return inventoryItems;
         }
+
         return inventoryItems
             .Where(entry =>
             {
@@ -143,14 +144,32 @@ public class Inventory : MonoBehaviour
             })
             .ToDictionary(entry => entry.Key, entry => entry.Value);
     }
-    public Dictionary<string, InventoryItem> GetAllItems()
+    public Dictionary<string, InventoryItem> GetItems(string itemTypeFilter, string sortType)
     {
-        Dictionary<string, InventoryItem> allItems = new Dictionary<string, InventoryItem>();
-        allItems.AddRange(inventoryItems);
-        foreach (WeaponSalvageComponent weaponSalvageComponent in weaponSalvageComponents) {
-
+        Dictionary<string, InventoryItem> items = GetItemsFilteredByType(itemTypeFilter);
+        if (string.Equals(sortType, "Cost", StringComparison.OrdinalIgnoreCase))
+        {
+            return items
+                .OrderBy(entry =>
+                {
+                    ItemDetails itemDetails = GetItemDetails(entry.Value.itemId);
+                    return itemDetails.cost;
+                })
+                .ThenBy(entry => entry.Value.itemId)
+                .ToDictionary(entry => entry.Key, entry => entry.Value);
         }
-        return inventoryItems;
+        else if (string.Equals(sortType, "Category", StringComparison.OrdinalIgnoreCase))
+        {
+            return items
+                .OrderBy(entry =>
+                {
+                    ItemDetails itemDetails = GetItemDetails(entry.Value.itemId);
+                    return itemDetails.itemType;
+                })
+                .ThenBy(entry => entry.Value.itemId)
+                .ToDictionary(entry => entry.Key, entry => entry.Value);
+        }
+        return items;
     }
 }
 [Serializable]
