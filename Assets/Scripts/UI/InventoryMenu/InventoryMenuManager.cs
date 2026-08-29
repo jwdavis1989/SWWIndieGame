@@ -424,6 +424,10 @@ public class InventoryMenuManager : MonoBehaviour
         tooltip.centerText.text = itemDetails.description;
         if (weapon != null) {
             tooltip.centerText.text += "\n" + weapon.GetInventoryStatsDisplay();
+        }else if (itemDetails.itemType == "component")
+        {
+            TinkerComponentData componentData = ItemDropManager.GetDB().GetTinkerComponentData(itemId);
+            tooltip.centerText.text += "\n\n"+componentData.stats;
         }
         tooltip.bottomText.text = "x" + qty + "  -  " + itemDetails.cost + " gp";
     }

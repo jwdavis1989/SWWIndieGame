@@ -1230,9 +1230,11 @@ public class WeaponScript : MonoBehaviour
         foreach (KeyValuePair<string, float> eStat in GetPrimaryStatsForDisplay()) {
             rv += eStat.Key + " " + eStat.Value + ", ";
         }
-        foreach (KeyValuePair<string, float> eStat in GetElementalStats())
-        {
-            rv += eStat.Key + " " + eStat.Value + ", ";
+        rv = rv.Substring(0, rv.Length - 2);
+        rv += "\n";
+        int i = 0;
+        foreach (KeyValuePair<string, float> eStat in GetElementalStats()){
+            rv += eStat.Key + " " + eStat.Value +  ((++i == 4 || i == 8)? "\n" :", ");
         }
         rv = rv.Substring(0, rv.Length - 2);
         return rv;
