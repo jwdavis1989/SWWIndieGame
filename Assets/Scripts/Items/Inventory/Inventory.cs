@@ -171,6 +171,10 @@ public class Inventory : MonoBehaviour
         }
         return items;
     }
+    public CharacterWeaponManager WeaponManager()
+    {
+        return GetComponent<CharacterWeaponManager>();
+    }
 }
 [Serializable]
 public class InventoryItem

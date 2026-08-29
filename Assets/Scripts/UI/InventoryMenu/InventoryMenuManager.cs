@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryMenuManager : MonoBehaviour
 {
@@ -229,7 +230,11 @@ public class InventoryMenuManager : MonoBehaviour
                 currentSortType = "";
             else
                 currentSortType = "Cost";
-            sortText.text = currentSortType + " -";
+
+            if (currentSortType == "")
+                sortText.text = "";
+            else
+                sortText.text = currentSortType + " -";
             LoadItemsToWindow();
         }
     }
@@ -286,10 +291,15 @@ public class InventoryMenuManager : MonoBehaviour
         if (currentCursorObj != eventSystem.currentSelectedGameObject) {
             currentCursorObj = eventSystem.currentSelectedGameObject;
             if (currentCursorObj != null) {
-                InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
-                if (ui != null) { // currently on a tinker component
-                    SetTooltipToItem(ui.itemId);
-                }
+                //InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
+                //if (ui != null) { // currently on a tinker component
+                //    ItemDetails itemDetails = GetItemDetails(ui.itemId);
+                //    if (itemDetails.itemType == "weapon"){
+                //        InventoryItem item = playerInventory.GetItem(ui.itemId);
+                //        SetTooltipToItem(ui.itemId, playerInventory.WeaponManager().FindWeaponByInventoryItem(item));
+                //    }else
+                //        SetTooltipToItem(ui.itemId);
+                //}
             }
         }
     }
@@ -339,9 +349,18 @@ public class InventoryMenuManager : MonoBehaviour
             InventoryItemUI itemUI = itemGridElement.GetComponent<InventoryItemUI>();
             itemUI.mainButtonForeground.sprite = itemDetails.icon;
             itemUI.itemId = itemDetails.itemId;
-            //Add tooltip on hover event
+            // Add mouse cursor tooltip
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) =>
+            {
+                SetTooltipToItem(itemUI.itemId, weapon);
+                itemUI.mainButton.Select();
+            });
+            itemUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
+            // Add select tooltip for gamepad
+            entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.Select;
             entry.callback.AddListener((eventData) =>
             {
                 SetTooltipToItem(itemUI.itemId, weapon);
