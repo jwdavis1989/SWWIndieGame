@@ -673,7 +673,7 @@ public class WeaponMenuManager : MonoBehaviour
         Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
         foreach (var item in inventory.GetTinkerComponents())
         {
-            if(item.Value.quantity > 0)
+            if(item.Value.itemQty > 0)
                 count++;
         }
         //foreach (var item in TinkerComponentManager.instance.baseComponents)
@@ -1228,7 +1228,7 @@ public class WeaponMenuManager : MonoBehaviour
 
         int count = 0;//count total unique components owned
         foreach(var item in ownedComponents) {
-            if(item.Value.quantity > 0)
+            if(item.Value.itemQty > 0)
                 count++;
         }
         count += inventory.weaponSalvageComponents.Count;
@@ -1248,7 +1248,7 @@ public class WeaponMenuManager : MonoBehaviour
     public void LoadComponent(KeyValuePair<string, InventoryItem> kvp, ItemDatabase itemDatabase, ref int componentsToSkip, ref int index, ref int displayedCount, in int maxDisplayed)
     {
         string itemId = kvp.Key;
-        int quantity = kvp.Value.quantity;
+        int quantity = kvp.Value.itemQty;
         TinkerComponentData tinkerComponentData = itemDatabase.GetTinkerComponentData(itemId);
         ItemDetails itemDetails = itemDatabase.GetItem(itemId);
         if (quantity > 0)
@@ -1561,7 +1561,7 @@ public class WeaponMenuManager : MonoBehaviour
                 Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
                 if(inventory.CheckOwnedQty(repairItemId) > 0)
                 {
-                    inventory.inventoryItems[repairItemId].quantity--;
+                    inventory.inventoryItems[repairItemId].itemQty--;
                     weapon.stats.currentDurability = weapon.stats.durability;
                     CloseWeaponSubmenu();
                     LoadComponentsToScreen();

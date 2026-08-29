@@ -34,6 +34,8 @@ public class InventoryMenuManager : MonoBehaviour
     PlayerControls playerControls;
     [HideInInspector][SerializeField] bool useButtonPerformed = false;
     [HideInInspector][SerializeField] bool quickSlotGamepad = false;
+    [HideInInspector][SerializeField] bool quickSlotGamepadStart = false;
+    [HideInInspector][SerializeField] bool quickSlotGamepadEnd = false;
     [HideInInspector][SerializeField] bool quickSlot1 = false;
     [HideInInspector][SerializeField] bool quickSlot2 = false;
     [HideInInspector][SerializeField] bool quickSlot3 = false;
@@ -45,6 +47,8 @@ public class InventoryMenuManager : MonoBehaviour
     [Header("Tooltips and any elements that are activated/deactivated when switching inputs")]
     public List<GameObject> gamepadTooltips = new List<GameObject>();
     public List<GameObject> keyboardMouseTooltips = new List<GameObject>();
+
+    private InventoryItemUI currentItem = null;
 
     public static InventoryMenuManager instance;
     public void Awake()
@@ -101,7 +105,9 @@ public class InventoryMenuManager : MonoBehaviour
             //Debug.Log("setting weapon menu controls...");
             playerControls = new PlayerControls();
             playerControls.InventoryMenu.UseButton.performed += i => useButtonPerformed = true;
-            playerControls.InventoryMenu.QuickslotButtonGamepad.performed += i => quickSlotGamepad = true;
+            //playerControls.InventoryMenu.QuickslotButtonGamepad.performed += i => quickSlotGamepad = true;
+            playerControls.InventoryMenu.QuickslotButtonGamepad.started += i => quickSlotGamepadStart = true;
+            playerControls.InventoryMenu.QuickslotButtonGamepad.canceled += i => quickSlotGamepadEnd = true;
             playerControls.InventoryMenu.QuickslotButton1.performed += i => quickSlot1 = true;
             playerControls.InventoryMenu.QuickslotButton2.performed += i => quickSlot2 = true;
             playerControls.InventoryMenu.QuickslotButton3.performed += i => quickSlot3 = true;
@@ -157,17 +163,33 @@ public class InventoryMenuManager : MonoBehaviour
         }
     }
     int currentSelectedQuickslot = 0;
-    public void HandlequickSlotGamepadInput()
-    {
+    public void HandlequickSlotGamepadInput(){
+        if (quickSlotGamepadStart){
+            currentSelectedQuickslot = 0;
+            quickslotUIs[0].gamepadSelectedIcon.SetActive(true);
+            quickSlotGamepadStart = false;
+            quickSlotGamepad = true;
+            Debug.Log("Quickslot start:" + currentItem.name);
+            ToggleItemNavigation(false);
+        }
+        if (quickSlotGamepadEnd){
+            quickSlotGamepadEnd = false;
+            quickSlotGamepad = false;
+            ToggleItemNavigation(true);
+            Debug.Log("Quickslot end:" + currentItem.name);
+            SetQuickslotItem(currentSelectedQuickslot);
+            for (int i = 0; i < 4; i++){
+                quickslotUIs[i].gamepadSelectedIcon.SetActive(false);
+            }
+        }
         //cycling
-        if (cycleQuickSlotGamepad != 0)
-        {
+        if (quickSlotGamepad && cycleQuickSlotGamepad != 0){
             if (cycleQuickSlotGamepad < 0) {
                 //Debug.Log("cycle gamepad 1");
                 if (currentSelectedQuickslot < 3)
                     currentSelectedQuickslot++;
                 else currentSelectedQuickslot = 0;
-            } else {
+            }else{
                 //Debug.Log("cycle gamepad 2");
                 if (currentSelectedQuickslot > 0)
                     currentSelectedQuickslot--;
@@ -178,11 +200,11 @@ public class InventoryMenuManager : MonoBehaviour
                 quickslotUIs[i].gamepadSelectedIcon.SetActive(i == currentSelectedQuickslot);
             }
         }
-        //using
-        if(quickSlotGamepad) {
-            quickSlotGamepad = false;
-            SetQuickslotItem(currentSelectedQuickslot);
-        }
+        ////using
+        //if (quickSlotGamepadEnd){
+        //    quickSlotGamepad = false;
+        //    SetQuickslotItem(currentSelectedQuickslot);
+        //}
     }
     public void HandlequickSlotKeyboardInput()
     {
@@ -206,9 +228,10 @@ public class InventoryMenuManager : MonoBehaviour
     void SetQuickslotItem(int quickslotIndex)
     {
         if(eventSystem.currentSelectedGameObject == null)
-            return; 
-        InventoryItemUI itemUI = eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
+            return;
+        InventoryItemUI itemUI = currentItem;// eventSystem.currentSelectedGameObject.GetComponentInParent<InventoryItemUI>();
         if (itemUI != null) {
+            Debug.Log("SetQuickslotItem:"+quickslotIndex + " to " + itemUI.itemId);//astest
             //UsableItem usableItem = playerInventory.GetItem(itemUI.itemId).GetComponent<UsableItem>();
             ItemEffect itemEffect = itemDatabase.GetItemEffect(itemUI.itemId);
             ItemDetails itemDetails = itemDatabase.GetItem(itemUI.itemId);
@@ -283,25 +306,26 @@ public class InventoryMenuManager : MonoBehaviour
     {
         // Lost gamepad Cursor
         if (eventSystem.currentSelectedGameObject == null && InputSwitchDetector.IsCurrentlyGamepad()) {
-            if (inventoryWindow.transform.childCount > 0) {
+            if (inventoryWindow.transform.childCount > 0) { // Select first
                 inventoryWindow.transform.GetChild(0).GetComponentInChildren<Button>().Select();
             }
         }
         // Change in selected objcet
-        if (currentCursorObj != eventSystem.currentSelectedGameObject) {
-            currentCursorObj = eventSystem.currentSelectedGameObject;
-            if (currentCursorObj != null) {
-                //InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
-                //if (ui != null) { // currently on a tinker component
-                //    ItemDetails itemDetails = GetItemDetails(ui.itemId);
-                //    if (itemDetails.itemType == "weapon"){
-                //        InventoryItem item = playerInventory.GetItem(ui.itemId);
-                //        SetTooltipToItem(ui.itemId, playerInventory.WeaponManager().FindWeaponByInventoryItem(item));
-                //    }else
-                //        SetTooltipToItem(ui.itemId);
-                //}
-            }
-        }
+        //if (currentCursorObj != eventSystem.currentSelectedGameObject) {
+        //    currentCursorObj = eventSystem.currentSelectedGameObject;
+        //    if (currentCursorObj != null) {
+        //        InventoryItemUI ui = currentCursorObj.GetComponentInParent<InventoryItemUI>();
+        //        if (ui != null){ // currently on a tinker component
+        //            ItemDetails itemDetails = GetItemDetails(ui.itemId);
+        //            if (itemDetails.itemType == "weapon"){
+        //                InventoryItem item = playerInventory.GetItem(ui.itemId);
+        //                SetTooltipToItem(ui.itemId, playerInventory.WeaponManager().FindWeaponByInventoryItem(item));
+        //            }
+        //            else
+        //                SetTooltipToItem(ui.itemId);
+        //        }
+        //    }
+        //}
     }
     /***********************************************************************************************
      ******************************  O U T P U T   T O   S C R E E N  ******************************
@@ -336,7 +360,7 @@ public class InventoryMenuManager : MonoBehaviour
             //    itemId = itemId.Split("##")[0];
             //}
             ItemDetails itemDetails = GetItemDetails(itemId);
-            if (item == null || itemDetails == null || item.quantity <= 0) continue;
+            if (item == null || itemDetails == null || item.itemQty <= 0) continue;
             if (itemsToSkip > 0) {
                 itemsToSkip--;
                 continue;
@@ -356,6 +380,7 @@ public class InventoryMenuManager : MonoBehaviour
             {
                 SetTooltipToItem(itemUI.itemId, weapon);
                 itemUI.mainButton.Select();
+                currentItem = itemUI;
             });
             itemUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
             // Add select tooltip for gamepad
@@ -364,7 +389,7 @@ public class InventoryMenuManager : MonoBehaviour
             entry.callback.AddListener((eventData) =>
             {
                 SetTooltipToItem(itemUI.itemId, weapon);
-                itemUI.mainButton.Select();
+                currentItem = itemUI;
             });
             itemUI.mainButton.GetComponent<EventTrigger>().triggers.Add(entry);
         }
@@ -393,7 +418,7 @@ public class InventoryMenuManager : MonoBehaviour
     }
     void SetTooltipToItem(string itemId, WeaponScript weapon = null)
     {
-        int qty = playerInventory.GetItem(itemId).quantity;
+        int qty = playerInventory.GetItem(itemId).itemQty;
         ItemDetails itemDetails = GetItemDetails(itemId);
         tooltip.headerText.text = itemDetails.itemName;
         tooltip.centerText.text = itemDetails.description;
@@ -407,25 +432,30 @@ public class InventoryMenuManager : MonoBehaviour
     {
         return itemDatabase.GetItem(itemId);
     }
-
-    //private void ToggleItemNavigation(bool enable)
-    //{
-    //    bool selected = false;
-    //    foreach (Transform t in inventoryWindow.transform)
-    //    {
-    //        // toggle navigation
-    //        Button button = t.gameObject.GetComponent<InventoryItemUI>().mainButton;
-    //        button.interactable = enable;
-    //        Navigation nav = button.navigation;
-    //        nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
-    //        button.navigation = nav;
-    //        if (enable && !selected && InputSwitchDetector.IsCurrentlyGamepad())
-    //        { // Select first
-    //            selected = true;
-    //            button.Select();
-    //        }
-    //    }
-    //}
+    private string lastSelected;
+    private void ToggleItemNavigation(bool enable)
+    {
+        bool selected = false;
+        foreach (Transform t in inventoryWindow.transform){
+            // toggle navigation
+            InventoryItemUI iui = t.GetComponent<InventoryItemUI>();
+            Button button = iui.mainButton;
+            //button.interactable = enable;
+            Navigation nav = button.navigation;
+            nav.mode = enable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+            button.navigation = nav;
+            if (enable){
+                if (lastSelected == iui.itemId){ // reselect 
+                    selected = true;
+                    button.Select();
+                }
+                if (lastSelected == "" && !selected && InputSwitchDetector.IsCurrentlyGamepad()){ // Select first
+                    selected = true;
+                    button.Select();
+                }
+            }
+        }
+    }
 
     // Item types? Consumable, Component, Weapon?
     //const string CONSUMABLES_FILTER = "CONSUMEABLES";

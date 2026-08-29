@@ -31,7 +31,7 @@ public class Inventory : MonoBehaviour
     public int CheckOwnedQty(string itemId)
     {
         if (inventoryItems.ContainsKey(itemId))
-            return inventoryItems[itemId].quantity;
+            return inventoryItems[itemId].itemQty;
         return 0;
     }
     /** Attempts to use an item */
@@ -45,7 +45,7 @@ public class Inventory : MonoBehaviour
             GetComponent<PlayerEffectsManager>().ProcessInstantEffect(itemEffect);
             if (itemDetails.IsConsumable()) {
                 //Debug.Log("CONSUME:" + itemId);
-                inventoryItems[itemId].quantity--;
+                inventoryItems[itemId].itemQty--;
             }
             if(quickSlotItems.Contains(itemId) && CheckOwnedQty(itemId) == 0) {
                 //Debug.Log("USED UP:" + itemId);
@@ -180,7 +180,8 @@ public class Inventory : MonoBehaviour
 public class InventoryItem
 {
     public string itemId;
-    public int quantity = 1;
+    public string pickupTime;
+    public int itemQty = 1;
     [Header("Each of this item is unique. E.g. Weapons, salvage")]
     public bool uniqueItem = false;
 }

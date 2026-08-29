@@ -265,7 +265,7 @@ public class TinkerComponentManager : MonoBehaviour
                     }
                     inventory.weaponSalvageComponents.Remove(salvage);
                 } else  {
-                    inventory.GetItem(itemId).quantity--;
+                    inventory.GetItem(itemId).itemQty--;
                 }
                 weapon.SetWeaponDamage(weapon.weaponDamageCollider);
                 weapon.UpdateHighestElementalStat();

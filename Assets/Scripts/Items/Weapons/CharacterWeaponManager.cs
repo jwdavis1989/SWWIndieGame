@@ -176,8 +176,9 @@ public class CharacterWeaponManager : MonoBehaviour
         if (inventory != null){
             //inventory.items.Add();
             InventoryItem newItem = new InventoryItem();
-            newItem.itemId = itemId;// + "##" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            newItem.quantity = 1;
+            newItem.pickupTime = "" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            newItem.itemId = itemId + "##" + newItem.pickupTime;
+            newItem.itemQty = 1;
             newItem.uniqueItem = true;
             inventory.inventoryItems.Add(itemId, newItem);
             newWeaponScr.inventoryItem = newItem;
