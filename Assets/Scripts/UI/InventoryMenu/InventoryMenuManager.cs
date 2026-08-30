@@ -297,10 +297,10 @@ public class InventoryMenuManager : MonoBehaviour
     public void LoadControlTooltips()
     {
         bool isGamepad = InputSwitchDetector.IsCurrentlyGamepad();
-        foreach (GameObject gamepadeUI in gamepadTooltips)
-            gamepadeUI.SetActive(isGamepad);
-        foreach (GameObject gamepadeUI in keyboardMouseTooltips)
-            gamepadeUI.SetActive(!isGamepad);
+        foreach (GameObject gamepadeUI in isGamepad? keyboardMouseTooltips :gamepadTooltips)
+            gamepadeUI.SetActive(false);
+        foreach (GameObject gamepadeUI in isGamepad? gamepadTooltips :keyboardMouseTooltips)
+            gamepadeUI.SetActive(true);
     }
     public void HandleGamepadSelectedObject()
     {
@@ -372,7 +372,7 @@ public class InventoryMenuManager : MonoBehaviour
             GameObject itemGridElement = Instantiate(itemUIPrefab, inventoryWindow.transform);
             InventoryItemUI itemUI = itemGridElement.GetComponent<InventoryItemUI>();
             itemUI.mainButtonForeground.sprite = itemDetails.icon;
-            itemUI.itemId = itemDetails.itemId;
+            itemUI.itemId = itemId;
             // Add mouse cursor tooltip
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = EventTriggerType.PointerEnter;

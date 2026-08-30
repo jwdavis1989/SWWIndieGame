@@ -96,13 +96,10 @@ public class TinkerComponentManager : MonoBehaviour
         WeaponScript weapon = wpnToBreak.GetComponent<WeaponScript>();
         if (weapon.stats.level < 5)
             throw new Exception("Must be Level 5 or over");
-        if (weapon.isSpecialWeapon)
-        {
+        if (weapon.isSpecialWeapon){
             if (PlayerWeaponManager.instance.ownedSpecialWeapons.Count <= 1)
                 throw new Exception("Last off hand weapon");
-        }
-        else
-        {
+        }else{
             if (PlayerWeaponManager.instance.ownedWeapons.Count <= 1)
                 throw new Exception("Last main hand weapon");
         }
@@ -123,20 +120,18 @@ public class TinkerComponentManager : MonoBehaviour
         GameObject eqWpn = characterWeapons.GetEquippedWeapon(specialWeapon);
         weaponsList.Remove(wpnToBreak);
         //reset equipped weapon index as it may have changed
-        if (specialWeapon)
-        {
+        if (specialWeapon){
             if (eqWpn == wpnToBreak)
                 characterWeapons.indexOfEquippedSpecialWeapon = 0;
             else
                 characterWeapons.indexOfEquippedSpecialWeapon = characterWeapons.ownedSpecialWeapons.IndexOf(eqWpn);
-        }
-        else
-        {
+        }else{
             if (eqWpn == wpnToBreak)
                 characterWeapons.indexOfEquippedWeapon = 0;
             else
                 characterWeapons.indexOfEquippedWeapon = characterWeapons.ownedWeapons.IndexOf(eqWpn);
         }
+        characterWeapons.GetComponent<Inventory>().inventoryItems.Remove(rv.itemId);
         wpnToBreak.SetActive(false);
         return rv;
     }
@@ -171,7 +166,7 @@ public class TinkerComponentManager : MonoBehaviour
         // check tinker pointstinkerComponent
         if (weapon.stats.currentTinkerPoints == 0)
         {
-            Debug.Log("No tinker points.");
+            Debug.Log("No tinker points." + weapon.stats.weaponName);
             return false; 
         }
         // check weapon component hand

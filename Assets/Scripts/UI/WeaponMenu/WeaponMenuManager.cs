@@ -284,6 +284,7 @@ public class WeaponMenuManager : MonoBehaviour
                 curWeaponPage++;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
+                LoadComponentsToScreen();
             }
         }
         else if (switchWeaponDown)
@@ -295,6 +296,7 @@ public class WeaponMenuManager : MonoBehaviour
                 curWeaponPage--;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
+                LoadComponentsToScreen();
             }
         }
     }

@@ -180,7 +180,7 @@ public class CharacterWeaponManager : MonoBehaviour
             newItem.itemId = itemId + "##" + newItem.pickupTime;
             newItem.itemQty = 1;
             newItem.uniqueItem = true;
-            inventory.inventoryItems.Add(itemId, newItem);
+            inventory.inventoryItems.Add(newItem.itemId, newItem);
             newWeaponScr.inventoryItem = newItem;
         }
         return weaponToAdd.GetComponent<WeaponScript>();
