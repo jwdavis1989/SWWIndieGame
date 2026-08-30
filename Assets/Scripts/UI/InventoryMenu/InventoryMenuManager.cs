@@ -423,7 +423,7 @@ public class InventoryMenuManager : MonoBehaviour
         tooltip.headerText.text = itemDetails.itemName;
         tooltip.centerText.text = itemDetails.description;
         if (weapon != null) {
-            tooltip.centerText.text += "\n" + weapon.GetInventoryStatsDisplay();
+            tooltip.centerText.text += "\n\n" + weapon.GetInventoryStatsDisplay();
         }else if (itemDetails.itemType == "component")
         {
             TinkerComponentData componentData = ItemDropManager.GetDB().GetTinkerComponentData(itemId);

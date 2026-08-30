@@ -1234,7 +1234,7 @@ public class WeaponScript : MonoBehaviour
         rv += "\n";
         int i = 0;
         foreach (KeyValuePair<string, float> eStat in GetElementalStats()){
-            rv += eStat.Key + " " + eStat.Value +  ((++i == 4 || i == 8)? "\n" :", ");
+            rv += eStat.Key + " " + eStat.Value +  ((++i == 5)? "\n" :", ");
         }
         rv = rv.Substring(0, rv.Length - 2);
         return rv;

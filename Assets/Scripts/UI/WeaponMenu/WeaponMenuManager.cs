@@ -26,6 +26,8 @@ public class WeaponMenuManager : MonoBehaviour
     public GridLayoutGroup weaponTraitGrid;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI activeWeaponTierLevelText;
+    public TextMeshProUGUI otherHandWeaponHeaderText;
+    public TextMeshProUGUI otherHandWeaponTierLevelText;
     public TextMeshProUGUI tinkerPointsCountText;
     public Transform weaponPreviewHolder;
     public GameObject currentWeaponPreview;
@@ -51,7 +53,8 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Input")]
     //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
     public EventSystem eventSystem;
-    [HideInInspector] [SerializeField] bool switchWeaponUp = false;
+    [HideInInspector][SerializeField] bool switchHandInput = false;
+    [HideInInspector][SerializeField] bool switchWeaponUp = false;
     [HideInInspector][SerializeField] bool switchWeaponDown = false;
     [HideInInspector][SerializeField] bool equipWeaponInput = false;
     [HideInInspector][SerializeField] bool weaponSubmenuInput = false;
@@ -97,9 +100,7 @@ public class WeaponMenuManager : MonoBehaviour
         //cmpntScroll.value = 0;
         curComponentPage = 0;
         activeWeapon = null;
-        LoadWeaponsToScreen();
-        DisplayActiveWeapon();
-        LoadComponentsToScreen();
+        ReloadWeaponMenu();
         if(playerControls != null)
             playerControls.WeaponMenu.Enable();
         // load tooltips
@@ -131,6 +132,7 @@ public class WeaponMenuManager : MonoBehaviour
             //playerControls.WeaponMenu.FocusComponentsWindow.performed += i => focusComponentsInput = true;
             //playerControls.WeaponMenu.FocusEvolutionsWindow.performed += i => focusEvolutionsInput = true;
             playerControls.WeaponMenu.WeaponSubmenu.performed += i => weaponSubmenuInput = true;
+            playerControls.WeaponMenu.SwitchHand.performed += i => switchHandInput = true;
             playerControls.Enable();
         }
     }
@@ -159,6 +161,7 @@ public class WeaponMenuManager : MonoBehaviour
         HandleEquipWeaponInput();
         HandleOpenWeaponSubmenuInput();
         HandleHelpInput();
+        HandleSwitchHandInput();
         //HandleFocusComponentsInput();
         HandleGamepadSelectedObject();//Moving through components/etc.
         CheckControlsChanged();//Gamepad <> KB&M
@@ -211,6 +214,14 @@ public class WeaponMenuManager : MonoBehaviour
             newPosition.z += zoomSpeed * Time.unscaledDeltaTime;
             newPosition.z = Mathf.Min(newPosition.z, maxZoomDistance);
             weaponPreviewHolder.transform.position = newPosition;
+        }
+    }
+    void HandleSwitchHandInput()
+    {
+        if (switchHandInput){
+            switchHandInput = false;
+            mainHandActive = !mainHandActive;
+            ReloadWeaponMenu();
         }
     }
     public void WeaponPreviewCursorEnter() { cursorInPreviewCamera = true; }
@@ -274,25 +285,17 @@ public class WeaponMenuManager : MonoBehaviour
             switchWeaponDown = false;
             return;
         }
-
-        if (switchWeaponUp)
-        {
+        if (switchWeaponUp){
             switchWeaponUp = false;
-
-            if (curWeaponPage < totalWeapons - 1)
-            {
+            if (curWeaponPage < totalWeapons - 1){
                 curWeaponPage++;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
                 LoadComponentsToScreen();
             }
-        }
-        else if (switchWeaponDown)
-        {
+        }else if (switchWeaponDown){
             switchWeaponDown = false;
-
-            if (curWeaponPage > 0)
-            {
+            if (curWeaponPage > 0){
                 curWeaponPage--;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
@@ -586,7 +589,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //Debug.Log("Broke down " + newComp.stats.itemName);
                 //add to screen
                 activeWeapon = null;
-                ReloadUpgradeMenu();
+                ReloadWeaponMenu();
             }
         }
         catch (Exception e) //Catches not lvl 5 or over error / no active weapon
@@ -807,7 +810,7 @@ public class WeaponMenuManager : MonoBehaviour
                 myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
                 {
                     weaponCntrller.EvolveWeapon(activeWeapon, evolves[0], PlayerWeaponManager.instance);
-                    ReloadUpgradeMenu();
+                    ReloadWeaponMenu();
                 });
             } else {
                 myBtnScrpt.topText.text = evolWpnDetails.itemName;
@@ -838,7 +841,7 @@ public class WeaponMenuManager : MonoBehaviour
                 myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
                 {
                     weaponCntrller.EvolveWeapon(activeWeapon, evolves[1], PlayerWeaponManager.instance);
-                    ReloadUpgradeMenu();
+                    ReloadWeaponMenu();
                 });
             } else {
                 //Note: I'm setting it to always show underscores instead of the name when already discovered
@@ -892,6 +895,17 @@ public class WeaponMenuManager : MonoBehaviour
         foreach (KeyValuePair<string, float> stat in wpn.GetElementalStats()) 
             LoadStat(stat, elementalStatsTextGrid.transform);
     }
+    void LoadOtherHandWeapon()
+    {
+        WeaponScript wpn = mainHandActive ? PlayerWeaponManager.instance.GetOffHand() : PlayerWeaponManager.instance.GetMainHand();
+        if(wpn == null){
+            otherHandWeaponHeaderText.text = mainHandActive?"Off Hand: None":"Main hand: None";
+            otherHandWeaponTierLevelText.text = "";
+        }else{
+            otherHandWeaponHeaderText.text = wpn.stats.weaponName;
+            otherHandWeaponTierLevelText.text = wpn.GetWeaponFamilyFormatted() + "\nLevel " + wpn.stats.level;
+        }
+}
     KeyValuePair<string, float> LoadStat(KeyValuePair<string, float> stat, Transform trans)
     {
         GameObject statTextObj = Instantiate(statsTextPrefab, trans);
@@ -998,13 +1012,14 @@ public class WeaponMenuManager : MonoBehaviour
      * Clear weapons grid and reload it with current values
      */
     int displayed = 0;
+    bool mainHandActive = true;
     void LoadWeaponsToScreen()
     {
         PlayerWeaponManager playerWpns = PlayerWeaponManager.instance;
 
-        List<GameObject> allWeapons = new List<GameObject>();
-        allWeapons.AddRange(playerWpns.ownedWeapons);
-        allWeapons.AddRange(playerWpns.ownedSpecialWeapons);
+        List<GameObject> weapons = new List<GameObject>();
+        weapons.AddRange(mainHandActive? playerWpns.ownedWeapons : playerWpns.ownedSpecialWeapons);
+        //weapons.AddRange(playerWpns.ownedSpecialWeapons);
 
         int maxDisplayed = 3;
 
@@ -1013,9 +1028,9 @@ public class WeaponMenuManager : MonoBehaviour
 
         displayed = 0;
 
-        for (int i = curWeaponPage; i < allWeapons.Count && displayed < maxDisplayed; i++)
+        for (int i = curWeaponPage; i < weapons.Count && displayed < maxDisplayed; i++)
         {
-            GameObject wpn = allWeapons[i];
+            GameObject wpn = weapons[i];
 
             if (wpn == null)
                 continue;
@@ -1042,7 +1057,8 @@ public class WeaponMenuManager : MonoBehaviour
             }
 
             // Disable equipped weapon
-            if (i == playerWpns.indexOfEquippedWeapon)
+            if ((mainHandActive && i == playerWpns.indexOfEquippedWeapon)
+                || (!mainHandActive && i == playerWpns.indexOfEquippedSpecialWeapon))
                 weaponButton.mainButton.interactable = false;
 
             weaponButton.mainButton.onClick.AddListener(() =>
@@ -1382,11 +1398,12 @@ public class WeaponMenuManager : MonoBehaviour
             });
         }
     }
-    private void ReloadUpgradeMenu()
+    private void ReloadWeaponMenu()
     {
         LoadWeaponsToScreen();
         DisplayActiveWeapon();
         LoadComponentsToScreen();
+        LoadOtherHandWeapon();
     }
     private void CheckControlsChanged()
     {
