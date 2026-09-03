@@ -8,6 +8,7 @@ public class AiSyncLocationConstantly : MonoBehaviour
     private GameObject targetObject;
     private Transform targetObjectTransform;
     public bool hasBeenInitialized = false;
+    public CharacterManager character;
 
 
     // Update is called once per frame
@@ -20,10 +21,16 @@ public class AiSyncLocationConstantly : MonoBehaviour
         }
     }
 
-    public void InitializeAiSync(GameObject initializerGameObject)
+    public void InitializeAiSync(GameObject initializerGameObject, CharacterManager characterInitializingThisActor)
     {
         targetObject = initializerGameObject;
+        character = characterInitializingThisActor;
         targetObjectTransform = targetObject.transform;
+
+        //Move weapon to visible actor's mainhandanchor
+        character.characterWeaponManager.GetMainHand().transform.SetParent(character.characterWeaponManager.mainHandWeaponAnchor.transform);
+
+        //Flag that initialization has completed
         hasBeenInitialized = true;
     }
 
@@ -64,12 +71,12 @@ public class AiSyncLocationConstantly : MonoBehaviour
 
     public void CallOpenDamageCollider()
     {
-        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //character.CallOpenDamageCollider();
     }
 
     public void CallCloseDamageCollider()
     {
-        //Does nothing, this is to prevent an error from using the humanoid animation events.
+        //character.CallCloseDamageCollider();
     }
 
     public void EnableCanDoCombo()

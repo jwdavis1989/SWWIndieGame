@@ -200,10 +200,10 @@ public class CharacterAnimatorManager : MonoBehaviour
     public void UpdateAnimatorControllerByWeapon(WeaponScript weaponScript)
     {
         character.animator.runtimeAnimatorController = weaponScript.weaponAnimatorOverride;
-        if (character.hasSecondaryAnimator)
-        {
-            character.secondaryAnimator.runtimeAnimatorController = weaponScript.weaponAnimatorOverride;
-        }
+        // if (character.hasSecondaryAnimator)
+        // {
+        //     character.secondaryAnimator.runtimeAnimatorController = weaponScript.weaponAnimatorOverride;
+        // }
     }
 
     public void EnableRootMotion()
