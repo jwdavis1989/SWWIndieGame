@@ -316,6 +316,12 @@ public class AICharacterManager : CharacterManager
         // animator.enabled = true;
         // navMeshAgent.enabled = true;
 
+        //Re-enable secondary animators for non-humanoid creatures
+        if (hasSecondaryAnimator)
+        {
+            instantiatedSecondaryAnimatorActor.SetActive(true);
+        }
+
 
         aiCharacterCombatManager.isPlayerInRenderRange = true;
     }
@@ -338,6 +344,12 @@ public class AICharacterManager : CharacterManager
 
         //Disable enemy to save on memory
         gameObject.SetActive(false);
+
+        //Disable secondary animators for non-humanoid creatures
+        if (hasSecondaryAnimator)
+        {
+            instantiatedSecondaryAnimatorActor.SetActive(false);
+        }
     }
 
     public void CreateActivationBeacon()
