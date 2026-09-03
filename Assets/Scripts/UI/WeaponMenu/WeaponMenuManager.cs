@@ -40,6 +40,7 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Grid containing owned weapons")]
     public GameObject weaponsGrid;
     public int curWeaponPage = 0;
+    public int curOHWeaponPage = 0;
     GameObject activeWeapon = null;
     public Image salvageButtonIconGamepad;
     public TextMeshProUGUI salvageControlText;
@@ -97,6 +98,8 @@ public class WeaponMenuManager : MonoBehaviour
         //wpnScroll.value = 0;
         if(PlayerWeaponManager.instance.GetMainHand() != null)
             curWeaponPage = PlayerWeaponManager.instance.ownedWeapons.IndexOf(PlayerWeaponManager.instance.GetMainHand().gameObject);
+        if (PlayerWeaponManager.instance.GetOffHand() != null)
+            curOHWeaponPage = PlayerWeaponManager.instance.ownedSpecialWeapons.IndexOf(PlayerWeaponManager.instance.GetOffHand().gameObject);
         //cmpntScroll.value = 0;
         curComponentPage = 0;
         activeWeapon = null;
@@ -277,26 +280,28 @@ public class WeaponMenuManager : MonoBehaviour
         if (submenuActive)
             return;
 
-        int totalWeapons = PlayerWeaponManager.instance.TotalWeapons();
+        int totalWeapons = mainHandActive? PlayerWeaponManager.instance.ownedWeapons.Count 
+            :PlayerWeaponManager.instance.ownedSpecialWeapons.Count;
 
-        if (totalWeapons <= 1)
-        {
+        if (totalWeapons <= 1){
             switchWeaponUp = false;
             switchWeaponDown = false;
             return;
         }
+        // get reference to the correct page #
+        ref int page = ref mainHandActive? ref curWeaponPage :ref curOHWeaponPage;
         if (switchWeaponUp){
             switchWeaponUp = false;
-            if (curWeaponPage < totalWeapons - 1){
-                curWeaponPage++;
+            if (page < totalWeapons - 1){
+                page++;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
                 LoadComponentsToScreen();
             }
         }else if (switchWeaponDown){
             switchWeaponDown = false;
-            if (curWeaponPage > 0){
-                curWeaponPage--;
+            if (page > 0){
+                page--;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
                 LoadComponentsToScreen();
@@ -643,21 +648,17 @@ public class WeaponMenuManager : MonoBehaviour
         {
             return; //no change
         }
-        if (currentStep > lastStep)
-        {
-            curWeaponPage++;
+        ref int page = ref mainHandActive ? ref curWeaponPage : ref curOHWeaponPage;
+        if (currentStep > lastStep){
+            page++;
+        }else{
+            page--;
         }
-        else
-        {
-            curWeaponPage--;
+        if (page > numOfPage){// past the end go to beg
+            page = 0;
         }
-        if (curWeaponPage > numOfPage)
-        {// past the end go to beg
-            curWeaponPage = 0;
-        }
-        else if (curWeaponPage < 0)
-        {//past beggining go to end
-            curWeaponPage = numOfPage;
+        else if (page < 0){//past beginning go to end
+            page = numOfPage;
         }
         lastStep = currentStep;
         LoadWeaponsToScreen();
@@ -1027,9 +1028,9 @@ public class WeaponMenuManager : MonoBehaviour
             Destroy(child.gameObject);
 
         displayed = 0;
-
-        for (int i = curWeaponPage; i < weapons.Count && displayed < maxDisplayed; i++)
-        {
+        int page = (mainHandActive ? curWeaponPage : curOHWeaponPage);
+        Debug.Log("mainHandActive="+ mainHandActive + ",Page=" + page);
+        for (int i = page; i < weapons.Count && displayed < maxDisplayed; i++){
             GameObject wpn = weapons[i];
 
             if (wpn == null)
@@ -1049,11 +1050,8 @@ public class WeaponMenuManager : MonoBehaviour
                 weaponButton.mainButtonForeground.GetComponent<Image>().sprite = wpnScrpt.spr;
 
             // First weapon displayed becomes active weapon
-            if (displayed == 1)
-            {
+            if (displayed == 1){
                 activeWeapon = wpnScrpt.gameObject;
-
-                // Your existing salvage logic here...
             }
 
             // Disable equipped weapon
@@ -1072,10 +1070,8 @@ public class WeaponMenuManager : MonoBehaviour
         }
 
         // Fill remaining slots
-        while (displayed < maxDisplayed)
-        {
+        while (displayed < maxDisplayed){
             displayed++;
-
             Instantiate(this.weaponButton, weaponsGrid.transform)
                 .GetComponent<WeaponButtonUI>()
                 .mainButtonForeground.SetActive(false);

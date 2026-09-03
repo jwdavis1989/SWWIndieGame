@@ -369,7 +369,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""d4408067-8521-4684-bc30-7ac35eb47372"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
@@ -396,7 +396,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""QuickslotButton2"",
                     ""type"": ""Button"",
                     ""id"": ""c81262f5-f135-41ff-96e4-5c162090bdf0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -405,7 +405,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""QuickslotButton1"",
                     ""type"": ""Button"",
                     ""id"": ""e053406a-9b41-4cd4-8d89-98e7a5432a56"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1321,6 +1321,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""id"": ""0ecc34b9-1992-40d3-bb5c-937e50547499"",
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": ""Hold(duration=0.1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenIdeaCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eced682a-960e-48ef-b050-5cc23c6dbbbc"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenIdeaCamera"",
@@ -2929,7 +2940,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""DeactivateCameraView"",
                     ""type"": ""Button"",
                     ""id"": ""65f0c365-6d34-4ef0-b1dd-cd440bee0b84"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -2949,17 +2960,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""cf83b35a-0192-47f7-b71f-3e37f71e6c27"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DeactivateCameraView"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1e6cde45-04de-4a2f-8d15-abcd8e4d60f5"",
-                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

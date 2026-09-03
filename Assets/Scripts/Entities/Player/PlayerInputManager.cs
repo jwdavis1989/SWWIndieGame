@@ -189,27 +189,27 @@ public class PlayerInputManager : MonoBehaviour
 
             //Debug Buttons
             playerControls.PlayerActions.DebugTestAddWeapon.performed += i => player.DebugAddWeapon();
-            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i =>
+            playerControls.PlayerActions.DebugTeleportToJerryDev.performed += (i => //[1]
             {
                 player.TeleportPlayerToSceneAndCoordinates(1, 0, 0, 112);              //JerryDev test dungeon
             });
-            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i =>
+            playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i => //[2]
             {
-                player.TeleportPlayerToSceneAndCoordinates(2, 0, 140, 0);
+                player.TeleportPlayerToSceneAndCoordinates(2, 0, 140, 0); // Tower in ocean
             });
-            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i =>
+            playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i => //[3]
             {
-                player.TeleportPlayerToSceneAndCoordinates(3, 0, 10, 0);    // MesaDev - 7/19/25: Western Town Mesa Ocean
+                player.TeleportPlayerToSceneAndCoordinates(3, 0, 10, 0);    // Mesa Town
             });
-            playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i =>
+            playerControls.PlayerActions.DebugTeleportToSurfaceDemo.performed += (i => //[4] 
             {
-                player.TeleportPlayerToSceneAndCoordinates(4, 0, 9, 0);
+                player.TeleportPlayerToSceneAndCoordinates(4, 0, 9, 0); // Surface Demo
             });
-            playerControls.PlayerActions.DebugTeleportToAlecDev2.performed += (i =>
+            playerControls.PlayerActions.DebugTeleportToAlecDev2.performed += (i => //[5]
             {
                 player.TeleportPlayerToSceneAndCoordinates(5, -50, 21, -80);  // grassy island
             });
-            playerControls.PlayerActions.DebugTeleportToAlecDevDungeon.performed += (i =>
+            playerControls.PlayerActions.DebugTeleportToAlecDevDungeon.performed += (i => //[6]
             {
                 player.TeleportPlayerToSceneAndCoordinates(15);  // tower level select
             });

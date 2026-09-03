@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class CheatConsole : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class CheatConsole : MonoBehaviour
         RegisterCommand("clear", Clear);
         RegisterCommand("give_gold", GiveGold);
         RegisterCommand("teleport", Teleport);
+        RegisterCommand("weapons", Weapons);
+        RegisterCommand("item", Item);
+        RegisterCommand("room", DevRoom);
         inputField.onSubmit.AddListener(OnSubmit);
     }
 
@@ -136,6 +140,57 @@ public class CheatConsole : MonoBehaviour
             player.transform.position = new Vector3(x, y, z);
 
             Print("Teleported player.");
+        }
+    }
+    void Weapons(string[] args)
+    {
+        //if (args.Length < 2)
+        //{
+        //    Print("Usage: weapons all");
+        //    return;
+        //}
+        TeleportData.playerManager.DebugAddWeapon();
+    }
+    void Item(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            Print("Usage: item itemId");
+            return;
+        }
+        ItemDetails itemDetails = ItemDropManager.GetDB().GetItem(args[1]);
+        if (itemDetails != null)
+            ItemDropManager.instance.DropItemById(args[1], TeleportData.playerManager.transform);
+        else Print("itemIds:bread,cheese,ruby");
+    }
+    void DevRoom(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            Print("Usage: room jerrydev");
+            return;
+        }
+
+        switch (args[1].ToLower())
+        {
+            case "jerrydev":
+                TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(1, 0, 0, 112);//JerryDev test dungeon
+                break;
+            case "alecdev":
+                TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(5, -50, 21, -80);  // grassy island
+                break;
+            case "mesa":
+                TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(3, 0, 10, 0); // Mesa Town
+                break;
+            case "tower":
+                TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(2, 0, 140, 0); // Tower in ocean
+                break;
+            case "dungeon":
+                TeleportData.playerManager.TeleportPlayerToSceneAndCoordinates(15);  // tower level select
+                break;
+            default:
+                Print("Invalid=" + args[1] + " Valid=jerrydev/AlecDev/mesa/tower/dungeon");
+                Debug.Log("Invalid=" + args[1]+ " Valid=jerrydev/AlecDev/mesa/tower/dungeon"); break;
         }
     }
 }
