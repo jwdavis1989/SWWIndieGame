@@ -67,6 +67,14 @@ public class AICharacterManager : CharacterManager
         //Initialize UI manager to avoid race condition
         characterUIManager.initializeUIManager();
 
+        if (hasSecondaryAnimator)
+        {
+            instantiatedSecondaryAnimatorActor = Instantiate(secondaryAnimatorActorPrefab, transform.position, transform.rotation);
+            secondaryAnimatorActorSyncScript = instantiatedSecondaryAnimatorActor.GetComponent<AiSyncLocationConstantly>();
+            secondaryAnimatorActorSyncScript.InitializeAiSync(gameObject);
+            secondaryAnimator = instantiatedSecondaryAnimatorActor.GetComponent<Animator>();
+        }
+
         //Initialize AIActivationBeacon
         CreateActivationBeacon();
 
@@ -77,6 +85,16 @@ public class AICharacterManager : CharacterManager
     protected override void Update()
     {
         base.Update();
+
+        if (hasSecondaryAnimator && secondaryAnimatorActorSyncScript != null && secondaryAnimatorActorSyncScript.hasBeenInitialized)
+        {
+            secondaryAnimator?.SetBool("isGrounded", isGrounded);
+            secondaryAnimator?.SetBool("isChargingAttack", isChargingAttack);
+            secondaryAnimator?.SetBool("isChargingSpell", isChargingSpellAttack);
+            secondaryAnimator?.SetBool("isAiming", isAiming);
+            secondaryAnimator?.SetBool("isMoving", isMoving);
+            secondaryAnimator?.SetBool("isBlocking", isBlocking);
+        }
 
         aiCharacterCombatManager.HandleActionRecovery(this);
     }
@@ -104,6 +122,11 @@ public class AICharacterManager : CharacterManager
         if (activationBeacon != null)
         {
             Destroy(activationBeacon);
+        }
+
+        if (instantiatedSecondaryAnimatorActor != null)
+        {
+            Destroy(instantiatedSecondaryAnimatorActor);
         }
     }
 

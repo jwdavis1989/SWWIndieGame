@@ -12,7 +12,12 @@ public class CharacterManager : MonoBehaviour
 {
     //CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public CharacterController characterController;
-    [HideInInspector] public Animator animator;
+    public Animator animator;
+    public bool hasSecondaryAnimator = false;
+    public Animator secondaryAnimator;
+    public GameObject secondaryAnimatorActorPrefab;
+    public GameObject instantiatedSecondaryAnimatorActor;
+    public AiSyncLocationConstantly secondaryAnimatorActorSyncScript;
     [HideInInspector] public CharacterStatsManager characterStatsManager;
     [HideInInspector] public CharacterCombatManager characterCombatManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
@@ -81,7 +86,10 @@ public class CharacterManager : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         characterStatsManager = GetComponent<CharacterStatsManager>();
         characterCombatManager = GetComponent<CharacterCombatManager>();
-        animator = GetComponent<Animator>();
+        if (animator == null)
+        {   
+            animator = GetComponent<Animator>();
+        }
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
@@ -215,7 +223,7 @@ public class CharacterManager : MonoBehaviour
     {
         Debug.Log(1);
         characterWeaponManager.OpenSpecialDamageCollider();
-        
+
         Debug.Log(2);
     }
 

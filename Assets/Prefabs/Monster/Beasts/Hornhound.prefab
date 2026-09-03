@@ -9028,7 +9028,7 @@ NavMeshAgent:
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 4
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -10816,7 +10816,6 @@ GameObject:
   - component: {fileID: 762289399883169071}
   - component: {fileID: 7391170668233711082}
   - component: {fileID: 2446919012497448820}
-  - component: {fileID: 6150328378378352735}
   - component: {fileID: 962821629920193291}
   - component: {fileID: 6265053492327421556}
   - component: {fileID: 5495163650456582217}
@@ -10828,6 +10827,7 @@ GameObject:
   - component: {fileID: 8014225668607665650}
   - component: {fileID: 2379485883544719827}
   - component: {fileID: 8815218972731579070}
+  - component: {fileID: 6448722737934220149}
   m_Layer: 6
   m_Name: Hornhound
   m_TagString: Untagged
@@ -10845,10 +10845,9 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 5683874774982919941}
   - {fileID: 8502407502082738808}
   - {fileID: 4174421404517555535}
   - {fileID: 311555463315820113}
@@ -11028,27 +11027,6 @@ MonoBehaviour:
   aggroSFX: {fileID: 8300000, guid: 9eeee9e8e22e5ca44937c94c74ef9701, type: 3}
   aggroSFXVolume: 0.5
   aggroSFXPitch: 1
---- !u!95 &6150328378378352735
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4345098624224957898}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2bd447818a694cb47ad86cf7631f4c33, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &962821629920193291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11178,6 +11156,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 0}
   animator: {fileID: 0}
+  hasSecondaryAnimator: 1
+  secondaryAnimator: {fileID: 0}
+  secondaryAnimatorActorPrefab: {fileID: 8075876115125661942, guid: 66424cf754bb7ed45ae5dfaa0a688e2f, type: 3}
+  instantiatedSecondaryAnimatorActor: {fileID: 0}
+  secondaryAnimatorActorSyncScript: {fileID: 0}
   characterStatsManager: {fileID: 0}
   characterCombatManager: {fileID: 0}
   characterEffectsManager: {fileID: 0}
@@ -11390,6 +11373,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cullDistance: 20
   checkIntervalInSeconds: 1
+--- !u!95 &6448722737934220149
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4345098624224957898}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 39957b52048169f4fbb5613b25039069, type: 3}
+  m_Controller: {fileID: 9100000, guid: cf6b4c68c846d154badf17176f3cf2c1, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4351197359389211397
 GameObject:
   m_ObjectHideFlags: 0
@@ -17016,154 +17020,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &7716963086787868092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5683874774982919941}
-  - component: {fileID: 2233648190171557128}
-  m_Layer: 0
-  m_Name: WolfBossmon_body
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5683874774982919941
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7716963086787868092}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.44, y: 0.04, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.34999996, z: 0.34999996}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3930533174057071794}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &2233648190171557128
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7716963086787868092}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 36af141b095230646a019c2a5428da42, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -5222077476010097717, guid: e6b070634da492a48a576974248d64b9, type: 3}
-  m_Bones:
-  - {fileID: 1708826221370988257}
-  - {fileID: 4307896436195628212}
-  - {fileID: 3371844698494574065}
-  - {fileID: 8274018632635367893}
-  - {fileID: 8102830146449983431}
-  - {fileID: 6750937010714565996}
-  - {fileID: 3905213960788283780}
-  - {fileID: 6893651641838139755}
-  - {fileID: 998210559870138546}
-  - {fileID: 7979355607823525849}
-  - {fileID: 5697043889497274583}
-  - {fileID: 6415003223566987345}
-  - {fileID: 7124557406556647487}
-  - {fileID: 2268212177427767626}
-  - {fileID: 2207481990569270776}
-  - {fileID: 2730488982819206241}
-  - {fileID: 6978106541889161711}
-  - {fileID: 2786439496312402377}
-  - {fileID: 3132169869809454291}
-  - {fileID: 6541533082392429156}
-  - {fileID: 8803938402602681176}
-  - {fileID: 5540406537263106166}
-  - {fileID: 2428374282962885839}
-  - {fileID: 2695016968830072425}
-  - {fileID: 5259643923797343121}
-  - {fileID: 5639144621599626200}
-  - {fileID: 6226840295942357984}
-  - {fileID: 2234961493801522188}
-  - {fileID: 1320897466690938547}
-  - {fileID: 2948589957729014146}
-  - {fileID: 4039605866450408431}
-  - {fileID: 557128946897190737}
-  - {fileID: 3857151992466562190}
-  - {fileID: 8645205705083209368}
-  - {fileID: 7772702816115325205}
-  - {fileID: 2435333267953401526}
-  - {fileID: 2032655546751243029}
-  - {fileID: 5688740946455334357}
-  - {fileID: 6058931430032913451}
-  - {fileID: 4896278638615542827}
-  - {fileID: 9013975545393694273}
-  - {fileID: 214628613897428555}
-  - {fileID: 6779384878302238187}
-  - {fileID: 7946473175289918515}
-  - {fileID: 294347258100073577}
-  - {fileID: 8471722903316684852}
-  - {fileID: 4113948346913357826}
-  - {fileID: 5839474275483552647}
-  - {fileID: 648537307206475513}
-  - {fileID: 1735059154217044610}
-  - {fileID: 189127882029199660}
-  - {fileID: 5680102870736609406}
-  - {fileID: 4287020067410539581}
-  - {fileID: 7862848045085672677}
-  - {fileID: 491173009433178043}
-  - {fileID: 2901542083540829736}
-  - {fileID: 5386077880981841535}
-  - {fileID: 1646469047343099851}
-  - {fileID: 3144165995064480654}
-  - {fileID: 171450899538127564}
-  - {fileID: 2459379619564898838}
-  - {fileID: 6211573194089586504}
-  - {fileID: 4341455380273453197}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 1708826221370988257}
-  m_AABB:
-    m_Center: {x: 0.5828843, y: 0.49705523, z: -0.000005364418}
-    m_Extent: {x: 6.070191, y: 2.028892, z: 2.1708045}
-  m_DirtyAABB: 0
 --- !u!1 &7719011532288224900
 GameObject:
   m_ObjectHideFlags: 0

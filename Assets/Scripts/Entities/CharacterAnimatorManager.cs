@@ -127,7 +127,11 @@ public class CharacterAnimatorManager : MonoBehaviour
 
         character.animator.SetFloat(horizontal, snappedHorizontalAmount, 0.1f, Time.deltaTime);
         character.animator.SetFloat(vertical, snappedVerticalAmount, 0.1f, Time.deltaTime);
-
+        if (character.hasSecondaryAnimator)
+        {
+            character.secondaryAnimator.SetFloat(horizontal, snappedHorizontalAmount, 0.1f, Time.deltaTime);
+            character.secondaryAnimator.SetFloat(vertical, snappedVerticalAmount, 0.1f, Time.deltaTime);
+        }
     }
 
     //Can be used for non-WeaponManager based enemies
@@ -140,6 +144,11 @@ public class CharacterAnimatorManager : MonoBehaviour
     {
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(targetAnimation, 0.2f);
+        if (character.hasSecondaryAnimator)
+        {
+            character.secondaryAnimator.applyRootMotion = applyRootMotion;
+            character.secondaryAnimator.CrossFade(targetAnimation, 0.2f);
+        }
 
         //Debug.Log("Playing Animation: " + targetAnimation);
 
@@ -172,6 +181,11 @@ public class CharacterAnimatorManager : MonoBehaviour
         UpdateAnimatorControllerByWeapon(character.characterWeaponManager.GetMainHand());
         character.animator.applyRootMotion = applyRootMotion;
         character.animator.CrossFade(targetAnimation, 0.2f);
+        if (character.hasSecondaryAnimator)
+        {
+            character.secondaryAnimator.applyRootMotion = applyRootMotion;
+            character.secondaryAnimator.CrossFade(targetAnimation, 0.2f);
+        }
         character.isPerformingAction = isPerformingAction;
         character.canRotate = canRotate;
         character.canMove = canMove;
@@ -186,16 +200,28 @@ public class CharacterAnimatorManager : MonoBehaviour
     public void UpdateAnimatorControllerByWeapon(WeaponScript weaponScript)
     {
         character.animator.runtimeAnimatorController = weaponScript.weaponAnimatorOverride;
+        if (character.hasSecondaryAnimator)
+        {
+            character.secondaryAnimator.runtimeAnimatorController = weaponScript.weaponAnimatorOverride;
+        }
     }
 
     public void EnableRootMotion()
     {
         character.animator.applyRootMotion = true;
+        if (character.hasSecondaryAnimator)
+        {
+            character.secondaryAnimator.applyRootMotion = true;
+        }
     }
 
     public void DisableRootMotion()
     {
         character.animator.applyRootMotion = false;
+        if (character.hasSecondaryAnimator)
+        {
+            character.secondaryAnimator.applyRootMotion = false;
+        }
     }
 
 }
