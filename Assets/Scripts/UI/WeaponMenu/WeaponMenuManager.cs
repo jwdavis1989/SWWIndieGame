@@ -26,6 +26,8 @@ public class WeaponMenuManager : MonoBehaviour
     public GridLayoutGroup weaponTraitGrid;
     public TextMeshProUGUI weaponPreviewHeaderText;
     public TextMeshProUGUI activeWeaponTierLevelText;
+    public TextMeshProUGUI otherHandWeaponHeaderText;
+    public TextMeshProUGUI otherHandWeaponTierLevelText;
     public TextMeshProUGUI tinkerPointsCountText;
     public Transform weaponPreviewHolder;
     public GameObject currentWeaponPreview;
@@ -38,6 +40,7 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Grid containing owned weapons")]
     public GameObject weaponsGrid;
     public int curWeaponPage = 0;
+    public int curOHWeaponPage = 0;
     GameObject activeWeapon = null;
     public Image salvageButtonIconGamepad;
     public TextMeshProUGUI salvageControlText;
@@ -51,7 +54,8 @@ public class WeaponMenuManager : MonoBehaviour
     [Header("Input")]
     //Event system. There can apparently only be one active at time so need to make sure this doesnt conflict with other UI
     public EventSystem eventSystem;
-    [HideInInspector] [SerializeField] bool switchWeaponUp = false;
+    [HideInInspector][SerializeField] bool switchHandInput = false;
+    [HideInInspector][SerializeField] bool switchWeaponUp = false;
     [HideInInspector][SerializeField] bool switchWeaponDown = false;
     [HideInInspector][SerializeField] bool equipWeaponInput = false;
     [HideInInspector][SerializeField] bool weaponSubmenuInput = false;
@@ -94,12 +98,12 @@ public class WeaponMenuManager : MonoBehaviour
         //wpnScroll.value = 0;
         if(PlayerWeaponManager.instance.GetMainHand() != null)
             curWeaponPage = PlayerWeaponManager.instance.ownedWeapons.IndexOf(PlayerWeaponManager.instance.GetMainHand().gameObject);
+        if (PlayerWeaponManager.instance.GetOffHand() != null)
+            curOHWeaponPage = PlayerWeaponManager.instance.ownedSpecialWeapons.IndexOf(PlayerWeaponManager.instance.GetOffHand().gameObject);
         //cmpntScroll.value = 0;
         curComponentPage = 0;
         activeWeapon = null;
-        LoadWeaponsToScreen();
-        DisplayActiveWeapon();
-        LoadComponentsToScreen();
+        ReloadWeaponMenu();
         if(playerControls != null)
             playerControls.WeaponMenu.Enable();
         // load tooltips
@@ -131,6 +135,7 @@ public class WeaponMenuManager : MonoBehaviour
             //playerControls.WeaponMenu.FocusComponentsWindow.performed += i => focusComponentsInput = true;
             //playerControls.WeaponMenu.FocusEvolutionsWindow.performed += i => focusEvolutionsInput = true;
             playerControls.WeaponMenu.WeaponSubmenu.performed += i => weaponSubmenuInput = true;
+            playerControls.WeaponMenu.SwitchHand.performed += i => switchHandInput = true;
             playerControls.Enable();
         }
     }
@@ -159,6 +164,7 @@ public class WeaponMenuManager : MonoBehaviour
         HandleEquipWeaponInput();
         HandleOpenWeaponSubmenuInput();
         HandleHelpInput();
+        HandleSwitchHandInput();
         //HandleFocusComponentsInput();
         HandleGamepadSelectedObject();//Moving through components/etc.
         CheckControlsChanged();//Gamepad <> KB&M
@@ -211,6 +217,14 @@ public class WeaponMenuManager : MonoBehaviour
             newPosition.z += zoomSpeed * Time.unscaledDeltaTime;
             newPosition.z = Mathf.Min(newPosition.z, maxZoomDistance);
             weaponPreviewHolder.transform.position = newPosition;
+        }
+    }
+    void HandleSwitchHandInput()
+    {
+        if (switchHandInput){
+            switchHandInput = false;
+            mainHandActive = !mainHandActive;
+            ReloadWeaponMenu();
         }
     }
     public void WeaponPreviewCursorEnter() { cursorInPreviewCamera = true; }
@@ -266,35 +280,31 @@ public class WeaponMenuManager : MonoBehaviour
         if (submenuActive)
             return;
 
-        int totalWeapons = PlayerWeaponManager.instance.TotalWeapons();
+        int totalWeapons = mainHandActive? PlayerWeaponManager.instance.ownedWeapons.Count 
+            :PlayerWeaponManager.instance.ownedSpecialWeapons.Count;
 
-        if (totalWeapons <= 1)
-        {
+        if (totalWeapons <= 1){
             switchWeaponUp = false;
             switchWeaponDown = false;
             return;
         }
-
-        if (switchWeaponUp)
-        {
+        // get reference to the correct page #
+        ref int page = ref mainHandActive? ref curWeaponPage :ref curOHWeaponPage;
+        if (switchWeaponUp){
             switchWeaponUp = false;
-
-            if (curWeaponPage < totalWeapons - 1)
-            {
-                curWeaponPage++;
+            if (page < totalWeapons - 1){
+                page++;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
+                LoadComponentsToScreen();
             }
-        }
-        else if (switchWeaponDown)
-        {
+        }else if (switchWeaponDown){
             switchWeaponDown = false;
-
-            if (curWeaponPage > 0)
-            {
-                curWeaponPage--;
+            if (page > 0){
+                page--;
                 LoadWeaponsToScreen();
                 DisplayActiveWeapon();
+                LoadComponentsToScreen();
             }
         }
     }
@@ -584,7 +594,7 @@ public class WeaponMenuManager : MonoBehaviour
                 //Debug.Log("Broke down " + newComp.stats.itemName);
                 //add to screen
                 activeWeapon = null;
-                ReloadUpgradeMenu();
+                ReloadWeaponMenu();
             }
         }
         catch (Exception e) //Catches not lvl 5 or over error / no active weapon
@@ -638,21 +648,17 @@ public class WeaponMenuManager : MonoBehaviour
         {
             return; //no change
         }
-        if (currentStep > lastStep)
-        {
-            curWeaponPage++;
+        ref int page = ref mainHandActive ? ref curWeaponPage : ref curOHWeaponPage;
+        if (currentStep > lastStep){
+            page++;
+        }else{
+            page--;
         }
-        else
-        {
-            curWeaponPage--;
+        if (page > numOfPage){// past the end go to beg
+            page = 0;
         }
-        if (curWeaponPage > numOfPage)
-        {// past the end go to beg
-            curWeaponPage = 0;
-        }
-        else if (curWeaponPage < 0)
-        {//past beggining go to end
-            curWeaponPage = numOfPage;
+        else if (page < 0){//past beginning go to end
+            page = numOfPage;
         }
         lastStep = currentStep;
         LoadWeaponsToScreen();
@@ -673,7 +679,7 @@ public class WeaponMenuManager : MonoBehaviour
         Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
         foreach (var item in inventory.GetTinkerComponents())
         {
-            if(item.Value.quantity > 0)
+            if(item.Value.itemQty > 0)
                 count++;
         }
         //foreach (var item in TinkerComponentManager.instance.baseComponents)
@@ -805,7 +811,7 @@ public class WeaponMenuManager : MonoBehaviour
                 myBtnScrpt.mainButton.onClick.AddListener(() => //Evolve Weapon Button
                 {
                     weaponCntrller.EvolveWeapon(activeWeapon, evolves[0], PlayerWeaponManager.instance);
-                    ReloadUpgradeMenu();
+                    ReloadWeaponMenu();
                 });
             } else {
                 myBtnScrpt.topText.text = evolWpnDetails.itemName;
@@ -836,7 +842,7 @@ public class WeaponMenuManager : MonoBehaviour
                 myBtnScrpt2.mainButton.onClick.AddListener(() => //Evolve 2 Weapon button
                 {
                     weaponCntrller.EvolveWeapon(activeWeapon, evolves[1], PlayerWeaponManager.instance);
-                    ReloadUpgradeMenu();
+                    ReloadWeaponMenu();
                 });
             } else {
                 //Note: I'm setting it to always show underscores instead of the name when already discovered
@@ -883,14 +889,24 @@ public class WeaponMenuManager : MonoBehaviour
         // Exp
         LoadExperienceToScreen(stats);
         //weapon traits
-        foreach(string traitId in wpn.stats.weaponTraits)
-        {
+        foreach(string traitId in wpn.stats.weaponTraits) {
             LoadWeaponTrait(traitId);
         }
         // Elemental
         foreach (KeyValuePair<string, float> stat in wpn.GetElementalStats()) 
             LoadStat(stat, elementalStatsTextGrid.transform);
     }
+    void LoadOtherHandWeapon()
+    {
+        WeaponScript wpn = mainHandActive ? PlayerWeaponManager.instance.GetOffHand() : PlayerWeaponManager.instance.GetMainHand();
+        if(wpn == null){
+            otherHandWeaponHeaderText.text = mainHandActive?"Off Hand: None":"Main hand: None";
+            otherHandWeaponTierLevelText.text = "";
+        }else{
+            otherHandWeaponHeaderText.text = wpn.stats.weaponName;
+            otherHandWeaponTierLevelText.text = wpn.GetWeaponFamilyFormatted() + "\nLevel " + wpn.stats.level;
+        }
+}
     KeyValuePair<string, float> LoadStat(KeyValuePair<string, float> stat, Transform trans)
     {
         GameObject statTextObj = Instantiate(statsTextPrefab, trans);
@@ -898,10 +914,8 @@ public class WeaponMenuManager : MonoBehaviour
         weaponStatUI.statId = stat.Key;
         bool greenTextShowing = false;
         string greenText = "";
-        if (activeComponent != null)
-        {
-            if (activeComponent.GetStats().ContainsKey(stat.Key))
-            {
+        if (activeComponent != null){ // A component is selected or hovered
+            if (activeComponent.GetStats().ContainsKey(stat.Key)){
                 greenTextShowing = true;
                 greenText += "<size=16> + " + activeComponent.GetStats()[stat.Key] + "</color></size>";
             }
@@ -999,13 +1013,14 @@ public class WeaponMenuManager : MonoBehaviour
      * Clear weapons grid and reload it with current values
      */
     int displayed = 0;
+    bool mainHandActive = true;
     void LoadWeaponsToScreen()
     {
         PlayerWeaponManager playerWpns = PlayerWeaponManager.instance;
 
-        List<GameObject> allWeapons = new List<GameObject>();
-        allWeapons.AddRange(playerWpns.ownedWeapons);
-        allWeapons.AddRange(playerWpns.ownedSpecialWeapons);
+        List<GameObject> weapons = new List<GameObject>();
+        weapons.AddRange(mainHandActive? playerWpns.ownedWeapons : playerWpns.ownedSpecialWeapons);
+        //weapons.AddRange(playerWpns.ownedSpecialWeapons);
 
         int maxDisplayed = 3;
 
@@ -1013,10 +1028,10 @@ public class WeaponMenuManager : MonoBehaviour
             Destroy(child.gameObject);
 
         displayed = 0;
-
-        for (int i = curWeaponPage; i < allWeapons.Count && displayed < maxDisplayed; i++)
-        {
-            GameObject wpn = allWeapons[i];
+        int page = (mainHandActive ? curWeaponPage : curOHWeaponPage);
+        Debug.Log("mainHandActive="+ mainHandActive + ",Page=" + page);
+        for (int i = page; i < weapons.Count && displayed < maxDisplayed; i++){
+            GameObject wpn = weapons[i];
 
             if (wpn == null)
                 continue;
@@ -1035,15 +1050,13 @@ public class WeaponMenuManager : MonoBehaviour
                 weaponButton.mainButtonForeground.GetComponent<Image>().sprite = wpnScrpt.spr;
 
             // First weapon displayed becomes active weapon
-            if (displayed == 1)
-            {
+            if (displayed == 1){
                 activeWeapon = wpnScrpt.gameObject;
-
-                // Your existing salvage logic here...
             }
 
             // Disable equipped weapon
-            if (i == playerWpns.indexOfEquippedWeapon)
+            if ((mainHandActive && i == playerWpns.indexOfEquippedWeapon)
+                || (!mainHandActive && i == playerWpns.indexOfEquippedSpecialWeapon))
                 weaponButton.mainButton.interactable = false;
 
             weaponButton.mainButton.onClick.AddListener(() =>
@@ -1057,10 +1070,8 @@ public class WeaponMenuManager : MonoBehaviour
         }
 
         // Fill remaining slots
-        while (displayed < maxDisplayed)
-        {
+        while (displayed < maxDisplayed){
             displayed++;
-
             Instantiate(this.weaponButton, weaponsGrid.transform)
                 .GetComponent<WeaponButtonUI>()
                 .mainButtonForeground.SetActive(false);
@@ -1231,7 +1242,7 @@ public class WeaponMenuManager : MonoBehaviour
 
         int count = 0;//count total unique components owned
         foreach(var item in ownedComponents) {
-            if(item.Value.quantity > 0)
+            if(item.Value.itemQty > 0)
                 count++;
         }
         count += inventory.weaponSalvageComponents.Count;
@@ -1251,7 +1262,7 @@ public class WeaponMenuManager : MonoBehaviour
     public void LoadComponent(KeyValuePair<string, InventoryItem> kvp, ItemDatabase itemDatabase, ref int componentsToSkip, ref int index, ref int displayedCount, in int maxDisplayed)
     {
         string itemId = kvp.Key;
-        int quantity = kvp.Value.quantity;
+        int quantity = kvp.Value.itemQty;
         TinkerComponentData tinkerComponentData = itemDatabase.GetTinkerComponentData(itemId);
         ItemDetails itemDetails = itemDatabase.GetItem(itemId);
         if (quantity > 0)
@@ -1383,11 +1394,12 @@ public class WeaponMenuManager : MonoBehaviour
             });
         }
     }
-    private void ReloadUpgradeMenu()
+    private void ReloadWeaponMenu()
     {
         LoadWeaponsToScreen();
         DisplayActiveWeapon();
         LoadComponentsToScreen();
+        LoadOtherHandWeapon();
     }
     private void CheckControlsChanged()
     {
@@ -1564,7 +1576,7 @@ public class WeaponMenuManager : MonoBehaviour
                 Inventory inventory = PlayerWeaponManager.instance.GetComponent<Inventory>();
                 if(inventory.CheckOwnedQty(repairItemId) > 0)
                 {
-                    inventory.inventoryItems[repairItemId].quantity--;
+                    inventory.inventoryItems[repairItemId].itemQty--;
                     weapon.stats.currentDurability = weapon.stats.durability;
                     CloseWeaponSubmenu();
                     LoadComponentsToScreen();

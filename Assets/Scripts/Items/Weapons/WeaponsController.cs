@@ -72,6 +72,7 @@ public class WeaponsController : MonoBehaviour
      */
     public GameObject EvolveWeapon(GameObject oldWpn, string newWeaponType, CharacterWeaponManager character)
     {
+        Inventory inventory = character.GetComponent<Inventory>();
         WeaponScript oldWpnScrpt = oldWpn.GetComponent<WeaponScript>();
         WeaponStats oldStats = oldWpnScrpt.stats;
         bool isSpecial = oldWpnScrpt.isSpecialWeapon;
@@ -86,18 +87,22 @@ public class WeaponsController : MonoBehaviour
         newStatsRef.currentTinkerPoints = oldStats.currentTinkerPoints;
         foreach(string oldTrait in oldStats.weaponTraits)
             newStatsRef.weaponTraits.Add(oldTrait);
-        if (isSpecial)
-        {
+        if (isSpecial){
             int oldWpnIndex = character.ownedSpecialWeapons.IndexOf(oldWpn);
             if(oldWpnIndex == -1) return null;
             character.ownedSpecialWeapons[oldWpnIndex] = newWpn;
-        }
-        else
-        {
+        }else{
             int oldWpnIndex = character.ownedWeapons.IndexOf(oldWpn);
             if (oldWpnIndex == -1) return null;
             character.ownedWeapons[oldWpnIndex] = newWpn;
         }
+        InventoryItem newItem = new InventoryItem();
+        inventory.inventoryItems.Remove(oldWpnScrpt.inventoryItem.itemId);
+        newItem.pickupTime = "" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        newItem.itemId = newStatsRef.weaponId + "##" + newItem.pickupTime;
+        newItem.itemQty = 1;
+        newItem.uniqueItem = true;
+        inventory.inventoryItems.Add(newItem.itemId, newItem);
         Destroy(oldWpn);
         return newWpn;
     }

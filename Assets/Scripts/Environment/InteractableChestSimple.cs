@@ -38,7 +38,7 @@ public class InteractableChestSimple : Interactable
 
         if (needsKey) { // needing a key
             if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0) {
-                player.GetComponent<Inventory>().GetItem(key_id).quantity--;
+                player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
                 SuccessfullyOpen(player);
             } else
                 SetColliderEnabled(true);

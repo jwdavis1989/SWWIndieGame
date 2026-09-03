@@ -283,7 +283,7 @@
                     "name": "Dodge",
                     "type": "Button",
                     "id": "d4408067-8521-4684-bc30-7ac35eb47372",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -310,7 +310,7 @@
                     "name": "QuickslotButton2",
                     "type": "Button",
                     "id": "c81262f5-f135-41ff-96e4-5c162090bdf0",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -319,7 +319,7 @@
                     "name": "QuickslotButton1",
                     "type": "Button",
                     "id": "e053406a-9b41-4cd4-8d89-98e7a5432a56",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1240,6 +1240,17 @@
                     "action": "OpenIdeaCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eced682a-960e-48ef-b050-5cc23c6dbbbc",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenIdeaCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -1499,10 +1510,19 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwitchHand",
+                    "type": "Button",
+                    "id": "932b0db3-241f-45c8-9b6c-b31f62f9c38e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SwitchMenuLeft",
                     "type": "Button",
                     "id": "6396655f-b346-4afb-b7f3-ea957632addf",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -1565,7 +1585,7 @@
                     "name": "FocusComponentsWindow",
                     "type": "Button",
                     "id": "32872322-a885-4991-9e01-45e14600e23e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1611,6 +1631,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchMenuLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4317a02f-1f09-4ebd-9ae0-fb1cc549c715",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHand",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c38b92d-dc06-4f32-bfc5-32a6b056fa64",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -2812,7 +2854,7 @@
                     "name": "DeactivateCameraView",
                     "type": "Button",
                     "id": "65f0c365-6d34-4ef0-b1dd-cd440bee0b84",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -2832,17 +2874,6 @@
                     "name": "",
                     "id": "cf83b35a-0192-47f7-b71f-3e37f71e6c27",
                     "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DeactivateCameraView",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1e6cde45-04de-4a2f-8d15-abcd8e4d60f5",
-                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

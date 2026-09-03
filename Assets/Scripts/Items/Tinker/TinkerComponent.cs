@@ -92,6 +92,16 @@ public class TinkerComponentStats
         //filter out zeroes and return
         return rv.Where(kvp => kvp.Value != 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
+    public override string ToString()
+    {
+        string rv = "";
+        foreach (KeyValuePair<string, float> kvp in GetStats()){
+            if(kvp.Value != 0)
+                rv += kvp.Key + " +" + kvp.Value + ", ";
+        }
+        rv = rv.Substring(0, rv.Length - 2);
+        return rv;
+    }
 }
 
 [Serializable]

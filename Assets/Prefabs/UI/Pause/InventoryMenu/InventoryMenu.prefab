@@ -1061,6 +1061,8 @@ MonoBehaviour:
   - {fileID: 8190218569603142894}
   emptyQuickslotSpr: {fileID: 21300000, guid: e0ac9eac0dfb49f4ab0813ecd430f20f, type: 3}
   goldText: {fileID: 8771194459039676971}
+  sortText: {fileID: 0}
+  filterText: {fileID: 0}
   itemUIPrefab: {fileID: 6566753777988130877, guid: a3ddc6cbe67f1c642929ffbbd3926b48, type: 3}
   itemDatabase: {fileID: 11400000, guid: eb403de05bc7f4f4ebe23d78c92d00c0, type: 2}
   playerInventory: {fileID: 0}
@@ -1068,11 +1070,15 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   useButtonPerformed: 0
   quickSlotGamepad: 0
+  quickSlotGamepadStart: 0
+  quickSlotGamepadEnd: 0
   quickSlot1: 0
   quickSlot2: 0
   quickSlot3: 0
   quickSlot4: 0
   cycleQuickSlotGamepad: 0
+  sortItemsInput: 0
+  filterItemsByCatergoryInput: 0
   gamepadTooltips: []
   keyboardMouseTooltips: []
 --- !u!1 &6167306706691580271
@@ -2315,6 +2321,22 @@ PrefabInstance:
     - target: {fileID: 234870710290295798, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -126.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166015729842991895, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 460
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166015729842991895, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 35.2061
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166015729842991895, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000047684
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166015729842991895, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0769
       objectReference: {fileID: 0}
     - target: {fileID: 1621170403134746416, guid: 742d4f235f2998043bd355a9762ad0ed, type: 3}
       propertyPath: m_Color.a
