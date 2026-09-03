@@ -28,7 +28,7 @@ public class AiSyncLocationConstantly : MonoBehaviour
         targetObjectTransform = targetObject.transform;
 
         //Move weapon to visible actor's mainhandanchor
-        character.characterWeaponManager.GetMainHand().transform.SetParent(character.characterWeaponManager.mainHandWeaponAnchor.transform);
+        character.characterWeaponManager.GetMainHand().transform.SetParent(character.characterWeaponManager.mainHandWeaponAnchor.transform, false);
 
         //Flag that initialization has completed
         hasBeenInitialized = true;
