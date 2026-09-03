@@ -183,7 +183,7 @@ public class CharacterAnimatorManager : MonoBehaviour
         character.animator.CrossFade(targetAnimation, 0.2f);
         if (character.hasSecondaryAnimator)
         {
-            character.secondaryAnimator.applyRootMotion = applyRootMotion;
+            //character.secondaryAnimator.applyRootMotion = applyRootMotion;
             character.secondaryAnimator.CrossFade(targetAnimation, 0.2f);
         }
         character.isPerformingAction = isPerformingAction;

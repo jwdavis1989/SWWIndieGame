@@ -26,7 +26,7 @@ public class AiSyncLocationConstantly : MonoBehaviour
         targetObjectTransform = targetObject.transform;
         hasBeenInitialized = true;
     }
-    
+
     public void EnableIsFalling()
     {
         //Compatibility Stub
@@ -46,4 +46,35 @@ public class AiSyncLocationConstantly : MonoBehaviour
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
+
+    public void CallDrainStaminaBasedOnAttack()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public void EnableCanRotate()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public void DisableCanRotate()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public void CallOpenDamageCollider()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public void CallCloseDamageCollider()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public void EnableCanDoCombo()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
 }

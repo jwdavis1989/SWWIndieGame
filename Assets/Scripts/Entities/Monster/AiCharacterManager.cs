@@ -72,6 +72,7 @@ public class AICharacterManager : CharacterManager
             instantiatedSecondaryAnimatorActor = Instantiate(secondaryAnimatorActorPrefab, transform.position, transform.rotation);
             secondaryAnimatorActorSyncScript = instantiatedSecondaryAnimatorActor.GetComponent<AiSyncLocationConstantly>();
             secondaryAnimatorActorSyncScript.InitializeAiSync(gameObject);
+            characterWeaponManager.mainHandWeaponAnchor = instantiatedSecondaryAnimatorActor.GetComponentInChildren<MainHandWeaponAnchor>().gameObject;
             secondaryAnimator = instantiatedSecondaryAnimatorActor.GetComponent<Animator>();
         }
 
