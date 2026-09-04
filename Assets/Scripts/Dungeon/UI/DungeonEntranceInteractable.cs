@@ -31,7 +31,7 @@ public class DungeonEntranceInteractable : Interactable
         { // needing a key
             if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
             {
-                player.GetComponent<Inventory>().GetItem(key_id).quantity--;
+                player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
                 Open();
             }
             else

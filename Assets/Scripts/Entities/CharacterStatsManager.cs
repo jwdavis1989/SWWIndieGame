@@ -164,7 +164,7 @@ public class CharacterStatsManager : MonoBehaviour
         staminaRegenerationTimer = 0;
     }
     float prevHealth = 0;
-    public float CheckHPChanged()
+    public float CheckDamageTaken()
     {
         float diff = prevHealth - currentHealth;
         prevHealth = currentHealth;

@@ -18,13 +18,23 @@ public class WorldCharacterEffectsManager : MonoBehaviour
 
     private void Awake() {
         if (instance == null) {
+            //Debug.Log("Creating WorldCharacterEffectsManager " + gameObject.name);
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
-        else {
+        else
+        {
+            //Debug.Log("Extra WorldCharacterEffectsManager " + gameObject.name);
             Destroy(gameObject);
         }
 
         GenerateEffectIDs();
+    }
+    private void OnDestroy()
+    {
+        //Debug.Log("Destroy WorldCharacterEffectsManager " + gameObject.name);
+        instance = null; // For main menu button
     }
 
     private void GenerateEffectIDs() {

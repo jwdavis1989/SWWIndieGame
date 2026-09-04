@@ -47,6 +47,7 @@ public class OptionsMenuManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             LoadOptions();
         }
         else
@@ -142,6 +143,11 @@ public class OptionsMenuManager : MonoBehaviour
     {
         HandleExitPauseMenuInput();
     }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+        playerControls.Dispose();
+    }
     /***********************************************************************************************
      ********************************  I N P U T   H A N D L E R S  ********************************
      ***********************************************************************************************/
@@ -153,7 +159,7 @@ public class OptionsMenuManager : MonoBehaviour
         {
 
         }
-        Debug.Log("ScrollX=" + scrollX + " scrollY=" + scrollY);
+        //Debug.Log("ScrollX=" + scrollX + " scrollY=" + scrollY);
     }
     // Handles swapping between gamepad/keyboard
     private void CheckControlsChanged()

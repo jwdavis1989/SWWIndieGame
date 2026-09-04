@@ -14,9 +14,9 @@ public class JournalManager : MonoBehaviour
         journalFlags[hasNotOpenedInventMenuKey] = true;
     }
 
-    public bool CheckJournalFlag(string key)
+    public static bool CheckJournalFlag(string key)
     {
-        return journalFlags[key];
+        return instance.journalFlags[key];
     }
     public void Awake()
     {
@@ -24,17 +24,17 @@ public class JournalManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
-
-
-
-
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+    }
 
 
 

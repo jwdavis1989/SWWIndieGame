@@ -34,8 +34,6 @@ public class UIRadialStatBar : MonoBehaviour
         {
             uiImage.material = new Material(uiImage.material);
             runtimeMaterial = uiImage.material;
-            Debug.Log("Color: " + runtimeMaterial.color);
-            Debug.Log("_Color: " + Shader.PropertyToID("_Color"));
         }
     }
 

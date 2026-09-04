@@ -73,6 +73,10 @@ public class CharacterLocomotionManager : MonoBehaviour
             //Air Timer
             inAirTimer += Time.deltaTime;
             character.animator.SetFloat("InAirTimer", inAirTimer);
+            if (character.hasSecondaryAnimator && character.secondaryAnimatorActorSyncScript != null && character.secondaryAnimatorActorSyncScript.hasBeenInitialized)
+            {
+                character.secondaryAnimator.SetFloat("InAirTimer", inAirTimer);
+            }
 
             //Increases gravity's effect over time
             if (!character.isBoosting)

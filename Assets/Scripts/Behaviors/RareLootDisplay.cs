@@ -29,7 +29,7 @@ public class RareLootDisplay : MonoBehaviour
         // wait
         yield return new WaitForSeconds(3);
         // give to player
-        PlayerWeaponManager.instance.AddWeaponById(lootItemId);
+        PlayerWeaponManager.instance.AddBaseWeaponById(lootItemId);
         // end this object
         Destroy(gameObject);
     }

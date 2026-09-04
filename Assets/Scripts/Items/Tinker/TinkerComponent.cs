@@ -63,6 +63,7 @@ public class TinkerComponent : PickupableItem
 [Serializable]
 public class TinkerComponentStats
 {
+    public string tinkerComponentId;
     [Header("Stats")]
     public float attack = 0;
     public float durability = 0;
@@ -91,6 +92,16 @@ public class TinkerComponentStats
         //filter out zeroes and return
         return rv.Where(kvp => kvp.Value != 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
+    public override string ToString()
+    {
+        string rv = "";
+        foreach (KeyValuePair<string, float> kvp in GetStats()){
+            if(kvp.Value != 0)
+                rv += kvp.Key + " +" + kvp.Value + ", ";
+        }
+        rv = rv.Substring(0, rv.Length - 2);
+        return rv;
+    }
 }
 
 [Serializable]
@@ -99,5 +110,6 @@ public class WeaponSalvageComponent
     public string itemId;
     public string itemName = "Default";
     public TinkerComponentStats stats = new TinkerComponentStats();
+    public List<string> weaponTraits = new List<string>();
 }
 

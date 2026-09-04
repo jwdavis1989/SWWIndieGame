@@ -22,9 +22,15 @@ public class DungeonManager : MonoBehaviour
     {
         if (instance == null){
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         } else {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
     public static DungeonNodeSaveData GetDungeonNodeProgress(string dungeonId, string nodeId)
     {

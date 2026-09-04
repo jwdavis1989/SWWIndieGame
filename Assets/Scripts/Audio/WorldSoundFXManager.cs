@@ -50,6 +50,7 @@ public class WorldSoundFXManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -60,6 +61,11 @@ public class WorldSoundFXManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     public AudioClip ChooseRandomSFXFromArray(AudioClip[] arrayOfAudioClips)

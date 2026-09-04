@@ -42,17 +42,18 @@ public class PickupableItem : MonoBehaviour
         // make sure quantity is at least 1 when picking up
         quantity = (quantity > 0) ? quantity : 1;
 
-        if (inventory.items.ContainsKey(itemId))
+        if (inventory.inventoryItems.ContainsKey(itemId))
         {   // update inventory quantity
-            inventory.items[itemId].quantity += quantity;
+            inventory.inventoryItems[itemId].itemQty += quantity;
             StartCoroutine(DestroyAfterDelay());
         }
         else
         {   // add item to inventory
             InventoryItem newItem = new InventoryItem();
             newItem.itemId = itemId;
-            newItem.quantity = quantity;
-            inventory.items.Add(itemId, newItem);
+            newItem.itemQty = quantity;
+            newItem.pickupTime = "" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            inventory.inventoryItems.Add(itemId, newItem);
             StartCoroutine(HideAfterDelay());
         }
     }

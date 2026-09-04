@@ -225,7 +225,7 @@ MonoBehaviour:
   isSpecialWeapon: 1
   isWristWeapon: 0
   specialWeaponDamageMultiplier: 1.25
-  spr: {fileID: 21300000, guid: d511495ea09ac9e49b881bcf17f09b19, type: 3}
+  spr: {fileID: 21300000, guid: 1284f88ac5e3b4042a9365d1d68f7370, type: 3}
   hasObtained: 1
   stats:
     weaponType: 6
@@ -270,6 +270,7 @@ MonoBehaviour:
     lightBackstepAttack01StaminaCostModifier: 1
     areaSpellAttack01StaminaCostModifier: 1
     gunAttack01StaminaCostModifier: 1
+    daggerAttack01StaminaCostModifier: 1
     lightAttack01DamageMotionValue: 1
     lightAttack02DamageMotionValue: 1.1
     lightAttack03DamageMotionValue: 1.2
@@ -284,6 +285,7 @@ MonoBehaviour:
     lightBackstepAttack01DamageMotionValue: 1
     areaSpellAttack01DamageMotionValue: 1
     singleTargetBulletAttack01DamageMotionValue: 1
+    daggerTeleportAttackDamageMotionValue: 1.25
   mainHandLightAttackAction: {fileID: 0}
   mainHandHeavyAttackAction: {fileID: 0}
   offHandCastMagicAttackAction: {fileID: 0}
@@ -312,6 +314,7 @@ MonoBehaviour:
   spellProjectileVFX: {fileID: 0}
   spellProjectileFullChargeVFX: {fileID: 0}
   daggerTeleportDistance: 5
+  daggerNoAttackTeleportDistanceModifier: 2
   daggerBackStabBehindTargetDistance: 1.5
   daggerTeleportDelay: 0.2
   daggerTeleportTargetLayer:

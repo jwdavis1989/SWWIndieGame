@@ -37,6 +37,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     [SerializeField] float sprintingSpeed = 6f;
     [SerializeField] float sprintingBoostingSpeed = 8f;
     [SerializeField] float rotationSpeed = 15f;
+    List<PlayerSpeedModifier> speedModifiers = new List<PlayerSpeedModifier>();
 
     [Header("Jump")]
     [SerializeField] float jumpHeight = 2f;
@@ -115,11 +116,11 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         {
             if (characterManager.isSprintingBoosting && !characterManager.isOutOfFuel)
             {
-                player.characterController.Move(moveDirection * sprintingBoostingSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * ApplySpeedModifiers(sprintingBoostingSpeed) * Time.deltaTime);
             }
             else
             {   
-                player.characterController.Move(moveDirection * sprintingSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * ApplySpeedModifiers(sprintingSpeed) * Time.deltaTime);
             }
         }
         else
@@ -127,12 +128,12 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             if (PlayerInputManager.instance.moveAmount > 0.5f)
             {
                 //Move at a running speed
-                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * ApplySpeedModifiers(runningSpeed) * Time.deltaTime);
             }
             else if (PlayerInputManager.instance.moveAmount <= 0.5f)
             {
                 //Move at a walking speed
-                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * ApplySpeedModifiers(walkingSpeed) * Time.deltaTime);
             }
         }
 
@@ -142,7 +143,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (player.isJumping)
         {
-            player.characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
+            player.characterController.Move(jumpDirection * ApplySpeedModifiers(jumpForwardSpeed) * Time.deltaTime);
         }
     }
 
@@ -151,7 +152,7 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         if (player.isRolling)
         {
             //Move Player
-            player.characterController.Move(rollDirection * Time.deltaTime * dodgeBoostSpeed);
+            player.characterController.Move(rollDirection * Time.deltaTime * ApplySpeedModifiers(dodgeBoostSpeed));
         }
     }
 
@@ -180,9 +181,9 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             playerRotation = Quaternion.LookRotation(jumpDirection);
             player.transform.rotation = playerRotation;
 
-            Vector3 newMovement = PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * airBoostSpeed;
+            Vector3 newMovement = PlayerCamera.instance.cameraPivotTransform.transform.forward * Time.deltaTime * ApplySpeedModifiers(airBoostSpeed);
             //Movement caused by boosting
-            if (InventionManager.instance.CheckHasUpgrade(InventionID.ICARUS_BOOSTERS))
+            if (InventionManager.CheckHasUpgrade(InventionID.ICARUS_BOOSTERS))
             {
                 //Player has Icarus Boosters
                 newMovement *= icarusBoosterDashSpeedMultiplier;
@@ -649,5 +650,28 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
         descentMeteorBoosters.SetActive(false);
         player.ResumeClothPhysics();
     }
-
+    float ApplySpeedModifiers(float currentSpeed)
+    {
+        float rv = currentSpeed;
+        foreach(PlayerSpeedModifier speedModifier in speedModifiers) 
+            rv *= speedModifier.modifier;
+        return currentSpeed;
+    }
+    public void AddSpeedModifier(string id, float modifer)
+    {
+        PlayerSpeedModifier speedModifier = new PlayerSpeedModifier();
+        speedModifier.id = id;
+        speedModifier.modifier = modifer;
+        speedModifiers.Add(speedModifier);
+    }
+    public void RemoveSpeedModifer(string id)
+    {
+        foreach(PlayerSpeedModifier modifer in speedModifiers)
+        {
+            if(modifer.id == id) 
+                speedModifiers.Remove(modifer);
+            break;
+        }
+    }
+    [Serializable] class PlayerSpeedModifier { public string id; public float modifier; }
 }

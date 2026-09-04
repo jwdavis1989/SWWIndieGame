@@ -14,6 +14,7 @@ public class PlayerWeaponManager : CharacterWeaponManager
         if (instance == null)
         {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
@@ -24,5 +25,10 @@ public class PlayerWeaponManager : CharacterWeaponManager
     {
         //Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 }

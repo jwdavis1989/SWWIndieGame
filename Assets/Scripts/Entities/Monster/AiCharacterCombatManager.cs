@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class AiCharacterCombatManager : CharacterCombatManager
 {
@@ -31,7 +34,11 @@ public class AiCharacterCombatManager : CharacterCombatManager
     public bool canRun = false;
     public float AIRunningSpeedModifier = 1f;
     public float farRangeDistanceThreshold = 10f;
-    public InstantCharacterEffect onDamageTakenEffect = null;
+    private List<AISpeedModifier> speedModifiers = new List<AISpeedModifier>();
+    [Header("Effect which applies to characters hit by this character")]
+    public OnHitEffect onHitEffect = null;
+    [Header("Effect which applies on to this character when it takes damage")]
+    public OnHitEffect onDamageTakenEffect = null;
 
     public override void Awake()
     {
@@ -39,11 +46,16 @@ public class AiCharacterCombatManager : CharacterCombatManager
     }
     public void Update()
     {
-        if(character.characterStatsManager.CheckHPChanged() < 0)
-        { //health has decreased
-            if(onDamageTakenEffect != null)
-                character.characterEffectsManager.ProcessInstantEffect(onDamageTakenEffect);
-        }
+        HandleOnDamageTakenEffect();
+    }
+
+    void HandleOnDamageTakenEffect()
+    {
+        if (onDamageTakenEffect == null)
+            return;
+        float damageTaken = character.characterStatsManager.CheckDamageTaken();
+        if (damageTaken > 0)
+            character.characterEffectsManager.ProcessInstantEffect(onDamageTakenEffect.Instantiate(damageTaken));
     }
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {
@@ -163,5 +175,85 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         return distanceFromTarget >= farRangeDistanceThreshold;
     }
-
+    public void SetIdleSpeed(AICharacterManager aiCharacter)
+    {
+        float newSpeed = ApplySpeedModifiers(AIIdleAnimationSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
+    }
+    public void SetBasicSpeed(AICharacterManager aiCharacter)
+    {
+        float newSpeed = ApplySpeedModifiers(AIMovementSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
+    }
+    public void SetSprintingSpeed(AICharacterManager aiCharacter)
+    {
+        float newSpeed = ApplySpeedModifiers(AIRunningSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
+    }
+    public void SetAttackSpeed(AICharacterManager aiCharacter)
+    {
+        float newSpeed = ApplySpeedModifiers(AIAttackSpeedModifier);
+        aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
+        if (aiCharacter.navMeshMovement)
+        {
+            aiCharacter.navMeshAgent.speed = newSpeed;
+            aiCharacter.navMeshAgent.acceleration = newSpeed;
+        }
+    }
+    float ApplySpeedModifiers(float currentSpeed)
+    {
+        float rv = currentSpeed;
+        foreach (AISpeedModifier speedModifier in speedModifiers)
+            rv *= speedModifier.modifier;
+        //Debug.Log("ApplySpeedModifiers:"+ speedModifiers.Count+ " to:"+ gameObject.name+ " speed:"+currentSpeed + " to:"+rv);
+        return rv;
+    }
+    public void AddSpeedModifier(string id, float modifer)
+    {
+        AISpeedModifier speedModifier = new AISpeedModifier();
+        speedModifier.id = id;
+        speedModifier.modifier = modifer;
+        speedModifiers.Add(speedModifier);
+    }
+    public void RemoveSpeedModifer(string id)
+    {
+        foreach (AISpeedModifier modifer in speedModifiers)
+        {
+            if (modifer.id == id)
+                speedModifiers.Remove(modifer);
+            break;
+        }
+    }
+    [Serializable] class AISpeedModifier { public string id; public float modifier; }
 }

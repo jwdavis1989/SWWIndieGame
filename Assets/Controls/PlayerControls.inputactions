@@ -283,7 +283,7 @@
                     "name": "Dodge",
                     "type": "Button",
                     "id": "d4408067-8521-4684-bc30-7ac35eb47372",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -310,7 +310,7 @@
                     "name": "QuickslotButton2",
                     "type": "Button",
                     "id": "c81262f5-f135-41ff-96e4-5c162090bdf0",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -319,7 +319,7 @@
                     "name": "QuickslotButton1",
                     "type": "Button",
                     "id": "e053406a-9b41-4cd4-8d89-98e7a5432a56",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1240,6 +1240,17 @@
                     "action": "OpenIdeaCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eced682a-960e-48ef-b050-5cc23c6dbbbc",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenIdeaCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -1251,7 +1262,7 @@
                     "name": "DialogueContinue",
                     "type": "Button",
                     "id": "ef92f6aa-327e-4cc7-958d-798b0088b416",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -1394,7 +1405,7 @@
                     "name": "SwitchMenuLeft",
                     "type": "Button",
                     "id": "6ea47575-3a52-46b2-a331-eaae2908c69c",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -1484,7 +1495,7 @@
                     "name": "PauseButton",
                     "type": "Button",
                     "id": "3609a37f-ed55-45eb-b6ca-7f943e4108bc",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1499,10 +1510,19 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "SwitchHand",
+                    "type": "Button",
+                    "id": "932b0db3-241f-45c8-9b6c-b31f62f9c38e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SwitchMenuLeft",
                     "type": "Button",
                     "id": "6396655f-b346-4afb-b7f3-ea957632addf",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -1565,7 +1585,7 @@
                     "name": "FocusComponentsWindow",
                     "type": "Button",
                     "id": "32872322-a885-4991-9e01-45e14600e23e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1611,6 +1631,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchMenuLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4317a02f-1f09-4ebd-9ae0-fb1cc549c715",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHand",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c38b92d-dc06-4f32-bfc5-32a6b056fa64",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchHand",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1866,7 +1908,7 @@
                     "name": "PauseButton",
                     "type": "Button",
                     "id": "0ab0b513-4364-486c-91ff-fe6428c774d1",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1893,7 +1935,7 @@
                     "name": "QuickslotButtonGamepad",
                     "type": "Button",
                     "id": "ac81a98b-25ff-4d76-9e1a-fcb48dce7898",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -1938,7 +1980,25 @@
                     "name": "UseButton",
                     "type": "Button",
                     "id": "fb548e66-816f-4dff-94ae-b9edbdfcf79a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SortItems",
+                    "type": "Button",
+                    "id": "9d7d5c5e-ef41-4880-8a57-dae1ec40693b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FilterItemsByCategory",
+                    "type": "Button",
+                    "id": "34c06d80-02aa-4989-b80b-fc4be12f8ba5",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -2008,6 +2068,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "UseButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13ff73e6-30bb-402f-81ed-5db550548a33",
+                    "path": "<Keyboard>/v",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SortItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bbf17246-c3b2-4ca8-a3c8-9a2a7a951238",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SortItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "540e7b43-73ad-41db-b58e-b8d99b9aa2da",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FilterItemsByCategory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90fde1e2-13ae-44a2-bf55-7c89f4ed294b",
+                    "path": "<Gamepad>/rightStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FilterItemsByCategory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -2137,7 +2241,7 @@
                     "name": "SwitchMenuLeft",
                     "type": "Button",
                     "id": "ab5d20d8-ab3f-42a3-bd54-696b1aec597a",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Tap",
                     "initialStateCheck": false
@@ -2750,7 +2854,7 @@
                     "name": "DeactivateCameraView",
                     "type": "Button",
                     "id": "65f0c365-6d34-4ef0-b1dd-cd440bee0b84",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -2770,17 +2874,6 @@
                     "name": "",
                     "id": "cf83b35a-0192-47f7-b71f-3e37f71e6c27",
                     "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DeactivateCameraView",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1e6cde45-04de-4a2f-8d15-abcd8e4d60f5",
-                    "path": "<Gamepad>/dpad/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

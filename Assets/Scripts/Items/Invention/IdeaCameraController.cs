@@ -66,6 +66,7 @@ public class IdeaCameraController : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             AttachCameraToPlayer();
         }
         else
@@ -94,6 +95,11 @@ public class IdeaCameraController : MonoBehaviour
     {
         HandleCapturePhotoInput();
         HandleDeactivateCameraViewInput();
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
+        playerControls.Dispose();
     }
     /** returns true if the player is in idea camera mode */
     static public bool isBusy()
@@ -166,7 +172,7 @@ public class IdeaCameraController : MonoBehaviour
             //Play Steve audio - Negative
             WorldSoundFXManager.instance.PlayAdvancedSoundFX(player.characterSoundFXManager.audioSource, WorldSoundFXManager.instance.ChooseRandomSFXFromArray(steveAudioClipNegative));
         }
-        else if (InventionManager.instance.CheckHasIdea(idea.ideaId))
+        else if (InventionManager.CheckHasIdea(idea.ideaId))
         { 
             ideaPhotoText.text = "Idea " + idea.ToString();
             previewControlsText.text = "Return - [Space] / (X)\r\nExit Camera - [ 1 ] / (Y)";

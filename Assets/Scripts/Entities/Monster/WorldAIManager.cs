@@ -26,7 +26,7 @@ public class WorldAIManager : MonoBehaviour
 
     public void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
     
     public void Awake()
@@ -34,11 +34,17 @@ public class WorldAIManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     public void SpawnCharacter(AICharacterSpawner aiCharacterSpawner)

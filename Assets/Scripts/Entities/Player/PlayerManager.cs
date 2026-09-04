@@ -15,6 +15,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerAnimationManager playerAnimationManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
     [HideInInspector] public PlayerInteractionManager playerInteractionManager;
+    [HideInInspector] public Inventory inventory;
 
     public GameObject flashlight;
     public GameObject cameraflashlight;
@@ -37,18 +38,23 @@ public class PlayerManager : CharacterManager
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerSoundFXManager = GetComponent<PlayerSoundFXManager>();
         playerInteractionManager = GetComponent<PlayerInteractionManager>();
+        inventory = GetComponent<Inventory>();
         capeClothComponent = capeSystem.GetComponentInChildren<Cloth>();
         capeClothWorldAccelerationModifier = capeClothComponent.worldAccelerationScale;
 
         //Turn on if adding multiplayer
         //playerNetworkManager = GetComponent<PlayerNetworkManager>();
-        PlayerInputManager.instance.player = this;
-        WorldSaveGameManager.instance.player = this;
         TeleportData.playerManager = this;
         playerStatsManager = GetComponent<PlayerStatsManager>();
 
         playerAnimationManager = GetComponent<PlayerAnimationManager>();
 
+    }
+    protected override void Start()
+    {
+        PlayerInputManager.instance.player = this;
+        WorldSaveGameManager.instance.player = this;
+        base.Start();
     }
 
     // Update is called once per frame
@@ -158,11 +164,12 @@ public class PlayerManager : CharacterManager
         //Inventions
         currentCharacterData.inventions = InventionManager.instance.SaveInventions();
         //Inventory
-        Inventory inventory = GetComponent<Inventory>();
         currentCharacterData.inventoryItems = inventory.SaveItems();
         currentCharacterData.weaponSalvage = inventory.SaveWeaponComponents();
         //Dungeon
         currentCharacterData.savedDungeons = DungeonManager.SaveDungeons();
+        // Active effects
+        currentCharacterData.activeCharacterEffects = characterEffectsManager.activeTimedEffects;
     }
 
     public void LoadGameFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
@@ -184,7 +191,7 @@ public class PlayerManager : CharacterManager
         playerStatsManager.currentHealth = currentCharacterData.currentHealth;
 
         PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
-        
+
 
 
         //Stamina
@@ -200,12 +207,12 @@ public class PlayerManager : CharacterManager
         {
             isOutOfFuel = false;
         }
-        if (currentCharacterData.currentFuel > currentCharacterData.currentFuel/2)
+        if (currentCharacterData.currentFuel > currentCharacterData.currentFuel / 2)
         {
             isRunningOnEmergencyPowerLevels = false;
         }
 
-        
+
         PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(playerStatsManager.currentFuel, playerStatsManager.maxFuel);
 
 
@@ -226,6 +233,8 @@ public class PlayerManager : CharacterManager
         GetComponent<Inventory>().LoadInventory(currentCharacterData.inventoryItems, currentCharacterData.weaponSalvage);
         //Dungeon
         DungeonManager.LoadDungeons(currentCharacterData.savedDungeons);
+        // Active effects
+        characterEffectsManager.activeTimedEffects = currentCharacterData.activeCharacterEffects; 
     }
 
     public void ToggleFlashlight()
@@ -267,10 +276,10 @@ public class PlayerManager : CharacterManager
     {
         foreach (WeaponData aWeapon in ItemDropManager.GetDB().weaponDetails)
         {
-            if (aWeapon.isMonsterWeapon) 
+            if (aWeapon.isMonsterWeapon)
                 continue;
             PlayerWeaponManager.instance.SetAllWeaponsToInactive(aWeapon.isSpecialWeapon);
-            PlayerWeaponManager.instance.AddWeaponById(aWeapon.itemId);
+            PlayerWeaponManager.instance.AddBaseWeaponById(aWeapon.itemId);
         }
         PlayerWeaponManager.instance.indexOfEquippedSpecialWeapon = PlayerWeaponManager.instance.ownedSpecialWeapons.Count - 1;
         PlayerWeaponManager.instance.indexOfEquippedWeapon = PlayerWeaponManager.instance.ownedWeapons.Count - 1;
@@ -352,7 +361,7 @@ public class PlayerManager : CharacterManager
         }
 
         updatedWeapon.stats.elemental.currentHighestElementalStat = newHighestElement;
-        
+
         //Sets all glowing materials to match the current highest element
         updatedWeapon.SetElementalWeaponMaterials(newHighestElementIndex);
 
@@ -366,7 +375,7 @@ public class PlayerManager : CharacterManager
                 updatedWeapon.bladeTrailVFX.gameObject.SetActive(false);
             }
         }
-        
+
         if (isMainHand)
         {
 
@@ -406,7 +415,7 @@ public class PlayerManager : CharacterManager
 
     public override void DisableInvulnerable()
     {
-        if (!InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
+        if (!InventionManager.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = false;
         }
@@ -415,7 +424,7 @@ public class PlayerManager : CharacterManager
     //Not currently being used because the dodge roll already begins invulnerability immediately, but is needed if that changes.
     public void EnableRollerJointInvulnerable()
     {
-        if (InventionManager.instance.CheckHasUpgrade(InventionID.ROLLER_JOINT))
+        if (InventionManager.CheckHasUpgrade(InventionID.ROLLER_JOINT))
         {
             isInvulnerable = true;
         }
@@ -462,7 +471,7 @@ public class PlayerManager : CharacterManager
         capeSystem.SetActive(false);
     }
 
-    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString=null, bool enableAfterLoad=true)
+    public void TeleportPlayerToSceneAndCoordinates(int sceneID, float destinationX = 0f, float destinationY = 0f, float destinationZ = 0f, string sceneIdString = null, bool enableAfterLoad = true)
     {
         TeleportData.Destination = new Vector3(destinationX, destinationY, destinationZ);
         TeleportData.playerManager = this;
@@ -476,6 +485,7 @@ public class PlayerManager : CharacterManager
 
         CharacterController playerController = GetComponent<CharacterController>();
         playerController.enabled = false;
+        TeleportData.playerManager.transform.position = new Vector3(0, 0, 0);
         SceneManager.LoadScene("LoadingScene");
         playerController.enabled = true;
 
@@ -521,5 +531,9 @@ public class PlayerManager : CharacterManager
         //capeClothComponent.worldAccelerationScale = capeClothWorldAccelerationModifier;
         capeClothComponent.enabled = true;
     }
-
+    public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
+    {
+        base.ApplyDamage(damage, characterCausingDamage, isMainHand);
+        PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
+    }
 }

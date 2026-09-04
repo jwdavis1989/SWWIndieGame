@@ -37,6 +37,7 @@ public class WeaponsController : MonoBehaviour
     {
         // Avoids destroying this object when changing scenes
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
         SortWeaponsByType();
     }
 
@@ -47,6 +48,10 @@ public class WeaponsController : MonoBehaviour
         else {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
     public void SortWeaponsByType()
     {
@@ -67,6 +72,7 @@ public class WeaponsController : MonoBehaviour
      */
     public GameObject EvolveWeapon(GameObject oldWpn, string newWeaponType, CharacterWeaponManager character)
     {
+        Inventory inventory = character.GetComponent<Inventory>();
         WeaponScript oldWpnScrpt = oldWpn.GetComponent<WeaponScript>();
         WeaponStats oldStats = oldWpnScrpt.stats;
         bool isSpecial = oldWpnScrpt.isSpecialWeapon;
@@ -79,22 +85,28 @@ public class WeaponsController : MonoBehaviour
         newStatsRef.stability = oldStats.stability;
         newStatsRef.elemental = oldStats.elemental;
         newStatsRef.currentTinkerPoints = oldStats.currentTinkerPoints;
-        if (isSpecial)
-        {
+        foreach(string oldTrait in oldStats.weaponTraits)
+            newStatsRef.weaponTraits.Add(oldTrait);
+        if (isSpecial){
             int oldWpnIndex = character.ownedSpecialWeapons.IndexOf(oldWpn);
             if(oldWpnIndex == -1) return null;
             character.ownedSpecialWeapons[oldWpnIndex] = newWpn;
-        }
-        else
-        {
+        }else{
             int oldWpnIndex = character.ownedWeapons.IndexOf(oldWpn);
             if (oldWpnIndex == -1) return null;
             character.ownedWeapons[oldWpnIndex] = newWpn;
         }
+        InventoryItem newItem = new InventoryItem();
+        inventory.inventoryItems.Remove(oldWpnScrpt.inventoryItem.itemId);
+        newItem.pickupTime = "" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        newItem.itemId = newStatsRef.weaponId + "##" + newItem.pickupTime;
+        newItem.itemQty = 1;
+        newItem.uniqueItem = true;
+        inventory.inventoryItems.Add(newItem.itemId, newItem);
         Destroy(oldWpn);
         return newWpn;
     }
-    public WeaponData GetWeaponData(string weaponId)
+    public static WeaponData GetWeaponData(string weaponId)
     {
         return ItemDropManager.GetDB().GetWeaponData(weaponId);
     }
@@ -131,9 +143,13 @@ public class WeaponsController : MonoBehaviour
         }
         return availableEvolves;
     }
-    public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
+    //public WeaponScript GetBaseWeaponByType(WeaponType weaponType)
+    //{
+    //    return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
+    //}
+    public static WeaponTraitData GetWeaponTraitData(string traitId)
     {
-        return baseWeapons[(int)weaponType].GetComponent<WeaponScript>();
+        return ItemDropManager.GetDB().GetWeaponTraitData(traitId);
     }
 }
 

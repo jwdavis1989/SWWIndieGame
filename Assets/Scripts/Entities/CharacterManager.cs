@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 //using Unity.Netcode;
 
 //If creating online coop, replace public class CharacterManager : MonoBehaviour with the following line:
@@ -11,7 +12,12 @@ public class CharacterManager : MonoBehaviour
 {
     //CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public CharacterController characterController;
-    [HideInInspector] public Animator animator;
+    public Animator animator;
+    public bool hasSecondaryAnimator = false;
+    public Animator secondaryAnimator;
+    public GameObject secondaryAnimatorActorPrefab;
+    public GameObject instantiatedSecondaryAnimatorActor;
+    public AiSyncLocationConstantly secondaryAnimatorActorSyncScript;
     [HideInInspector] public CharacterStatsManager characterStatsManager;
     [HideInInspector] public CharacterCombatManager characterCombatManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
@@ -75,12 +81,16 @@ public class CharacterManager : MonoBehaviour
         if (isPlayer)
         {
             DontDestroyOnLoad(this);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
 
         characterController = GetComponent<CharacterController>();
         characterStatsManager = GetComponent<CharacterStatsManager>();
         characterCombatManager = GetComponent<CharacterCombatManager>();
-        animator = GetComponent<Animator>();
+        if (animator == null)
+        {   
+            animator = GetComponent<Animator>();
+        }
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         characterSoundFXManager = GetComponent<CharacterSoundFXManager>();
@@ -214,7 +224,7 @@ public class CharacterManager : MonoBehaviour
     {
         Debug.Log(1);
         characterWeaponManager.OpenSpecialDamageCollider();
-        
+
         Debug.Log(2);
     }
 
@@ -367,5 +377,24 @@ public class CharacterManager : MonoBehaviour
     public virtual void DisableCanComboSpecialWeapon()
     {
         canComboSpecialAttack = false;
+    }
+    public virtual void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
+    {
+        characterStatsManager.currentHealth -= damage;
+    }
+    public virtual void ApplyOnHitEffects(CharacterManager target, float hitDamage = 1, bool isMainHand = false)
+    {
+        //Debug.Log("ApplyOnHitEffects:" + target.name + " MH:"+ isMainHand);//astest
+        if (characterWeaponManager != null)
+        {
+            //Debug.Log("ApplyOnHitEffects characterWeaponManager:" + target.name);//astest
+            WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
+            if (weapon != null)
+            {
+                //Debug.Log("ApplyOnHitEffects weapon:" + weapon.stats.weaponId);//astest
+                weapon.ApplyWeaponOnHitEffects(target, hitDamage);
+            }
+        }
+        //else do on hit effects from enemies without weapons?
     }
 }
