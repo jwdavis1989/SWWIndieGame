@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 [CreateAssetMenu(menuName = "Items/Item Data/Item Database")]
 
 public class ItemDatabase : ScriptableObject
@@ -68,6 +69,8 @@ public class ItemDatabase : ScriptableObject
     {
         if (itemLookup == null)
             Initialize();
+        if (itemId.Contains("##"))
+            itemId = itemId.Split("##")[0];
         itemId = itemId.ToLower();//case insensitivity
         itemLookup.TryGetValue(itemId, out var item);
         return item;

@@ -17,10 +17,14 @@ public class PlayerSettingsManager : MonoBehaviour
     {
         if (instance == null)
         {
+            //Debug.Log("PlayerSettingsManager new " + gameObject.name);
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else
         {
+            //Debug.Log("PlayerSettingsManager extra " + gameObject.name);
             Destroy(gameObject);
         }
     }
@@ -28,6 +32,11 @@ public class PlayerSettingsManager : MonoBehaviour
     {
         filePath = Path.Combine(Application.persistentDataPath, filename);
         LoadPlayerSettings();
+    }
+    private void OnDestroy()
+    {
+        //Debug.Log("PlayerSettingsManager destroyed " + gameObject.name);
+        instance = null; // For main menu button
     }
     // Player Settings Manager provides api for save & load of player settings and stores loaded player settings
     //    = Path.Combine(
@@ -50,9 +59,9 @@ public class PlayerSettingsManager : MonoBehaviour
             // First run – create default settings
             playerSettings = new PlayerSettings();
             playerSettings.inverted = false;
-            playerSettings.mainVolume = 1f;
-            playerSettings.musicVolume = 1f;
-            playerSettings.effectsVolume = 1f;
+            playerSettings.mainVolume = 0.75f;
+            playerSettings.musicVolume = 0.75f;
+            playerSettings.effectsVolume = 0.75f;
             SavePlayerSettings();
         }
         PlayerCamera.instance.isCameraInverted = playerSettings.inverted;
@@ -99,6 +108,11 @@ public class PlayerSettingsManager : MonoBehaviour
     }
     public static float GetSensitivity(bool gamepad)
     {
+        if(instance == null)
+        {
+            Debug.LogError("PlayerSettingsManager null");
+            return 0f;
+        }
         float sensitivity = gamepad ? 
             instance.playerSettings.gamepadSensitivity :instance.playerSettings.mouseSensitivity;
         //Debug.Log("isGamepad=" + InputSwitchDetector.IsCurrentlyGamepad() + " sensitivity:" + sensitivity);
@@ -113,13 +127,13 @@ public class PlayerSettingsManager : MonoBehaviour
 {
     //controls
     public bool gamepad;//otherwise KB&M
-    public bool inverted = true;//default to wrong
+    public bool inverted = false;
     public float mouseSensitivity = 1.0f;
     public float gamepadSensitivity = 1.0f;
     //volume
-    public float mainVolume;
-    public float musicVolume;
-    public float effectsVolume;
+    public float mainVolume = 0.75f;
+    public float musicVolume = 0.75f;
+    public float effectsVolume = 0.75f;
     //vfx
     public float brightness;
 }

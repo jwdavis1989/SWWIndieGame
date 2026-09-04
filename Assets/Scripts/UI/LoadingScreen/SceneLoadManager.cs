@@ -9,10 +9,13 @@ public class SceneLoadManager : MonoBehaviour
     public Scrollbar loadingBar;
     void Start()
     {
-        // Move player to origin
-        TeleportData.playerManager.transform.position = new Vector3(0,0,0);
-        // Disable Player Gravity to avoid infinite falling bug
-        TeleportData.playerManager.hasGravity = false;
+        if (TeleportData.playerManager != null)
+        {
+            // Move player to origin
+            TeleportData.playerManager.transform.position = new Vector3(0, 0, 0);
+            // Disable Player Gravity to avoid infinite falling bug
+            TeleportData.playerManager.hasGravity = false;
+        }
 
         StartCoroutine(LoadScene());
     }
@@ -33,7 +36,13 @@ public class SceneLoadManager : MonoBehaviour
             yield return null;
         }
         operation.allowSceneActivation = true;
-
+        // Teleport
+        if (TeleportData.playerManager != null)
+        {
+            TeleportData.playerManager.transform.position = TeleportData.Destination;
+            TeleportData.playerManager.transform.rotation = Quaternion.Euler(new Vector3(0, TeleportData.yRotation, 0));
+            PlayerCamera.instance.SnapCameraBehindPlayer();
+        }
         // Enable Controls
         if (TeleportData.enableAfterLoad)
         {
@@ -43,10 +52,6 @@ public class SceneLoadManager : MonoBehaviour
             // Re-enable Player Gravity
             TeleportData.playerManager.hasGravity = true;
         }
-        // Teleport
-        TeleportData.playerManager.transform.position = TeleportData.Destination;
-        TeleportData.playerManager.transform.rotation = Quaternion.Euler(new Vector3(0,TeleportData.yRotation,0));
-        PlayerCamera.instance.SnapCameraBehindPlayer();
     }
 }
 public static class TeleportData

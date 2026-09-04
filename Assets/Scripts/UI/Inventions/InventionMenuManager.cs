@@ -48,6 +48,7 @@ public class InventionMenuManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             eventSystem = PauseScript.instance.mainPauseMenuEvents;
         }
         else
@@ -119,6 +120,10 @@ public class InventionMenuManager : MonoBehaviour
             foreach (GameObject gamepadeUI in keyboardMouseTooltips)
                 gamepadeUI.SetActive(false);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
     public void OpenInventionMenu()
     {

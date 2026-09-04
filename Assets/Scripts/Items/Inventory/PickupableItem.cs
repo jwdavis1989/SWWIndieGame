@@ -44,14 +44,15 @@ public class PickupableItem : MonoBehaviour
 
         if (inventory.inventoryItems.ContainsKey(itemId))
         {   // update inventory quantity
-            inventory.inventoryItems[itemId].quantity += quantity;
+            inventory.inventoryItems[itemId].itemQty += quantity;
             StartCoroutine(DestroyAfterDelay());
         }
         else
         {   // add item to inventory
             InventoryItem newItem = new InventoryItem();
             newItem.itemId = itemId;
-            newItem.quantity = quantity;
+            newItem.itemQty = quantity;
+            newItem.pickupTime = "" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             inventory.inventoryItems.Add(itemId, newItem);
             StartCoroutine(HideAfterDelay());
         }

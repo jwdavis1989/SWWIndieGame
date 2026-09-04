@@ -10,17 +10,25 @@ public class WorldUtilityManager : MonoBehaviour
     [Header("Layers")]
     [SerializeField] LayerMask characterLayers;
     [SerializeField] LayerMask environmentLayers;
+    public static List<GameObject> StaticObjects = new List<GameObject>();
 
-    private void Awake()
+    private void OnEnable()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
+            StaticObjects.Add(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        //Debug.Log("WorldUtilitiyMan Destroyed:"+gameObject.name);
+        instance = null; // For main menu button
     }
 
     public LayerMask GetCharacterLayers()

@@ -43,6 +43,7 @@ public class WorldSaveGameManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        WorldUtilityManager.StaticObjects.Add(gameObject);
         LoadAllCharacterProfiles();
     }
 
@@ -63,10 +64,15 @@ public class WorldSaveGameManager : MonoBehaviour
     public void Awake() {
         if (instance == null) {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
         }
         else {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
 
     public string DecideCharacterFileNameBasedOnCharacterSlotBeingUsed(CharacterSlot characterSlot) {
@@ -342,9 +348,11 @@ public class WorldSaveGameManager : MonoBehaviour
         //Note: Interactables might require further modification to this function as per Episode 53 of the tutorial
 
         //If you want to use different scenes for levels in your project, use this
-        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
+        //AsyncOperation loadOperation = SceneManager.LoadSceneAsync(currentCharacterData.sceneIndex);
         //Give player object data from file
         player.LoadGameFromCurrentCharacterData(ref currentCharacterData);
+        player.TeleportPlayerToSceneAndCoordinates(currentCharacterData.sceneIndex
+            , currentCharacterData.xPosition, currentCharacterData.yPosition, currentCharacterData.zPosition);
         yield return null;
     }
 

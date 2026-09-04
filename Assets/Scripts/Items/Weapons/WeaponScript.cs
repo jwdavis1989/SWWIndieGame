@@ -227,15 +227,15 @@ public class ElementalStats
     }
     public override string ToString()
     {
-        return "firePower:" + firePower + ", "
-        + "icePower:" + icePower + ", "
-        + "lightningPower:" + lightningPower + ", "
-        + "windPower:" + windPower + ", "
-        + "earthPower:" + earthPower + ", "
-        + "lightPower:" + lightPower + ", "
-        + "beastPower:" + beastPower + ", "
-        + "scalesPower:" + scalesPower + ", "
-        + "techPower:" + techPower;
+        return "Fire " + firePower + ", "
+        + "Ice " + icePower + ", "
+        + "Lightning " + lightningPower + ", "
+        + "Wind" + windPower + ", "
+        + "Earth " + earthPower + ", "
+        + "Light " + lightPower + ", "
+        + "Beast " + beastPower + ", "
+        + "Scales " + scalesPower + ", "
+        + "Tech " + techPower;
     }
 }
 /** 
@@ -263,6 +263,8 @@ public class WeaponScript : MonoBehaviour
     public bool hasObtained = false;
     [Header("These are all written to JSON when saving a game.")]
     public WeaponStats stats;
+
+    [HideInInspector] public InventoryItem inventoryItem; // ref to inventory
 
     [Header("Actions")]
     public WeaponItemAction mainHandLightAttackAction;      //One hand light attack
@@ -1222,6 +1224,21 @@ public class WeaponScript : MonoBehaviour
     public Dictionary<string, float> GetElementalStats()
     {
         return stats.elemental.ToElementalDictionary();
+    }
+    public string GetInventoryStatsDisplay()
+    {
+        string rv = "";
+        foreach (KeyValuePair<string, float> eStat in GetPrimaryStatsForDisplay()) {
+            rv += eStat.Key + " " + eStat.Value + ", ";
+        }
+        rv = rv.Substring(0, rv.Length - 2);
+        rv += "\n";
+        int i = 0;
+        foreach (KeyValuePair<string, float> eStat in GetElementalStats()){
+            rv += eStat.Key + " " + eStat.Value +  ((++i == 5)? "\n" :", ");
+        }
+        rv = rv.Substring(0, rv.Length - 2);
+        return rv;
     }
     public static string GetStatTooltip(string stat)
     {

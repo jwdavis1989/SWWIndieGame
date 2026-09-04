@@ -42,12 +42,17 @@ public class TitleScreenManager : MonoBehaviour
     private void Awake() {
         if (instance == null) {
             instance = this;
+            WorldUtilityManager.StaticObjects.Add(gameObject);
             audioSource = GetComponent<AudioSource>();
             //PlayTitleScreenBackgroundMusic();
         }
         else {
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        instance = null; // For main menu button
     }
     //EventSystem eventSystem;
     //public void Update()

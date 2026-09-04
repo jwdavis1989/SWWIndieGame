@@ -369,7 +369,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""d4408067-8521-4684-bc30-7ac35eb47372"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
@@ -396,7 +396,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""QuickslotButton2"",
                     ""type"": ""Button"",
                     ""id"": ""c81262f5-f135-41ff-96e4-5c162090bdf0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -405,7 +405,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""QuickslotButton1"",
                     ""type"": ""Button"",
                     ""id"": ""e053406a-9b41-4cd4-8d89-98e7a5432a56"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1326,6 +1326,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""OpenIdeaCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eced682a-960e-48ef-b050-5cc23c6dbbbc"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenIdeaCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1585,10 +1596,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""SwitchHand"",
+                    ""type"": ""Button"",
+                    ""id"": ""932b0db3-241f-45c8-9b6c-b31f62f9c38e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""SwitchMenuLeft"",
                     ""type"": ""Button"",
                     ""id"": ""6396655f-b346-4afb-b7f3-ea957632addf"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
@@ -1651,7 +1671,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""FocusComponentsWindow"",
                     ""type"": ""Button"",
                     ""id"": ""32872322-a885-4991-9e01-45e14600e23e"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -1697,6 +1717,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchMenuLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4317a02f-1f09-4ebd-9ae0-fb1cc549c715"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchHand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c38b92d-dc06-4f32-bfc5-32a6b056fa64"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchHand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -2898,7 +2940,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""DeactivateCameraView"",
                     ""type"": ""Button"",
                     ""id"": ""65f0c365-6d34-4ef0-b1dd-cd440bee0b84"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -2918,17 +2960,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""cf83b35a-0192-47f7-b71f-3e37f71e6c27"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DeactivateCameraView"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1e6cde45-04de-4a2f-8d15-abcd8e4d60f5"",
-                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -3463,6 +3494,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_WeaponMenu = asset.FindActionMap("Weapon Menu", throwIfNotFound: true);
         m_WeaponMenu_PauseButton = m_WeaponMenu.FindAction("PauseButton", throwIfNotFound: true);
         m_WeaponMenu_HelpButton = m_WeaponMenu.FindAction("HelpButton", throwIfNotFound: true);
+        m_WeaponMenu_SwitchHand = m_WeaponMenu.FindAction("SwitchHand", throwIfNotFound: true);
         m_WeaponMenu_SwitchMenuLeft = m_WeaponMenu.FindAction("SwitchMenuLeft", throwIfNotFound: true);
         m_WeaponMenu_SwitchMenuRight = m_WeaponMenu.FindAction("SwitchMenuRight", throwIfNotFound: true);
         m_WeaponMenu_SwitchWeaponUp = m_WeaponMenu.FindAction("SwitchWeaponUp", throwIfNotFound: true);
@@ -4557,6 +4589,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IWeaponMenuActions> m_WeaponMenuActionsCallbackInterfaces = new List<IWeaponMenuActions>();
     private readonly InputAction m_WeaponMenu_PauseButton;
     private readonly InputAction m_WeaponMenu_HelpButton;
+    private readonly InputAction m_WeaponMenu_SwitchHand;
     private readonly InputAction m_WeaponMenu_SwitchMenuLeft;
     private readonly InputAction m_WeaponMenu_SwitchMenuRight;
     private readonly InputAction m_WeaponMenu_SwitchWeaponUp;
@@ -4585,6 +4618,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "WeaponMenu/HelpButton".
         /// </summary>
         public InputAction @HelpButton => m_Wrapper.m_WeaponMenu_HelpButton;
+        /// <summary>
+        /// Provides access to the underlying input action "WeaponMenu/SwitchHand".
+        /// </summary>
+        public InputAction @SwitchHand => m_Wrapper.m_WeaponMenu_SwitchHand;
         /// <summary>
         /// Provides access to the underlying input action "WeaponMenu/SwitchMenuLeft".
         /// </summary>
@@ -4653,6 +4690,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HelpButton.started += instance.OnHelpButton;
             @HelpButton.performed += instance.OnHelpButton;
             @HelpButton.canceled += instance.OnHelpButton;
+            @SwitchHand.started += instance.OnSwitchHand;
+            @SwitchHand.performed += instance.OnSwitchHand;
+            @SwitchHand.canceled += instance.OnSwitchHand;
             @SwitchMenuLeft.started += instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.performed += instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.canceled += instance.OnSwitchMenuLeft;
@@ -4697,6 +4737,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @HelpButton.started -= instance.OnHelpButton;
             @HelpButton.performed -= instance.OnHelpButton;
             @HelpButton.canceled -= instance.OnHelpButton;
+            @SwitchHand.started -= instance.OnSwitchHand;
+            @SwitchHand.performed -= instance.OnSwitchHand;
+            @SwitchHand.canceled -= instance.OnSwitchHand;
             @SwitchMenuLeft.started -= instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.performed -= instance.OnSwitchMenuLeft;
             @SwitchMenuLeft.canceled -= instance.OnSwitchMenuLeft;
@@ -6153,6 +6196,13 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnHelpButton(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchHand" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchHand(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SwitchMenuLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
