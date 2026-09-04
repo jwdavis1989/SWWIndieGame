@@ -411,4 +411,16 @@ public class AICharacterManager : CharacterManager
         }
         //else do on hit effects from enemies without weapons?
     }
+
+
+    public void CallEnableBodyTrailVFX()
+    {
+        secondaryAnimatorActorSyncScript.EnableBodyTrailVFX();
+    }
+
+    public void CallDisableBodyTrailVFX()
+    {
+        secondaryAnimatorActorSyncScript.DisableBodyTrailVFX();
+    }
+
 }

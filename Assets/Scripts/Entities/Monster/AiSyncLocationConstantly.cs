@@ -10,6 +10,10 @@ public class AiSyncLocationConstantly : MonoBehaviour
     public bool hasBeenInitialized = false;
     public CharacterManager character;
 
+    [Header("Body Trail VFX")]
+    public bool hasBodyTrailVFX;
+    public GameObject[] bodyTrailVFXs;
+
 
     // Update is called once per frame
     void LateUpdate()
@@ -80,6 +84,32 @@ public class AiSyncLocationConstantly : MonoBehaviour
     }
 
     public void EnableCanDoCombo()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public void EnableBodyTrailVFX()
+    {
+        foreach(GameObject bodyTrailVFX in bodyTrailVFXs)
+        {
+            bodyTrailVFX.SetActive(true);
+        }
+    }
+
+    public void DisableBodyTrailVFX()
+    {
+        foreach(GameObject bodyTrailVFX in bodyTrailVFXs)
+        {
+            bodyTrailVFX.SetActive(false);
+        }
+    }
+
+    public void CallEnableBodyTrailVFX()
+    {
+        //Does nothing, this is to prevent an error from using the humanoid animation events.
+    }
+
+    public void CallDisableBodyTrailVFX()
     {
         //Does nothing, this is to prevent an error from using the humanoid animation events.
     }
