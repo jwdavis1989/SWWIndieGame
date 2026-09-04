@@ -179,6 +179,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         float newSpeed = ApplySpeedModifiers(AIIdleAnimationSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
         if (aiCharacter.navMeshMovement)
         {
             aiCharacter.navMeshAgent.speed = newSpeed;
@@ -189,6 +193,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         float newSpeed = ApplySpeedModifiers(AIMovementSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
         if (aiCharacter.navMeshMovement)
         {
             aiCharacter.navMeshAgent.speed = newSpeed;
@@ -199,6 +207,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         float newSpeed = ApplySpeedModifiers(AIRunningSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
         if (aiCharacter.navMeshMovement)
         {
             aiCharacter.navMeshAgent.speed = newSpeed;
@@ -209,6 +221,10 @@ public class AiCharacterCombatManager : CharacterCombatManager
     {
         float newSpeed = ApplySpeedModifiers(AIAttackSpeedModifier);
         aiCharacter.animator.speed = newSpeed;
+        if (aiCharacter.hasSecondaryAnimator)
+        {
+            aiCharacter.secondaryAnimator.speed = newSpeed;
+        }
         if (aiCharacter.navMeshMovement)
         {
             aiCharacter.navMeshAgent.speed = newSpeed;
