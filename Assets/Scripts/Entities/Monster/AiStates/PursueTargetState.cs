@@ -35,6 +35,13 @@ public class PursueTargetState : AIState
 
         aiCharacter.aiCharacterLocomotionManager.RotateTowardsAgent(aiCharacter);
 
+        //If Target is no longer present, return to the Idle State
+        if (aiCharacterCombatManager.currentTarget == null) {
+            //Reset Animation Speed to Idle Speed
+            aiCharacterCombatManager.SetIdleSpeed(aiCharacter);
+            return SwitchState(aiCharacter, aiCharacter.idleState);
+        }
+
         if (aiCharacter.navMeshAgent)
         {
             //If we are in combat range of the target, switch to Combat Stance State

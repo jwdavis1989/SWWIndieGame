@@ -11,6 +11,9 @@ public class ResetIsJumping : StateMachineBehaviour
             character = animator.GetComponent<CharacterManager>(); 
         }
 
-        character.isJumping = false;
+        if (character != null)
+        {
+            character.isJumping = false;
+        }
     }
 }

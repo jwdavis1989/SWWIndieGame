@@ -12,36 +12,42 @@ public class ResetActionFlag : StateMachineBehaviour
         {
             character = animator.GetComponent<CharacterManager>();
         }
-
-        //This is called when an action ends, and the state returns to "Empty"
-        character.isPerformingAction = false;
-        character.canRotate = true;
-        character.canMove = true;
-        character.isJumping = false;
-        character.isBoosting = false;
-        character.isRolling = false;
-        character.canComboSpecialAttack = false;
-
-        //TODO: Investigate if this is causing bugs for AI.
-        //This was needed to keep enemies from being automatically set to no root motion
-        //Which they use to move using their NavMeshes.
-        if (character.isPlayer)
+        if (character != null)
         {
-            character.animator.applyRootMotion = false;
-        }
+            //This is called when an action ends, and the state returns to "Empty"
+            character.isPerformingAction = false;
+            character.canRotate = true;
+            character.canMove = true;
+            character.isJumping = false;
+            character.isBoosting = false;
+            character.isRolling = false;
+            character.canComboSpecialAttack = false;
 
-        //TODO: Investigate why this was causing error
-        if (character.characterCombatManager != null)
-        {
-            character.characterCombatManager.DisableCanDoCombo();
-            character.characterCombatManager.DisableCanDoRollingAttack();
-            character.characterCombatManager.DisableCanDoBackStepAttack();
-        }
+            //TODO: Investigate if this is causing bugs for AI.
+            //This was needed to keep enemies from being automatically set to no root motion
+            //Which they use to move using their NavMeshes.
+            if (character.isPlayer)
+            {
+                character.animator.applyRootMotion = false;
+                if (character.hasSecondaryAnimator)
+                {
+                    character.secondaryAnimator.applyRootMotion = false;
+                }
+            }
 
-        //Deletes spell VFX if character is interuptted during their spellcasting animation
-        if (character.characterEffectsManager.activeSpellWarmUpFX != null)
-        {
-            Destroy(character.characterEffectsManager.activeSpellWarmUpFX);
+            //TODO: Investigate why this was causing error
+            if (character.characterCombatManager != null)
+            {
+                character.characterCombatManager.DisableCanDoCombo();
+                character.characterCombatManager.DisableCanDoRollingAttack();
+                character.characterCombatManager.DisableCanDoBackStepAttack();
+            }
+
+            //Deletes spell VFX if character is interuptted during their spellcasting animation
+            if (character.characterEffectsManager.activeSpellWarmUpFX != null)
+            {
+                Destroy(character.characterEffectsManager.activeSpellWarmUpFX);
+            }
         }
     }
 

@@ -16,8 +16,8 @@ public class CombatStanceState : AIState
     [Header("Attacks")]
     public List<AiCharacterAttackAction> aiCharacterAttacks;    //List of all possible attacks this character can do
     protected List<AiCharacterAttackAction> potentialAttacks;   //All attacks possible in this situation (Based on angle/distance/weight)
-    private AiCharacterAttackAction chosenAttack;
-    private AiCharacterAttackAction previousChosenAttack;
+    protected AiCharacterAttackAction chosenAttack;
+    protected AiCharacterAttackAction previousChosenAttack;
     protected bool hasSelectedAttack = false;
 
     [Header("Combo")]

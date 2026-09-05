@@ -14,6 +14,9 @@ public class ToggleAttackType : StateMachineBehaviour
             character = animator.GetComponent<CharacterManager>();
         }
 
-        character.characterWeaponManager.currentAttackType = attackType;
+        if (character != null)
+        {   
+            character.characterWeaponManager.currentAttackType = attackType;
+        }
     }
 }

@@ -37,6 +37,7 @@ public enum WeaponType
 
     //Monster Weapons
     SkeleShortSword,
+    HornhoundAttack,
     //Limit - Nothing past here
     UNKNOWN
 }
