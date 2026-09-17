@@ -632,4 +632,17 @@ public class CharacterWeaponManager : MonoBehaviour
                 break;
         }
     }
+
+    public bool HasTrait(string traitId)
+    {
+        foreach(var wpn in ownedWeapons){
+            if(wpn.GetComponent<WeaponScript>().stats.weaponTraits.Contains(traitId))
+                return true;
+        }
+        foreach (var wpn in ownedSpecialWeapons){
+            if (wpn.GetComponent<WeaponScript>().stats.weaponTraits.Contains(traitId))
+                return true;
+        }
+        return false;
+    }
 }

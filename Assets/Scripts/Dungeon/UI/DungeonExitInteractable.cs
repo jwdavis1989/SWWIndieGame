@@ -12,7 +12,7 @@ public class DungeonExitInteractable : Interactable
     public string connectedFloorId = "";
 
     DungeonData dungeonData;
-    private float elapsedTime = 0f;
+    private float timeSinceLevelStarted = 0f;
     protected override void Awake()
     {
         base.Awake();
@@ -21,7 +21,7 @@ public class DungeonExitInteractable : Interactable
     }
     public void Update()
     {
-        elapsedTime += Time.deltaTime;
+        timeSinceLevelStarted += Time.deltaTime;
     }
     public override void Interact(PlayerManager player)
     {
@@ -60,7 +60,7 @@ public class DungeonExitInteractable : Interactable
     {
         //DungeonData dungeonData = DungeonManager.GetDB().GetDungeon(dungeon_id);
         string levelSelectScene = dungeonData.dungeonLevelSelectSceneID;
-        DungeonManager.CompleteCurrentDungeonLevel(elapsedTime, connectedFloorId);
+        DungeonManager.CompleteCurrentDungeonLevel(timeSinceLevelStarted, connectedFloorId);
         //DungeonManager
         PlayerInputManager.instance.SafeDisable(true, true);
         TeleportData.yRotation = dungeonData.exitYRotation;

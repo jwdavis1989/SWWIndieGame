@@ -23,7 +23,8 @@ public class InteractableChestSimple : Interactable
 
     [Header("Lock & Key")]
     public bool needsKey = false;
-    public string key_id = "brass_key";
+    public string key_id = "chest_key";
+    bool lockpickUsed = false;
     protected override void Start()
     {
         base.Start();
@@ -37,8 +38,11 @@ public class InteractableChestSimple : Interactable
         base.Interact(player);
 
         if (needsKey) { // needing a key
-            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0) {
-                player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
+            if (CanOpen(player,true)) {
+                if (lockpickUsed)
+                    DungeonManager.lockpickUsed = true;
+                else // remove key
+                    player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
                 SuccessfullyOpen(player);
             } else
                 SetColliderEnabled(true);
@@ -63,7 +67,7 @@ public class InteractableChestSimple : Interactable
         StartCoroutine(OpenDoorOverTime());
         HandleLootTable();
     }
-
+    // Still used by small chest. Not used by big chest. May depreciate when small chest 
     IEnumerator OpenDoorOverTime()
     {
         while (currentDoorOpenTimer < maximumDoorOpenTimer)
@@ -116,5 +120,17 @@ public class InteractableChestSimple : Interactable
             if (needsKey)
                 interactableText = "Locked";
         }
+    }
+    bool CanOpen(PlayerManager player, bool isUsing = false)
+    {
+        if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0) // player has the key 
+            return true;
+        if(!lockpickUsed && player.characterWeaponManager.GetMainHand().stats.weaponTraits.Contains("lockpick")) // or an unused lockpick
+        {
+            if(isUsing)
+                lockpickUsed = true;
+            return true;
+        }
+        return false;
     }
 }
