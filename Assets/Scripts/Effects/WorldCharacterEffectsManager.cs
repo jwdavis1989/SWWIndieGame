@@ -10,6 +10,8 @@ public class WorldCharacterEffectsManager : MonoBehaviour
     public GameObject defaultBloodSplatterVFX;
     public GameObject defaultDeathExplosionVFX;
     public GameObject defaultfootstepDustVFX;
+    [SerializeField] private GameObject innerLightVFX;
+    public static GameObject InnerLightVFX => instance.innerLightVFX;
 
     [Header("Damage")]
     public TakeHealthDamageCharacterEffect takeHealthDamageEffect;

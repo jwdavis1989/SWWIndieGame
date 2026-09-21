@@ -24,7 +24,7 @@ public class InteractableChestSimple : Interactable
     [Header("Lock & Key")]
     public bool needsKey = false;
     public string key_id = "chest_key";
-    bool lockpickUsed = false;
+    bool lockpicking = false;
     protected override void Start()
     {
         base.Start();
@@ -39,7 +39,7 @@ public class InteractableChestSimple : Interactable
 
         if (needsKey) { // needing a key
             if (CanOpen(player,true)) {
-                if (lockpickUsed)
+                if (lockpicking)
                     DungeonManager.lockpickUsed = true;
                 else // remove key
                     player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
@@ -121,14 +121,14 @@ public class InteractableChestSimple : Interactable
                 interactableText = "Locked";
         }
     }
-    bool CanOpen(PlayerManager player, bool isUsing = false)
+    bool CanOpen(PlayerManager player, bool willOpen = false)
     {
         if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0) // player has the key 
             return true;
-        if(!lockpickUsed && player.characterWeaponManager.GetMainHand().stats.weaponTraits.Contains("lockpick")) // or an unused lockpick
+        if(!DungeonManager.lockpickUsed && player.characterWeaponManager.GetMainHand().HasTrait("lockpick")) // or an unused lockpick
         {
-            if(isUsing)
-                lockpickUsed = true;
+            if(willOpen)
+                lockpicking = true;
             return true;
         }
         return false;
