@@ -383,6 +383,10 @@ public class WeaponScript : MonoBehaviour
         }
 
     }
+    public bool HasTrait(string traitID)
+    {
+        return stats.weaponTraits.Contains(traitID);
+    }
     //TODO: Call this when you upgrade weapons too!
     public void SetWeaponDamage(MeleeWeaponDamageCollider weaponDamageCollider)
     {
@@ -469,9 +473,9 @@ public class WeaponScript : MonoBehaviour
             if (reduceDurability)
             {
                 float durabilityDamage = 1;
-                if (stats.weaponTraits.Contains("durable"))
+                if (HasTrait("durable"))
                     durabilityDamage = 0.85f;
-                else if (stats.weaponTraits.Contains("fragile"))
+                else if (HasTrait("fragile"))
                     durabilityDamage = 1.15f;
                 stats.currentDurability -= durabilityDamage;
             }

@@ -10,12 +10,12 @@ public class TimeLimitChallnge : DungeonChallengeData
 
     public override bool IsFailed()
     {
-        return DungeonManager.elapsedTime > timeLimit;
+        return DungeonManager.LevelCompleteTime > timeLimit;
     }
     public override void Initialize()
     {
         if(description == null || description.Length == 0) 
             description = "Beat the level in less than " + timeLimit + " seconds";
-        DungeonManager.elapsedTime = 0;
+        //DungeonManager.elapsedTime = 0;
     }
 }

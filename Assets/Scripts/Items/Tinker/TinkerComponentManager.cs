@@ -246,11 +246,11 @@ public class TinkerComponentManager : MonoBehaviour
                     foreach (string weaponTraitId in salvage.weaponTraits)
                     {
                         List<string> weaponTraits = weapon.stats.weaponTraits;
-                        if (weapon.stats.weaponTraits.Contains(weaponTraitId))
+                        if (weapon.HasTrait(weaponTraitId))
                             continue; // already have this trait, skip it
-                        if(weaponTraitId.ToLower().Equals("fragile") && weaponTraits.Contains("durable")){
+                        if(weaponTraitId.ToLower().Equals("fragile") && weapon.HasTrait("durable")){
                             weaponTraits.Remove("durable");
-                        }else if (weaponTraitId.ToLower().Equals("durable") && weaponTraits.Contains("fragile")){
+                        }else if (weaponTraitId.ToLower().Equals("durable") && weapon.HasTrait("fragile")){
                             weaponTraits.Remove("fragile");
                         } else {
                             WeaponTraitData weaponTraitData = ItemDropManager.GetDB().GetWeaponTraitData(weaponTraitId);

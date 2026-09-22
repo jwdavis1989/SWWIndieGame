@@ -78,6 +78,10 @@ public class PlayerManager : CharacterManager
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
 
+        // inner light cd
+        if(innerLightCoolddownRemaining > 0) 
+            innerLightCoolddownRemaining -= Time.deltaTime;
+
         DebugMenu();
     }
 
@@ -531,8 +535,18 @@ public class PlayerManager : CharacterManager
         //capeClothComponent.worldAccelerationScale = capeClothWorldAccelerationModifier;
         capeClothComponent.enabled = true;
     }
+    const float innerLightCooldown = 30;
+    float innerLightCoolddownRemaining = 0;
     public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
     {
+        if (characterWeaponManager.GetMainHand().HasTrait("inner_light")){
+            // Inner Light: If not damaged within the last 30 seconds, the next attack that hits you deals 75% reduced damage.
+            if (innerLightCoolddownRemaining <= 0){
+                damage *= 0.75f;
+                Instantiate(WorldCharacterEffectsManager.InnerLightVFX, characterWeaponManager.GetMainHand().transform);
+            }
+            innerLightCoolddownRemaining = innerLightCooldown;
+        }
         base.ApplyDamage(damage, characterCausingDamage, isMainHand);
         PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
     }
