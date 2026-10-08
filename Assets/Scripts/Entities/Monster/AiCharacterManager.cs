@@ -38,8 +38,12 @@ public class AICharacterManager : CharacterManager
     public bool isHitByMainHand = false;
     public bool isHitByOffHand = false;
 
-    [Header("Default Flank Direction")]
-    private bool flankRight = true;
+    [Header("Flanking")]
+    public bool hasChosenFlankSide = false;
+    private bool flankRight = false;
+    public float flankRadius = 1f;
+    private float pathUpdateCooldown = 0f;
+    private const float PATH_UPDATE_INTERVAL = 0.15f;
 
     protected override void Awake()
     {
@@ -232,29 +236,29 @@ public class AICharacterManager : CharacterManager
 
         //1. Play the walking animation
         characterAnimatorManager.UpdateAnimatorMovementParameters(0.5f, 0, false);
-        
+
         //2. Safeguard check for targets
-        if (aiCharacterCombatManager.currentTarget == null || navMeshAgent == null) {
-            return; 
+        if (aiCharacterCombatManager.currentTarget == null || navMeshAgent == null)
+        {
+            return;
         }
-        
+
         Transform targetTransform = aiCharacterCombatManager.currentTarget.transform;
-        
+
         //3. Randomize the direction if the agent has reached its destination or has no path
         if (!navMeshAgent.hasPath || navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
             flankRight = Random.value > 0.5f;
         }
-        
+
         //4. Determine flank direction based on the randomized choice
         //Positive right vector moves right, negative right vector moves left
         Vector3 sideDirection = flankRight ? targetTransform.right : -targetTransform.right;
-        
+
         //Combine side direction with a slight pull toward the back of the player
         Vector3 flankDirection = (sideDirection - targetTransform.forward).normalized;// Determine how far away from the player the flanking path should orbit (e.g., 2 meters)
-        float flankRadius = 2f;
         Vector3 targetFlankPosition = targetTransform.position + (flankDirection * flankRadius);
-        
+
         //5. Sample the NavMesh to find the closest valid walkable point
         if (NavMesh.SamplePosition(targetFlankPosition, out NavMeshHit hit, 2f, NavMesh.AllAreas))
         {
@@ -265,35 +269,71 @@ public class AICharacterManager : CharacterManager
 
     public void BeginFlankingTargetFast()
     {
-        //1. Play the walking animation
+        // //1. Play the walking animation
+        // characterAnimatorManager.UpdateAnimatorMovementParameters(1, 0, false);
+
+        // //2. Safeguard check for targets
+        // if (aiCharacterCombatManager.currentTarget == null || navMeshAgent == null) {
+        //     return; 
+        // }
+
+        // Transform targetTransform = aiCharacterCombatManager.currentTarget.transform;
+
+        // //3. Randomize the direction if the agent has reached its destination or has no path
+        // if (!navMeshAgent.hasPath || navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+        // {
+        //     flankRight = Random.value > 0.5f;
+        // }
+
+        // //4. Determine flank direction based on the randomized choice
+        // //Positive right vector moves right, negative right vector moves left
+        // Vector3 sideDirection = flankRight ? targetTransform.right : -targetTransform.right;
+
+        // //Combine side direction with a slight pull toward the back of the player
+        // //Determine how far away from the player the flanking path should orbit (e.g., 2 meters)
+        // Vector3 flankDirection = (sideDirection - targetTransform.forward).normalized;
+        // Vector3 targetFlankPosition = targetTransform.position + (flankDirection * flankRadius);
+
+        // //5. Sample the NavMesh to find the closest valid walkable point
+        // if (NavMesh.SamplePosition(targetFlankPosition, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        // {
+        //     //6. Tell the agent to move to the flanking point
+        //     navMeshAgent.SetDestination(hit.position);
+        // }
+
         characterAnimatorManager.UpdateAnimatorMovementParameters(1, 0, false);
-        
-        //2. Safeguard check for targets
-        if (aiCharacterCombatManager.currentTarget == null || navMeshAgent == null) {
-            return; 
-        }
-        
+
+        if (aiCharacterCombatManager.currentTarget == null || navMeshAgent == null) return;
+
+        // Reduce path calculations to prevent pathPending from locking up the agent
+        pathUpdateCooldown -= Time.deltaTime;
+        if (pathUpdateCooldown > 0f) return;
+        pathUpdateCooldown = PATH_UPDATE_INTERVAL;
+
         Transform targetTransform = aiCharacterCombatManager.currentTarget.transform;
-        
-        //3. Randomize the direction if the agent has reached its destination or has no path
-        if (!navMeshAgent.hasPath || navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+
+        if (!hasChosenFlankSide)
         {
             flankRight = Random.value > 0.5f;
+            hasChosenFlankSide = true;
         }
-        
-        //4. Determine flank direction based on the randomized choice
-        //Positive right vector moves right, negative right vector moves left
-        Vector3 sideDirection = flankRight ? targetTransform.right : -targetTransform.right;
-        
-        //Combine side direction with a slight pull toward the back of the player
-        Vector3 flankDirection = (sideDirection - targetTransform.forward).normalized;// Determine how far away from the player the flanking path should orbit (e.g., 2 meters)
-        float flankRadius = 2f;
-        Vector3 targetFlankPosition = targetTransform.position + (flankDirection * flankRadius);
-        
-        //5. Sample the NavMesh to find the closest valid walkable point
-        if (NavMesh.SamplePosition(targetFlankPosition, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+
+        Vector3 directionToMe = (transform.position - targetTransform.position);
+        directionToMe.y = 0;
+        directionToMe.Normalize();
+
+        // Rotate out out by 35 degrees to form an arc path step
+        float angleStep = flankRight ? 35f : -35f;
+        Vector3 orbitDirection = Quaternion.Euler(0, angleStep, 0) * directionToMe;
+
+        // Pull heavily toward the back over time
+        Vector3 playerBacksideDir = -targetTransform.forward;
+        Vector3 finalDirection = Vector3.Slerp(orbitDirection, playerBacksideDir, 0.25f).normalized;
+
+        Vector3 targetFlankPosition = targetTransform.position + (finalDirection * flankRadius);
+
+        if (NavMesh.SamplePosition(targetFlankPosition, out NavMeshHit hit, 3.5f, NavMesh.AllAreas))
         {
-            //6. Tell the agent to move to the flanking point
             navMeshAgent.SetDestination(hit.position);
         }
     }

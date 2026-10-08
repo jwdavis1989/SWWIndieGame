@@ -56,6 +56,13 @@ public class PlayerStatsManager : CharacterStatsManager
 
         //Reset Special Weapon Cooldown
         player.characterWeaponManager.isSpecialWeaponOffCooldown = true;
+
+        //Reset Inner Light Cooldown
+        if (player.characterWeaponManager.GetMainHand().HasTrait("inner_light"))
+        {
+            player.isWieldingInnerLightWeapon = true;
+            player.innerLightCoolddownRemaining = 0;
+        }
     }
 
     public void SetNewMaxFuelValue()
