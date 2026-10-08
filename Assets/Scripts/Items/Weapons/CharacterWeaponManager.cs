@@ -232,6 +232,9 @@ public class CharacterWeaponManager : MonoBehaviour
             if (characterThatOwnsThisArsenal.isPlayer) {
                 PlayerUIManager.instance.playerUIHudManager.SetRightWeaponQuickSlotIcon();
             }
+
+            //Handle Inner Light Trait Tracking
+            characterThatOwnsThisArsenal.isWieldingInnerLightWeapon = GetMainHand().HasTrait("inner_light");
         }
     }
     //find next weapon and call ChangeWeapon

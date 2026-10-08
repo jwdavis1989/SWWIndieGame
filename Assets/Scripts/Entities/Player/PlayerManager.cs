@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aura2API;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -23,6 +24,10 @@ public class PlayerManager : CharacterManager
     private Cloth capeClothComponent;
     private float capeClothWorldAccelerationModifier;
     [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
+
+    [Header("Traits - Player")]
+    public bool isInnerLightActive = false;
+    public GameObject innerLightVFX;
 
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
@@ -78,9 +83,8 @@ public class PlayerManager : CharacterManager
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
 
-        // inner light cd
-        if(innerLightCoolddownRemaining > 0) 
-            innerLightCoolddownRemaining -= Time.deltaTime;
+        //Checks for Inner Light Weapon and Manages Timer
+        HandleInnerLightTrait();
 
         DebugMenu();
     }
@@ -238,7 +242,7 @@ public class PlayerManager : CharacterManager
         //Dungeon
         DungeonManager.LoadDungeons(currentCharacterData.savedDungeons);
         // Active effects
-        characterEffectsManager.activeTimedEffects = currentCharacterData.activeCharacterEffects; 
+        characterEffectsManager.activeTimedEffects = currentCharacterData.activeCharacterEffects;
     }
 
     public void ToggleFlashlight()
@@ -536,18 +540,38 @@ public class PlayerManager : CharacterManager
         capeClothComponent.enabled = true;
     }
     const float innerLightCooldown = 30;
-    float innerLightCoolddownRemaining = 0;
+    public float innerLightCoolddownRemaining = 0;
     public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
     {
-        if (characterWeaponManager.GetMainHand().HasTrait("inner_light")){
+        if (characterWeaponManager.GetMainHand().HasTrait("inner_light"))
+        {
             // Inner Light: If not damaged within the last 30 seconds, the next attack that hits you deals 75% reduced damage.
-            if (innerLightCoolddownRemaining <= 0){
+            if (innerLightCoolddownRemaining <= 0)
+            {
                 damage *= 0.75f;
-                Instantiate(WorldCharacterEffectsManager.InnerLightVFX, characterWeaponManager.GetMainHand().transform);
+                Instantiate(WorldCharacterEffectsManager.InnerLightBreakVFX, characterWeaponManager.GetMainHand().transform);
             }
             innerLightCoolddownRemaining = innerLightCooldown;
+            isInnerLightActive = false;
+            innerLightVFX.gameObject.Destroy();
         }
         base.ApplyDamage(damage, characterCausingDamage, isMainHand);
         PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
     }
+
+    public void HandleInnerLightTrait()
+    {
+        if (isWieldingInnerLightWeapon)
+        {
+            //Inner Light Cooldown
+            if (innerLightCoolddownRemaining > 0)
+                innerLightCoolddownRemaining -= Time.deltaTime;
+            else if (!isInnerLightActive)
+            {
+                isInnerLightActive = true;
+                innerLightVFX = Instantiate(WorldCharacterEffectsManager.instance.innerLightApplyVFX, transform);
+            }
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class PlayerWeaponManager : CharacterWeaponManager
 {
@@ -31,4 +32,5 @@ public class PlayerWeaponManager : CharacterWeaponManager
     {
         instance = null; // For main menu button
     }
+    
 }

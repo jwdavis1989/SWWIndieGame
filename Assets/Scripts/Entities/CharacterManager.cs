@@ -34,6 +34,9 @@ public class CharacterManager : MonoBehaviour
     public bool isDead = false;
     public float deathExplosionVFXDelay = 2f;
 
+    [Header("Traits - Character")]
+    public bool isWieldingInnerLightWeapon = false;
+
     [Header("Character Faction")]
     public CharacterFaction faction;
 
