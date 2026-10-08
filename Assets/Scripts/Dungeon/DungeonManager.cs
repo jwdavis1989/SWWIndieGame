@@ -59,6 +59,7 @@ public class DungeonManager : MonoBehaviour
     }
     public static void EnterDungeonLevel(string dungeonId, string dungeonLevelId)
     {
+        InitializeLevelData();
         //Debug.Log("EnterDungeonLevel,"+dungeonId+","+dungeonLevelId+".");
         DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(dungeonId);
         //Debug.Log("EnterDungeonLevel," + dungeonData.dungeonName + ".");
@@ -79,8 +80,8 @@ public class DungeonManager : MonoBehaviour
     }
     public static void CompleteCurrentDungeonLevel(float completeTime = 0, string unlockedFloorId = null)
     {
-        elapsedTime = completeTime;
-        if(instance.savedDungeons == null)
+        LevelCompleteTime = completeTime;
+        if (instance.savedDungeons == null)
             instance.savedDungeons = new List<DungeonSaveData> ();
         DungeonData dungeonData = instance.dungeonDatabase.GetDungeon(currentDungeonId);
         DungeonLevelData dungeonNode = dungeonData.GetDungeonLevelNodeByID (currentLevelId);
@@ -100,6 +101,7 @@ public class DungeonManager : MonoBehaviour
         }
         // mark level as complete
         nodeSaveData.completed = true;
+        // handle challenges
         foreach (DungeonChallengeData challenge in dungeonNode.dungeonChallenges)
         {
             if (!challenge.IsFailed())
@@ -119,13 +121,21 @@ public class DungeonManager : MonoBehaviour
             }
         }
     }
-    //challenges
-    public static float elapsedTime = 0;
-    public static float GetElapsedTime()
-    {
-        return elapsedTime;
-    }
-    public static bool mainHandUsed = false;
-    public static bool offHandUsed = false;
+    // Challenges
+    public static float LevelCompleteTime { get; private set; }
     public static bool healingItemUsed = false;
+    //public static bool mainHandUsed = false;
+    public static bool offHandUsed = false;
+    public static bool finishedUnderTimelimit = false;
+
+    // Lockpick weapon trait
+    public static bool lockpickUsed;
+    static void InitializeLevelData()
+    {
+        offHandUsed = false;
+        healingItemUsed = false;
+        lockpickUsed = false;
+        finishedUnderTimelimit = false;
+    }
+
 }

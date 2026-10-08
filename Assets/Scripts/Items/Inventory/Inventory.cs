@@ -21,7 +21,9 @@ public class Inventory : MonoBehaviour
 
     public InventoryItem GetItem(string itemId)
     {
-        return inventoryItems[itemId];
+        if(inventoryItems.TryGetValue(itemId, out var itemOut))
+            return itemOut; 
+        return null;
     }
     public string GetQuickSlotItemId(int quickslot)
     {
