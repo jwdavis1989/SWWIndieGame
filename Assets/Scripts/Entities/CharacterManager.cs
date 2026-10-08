@@ -400,4 +400,9 @@ public class CharacterManager : MonoBehaviour
         }
         //else do on hit effects from enemies without weapons?
     }
+
+    public virtual void DestroyInnerLightVFX()
+    {
+        //Stub to avoid error, see overriden version in PlayerManager
+    }
 }

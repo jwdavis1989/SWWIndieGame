@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class CharacterWeaponManager : MonoBehaviour
@@ -235,6 +236,12 @@ public class CharacterWeaponManager : MonoBehaviour
 
             //Handle Inner Light Trait Tracking
             characterThatOwnsThisArsenal.isWieldingInnerLightWeapon = GetMainHand().HasTrait("inner_light");
+
+            //Destroy any pre-existing VFX for Inner Light if the new weapon doesn't have it
+            if (!characterThatOwnsThisArsenal.isWieldingInnerLightWeapon)
+            {
+                characterThatOwnsThisArsenal.DestroyInnerLightVFX();
+            }
         }
     }
     //find next weapon and call ChangeWeapon

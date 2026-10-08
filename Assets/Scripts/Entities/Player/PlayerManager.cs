@@ -552,8 +552,7 @@ public class PlayerManager : CharacterManager
                 Instantiate(WorldCharacterEffectsManager.InnerLightBreakVFX, characterWeaponManager.GetMainHand().transform);
             }
             innerLightCoolddownRemaining = innerLightCooldown;
-            isInnerLightActive = false;
-            innerLightVFX.gameObject.Destroy();
+            DestroyInnerLightVFX();
         }
         base.ApplyDamage(damage, characterCausingDamage, isMainHand);
         PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
@@ -572,6 +571,12 @@ public class PlayerManager : CharacterManager
                 innerLightVFX = Instantiate(WorldCharacterEffectsManager.instance.innerLightApplyVFX, transform);
             }
         }
+    }
+
+    public override void DestroyInnerLightVFX()
+    {
+        isInnerLightActive = false;
+        innerLightVFX.gameObject.Destroy();
     }
 
 }
