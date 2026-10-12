@@ -129,13 +129,14 @@ public class DungeonManager : MonoBehaviour
     public static bool finishedUnderTimelimit = false;
 
     // Lockpick weapon trait
-    public static bool lockpickUsed;
+    public static int lockpicksUsed = 0;
     static void InitializeLevelData()
     {
         offHandUsed = false;
         healingItemUsed = false;
-        lockpickUsed = false;
         finishedUnderTimelimit = false;
+        lockpicksUsed = 0;
+        PlayerWeaponManager.ResetLockpickUsed();
     }
 
 }

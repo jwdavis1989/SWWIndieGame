@@ -32,5 +32,14 @@ public class PlayerWeaponManager : CharacterWeaponManager
     {
         instance = null; // For main menu button
     }
-    
+    public static void ResetLockpickUsed()
+    {
+        List<GameObject> weapons = new List<GameObject> ();
+        weapons.AddRange(instance.ownedWeapons);
+        weapons.AddRange(instance.ownedSpecialWeapons);
+        foreach (GameObject weapon in weapons)
+        {
+            weapon.GetComponent<WeaponScript>().lockpickUsed = false;
+        }
+    }
 }
