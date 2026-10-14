@@ -37,9 +37,9 @@ public class InteractableChestSimple : Interactable
         base.Interact(player);
 
         if (needsKey) { // needing a key
-            if (CanOpen(player,true)) {
+            if (Open(player)) {
                 SuccessfullyOpen(player);
-            } else
+            } else // Can't open
                 SetColliderEnabled(true);
         } else {
             SuccessfullyOpen(player);
@@ -114,14 +114,22 @@ public class InteractableChestSimple : Interactable
             player.playerInteractionManager.AddInteractionToList(this);
             if (needsKey)
             {
-                if(CanOpen(player, false))
+                if(CanOpen(player))
                     interactableText = "Unlock";
                 else
                     interactableText = "Locked";
             }
         }
     }
-    bool CanOpen(PlayerManager player, bool willOpen = false)
+    bool CanOpen(PlayerManager player)
+    {
+        return CheckKeyOrLockpick(player, false);
+    }
+    bool Open(PlayerManager player)
+    {
+        return CheckKeyOrLockpick(player, true);
+    }
+    bool CheckKeyOrLockpick(PlayerManager player, bool willOpen = false)
     {
         if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
         { // player has the key 

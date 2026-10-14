@@ -26,7 +26,7 @@ public class DungeonExitInteractable : Interactable
     public override void Interact(PlayerManager player)
     {
         base.Interact(player);
-        if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
+        if (CanOpen(player))
         {
             player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
             Open();
@@ -42,15 +42,16 @@ public class DungeonExitInteractable : Interactable
         {
             //Pass the interaction to the player
             player.playerInteractionManager.AddInteractionToList(this);
-            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
-            {
+            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0){
                 interactableText = "Exit dungeon";
-            }
-            else
-            {
+            }else{
                 interactableText = "Locked";
             }
         }
+    }
+    bool CanOpen(PlayerManager player)
+    {
+        return player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0;
     }
     public void SetColliderEnabled(bool enabled)
     {
