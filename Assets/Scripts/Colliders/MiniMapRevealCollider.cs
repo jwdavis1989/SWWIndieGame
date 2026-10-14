@@ -8,7 +8,7 @@ public class MiniMapRevealCollider : MonoBehaviour
     private GameObject miniMapTile;
     //[Header("Reveals all enemy locations. ")]
     //public bool roseQuartzReveal = false; //Enemies dont use reveal collider
-    [Header("Reveal all water sources, locked doors, and treasure chests.")]
+    [Header("true if reavealed by journal: water sources, locked doors, treasure chests")]
     public bool journalReveal = false;
 
     // Start is called before the first frame update

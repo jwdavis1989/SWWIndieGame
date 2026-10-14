@@ -195,7 +195,7 @@ public class PlayerInputManager : MonoBehaviour
             });
             playerControls.PlayerActions.DebugTeleportToAlecDev.performed += (i => //[2]
             {
-                player.TeleportPlayerToSceneAndCoordinates(2, 0, 140, 0); // Tower in ocean
+                player.TeleportPlayerToSceneAndCoordinates(2, -15.5f, 8.6f, -15); // Tower in ocean
             });
             playerControls.PlayerActions.DebugTeleportToJacobDev.performed += (i => //[3]
             {
