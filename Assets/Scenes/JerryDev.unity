@@ -60877,6 +60877,7 @@ MonoBehaviour:
   characterModel: {fileID: 0}
   isDead: 0
   deathExplosionVFXDelay: 5
+  isWieldingInnerLightWeapon: 0
   faction: 3
   isPlayer: 0
   isRotatingAttacker: 0
@@ -166203,6 +166204,7 @@ MonoBehaviour:
   characterModel: {fileID: 0}
   isDead: 0
   deathExplosionVFXDelay: 5
+  isWieldingInnerLightWeapon: 0
   faction: 3
   isPlayer: 0
   isRotatingAttacker: 0
@@ -218522,6 +218524,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6571532528099707781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &755298302622873398
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.017
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 74.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3824602426041058615, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901718478162378230, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
+      propertyPath: m_Name
+      value: Hazard_CrystalField
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ecb3f0702fba9c40890518d0de2d3ce, type: 3}
 --- !u!65 &781206593405972380
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -292203,3 +292262,4 @@ SceneRoots:
   - {fileID: 881935288}
   - {fileID: 1737992022}
   - {fileID: 2096157908}
+  - {fileID: 755298302622873398}
