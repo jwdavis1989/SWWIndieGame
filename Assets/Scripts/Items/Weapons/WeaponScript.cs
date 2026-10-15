@@ -263,6 +263,7 @@ public class WeaponScript : MonoBehaviour
     public bool hasObtained = false;
     [Header("These are all written to JSON when saving a game.")]
     public WeaponStats stats;
+    public bool lockpickUsed = false;
 
     [HideInInspector] public InventoryItem inventoryItem; // ref to inventory
 

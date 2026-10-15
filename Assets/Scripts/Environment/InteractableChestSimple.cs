@@ -24,7 +24,6 @@ public class InteractableChestSimple : Interactable
     [Header("Lock & Key")]
     public bool needsKey = false;
     public string key_id = "chest_key";
-    bool lockpicking = false;
     protected override void Start()
     {
         base.Start();
@@ -38,13 +37,9 @@ public class InteractableChestSimple : Interactable
         base.Interact(player);
 
         if (needsKey) { // needing a key
-            if (CanOpen(player,true)) {
-                if (lockpicking)
-                    DungeonManager.lockpickUsed = true;
-                else // remove key
-                    player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
+            if (Open(player)) {
                 SuccessfullyOpen(player);
-            } else
+            } else // Can't open
                 SetColliderEnabled(true);
         } else {
             SuccessfullyOpen(player);
@@ -118,18 +113,53 @@ public class InteractableChestSimple : Interactable
             //Pass the interaction to the player
             player.playerInteractionManager.AddInteractionToList(this);
             if (needsKey)
-                interactableText = "Locked";
+            {
+                if(CanOpen(player))
+                    interactableText = "Unlock";
+                else
+                    interactableText = "Locked";
+            }
         }
     }
-    bool CanOpen(PlayerManager player, bool willOpen = false)
+    bool CanOpen(PlayerManager player)
     {
-        if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0) // player has the key 
+        return CheckKeyOrLockpick(player, false);
+    }
+    bool Open(PlayerManager player)
+    {
+        return CheckKeyOrLockpick(player, true);
+    }
+    bool CheckKeyOrLockpick(PlayerManager player, bool willOpen = false)
+    {
+        if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
+        { // player has the key 
+            if (willOpen)
+                player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
             return true;
-        if(!DungeonManager.lockpickUsed && player.characterWeaponManager.GetMainHand().HasTrait("lockpick")) // or an unused lockpick
+        }
+        // Check for lockpick
+        WeaponScript mainHandWeapon = player.characterWeaponManager.GetMainHand();
+        WeaponScript offHandWeapon = player.characterWeaponManager.GetOffHand();
+        if (DungeonManager.lockpicksUsed < 2 )
         {
-            if(willOpen)
-                lockpicking = true;
-            return true;
+            if(mainHandWeapon.HasTrait("lockpick") && mainHandWeapon.lockpickUsed == false)
+            {
+                if (willOpen)
+                {
+                    mainHandWeapon.lockpickUsed = true;
+                    DungeonManager.lockpicksUsed++;
+                }
+                return true;
+            }
+            if(offHandWeapon.HasTrait("lockpick") && offHandWeapon.lockpickUsed == false)
+            {
+                if (willOpen)
+                {
+                    offHandWeapon.lockpickUsed = true;
+                    DungeonManager.lockpicksUsed++;
+                }
+                return true;
+            }
         }
         return false;
     }
