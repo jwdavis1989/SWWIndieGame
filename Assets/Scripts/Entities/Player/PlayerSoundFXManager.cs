@@ -62,8 +62,8 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
 
     public void PlayFlashlightGlitchSoundFX()
     {
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.flashlightGlitchSFX, 2f, 1f, false);
-        PlayAdvancedSoundFX(WorldSoundFXManager.instance.flashlightGlitchSFX, 2f, 0.9f, false);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.flashlightGlitchSFX, 1f, 1f, true);
+        PlayAdvancedSoundFX(WorldSoundFXManager.instance.flashlightGlitchSFX, 1f, 0.9f, true);
         PlayAdvancedSoundFX(WorldSoundFXManager.instance.ChooseRandomSFXFromArray(IdeaCameraController.instance.steveAudioClipNegative));
     }
 

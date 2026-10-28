@@ -19,6 +19,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public Inventory inventory;
 
     public GameObject flashlight;
+    public bool canUseFlashlight = true;
     public GameObject cameraflashlight;
     public GameObject capeSystem;
     private Cloth capeClothComponent;
@@ -218,6 +219,7 @@ public class PlayerManager : CharacterManager
         if (currentCharacterData.currentFuel > currentCharacterData.currentFuel / 2)
         {
             isRunningOnEmergencyPowerLevels = false;
+            canUseFlashlight = true;
         }
 
 
@@ -253,7 +255,7 @@ public class PlayerManager : CharacterManager
             {
                 flashlight.SetActive(false);
             }
-            else if (!isRunningOnEmergencyPowerLevels)
+            else if (!isRunningOnEmergencyPowerLevels && canUseFlashlight)
             {
                 flashlight.SetActive(true);
             }
@@ -269,7 +271,7 @@ public class PlayerManager : CharacterManager
             {
                 cameraflashlight.SetActive(false);
             }
-            else if (!isRunningOnEmergencyPowerLevels)
+            else if (!isRunningOnEmergencyPowerLevels && canUseFlashlight)
             {
                 cameraflashlight.SetActive(true);
             }
