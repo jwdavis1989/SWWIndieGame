@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class PlayerWeaponManager : CharacterWeaponManager
 {
@@ -30,5 +31,15 @@ public class PlayerWeaponManager : CharacterWeaponManager
     private void OnDestroy()
     {
         instance = null; // For main menu button
+    }
+    public static void ResetLockpickUsed()
+    {
+        List<GameObject> weapons = new List<GameObject> ();
+        weapons.AddRange(instance.ownedWeapons);
+        weapons.AddRange(instance.ownedSpecialWeapons);
+        foreach (GameObject weapon in weapons)
+        {
+            weapon.GetComponent<WeaponScript>().lockpickUsed = false;
+        }
     }
 }

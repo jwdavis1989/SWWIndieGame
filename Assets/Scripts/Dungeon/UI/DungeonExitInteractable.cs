@@ -12,7 +12,7 @@ public class DungeonExitInteractable : Interactable
     public string connectedFloorId = "";
 
     DungeonData dungeonData;
-    private float elapsedTime = 0f;
+    private float timeSinceLevelStarted = 0f;
     protected override void Awake()
     {
         base.Awake();
@@ -21,12 +21,12 @@ public class DungeonExitInteractable : Interactable
     }
     public void Update()
     {
-        elapsedTime += Time.deltaTime;
+        timeSinceLevelStarted += Time.deltaTime;
     }
     public override void Interact(PlayerManager player)
     {
         base.Interact(player);
-        if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
+        if (CanOpen(player))
         {
             player.GetComponent<Inventory>().GetItem(key_id).itemQty--;
             Open();
@@ -42,15 +42,16 @@ public class DungeonExitInteractable : Interactable
         {
             //Pass the interaction to the player
             player.playerInteractionManager.AddInteractionToList(this);
-            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0)
-            {
+            if (player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0){
                 interactableText = "Exit dungeon";
-            }
-            else
-            {
+            }else{
                 interactableText = "Locked";
             }
         }
+    }
+    bool CanOpen(PlayerManager player)
+    {
+        return player.GetComponent<Inventory>().CheckOwnedQty(key_id) > 0;
     }
     public void SetColliderEnabled(bool enabled)
     {
@@ -60,7 +61,7 @@ public class DungeonExitInteractable : Interactable
     {
         //DungeonData dungeonData = DungeonManager.GetDB().GetDungeon(dungeon_id);
         string levelSelectScene = dungeonData.dungeonLevelSelectSceneID;
-        DungeonManager.CompleteCurrentDungeonLevel(elapsedTime, connectedFloorId);
+        DungeonManager.CompleteCurrentDungeonLevel(timeSinceLevelStarted, connectedFloorId);
         //DungeonManager
         PlayerInputManager.instance.SafeDisable(true, true);
         TeleportData.yRotation = dungeonData.exitYRotation;

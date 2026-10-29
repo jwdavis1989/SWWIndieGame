@@ -41,7 +41,7 @@ public class HornHoundCombatStanceState : CombatStanceState
         }
 
         //Rotate to face our target
-        aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
+        //aiCharacterCombatManager.RotateTowardsAgent(aiCharacter);
 
         //If Target is no longer present, return to the Idle State
         if (aiCharacterCombatManager.currentTarget == null)

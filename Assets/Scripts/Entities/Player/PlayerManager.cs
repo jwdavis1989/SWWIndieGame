@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aura2API;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -18,11 +19,16 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public Inventory inventory;
 
     public GameObject flashlight;
+    public bool canUseFlashlight = true;
     public GameObject cameraflashlight;
     public GameObject capeSystem;
     private Cloth capeClothComponent;
     private float capeClothWorldAccelerationModifier;
     [SerializeField] public PlayerSoundFXManager playerSoundFXManager;
+
+    [Header("Traits - Player")]
+    public bool isInnerLightActive = false;
+    public GameObject innerLightVFX;
 
     [Header("Debug Menu")]
     [SerializeField] bool respawnCharacter = false;
@@ -77,6 +83,9 @@ public class PlayerManager : CharacterManager
 
         //Regenerates your stamina
         playerStatsManager.RegenerateStamina();
+
+        //Checks for Inner Light Weapon and Manages Timer
+        HandleInnerLightTrait();
 
         DebugMenu();
     }
@@ -210,6 +219,7 @@ public class PlayerManager : CharacterManager
         if (currentCharacterData.currentFuel > currentCharacterData.currentFuel / 2)
         {
             isRunningOnEmergencyPowerLevels = false;
+            canUseFlashlight = true;
         }
 
 
@@ -234,7 +244,7 @@ public class PlayerManager : CharacterManager
         //Dungeon
         DungeonManager.LoadDungeons(currentCharacterData.savedDungeons);
         // Active effects
-        characterEffectsManager.activeTimedEffects = currentCharacterData.activeCharacterEffects; 
+        characterEffectsManager.activeTimedEffects = currentCharacterData.activeCharacterEffects;
     }
 
     public void ToggleFlashlight()
@@ -245,7 +255,7 @@ public class PlayerManager : CharacterManager
             {
                 flashlight.SetActive(false);
             }
-            else if (!isRunningOnEmergencyPowerLevels)
+            else if (!isRunningOnEmergencyPowerLevels && canUseFlashlight)
             {
                 flashlight.SetActive(true);
             }
@@ -261,7 +271,7 @@ public class PlayerManager : CharacterManager
             {
                 cameraflashlight.SetActive(false);
             }
-            else if (!isRunningOnEmergencyPowerLevels)
+            else if (!isRunningOnEmergencyPowerLevels && canUseFlashlight)
             {
                 cameraflashlight.SetActive(true);
             }
@@ -531,9 +541,44 @@ public class PlayerManager : CharacterManager
         //capeClothComponent.worldAccelerationScale = capeClothWorldAccelerationModifier;
         capeClothComponent.enabled = true;
     }
+    const float innerLightCooldown = 30;
+    public float innerLightCoolddownRemaining = 0;
     public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
     {
+        if (characterWeaponManager.GetMainHand().HasTrait("inner_light"))
+        {
+            // Inner Light: If not damaged within the last 30 seconds, the next attack that hits you deals 75% reduced damage.
+            if (innerLightCoolddownRemaining <= 0)
+            {
+                damage *= 0.75f;
+                Instantiate(WorldCharacterEffectsManager.InnerLightBreakVFX, characterWeaponManager.GetMainHand().transform);
+            }
+            innerLightCoolddownRemaining = innerLightCooldown;
+            DestroyInnerLightVFX();
+        }
         base.ApplyDamage(damage, characterCausingDamage, isMainHand);
         PlayerUIManager.instance.playerUIHudManager.UpdateHealthBar(playerStatsManager.currentHealth, playerStatsManager.maxHealth);
     }
+
+    public void HandleInnerLightTrait()
+    {
+        if (isWieldingInnerLightWeapon)
+        {
+            //Inner Light Cooldown
+            if (innerLightCoolddownRemaining > 0)
+                innerLightCoolddownRemaining -= Time.deltaTime;
+            else if (!isInnerLightActive)
+            {
+                isInnerLightActive = true;
+                innerLightVFX = Instantiate(WorldCharacterEffectsManager.instance.innerLightApplyVFX, transform);
+            }
+        }
+    }
+
+    public override void DestroyInnerLightVFX()
+    {
+        isInnerLightActive = false;
+        innerLightVFX.gameObject.Destroy();
+    }
+
 }

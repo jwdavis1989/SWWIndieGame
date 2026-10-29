@@ -34,6 +34,9 @@ public class CharacterManager : MonoBehaviour
     public bool isDead = false;
     public float deathExplosionVFXDelay = 2f;
 
+    [Header("Traits - Character")]
+    public bool isWieldingInnerLightWeapon = false;
+
     [Header("Character Faction")]
     public CharacterFaction faction;
 
@@ -396,5 +399,10 @@ public class CharacterManager : MonoBehaviour
             }
         }
         //else do on hit effects from enemies without weapons?
+    }
+
+    public virtual void DestroyInnerLightVFX()
+    {
+        //Stub to avoid error, see overriden version in PlayerManager
     }
 }

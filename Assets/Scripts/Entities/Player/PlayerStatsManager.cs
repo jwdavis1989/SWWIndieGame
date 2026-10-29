@@ -16,6 +16,7 @@ public class PlayerStatsManager : CharacterStatsManager
     [SerializeField] private int flickerCount = 6;             // How many times it blinks before dying
     [SerializeField] private float minFlickerDelay = 0.05f;    // Shortest time light stays on/off
     [SerializeField] private float maxFlickerDelay = 0.25f;    // Longest time light stays on/off
+    private Coroutine flickerCoroutine;
     private bool isFlickering = false;
 
     protected override void Awake()
@@ -48,6 +49,7 @@ public class PlayerStatsManager : CharacterStatsManager
         SetNewMaxFuelValue();
         player.isOutOfFuel = false;
         player.isRunningOnEmergencyPowerLevels = false;
+        player.canUseFlashlight = true;
         if (player.isDead)
         {
             player.ReviveCharacter();
@@ -56,6 +58,13 @@ public class PlayerStatsManager : CharacterStatsManager
 
         //Reset Special Weapon Cooldown
         player.characterWeaponManager.isSpecialWeaponOffCooldown = true;
+
+        //Reset Inner Light Cooldown
+        if (player.characterWeaponManager.GetMainHand().HasTrait("inner_light"))
+        {
+            player.isWieldingInnerLightWeapon = true;
+            player.innerLightCoolddownRemaining = 0;
+        }
     }
 
     public void SetNewMaxFuelValue()
@@ -64,6 +73,7 @@ public class PlayerStatsManager : CharacterStatsManager
         currentFuel = maxFuel;
         player.isOutOfFuel = false;
         player.isRunningOnEmergencyPowerLevels = false;
+        player.canUseFlashlight = true;
         PlayerUIManager.instance.playerUIHudManager.UpdateFuelBar(currentFuel, maxFuel);
     }
 
@@ -82,13 +92,8 @@ public class PlayerStatsManager : CharacterStatsManager
             else if (!player.isRunningOnEmergencyPowerLevels && currentFuel < maxFuel / 2)
             {
                 player.isRunningOnEmergencyPowerLevels = true;
-
-                if (!isFlickering)
-                {
-                    StartCoroutine(FlickerAndShutOffFlashlight());
-                    player.playerSoundFXManager.PlayFlashlightGlitchSoundFX();
-                }
-
+                player.canUseFlashlight = false;
+                HandleFlashlightFlicker();
             }
             else
             {
@@ -101,14 +106,34 @@ public class PlayerStatsManager : CharacterStatsManager
         }
     }
 
-    private IEnumerator FlickerAndShutOffFlashlight()
+    public void HandleFlashlightFlicker(bool willTurnOff = true)
+    {
+        if (flickerCoroutine != null)
+        {
+            StopCoroutine(flickerCoroutine);
+            flickerCoroutine = null;
+        }
+
+        if (!isFlickering && !player.isRunningOnEmergencyPowerLevels)
+        {
+            //Do we want the flashlight to flicker off or back on?
+            StartCoroutine(FlickerFlashlight(!willTurnOff));
+
+
+            //Play glitch sound effects to sell the effect
+            player.playerSoundFXManager.PlayFlashlightGlitchSoundFX();
+        }
+    }
+
+    private IEnumerator FlickerFlashlight(bool willFlashlightTurnOnAtEnd = false)
     {
         isFlickering = true;
 
         //Loop through the flicker count to create an erratic blinking pattern
         for (int i = 0; i < flickerCount; i++)
         {
-            bool toggleState = (i % 2 == 0); // Alternates true/false every iteration
+            //Alternates true/false every iteration
+            bool toggleState = (i % 2 == 0);
 
             if (player.flashlight != null) player.flashlight.SetActive(toggleState);
             if (player.cameraflashlight != null) player.cameraflashlight.SetActive(toggleState);
@@ -120,10 +145,17 @@ public class PlayerStatsManager : CharacterStatsManager
         }
 
         //Hard shutoff
-        if (player.flashlight != null) player.flashlight.SetActive(false);
-        if (player.cameraflashlight != null) player.cameraflashlight.SetActive(false);
+        if (player.flashlight != null) player.flashlight.SetActive(willFlashlightTurnOnAtEnd);
+        if (player.cameraflashlight != null) player.cameraflashlight.SetActive(willFlashlightTurnOnAtEnd);
 
         isFlickering = false;
+
+        //Handle whether the player can change the flashlight state or not
+        //player.canUseFlashlight = canToggleFlashlight;
+        player.canUseFlashlight = willFlashlightTurnOnAtEnd;
+
+        //Clear the stored coroutine reference
+        flickerCoroutine = null;
     }
 
 }
