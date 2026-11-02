@@ -4570,7 +4570,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 977648258}
   m_CullTransparentMesh: 1
---- !u!84 &1046850833
+--- !u!84 &998475904
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7377,6 +7377,44 @@ CapsuleCollider:
   m_Height: 0.49
   m_Direction: 1
   m_Center: {x: 0, y: 0.33, z: 0}
+--- !u!84 &1375098344
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 256
+  m_Height: 256
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 0
+  m_ColorFormat: 5
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1390627313
 GameObject:
   m_ObjectHideFlags: 0
@@ -8435,44 +8473,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -6874584590210671055, guid: f9676a69ab69e1741a420a9215582afb, type: 3}
   m_PrefabInstance: {fileID: 1141389998}
   m_PrefabAsset: {fileID: 0}
---- !u!84 &1671276216
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1689852542
 GameObject:
   m_ObjectHideFlags: 0
@@ -9201,44 +9201,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1447053619}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!84 &1980091819
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: '(Optional) Wider Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &1991056547
 GameObject:
   m_ObjectHideFlags: 0
@@ -9373,44 +9335,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991056547}
   m_CullTransparentMesh: 1
---- !u!84 &1992981550
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 'Flashlight Cone : Cookie Map Render Texture'
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 256
-  m_Height: 256
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 0
-  m_ColorFormat: 5
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1001 &2007066191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11151,6 +11075,7 @@ MonoBehaviour:
   characterModel: {fileID: 1209492689}
   isDead: 0
   deathExplosionVFXDelay: 5
+  isWieldingInnerLightWeapon: 0
   faction: 0
   isPlayer: 1
   isRotatingAttacker: 0
@@ -11191,12 +11116,14 @@ MonoBehaviour:
   playerInteractionManager: {fileID: 0}
   inventory: {fileID: 0}
   flashlight: {fileID: 2076048840}
+  canUseFlashlight: 1
   cameraflashlight: {fileID: 1076579486}
   capeSystem: {fileID: 1802751127}
   playerSoundFXManager: {fileID: 0}
   isInnerLightActive: 0
   innerLightVFX: {fileID: 0}
   respawnCharacter: 0
+  innerLightCoolddownRemaining: 0
 --- !u!4 &4296533413394450653
 Transform:
   m_ObjectHideFlags: 0
@@ -11578,22 +11505,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 4202956625226732820}
-    - target: {fileID: 915837811372269487, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: isCameraInverted
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 915837811372269487, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: collideWithLayers.m_Bits
-      value: 131073
-      objectReference: {fileID: 0}
-    - target: {fileID: 1335847405064486984, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 151551
-      objectReference: {fileID: 0}
     - target: {fileID: 2089660518784529226, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: cookieMapRenderTexture
       value: 
-      objectReference: {fileID: 1671276216}
+      objectReference: {fileID: 1375098344}
     - target: {fileID: 2303989768072336991, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: frustumSettings.baseSettings
       value: 
@@ -11642,10 +11557,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3872588456634140819, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -3.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4662827858231400229, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: m_Name
       value: Player Camera
@@ -11653,7 +11564,7 @@ PrefabInstance:
     - target: {fileID: 6158356203261551149, guid: fdd8de6fb8ec2224d80997ff44bed6b0, type: 3}
       propertyPath: cookieMapRenderTexture
       value: 
-      objectReference: {fileID: 1046850833}
+      objectReference: {fileID: 998475904}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
