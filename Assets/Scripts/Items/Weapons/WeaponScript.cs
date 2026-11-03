@@ -263,7 +263,9 @@ public class WeaponScript : MonoBehaviour
     public bool hasObtained = false;
     [Header("These are all written to JSON when saving a game.")]
     public WeaponStats stats;
+    [Header("Used for tracking current state of weapon traits.")]
     public bool lockpickUsed = false;
+    public float staticChargeValue = 0;
 
     [HideInInspector] public InventoryItem inventoryItem; // ref to inventory
 
@@ -382,6 +384,16 @@ public class WeaponScript : MonoBehaviour
             HandleSettingGunToFiringTransform();
             HandleSetGunToHandTransform();
         }
+        if (HasTrait("static_charge"))
+        {
+            if (characterThatOwnsThisWeapon == null)
+                return;
+            if (characterThatOwnsThisWeapon.isSprinting || characterThatOwnsThisWeapon.isMoving)
+            {
+                // Weapon buils up static charge as the character moves
+                staticChargeValue += Time.deltaTime;
+            }
+        }
 
     }
     public bool HasTrait(string traitID)
@@ -452,7 +464,7 @@ public class WeaponScript : MonoBehaviour
             //TODO PLAY LEVEL UP NOISE/ANIMATION
         }
     }
-    public void ApplyWeaponOnHitEffects(CharacterManager targetCharacter, float hitDamage)
+    public void ApplyWeaponOnHitEffects(CharacterManager targetCharacter, float hitDamage, WeaponScript weapon)
     {
         foreach(string weaponTraitId in stats.weaponTraits)
         {
@@ -460,7 +472,7 @@ public class WeaponScript : MonoBehaviour
             if (traitData.onHitEffect != null)
             {
                 //Debug.Log("ApplyWeaponOnHitEffects:" + traitData.onHitEffect.timedEffect.effectId);//astest
-                targetCharacter.characterEffectsManager.ProcessInstantEffect(traitData.onHitEffect.Instantiate(hitDamage));
+                targetCharacter.characterEffectsManager.ProcessInstantEffect(traitData.onHitEffect.Instantiate(hitDamage, weapon));
             }
         }
     }

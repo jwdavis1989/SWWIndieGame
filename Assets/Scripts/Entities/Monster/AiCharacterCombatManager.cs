@@ -46,16 +46,13 @@ public class AiCharacterCombatManager : CharacterCombatManager
     }
     public void Update()
     {
-        HandleOnDamageTakenEffect();
     }
 
-    void HandleOnDamageTakenEffect()
+    public void HandleOnDamageTakenEffect(float damageTaken, WeaponScript weaponCausingDamage)
     {
         if (onDamageTakenEffect == null)
             return;
-        float damageTaken = character.characterStatsManager.CheckDamageTaken();
-        if (damageTaken > 0)
-            character.characterEffectsManager.ProcessInstantEffect(onDamageTakenEffect.Instantiate(damageTaken));
+        character.characterEffectsManager.ProcessInstantEffect(onDamageTakenEffect.Instantiate(damageTaken, weaponCausingDamage));
     }
 
     public void FindATargetWithInLineOSight(AICharacterManager aiCharacter) {

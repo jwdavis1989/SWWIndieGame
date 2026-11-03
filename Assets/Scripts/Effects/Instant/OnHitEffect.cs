@@ -5,9 +5,11 @@ public class OnHitEffect : InstantCharacterEffect
 {
     public TimedCharacterEffect timedEffect;
     protected float hitDamage;
-    public OnHitEffect Instantiate(float hitDamage){
+    protected WeaponScript weaponDealingDamage;
+    public OnHitEffect Instantiate(float hitDamage, WeaponScript weapon){
         OnHitEffect rv = Instantiate(this);
-        rv.hitDamage = hitDamage; 
+        rv.hitDamage = hitDamage;
+        rv.weaponDealingDamage = weapon;
         return rv;
     } 
     public override void ProcessEffect(CharacterManager target)

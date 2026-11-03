@@ -395,7 +395,7 @@ public class CharacterManager : MonoBehaviour
             if (weapon != null)
             {
                 //Debug.Log("ApplyOnHitEffects weapon:" + weapon.stats.weaponId);//astest
-                weapon.ApplyWeaponOnHitEffects(target, hitDamage);
+                weapon.ApplyWeaponOnHitEffects(target, hitDamage, weapon);
             }
         }
         //else do on hit effects from enemies without weapons?

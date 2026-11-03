@@ -412,23 +412,27 @@ public class AICharacterManager : CharacterManager
     public override void ApplyDamage(float damage, CharacterManager characterCausingDamage = null, bool isMainHand = false, string damageColor = "white")
     {
         base.ApplyDamage(damage, characterCausingDamage, isMainHand);
+        WeaponScript weaponCausingDamage = null;
         if (characterCausingDamage != null)
         {
             if (isMainHand)
             {
                 isHitByMainHand = true;
+                weaponCausingDamage = characterCausingDamage.characterWeaponManager.GetMainHand();
             }
             else
             {
                 isHitByOffHand = true;
                 DungeonManager.offHandUsed = true;
+                weaponCausingDamage = characterCausingDamage.characterWeaponManager.GetOffHand();
             }
             //Aggro the monster if they aren't already
             if (characterCausingDamage.isPlayer && characterCombatManager.currentTarget == null)
             {
-                characterCombatManager.AggroPlayer(characterCausingDamage.gameObject);
+                aiCharacterCombatManager.AggroPlayer(characterCausingDamage.gameObject);
             }
         }
+        aiCharacterCombatManager.HandleOnDamageTakenEffect(damage, weaponCausingDamage);
         if (characterUIManager != null)
         {
             characterUIManager.TriggerGlitchTextEffect();
@@ -442,12 +446,12 @@ public class AICharacterManager : CharacterManager
             WeaponScript weapon = isMainHand ? characterWeaponManager.GetMainHand() : characterWeaponManager.GetOffHand();
             if (weapon != null)
             {
-                weapon.ApplyWeaponOnHitEffects(target, hitDamage);
+                weapon.ApplyWeaponOnHitEffects(target, hitDamage, weapon);
             }
         }
         else if (aiCharacterCombatManager.onHitEffect != null)
         {
-            target.characterEffectsManager.ProcessInstantEffect(aiCharacterCombatManager.onHitEffect.Instantiate(hitDamage));
+            target.characterEffectsManager.ProcessInstantEffect(aiCharacterCombatManager.onHitEffect.Instantiate(hitDamage, null));
         }
         //else do on hit effects from enemies without weapons?
     }
