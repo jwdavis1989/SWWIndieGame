@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instantEffectID: 0
   timedEffect: {fileID: 0}
-  timeToFullCharge: 1
-  radius: 2
+  timeToFullCharge: 3
+  radius: 4
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 1024
-  staticChargeVFX: {fileID: 4602358627416495891, guid: 28f3f02e985f1b4429dbd2ec358885b9, type: 3}
+    m_Bits: 1088
+  enemyHitFX: {fileID: 4602358627416495891, guid: 28f3f02e985f1b4429dbd2ec358885b9, type: 3}
+  fullyChargedFX: {fileID: 4602358627416495891, guid: 1b5a8db63fe86a543b0c1cd3fb30011e, type: 3}

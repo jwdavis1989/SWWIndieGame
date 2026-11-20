@@ -10,28 +10,29 @@ public class StaticChargeOnHitEffect : OnHitEffect
     public float timeToFullCharge = 1f;
     public float radius = 1f;
     public LayerMask enemyLayers;
-    public GameObject staticChargeVFX;
     public override void ProcessEffect(CharacterManager target)
     {
+        Debug.Log("StaticChargeOnHitEffect ProcessEffect target=" + target.name);
         if (weaponDealingDamage == null || weaponDealingDamage.staticChargeValue < timeToFullCharge)
             return; // Not yet charged
         weaponDealingDamage.staticChargeValue = 0;
+        weaponDealingDamage.fullyChargedStaticCharge = false;
+        Destroy(weaponDealingDamage.staticChargeFX);
         Collider[] hitColliders = Physics.OverlapSphere(target.transform.position, radius, enemyLayers);
         foreach (Collider collider in hitColliders)
         {
+            // Check for target
             if (collider.gameObject == target.gameObject) continue;
-
             AICharacterManager ai = collider.GetComponent<AICharacterManager>();
             if(ai == null) continue;
 
-            //VFX
-            if (staticChargeVFX != null)
-                Instantiate(staticChargeVFX, target.transform);
-
-            //deal damage
+            // Apply effects
+            Instantiate(WorldCharacterEffectsManager.StaticChargeHitFX, ai.transform);
             ai.ApplyDamage(hitDamage * 0.2f, null, false, "white");
+            //Editor only visual debug line
+            Debug.DrawLine(target.transform.position, ai.transform.position, Color.blue);
 
-            return; // Putting this here so it only hits one enemy.
+            //return; // This will make it only hit one enemy.
         }
     }
 }

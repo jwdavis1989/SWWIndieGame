@@ -14,6 +14,12 @@ public class WorldCharacterEffectsManager : MonoBehaviour
     public GameObject innerLightApplyVFX;
     public static GameObject InnerLightBreakVFX => instance.innerLightBreakVFX;
 
+    [SerializeField] private GameObject staticChargeChargedFX;
+    [SerializeField] private GameObject staticChargeHitFX;
+    public static GameObject StaticChargeChargedFX => instance.staticChargeChargedFX;
+    public static GameObject StaticChargeHitFX => instance.staticChargeHitFX;
+
+
     [Header("Damage")]
     public TakeHealthDamageCharacterEffect takeHealthDamageEffect;
     public TakeBlockedHealthDamageCharacterEffect takeBlockedHealthDamageCharacterEffect;

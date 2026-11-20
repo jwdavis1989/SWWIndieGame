@@ -384,14 +384,32 @@ public class WeaponScript : MonoBehaviour
             HandleSettingGunToFiringTransform();
             HandleSetGunToHandTransform();
         }
-        if (HasTrait("static_charge"))
+        HandleStaticCharge();
+
+    }
+    public bool fullyChargedStaticCharge = false;
+    public GameObject staticChargeFX = null;
+    void HandleStaticCharge()
+    {
+        if(!HasTrait("static_charge") || fullyChargedStaticCharge)
+            return;
+        if (characterThatOwnsThisWeapon == null)
+            return;
+        if (characterThatOwnsThisWeapon.isSprinting || characterThatOwnsThisWeapon.isMoving)
         {
-            if (characterThatOwnsThisWeapon == null)
+            // Weapon buils up static charge as the character moves
+            staticChargeValue += Time.deltaTime;
+
+
+            WeaponTraitData staticChargeData = WeaponsController.GetWeaponTraitData("static_charge");
+            StaticChargeOnHitEffect staticChargeEffectData = (StaticChargeOnHitEffect)staticChargeData.onHitEffect;
+            if (staticChargeEffectData == null)
                 return;
-            if (characterThatOwnsThisWeapon.isSprinting || characterThatOwnsThisWeapon.isMoving)
+            if (staticChargeValue >= staticChargeEffectData.timeToFullCharge)
             {
-                // Weapon buils up static charge as the character moves
-                staticChargeValue += Time.deltaTime;
+                staticChargeFX = Instantiate(WorldCharacterEffectsManager.StaticChargeChargedFX, transform);
+                staticChargeValue = staticChargeEffectData.timeToFullCharge;
+                fullyChargedStaticCharge = true;
             }
         }
 

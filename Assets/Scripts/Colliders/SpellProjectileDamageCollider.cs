@@ -94,7 +94,7 @@ public class SpellProjectileDamageCollider : DamageCollider
 
         //Base Attack Power
         damageEffect.physicalDamage = physicalDamage;
-        Debug.Log("Base Damage: " + physicalDamage);
+        //Debug.Log("Base Damage: " + physicalDamage);
 
         //Elemental
         damageEffect.elementalDamage = elementalStats;

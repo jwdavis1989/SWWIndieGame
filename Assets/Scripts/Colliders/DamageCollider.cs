@@ -91,7 +91,7 @@ public class DamageCollider : MonoBehaviour
         //TODO: Check for Weapon Reflection (e.g. a one handed spear bouncing off a shield)
 
         //Check if the character is blocking, and check if they are facing in the correct direction to block successfully
-        Debug.Log("isBlocking: " + damageTarget.isBlocking);
+        //Debug.Log("isBlocking: " + damageTarget.isBlocking);
         if (damageTarget.isBlocking /*&& dotValueFromAttackToDamageTarget > 0.1f*/)
         {
             charactersDamaged.Add(damageTarget);
